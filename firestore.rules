@@ -114,6 +114,44 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
+    // REFERRALS COLLECTION
+    match /referrals/{userId} {
+      // Users can read and write their own referral record
+      allow read: if isOwner(userId) || isAdmin();
+      allow write: if isOwner(userId) || isAdmin();
+      allow create: if isSignedIn();
+    }
+
+    // REFERRAL TRACKING COLLECTION
+    match /referralTracking/{trackingId} {
+      // Users can read their own referred customers
+      allow read: if isSignedIn() &&
+                    (resource.data.referrerId == request.auth.uid || isAdmin());
+      // Only admins can update referral status
+      allow update: if isAdmin();
+      // Allow creation during signup (even anonymous users for tracking)
+      allow create: if true;
+    }
+
+    // REFERRAL CLICKS (Analytics)
+    match /referralClicks/{clickId} {
+      allow read: if isSignedIn();
+      // Allow anonymous click tracking
+      allow write: if true;
+    }
+
+    // PENDING NOTIFICATIONS (Email queue)
+    match /pendingNotifications/{notificationId} {
+      allow read, write: if isAdmin();
+    }
+
+    // PAYOUTS COLLECTION
+    match /payouts/{payoutId} {
+      allow read: if isSignedIn() &&
+                    (resource.data.userId == request.auth.uid || isAdmin());
+      allow write: if isAdmin();
+    }
+
     // Default deny all other collections
     match /{document=**} {
       allow read, write: if false;
