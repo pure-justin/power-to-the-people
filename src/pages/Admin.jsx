@@ -1081,6 +1081,15 @@ export default function Admin() {
             )}
           </div>
         </div>
+
+        {/* Project Detail Modal */}
+        {selectedProject && (
+          <ProjectDetailModal
+            project={selectedProject}
+            onClose={() => setSelectedProject(null)}
+            onUpdate={handleModalUpdate}
+          />
+        )}
       </div>
     </div>
   );
