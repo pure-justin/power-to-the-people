@@ -1,0 +1,29 @@
+# Firebase Configuration
+# Service account JSON file path
+GOOGLE_APPLICATION_CREDENTIALS=../firebase-service-account.json
+
+# SendGrid API Key (required for email delivery)
+# Get from: https://app.sendgrid.com/settings/api_keys
+SENDGRID_API_KEY=your_sendgrid_api_key_here
+
+# Twilio (optional - for SMS follow-ups)
+# Get from: https://console.twilio.com
+TWILIO_ACCOUNT_SID=your_twilio_account_sid
+TWILIO_AUTH_TOKEN=your_twilio_auth_token
+TWILIO_PHONE_NUMBER=+1234567890
+
+# Campaign Settings
+CAMPAIGN_FROM_EMAIL=solar@powertothepeopleenergy.com
+CAMPAIGN_FROM_NAME=Power to the People Energy
+CAMPAIGN_REPLY_TO=justin@agntc.tech
+
+# OpenRouter API (optional - for AI-powered email improvements)
+OPENROUTER_API_KEY=your_openrouter_api_key
+
+# Rate Limiting
+MAX_EMAILS_PER_DAY=500
+MAX_EMAILS_PER_HOUR=100
+
+# Development Mode (set to 'true' for testing)
+DRY_RUN=true
+DEBUG=false
