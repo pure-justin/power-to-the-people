@@ -737,6 +737,283 @@ const getProductionColor = (productionKwh) => {
       ),
     },
 
+    utilityBillApi: {
+      title: "Utility Bill Scanner",
+      icon: AlertCircle,
+      content: (
+        <div className="doc-section">
+          <h1>Utility Bill Scanner API</h1>
+          <p className="lead">
+            Extract detailed usage and billing information from utility bill
+            images using Gemini 1.5 Pro vision AI. Supports electric, gas, and
+            combined utility bills with 12-month usage history extraction.
+          </p>
+
+          <ApiEndpoint
+            method="POST"
+            endpoint="/api/scan-bill"
+            description="Upload and analyze utility bill images to extract consumption data, account details, and usage history"
+            parameters={[
+              {
+                name: "imageBase64",
+                type: "string",
+                required: true,
+                description: "Base64-encoded image data of the utility bill",
+              },
+              {
+                name: "mediaType",
+                type: "string",
+                required: false,
+                description:
+                  "MIME type of the image (default: image/jpeg). Supports image/jpeg, image/png, application/pdf",
+              },
+            ]}
+            returns="Promise<object> - Extracted bill data with usage history and consumption data"
+            example={`import axios from 'axios';
+
+// Scan a utility bill image
+const scanUtilityBill = async (imageFile) => {
+  // Convert file to base64
+  const reader = new FileReader();
+  const base64Promise = new Promise((resolve) => {
+    reader.onload = () => {
+      const base64 = reader.result.split(',')[1];
+      resolve(base64);
+    };
+  });
+  reader.readAsDataURL(imageFile);
+  const imageBase64 = await base64Promise;
+
+  // Call the scan-bill API
+  const response = await axios.post(
+    'https://your-vercel-app.vercel.app/api/scan-bill',
+    {
+      data: {
+        imageBase64,
+        mediaType: imageFile.type
+      }
+    }
+  );
+
+  return response.data;
+};
+
+// Usage
+const result = await scanUtilityBill(billImageFile);
+
+if (result.success) {
+  console.log('Account Number:', result.billData.accountNumber);
+  console.log('Annual Usage:', result.consumptionData.annualConsumption, 'kWh');
+  console.log('12-Month History:', result.consumptionData.monthlyConsumption);
+  console.log('ESIID (Texas):', result.billData.esiid);
+  console.log('Utility Company:', result.billData.utilityCompany);
+} else {
+  console.error('Error:', result.error);
+}`}
+            onCopy={(code) => copyToClipboard(code, "scan-bill")}
+            copied={copiedCode === "scan-bill"}
+          />
+
+          <div className="endpoint-section">
+            <h3>Response Structure</h3>
+            <CodeBlock
+              language="javascript"
+              code={`{
+  "success": true,
+  "billData": {
+    "isValidBill": true,
+    "accountNumber": "123456789",
+    "customerName": "John Smith",
+    "serviceAddress": "123 Solar St, Austin, TX 78701",
+    "utilityCompany": "Austin Energy",
+    "utilityType": "electric",
+    "esiid": "10123456789012345678", // Texas only
+    "meterNumber": "987654321",
+    "ratePlanName": "Residential Service",
+    "billingPeriodStart": "2024-12-01",
+    "billingPeriodEnd": "2024-12-31",
+    "currentUsageKwh": 1200,
+    "usageHistory": [
+      { "month": "January", "year": 2024, "kWh": 1500 },
+      { "month": "February", "year": 2024, "kWh": 1350 },
+      // ... 12 months total
+    ],
+    "totalAmountDue": 145.67,
+    "ratePerKwh": 0.12,
+    "confidence": 0.95
+  },
+  "consumptionData": {
+    "annualConsumption": 14400,
+    "monthsWithData": 12,
+    "dataQuality": "excellent",
+    "monthlyConsumption": [
+      { "month": "January", "kWh": 1500, "estimated": false },
+      // ... 12 months
+    ]
+  }
+}`}
+              onCopy={(code) => copyToClipboard(code, "bill-response")}
+              copied={copiedCode === "bill-response"}
+            />
+          </div>
+
+          <div className="endpoint-section">
+            <h3>Error Handling</h3>
+            <CodeBlock
+              language="javascript"
+              code={`// Handle validation errors
+if (!result.success) {
+  switch (result.errorType) {
+    case 'not_a_bill':
+      console.error('Not a utility bill. Please upload your electric or gas bill.');
+      break;
+    case 'poor_quality':
+      console.error('Image quality too poor. Take a clearer photo.');
+      break;
+    default:
+      console.error('Error scanning bill:', result.error);
+  }
+}`}
+              onCopy={(code) => copyToClipboard(code, "bill-errors")}
+              copied={copiedCode === "bill-errors"}
+            />
+          </div>
+        </div>
+      ),
+    },
+
+    addressApi: {
+      title: "Address & Location",
+      icon: Search,
+      content: (
+        <div className="doc-section">
+          <h1>Address & Location API</h1>
+          <p className="lead">
+            Geocoding, reverse geocoding, and Google Places integration for
+            address validation and location services.
+          </p>
+
+          <ApiEndpoint
+            method="GET"
+            endpoint="getCurrentLocation()"
+            description="Get user's current location via browser geolocation API and reverse geocode to full address"
+            parameters={[]}
+            returns="Promise<object> - Parsed address with coordinates"
+            example={`import { getCurrentLocation } from './services/addressService';
+
+// Get current location and address
+try {
+  const location = await getCurrentLocation();
+
+  console.log('Address:', location.formattedAddress);
+  console.log('Coordinates:', location.lat, location.lng);
+  console.log('City:', location.city);
+  console.log('State:', location.state);
+  console.log('ZIP:', location.zipCode);
+  console.log('County:', location.county);
+} catch (error) {
+  // Handle permission denied, timeout, or unavailable
+  console.error(error.message);
+}`}
+            onCopy={(code) => copyToClipboard(code, "get-location")}
+            copied={copiedCode === "get-location"}
+          />
+
+          <ApiEndpoint
+            method="POST"
+            endpoint="parseGoogleAddress(place)"
+            description="Parse Google Places autocomplete result into structured address components"
+            parameters={[
+              {
+                name: "place",
+                type: "object",
+                required: true,
+                description: "Google Places API place object",
+              },
+            ]}
+            returns="object - Parsed address components"
+            example={`import { parseGoogleAddress } from './services/addressService';
+
+// After Google Places autocomplete selection
+const onPlaceSelected = (place) => {
+  const parsed = parseGoogleAddress(place);
+
+  console.log('Parsed Address:', {
+    streetAddress: parsed.streetAddress, // "123 Solar St"
+    city: parsed.city,                   // "Austin"
+    county: parsed.county,               // "Travis"
+    state: parsed.state,                 // "TX"
+    zipCode: parsed.zipCode,             // "78701"
+    lat: parsed.lat,                     // 30.2672
+    lng: parsed.lng                      // -97.7431
+  });
+
+  // Use for solar system design
+  designSolarSystem(parsed.lat, parsed.lng, annualUsage);
+};`}
+            onCopy={(code) => copyToClipboard(code, "parse-address")}
+            copied={copiedCode === "parse-address"}
+          />
+
+          <h2>Energy Community Lookup</h2>
+          <p>
+            Check if a property qualifies for IRS Energy Community tax credits
+            based on IRS Notice 2025-31.
+          </p>
+
+          <ApiEndpoint
+            method="GET"
+            endpoint="checkEnergyCommunity(county, state)"
+            description="Determine if a county qualifies as an IRS Energy Community for enhanced solar tax credits"
+            parameters={[
+              {
+                name: "county",
+                type: "string",
+                required: true,
+                description: 'County name (e.g., "Harris" or "Harris County")',
+              },
+              {
+                name: "state",
+                type: "string",
+                required: false,
+                description: 'State code (default: "TX")',
+              },
+            ]}
+            returns="object - Energy community status and MSA information"
+            example={`import { checkEnergyCommunity } from './services/energyCommunity';
+
+// Check if Harris County, TX qualifies
+const result = checkEnergyCommunity('Harris', 'TX');
+
+console.log(result);
+// {
+//   isEnergyCommunity: true,
+//   msa: "Houston-The Woodlands-Sugar Land",
+//   county: "Harris",
+//   reason: "Part of Houston-The Woodlands-Sugar Land MSA - qualifies under IRS Notice 2025-31"
+// }
+
+// Use for enhanced tax credit calculation
+if (result.isEnergyCommunity) {
+  const taxCredit = systemCost * 0.40; // 40% ITC instead of 30%
+  console.log(\`Enhanced tax credit: $\${taxCredit.toLocaleString()}\`);
+}`}
+            onCopy={(code) => copyToClipboard(code, "energy-community")}
+            copied={copiedCode === "energy-community"}
+          />
+
+          <div className="endpoint-section">
+            <h3>Supported Energy Communities (Texas)</h3>
+            <p>
+              70+ Texas counties qualify including Houston, Dallas-Fort Worth,
+              Austin, Midland, Odessa, Beaumont-Port Arthur, and more. See IRS
+              Notice 2025-31 Appendix 3 for full list.
+            </p>
+          </div>
+        </div>
+      ),
+    },
+
     examples: {
       title: "Code Examples",
       icon: Code,
