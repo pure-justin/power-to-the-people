@@ -232,14 +232,11 @@ export const secureSolarWebhook = functions
       // If leadId provided, update the lead
       if (leadId) {
         const db = admin.firestore();
-        await db
-          .collection("leads")
-          .doc(leadId)
-          .update({
-            solarApiData: solarData,
-            systemSize: solarData.estimatedSystemSize,
-            updatedAt: admin.firestore.Timestamp.now(),
-          });
+        await db.collection("leads").doc(leadId).update({
+          solarApiData: solarData,
+          systemSize: solarData.estimatedSystemSize,
+          updatedAt: admin.firestore.Timestamp.now(),
+        });
       }
 
       res.json({
