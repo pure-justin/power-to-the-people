@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Green Button Data - Sample Texas Home</title>
+  <entry>
+    <title>Usage Data</title>
+    <content>
+      <IntervalBlock>
+        <!-- January 2024 - Winter high usage -->
+        <IntervalReading><timePeriod><start>1704067200</start></timePeriod><value>1850000</value></IntervalReading>
+        <!-- February 2024 -->
+        <IntervalReading><timePeriod><start>1706745600</start></timePeriod><value>1620000</value></IntervalReading>
+        <!-- March 2024 -->
+        <IntervalReading><timePeriod><start>1709251200</start></timePeriod><value>1280000</value></IntervalReading>
+        <!-- April 2024 -->
+        <IntervalReading><timePeriod><start>1711929600</start></timePeriod><value>1150000</value></IntervalReading>
+        <!-- May 2024 -->
+        <IntervalReading><timePeriod><start>1714521600</start></timePeriod><value>1420000</value></IntervalReading>
+        <!-- June 2024 - Summer AC starts -->
+        <IntervalReading><timePeriod><start>1717200000</start></timePeriod><value>1980000</value></IntervalReading>
+        <!-- July 2024 - Peak summer -->
+        <IntervalReading><timePeriod><start>1719792000</start></timePeriod><value>2450000</value></IntervalReading>
+        <!-- August 2024 - Peak summer -->
+        <IntervalReading><timePeriod><start>1722470400</start></timePeriod><value>2380000</value></IntervalReading>
+        <!-- September 2024 -->
+        <IntervalReading><timePeriod><start>1725148800</start></timePeriod><value>1850000</value></IntervalReading>
+        <!-- October 2024 -->
+        <IntervalReading><timePeriod><start>1727740800</start></timePeriod><value>1280000</value></IntervalReading>
+        <!-- November 2024 -->
+        <IntervalReading><timePeriod><start>1730419200</start></timePeriod><value>1350000</value></IntervalReading>
+        <!-- December 2024 -->
+        <IntervalReading><timePeriod><start>1733011200</start></timePeriod><value>1720000</value></IntervalReading>
+      </IntervalBlock>
+    </content>
+  </entry>
+</feed>

@@ -1,0 +1,19 @@
+{
+  "name": "smt-connector",
+  "version": "1.0.0",
+  "main": "connect.js",
+  "scripts": {
+    "start": "node connect.js",
+    "server": "node server.js",
+    "headless": "node connect.js --headless",
+    "install-browser": "npx playwright install chromium"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "Smart Meter Texas data connector using headless browser",
+  "dependencies": {
+    "firebase-admin": "^12.0.0",
+    "playwright": "1.48.2"
+  }
+}
