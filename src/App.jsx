@@ -19,6 +19,7 @@ function App() {
         <Route path="/qualify" element={<Qualify />} />
         <Route path="/qualify/smt-callback" element={<SmtCallback />} />
         <Route path="/portal" element={<Portal />} />
+        <Route path="/referrals" element={<Referrals />} />
         <Route path="/project/:id" element={<ProjectStatus />} />
         <Route path="/success" element={<Success />} />
         <Route path="/test3d" element={<Test3D />} />
