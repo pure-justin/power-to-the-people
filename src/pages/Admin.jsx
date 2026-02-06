@@ -56,6 +56,7 @@ export default function Admin() {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
   const [showAnalytics, setShowAnalytics] = useState(true);
+  const [activeTab, setActiveTab] = useState("projects"); // projects, analytics, referrals
 
   // Check authentication status
   useEffect(() => {
