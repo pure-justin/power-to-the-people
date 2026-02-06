@@ -1276,6 +1276,88 @@ export default function Success() {
         }
 
 
+        /* Compare Installers CTA */
+        .compare-installers-cta {
+          background: linear-gradient(135deg, rgba(0, 212, 170, 0.15), rgba(0, 100, 80, 0.1));
+          border: 2px solid rgba(0, 212, 170, 0.4);
+          border-radius: 20px;
+          padding: 32px;
+          margin-bottom: 32px;
+          text-align: center;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .compare-installers-cta::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          right: -20%;
+          width: 300px;
+          height: 300px;
+          background: radial-gradient(circle, rgba(0, 212, 170, 0.15) 0%, transparent 70%);
+          pointer-events: none;
+        }
+
+        .compare-cta-content {
+          position: relative;
+          z-index: 1;
+        }
+
+        .compare-cta-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 8px 16px;
+          background: rgba(0, 212, 170, 0.2);
+          border: 1px solid rgba(0, 212, 170, 0.4);
+          border-radius: 100px;
+          color: #00FFD4;
+          font-size: 0.75rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          margin-bottom: 16px;
+        }
+
+        .compare-cta-title {
+          font-size: clamp(1.4rem, 3vw, 1.9rem);
+          font-weight: 900;
+          color: #fff;
+          margin: 0 0 12px;
+        }
+
+        .compare-cta-desc {
+          color: rgba(255, 255, 255, 0.8);
+          font-size: 1rem;
+          margin: 0 0 24px;
+          max-width: 600px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .compare-cta-button {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          padding: 16px 32px;
+          background: linear-gradient(135deg, #00FFD4, #00B894);
+          border: none;
+          border-radius: 12px;
+          color: #0a1520;
+          font-size: 1rem;
+          font-weight: 700;
+          cursor: pointer;
+          text-decoration: none;
+          transition: all 0.3s;
+          box-shadow: 0 4px 20px rgba(0, 212, 170, 0.3);
+        }
+
+        .compare-cta-button:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 30px rgba(0, 212, 170, 0.5);
+        }
+
         /* Why Section */
         .why-section {
           margin-bottom: 40px;
