@@ -1055,7 +1055,7 @@ export default function Admin() {
                         <td>
                           <button
                             className="view-btn"
-                            onClick={() => navigate(`/project/${project.id}`)}
+                            onClick={() => handleProjectClick(project)}
                           >
                             <Eye size={14} />
                             View
