@@ -28,30 +28,27 @@ service cloud.firestore {
 
     // LEADS COLLECTION
     match /leads/{leadId} {
-      // Anyone authenticated can create a lead (from qualification form)
-      allow create: if isSignedIn() &&
-                       request.resource.data.customer.email is string &&
-                       request.resource.data.address.county is string &&
-                       request.resource.data.qualification.isHomeowner == true;
+      // Anyone can create a lead (public form submission)
+      allow create: if true;
 
-      // Users can read their own leads
+      // Users can read their own leads (by email)
       allow read: if isSignedIn() && (
-        resource.data.customer.userId == request.auth.uid ||
-        resource.data.customer.email == request.auth.token.email
+        resource.data.createdBy == request.auth.uid ||
+        resource.data.email == request.auth.token.email
       );
 
-      // Admins can read/write all leads
-      allow read, write: if isAdmin();
+      // Admins and sales reps can read all leads
+      allow read: if isAdminOrInstaller();
 
-      // Installers can read assigned leads
-      allow read: if isInstaller() && resource.data.assignedTo == request.auth.uid;
+      // Admins can write all leads
+      allow write: if isAdmin();
 
-      // Allow updates to assigned leads by the assignee (add notes, update progress)
+      // Assigned sales reps can update their leads (status, notes)
       allow update: if isSignedIn() &&
                        resource.data.assignedTo == request.auth.uid &&
-                       // Only allow updating specific fields
                        request.resource.data.diff(resource.data).affectedKeys()
-                         .hasOnly(['notes', 'progress', 'updatedAt', 'tags']);
+                         .hasOnly(['status', 'notes', 'updatedAt', 'lastContactedAt',
+                                   'qualifiedAt', 'closedAt', 'score', 'scoreBreakdown']);
     }
 
     // PROJECTS COLLECTION (Legacy - keep for backward compatibility)
