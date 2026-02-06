@@ -1,0 +1,63 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "commercial_leads",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "enrichedWithROI", "order": "ASCENDING" },
+        { "fieldPath": "leadPriority", "order": "ASCENDING" },
+        { "fieldPath": "emailSequence", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "commercial_leads",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "enrichedWithROI", "order": "ASCENDING" },
+        { "fieldPath": "leadPriority", "order": "ASCENDING" },
+        { "fieldPath": "leadScore", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "commercial_leads",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "leadScore", "order": "DESCENDING" },
+        { "fieldPath": "emailsOpened", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "commercial_leads",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "enrichedWithUtilityData", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "commercial_leads",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "enrichedWithUtilityData", "order": "ASCENDING" },
+        { "fieldPath": "enrichedWithROI", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "campaign_emails",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "leadId", "order": "ASCENDING" },
+        { "fieldPath": "sentAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "campaign_emails",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "sequenceNumber", "order": "ASCENDING" },
+        { "fieldPath": "sentAt", "order": "DESCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}
