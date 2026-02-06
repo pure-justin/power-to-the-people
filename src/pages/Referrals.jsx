@@ -13,6 +13,7 @@ import {
   ExternalLink,
   Mail,
   MessageCircle,
+  BarChart3,
 } from "lucide-react";
 import { getCurrentUser, onAuthChange } from "../services/firebase";
 import {
@@ -22,6 +23,8 @@ import {
   generateReferralLink,
   getReferralLeaderboard,
 } from "../services/referralService";
+import ReferralDashboard from "../components/ReferralDashboard";
+import ReferralSocialShare from "../components/ReferralSocialShare";
 
 export default function Referrals() {
   const navigate = useNavigate();
