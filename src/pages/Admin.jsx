@@ -919,6 +919,11 @@ export default function Admin() {
             </div>
           )}
 
+          {/* Analytics Section */}
+          {showAnalytics && projects.length > 0 && (
+            <AdminAnalytics projects={projects} />
+          )}
+
           {/* Projects Section */}
           <div className="projects-section">
             <div className="projects-header">
