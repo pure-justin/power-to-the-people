@@ -1728,6 +1728,32 @@ export default function Qualify() {
         console.warn("No systemDesign to store!");
       }
 
+      // Track referral if provided
+      if (referralInfo && referralCode) {
+        try {
+          console.log("Tracking referral for:", referralCode);
+          await trackReferral(referralCode, {
+            email: formData.email,
+            name: `${formData.firstName} ${formData.lastName}`,
+            phone: formData.phone,
+            address: `${formData.street}, ${formData.city}, ${formData.state} ${formData.postalCode}`,
+            projectId: projectId,
+            qualificationData: {
+              isHomeowner: formData.isHomeowner,
+              creditScore: formData.creditScore,
+              energyCommunity: energyCommunityResult?.isEnergyCommunity,
+              annualUsageKwh: annualUsageKwh,
+            },
+          });
+          console.log("Referral tracked successfully");
+          // Store referral code for success page
+          sessionStorage.setItem("referralCode", referralCode);
+        } catch (refError) {
+          console.error("Error tracking referral:", refError);
+          // Don't block submission if referral tracking fails
+        }
+      }
+
       // Clear SMT credentials from memory (security)
       setSmtUsername("");
       setSmtPassword("");
