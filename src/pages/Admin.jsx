@@ -52,6 +52,8 @@ export default function Admin() {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [showAnalytics, setShowAnalytics] = useState(true);
 
   // Check authentication status
   useEffect(() => {
