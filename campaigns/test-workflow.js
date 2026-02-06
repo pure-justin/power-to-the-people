@@ -4,8 +4,9 @@
  * Quick test with 10 sample leads
  */
 
-const { initializeApp } = require("firebase-admin/app");
+const { initializeApp, cert } = require("firebase-admin/app");
 const { getFirestore } = require("firebase-admin/firestore");
+const path = require("path");
 const LoopNetScraper = require("./scrapers/loopnet-scraper");
 const UtilityRateService = require("./enrichment/utility-rates");
 const ROICalculator = require("./enrichment/roi-calculator");
@@ -16,13 +17,27 @@ async function testWorkflow() {
   console.log("\n🧪 Testing Campaign Workflow");
   console.log("============================\n");
 
-  // Initialize Firebase
+  // Initialize Firebase with service account
   try {
-    initializeApp();
+    const serviceAccountPath = path.join(
+      __dirname,
+      "../firebase-service-account.json",
+    );
+    initializeApp({
+      credential: cert(serviceAccountPath),
+    });
     console.log("✅ Firebase initialized\n");
   } catch (error) {
-    // Already initialized
-    console.log("✅ Firebase already initialized\n");
+    if (error.code === "app/duplicate-app") {
+      console.log("✅ Firebase already initialized\n");
+    } else {
+      console.error("❌ Firebase initialization failed:", error.message);
+      console.log("\n📝 Make sure firebase-service-account.json exists at:");
+      console.log(
+        "   /Users/admin/Projects/power-to-the-people/firebase-service-account.json\n",
+      );
+      process.exit(1);
+    }
   }
 
   const scraper = new LoopNetScraper();
