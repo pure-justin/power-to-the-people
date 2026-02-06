@@ -842,18 +842,104 @@ export default function Admin() {
             }}
           >
             <div>
-              <h1 className="admin-title">Dashboard</h1>
+              <h1 className="admin-title">Admin Dashboard</h1>
               <p className="admin-subtitle">
-                Manage customer projects and track performance
+                Manage customer projects, referrals, and track performance
               </p>
             </div>
+            {activeTab === "projects" && (
+              <button
+                className="action-btn"
+                onClick={() => setShowAnalytics(!showAnalytics)}
+                style={{ alignSelf: "flex-start" }}
+              >
+                <BarChart3 size={16} />
+                {showAnalytics ? "Hide" : "Show"} Analytics
+              </button>
+            )}
+          </div>
+
+          {/* Tab Navigation */}
+          <div
+            style={{
+              display: "flex",
+              gap: "16px",
+              borderBottom: "2px solid #e5e7eb",
+              marginBottom: "32px",
+              marginTop: "24px",
+            }}
+          >
             <button
-              className="action-btn"
-              onClick={() => setShowAnalytics(!showAnalytics)}
-              style={{ alignSelf: "flex-start" }}
+              onClick={() => setActiveTab("projects")}
+              style={{
+                padding: "12px 24px",
+                background: "none",
+                border: "none",
+                borderBottom:
+                  activeTab === "projects"
+                    ? "2px solid #10b981"
+                    : "2px solid transparent",
+                color: activeTab === "projects" ? "#10b981" : "#6b7280",
+                fontWeight: activeTab === "projects" ? 600 : 500,
+                cursor: "pointer",
+                fontSize: "0.95rem",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                marginBottom: "-2px",
+                transition: "all 0.2s",
+              }}
             >
-              <BarChart3 size={16} />
-              {showAnalytics ? "Hide" : "Show"} Analytics
+              <FileText size={18} />
+              Projects
+            </button>
+            <button
+              onClick={() => setActiveTab("analytics")}
+              style={{
+                padding: "12px 24px",
+                background: "none",
+                border: "none",
+                borderBottom:
+                  activeTab === "analytics"
+                    ? "2px solid #10b981"
+                    : "2px solid transparent",
+                color: activeTab === "analytics" ? "#10b981" : "#6b7280",
+                fontWeight: activeTab === "analytics" ? 600 : 500,
+                cursor: "pointer",
+                fontSize: "0.95rem",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                marginBottom: "-2px",
+                transition: "all 0.2s",
+              }}
+            >
+              <BarChart3 size={18} />
+              Analytics
+            </button>
+            <button
+              onClick={() => setActiveTab("referrals")}
+              style={{
+                padding: "12px 24px",
+                background: "none",
+                border: "none",
+                borderBottom:
+                  activeTab === "referrals"
+                    ? "2px solid #10b981"
+                    : "2px solid transparent",
+                color: activeTab === "referrals" ? "#10b981" : "#6b7280",
+                fontWeight: activeTab === "referrals" ? 600 : 500,
+                cursor: "pointer",
+                fontSize: "0.95rem",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                marginBottom: "-2px",
+                transition: "all 0.2s",
+              }}
+            >
+              <Gift size={18} />
+              Referrals
             </button>
           </div>
 
