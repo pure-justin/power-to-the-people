@@ -140,6 +140,16 @@ export default function Admin() {
     setTimeout(() => setIsRefreshing(false), 500);
   };
 
+  // Handle project click
+  const handleProjectClick = (project) => {
+    setSelectedProject(project);
+  };
+
+  // Handle modal update (refresh data after changes)
+  const handleModalUpdate = async () => {
+    await loadDashboardData();
+  };
+
   // Filter and search projects
   const filteredProjects = projects.filter((project) => {
     const matchesSearch =
