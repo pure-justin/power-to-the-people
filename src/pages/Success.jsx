@@ -2170,6 +2170,30 @@ export default function Success() {
               </div>
             </div>
           </div>
+          {/* Compare Installers CTA */}
+          <div className="compare-installers-cta">
+            <div className="compare-cta-content">
+              <div className="compare-cta-badge">
+                <Users size={14} />
+                Next Step
+              </div>
+              <h2 className="compare-cta-title">
+                Ready to Choose Your{" "}
+                <span className="gradient-text">Installer</span>?
+              </h2>
+              <p className="compare-cta-desc">
+                Compare top-rated solar installers side-by-side. See pricing,
+                warranties, customer reviews, and installation timelines for
+                your {currentSystemKw.toFixed(1)} kW system.
+              </p>
+              <Link to="/installers" className="compare-cta-button">
+                <Users size={20} />
+                Compare Installers
+                <ArrowRight size={20} />
+              </Link>
+            </div>
+          </div>
+
           {/* Why Solar + Battery Section */}
           <div className="why-section">
             <h2 className="why-title">
