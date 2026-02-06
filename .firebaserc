@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "agentic-labs"
-  }
+    "default": "pttp-solar-crm"
+  },
+  "targets": {},
+  "etags": {}
 }
