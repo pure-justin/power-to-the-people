@@ -348,7 +348,7 @@ export class CommercialSolarROI {
 
 // CLI Usage
 if (import.meta.url === `file://${process.argv[1]}`) {
-  import { readFile, writeFile } from "fs/promises";
+  const { readFile, writeFile } = await import("fs/promises");
 
   const calculator = new CommercialSolarROI();
 
