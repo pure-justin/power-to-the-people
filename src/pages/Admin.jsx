@@ -36,6 +36,7 @@ import ProjectDetailModal from "../components/ProjectDetailModal";
 import AdminAnalytics from "../components/AdminAnalytics";
 import ReferralAdminPanel from "../components/ReferralAdminPanel";
 import AvaActivityPanel from "../components/AvaActivityPanel";
+import SmsNotificationPanel from "../components/SmsNotificationPanel";
 
 export default function Admin() {
   const navigate = useNavigate();
