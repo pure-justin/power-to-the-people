@@ -363,12 +363,30 @@ export default function Referrals() {
 
         {/* Tabs */}
         <div className="border-b border-gray-800 mb-8">
-          <div className="flex items-center gap-8">
+          <div className="flex items-center gap-6 overflow-x-auto">
             <button
               onClick={() => setActiveTab("overview")}
               className={`tab-button ${activeTab === "overview" ? "active" : ""}`}
             >
               Overview
+            </button>
+            <button
+              onClick={() => setActiveTab("dashboard")}
+              className={`tab-button ${activeTab === "dashboard" ? "active" : ""}`}
+            >
+              <div className="flex items-center gap-2">
+                <BarChart3 size={18} />
+                Analytics
+              </div>
+            </button>
+            <button
+              onClick={() => setActiveTab("share")}
+              className={`tab-button ${activeTab === "share" ? "active" : ""}`}
+            >
+              <div className="flex items-center gap-2">
+                <Share2 size={18} />
+                Share
+              </div>
             </button>
             <button
               onClick={() => setActiveTab("referrals")}
