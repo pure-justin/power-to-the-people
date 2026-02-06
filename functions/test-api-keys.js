@@ -50,7 +50,7 @@ async function testApiKeyManagement() {
         requestsThisHour: 0,
         requestsThisDay: 0,
         requestsThisMonth: 0,
-        lastResetAt: admin.firestore.Timestamp.now(),
+        lastResetAt: new Date(),
       },
       createdAt: admin.firestore.Timestamp.now(),
       updatedAt: admin.firestore.Timestamp.now(),
