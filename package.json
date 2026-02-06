@@ -12,6 +12,7 @@
   "dependencies": {
     "@google/generative-ai": "^0.24.0",
     "cesium": "^1.137.0",
+    "dotenv": "^17.2.4",
     "firebase": "^12.8.0",
     "geotiff": "^2.1.4-beta.1",
     "lucide-react": "^0.562.0",

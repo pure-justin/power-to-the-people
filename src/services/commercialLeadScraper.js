@@ -3,7 +3,11 @@
  * Scrapes commercial properties in Nevada using Google Places API
  */
 
-const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+// Support both Vite (import.meta.env) and Node.js (process.env)
+const GOOGLE_MAPS_API_KEY =
+  typeof import.meta !== "undefined" && import.meta.env
+    ? import.meta.env.VITE_GOOGLE_MAPS_API_KEY
+    : process.env.VITE_GOOGLE_MAPS_API_KEY;
 
 // Nevada major cities and regions to search
 const NEVADA_LOCATIONS = [
