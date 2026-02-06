@@ -1222,6 +1222,340 @@ useEffect(() => {
         </div>
       ),
     },
+
+    rateLimiting: {
+      title: "Rate Limits & Best Practices",
+      icon: AlertCircle,
+      content: (
+        <div className="doc-section">
+          <h1>Rate Limiting & Best Practices</h1>
+
+          <h2>API Rate Limits</h2>
+          <div className="info-cards">
+            <div className="info-card">
+              <div className="info-card-icon">
+                <Zap />
+              </div>
+              <h3>Google Solar API</h3>
+              <p>
+                <strong>Rate:</strong> 1,000 requests/day (free tier)
+                <br />
+                <strong>Quota:</strong> Check Google Cloud Console for current
+                usage
+              </p>
+            </div>
+
+            <div className="info-card">
+              <div className="info-card-icon">
+                <Server />
+              </div>
+              <h3>Gemini API (Bill Scanning)</h3>
+              <p>
+                <strong>Rate:</strong> 60 requests/minute
+                <br />
+                <strong>Size:</strong> Max 10MB per image/PDF
+              </p>
+            </div>
+
+            <div className="info-card">
+              <div className="info-card-icon">
+                <Database />
+              </div>
+              <h3>Firebase Firestore</h3>
+              <p>
+                <strong>Reads:</strong> 50,000/day (free tier)
+                <br />
+                <strong>Writes:</strong> 20,000/day (free tier)
+              </p>
+            </div>
+          </div>
+
+          <h2>Best Practices</h2>
+
+          <h3>1. Cache Building Insights</h3>
+          <CodeBlock
+            language="javascript"
+            code={`// Cache building insights to avoid repeated API calls
+const cachedInsights = new Map();
+
+const getBuildingInsightsCached = async (lat, lng) => {
+  const key = \`\${lat.toFixed(4)},\${lng.toFixed(4)}\`;
+
+  if (cachedInsights.has(key)) {
+    console.log('Using cached insights');
+    return cachedInsights.get(key);
+  }
+
+  const insights = await getBuildingInsights(lat, lng);
+  cachedInsights.set(key, insights);
+  return insights;
+};`}
+            onCopy={(code) => copyToClipboard(code, "cache-insights")}
+            copied={copiedCode === "cache-insights"}
+          />
+
+          <h3>2. Debounce User Input</h3>
+          <CodeBlock
+            language="javascript"
+            code={`// Debounce address autocomplete to reduce API calls
+import { useState, useEffect } from 'react';
+
+const useDebounce = (value, delay) => {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => clearTimeout(handler);
+  }, [value, delay]);
+
+  return debouncedValue;
+};
+
+// Usage in component
+const [searchTerm, setSearchTerm] = useState('');
+const debouncedSearch = useDebounce(searchTerm, 500);
+
+useEffect(() => {
+  if (debouncedSearch.length > 3) {
+    // Trigger autocomplete search
+    fetchPlacePredictions(debouncedSearch);
+  }
+}, [debouncedSearch]);`}
+            onCopy={(code) => copyToClipboard(code, "debounce")}
+            copied={copiedCode === "debounce"}
+          />
+
+          <h3>3. Error Handling with Retry</h3>
+          <CodeBlock
+            language="javascript"
+            code={`// Retry failed API calls with exponential backoff
+const retryWithBackoff = async (fn, maxRetries = 3, delay = 1000) => {
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      return await fn();
+    } catch (error) {
+      if (i === maxRetries - 1) throw error;
+
+      // Exponential backoff: 1s, 2s, 4s
+      const waitTime = delay * Math.pow(2, i);
+      console.log(\`Retry \${i + 1}/\${maxRetries} after \${waitTime}ms\`);
+      await new Promise(resolve => setTimeout(resolve, waitTime));
+    }
+  }
+};
+
+// Usage
+const insights = await retryWithBackoff(() =>
+  getBuildingInsights(lat, lng)
+);`}
+            onCopy={(code) => copyToClipboard(code, "retry")}
+            copied={copiedCode === "retry"}
+          />
+
+          <h3>4. Batch Firestore Operations</h3>
+          <CodeBlock
+            language="javascript"
+            code={`import { writeBatch } from 'firebase/firestore';
+
+// Batch write multiple documents (more efficient)
+const batchCreateLeads = async (leadsData) => {
+  const batch = writeBatch(db);
+
+  leadsData.forEach(leadData => {
+    const docRef = doc(collection(db, 'leads'));
+    batch.set(docRef, {
+      ...leadData,
+      createdAt: new Date(),
+      status: 'pending'
+    });
+  });
+
+  await batch.commit();
+  console.log(\`Created \${leadsData.length} leads in one batch\`);
+};`}
+            onCopy={(code) => copyToClipboard(code, "batch-writes")}
+            copied={copiedCode === "batch-writes"}
+          />
+
+          <h3>5. Optimize GeoTIFF Loading</h3>
+          <CodeBlock
+            language="javascript"
+            code={`// Only fetch imagery when needed for visualization
+const [showVisualization, setShowVisualization] = useState(false);
+const [imagery, setImagery] = useState(null);
+
+const loadImagery = async () => {
+  if (!imagery && showVisualization) {
+    const dataLayers = await getDataLayers(lat, lng);
+    const rgbImagery = await fetchRgbImagery(dataLayers.rgbUrl);
+    setImagery(rgbImagery);
+  }
+};
+
+// Only load when user clicks "View Roof"
+<button onClick={() => {
+  setShowVisualization(true);
+  loadImagery();
+}}>
+  View 3D Roof Visualization
+</button>`}
+            onCopy={(code) => copyToClipboard(code, "optimize-geotiff")}
+            copied={copiedCode === "optimize-geotiff"}
+          />
+
+          <h2>Security Best Practices</h2>
+          <ul>
+            <li>
+              <strong>Never expose API keys in client code:</strong> Use
+              environment variables and server-side proxies
+            </li>
+            <li>
+              <strong>Validate all inputs:</strong> Sanitize coordinates,
+              addresses, and user data before API calls
+            </li>
+            <li>
+              <strong>Use Firebase Security Rules:</strong> Restrict Firestore
+              reads/writes based on authentication
+            </li>
+            <li>
+              <strong>Implement CORS policies:</strong> Only allow requests from
+              your domain
+            </li>
+            <li>
+              <strong>Monitor API usage:</strong> Set up alerts for unusual
+              activity in Google Cloud Console
+            </li>
+          </ul>
+        </div>
+      ),
+    },
+
+    errorHandling: {
+      title: "Error Handling",
+      icon: AlertCircle,
+      content: (
+        <div className="doc-section">
+          <h1>Error Handling Guide</h1>
+
+          <h2>Common Error Types</h2>
+
+          <h3>Solar API Errors</h3>
+          <CodeBlock
+            language="javascript"
+            code={`try {
+  const insights = await getBuildingInsights(lat, lng);
+} catch (error) {
+  if (error.message.includes('not available for this location')) {
+    // No solar data coverage for this property
+    alert('Solar data not available for this address. Try a nearby location.');
+  } else if (error.message.includes('Invalid location')) {
+    // Invalid coordinates
+    alert('Invalid coordinates. Please check the address.');
+  } else if (error.message.includes('quota')) {
+    // API quota exceeded
+    alert('Service temporarily unavailable. Please try again later.');
+  } else {
+    // Generic error
+    console.error('Solar API error:', error);
+    alert('Unable to fetch solar data. Please try again.');
+  }
+}`}
+            onCopy={(code) => copyToClipboard(code, "solar-errors")}
+            copied={copiedCode === "solar-errors"}
+          />
+
+          <h3>Firebase Errors</h3>
+          <CodeBlock
+            language="javascript"
+            code={`import { FirebaseError } from 'firebase/app';
+
+try {
+  await addDoc(collection(db, 'leads'), leadData);
+} catch (error) {
+  if (error instanceof FirebaseError) {
+    switch (error.code) {
+      case 'permission-denied':
+        console.error('Insufficient permissions');
+        break;
+      case 'unavailable':
+        console.error('Firebase temporarily unavailable');
+        break;
+      case 'unauthenticated':
+        console.error('User not authenticated');
+        break;
+      default:
+        console.error('Firebase error:', error.code, error.message);
+    }
+  }
+}`}
+            onCopy={(code) => copyToClipboard(code, "firebase-errors")}
+            copied={copiedCode === "firebase-errors"}
+          />
+
+          <h3>Geolocation Errors</h3>
+          <CodeBlock
+            language="javascript"
+            code={`try {
+  const location = await getCurrentLocation();
+} catch (error) {
+  if (error.message.includes('denied')) {
+    // User denied location permission
+    setShowAddressInput(true);
+    alert('Location access denied. Please enter your address manually.');
+  } else if (error.message.includes('unavailable')) {
+    // Location unavailable (GPS off, etc.)
+    setShowAddressInput(true);
+    alert('Location unavailable. Please enter your address.');
+  } else if (error.message.includes('timeout')) {
+    // Location request timed out
+    setShowAddressInput(true);
+    alert('Location request timed out. Please enter your address.');
+  }
+}`}
+            onCopy={(code) => copyToClipboard(code, "geolocation-errors")}
+            copied={copiedCode === "geolocation-errors"}
+          />
+
+          <h2>Graceful Degradation</h2>
+          <CodeBlock
+            language="javascript"
+            code={`// Provide fallback data when API fails
+const designSystemWithFallback = async (lat, lng, annualUsage) => {
+  try {
+    return await designSolarSystem(lat, lng, annualUsage);
+  } catch (error) {
+    console.error('Failed to fetch solar data, using estimates:', error);
+
+    // Return estimated system based on usage only
+    const panelCount = Math.ceil(annualUsage / 500); // Rough estimate
+    return {
+      panels: {
+        count: panelCount,
+        wattage: 410,
+        systemSizeKw: (panelCount * 410) / 1000
+      },
+      production: {
+        annualKwh: annualUsage,
+        monthlyKwh: Math.round(annualUsage / 12)
+      },
+      batteries: {
+        brand: "Duracell PowerCenter Hybrid",
+        totalCapacityKwh: 60
+      },
+      isEstimate: true,
+      estimateReason: error.message
+    };
+  }
+};`}
+            onCopy={(code) => copyToClipboard(code, "fallback")}
+            copied={copiedCode === "fallback"}
+          />
+        </div>
+      ),
+    },
   };
 
   const filteredSections = Object.entries(sections).filter(([key, section]) => {
