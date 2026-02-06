@@ -22,10 +22,7 @@ const TARGET_PROPERTY_TYPES = [
 
 class LoopNetScraper {
   constructor() {
-    // Initialize Firebase if not already initialized
-    if (!initializeApp.length) {
-      initializeApp();
-    }
+    // Get Firestore instance (assumes Firebase is already initialized)
     this.db = getFirestore();
   }
 
