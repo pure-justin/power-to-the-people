@@ -945,6 +945,30 @@ export default function Admin() {
               Referrals
             </button>
             <button
+              onClick={() => setActiveTab("sms")}
+              style={{
+                padding: "12px 24px",
+                background: "none",
+                border: "none",
+                borderBottom:
+                  activeTab === "sms"
+                    ? "2px solid #10b981"
+                    : "2px solid transparent",
+                color: activeTab === "sms" ? "#10b981" : "#6b7280",
+                fontWeight: activeTab === "sms" ? 600 : 500,
+                cursor: "pointer",
+                fontSize: "0.95rem",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                marginBottom: "-2px",
+                transition: "all 0.2s",
+              }}
+            >
+              <Phone size={18} />
+              SMS
+            </button>
+            <button
               onClick={() => setActiveTab("ava")}
               style={{
                 padding: "12px 24px",
@@ -972,6 +996,9 @@ export default function Admin() {
 
           {/* Referrals Tab */}
           {activeTab === "referrals" && <ReferralAdminPanel />}
+
+          {/* SMS Notifications Tab */}
+          {activeTab === "sms" && <SmsNotificationPanel />}
 
           {/* Ava AI Tab */}
           {activeTab === "ava" && <AvaActivityPanel />}
