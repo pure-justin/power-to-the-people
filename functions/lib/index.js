@@ -38,7 +38,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.leadWebhook = exports.recalculateLeadScores = exports.assignLead = exports.addLeadNote = exports.updateLead = exports.createLead = exports.smtWebhook = exports.fetchSmtUsage = void 0;
+exports.validateApiKeyFromRequest = exports.cleanupApiKeys = exports.getApiKeyUsage = exports.updateApiKey = exports.rotateApiKey = exports.revokeApiKey = exports.validateApiKey = exports.createApiKey = exports.leadWebhook = exports.recalculateLeadScores = exports.assignLead = exports.addLeadNote = exports.updateLead = exports.createLead = exports.smtWebhook = exports.fetchSmtUsage = void 0;
 const admin = __importStar(require("firebase-admin"));
 // Initialize Firebase Admin SDK
 admin.initializeApp();
@@ -54,4 +54,14 @@ Object.defineProperty(exports, "addLeadNote", { enumerable: true, get: function 
 Object.defineProperty(exports, "assignLead", { enumerable: true, get: function () { return leads_1.assignLead; } });
 Object.defineProperty(exports, "recalculateLeadScores", { enumerable: true, get: function () { return leads_1.recalculateLeadScores; } });
 Object.defineProperty(exports, "leadWebhook", { enumerable: true, get: function () { return leads_1.leadWebhook; } });
+// Export API Key Management functions
+var apiKeys_1 = require("./apiKeys");
+Object.defineProperty(exports, "createApiKey", { enumerable: true, get: function () { return apiKeys_1.createApiKey; } });
+Object.defineProperty(exports, "validateApiKey", { enumerable: true, get: function () { return apiKeys_1.validateApiKey; } });
+Object.defineProperty(exports, "revokeApiKey", { enumerable: true, get: function () { return apiKeys_1.revokeApiKey; } });
+Object.defineProperty(exports, "rotateApiKey", { enumerable: true, get: function () { return apiKeys_1.rotateApiKey; } });
+Object.defineProperty(exports, "updateApiKey", { enumerable: true, get: function () { return apiKeys_1.updateApiKey; } });
+Object.defineProperty(exports, "getApiKeyUsage", { enumerable: true, get: function () { return apiKeys_1.getApiKeyUsage; } });
+Object.defineProperty(exports, "cleanupApiKeys", { enumerable: true, get: function () { return apiKeys_1.cleanupApiKeys; } });
+Object.defineProperty(exports, "validateApiKeyFromRequest", { enumerable: true, get: function () { return apiKeys_1.validateApiKeyFromRequest; } });
 //# sourceMappingURL=index.js.map

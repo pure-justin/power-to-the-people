@@ -21,3 +21,15 @@ export {
   recalculateLeadScores,
   leadWebhook,
 } from "./leads";
+
+// Export API Key Management functions
+export {
+  createApiKey,
+  validateApiKey,
+  revokeApiKey,
+  rotateApiKey,
+  updateApiKey,
+  getApiKeyUsage,
+  cleanupApiKeys,
+  validateApiKeyFromRequest,
+} from "./apiKeys";
