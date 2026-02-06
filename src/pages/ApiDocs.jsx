@@ -14,6 +14,7 @@ import {
   Play,
   AlertCircle,
 } from "lucide-react";
+import ApiPlayground from "../components/ApiPlayground";
 import "../styles/ApiDocs.css";
 
 const ApiDocs = () => {
