@@ -1,0 +1,69 @@
+# SMS Integration - Deployment Commands
+# Copy and paste these commands to deploy
+
+# ============================================
+# STEP 1: Set Firebase Functions Config
+# ============================================
+
+cd /Users/admin/Projects/power-to-the-people/functions
+
+# Set Twilio credentials (get from .env file)
+firebase functions:config:set twilio.account_sid="$(grep TWILIO_ACCOUNT_SID .env | cut -d '=' -f2 | tr -d '"')"
+firebase functions:config:set twilio.auth_token="$(grep TWILIO_AUTH_TOKEN .env | cut -d '=' -f2 | tr -d '"')"
+firebase functions:config:set twilio.phone_number="$(grep TWILIO_PHONE_NUMBER .env | cut -d '=' -f2 | tr -d '"')"
+
+# Set admin phone for notifications (REPLACE WITH YOUR PHONE)
+firebase functions:config:set admin.phone="+15551234567"
+
+# Verify config
+firebase functions:config:get
+
+# ============================================
+# STEP 2: Deploy Functions
+# ============================================
+
+# Build TypeScript (already done, but run again if needed)
+npm run build
+
+# Deploy to Firebase
+firebase deploy --only functions
+
+# OR use the deployment script
+cd /Users/admin/Projects/power-to-the-people
+./DEPLOY_SMS.sh
+
+# ============================================
+# STEP 3: Configure Twilio Webhook (Optional)
+# ============================================
+
+# Go to: https://console.twilio.com/us1/develop/phone-numbers/manage/incoming
+# Click on phone number: +1 (855) 661-4194
+# Set Status Callback URL to:
+# https://us-central1-power-to-the-people-vpp.cloudfunctions.net/twilioStatusCallback
+
+# ============================================
+# STEP 4: Test Integration
+# ============================================
+
+# Open admin panel
+# https://power-to-the-people-vpp.web.app/admin
+
+# Login with:
+# Email: justin@agntc.tech
+# Password: Solar2026!
+
+# Go to SMS tab and send a test message to your phone
+
+# ============================================
+# STEP 5: Monitor
+# ============================================
+
+# View function logs
+firebase functions:log --only smsOnProjectCreated
+
+# Check Firestore logs
+# Firebase Console → Firestore → smsLog collection
+
+# View Twilio console
+# https://console.twilio.com
+
