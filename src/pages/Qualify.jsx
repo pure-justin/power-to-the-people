@@ -3689,6 +3689,52 @@ export default function Qualify() {
                 />
               </div>
 
+              {!referralInfo && (
+                <div className="q-form-group" style={{ marginTop: 16 }}>
+                  <label className="q-label">Referral Code (optional)</label>
+                  <div style={{ position: "relative" }}>
+                    <input
+                      type="text"
+                      className="q-input"
+                      placeholder="JOHN123456"
+                      value={referralCode}
+                      onChange={(e) => {
+                        const code = e.target.value.toUpperCase();
+                        setReferralCode(code);
+                        if (code.length >= 6) {
+                          validateReferral(code);
+                        }
+                      }}
+                      style={{ textTransform: "uppercase" }}
+                    />
+                    {validatingReferral && (
+                      <Loader2
+                        size={18}
+                        className="q-spinner"
+                        style={{
+                          position: "absolute",
+                          right: 12,
+                          top: "50%",
+                          transform: "translateY(-50%)",
+                        }}
+                      />
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {referralInfo && (
+                <div
+                  className="q-success-notice"
+                  style={{ marginTop: 16, marginBottom: 16 }}
+                >
+                  <CheckCircle size={18} />
+                  <span>
+                    Referred by {referralInfo.displayName || referralInfo.email}
+                  </span>
+                </div>
+              )}
+
               <button
                 className="q-btn"
                 onClick={handleSubmit}
