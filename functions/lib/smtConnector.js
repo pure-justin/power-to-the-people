@@ -49,7 +49,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.smtWebhook = exports.fetchSmtUsage = void 0;
-const functions = __importStar(require("firebase-functions"));
+const functions = __importStar(require("firebase-functions/v1"));
 const admin = __importStar(require("firebase-admin"));
 const puppeteer_core_1 = __importDefault(require("puppeteer-core"));
 // Browserless.io endpoint (or self-hosted)

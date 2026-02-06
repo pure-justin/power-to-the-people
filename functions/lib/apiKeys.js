@@ -41,7 +41,7 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.cleanupApiKeys = exports.getApiKeyUsage = exports.updateApiKey = exports.rotateApiKey = exports.revokeApiKey = exports.validateApiKey = exports.createApiKey = exports.ApiKeyScope = exports.ApiKeyStatus = void 0;
 exports.validateApiKeyFromRequest = validateApiKeyFromRequest;
-const functions = __importStar(require("firebase-functions"));
+const functions = __importStar(require("firebase-functions/v1"));
 const admin = __importStar(require("firebase-admin"));
 const crypto = __importStar(require("crypto"));
 /**
