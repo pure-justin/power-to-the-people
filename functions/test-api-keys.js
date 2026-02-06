@@ -28,7 +28,7 @@ async function testApiKeyManagement() {
     const mockUserId = "test-user-123";
 
     const mockApiKey = {
-      id: apiKeysRef.doc().id,
+      id: "mock-api-key-123",
       key: "hashed_key_would_go_here",
       keyPrefix: "pk_test_abc123...",
       name: "Test Development Key",
