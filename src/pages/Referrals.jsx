@@ -404,6 +404,15 @@ export default function Referrals() {
         </div>
 
         {/* Tab Content */}
+        {activeTab === "dashboard" && <ReferralDashboard userId={user.uid} />}
+
+        {activeTab === "share" && (
+          <ReferralSocialShare
+            referralCode={referralData.referralCode}
+            userName={user.displayName || user.email}
+          />
+        )}
+
         {activeTab === "overview" && (
           <div className="space-y-8">
             {/* Earning Breakdown */}
