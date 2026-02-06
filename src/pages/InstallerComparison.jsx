@@ -21,6 +21,14 @@ import {
   Battery,
   Sun,
   AlertCircle,
+  Filter,
+  Download,
+  Share2,
+  MapPin,
+  Briefcase,
+  BarChart3,
+  Grid,
+  List,
 } from "lucide-react";
 import {
   getAllInstallers,
@@ -28,6 +36,7 @@ import {
   getInstallerScore,
   getRecommendedInstallers,
 } from "../services/installerService";
+import { searchInstallers } from "../services/installerApi";
 
 export default function InstallerComparison() {
   const [selectedInstallers, setSelectedInstallers] = useState([
@@ -40,6 +49,23 @@ export default function InstallerComparison() {
   const [expandedCards, setExpandedCards] = useState({});
   const [sortBy, setSortBy] = useState("score");
   const [filterPriority, setFilterPriority] = useState("balanced");
+  const [viewMode, setViewMode] = useState("grid"); // 'grid' or 'table'
+  const [showFilters, setShowFilters] = useState(false);
+
+  // Advanced filters
+  const [filters, setFilters] = useState({
+    minRating: 0,
+    maxPrice: 3.5,
+    minYearsInBusiness: 0,
+    certifications: [],
+    serviceArea: "All",
+    batteryOptions: [],
+    financingOptions: [],
+  });
+
+  // Real installer data from Firestore
+  const [realInstallers, setRealInstallers] = useState([]);
+  const [loadingReal, setLoadingReal] = useState(false);
 
   const allInstallers = getAllInstallers();
 
@@ -47,6 +73,29 @@ export default function InstallerComparison() {
     const data = compareInstallers(selectedInstallers, systemSize);
     setComparisonData(data);
   }, [selectedInstallers, systemSize]);
+
+  // Load real installer data
+  useEffect(() => {
+    loadRealInstallers();
+  }, []);
+
+  const loadRealInstallers = async () => {
+    setLoadingReal(true);
+    try {
+      const result = await searchInstallers({
+        state: "TX",
+        minRating: 4.0,
+        maxResults: 20,
+        sortBy: "rating",
+      });
+      if (result.success) {
+        setRealInstallers(result.installers);
+      }
+    } catch (error) {
+      console.error("Error loading real installers:", error);
+    }
+    setLoadingReal(false);
+  };
 
   const toggleInstallerSelection = (installerId) => {
     if (selectedInstallers.includes(installerId)) {
@@ -56,7 +105,7 @@ export default function InstallerComparison() {
         );
       }
     } else {
-      if (selectedInstallers.length < 4) {
+      if (selectedInstallers.length < 6) {
         setSelectedInstallers([...selectedInstallers, installerId]);
       }
     }
@@ -70,7 +119,22 @@ export default function InstallerComparison() {
   };
 
   const getSortedData = () => {
-    const data = [...comparisonData];
+    let data = [...comparisonData];
+
+    // Apply filters
+    data = data.filter((installer) => {
+      if (installer.rating < filters.minRating) return false;
+      if (installer.pricePerWatt > filters.maxPrice) return false;
+      if (installer.yearsInBusiness < filters.minYearsInBusiness) return false;
+      if (
+        filters.serviceArea !== "All" &&
+        !installer.serviceAreas.includes(filters.serviceArea)
+      )
+        return false;
+      return true;
+    });
+
+    // Sort
     switch (sortBy) {
       case "price":
         return data.sort((a, b) => a.pricing.netCost - b.pricing.netCost);
@@ -86,6 +150,8 @@ export default function InstallerComparison() {
           const bWeeks = parseInt(b.installationTime.split("-")[0]);
           return aWeeks - bWeeks;
         });
+      case "experience":
+        return data.sort((a, b) => b.installsCompleted - a.installsCompleted);
       case "score":
       default:
         return data.sort((a, b) => {
@@ -100,6 +166,92 @@ export default function InstallerComparison() {
     priority: filterPriority,
     location: "Texas",
   });
+
+  const exportComparison = () => {
+    const data = getSortedData();
+    const csv = [
+      [
+        "Installer",
+        "Rating",
+        "Price/Watt",
+        "Net Cost",
+        "Installation Time",
+        "Experience",
+        "Satisfaction",
+      ],
+      ...data.map((inst) => [
+        inst.name,
+        inst.rating,
+        inst.pricePerWatt,
+        inst.pricing.netCost,
+        inst.installationTime,
+        `${inst.yearsInBusiness} years`,
+        `${inst.customerSatisfaction}%`,
+      ]),
+    ]
+      .map((row) => row.join(","))
+      .join("\n");
+
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `installer-comparison-${new Date().toISOString().split("T")[0]}.csv`;
+    a.click();
+  };
+
+  const shareComparison = async () => {
+    const url = window.location.href;
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: "Solar Installer Comparison",
+          text: `Compare ${selectedInstallers.length} solar installers for a ${systemSize}kW system`,
+          url: url,
+        });
+      } catch (err) {
+        console.log("Share failed:", err);
+      }
+    } else {
+      navigator.clipboard.writeText(url);
+      alert("Link copied to clipboard!");
+    }
+  };
+
+  const getComparisonInsights = () => {
+    const data = getSortedData();
+    if (data.length === 0) return null;
+
+    const avgPrice =
+      data.reduce((sum, inst) => sum + inst.pricing.netCost, 0) / data.length;
+    const avgRating =
+      data.reduce((sum, inst) => sum + inst.rating, 0) / data.length;
+    const avgSatisfaction =
+      data.reduce((sum, inst) => sum + inst.customerSatisfaction, 0) /
+      data.length;
+    const cheapest = data.reduce(
+      (min, inst) => (inst.pricing.netCost < min.pricing.netCost ? inst : min),
+      data[0],
+    );
+    const fastest = data.reduce((min, inst) => {
+      const aWeeks = parseInt(inst.installationTime.split("-")[0]);
+      const bWeeks = parseInt(min.installationTime.split("-")[0]);
+      return aWeeks < bWeeks ? inst : min;
+    }, data[0]);
+
+    return {
+      avgPrice: Math.round(avgPrice),
+      avgRating: avgRating.toFixed(1),
+      avgSatisfaction: Math.round(avgSatisfaction),
+      cheapest,
+      fastest,
+      priceDiff: Math.round(
+        data[data.length - 1].pricing.netCost - cheapest.pricing.netCost,
+      ),
+    };
+  };
+
+  const insights = getComparisonInsights();
 
   return (
     <div className="installer-comparison-page">
@@ -180,6 +332,33 @@ export default function InstallerComparison() {
           box-shadow: 0 0 20px rgba(0, 212, 170, 0.4);
         }
 
+        .header-actions {
+          display: flex;
+          gap: 12px;
+          align-items: center;
+        }
+
+        .action-btn {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 10px 16px;
+          background: rgba(255, 255, 255, 0.05);
+          border: 1px solid rgba(255, 255, 255, 0.15);
+          border-radius: 10px;
+          color: #fff;
+          text-decoration: none;
+          font-size: 0.9rem;
+          font-weight: 600;
+          transition: all 0.2s;
+          cursor: pointer;
+        }
+
+        .action-btn:hover {
+          background: rgba(255, 255, 255, 0.08);
+          border-color: rgba(0, 212, 170, 0.5);
+        }
+
         .back-btn {
           display: flex;
           align-items: center;
@@ -225,6 +404,61 @@ export default function InstallerComparison() {
           margin: 0;
         }
 
+        /* Insights Section */
+        .insights-section {
+          background: linear-gradient(135deg, rgba(0, 212, 170, 0.1), rgba(0, 100, 80, 0.05));
+          border: 1px solid rgba(0, 212, 170, 0.2);
+          border-radius: 16px;
+          padding: 24px;
+          margin-bottom: 32px;
+        }
+
+        .insights-header {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          margin-bottom: 20px;
+        }
+
+        .insights-header h2 {
+          color: #fff;
+          font-size: 1.2rem;
+          font-weight: 800;
+          margin: 0;
+        }
+
+        .insights-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 16px;
+        }
+
+        .insight-card {
+          background: rgba(0, 0, 0, 0.3);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 12px;
+          padding: 16px;
+        }
+
+        .insight-label {
+          font-size: 0.75rem;
+          color: rgba(255, 255, 255, 0.6);
+          text-transform: uppercase;
+          margin-bottom: 8px;
+        }
+
+        .insight-value {
+          font-size: 1.5rem;
+          font-weight: 800;
+          color: #00FFD4;
+        }
+
+        .insight-detail {
+          font-size: 0.85rem;
+          color: rgba(255, 255, 255, 0.7);
+          margin-top: 4px;
+        }
+
         /* Controls Section */
         .controls-section {
           background: rgba(255, 255, 255, 0.03);
@@ -232,6 +466,43 @@ export default function InstallerComparison() {
           border-radius: 16px;
           padding: 24px;
           margin-bottom: 32px;
+        }
+
+        .controls-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 20px;
+        }
+
+        .controls-header h3 {
+          color: #fff;
+          font-size: 1.1rem;
+          font-weight: 700;
+          margin: 0;
+        }
+
+        .view-toggle {
+          display: flex;
+          gap: 8px;
+          background: rgba(0, 0, 0, 0.3);
+          padding: 4px;
+          border-radius: 8px;
+        }
+
+        .view-btn {
+          padding: 8px 12px;
+          background: transparent;
+          border: none;
+          color: rgba(255, 255, 255, 0.6);
+          border-radius: 6px;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+
+        .view-btn.active {
+          background: rgba(0, 212, 170, 0.2);
+          color: #00FFD4;
         }
 
         .controls-grid {
@@ -282,6 +553,38 @@ export default function InstallerComparison() {
 
         .control-select:focus {
           border-color: #00FFD4;
+        }
+
+        /* Advanced Filters */
+        .advanced-filters {
+          margin-top: 20px;
+          padding-top: 20px;
+          border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .filter-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 16px;
+        }
+
+        .filter-header h4 {
+          color: #fff;
+          font-size: 0.95rem;
+          font-weight: 700;
+          margin: 0;
+        }
+
+        .filter-toggle {
+          padding: 6px 12px;
+          background: rgba(0, 212, 170, 0.1);
+          border: 1px solid rgba(0, 212, 170, 0.3);
+          border-radius: 6px;
+          color: #00FFD4;
+          font-size: 0.85rem;
+          font-weight: 600;
+          cursor: pointer;
         }
 
         /* Recommended Section */
@@ -808,6 +1111,41 @@ export default function InstallerComparison() {
           text-decoration: underline;
         }
 
+        /* Table View */
+        .comparison-table {
+          background: rgba(255, 255, 255, 0.03);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          border-radius: 16px;
+          overflow: hidden;
+          overflow-x: auto;
+        }
+
+        .comparison-table table {
+          width: 100%;
+          border-collapse: collapse;
+        }
+
+        .comparison-table th {
+          background: rgba(0, 0, 0, 0.3);
+          padding: 16px;
+          text-align: left;
+          color: #00FFD4;
+          font-weight: 700;
+          font-size: 0.85rem;
+          text-transform: uppercase;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .comparison-table td {
+          padding: 16px;
+          color: #fff;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .comparison-table tr:hover {
+          background: rgba(0, 212, 170, 0.05);
+        }
+
         @media (max-width: 768px) {
           .comparison-grid {
             grid-template-columns: 1fr;
@@ -815,6 +1153,14 @@ export default function InstallerComparison() {
 
           .pros-cons-section {
             grid-template-columns: 1fr;
+          }
+
+          .insights-grid {
+            grid-template-columns: 1fr;
+          }
+
+          .header-actions {
+            flex-wrap: wrap;
           }
         }
       `}</style>
@@ -831,10 +1177,20 @@ export default function InstallerComparison() {
             </div>
             Power to the People
           </Link>
-          <Link to="/success" className="back-btn">
-            <ArrowLeft size={16} />
-            Back
-          </Link>
+          <div className="header-actions">
+            <button className="action-btn" onClick={exportComparison}>
+              <Download size={16} />
+              Export
+            </button>
+            <button className="action-btn" onClick={shareComparison}>
+              <Share2 size={16} />
+              Share
+            </button>
+            <Link to="/success" className="back-btn">
+              <ArrowLeft size={16} />
+              Back
+            </Link>
+          </div>
         </div>
 
         {/* Title */}
@@ -848,8 +1204,74 @@ export default function InstallerComparison() {
           </p>
         </div>
 
+        {/* Insights */}
+        {insights && (
+          <div className="insights-section">
+            <div className="insights-header">
+              <BarChart3 size={24} color="#00FFD4" />
+              <h2>Comparison Insights</h2>
+            </div>
+            <div className="insights-grid">
+              <div className="insight-card">
+                <div className="insight-label">Average Price</div>
+                <div className="insight-value">
+                  ${insights.avgPrice.toLocaleString()}
+                </div>
+                <div className="insight-detail">After tax credits</div>
+              </div>
+              <div className="insight-card">
+                <div className="insight-label">Average Rating</div>
+                <div className="insight-value">{insights.avgRating} ⭐</div>
+                <div className="insight-detail">
+                  {insights.avgSatisfaction}% satisfaction
+                </div>
+              </div>
+              <div className="insight-card">
+                <div className="insight-label">Best Value</div>
+                <div className="insight-value">{insights.cheapest.name}</div>
+                <div className="insight-detail">
+                  ${insights.cheapest.pricing.netCost.toLocaleString()}
+                </div>
+              </div>
+              <div className="insight-card">
+                <div className="insight-label">Fastest Install</div>
+                <div className="insight-value">{insights.fastest.name}</div>
+                <div className="insight-detail">
+                  {insights.fastest.installationTime}
+                </div>
+              </div>
+              <div className="insight-card">
+                <div className="insight-label">Price Range</div>
+                <div className="insight-value">
+                  ${insights.priceDiff.toLocaleString()}
+                </div>
+                <div className="insight-detail">
+                  Difference between highest & lowest
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Controls */}
         <div className="controls-section">
+          <div className="controls-header">
+            <h3>Comparison Settings</h3>
+            <div className="view-toggle">
+              <button
+                className={`view-btn ${viewMode === "grid" ? "active" : ""}`}
+                onClick={() => setViewMode("grid")}
+              >
+                <Grid size={16} />
+              </button>
+              <button
+                className={`view-btn ${viewMode === "table" ? "active" : ""}`}
+                onClick={() => setViewMode("table")}
+              >
+                <List size={16} />
+              </button>
+            </div>
+          </div>
           <div className="controls-grid">
             <div className="control-group">
               <label className="control-label">
@@ -883,6 +1305,7 @@ export default function InstallerComparison() {
                 <option value="rating">Highest Rating</option>
                 <option value="satisfaction">Customer Satisfaction</option>
                 <option value="speed">Fastest Installation</option>
+                <option value="experience">Most Experience</option>
               </select>
             </div>
             <div className="control-group">
@@ -901,6 +1324,114 @@ export default function InstallerComparison() {
                 <option value="speed">Fastest Install</option>
               </select>
             </div>
+          </div>
+
+          {/* Advanced Filters */}
+          <div className="advanced-filters">
+            <div className="filter-header">
+              <h4>Advanced Filters</h4>
+              <button
+                className="filter-toggle"
+                onClick={() => setShowFilters(!showFilters)}
+              >
+                <Filter
+                  size={14}
+                  style={{ marginRight: 6, display: "inline" }}
+                />
+                {showFilters ? "Hide" : "Show"} Filters
+              </button>
+            </div>
+            {showFilters && (
+              <div className="controls-grid" style={{ marginTop: 16 }}>
+                <div className="control-group">
+                  <label className="control-label">
+                    <Star size={16} />
+                    Minimum Rating
+                  </label>
+                  <input
+                    type="range"
+                    className="control-input"
+                    value={filters.minRating}
+                    onChange={(e) =>
+                      setFilters({
+                        ...filters,
+                        minRating: parseFloat(e.target.value),
+                      })
+                    }
+                    min="0"
+                    max="5"
+                    step="0.5"
+                  />
+                  <span
+                    style={{
+                      color: "#00FFD4",
+                      fontSize: "0.9rem",
+                      fontWeight: 700,
+                    }}
+                  >
+                    {filters.minRating} stars+
+                  </span>
+                </div>
+                <div className="control-group">
+                  <label className="control-label">
+                    <DollarSign size={16} />
+                    Max Price per Watt
+                  </label>
+                  <input
+                    type="range"
+                    className="control-input"
+                    value={filters.maxPrice}
+                    onChange={(e) =>
+                      setFilters({
+                        ...filters,
+                        maxPrice: parseFloat(e.target.value),
+                      })
+                    }
+                    min="2.0"
+                    max="3.5"
+                    step="0.1"
+                  />
+                  <span
+                    style={{
+                      color: "#00FFD4",
+                      fontSize: "0.9rem",
+                      fontWeight: 700,
+                    }}
+                  >
+                    ${filters.maxPrice}/W
+                  </span>
+                </div>
+                <div className="control-group">
+                  <label className="control-label">
+                    <Calendar size={16} />
+                    Min Years in Business
+                  </label>
+                  <input
+                    type="range"
+                    className="control-input"
+                    value={filters.minYearsInBusiness}
+                    onChange={(e) =>
+                      setFilters({
+                        ...filters,
+                        minYearsInBusiness: parseInt(e.target.value),
+                      })
+                    }
+                    min="0"
+                    max="20"
+                    step="1"
+                  />
+                  <span
+                    style={{
+                      color: "#00FFD4",
+                      fontSize: "0.9rem",
+                      fontWeight: 700,
+                    }}
+                  >
+                    {filters.minYearsInBusiness} years+
+                  </span>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
@@ -941,7 +1472,7 @@ export default function InstallerComparison() {
           <div className="selection-header">
             <h3 className="selection-title">All Installers</h3>
             <span className="selection-count">
-              {selectedInstallers.length} of 4 selected
+              {selectedInstallers.length} of 6 selected
             </span>
           </div>
           <div className="installer-chips">
@@ -951,14 +1482,14 @@ export default function InstallerComparison() {
                 className={`installer-chip ${
                   selectedInstallers.includes(installer.id)
                     ? "selected"
-                    : selectedInstallers.length >= 4
+                    : selectedInstallers.length >= 6
                       ? "disabled"
                       : ""
                 }`}
                 onClick={() => toggleInstallerSelection(installer.id)}
                 disabled={
                   !selectedInstallers.includes(installer.id) &&
-                  selectedInstallers.length >= 4
+                  selectedInstallers.length >= 6
                 }
               >
                 {installer.name}
@@ -967,266 +1498,327 @@ export default function InstallerComparison() {
           </div>
         </div>
 
-        {/* Comparison Cards */}
-        <div className="comparison-grid">
-          {getSortedData().map((installer) => {
-            const score = getInstallerScore(installer);
-            const isExpanded = expandedCards[installer.id];
+        {/* Comparison View */}
+        {viewMode === "grid" ? (
+          <div className="comparison-grid">
+            {getSortedData().map((installer) => {
+              const score = getInstallerScore(installer);
+              const isExpanded = expandedCards[installer.id];
 
-            return (
-              <div key={installer.id} className="installer-card">
-                {/* Header */}
-                <div className="card-header">
-                  <div className="installer-name-row">
-                    <h2 className="installer-name">{installer.name}</h2>
-                    {score.total >= 90 && (
-                      <span className="installer-badge">Top Rated</span>
+              return (
+                <div key={installer.id} className="installer-card">
+                  {/* Header */}
+                  <div className="card-header">
+                    <div className="installer-name-row">
+                      <h2 className="installer-name">{installer.name}</h2>
+                      {score.total >= 90 && (
+                        <span className="installer-badge">Top Rated</span>
+                      )}
+                    </div>
+                    <div className="rating-row">
+                      <div className="rating-display">
+                        <div className="rating-stars">
+                          {[...Array(5)].map((_, i) => (
+                            <Star
+                              key={i}
+                              size={16}
+                              fill={
+                                i < Math.floor(installer.rating)
+                                  ? "#fbbf24"
+                                  : "none"
+                              }
+                              color="#fbbf24"
+                            />
+                          ))}
+                        </div>
+                        <span className="rating-value">{installer.rating}</span>
+                        <span className="rating-reviews">
+                          ({installer.reviews.toLocaleString()} reviews)
+                        </span>
+                      </div>
+                    </div>
+                    <div className="installer-score">
+                      <Award size={18} />
+                      <div>
+                        <div className="score-value">{score.total}/100</div>
+                        <div className="score-label">Overall Score</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Pricing */}
+                  <div className="pricing-section">
+                    <div className="price-main">
+                      <span className="price-value">
+                        ${installer.pricing.netCost.toLocaleString()}
+                      </span>
+                      <span className="price-label">
+                        After Federal Tax Credit
+                      </span>
+                    </div>
+                    <div className="price-breakdown">
+                      <div className="price-item">
+                        <span className="price-item-label">Solar System</span>
+                        <span className="price-item-value">
+                          ${installer.pricing.basePrice.toLocaleString()}
+                        </span>
+                      </div>
+                      <div className="price-item">
+                        <span className="price-item-label">60 kWh Battery</span>
+                        <span className="price-item-value">
+                          ${installer.pricing.batteryCost.toLocaleString()}
+                        </span>
+                      </div>
+                      <div className="price-item">
+                        <span className="price-item-label">Total System</span>
+                        <span className="price-item-value">
+                          ${installer.pricing.totalPrice.toLocaleString()}
+                        </span>
+                      </div>
+                      <div className="price-item">
+                        <span className="price-item-label">
+                          Tax Credit (30%)
+                        </span>
+                        <span
+                          className="price-item-value"
+                          style={{ color: "#00FFD4" }}
+                        >
+                          -$
+                          {installer.pricing.federalTaxCredit.toLocaleString()}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="price-monthly">
+                      <div className="monthly-payment">
+                        ${installer.pricing.monthlyPayment.toLocaleString()}/mo
+                      </div>
+                      <div className="monthly-label">
+                        25-year financing @ {installer.financing.apr}% APR
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Key Details */}
+                  <div className="details-section">
+                    <div className="detail-row">
+                      <div className="detail-icon">
+                        <Clock size={20} />
+                      </div>
+                      <div className="detail-content">
+                        <div className="detail-label">Installation Time</div>
+                        <div className="detail-value">
+                          {installer.installationTime}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="detail-row">
+                      <div className="detail-icon">
+                        <Users size={20} />
+                      </div>
+                      <div className="detail-content">
+                        <div className="detail-label">Experience</div>
+                        <div className="detail-value">
+                          {installer.yearsInBusiness} years |{" "}
+                          {installer.installsCompleted.toLocaleString()}{" "}
+                          installs
+                        </div>
+                      </div>
+                    </div>
+                    <div className="detail-row">
+                      <div className="detail-icon">
+                        <TrendingUp size={20} />
+                      </div>
+                      <div className="detail-content">
+                        <div className="detail-label">
+                          Customer Satisfaction
+                        </div>
+                        <div className="detail-value">
+                          {installer.customerSatisfaction}%
+                        </div>
+                      </div>
+                    </div>
+                    <div className="detail-row">
+                      <div className="detail-icon">
+                        <Battery size={20} />
+                      </div>
+                      <div className="detail-content">
+                        <div className="detail-label">Battery Options</div>
+                        <div className="detail-value">
+                          {installer.equipmentBrands.batteries.join(", ")}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Pros/Cons */}
+                  <div className="pros-cons-section">
+                    <div className="pros-list">
+                      <div className="section-title-small">Pros</div>
+                      {installer.pros.map((pro, i) => (
+                        <li key={i}>
+                          <Check size={14} />
+                          {pro}
+                        </li>
+                      ))}
+                    </div>
+                    <div className="cons-list">
+                      <div className="section-title-small">Cons</div>
+                      {installer.cons.map((con, i) => (
+                        <li key={i}>
+                          <X size={14} />
+                          {con}
+                        </li>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Expand Button */}
+                  <button
+                    className="expand-button"
+                    onClick={() => toggleCardExpanded(installer.id)}
+                  >
+                    {isExpanded ? "Show Less" : "Show More Details"}
+                    {isExpanded ? (
+                      <ChevronUp size={16} />
+                    ) : (
+                      <ChevronDown size={16} />
                     )}
-                  </div>
-                  <div className="rating-row">
-                    <div className="rating-display">
-                      <div className="rating-stars">
-                        {[...Array(5)].map((_, i) => (
-                          <Star
-                            key={i}
-                            size={16}
-                            fill={
-                              i < Math.floor(installer.rating)
-                                ? "#fbbf24"
-                                : "none"
-                            }
-                            color="#fbbf24"
-                          />
-                        ))}
-                      </div>
-                      <span className="rating-value">{installer.rating}</span>
-                      <span className="rating-reviews">
-                        ({installer.reviews.toLocaleString()} reviews)
-                      </span>
-                    </div>
-                  </div>
-                  <div className="installer-score">
-                    <Award size={18} />
-                    <div>
-                      <div className="score-value">{score.total}/100</div>
-                      <div className="score-label">Overall Score</div>
-                    </div>
-                  </div>
-                </div>
+                  </button>
 
-                {/* Pricing */}
-                <div className="pricing-section">
-                  <div className="price-main">
-                    <span className="price-value">
-                      ${installer.pricing.netCost.toLocaleString()}
-                    </span>
-                    <span className="price-label">
-                      After Federal Tax Credit
-                    </span>
-                  </div>
-                  <div className="price-breakdown">
-                    <div className="price-item">
-                      <span className="price-item-label">Solar System</span>
-                      <span className="price-item-value">
-                        ${installer.pricing.basePrice.toLocaleString()}
-                      </span>
-                    </div>
-                    <div className="price-item">
-                      <span className="price-item-label">60 kWh Battery</span>
-                      <span className="price-item-value">
-                        ${installer.pricing.batteryCost.toLocaleString()}
-                      </span>
-                    </div>
-                    <div className="price-item">
-                      <span className="price-item-label">Total System</span>
-                      <span className="price-item-value">
-                        ${installer.pricing.totalPrice.toLocaleString()}
-                      </span>
-                    </div>
-                    <div className="price-item">
-                      <span className="price-item-label">Tax Credit (30%)</span>
-                      <span
-                        className="price-item-value"
-                        style={{ color: "#00FFD4" }}
-                      >
-                        -${installer.pricing.federalTaxCredit.toLocaleString()}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="price-monthly">
-                    <div className="monthly-payment">
-                      ${installer.pricing.monthlyPayment.toLocaleString()}/mo
-                    </div>
-                    <div className="monthly-label">
-                      25-year financing @ {installer.financing.apr}% APR
-                    </div>
-                  </div>
-                </div>
+                  {/* Expanded Details */}
+                  {isExpanded && (
+                    <div className="expanded-details">
+                      {/* Warranty */}
+                      <div className="certifications-section">
+                        <div className="cert-label">Warranty Coverage</div>
+                        <div className="warranty-grid">
+                          <div className="warranty-item">
+                            <div className="warranty-label">Workmanship</div>
+                            <div className="warranty-value">
+                              {installer.warranty.workmanship} years
+                            </div>
+                          </div>
+                          <div className="warranty-item">
+                            <div className="warranty-label">Panels</div>
+                            <div className="warranty-value">
+                              {installer.warranty.panels} years
+                            </div>
+                          </div>
+                          <div className="warranty-item">
+                            <div className="warranty-label">Inverters</div>
+                            <div className="warranty-value">
+                              {installer.warranty.inverters} years
+                            </div>
+                          </div>
+                          <div className="warranty-item">
+                            <div className="warranty-label">Batteries</div>
+                            <div className="warranty-value">
+                              {installer.warranty.batteries} years
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 
-                {/* Key Details */}
-                <div className="details-section">
-                  <div className="detail-row">
-                    <div className="detail-icon">
-                      <Clock size={20} />
-                    </div>
-                    <div className="detail-content">
-                      <div className="detail-label">Installation Time</div>
-                      <div className="detail-value">
-                        {installer.installationTime}
+                      {/* Certifications */}
+                      <div className="certifications-section">
+                        <div className="cert-label">Certifications</div>
+                        <div className="cert-badges">
+                          {installer.certifications.map((cert, i) => (
+                            <span key={i} className="cert-badge">
+                              {cert}
+                            </span>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  <div className="detail-row">
-                    <div className="detail-icon">
-                      <Users size={20} />
-                    </div>
-                    <div className="detail-content">
-                      <div className="detail-label">Experience</div>
-                      <div className="detail-value">
-                        {installer.yearsInBusiness} years |{" "}
-                        {installer.installsCompleted.toLocaleString()} installs
-                      </div>
-                    </div>
-                  </div>
-                  <div className="detail-row">
-                    <div className="detail-icon">
-                      <TrendingUp size={20} />
-                    </div>
-                    <div className="detail-content">
-                      <div className="detail-label">Customer Satisfaction</div>
-                      <div className="detail-value">
-                        {installer.customerSatisfaction}%
-                      </div>
-                    </div>
-                  </div>
-                  <div className="detail-row">
-                    <div className="detail-icon">
-                      <Battery size={20} />
-                    </div>
-                    <div className="detail-content">
-                      <div className="detail-label">Battery Options</div>
-                      <div className="detail-value">
-                        {installer.equipmentBrands.batteries.join(", ")}
-                      </div>
-                    </div>
-                  </div>
-                </div>
 
-                {/* Pros/Cons */}
-                <div className="pros-cons-section">
-                  <div className="pros-list">
-                    <div className="section-title-small">Pros</div>
-                    {installer.pros.map((pro, i) => (
-                      <li key={i}>
-                        <Check size={14} />
-                        {pro}
-                      </li>
-                    ))}
-                  </div>
-                  <div className="cons-list">
-                    <div className="section-title-small">Cons</div>
-                    {installer.cons.map((con, i) => (
-                      <li key={i}>
-                        <X size={14} />
-                        {con}
-                      </li>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Expand Button */}
-                <button
-                  className="expand-button"
-                  onClick={() => toggleCardExpanded(installer.id)}
-                >
-                  {isExpanded ? "Show Less" : "Show More Details"}
-                  {isExpanded ? (
-                    <ChevronUp size={16} />
-                  ) : (
-                    <ChevronDown size={16} />
+                      {/* Contact Info */}
+                      <div className="certifications-section">
+                        <div className="cert-label">Contact Information</div>
+                        <div className="contact-section">
+                          <div className="contact-item">
+                            <Phone size={16} />
+                            <a href={`tel:${installer.contactInfo.phone}`}>
+                              {installer.contactInfo.phone}
+                            </a>
+                          </div>
+                          <div className="contact-item">
+                            <Mail size={16} />
+                            <a href={`mailto:${installer.contactInfo.email}`}>
+                              {installer.contactInfo.email}
+                            </a>
+                          </div>
+                          <div className="contact-item">
+                            <Globe size={16} />
+                            <a
+                              href={installer.contactInfo.website}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {installer.contactInfo.website}
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   )}
-                </button>
-
-                {/* Expanded Details */}
-                {isExpanded && (
-                  <div className="expanded-details">
-                    {/* Warranty */}
-                    <div className="certifications-section">
-                      <div className="cert-label">Warranty Coverage</div>
-                      <div className="warranty-grid">
-                        <div className="warranty-item">
-                          <div className="warranty-label">Workmanship</div>
-                          <div className="warranty-value">
-                            {installer.warranty.workmanship} years
-                          </div>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="comparison-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Installer</th>
+                  <th>Rating</th>
+                  <th>Score</th>
+                  <th>Net Cost</th>
+                  <th>Monthly</th>
+                  <th>Installation</th>
+                  <th>Experience</th>
+                  <th>Satisfaction</th>
+                </tr>
+              </thead>
+              <tbody>
+                {getSortedData().map((installer) => {
+                  const score = getInstallerScore(installer);
+                  return (
+                    <tr key={installer.id}>
+                      <td style={{ fontWeight: 700 }}>{installer.name}</td>
+                      <td>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 6,
+                          }}
+                        >
+                          <Star size={14} fill="#fbbf24" color="#fbbf24" />
+                          {installer.rating}
                         </div>
-                        <div className="warranty-item">
-                          <div className="warranty-label">Panels</div>
-                          <div className="warranty-value">
-                            {installer.warranty.panels} years
-                          </div>
-                        </div>
-                        <div className="warranty-item">
-                          <div className="warranty-label">Inverters</div>
-                          <div className="warranty-value">
-                            {installer.warranty.inverters} years
-                          </div>
-                        </div>
-                        <div className="warranty-item">
-                          <div className="warranty-label">Batteries</div>
-                          <div className="warranty-value">
-                            {installer.warranty.batteries} years
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Certifications */}
-                    <div className="certifications-section">
-                      <div className="cert-label">Certifications</div>
-                      <div className="cert-badges">
-                        {installer.certifications.map((cert, i) => (
-                          <span key={i} className="cert-badge">
-                            {cert}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Contact Info */}
-                    <div className="certifications-section">
-                      <div className="cert-label">Contact Information</div>
-                      <div className="contact-section">
-                        <div className="contact-item">
-                          <Phone size={16} />
-                          <a href={`tel:${installer.contactInfo.phone}`}>
-                            {installer.contactInfo.phone}
-                          </a>
-                        </div>
-                        <div className="contact-item">
-                          <Mail size={16} />
-                          <a href={`mailto:${installer.contactInfo.email}`}>
-                            {installer.contactInfo.email}
-                          </a>
-                        </div>
-                        <div className="contact-item">
-                          <Globe size={16} />
-                          <a
-                            href={installer.contactInfo.website}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            {installer.contactInfo.website}
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
+                      </td>
+                      <td>
+                        <span style={{ color: "#00FFD4", fontWeight: 700 }}>
+                          {score.total}/100
+                        </span>
+                      </td>
+                      <td style={{ fontWeight: 700 }}>
+                        ${installer.pricing.netCost.toLocaleString()}
+                      </td>
+                      <td>
+                        ${installer.pricing.monthlyPayment.toLocaleString()}/mo
+                      </td>
+                      <td>{installer.installationTime}</td>
+                      <td>{installer.yearsInBusiness} years</td>
+                      <td>{installer.customerSatisfaction}%</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
   );
