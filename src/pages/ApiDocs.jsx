@@ -695,6 +695,48 @@ const getProductionColor = (productionKwh) => {
       ),
     },
 
+    playground: {
+      title: "API Playground",
+      icon: Play,
+      content: (
+        <div className="doc-section">
+          <h1>API Playground</h1>
+          <p className="lead">
+            Test API endpoints with live data. Enter coordinates and parameters
+            to see real responses from the Google Solar API and Firebase
+            services.
+          </p>
+
+          <ApiPlayground />
+
+          <div className="playground-tips">
+            <h3>Tips for Testing</h3>
+            <ul>
+              <li>
+                <strong>Austin, TX:</strong> Latitude 30.2672, Longitude
+                -97.7431
+              </li>
+              <li>
+                <strong>Los Angeles, CA:</strong> Latitude 34.0522, Longitude
+                -118.2437
+              </li>
+              <li>
+                <strong>Miami, FL:</strong> Latitude 25.7617, Longitude -80.1918
+              </li>
+              <li>
+                <strong>Annual Usage:</strong> Average US home uses
+                10,000-15,000 kWh/year
+              </li>
+              <li>
+                <strong>Target Offset:</strong> Use 1.0 for 100% offset, 1.05
+                for 105%, etc.
+              </li>
+            </ul>
+          </div>
+        </div>
+      ),
+    },
+
     examples: {
       title: "Code Examples",
       icon: Code,
