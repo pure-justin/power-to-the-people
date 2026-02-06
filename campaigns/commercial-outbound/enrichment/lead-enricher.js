@@ -451,7 +451,7 @@ export class LeadEnricher {
 
 // CLI Usage
 if (import.meta.url === `file://${process.argv[1]}`) {
-  import { readFile } from "fs/promises";
+  const { readFile } = await import("fs/promises");
 
   const enricher = new LeadEnricher();
 
