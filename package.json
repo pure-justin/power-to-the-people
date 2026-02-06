@@ -12,7 +12,11 @@
     "leads:scrape": "node scripts/automated-lead-pipeline.js --mode=scrape",
     "leads:quick": "node scripts/automated-lead-pipeline.js --target=100 --mode=generate --skip-firestore",
     "leads:validate": "node scripts/validate-leads.js",
-    "leads:schedule": "node scripts/schedule-lead-pipeline.js"
+    "leads:schedule": "node scripts/schedule-lead-pipeline.js",
+    "installers:scrape": "node scripts/installer-data-pipeline.js",
+    "installers:scrape:500": "node scripts/installer-data-pipeline.js --target=500",
+    "installers:scrape:1000": "node scripts/installer-data-pipeline.js --target=1000",
+    "installers:import": "node scripts/import-installers-to-firestore.js"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.0",
