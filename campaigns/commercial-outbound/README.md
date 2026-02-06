@@ -1,10 +1,17 @@
-# Commercial Solar Outbound Campaign System
+# Commercial Solar Cold Outbound Campaign
 
-Complete automated cold outreach system for targeting 500+ commercial properties with personalized solar ROI calculations.
+**Complete automated system to generate and nurture 500 qualified commercial solar leads in 30 days.**
 
-## 🎯 Goal
+## 🎯 Campaign Overview
 
-**Populate database with 50 qualified commercial solar leads in 30 days** through automated scraping, enrichment, and personalized outreach.
+This system:
+- ✅ Scrapes 500 commercial properties from LoopNet + CoStar
+- ✅ Enriches with local utility rates for each property
+- ✅ Calculates personalized solar ROI (25-year projections)
+- ✅ Scores and prioritizes leads (hot/warm/medium/cold)
+- ✅ Sends 5-email automated sequence with personalized data
+- ✅ Tracks opens, clicks, and responses
+- ✅ Generates qualified leads for sales follow-up
 
 ## 📊 System Overview
 
