@@ -80,7 +80,7 @@ async function testApiKeyManagement() {
       responseSize: 1024,
       ipAddress: "192.168.1.1",
       userAgent: "Mozilla/5.0",
-      timestamp: admin.firestore.Timestamp.now(),
+      timestamp: new Date(),
     };
 
     console.log("✅ Usage log entry created:");
