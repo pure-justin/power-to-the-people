@@ -943,8 +943,82 @@ export default function Admin() {
             </button>
           </div>
 
-          {/* Stats Grid */}
-          {stats && (
+          {/* Referrals Tab */}
+          {activeTab === "referrals" && <ReferralAdminPanel />}
+
+          {/* Analytics Tab */}
+          {activeTab === "analytics" && stats && (
+            <>
+              <div className="stats-grid">
+                <div className="stat-card">
+                  <div className="stat-header">
+                    <span className="stat-label">Total Projects</span>
+                    <div
+                      className="stat-icon"
+                      style={{ background: "rgba(59, 130, 246, 0.1)" }}
+                    >
+                      <FileText size={20} style={{ color: "#3b82f6" }} />
+                    </div>
+                  </div>
+                  <div className="stat-value">{stats.totalProjects}</div>
+                  <div className="stat-change">
+                    +{stats.newThisMonth} this month
+                  </div>
+                </div>
+
+                <div className="stat-card">
+                  <div className="stat-header">
+                    <span className="stat-label">Active Customers</span>
+                    <div
+                      className="stat-icon"
+                      style={{ background: "rgba(16, 185, 129, 0.1)" }}
+                    >
+                      <Users size={20} style={{ color: "#10b981" }} />
+                    </div>
+                  </div>
+                  <div className="stat-value">{stats.activeCustomers}</div>
+                  <div className="stat-change">
+                    {stats.approvalRate}% approval rate
+                  </div>
+                </div>
+
+                <div className="stat-card">
+                  <div className="stat-header">
+                    <span className="stat-label">Installed Systems</span>
+                    <div
+                      className="stat-icon"
+                      style={{ background: "rgba(139, 92, 246, 0.1)" }}
+                    >
+                      <Battery size={20} style={{ color: "#8b5cf6" }} />
+                    </div>
+                  </div>
+                  <div className="stat-value">{stats.installedSystems}</div>
+                  <div className="stat-change">
+                    {stats.avgSystemSize} kW avg size
+                  </div>
+                </div>
+
+                <div className="stat-card">
+                  <div className="stat-header">
+                    <span className="stat-label">Total Capacity</span>
+                    <div
+                      className="stat-icon"
+                      style={{ background: "rgba(245, 158, 11, 0.1)" }}
+                    >
+                      <Zap size={20} style={{ color: "#f59e0b" }} />
+                    </div>
+                  </div>
+                  <div className="stat-value">{stats.totalCapacity} kW</div>
+                  <div className="stat-change">Grid capacity</div>
+                </div>
+              </div>
+
+              {showAnalytics && <AdminAnalytics />}
+            </>
+          )}
+
+          {/* Projects Tab */}
+          {activeTab === "projects" && stats && (
             <div className="stats-grid">
               <div className="stat-card">
                 <div className="stat-header">
