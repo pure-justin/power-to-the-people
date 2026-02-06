@@ -70,7 +70,7 @@ async function testApiKeyManagement() {
     // Test 3: Simulate usage tracking
     console.log("\n3️⃣  Simulating usage tracking...");
     const usageLog = {
-      id: db.collection("apiKeyUsageLogs").doc().id,
+      id: "mock-usage-log-456",
       apiKeyId: mockApiKey.id,
       endpoint: "/api/leads",
       method: "GET",
