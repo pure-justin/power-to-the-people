@@ -1,0 +1,41 @@
+{
+  "name": "commercial-solar-campaign",
+  "version": "1.0.0",
+  "description": "Cold outbound campaign system for commercial solar properties",
+  "main": "campaign-orchestrator.js",
+  "scripts": {
+    "launch": "node campaign-orchestrator.js --launch --dry-run",
+    "launch:prod": "node campaign-orchestrator.js --launch",
+    "follow-up": "node campaign-orchestrator.js --follow-up",
+    "qualified": "node campaign-orchestrator.js --qualified",
+    "scrape": "node scrapers/loopnet-scraper.js",
+    "enrich:rates": "node enrichment/utility-rates.js --enrich",
+    "enrich:roi": "node enrichment/roi-calculator.js --enrich",
+    "score": "node enrichment/lead-scorer.js --score",
+    "stats": "node enrichment/lead-scorer.js --stats",
+    "email:preview": "node outreach/email-engine.js --preview",
+    "test": "echo 'No tests yet' && exit 0"
+  },
+  "keywords": [
+    "solar",
+    "commercial",
+    "cold-outreach",
+    "campaign",
+    "crm"
+  ],
+  "author": "Power to the People Energy",
+  "license": "MIT",
+  "dependencies": {
+    "firebase-admin": "^12.0.0",
+    "@sendgrid/mail": "^8.1.0",
+    "axios": "^1.6.0",
+    "dotenv": "^16.4.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
