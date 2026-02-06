@@ -480,5 +480,22 @@ export const unlinkSmtAccount = async (uid) => {
   await updateUserProfile(uid, { smtLinked: false });
 };
 
-export { auth, db, storage };
+export {
+  auth,
+  db,
+  storage,
+  collection,
+  doc,
+  setDoc,
+  getDoc,
+  getDocs,
+  addDoc,
+  serverTimestamp,
+  query,
+  where,
+  orderBy,
+  limit,
+  updateDoc,
+  increment,
+};
 export default app;
