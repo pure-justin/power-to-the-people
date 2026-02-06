@@ -16,6 +16,9 @@
  *   --cities=city1,city2  Only specific cities (comma-separated)
  */
 
+import dotenv from "dotenv";
+dotenv.config();
+
 import {
   scrapeAllNevada,
   scrapeLocation,
