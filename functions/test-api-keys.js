@@ -26,7 +26,6 @@ async function testApiKeyManagement() {
     // Test 1: Simulate creating an API key
     console.log("1️⃣  Creating API key...");
     const mockUserId = "test-user-123";
-    const apiKeysRef = db.collection("apiKeys");
 
     const mockApiKey = {
       id: apiKeysRef.doc().id,
