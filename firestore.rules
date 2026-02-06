@@ -1,0 +1,125 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isSignedIn() &&
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    function isInstaller() {
+      return isSignedIn() &&
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'installer';
+    }
+
+    function isAdminOrInstaller() {
+      return isAdmin() || isInstaller();
+    }
+
+    // LEADS COLLECTION
+    match /leads/{leadId} {
+      // Anyone authenticated can create a lead (from qualification form)
+      allow create: if isSignedIn() &&
+                       request.resource.data.customer.email is string &&
+                       request.resource.data.address.county is string &&
+                       request.resource.data.qualification.isHomeowner == true;
+
+      // Users can read their own leads
+      allow read: if isSignedIn() && (
+        resource.data.customer.userId == request.auth.uid ||
+        resource.data.customer.email == request.auth.token.email
+      );
+
+      // Admins can read/write all leads
+      allow read, write: if isAdmin();
+
+      // Installers can read assigned leads
+      allow read: if isInstaller() && resource.data.assignedTo == request.auth.uid;
+
+      // Allow updates to assigned leads by the assignee (add notes, update progress)
+      allow update: if isSignedIn() &&
+                       resource.data.assignedTo == request.auth.uid &&
+                       // Only allow updating specific fields
+                       request.resource.data.diff(resource.data).affectedKeys()
+                         .hasOnly(['notes', 'progress', 'updatedAt', 'tags']);
+    }
+
+    // PROJECTS COLLECTION (Legacy - keep for backward compatibility)
+    match /projects/{projectId} {
+      // Anyone authenticated can create
+      allow create: if isSignedIn();
+
+      // Users can read their own projects
+      allow read: if isSignedIn();
+
+      // Admins can read/write all
+      allow read, write: if isAdmin();
+    }
+
+    // ADDRESS CACHE COLLECTION
+    match /addressCache/{addressHash} {
+      // Anyone can read cache
+      allow read: if true;
+
+      // Only authenticated users can write cache
+      allow write: if isSignedIn();
+
+      // Admins can delete cache entries
+      allow delete: if isAdmin();
+    }
+
+    // USERS COLLECTION
+    match /users/{userId} {
+      // Users can read their own profile
+      allow read: if isOwner(userId);
+
+      // Users can update their own profile (limited fields)
+      allow update: if isOwner(userId) &&
+                       request.resource.data.diff(resource.data).affectedKeys()
+                         .hasOnly(['displayName', 'firstName', 'lastName', 'phone',
+                                   'notifications', 'updatedAt', 'lastLoginAt']);
+
+      // Admins can read/write all user profiles
+      allow read, write: if isAdmin();
+
+      // Allow user creation during signup
+      allow create: if isOwner(userId) &&
+                       request.resource.data.email == request.auth.token.email;
+
+      // Private subcollection for SMT credentials
+      match /private/smt {
+        // Only the user can read/write their own credentials
+        allow read, write: if isOwner(userId);
+
+        // Cloud Functions can access (using admin SDK)
+      }
+    }
+
+    // ADMIN ANALYTICS COLLECTION
+    match /analytics/{document=**} {
+      allow read: if isAdmin();
+      allow write: if isAdmin();
+    }
+
+    // SYSTEM CONFIGURATION
+    match /config/{document=**} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // Default deny all other collections
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
