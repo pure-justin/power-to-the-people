@@ -9,6 +9,7 @@ import SubHubCompare from "./pages/SubHubCompare";
 import SmtCallback from "./pages/SmtCallback";
 import Admin from "./pages/Admin";
 import Referrals from "./pages/Referrals";
+import ApiDocs from "./pages/ApiDocs";
 import "./App.css";
 
 function App() {
