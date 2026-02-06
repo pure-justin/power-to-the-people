@@ -17,8 +17,12 @@ async function testWorkflow() {
   console.log("============================\n");
 
   // Initialize Firebase
-  if (!initializeApp.length) {
+  try {
     initializeApp();
+    console.log("✅ Firebase initialized\n");
+  } catch (error) {
+    // Already initialized
+    console.log("✅ Firebase already initialized\n");
   }
 
   const scraper = new LoopNetScraper();
