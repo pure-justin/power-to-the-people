@@ -35,7 +35,7 @@ export default function Referrals() {
   const [analytics, setAnalytics] = useState(null);
   const [leaderboard, setLeaderboard] = useState([]);
   const [copied, setCopied] = useState(false);
-  const [activeTab, setActiveTab] = useState("overview"); // overview, referrals, leaderboard
+  const [activeTab, setActiveTab] = useState("overview"); // overview, dashboard, share, referrals, leaderboard
 
   useEffect(() => {
     const currentUser = getCurrentUser();
