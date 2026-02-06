@@ -7,15 +7,17 @@
  * Usage: node test-api-keys.js
  */
 
-const admin = require("firebase-admin");
+// This is a demonstration script - it doesn't connect to actual Firebase
+// To run with real Firebase, uncomment the code below and provide a service account key
 
-// Initialize Firebase Admin
-const serviceAccount = require("../path/to/serviceAccountKey.json"); // Update path
+/*
+const admin = require("firebase-admin");
+const serviceAccount = require("../path/to/serviceAccountKey.json");
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
-
 const db = admin.firestore();
+*/
 
 async function testApiKeyManagement() {
   console.log("🔐 Testing API Key Management System\n");
