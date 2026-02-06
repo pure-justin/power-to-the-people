@@ -12,243 +12,213 @@ import {
 import { db } from "./firebase";
 
 /**
- * Get all projects for admin dashboard
- * Returns projects ordered by creation date (newest first)
+ * Get all leads for admin dashboard
+ * Returns leads ordered by creation date (newest first)
  */
 export const getAdminProjects = async () => {
   try {
     if (!db) throw new Error("Firestore not initialized");
 
-    // Query all projects, ordered by creation date
-    const projectsRef = collection(db, "projects");
-    const q = query(projectsRef, orderBy("createdAt", "desc"));
+    // Query leads collection
+    const leadsRef = collection(db, "leads");
+    const q = query(leadsRef, orderBy("createdAt", "desc"), limit(500));
 
     const querySnapshot = await getDocs(q);
 
-    const projects = [];
+    const leads = [];
     querySnapshot.forEach((doc) => {
-      projects.push({
+      const data = doc.data();
+      
+      // Normalize the data structure for both residential and commercial leads
+      leads.push({
         id: doc.id,
-        ...doc.data(),
+        // Common fields
+        status: data.status || 'new',
+        createdAt: data.createdAt,
+        updatedAt: data.updatedAt,
+        
+        // Customer info (handle both structures)
+        customerName: data.name || data.propertyName || data.customer?.organizationName || 'Unknown',
+        email: data.email || data.customer?.email || data.contactInfo?.email || '',
+        phone: data.phone || data.contactInfo?.phone || '',
+        
+        // Address (handle both structures)
+        address: typeof data.address === 'string' 
+          ? data.address 
+          : data.address?.formattedAddress || '',
+        zipCode: data.zipCode || data.address?.zipCode || '',
+        
+        // Lead type
+        leadType: data.leadType || (data.isCommercial ? 'commercial' : 'residential'),
+        isCommercial: data.isCommercial || false,
+        
+        // Solar specific
+        systemSize: data.systemDesign?.maxPanelCapacity 
+          ? (data.systemDesign.maxPanelCapacity * 0.4 / 1000).toFixed(1) // Convert panels to kW
+          : data.systemSize || '',
+        estimatedSavings: data.systemDesign?.estimatedAnnualSavings || '',
+        
+        // Scoring
+        leadScore: data.leadScore || data.qualityScore || 0,
+        qualityTier: data.qualityTier || '',
+        priority: data.priority || 'normal',
+        
+        // Source tracking
+        source: data.source || data.tracking?.source || 'website',
+        campaign: data.tracking?.campaign || data.utmCampaign || '',
+        
+        // Property info (commercial)
+        propertyType: data.propertyType || '',
+        propertyName: data.propertyName || '',
+        
+        // Raw data for details
+        _raw: data,
       });
     });
 
-    console.log(`Admin: Loaded ${projects.length} projects`);
-    return projects;
+    console.log(`Admin: Loaded ${leads.length} leads`);
+    return leads;
   } catch (error) {
-    console.error("Error fetching admin projects:", error);
-
-    // If Firestore fails, return mock data for development
-    if (process.env.NODE_ENV === "development") {
-      console.warn("Using mock data for development");
-      return getMockProjects();
-    }
-
+    console.error("Error fetching admin leads:", error);
     throw error;
   }
 };
 
 /**
  * Get admin dashboard statistics
- * Calculates metrics from project data
  */
 export const getAdminStats = async () => {
   try {
-    const projects = await getAdminProjects();
+    const leads = await getAdminProjects();
 
-    // Calculate total projects
-    const totalProjects = projects.length;
+    const totalProjects = leads.length;
 
-    // Calculate projects created this month
+    // Count by type
+    const residential = leads.filter(l => !l.isCommercial).length;
+    const commercial = leads.filter(l => l.isCommercial).length;
+
+    // New this month
     const now = new Date();
     const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-    const newThisMonth = projects.filter((p) => {
-      const createdDate = p.createdAt?.toDate?.() || new Date(0);
+    const newThisMonth = leads.filter((l) => {
+      const createdDate = l.createdAt?.toDate?.() || new Date(0);
       return createdDate >= startOfMonth;
     }).length;
 
-    // Calculate active customers (unique emails with non-cancelled projects)
+    // Active customers (unique emails)
     const activeEmails = new Set();
-    projects.forEach((p) => {
-      if (p.email && p.status !== "cancelled") {
-        activeEmails.add(p.email);
-      }
+    leads.forEach((l) => {
+      if (l.email) activeEmails.add(l.email);
     });
     const activeCustomers = activeEmails.size;
 
-    // Calculate customer growth (mock for now, would need historical data)
-    const customerGrowth =
-      newThisMonth > 0 ? Math.round((newThisMonth / totalProjects) * 100) : 0;
-
-    // Calculate total capacity (sum of system sizes)
-    const totalCapacity = projects
-      .filter((p) => p.systemSize && p.status !== "cancelled")
-      .reduce((sum, p) => sum + (parseFloat(p.systemSize) || 0), 0)
+    // Calculate total potential capacity
+    const totalCapacity = leads
+      .filter((l) => l.systemSize)
+      .reduce((sum, l) => sum + (parseFloat(l.systemSize) || 0), 0)
       .toFixed(1);
 
-    // Estimate revenue (mock calculation: $500 per kW)
-    const estimatedRevenue = (totalCapacity * 500).toLocaleString();
+    // Calculate total potential savings
+    const totalSavings = leads
+      .filter((l) => l.estimatedSavings)
+      .reduce((sum, l) => sum + (parseFloat(l.estimatedSavings) || 0), 0);
+
+    // Average lead score
+    const scoredLeads = leads.filter(l => l.leadScore > 0);
+    const avgLeadScore = scoredLeads.length > 0
+      ? Math.round(scoredLeads.reduce((sum, l) => sum + l.leadScore, 0) / scoredLeads.length)
+      : 0;
 
     return {
       totalProjects,
+      residential,
+      commercial,
       newThisMonth,
       activeCustomers,
-      customerGrowth,
+      customerGrowth: newThisMonth > 0 ? Math.round((newThisMonth / totalProjects) * 100) : 0,
       totalCapacity,
-      estimatedRevenue,
+      estimatedRevenue: totalSavings.toLocaleString(),
+      avgLeadScore,
     };
   } catch (error) {
     console.error("Error calculating admin stats:", error);
-
-    // Return mock stats for development
-    if (process.env.NODE_ENV === "development") {
-      return {
-        totalProjects: 12,
-        newThisMonth: 4,
-        activeCustomers: 10,
-        customerGrowth: 25,
-        totalCapacity: "84.5",
-        estimatedRevenue: "42,250",
-      };
-    }
-
     throw error;
   }
 };
 
 /**
- * Update project status
+ * Update lead status
  */
-export const updateProjectStatus = async (projectId, newStatus) => {
+export const updateProjectStatus = async (leadId, newStatus) => {
   try {
     if (!db) throw new Error("Firestore not initialized");
 
-    const projectRef = doc(db, "projects", projectId);
-    await updateDoc(projectRef, {
+    const leadRef = doc(db, "leads", leadId);
+    await updateDoc(leadRef, {
       status: newStatus,
       updatedAt: serverTimestamp(),
     });
 
-    console.log(`Admin: Updated project ${projectId} status to ${newStatus}`);
+    console.log(`Admin: Updated lead ${leadId} status to ${newStatus}`);
     return true;
   } catch (error) {
-    console.error("Error updating project status:", error);
+    console.error("Error updating lead status:", error);
     throw error;
   }
 };
 
 /**
- * Get projects by status
+ * Get leads by status
  */
 export const getProjectsByStatus = async (status) => {
   try {
     if (!db) throw new Error("Firestore not initialized");
 
-    const projectsRef = collection(db, "projects");
+    const leadsRef = collection(db, "leads");
     const q = query(
-      projectsRef,
+      leadsRef,
       where("status", "==", status),
       orderBy("createdAt", "desc"),
     );
 
     const querySnapshot = await getDocs(q);
 
-    const projects = [];
+    const leads = [];
     querySnapshot.forEach((doc) => {
-      projects.push({
+      leads.push({
         id: doc.id,
         ...doc.data(),
       });
     });
 
-    return projects;
+    return leads;
   } catch (error) {
-    console.error("Error fetching projects by status:", error);
+    console.error("Error fetching leads by status:", error);
     throw error;
   }
 };
 
 /**
- * Search projects by customer name or email
+ * Search leads
  */
 export const searchProjects = async (searchTerm) => {
   try {
-    // For now, we'll fetch all projects and filter client-side
-    // In production, consider using Algolia or Elasticsearch for better search
-    const projects = await getAdminProjects();
+    const leads = await getAdminProjects();
 
     const lowerSearch = searchTerm.toLowerCase();
-    return projects.filter(
-      (p) =>
-        p.customerName?.toLowerCase().includes(lowerSearch) ||
-        p.email?.toLowerCase().includes(lowerSearch) ||
-        p.phone?.includes(searchTerm) ||
-        p.id.toLowerCase().includes(lowerSearch),
+    return leads.filter(
+      (l) =>
+        l.customerName?.toLowerCase().includes(lowerSearch) ||
+        l.email?.toLowerCase().includes(lowerSearch) ||
+        l.phone?.includes(searchTerm) ||
+        l.address?.toLowerCase().includes(lowerSearch) ||
+        l.propertyName?.toLowerCase().includes(lowerSearch) ||
+        l.id.toLowerCase().includes(lowerSearch),
     );
   } catch (error) {
-    console.error("Error searching projects:", error);
+    console.error("Error searching leads:", error);
     throw error;
   }
-};
-
-/**
- * Mock project data for development
- */
-const getMockProjects = () => {
-  const statuses = [
-    "submitted",
-    "reviewing",
-    "approved",
-    "scheduled",
-    "completed",
-  ];
-  const names = [
-    "John Smith",
-    "Sarah Johnson",
-    "Michael Brown",
-    "Emily Davis",
-    "David Wilson",
-    "Jennifer Martinez",
-    "Robert Anderson",
-    "Lisa Taylor",
-    "James Thomas",
-    "Maria Garcia",
-    "William Moore",
-    "Jessica Lee",
-  ];
-  const addresses = [
-    "123 Oak Street, Austin, TX 78701",
-    "456 Elm Avenue, Dallas, TX 75201",
-    "789 Pine Road, Houston, TX 77001",
-    "321 Maple Drive, San Antonio, TX 78201",
-    "654 Cedar Lane, Fort Worth, TX 76101",
-    "987 Birch Court, El Paso, TX 79901",
-    "147 Willow Way, Arlington, TX 76001",
-    "258 Spruce Street, Corpus Christi, TX 78401",
-    "369 Ash Boulevard, Plano, TX 75001",
-    "741 Cherry Circle, Laredo, TX 78040",
-    "852 Walnut Place, Lubbock, TX 79401",
-    "963 Hickory Drive, Irving, TX 75001",
-  ];
-
-  return names.map((name, index) => {
-    const createdDate = new Date();
-    createdDate.setDate(createdDate.getDate() - Math.floor(Math.random() * 90)); // Random date within last 90 days
-
-    return {
-      id: `PTTP-${Date.now() - index * 100000}`,
-      customerName: name,
-      email: `${name.toLowerCase().replace(" ", ".")}@example.com`,
-      phone: `512-555-${String(1000 + index).padStart(4, "0")}`,
-      address: addresses[index],
-      status: statuses[Math.floor(Math.random() * statuses.length)],
-      systemSize: (5 + Math.random() * 10).toFixed(1), // 5-15 kW
-      batterySize: (10 + Math.random() * 20).toFixed(1), // 10-30 kWh
-      createdAt: {
-        toDate: () => createdDate,
-      },
-    };
-  });
 };
 
 export default {
