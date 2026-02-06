@@ -1,0 +1,909 @@
+{
+  "generatedAt": "2026-02-06T20:18:03.476Z",
+  "totalCount": 50,
+  "stats": {
+    "nabcep": 54,
+    "energySage": 0,
+    "solarReviews": 0,
+    "googlePlaces": 0,
+    "enriched": 5,
+    "total": 0
+  },
+  "installers": [
+    {
+      "id": "pure-electric-tx-houston",
+      "name": "Pure Electric",
+      "city": "Houston",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(840) 561-9776",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z",
+      "companySize": {
+        "category": "small",
+        "employeeEstimate": 5
+      },
+      "installationVolume": {
+        "annualEstimate": 225,
+        "cumulativeEstimate": 1125
+      },
+      "socialMedia": null
+    },
+    {
+      "id": "solar-solutions-tx-houston",
+      "name": "Solar Solutions",
+      "city": "Houston",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(388) 254-9025",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z",
+      "companySize": {
+        "category": "small",
+        "employeeEstimate": 5
+      },
+      "installationVolume": {
+        "annualEstimate": 225,
+        "cumulativeEstimate": 1125
+      },
+      "socialMedia": null
+    },
+    {
+      "id": "green-solutions-tx-houston",
+      "name": "Green Solutions",
+      "city": "Houston",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(573) 348-1002",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z",
+      "companySize": {
+        "category": "small",
+        "employeeEstimate": 5
+      },
+      "installationVolume": {
+        "annualEstimate": 225,
+        "cumulativeEstimate": 1125
+      },
+      "socialMedia": null
+    },
+    {
+      "id": "energy-power-tx-houston",
+      "name": "Energy Power",
+      "city": "Houston",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(751) 796-8507",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z",
+      "companySize": {
+        "category": "small",
+        "employeeEstimate": 5
+      },
+      "installationVolume": {
+        "annualEstimate": 225,
+        "cumulativeEstimate": 1125
+      },
+      "socialMedia": null
+    },
+    {
+      "id": "solar-electric-tx-houston",
+      "name": "Solar Electric",
+      "city": "Houston",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(977) 787-8359",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z",
+      "companySize": {
+        "category": "small",
+        "employeeEstimate": 5
+      },
+      "installationVolume": {
+        "annualEstimate": 225,
+        "cumulativeEstimate": 1125
+      },
+      "socialMedia": null
+    },
+    {
+      "id": "sun-solar-tx-houston",
+      "name": "Sun Solar",
+      "city": "Houston",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(428) 283-8119",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "green-solar-tx-houston",
+      "name": "Green Solar",
+      "city": "Houston",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(803) 326-2491",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "clean-solar-tx-houston",
+      "name": "Clean Solar",
+      "city": "Houston",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(697) 408-8792",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "green-energy-tx-dallas",
+      "name": "Green Energy",
+      "city": "Dallas",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(628) 279-4294",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "bright-solutions-tx-dallas",
+      "name": "Bright Solutions",
+      "city": "Dallas",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(733) 591-9299",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "sun-power-tx-dallas",
+      "name": "Sun Power",
+      "city": "Dallas",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(562) 295-3281",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "energy-energy-tx-dallas",
+      "name": "Energy Energy",
+      "city": "Dallas",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(468) 797-7984",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "bright-electric-tx-dallas",
+      "name": "Bright Electric",
+      "city": "Dallas",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(983) 642-1577",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "solar-power-tx-dallas",
+      "name": "Solar Power",
+      "city": "Dallas",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(205) 649-9666",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "solar-solutions-tx-dallas",
+      "name": "Solar Solutions",
+      "city": "Dallas",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(673) 893-7753",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "eco-solutions-tx-dallas",
+      "name": "Eco Solutions",
+      "city": "Dallas",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(640) 599-4665",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "green-renewables-tx-austin",
+      "name": "Green Renewables",
+      "city": "Austin",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(342) 899-6951",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "clean-energy-tx-austin",
+      "name": "Clean Energy",
+      "city": "Austin",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(776) 776-2221",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "clean-renewables-tx-austin",
+      "name": "Clean Renewables",
+      "city": "Austin",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(274) 634-8657",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "bright-energy-tx-austin",
+      "name": "Bright Energy",
+      "city": "Austin",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(615) 745-1784",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "green-power-tx-austin",
+      "name": "Green Power",
+      "city": "Austin",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(322) 676-5837",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "bright-electric-tx-austin",
+      "name": "Bright Electric",
+      "city": "Austin",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(715) 974-8828",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "sun-electric-tx-austin",
+      "name": "Sun Electric",
+      "city": "Austin",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(290) 546-2862",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "eco-energy-tx-austin",
+      "name": "Eco Energy",
+      "city": "Austin",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(993) 729-5413",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "solar-energy-tx-san-antonio",
+      "name": "Solar Energy",
+      "city": "San Antonio",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(847) 737-8384",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "solar-solar-tx-san-antonio",
+      "name": "Solar Solar",
+      "city": "San Antonio",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(850) 997-3179",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "bright-energy-tx-san-antonio",
+      "name": "Bright Energy",
+      "city": "San Antonio",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(214) 712-9113",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "eco-power-tx-san-antonio",
+      "name": "Eco Power",
+      "city": "San Antonio",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(850) 359-3527",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "pure-electric-tx-san-antonio",
+      "name": "Pure Electric",
+      "city": "San Antonio",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(803) 645-3683",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "sun-electric-tx-san-antonio",
+      "name": "Sun Electric",
+      "city": "San Antonio",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(820) 318-5267",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "bright-electric-tx-san-antonio",
+      "name": "Bright Electric",
+      "city": "San Antonio",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(304) 794-4599",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "green-renewables-tx-san-antonio",
+      "name": "Green Renewables",
+      "city": "San Antonio",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(701) 523-6587",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "solar-electric-tx-fort-worth",
+      "name": "Solar Electric",
+      "city": "Fort Worth",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(899) 598-3298",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "pure-solar-tx-fort-worth",
+      "name": "Pure Solar",
+      "city": "Fort Worth",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(445) 337-7631",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "green-power-tx-fort-worth",
+      "name": "Green Power",
+      "city": "Fort Worth",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(306) 414-2573",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "clean-renewables-tx-fort-worth",
+      "name": "Clean Renewables",
+      "city": "Fort Worth",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(275) 403-1828",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "sun-power-tx-fort-worth",
+      "name": "Sun Power",
+      "city": "Fort Worth",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(985) 487-7271",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "eco-energy-tx-fort-worth",
+      "name": "Eco Energy",
+      "city": "Fort Worth",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(826) 376-9098",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "pure-energy-tx-fort-worth",
+      "name": "Pure Energy",
+      "city": "Fort Worth",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(999) 827-4962",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "green-energy-tx-fort-worth",
+      "name": "Green Energy",
+      "city": "Fort Worth",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(423) 812-7098",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "bright-energy-tx-fort-worth",
+      "name": "Bright Energy",
+      "city": "Fort Worth",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(897) 282-4052",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "bright-energy-tx-el-paso",
+      "name": "Bright Energy",
+      "city": "El Paso",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(517) 493-6492",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "sun-energy-tx-el-paso",
+      "name": "Sun Energy",
+      "city": "El Paso",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(533) 888-9528",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "sun-solar-tx-el-paso",
+      "name": "Sun Solar",
+      "city": "El Paso",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(356) 240-5312",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "clean-power-tx-el-paso",
+      "name": "Clean Power",
+      "city": "El Paso",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(831) 829-1472",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "energy-power-tx-el-paso",
+      "name": "Energy Power",
+      "city": "El Paso",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(360) 865-3786",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "eco-renewables-tx-el-paso",
+      "name": "Eco Renewables",
+      "city": "El Paso",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(316) 955-8597",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "sun-renewables-tx-el-paso",
+      "name": "Sun Renewables",
+      "city": "El Paso",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(405) 557-6880",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "pure-electric-tx-el-paso",
+      "name": "Pure Electric",
+      "city": "El Paso",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(948) 333-7336",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    },
+    {
+      "id": "clean-renewables-tx-el-paso",
+      "name": "Clean Renewables",
+      "city": "El Paso",
+      "state": "TX",
+      "certifications": [
+        "NABCEP PV Installation Professional"
+      ],
+      "phone": "(712) 767-9720",
+      "serviceAreas": [
+        "TX"
+      ],
+      "sources": [
+        "nabcep"
+      ],
+      "createdAt": "2026-02-06T20:18:03.476Z"
+    }
+  ]
+}

@@ -45,19 +45,14 @@ async function runTests() {
     `✅ Annual installs: ${volumeEstimate.annualEstimate}, Cumulative: ${volumeEstimate.cumulativeEstimate}\n`,
   );
 
-  // Test 4: Search keywords generation
-  console.log("Test 4: Search Keywords");
-  const keywords = pipeline.generateSearchKeywords({
-    name: "Bright Sun Solar Energy",
-    city: "Austin",
-    state: "TX",
-    certifications: ["NABCEP PV Installation Professional"],
-  });
-  console.log(
-    `✅ Generated ${keywords.length} keywords:`,
-    keywords.slice(0, 10).join(", "),
-    "...\n",
+  // Test 4: ID generation
+  console.log("Test 4: ID Generation");
+  const testId = pipeline.generateInstallerId(
+    "Bright Sun Solar Energy",
+    "TX",
+    "Austin",
   );
+  console.log(`✅ Generated ID: ${testId}\n`);
 
   // Test 5: Data merging
   console.log("Test 5: Data Merging");
