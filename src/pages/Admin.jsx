@@ -830,10 +830,29 @@ export default function Admin() {
 
         {/* Dashboard Content */}
         <div className="admin-container">
-          <h1 className="admin-title">Dashboard</h1>
-          <p className="admin-subtitle">
-            Manage customer projects and track performance
-          </p>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginBottom: 8,
+            }}
+          >
+            <div>
+              <h1 className="admin-title">Dashboard</h1>
+              <p className="admin-subtitle">
+                Manage customer projects and track performance
+              </p>
+            </div>
+            <button
+              className="action-btn"
+              onClick={() => setShowAnalytics(!showAnalytics)}
+              style={{ alignSelf: "flex-start" }}
+            >
+              <BarChart3 size={16} />
+              {showAnalytics ? "Hide" : "Show"} Analytics
+            </button>
+          </div>
 
           {/* Stats Grid */}
           {stats && (
