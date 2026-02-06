@@ -16,7 +16,10 @@
     "installers:scrape": "node scripts/installer-data-pipeline.js",
     "installers:scrape:500": "node scripts/installer-data-pipeline.js --target=500",
     "installers:scrape:1000": "node scripts/installer-data-pipeline.js --target=1000",
-    "installers:import": "node scripts/import-installers-to-firestore.js"
+    "installers:import": "node scripts/import-installers-to-firestore.js",
+    "campaign:run": "node campaigns/commercial-outbound/run-campaign.js",
+    "campaign:dryrun": "node campaigns/commercial-outbound/run-campaign.js --dry-run",
+    "campaign:test": "node campaigns/commercial-outbound/run-campaign.js --target 10 --dry-run"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.0",
