@@ -10,6 +10,7 @@ import SmtCallback from "./pages/SmtCallback";
 import Admin from "./pages/Admin";
 import Referrals from "./pages/Referrals";
 import ApiDocs from "./pages/ApiDocs";
+import InstallerComparison from "./pages/InstallerComparison";
 import "./App.css";
 
 function App() {
