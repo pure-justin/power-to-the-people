@@ -66,6 +66,11 @@ export default function Qualify() {
   const [isCheckingEligibility, setIsCheckingEligibility] = useState(false);
   const [error, setError] = useState("");
 
+  // Referral tracking
+  const [referralCode, setReferralCode] = useState("");
+  const [referralInfo, setReferralInfo] = useState(null);
+  const [validatingReferral, setValidatingReferral] = useState(false);
+
   // Dynamic spots counter for urgency
   const [spotsLeft, setSpotsLeft] = useState(847);
   const [approvalRate, setApprovalRate] = useState(11.2);
