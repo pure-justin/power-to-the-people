@@ -7,6 +7,7 @@ import Success from "./pages/Success";
 import Test3D from "./pages/Test3D";
 import SubHubCompare from "./pages/SubHubCompare";
 import SmtCallback from "./pages/SmtCallback";
+import Admin from "./pages/Admin";
 import "./App.css";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/success" element={<Success />} />
         <Route path="/test3d" element={<Test3D />} />
         <Route path="/compare" element={<SubHubCompare />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </BrowserRouter>
   );
