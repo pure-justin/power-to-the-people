@@ -19,7 +19,7 @@ import { LoopNetScraper } from "./scrapers/loopnet-scraper.js";
 import { LeadEnricher } from "./enrichment/lead-enricher.js";
 import { CommercialSolarROI } from "./roi-calculator.js";
 import OutreachScheduler from "./outreach-scheduler.js";
-import { initializeApp } from "firebase-admin/app";
+import { initializeApp, applicationDefault } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
 import { writeFile } from "fs/promises";
 
