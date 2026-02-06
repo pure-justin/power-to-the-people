@@ -195,6 +195,16 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
+    // SMS LOG COLLECTION
+    match /smsLog/{logId} {
+      // Only admins can read SMS logs
+      allow read: if isAdmin();
+
+      // Cloud Functions can write (via Admin SDK)
+      // Direct writes from client are blocked
+      allow write: if false;
+    }
+
     // Default deny all other collections
     match /{document=**} {
       allow read, write: if false;
