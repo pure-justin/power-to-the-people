@@ -21,6 +21,7 @@ import {
   DollarSign,
   AlertCircle,
   RefreshCw,
+  BarChart3,
 } from "lucide-react";
 import {
   onAuthChange,
@@ -29,6 +30,8 @@ import {
   signInWithEmail,
 } from "../services/firebase";
 import { getAdminProjects, getAdminStats } from "../services/adminService";
+import ProjectDetailModal from "../components/ProjectDetailModal";
+import AdminAnalytics from "../components/AdminAnalytics";
 
 export default function Admin() {
   const navigate = useNavigate();
