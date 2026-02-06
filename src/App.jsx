@@ -26,6 +26,7 @@ function App() {
         <Route path="/test3d" element={<Test3D />} />
         <Route path="/compare" element={<SubHubCompare />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/api-docs" element={<ApiDocs />} />
       </Routes>
     </BrowserRouter>
   );
