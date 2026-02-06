@@ -236,6 +236,40 @@ export default function Qualify() {
   const SMT_API_URL =
     import.meta.env.VITE_SMT_API_URL || "http://localhost:3001";
 
+  // Check for referral code in URL on mount
+  useEffect(() => {
+    const refCode = searchParams.get("ref");
+    if (refCode) {
+      setReferralCode(refCode);
+      validateReferral(refCode);
+    }
+  }, [searchParams]);
+
+  // Validate referral code
+  const validateReferral = async (code) => {
+    if (!code || code.trim() === "") {
+      setReferralInfo(null);
+      return;
+    }
+
+    setValidatingReferral(true);
+    try {
+      const referrer = await validateReferralCode(code);
+      if (referrer) {
+        setReferralInfo(referrer);
+        console.log("Valid referral code from:", referrer.email);
+      } else {
+        setReferralInfo(null);
+        console.log("Invalid referral code:", code);
+      }
+    } catch (error) {
+      console.error("Error validating referral code:", error);
+      setReferralInfo(null);
+    } finally {
+      setValidatingReferral(false);
+    }
+  };
+
   // Check for SMT data on mount (from Python connector)
   useEffect(() => {
     if (searchParams.get("smtData") === "ready") {
