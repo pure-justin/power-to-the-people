@@ -22,6 +22,7 @@ import {
   AlertCircle,
   RefreshCw,
   BarChart3,
+  Gift,
 } from "lucide-react";
 import {
   onAuthChange,
@@ -32,6 +33,7 @@ import {
 import { getAdminProjects, getAdminStats } from "../services/adminService";
 import ProjectDetailModal from "../components/ProjectDetailModal";
 import AdminAnalytics from "../components/AdminAnalytics";
+import ReferralAdminPanel from "../components/ReferralAdminPanel";
 
 export default function Admin() {
   const navigate = useNavigate();
