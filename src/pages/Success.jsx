@@ -22,6 +22,7 @@ import {
   ThermometerSun,
   Heart,
   BatteryCharging,
+  Users,
 } from "lucide-react";
 import RoofVisualizer from "../components/RoofVisualizer";
 import { createAccount } from "../services/firebase";
