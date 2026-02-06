@@ -240,6 +240,8 @@ function getNevadaUtility(city) {
 
 /**
  * Check if property already exists in database
+ * Note: This requires read permissions. For automated imports,
+ * we'll skip this check and rely on unique placeIds in generation.
  */
 export async function propertyExists(placeId) {
   try {
@@ -248,6 +250,10 @@ export async function propertyExists(placeId) {
     const snapshot = await getDocs(q);
     return !snapshot.empty;
   } catch (error) {
+    // If permission denied, assume doesn't exist (create will fail if duplicate)
+    if (error.code === "permission-denied") {
+      return false;
+    }
     console.error("Error checking property existence:", error);
     return false;
   }
