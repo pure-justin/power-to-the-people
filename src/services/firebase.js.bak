@@ -31,11 +31,11 @@ import {
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB5qQNPcjiYk3tOqWT9T74TzEwK0cDMaRE",
-  authDomain: "power-to-the-people-vpp.firebaseapp.com",
-  projectId: "power-to-the-people-vpp",
-  storageBucket: "power-to-the-people-vpp.firebasestorage.app",
-  messagingSenderId: "420242983855",
+  apiKey: "AIzaSyBzvqnZLTqAcv0u6qrIu4APhrYi80Iy9Ys",
+  authDomain: "agentic-labs.firebaseapp.com",
+  projectId: "agentic-labs",
+  storageBucket: "agentic-labs.firebasestorage.app",
+  messagingSenderId: "299736855701",
 };
 
 let app = null;

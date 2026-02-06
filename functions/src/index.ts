@@ -40,3 +40,19 @@ export {
   secureSolarWebhook,
   secureLeadQuery,
 } from "./secureLeadWebhook";
+
+// Export Referral System functions
+export {
+  onProjectCreated,
+  onProjectUpdated,
+  updateReferralStatusHttp,
+  getReferralStats,
+  processWeeklyPayouts,
+} from "./referrals";
+
+// Export Referral Webhooks
+export {
+  referralStatusWebhook,
+  referralBulkUpdateWebhook,
+  referralStatsWebhook,
+} from "./referralWebhooks";
