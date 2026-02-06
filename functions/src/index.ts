@@ -10,10 +10,7 @@ import * as admin from "firebase-admin";
 admin.initializeApp();
 
 // Export SMT Connector functions
-export {
-  fetchSmtUsage,
-  smtWebhook,
-} from "./smtConnector";
+export { fetchSmtUsage, smtWebhook } from "./smtConnector";
 
 // Export Lead Management functions
 export {
