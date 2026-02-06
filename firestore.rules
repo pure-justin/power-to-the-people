@@ -152,6 +152,49 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
+    // COMMERCIAL LEADS COLLECTION (Cold Outbound Campaign)
+    match /commercial_leads/{leadId} {
+      // Admins have full access
+      allow read, write: if isAdmin();
+
+      // Sales team can read and update engagement
+      allow read: if isSignedIn() &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['admin', 'sales', 'installer'];
+
+      allow update: if isSignedIn() &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['admin', 'sales'] &&
+        request.resource.data.diff(resource.data).affectedKeys()
+          .hasOnly(['engagement', 'status', 'notes', 'updatedAt', 'propertyManager']);
+    }
+
+    // CAMPAIGNS COLLECTION
+    match /campaigns/{campaignId} {
+      // Admins have full access
+      allow read, write: if isAdmin();
+
+      // Sales team can read
+      allow read: if isSignedIn() &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['admin', 'sales', 'installer'];
+    }
+
+    // UTILITY RATES COLLECTION (cached data)
+    match /utility_rates/{utilityId} {
+      // Public read access
+      allow read: if true;
+
+      // Admin write
+      allow write: if isAdmin();
+    }
+
+    // EMAIL TEMPLATES COLLECTION
+    match /email_templates/{templateId} {
+      // Public read
+      allow read: if true;
+
+      // Admin write
+      allow write: if isAdmin();
+    }
+
     // Default deny all other collections
     match /{document=**} {
       allow read, write: if false;
