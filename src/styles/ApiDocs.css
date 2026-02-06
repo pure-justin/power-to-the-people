@@ -569,6 +569,35 @@
   background: rgba(96, 165, 250, 0.5);
 }
 
+/* Playground Tips */
+.playground-tips {
+  background: rgba(59, 130, 246, 0.05);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 1rem;
+  padding: 2rem;
+  margin-top: 2rem;
+}
+
+.playground-tips h3 {
+  margin-top: 0;
+  color: #60a5fa;
+}
+
+.playground-tips ul {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+  color: #cbd5e1;
+}
+
+.playground-tips li {
+  margin-bottom: 0.75rem;
+  line-height: 1.6;
+}
+
+.playground-tips strong {
+  color: #e2e8f0;
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
   .api-docs-container {
