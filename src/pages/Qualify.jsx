@@ -35,6 +35,10 @@ import {
   signInWithEmail,
   linkSmtAccount,
 } from "../services/firebase";
+import {
+  validateReferralCode,
+  trackReferral,
+} from "../services/referralService";
 import AddressAutocomplete from "../components/AddressAutocomplete";
 
 // Generate a unique project ID
