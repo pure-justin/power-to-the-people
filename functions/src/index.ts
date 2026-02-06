@@ -33,3 +33,10 @@ export {
   cleanupApiKeys,
   validateApiKeyFromRequest,
 } from "./apiKeys";
+
+// Export Secure Webhook Examples (API key protected endpoints)
+export {
+  secureLeadWebhook,
+  secureSolarWebhook,
+  secureLeadQuery,
+} from "./secureLeadWebhook";
