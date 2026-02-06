@@ -56,3 +56,15 @@ export {
   referralBulkUpdateWebhook,
   referralStatsWebhook,
 } from "./referralWebhooks";
+
+// Export SMS Notification functions
+export {
+  onProjectCreated as smsOnProjectCreated,
+  onProjectStatusUpdate,
+  onReferralReward,
+  sendCustomSMS,
+  sendBulkSMS,
+  sendPaymentReminders,
+  getSmsStats,
+  twilioStatusCallback,
+} from "./smsNotifications";
