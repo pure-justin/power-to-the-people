@@ -52,8 +52,8 @@ async function testApiKeyManagement() {
         requestsThisMonth: 0,
         lastResetAt: new Date(),
       },
-      createdAt: admin.firestore.Timestamp.now(),
-      updatedAt: admin.firestore.Timestamp.now(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
     };
 
     console.log("✅ Mock API key created:", mockApiKey.keyPrefix);
