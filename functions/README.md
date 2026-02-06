@@ -53,6 +53,60 @@ const BROWSERLESS_URL = process.env.BROWSERLESS_URL || functions.config().browse
 
 ## Available Functions
 
+### API Key Management
+
+Complete API key system with usage tracking and rate limiting for developer platform.
+
+#### `createApiKey` (callable)
+Generate a new API key with custom scopes and rate limits.
+
+**Input:**
+```typescript
+{
+  name: string,
+  description?: string,
+  scopes: ApiKeyScope[],
+  environment?: "development" | "production",
+  expiresInDays?: number,
+  rateLimit?: Partial<RateLimit>,
+  allowedIps?: string[],
+  allowedDomains?: string[]
+}
+```
+
+**Output:**
+```typescript
+{
+  success: true,
+  apiKeyId: string,
+  apiKey: string,  // Plain-text key - ONLY TIME IT'S SHOWN!
+  keyPrefix: string,
+  message: "Save this API key securely. It will not be shown again."
+}
+```
+
+#### `validateApiKey` (callable)
+Validates an API key and checks permissions.
+
+#### `revokeApiKey` (callable)
+Permanently disables an API key.
+
+#### `rotateApiKey` (callable)
+Generates a new API key while preserving settings.
+
+#### `updateApiKey` (callable)
+Updates API key settings (name, scopes, rate limits, etc).
+
+#### `getApiKeyUsage` (callable)
+Retrieves usage statistics and detailed request logs.
+
+#### `cleanupApiKeys` (scheduled)
+Automatically runs daily to expire old keys and clean up logs.
+
+**Documentation:** See `src/apiKeys.test.md` for complete guide and `API_KEYS_README.md`
+
+---
+
 ### Lead Management
 
 #### `createLead` (callable)
