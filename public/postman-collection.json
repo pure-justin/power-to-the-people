@@ -1,0 +1,390 @@
+{
+  "info": {
+    "name": "Power to the People API",
+    "description": "Complete API collection for solar enrollment, lead management, referrals, and SMS notifications",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "power-to-the-people-v1",
+    "version": "1.0.0"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{API_KEY}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "BASE_URL",
+      "value": "https://us-central1-power-to-the-people-vpp.cloudfunctions.net",
+      "type": "string"
+    },
+    {
+      "key": "NETLIFY_URL",
+      "value": "https://power-to-the-people-vpp.web.app/.netlify/functions",
+      "type": "string"
+    },
+    {
+      "key": "API_KEY",
+      "value": "pk_test_your_api_key_here",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Utility Bill",
+      "item": [
+        {
+          "name": "Scan Utility Bill",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"imageBase64\": \"<base64_encoded_image>\",\n    \"mediaType\": \"image/jpeg\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{NETLIFY_URL}}/scan-bill",
+              "host": ["{{NETLIFY_URL}}"],
+              "path": ["scan-bill"]
+            },
+            "description": "Extract data from utility bill images using AI"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Leads",
+      "item": [
+        {
+          "name": "Create Lead",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Smith\",\n  \"email\": \"john@example.com\",\n  \"phone\": \"+15125550100\",\n  \"address\": \"123 Solar St, Austin, TX 78701\",\n  \"annualUsageKwh\": 12000,\n  \"monthlyBill\": 150,\n  \"source\": \"website\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/createLead",
+              "host": ["{{BASE_URL}}"],
+              "path": ["createLead"]
+            },
+            "description": "Create a new solar installation lead"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Lead",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"leadId\": \"lead_123\",\n  \"status\": \"contacted\",\n  \"notes\": \"Called customer, scheduled follow-up\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/updateLead",
+              "host": ["{{BASE_URL}}"],
+              "path": ["updateLead"]
+            },
+            "description": "Update lead information and status"
+          },
+          "response": []
+        },
+        {
+          "name": "Lead Webhook",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Jane Doe\",\n  \"email\": \"jane@example.com\",\n  \"phone\": \"+15125550200\",\n  \"address\": \"456 Green Ave, Austin, TX 78702\",\n  \"source\": \"partner_referral\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/leadWebhook",
+              "host": ["{{BASE_URL}}"],
+              "path": ["leadWebhook"]
+            },
+            "description": "External webhook for lead submissions (API key required)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Referrals",
+      "item": [
+        {
+          "name": "Update Referral Status",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"trackingId\": \"tracking_123\",\n  \"status\": \"installed\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/referralStatusWebhook",
+              "host": ["{{BASE_URL}}"],
+              "path": ["referralStatusWebhook"]
+            },
+            "description": "Update referral status and trigger rewards"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Referral Stats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/referralStatsWebhook",
+              "host": ["{{BASE_URL}}"],
+              "path": ["referralStatsWebhook"]
+            },
+            "description": "Get referral program statistics"
+          },
+          "response": []
+        },
+        {
+          "name": "Bulk Update Referrals",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"updates\": [\n    {\n      \"trackingId\": \"tracking_123\",\n      \"status\": \"qualified\"\n    },\n    {\n      \"trackingId\": \"tracking_456\",\n      \"status\": \"site_survey\"\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/referralBulkUpdateWebhook",
+              "host": ["{{BASE_URL}}"],
+              "path": ["referralBulkUpdateWebhook"]
+            },
+            "description": "Bulk update multiple referrals"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "SMS",
+      "item": [
+        {
+          "name": "Send Custom SMS",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"+15125550100\",\n  \"message\": \"Thanks for enrolling! We'll contact you within 24 hours.\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/sendCustomSMS",
+              "host": ["{{BASE_URL}}"],
+              "path": ["sendCustomSMS"]
+            },
+            "description": "Send a custom SMS message (admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Send Bulk SMS",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"recipients\": [\n    \"+15125550100\",\n    \"+15125550200\",\n    \"+15125550300\"\n  ],\n  \"message\": \"Power to the People: Your installation is scheduled for next week!\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/sendBulkSMS",
+              "host": ["{{BASE_URL}}"],
+              "path": ["sendBulkSMS"]
+            },
+            "description": "Send SMS to multiple recipients (max 100)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get SMS Stats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/getSmsStats",
+              "host": ["{{BASE_URL}}"],
+              "path": ["getSmsStats"]
+            },
+            "description": "Get SMS usage statistics (admin only)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "API Keys",
+      "item": [
+        {
+          "name": "Create API Key",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Production API Key\",\n  \"description\": \"API key for production webhook integrations\",\n  \"scopes\": [\"write_leads\", \"read_leads\"],\n  \"environment\": \"production\",\n  \"expiresInDays\": 365\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/createApiKey",
+              "host": ["{{BASE_URL}}"],
+              "path": ["createApiKey"]
+            },
+            "description": "Create a new API key with specific scopes"
+          },
+          "response": []
+        },
+        {
+          "name": "Validate API Key",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"requiredScope\": \"write_leads\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/validateApiKey",
+              "host": ["{{BASE_URL}}"],
+              "path": ["validateApiKey"]
+            },
+            "description": "Validate an API key and check permissions"
+          },
+          "response": []
+        },
+        {
+          "name": "Revoke API Key",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"apiKeyId\": \"key_123\",\n  \"reason\": \"Key compromised\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/revokeApiKey",
+              "host": ["{{BASE_URL}}"],
+              "path": ["revokeApiKey"]
+            },
+            "description": "Permanently revoke an API key"
+          },
+          "response": []
+        },
+        {
+          "name": "Rotate API Key",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"apiKeyId\": \"key_123\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/rotateApiKey",
+              "host": ["{{BASE_URL}}"],
+              "path": ["rotateApiKey"]
+            },
+            "description": "Rotate API key (generate new key, keep same ID)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get API Key Usage",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"apiKeyId\": \"key_123\",\n  \"days\": 7\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/getApiKeyUsage",
+              "host": ["{{BASE_URL}}"],
+              "path": ["getApiKeyUsage"]
+            },
+            "description": "Get API key usage statistics"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
