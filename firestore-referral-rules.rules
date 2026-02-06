@@ -1,0 +1,62 @@
+// Firestore Security Rules for Referral System
+// Add these rules to your existing firestore.rules file
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Referral records - users can read their own, admins can read all
+    match /referrals/{userId} {
+      // Users can read their own referral data
+      allow read: if request.auth != null && request.auth.uid == userId;
+
+      // Only system can create/update referral records
+      allow create: if request.auth != null && request.auth.uid == userId;
+      allow update: if request.auth != null && (
+        request.auth.uid == userId ||
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
+      );
+
+      // No deletes allowed
+      allow delete: if false;
+    }
+
+    // Referral tracking - referrers can read their referrals, admins can read all
+    match /referralTracking/{trackingId} {
+      // Users can read referrals they made
+      allow read: if request.auth != null && (
+        resource.data.referrerId == request.auth.uid ||
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
+      );
+
+      // System can create tracking records
+      allow create: if request.auth != null;
+
+      // Admins can update tracking records (for status changes)
+      allow update: if request.auth != null &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+
+      // No deletes allowed
+      allow delete: if false;
+    }
+
+    // Payout records - users can read their own, admins can read all
+    match /payouts/{payoutId} {
+      // Users can read their own payout requests
+      allow read: if request.auth != null && (
+        resource.data.userId == request.auth.uid ||
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
+      );
+
+      // Users can create payout requests for themselves
+      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+
+      // Only admins can update payout status
+      allow update: if request.auth != null &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+
+      // No deletes allowed
+      allow delete: if false;
+    }
+  }
+}
