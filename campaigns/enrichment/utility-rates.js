@@ -52,7 +52,8 @@ class UtilityRateService {
 
     // In production, this would call OpenEI API or utility company APIs
     // For now, add slight variation based on zip code
-    const zipVariation = parseInt(zipCode.slice(-2)) / 1000;
+    const zipStr = String(zipCode);
+    const zipVariation = parseInt(zipStr.slice(-2)) / 1000;
     const finalRate = baseRate + zipVariation;
 
     return {
