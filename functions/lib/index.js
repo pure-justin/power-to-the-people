@@ -38,7 +38,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.validateApiKeyFromRequest = exports.cleanupApiKeys = exports.getApiKeyUsage = exports.updateApiKey = exports.rotateApiKey = exports.revokeApiKey = exports.validateApiKey = exports.createApiKey = exports.leadWebhook = exports.recalculateLeadScores = exports.assignLead = exports.addLeadNote = exports.updateLead = exports.createLead = exports.smtWebhook = exports.fetchSmtUsage = void 0;
+exports.secureLeadQuery = exports.secureSolarWebhook = exports.secureLeadWebhook = exports.validateApiKeyFromRequest = exports.cleanupApiKeys = exports.getApiKeyUsage = exports.updateApiKey = exports.rotateApiKey = exports.revokeApiKey = exports.validateApiKey = exports.createApiKey = exports.leadWebhook = exports.recalculateLeadScores = exports.assignLead = exports.addLeadNote = exports.updateLead = exports.createLead = exports.smtWebhook = exports.fetchSmtUsage = void 0;
 const admin = __importStar(require("firebase-admin"));
 // Initialize Firebase Admin SDK
 admin.initializeApp();
@@ -64,4 +64,9 @@ Object.defineProperty(exports, "updateApiKey", { enumerable: true, get: function
 Object.defineProperty(exports, "getApiKeyUsage", { enumerable: true, get: function () { return apiKeys_1.getApiKeyUsage; } });
 Object.defineProperty(exports, "cleanupApiKeys", { enumerable: true, get: function () { return apiKeys_1.cleanupApiKeys; } });
 Object.defineProperty(exports, "validateApiKeyFromRequest", { enumerable: true, get: function () { return apiKeys_1.validateApiKeyFromRequest; } });
+// Export Secure Webhook Examples (API key protected endpoints)
+var secureLeadWebhook_1 = require("./secureLeadWebhook");
+Object.defineProperty(exports, "secureLeadWebhook", { enumerable: true, get: function () { return secureLeadWebhook_1.secureLeadWebhook; } });
+Object.defineProperty(exports, "secureSolarWebhook", { enumerable: true, get: function () { return secureLeadWebhook_1.secureSolarWebhook; } });
+Object.defineProperty(exports, "secureLeadQuery", { enumerable: true, get: function () { return secureLeadWebhook_1.secureLeadQuery; } });
 //# sourceMappingURL=index.js.map
