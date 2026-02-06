@@ -1,0 +1,777 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Power to the People API",
+    "description": "Complete API for solar enrollment, lead management, referrals, SMS notifications, and solar system design using Google Solar API.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Power to the People Support",
+      "email": "support@powertothepeoplevpp.com",
+      "url": "https://power-to-the-people-vpp.web.app"
+    },
+    "license": {
+      "name": "Proprietary",
+      "url": "https://power-to-the-people-vpp.web.app/terms"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://us-central1-power-to-the-people-vpp.cloudfunctions.net",
+      "description": "Production Cloud Functions"
+    },
+    {
+      "url": "https://power-to-the-people-vpp.web.app/.netlify/functions",
+      "description": "Netlify Functions"
+    }
+  ],
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Solar",
+      "description": "Solar system design and calculations"
+    },
+    {
+      "name": "Leads",
+      "description": "Lead management and tracking"
+    },
+    {
+      "name": "Referrals",
+      "description": "Referral program and rewards"
+    },
+    {
+      "name": "SMS",
+      "description": "SMS notifications and messaging"
+    },
+    {
+      "name": "API Keys",
+      "description": "API key management"
+    },
+    {
+      "name": "Utility",
+      "description": "Utility bill scanning and data extraction"
+    }
+  ],
+  "paths": {
+    "/scan-bill": {
+      "post": {
+        "tags": ["Utility"],
+        "summary": "Scan Utility Bill",
+        "description": "Extract data from utility bill images using AI (Gemini 1.5 Pro)",
+        "operationId": "scanBill",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScanBillRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Bill scanned successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScanBillResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalError"
+          }
+        }
+      }
+    },
+    "/createLead": {
+      "post": {
+        "tags": ["Leads"],
+        "summary": "Create Lead",
+        "description": "Create a new solar installation lead",
+        "operationId": "createLead",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateLeadRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Lead created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateLeadResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/updateLead": {
+      "post": {
+        "tags": ["Leads"],
+        "summary": "Update Lead",
+        "description": "Update lead information and status",
+        "operationId": "updateLead",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateLeadRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Lead updated successfully"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/leadWebhook": {
+      "post": {
+        "tags": ["Leads"],
+        "summary": "Lead Webhook",
+        "description": "External webhook for lead submissions (API key required)",
+        "operationId": "leadWebhook",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LeadWebhookRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Lead received"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/referralStatusWebhook": {
+      "post": {
+        "tags": ["Referrals"],
+        "summary": "Update Referral Status",
+        "description": "Update referral status and trigger rewards",
+        "operationId": "updateReferralStatus",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReferralStatusRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Referral status updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReferralStatusResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/referralStatsWebhook": {
+      "get": {
+        "tags": ["Referrals"],
+        "summary": "Get Referral Stats",
+        "description": "Get referral program statistics",
+        "operationId": "getReferralStats",
+        "responses": {
+          "200": {
+            "description": "Stats retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReferralStatsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/sendCustomSMS": {
+      "post": {
+        "tags": ["SMS"],
+        "summary": "Send Custom SMS",
+        "description": "Send a custom SMS message (admin only)",
+        "operationId": "sendCustomSMS",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendSMSRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "SMS sent successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "messageId": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/sendBulkSMS": {
+      "post": {
+        "tags": ["SMS"],
+        "summary": "Send Bulk SMS",
+        "description": "Send SMS to multiple recipients (max 100)",
+        "operationId": "sendBulkSMS",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BulkSMSRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Bulk SMS sent",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BulkSMSResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/getSmsStats": {
+      "get": {
+        "tags": ["SMS"],
+        "summary": "Get SMS Stats",
+        "description": "Get SMS usage statistics (admin only)",
+        "operationId": "getSmsStats",
+        "responses": {
+          "200": {
+            "description": "Stats retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SmsStatsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/createApiKey": {
+      "post": {
+        "tags": ["API Keys"],
+        "summary": "Create API Key",
+        "description": "Create a new API key with specific scopes",
+        "operationId": "createApiKey",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateApiKeyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "API key created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateApiKeyResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/validateApiKey": {
+      "post": {
+        "tags": ["API Keys"],
+        "summary": "Validate API Key",
+        "description": "Validate an API key and check permissions",
+        "operationId": "validateApiKey",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["apiKey"],
+                "properties": {
+                  "apiKey": {
+                    "type": "string",
+                    "example": "pk_test_..."
+                  },
+                  "requiredScope": {
+                    "type": "string",
+                    "enum": ["read_leads", "write_leads", "read_solar", "write_solar", "read_smt", "write_smt", "admin"]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "API key is valid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "valid": {
+                      "type": "boolean"
+                    },
+                    "apiKeyId": {
+                      "type": "string"
+                    },
+                    "scopes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/revokeApiKey": {
+      "post": {
+        "tags": ["API Keys"],
+        "summary": "Revoke API Key",
+        "description": "Permanently revoke an API key",
+        "operationId": "revokeApiKey",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["apiKeyId"],
+                "properties": {
+                  "apiKeyId": {
+                    "type": "string"
+                  },
+                  "reason": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "API key revoked successfully"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "API Key",
+        "description": "Use your API key in the Authorization header: `Bearer pk_test_...`"
+      }
+    },
+    "schemas": {
+      "ScanBillRequest": {
+        "type": "object",
+        "required": ["data"],
+        "properties": {
+          "data": {
+            "type": "object",
+            "required": ["imageBase64"],
+            "properties": {
+              "imageBase64": {
+                "type": "string",
+                "description": "Base64 encoded utility bill image"
+              },
+              "mediaType": {
+                "type": "string",
+                "enum": ["image/jpeg", "image/png", "application/pdf"],
+                "default": "image/jpeg"
+              }
+            }
+          }
+        }
+      },
+      "ScanBillResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "billData": {
+            "type": "object",
+            "properties": {
+              "accountNumber": { "type": "string" },
+              "customerName": { "type": "string" },
+              "serviceAddress": { "type": "string" },
+              "utilityCompany": { "type": "string" },
+              "currentUsageKwh": { "type": "number" },
+              "totalAmountDue": { "type": "number" },
+              "esiid": { "type": "string", "description": "Electric Service Identifier (Texas)" },
+              "usageHistory": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "month": { "type": "string" },
+                    "year": { "type": "number" },
+                    "kWh": { "type": "number" }
+                  }
+                }
+              }
+            }
+          },
+          "consumptionData": {
+            "type": "object",
+            "properties": {
+              "annualConsumption": { "type": "number" },
+              "monthsWithData": { "type": "number" },
+              "dataQuality": { "type": "string", "enum": ["excellent", "good", "fair", "poor"] }
+            }
+          }
+        }
+      },
+      "CreateLeadRequest": {
+        "type": "object",
+        "required": ["name", "email", "phone", "address"],
+        "properties": {
+          "name": { "type": "string" },
+          "email": { "type": "string", "format": "email" },
+          "phone": { "type": "string" },
+          "address": { "type": "string" },
+          "annualUsageKwh": { "type": "number" },
+          "monthlyBill": { "type": "number" },
+          "referralCode": { "type": "string" },
+          "source": { "type": "string" }
+        }
+      },
+      "CreateLeadResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean" },
+          "leadId": { "type": "string" },
+          "message": { "type": "string" }
+        }
+      },
+      "UpdateLeadRequest": {
+        "type": "object",
+        "required": ["leadId"],
+        "properties": {
+          "leadId": { "type": "string" },
+          "status": {
+            "type": "string",
+            "enum": ["new", "qualified", "contacted", "proposal", "closed", "lost"]
+          },
+          "notes": { "type": "string" },
+          "assignedTo": { "type": "string" }
+        }
+      },
+      "LeadWebhookRequest": {
+        "type": "object",
+        "required": ["name", "email", "phone"],
+        "properties": {
+          "name": { "type": "string" },
+          "email": { "type": "string", "format": "email" },
+          "phone": { "type": "string" },
+          "address": { "type": "string" },
+          "source": { "type": "string" },
+          "metadata": { "type": "object" }
+        }
+      },
+      "ReferralStatusRequest": {
+        "type": "object",
+        "required": ["trackingId", "status"],
+        "properties": {
+          "trackingId": { "type": "string" },
+          "status": {
+            "type": "string",
+            "enum": ["signed_up", "qualified", "site_survey", "installed"]
+          }
+        }
+      },
+      "ReferralStatusResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean" },
+          "earningsAdded": { "type": "number" },
+          "newStatus": { "type": "string" }
+        }
+      },
+      "ReferralStatsResponse": {
+        "type": "object",
+        "properties": {
+          "totalReferrals": { "type": "number" },
+          "qualifiedReferrals": { "type": "number" },
+          "installedReferrals": { "type": "number" },
+          "totalEarnings": { "type": "number" },
+          "pendingEarnings": { "type": "number" }
+        }
+      },
+      "SendSMSRequest": {
+        "type": "object",
+        "required": ["phone", "message"],
+        "properties": {
+          "phone": {
+            "type": "string",
+            "pattern": "^\\+1[0-9]{10}$",
+            "example": "+15125550100"
+          },
+          "message": {
+            "type": "string",
+            "maxLength": 160
+          }
+        }
+      },
+      "BulkSMSRequest": {
+        "type": "object",
+        "required": ["recipients", "message"],
+        "properties": {
+          "recipients": {
+            "type": "array",
+            "items": { "type": "string" },
+            "maxItems": 100
+          },
+          "message": {
+            "type": "string",
+            "maxLength": 160
+          }
+        }
+      },
+      "BulkSMSResponse": {
+        "type": "object",
+        "properties": {
+          "total": { "type": "number" },
+          "successful": { "type": "number" },
+          "failed": { "type": "number" }
+        }
+      },
+      "SmsStatsResponse": {
+        "type": "object",
+        "properties": {
+          "total": { "type": "number" },
+          "successful": { "type": "number" },
+          "failed": { "type": "number" },
+          "estimatedCost": { "type": "string" },
+          "period": { "type": "string" }
+        }
+      },
+      "CreateApiKeyRequest": {
+        "type": "object",
+        "required": ["name", "scopes"],
+        "properties": {
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "scopes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["read_leads", "write_leads", "read_solar", "write_solar", "read_smt", "write_smt", "admin"]
+            },
+            "minItems": 1
+          },
+          "environment": {
+            "type": "string",
+            "enum": ["development", "production"],
+            "default": "development"
+          },
+          "expiresInDays": { "type": "number" }
+        }
+      },
+      "CreateApiKeyResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean" },
+          "apiKeyId": { "type": "string" },
+          "apiKey": {
+            "type": "string",
+            "description": "The full API key - save it securely, it will not be shown again"
+          },
+          "keyPrefix": { "type": "string" },
+          "message": { "type": "string" }
+        }
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "Bad Request - Invalid parameters",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": { "type": "string" },
+                "message": { "type": "string" }
+              }
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Unauthorized - Invalid or missing API key",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": { "type": "string" },
+                "message": { "type": "string" }
+              }
+            }
+          }
+        }
+      },
+      "Forbidden": {
+        "description": "Forbidden - Insufficient permissions",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": { "type": "string" },
+                "message": { "type": "string" }
+              }
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Not Found - Resource does not exist",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": { "type": "string" },
+                "message": { "type": "string" }
+              }
+            }
+          }
+        }
+      },
+      "InternalError": {
+        "description": "Internal Server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": { "type": "string" },
+                "message": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
