@@ -23,7 +23,6 @@ import {
   RefreshCw,
   BarChart3,
   Gift,
-  Bot,
 } from "lucide-react";
 import {
   onAuthChange,
@@ -35,7 +34,6 @@ import { getAdminProjects, getAdminStats } from "../services/adminService";
 import ProjectDetailModal from "../components/ProjectDetailModal";
 import AdminAnalytics from "../components/AdminAnalytics";
 import ReferralAdminPanel from "../components/ReferralAdminPanel";
-import AvaActivityPanel from "../components/AvaActivityPanel";
 
 export default function Admin() {
   const navigate = useNavigate();
@@ -58,7 +56,7 @@ export default function Admin() {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
   const [showAnalytics, setShowAnalytics] = useState(true);
-  const [activeTab, setActiveTab] = useState("projects"); // projects, analytics, referrals, ava
+  const [activeTab, setActiveTab] = useState("projects"); // projects, analytics, referrals
 
   // Check authentication status
   useEffect(() => {
@@ -943,37 +941,10 @@ export default function Admin() {
               <Gift size={18} />
               Referrals
             </button>
-            <button
-              onClick={() => setActiveTab("ava")}
-              style={{
-                padding: "12px 24px",
-                background: "none",
-                border: "none",
-                borderBottom:
-                  activeTab === "ava"
-                    ? "2px solid #8b5cf6"
-                    : "2px solid transparent",
-                color: activeTab === "ava" ? "#8b5cf6" : "#6b7280",
-                fontWeight: activeTab === "ava" ? 600 : 500,
-                cursor: "pointer",
-                fontSize: "0.95rem",
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-                marginBottom: "-2px",
-                transition: "all 0.2s",
-              }}
-            >
-              <Bot size={18} />
-              Ava AI
-            </button>
           </div>
 
           {/* Referrals Tab */}
           {activeTab === "referrals" && <ReferralAdminPanel />}
-
-          {/* Ava AI Tab */}
-          {activeTab === "ava" && <AvaActivityPanel />}
 
           {/* Analytics Tab */}
           {activeTab === "analytics" && stats && (
