@@ -22,10 +22,14 @@ if ! command -v node &> /dev/null; then
     exit 1
 fi
 
+# Get script directory
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR"
+
 # Check if functions are built
 if [ ! -d "functions/lib" ]; then
     echo "⚠️  Functions not built. Building now..."
-    cd functions && npm run build && cd ..
+    (cd functions && npm run build)
 fi
 
 echo "✓ Prerequisites OK"
