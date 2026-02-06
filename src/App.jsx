@@ -8,6 +8,7 @@ import Test3D from "./pages/Test3D";
 import SubHubCompare from "./pages/SubHubCompare";
 import SmtCallback from "./pages/SmtCallback";
 import Admin from "./pages/Admin";
+import Referrals from "./pages/Referrals";
 import "./App.css";
 
 function App() {
