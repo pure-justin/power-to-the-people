@@ -270,6 +270,38 @@ export const onProjectStatusUpdate = functions.firestore
     if (message) {
       await sendSMS(phone, message);
     }
+
+    // Create in-app notification for status changes
+    const projectId = context.params.projectId;
+    const notifMap: Record<string, { type: string; title: string }> = {
+      approved: {
+        type: "application_approved",
+        title: "Application Approved",
+      },
+      pending_info: {
+        type: "status_update",
+        title: "Info Required",
+      },
+      installation_scheduled: {
+        type: "installation_scheduled",
+        title: "Installation Scheduled",
+      },
+      installed: {
+        type: "installation_complete",
+        title: "System Installed",
+      },
+    };
+
+    const notifConfig = notifMap[after.status];
+    if (notifConfig && message) {
+      await createInAppNotification({
+        projectId,
+        type: notifConfig.type,
+        title: notifConfig.title,
+        message,
+        link: `https://power-to-the-people-vpp.web.app/project/${projectId}`,
+      });
+    }
   });
 
 /**
