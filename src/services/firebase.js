@@ -345,6 +345,21 @@ export const createAccount = async (email, password, displayName) => {
     role: "customer",
   });
 
+  // Auto-create referral record so user can start referring immediately
+  try {
+    const { createReferralRecord } = await import("./referralService");
+    await createReferralRecord(userCredential.user.uid, {
+      email,
+      displayName: displayName || "",
+    });
+    console.log("Firebase: Created referral record for", email);
+  } catch (refError) {
+    console.warn(
+      "Firebase: Referral record creation skipped:",
+      refError.message,
+    );
+  }
+
   console.log("Firebase: Created account for", email);
   return userCredential.user;
 };
