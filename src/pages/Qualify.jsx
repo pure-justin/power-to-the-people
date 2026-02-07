@@ -1609,6 +1609,7 @@ export default function Qualify() {
           email: formData.email,
           phone: formData.phone,
         },
+        smsOptIn: formData.phone ? formData.smsOptIn : false,
         address: {
           street: formData.street,
           city: formData.city,
