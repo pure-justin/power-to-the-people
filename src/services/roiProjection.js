@@ -581,4 +581,280 @@ export function calculateAdvancedROI(inputs = {}) {
   };
 }
 
+// ============================================
+// MONTE CARLO RISK ANALYSIS
+// ============================================
+
+/**
+ * Run Monte Carlo simulation for ROI uncertainty analysis
+ * Varies utility escalation, solar degradation, and sunshine hours
+ * Returns percentile bands (P10, P25, P50, P75, P90)
+ */
+export function runMonteCarloSimulation(baseInputs = {}, iterations = 500) {
+  const config = { ...DEFAULTS, ...baseInputs };
+
+  // Parameter distributions (mean, stddev)
+  const params = {
+    utilityEscalator: { mean: config.utilityEscalator, std: 0.01 },
+    annualDegradation: { mean: config.annualDegradation, std: 0.002 },
+    sunshineHoursPerYear: { mean: config.sunshineHoursPerYear, std: 150 },
+    solarEscalator: { mean: config.solarEscalator, std: 0.005 },
+  };
+
+  // Simple Box-Muller for normal random
+  function normalRandom(mean, std) {
+    const u1 = Math.random();
+    const u2 = Math.random();
+    const z = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+    return mean + z * std;
+  }
+
+  // Run simulations
+  const results = [];
+  for (let i = 0; i < iterations; i++) {
+    const simInputs = {
+      ...config,
+      utilityEscalator: Math.max(
+        0.01,
+        normalRandom(params.utilityEscalator.mean, params.utilityEscalator.std),
+      ),
+      annualDegradation: Math.max(
+        0.002,
+        Math.min(
+          0.015,
+          normalRandom(
+            params.annualDegradation.mean,
+            params.annualDegradation.std,
+          ),
+        ),
+      ),
+      sunshineHoursPerYear: Math.max(
+        800,
+        normalRandom(
+          params.sunshineHoursPerYear.mean,
+          params.sunshineHoursPerYear.std,
+        ),
+      ),
+      solarEscalator: Math.max(
+        0.01,
+        normalRandom(params.solarEscalator.mean, params.solarEscalator.std),
+      ),
+    };
+    const projection = calculateROIProjection(simInputs);
+    results.push({
+      totalSavingsLease: projection.metrics.totalSavingsLease,
+      totalSavingsPurchase: projection.metrics.totalSavingsPurchase,
+      leasePaybackYear: projection.metrics.leasePaybackYear,
+      purchasePaybackYear: projection.metrics.purchasePaybackYear,
+      yearlyLeaseSavings: projection.yearlyData.map(
+        (d) => d.leaseCumulativeSavings,
+      ),
+      yearlyPurchaseSavings: projection.yearlyData.map(
+        (d) => d.purchaseCumulativeSavings,
+      ),
+    });
+  }
+
+  // Sort by total savings to get percentiles
+  const sortedLease = [...results].sort(
+    (a, b) => a.totalSavingsLease - b.totalSavingsLease,
+  );
+  const sortedPurchase = [...results].sort(
+    (a, b) => a.totalSavingsPurchase - b.totalSavingsPurchase,
+  );
+
+  function percentile(sorted, p) {
+    const idx = Math.floor(sorted.length * p);
+    return sorted[Math.min(idx, sorted.length - 1)];
+  }
+
+  // Build year-by-year percentile bands
+  const yearBands = [];
+  for (let yr = 0; yr < config.projectionYears; yr++) {
+    const leaseValues = results
+      .map((r) => r.yearlyLeaseSavings[yr])
+      .sort((a, b) => a - b);
+    const purchaseValues = results
+      .map((r) => r.yearlyPurchaseSavings[yr])
+      .sort((a, b) => a - b);
+    const pctIdx = (p) =>
+      Math.min(Math.floor(leaseValues.length * p), leaseValues.length - 1);
+    yearBands.push({
+      year: yr + 1,
+      lease: {
+        p10: leaseValues[pctIdx(0.1)],
+        p25: leaseValues[pctIdx(0.25)],
+        p50: leaseValues[pctIdx(0.5)],
+        p75: leaseValues[pctIdx(0.75)],
+        p90: leaseValues[pctIdx(0.9)],
+      },
+      purchase: {
+        p10: purchaseValues[pctIdx(0.1)],
+        p25: purchaseValues[pctIdx(0.25)],
+        p50: purchaseValues[pctIdx(0.5)],
+        p75: purchaseValues[pctIdx(0.75)],
+        p90: purchaseValues[pctIdx(0.9)],
+      },
+    });
+  }
+
+  return {
+    iterations,
+    lease: {
+      p10: percentile(sortedLease, 0.1).totalSavingsLease,
+      p25: percentile(sortedLease, 0.25).totalSavingsLease,
+      p50: percentile(sortedLease, 0.5).totalSavingsLease,
+      p75: percentile(sortedLease, 0.75).totalSavingsLease,
+      p90: percentile(sortedLease, 0.9).totalSavingsLease,
+      mean: Math.round(
+        results.reduce((s, r) => s + r.totalSavingsLease, 0) / iterations,
+      ),
+    },
+    purchase: {
+      p10: percentile(sortedPurchase, 0.1).totalSavingsPurchase,
+      p25: percentile(sortedPurchase, 0.25).totalSavingsPurchase,
+      p50: percentile(sortedPurchase, 0.5).totalSavingsPurchase,
+      p75: percentile(sortedPurchase, 0.75).totalSavingsPurchase,
+      p90: percentile(sortedPurchase, 0.9).totalSavingsPurchase,
+      mean: Math.round(
+        results.reduce((s, r) => s + r.totalSavingsPurchase, 0) / iterations,
+      ),
+    },
+    yearBands,
+  };
+}
+
+// ============================================
+// RATE FORECAST COMPARISON
+// ============================================
+
+/**
+ * Generate utility vs solar rate forecast over projection period
+ */
+export function generateRateForecast(inputs = {}) {
+  const config = { ...DEFAULTS, ...inputs };
+  const forecast = [];
+  for (let year = 0; year <= config.projectionYears; year++) {
+    const utilityRate =
+      config.utilityRate * Math.pow(1 + config.utilityEscalator, year);
+    const solarRate =
+      config.solarRate * Math.pow(1 + config.solarEscalator, year);
+    forecast.push({
+      year,
+      utilityRate: parseFloat(utilityRate.toFixed(4)),
+      solarRate: parseFloat(solarRate.toFixed(4)),
+      spread: parseFloat((utilityRate - solarRate).toFixed(4)),
+      savingsPerKwh: parseFloat(
+        Math.max(0, utilityRate - solarRate).toFixed(4),
+      ),
+    });
+  }
+  return forecast;
+}
+
+// ============================================
+// SCENARIO COMPARISON
+// ============================================
+
+/**
+ * Generate a comprehensive 3-way comparison (Utility only vs Lease vs Purchase)
+ */
+export function generateScenarioComparison(inputs = {}) {
+  const projection = calculateAdvancedROI(inputs);
+  const { yearlyData, metrics, costs, system, advanced } = projection;
+
+  const yr5 = yearlyData[4];
+  const yr10 = yearlyData[9];
+  const yr15 = yearlyData[14];
+  const yr25 = yearlyData[24];
+
+  return {
+    scenarios: [
+      {
+        name: "Utility Only",
+        color: "#ef4444",
+        upfrontCost: 0,
+        monthlyCost: Math.round(yearlyData[0].utilityOnlyCost / 12),
+        year5Total: yr5.utilityCumulative,
+        year10Total: yr10.utilityCumulative,
+        year15Total: yr15.utilityCumulative,
+        year25Total: yr25.utilityCumulative,
+        rateYear25: yr25.utilityRate,
+        hasBackup: false,
+        homeValueBoost: 0,
+      },
+      {
+        name: "Solar Lease/PPA",
+        color: "#10b981",
+        upfrontCost: 0,
+        monthlyCost: Math.round(yearlyData[0].leaseYearlyCost / 12),
+        year5Total: yr5.leaseCumulative,
+        year10Total: yr10.leaseCumulative,
+        year15Total: yr15.leaseCumulative,
+        year25Total: yr25.leaseCumulative,
+        rateYear25: yr25.solarRate,
+        hasBackup: true,
+        homeValueBoost: advanced.homeValueImpact.valueIncrease,
+        savings5yr: yr5.leaseCumulativeSavings,
+        savings10yr: yr10.leaseCumulativeSavings,
+        savings25yr: yr25.leaseCumulativeSavings,
+      },
+      {
+        name: "Solar Purchase",
+        color: "#3b82f6",
+        upfrontCost: advanced.netSystemCost,
+        monthlyCost: costs.monthlyLoanPayment,
+        year5Total: yr5.purchaseCumulative,
+        year10Total: yr10.purchaseCumulative,
+        year15Total: yr15.purchaseCumulative,
+        year25Total: yr25.purchaseCumulative,
+        rateYear25: 0,
+        hasBackup: true,
+        homeValueBoost: advanced.homeValueImpact.valueIncrease,
+        savings5yr: yr5.purchaseCumulativeSavings,
+        savings10yr: yr10.purchaseCumulativeSavings,
+        savings25yr: yr25.purchaseCumulativeSavings,
+      },
+    ],
+    system,
+    metrics,
+    costs,
+    advanced,
+  };
+}
+
+/**
+ * Encode projection parameters into a shareable URL string
+ */
+export function encodeProjectionParams(params) {
+  const keys = [
+    "monthlyBill",
+    "utilityRate",
+    "systemSizeKw",
+    "solarRate",
+    "solarEscalator",
+    "utilityEscalator",
+    "homeValue",
+    "selectedState",
+  ];
+  const encoded = {};
+  keys.forEach((k) => {
+    if (params[k] !== undefined && params[k] !== null) {
+      encoded[k] = params[k];
+    }
+  });
+  return btoa(JSON.stringify(encoded));
+}
+
+/**
+ * Decode shareable URL string back into parameters
+ */
+export function decodeProjectionParams(encoded) {
+  try {
+    return JSON.parse(atob(encoded));
+  } catch {
+    return null;
+  }
+}
+
 export { DEFAULTS as ROI_DEFAULTS };
