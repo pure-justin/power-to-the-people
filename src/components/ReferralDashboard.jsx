@@ -321,6 +321,25 @@ export default function ReferralDashboard({ userId }) {
           </div>
           <p className="text-gray-500 text-sm">Per referral</p>
         </div>
+
+        <div className="bg-gray-900 rounded-xl p-6 border border-gray-800">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="p-3 bg-orange-900/30 rounded-lg">
+              <MousePointer size={24} className="text-orange-400" />
+            </div>
+            <div>
+              <div className="text-gray-400 text-sm">Link Clicks</div>
+              <div className="text-2xl font-bold text-white">
+                {clickStats?.totalClicks || 0}
+              </div>
+            </div>
+          </div>
+          <p className="text-gray-500 text-sm">
+            {referrals.length > 0 && clickStats?.totalClicks > 0
+              ? `${Math.round((referrals.length / clickStats.totalClicks) * 100)}% signup rate`
+              : "Share your link to get started"}
+          </p>
+        </div>
       </div>
 
       {/* Quick Stats */}
