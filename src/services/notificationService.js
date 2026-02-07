@@ -16,9 +16,8 @@ import {
   orderBy,
   limit,
   serverTimestamp,
-  onSnapshot,
 } from "./firebase";
-import { onSnapshot as firestoreOnSnapshot } from "firebase/firestore";
+import { onSnapshot } from "firebase/firestore";
 
 /**
  * Notification types and their display config
