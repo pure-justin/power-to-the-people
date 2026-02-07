@@ -104,6 +104,20 @@ export default function ReferralAdminPanel() {
     }
   };
 
+  const handlePayoutStatusUpdate = async (payoutId, newStatus) => {
+    try {
+      setUpdating(true);
+      await updatePayoutStatus(payoutId, newStatus);
+      await loadAllData();
+      alert(`Payout ${newStatus} successfully!`);
+    } catch (error) {
+      console.error("Error updating payout:", error);
+      alert("Failed to update payout: " + error.message);
+    } finally {
+      setUpdating(false);
+    }
+  };
+
   const exportToCSV = () => {
     const headers = [
       "Referrer Email",
