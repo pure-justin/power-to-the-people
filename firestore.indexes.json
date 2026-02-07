@@ -316,6 +316,103 @@
         }
       ]
     }
+    ,
+    {
+      "collectionGroup": "solar_equipment",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "category", "order": "ASCENDING" },
+        { "fieldPath": "feoc_compliant", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "solar_equipment",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "category", "order": "ASCENDING" },
+        { "fieldPath": "domestic_content_compliant", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "solar_equipment",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "manufacturer", "order": "ASCENDING" },
+        { "fieldPath": "category", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "solar_utility_rates",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "state", "order": "ASCENDING" },
+        { "fieldPath": "utility_type", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "solar_incentives",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "state", "order": "ASCENDING" },
+        { "fieldPath": "status", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "solar_incentives",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "incentive_type", "order": "ASCENDING" },
+        { "fieldPath": "state", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "solar_permits",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "state", "order": "ASCENDING" },
+        { "fieldPath": "jurisdiction_key", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "solar_tpo_providers",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "provider_type", "order": "ASCENDING" },
+        { "fieldPath": "name", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "subscriptions",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "userId", "order": "ASCENDING" },
+        { "fieldPath": "status", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "usage_records",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "userId", "order": "ASCENDING" },
+        { "fieldPath": "month", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "data_refresh_log",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "source", "order": "ASCENDING" },
+        { "fieldPath": "started_at", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "apiKeys",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "userId", "order": "ASCENDING" },
+        { "fieldPath": "status", "order": "ASCENDING" }
+      ]
+    }
   ],
   "fieldOverrides": [
     {
