@@ -329,13 +329,22 @@ export const onReferralReward = functions.firestore
     const referrer = referrerDoc.data();
     if (!referrer?.phone) return;
 
-    const message = SMS_TEMPLATES.REFERRAL_REWARD(
+    const rewardMessage = SMS_TEMPLATES.REFERRAL_REWARD(
       referrer.firstName || "there",
       after.rewardAmount?.toFixed(0) || "500",
       after.referredName || "Your friend",
     );
 
-    await sendSMS(referrer.phone, message);
+    await sendSMS(referrer.phone, rewardMessage);
+
+    // Create in-app notification for referral reward
+    await createInAppNotification({
+      userId: after.referrerId,
+      type: "referral_reward",
+      title: "Referral Reward Earned",
+      message: rewardMessage,
+      link: "https://power-to-the-people-vpp.web.app/referrals",
+    });
   });
 
 /**
