@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import {
   Code,
   BookOpen,
@@ -36,11 +36,15 @@ import {
   CreditCard,
   Truck,
   Link,
+  Menu,
+  X,
+  Download,
+  Keyboard,
 } from "lucide-react";
 import ApiPlayground from "../components/ApiPlayground";
 import "../styles/ApiDocs.css";
 
-const API_VERSION = "3.0.0";
+const API_VERSION = "3.1.0";
 const LAST_UPDATED = "2026-02-06";
 
 // Multi-language code example component
