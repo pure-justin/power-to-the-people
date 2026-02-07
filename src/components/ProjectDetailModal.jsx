@@ -83,10 +83,17 @@ export default function ProjectDetailModal({ project, onClose, onUpdate }) {
       // Update status if changed
       if (selectedStatus !== project.status) {
         await updateProjectStatus(project.id, selectedStatus);
+
+        // Sync referral tracking status if this lead was referred
+        if (project.email) {
+          try {
+            await syncLeadStatusToReferral(project.email, selectedStatus);
+          } catch (syncError) {
+            console.warn("Referral sync skipped:", syncError.message);
+          }
+        }
       }
 
-      // In a real app, you'd also save notes to Firestore
-      // For now, just show success
       setSuccess("Changes saved successfully!");
 
       // Notify parent to refresh data
