@@ -3636,6 +3636,44 @@ except requests.exceptions.ConnectionError:
         <div className="changelog-entries">
           <div className="changelog-entry">
             <div className="changelog-version">
+              <span className="version-number">v3.1.0</span>
+              <span className="version-date">February 6, 2026</span>
+            </div>
+            <div className="changelog-content">
+              <h3>Enhanced Documentation Portal</h3>
+              <ul>
+                <li>
+                  <span className="change-tag added">Added</span> Enhanced API
+                  Playground with categorized endpoints, request history, cURL
+                  generation, and response download
+                </li>
+                <li>
+                  <span className="change-tag added">Added</span> Lead
+                  Management and Agent Coordinator endpoints in Playground
+                </li>
+                <li>
+                  <span className="change-tag added">Added</span> OpenAPI
+                  Specification page with schema overview and SDK generation
+                  guides
+                </li>
+                <li>
+                  <span className="change-tag added">Added</span>{" "}
+                  Mobile-responsive sidebar with hamburger toggle
+                </li>
+                <li>
+                  <span className="change-tag added">Added</span> Keyboard
+                  navigation (/ to search, j/k for sections, ? for shortcuts)
+                </li>
+                <li>
+                  <span className="change-tag improved">Improved</span>{" "}
+                  Full-text content search across all documentation sections
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="changelog-entry">
+            <div className="changelog-version">
               <span className="version-number">v3.0.0</span>
               <span className="version-date">February 6, 2026</span>
             </div>
