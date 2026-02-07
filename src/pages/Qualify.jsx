@@ -243,6 +243,9 @@ export default function Qualify() {
     if (refCode) {
       setReferralCode(refCode);
       validateReferral(refCode);
+      // Track the referral link click
+      const utmSource = searchParams.get("utm_source") || "direct";
+      trackReferralClick(refCode, utmSource);
     }
   }, [searchParams]);
 
