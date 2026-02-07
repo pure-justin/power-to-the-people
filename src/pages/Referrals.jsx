@@ -465,6 +465,15 @@ export default function Referrals() {
               My Referrals ({referrals.length})
             </button>
             <button
+              onClick={() => setActiveTab("payouts")}
+              className={`tab-button ${activeTab === "payouts" ? "active" : ""}`}
+            >
+              <div className="flex items-center gap-2">
+                <Wallet size={18} />
+                Payouts
+              </div>
+            </button>
+            <button
               onClick={() => setActiveTab("leaderboard")}
               className={`tab-button ${activeTab === "leaderboard" ? "active" : ""}`}
             >
