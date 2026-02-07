@@ -3,6 +3,7 @@
  * Cloud Functions Entry Point
  *
  * Exports all Firebase Cloud Functions for the Power to the People app.
+ * Runtime: Node.js 22
  */
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;

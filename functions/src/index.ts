@@ -2,6 +2,7 @@
  * Cloud Functions Entry Point
  *
  * Exports all Firebase Cloud Functions for the Power to the People app.
+ * Runtime: Node.js 22
  */
 
 import * as admin from "firebase-admin";
