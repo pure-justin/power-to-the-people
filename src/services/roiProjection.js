@@ -468,8 +468,10 @@ export function calculateLCOE(
  * Based on Zillow/NREL research: ~$20/kWh of annual production or ~4.1% increase
  */
 export function calculateHomeValueImpact(systemSizeKw, homeValue = 300000) {
-  const annualProductionKwh = systemSizeKw * 1500; // national avg
-  const solarPremium = annualProductionKwh * 20; // ~$20 per kWh annual production
+  // Based on Lawrence Berkeley National Lab research: ~$4.10/W premium
+  // Capped at 10% of home value (conservative ceiling)
+  const rawPremium = systemSizeKw * 1000 * 4.1; // $4.10 per watt
+  const solarPremium = Math.min(rawPremium, homeValue * 0.1);
   const percentIncrease = (solarPremium / homeValue) * 100;
   return {
     valueIncrease: Math.round(solarPremium),
