@@ -191,26 +191,22 @@ export const createMercuryInvoice = functions
       try {
         const invoiceDate = new Date().toISOString().split("T")[0];
 
-        const mercuryLineItems = lineItems.map((item) => ({
-          description: item.description,
-          quantity: item.quantity,
-          unitPrice: item.unitPrice,
+        const mercuryLineItems = lineItems.map((item: any) => ({
+          name: item.description || item.name,
+          quantity: item.quantity || 1,
+          unitPrice: item.unitPrice || item.amount,
         }));
 
         const result = await mercuryFetch("/ar/invoices", "POST", {
-          accountId: MERCURY_ACCOUNT_ID,
-          amount,
-          currency: "USD",
+          customerId,
+          destinationAccountId: MERCURY_ACCOUNT_ID,
           dueDate,
           invoiceDate,
           lineItems: mercuryLineItems,
           achDebitEnabled: true,
           creditCardEnabled: false,
           sendEmailOption: "SendNow",
-          customer: {
-            id: customerId,
-          },
-          memo: memo || undefined,
+          payerMemo: memo || undefined,
         });
 
         const db = admin.firestore();

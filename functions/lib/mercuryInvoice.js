@@ -103,7 +103,7 @@ exports.createMercuryCustomer = functions
         throw new functions.https.HttpsError("invalid-argument", "leadId, name, and email are required");
     }
     try {
-        const result = await mercuryFetch("/customers", "POST", {
+        const result = await mercuryFetch("/ar/customers", "POST", {
             name,
             email,
             phone: phone || undefined,
@@ -142,24 +142,20 @@ exports.createMercuryInvoice = functions
     try {
         const invoiceDate = new Date().toISOString().split("T")[0];
         const mercuryLineItems = lineItems.map((item) => ({
-            description: item.description,
-            quantity: item.quantity,
-            unitPrice: item.unitPrice,
+            name: item.description || item.name,
+            quantity: item.quantity || 1,
+            unitPrice: item.unitPrice || item.amount,
         }));
-        const result = await mercuryFetch("/invoices", "POST", {
-            accountId: MERCURY_ACCOUNT_ID,
-            amount,
-            currency: "USD",
+        const result = await mercuryFetch("/ar/invoices", "POST", {
+            customerId,
+            destinationAccountId: MERCURY_ACCOUNT_ID,
             dueDate,
             invoiceDate,
             lineItems: mercuryLineItems,
             achDebitEnabled: true,
             creditCardEnabled: false,
             sendEmailOption: "SendNow",
-            customer: {
-                id: customerId,
-            },
-            memo: memo || undefined,
+            payerMemo: memo || undefined,
         });
         const db = admin.firestore();
         const invoiceRef = db.collection("invoices").doc();
@@ -223,7 +219,7 @@ exports.getMercuryInvoice = functions
         throw new functions.https.HttpsError("invalid-argument", "mercuryInvoiceId is required");
     }
     try {
-        const result = await mercuryFetch(`/invoices/${mercuryInvoiceId}`, "GET");
+        const result = await mercuryFetch(`/ar/invoices/${mercuryInvoiceId}`, "GET");
         return {
             success: true,
             invoice: result,
@@ -276,7 +272,7 @@ exports.cancelMercuryInvoice = functions
         throw new functions.https.HttpsError("invalid-argument", "mercuryInvoiceId and firestoreInvoiceId are required");
     }
     try {
-        await mercuryFetch(`/invoices/${mercuryInvoiceId}/cancel`, "PUT");
+        await mercuryFetch(`/ar/invoices/${mercuryInvoiceId}/cancel`, "PUT");
         const db = admin.firestore();
         // Update Firestore invoice
         await db.collection("invoices").doc(firestoreInvoiceId).update({
@@ -326,7 +322,7 @@ exports.syncInvoiceStatus = functions.pubsub
     for (const doc of invoicesSnapshot.docs) {
         const invoice = doc.data();
         try {
-            const mercuryInvoice = await mercuryFetch(`/invoices/${invoice.mercuryInvoiceId}`, "GET");
+            const mercuryInvoice = await mercuryFetch(`/ar/invoices/${invoice.mercuryInvoiceId}`, "GET");
             const newStatus = mercuryInvoice.status;
             // Skip if status hasn't changed
             if (newStatus === invoice.status)
