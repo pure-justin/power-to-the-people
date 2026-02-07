@@ -67,4 +67,7 @@ export {
   sendPaymentReminders,
   getSmsStats,
   twilioStatusCallback,
+  updateSmsPreferences,
+  handleIncomingSms,
+  getProjectSmsHistory,
 } from "./smsNotifications";
