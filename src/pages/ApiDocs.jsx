@@ -311,6 +311,57 @@ const ApiDocs = () => {
               View API <ChevronRight size={14} />
             </span>
           </div>
+
+          <div
+            className="info-card"
+            onClick={() => setActiveSection("installerApi")}
+          >
+            <div className="info-card-icon">
+              <Wrench size={24} />
+            </div>
+            <h3>Installer Search</h3>
+            <p>
+              Search, filter, and compare solar installers by location, rating,
+              certifications, and company size.
+            </p>
+            <span className="card-link">
+              View API <ChevronRight size={14} />
+            </span>
+          </div>
+
+          <div
+            className="info-card"
+            onClick={() => setActiveSection("commercialApi")}
+          >
+            <div className="info-card-icon">
+              <Building2 size={24} />
+            </div>
+            <h3>Commercial Leads</h3>
+            <p>
+              AI-powered commercial solar lead generation with property
+              scraping, scoring, and batch import.
+            </p>
+            <span className="card-link">
+              View API <ChevronRight size={14} />
+            </span>
+          </div>
+
+          <div
+            className="info-card"
+            onClick={() => setActiveSection("coordinatorApi")}
+          >
+            <div className="info-card-icon">
+              <Bot size={24} />
+            </div>
+            <h3>Agent Coordinator</h3>
+            <p>
+              Multi-agent orchestration system with task queues, messaging, and
+              AI agent management via Ava.
+            </p>
+            <span className="card-link">
+              View API <ChevronRight size={14} />
+            </span>
+          </div>
         </div>
 
         <div className="base-urls">
