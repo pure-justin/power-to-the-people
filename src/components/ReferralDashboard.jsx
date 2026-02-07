@@ -24,6 +24,7 @@ import {
 export default function ReferralDashboard({ userId }) {
   const [analytics, setAnalytics] = useState(null);
   const [referrals, setReferrals] = useState([]);
+  const [clickStats, setClickStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [timeframe, setTimeframe] = useState("all"); // all, month, week
 
