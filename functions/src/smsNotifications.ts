@@ -118,6 +118,37 @@ export async function sendSMS(to: string, message: string): Promise<boolean> {
 }
 
 /**
+ * Create an in-app notification in Firestore
+ * These are displayed in the NotificationCenter component
+ */
+async function createInAppNotification(params: {
+  projectId?: string;
+  userId?: string;
+  type: string;
+  title: string;
+  message: string;
+  link?: string;
+}): Promise<void> {
+  try {
+    await admin
+      .firestore()
+      .collection("notifications")
+      .add({
+        projectId: params.projectId || null,
+        userId: params.userId || null,
+        type: params.type,
+        title: params.title,
+        message: params.message,
+        link: params.link || null,
+        read: false,
+        createdAt: admin.firestore.FieldValue.serverTimestamp(),
+      });
+  } catch (error) {
+    console.error("Error creating in-app notification:", error);
+  }
+}
+
+/**
  * Firestore Trigger: New Project Created
  * Sends SMS to customer and admin team
  */
