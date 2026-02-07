@@ -175,6 +175,15 @@ export const onProjectCreated = functions.firestore
       await sendSMS(phone, message);
     }
 
+    // Create in-app notification for the project
+    await createInAppNotification({
+      projectId,
+      type: "enrollment_confirmation",
+      title: "Enrollment Confirmed",
+      message: `Welcome ${firstName}! Your solar application ${projectId} is being reviewed. We'll notify you of updates.`,
+      link: `https://power-to-the-people-vpp.web.app/project/${projectId}`,
+    });
+
     // Send admin notification
     const adminPhone =
       functions.config().admin?.phone || process.env.ADMIN_PHONE;
