@@ -184,10 +184,13 @@ export const onProjectStatusUpdate = functions.firestore
       return;
     }
 
-    const phone = after.phone;
+    const phone = after.phone || after.customer?.phone;
     if (!phone) return;
 
-    const name = after.firstName || "there";
+    // Check SMS opt-in
+    if (after.smsOptIn === false) return;
+
+    const name = after.firstName || after.customer?.firstName || "there";
 
     let message: string | null = null;
 
