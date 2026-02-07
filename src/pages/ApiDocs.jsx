@@ -40,7 +40,7 @@ import {
 import ApiPlayground from "../components/ApiPlayground";
 import "../styles/ApiDocs.css";
 
-const API_VERSION = "2.1.0";
+const API_VERSION = "3.0.0";
 const LAST_UPDATED = "2026-02-06";
 
 // Multi-language code example component
