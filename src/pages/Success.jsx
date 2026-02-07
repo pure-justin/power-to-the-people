@@ -232,6 +232,21 @@ export default function Success() {
     try {
       const displayName = `${customerName} ${customerLastName}`.trim();
       await createAccount(customerEmail, password, displayName);
+
+      // Create referral record so this user can refer others
+      try {
+        const user = getCurrentUser();
+        if (user) {
+          await createReferralRecord(user.uid, {
+            email: customerEmail,
+            displayName,
+          });
+        }
+      } catch (refErr) {
+        console.error("Error creating referral record:", refErr);
+        // Don't block account creation if referral setup fails
+      }
+
       setAccountCreated(true);
     } catch (err) {
       console.error("Account creation error:", err);
