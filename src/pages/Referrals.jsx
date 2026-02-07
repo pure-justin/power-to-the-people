@@ -14,6 +14,9 @@ import {
   Mail,
   MessageCircle,
   BarChart3,
+  Wallet,
+  Clock,
+  AlertCircle,
 } from "lucide-react";
 import { getCurrentUser, onAuthChange } from "../services/firebase";
 import {
