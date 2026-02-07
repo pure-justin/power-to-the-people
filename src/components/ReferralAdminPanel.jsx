@@ -31,6 +31,8 @@ export default function ReferralAdminPanel() {
   const [statusFilter, setStatusFilter] = useState("all");
   const [selectedReferral, setSelectedReferral] = useState(null);
   const [updating, setUpdating] = useState(false);
+  const [payouts, setPayouts] = useState([]);
+  const [adminSubTab, setAdminSubTab] = useState("referrals"); // referrals, payouts
 
   useEffect(() => {
     loadAllData();
