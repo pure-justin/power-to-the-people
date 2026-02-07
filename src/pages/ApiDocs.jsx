@@ -3800,14 +3800,240 @@ except requests.exceptions.ConnectionError:
         </div>
       </div>
     ),
+
+    openApiSpec: (
+      <div className="doc-section">
+        <h1>OpenAPI Specification</h1>
+        <p className="lead">
+          Download the complete OpenAPI 3.0.3 specification for the Power to the
+          People API. Import into Swagger UI, Postman, or any OpenAPI-compatible
+          tool.
+        </p>
+
+        <div className="spec-downloads">
+          <a
+            href="/api-spec.json"
+            download="power-to-the-people-api-spec.json"
+            className="spec-download-card"
+          >
+            <div className="spec-icon">
+              <FileText size={24} />
+            </div>
+            <div className="spec-info">
+              <h3>OpenAPI 3.0.3 Spec</h3>
+              <p>Complete API specification in JSON format</p>
+              <span className="spec-format">JSON</span>
+            </div>
+            <Download size={20} className="spec-dl-icon" />
+          </a>
+
+          <a
+            href="/postman-collection.json"
+            download="power-to-the-people-postman.json"
+            className="spec-download-card"
+          >
+            <div className="spec-icon">
+              <Package size={24} />
+            </div>
+            <div className="spec-info">
+              <h3>Postman Collection</h3>
+              <p>Pre-configured collection with example requests</p>
+              <span className="spec-format">Postman v2.1</span>
+            </div>
+            <Download size={20} className="spec-dl-icon" />
+          </a>
+        </div>
+
+        <h2>API Schema Overview</h2>
+        <div className="schema-overview">
+          <div className="schema-card">
+            <h4>Servers</h4>
+            <div className="schema-items">
+              <div className="schema-item">
+                <code>Production</code>
+                <span>
+                  us-central1-power-to-the-people-vpp.cloudfunctions.net
+                </span>
+              </div>
+              <div className="schema-item">
+                <code>Netlify</code>
+                <span>power-to-the-people-vpp.web.app/.netlify/functions</span>
+              </div>
+              <div className="schema-item">
+                <code>Coordinator</code>
+                <span>100.124.119.18:5050 (Tailscale)</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="schema-card">
+            <h4>Authentication</h4>
+            <div className="schema-items">
+              <div className="schema-item">
+                <code>ApiKeyAuth</code>
+                <span>Bearer token in Authorization header</span>
+              </div>
+              <div className="schema-item">
+                <code>FirebaseAuth</code>
+                <span>Firebase ID token from client SDK</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="schema-card">
+            <h4>API Tags</h4>
+            <div className="tag-list">
+              <span className="api-tag">Solar</span>
+              <span className="api-tag">Leads</span>
+              <span className="api-tag">Referrals</span>
+              <span className="api-tag">SMS</span>
+              <span className="api-tag">API Keys</span>
+              <span className="api-tag">Utility</span>
+              <span className="api-tag">Installers</span>
+              <span className="api-tag">Commercial</span>
+              <span className="api-tag">Coordinator</span>
+            </div>
+          </div>
+
+          <div className="schema-card">
+            <h4>Endpoints</h4>
+            <div className="endpoint-counts">
+              <div className="ep-count">
+                <span className="ep-count-method get">GET</span>
+                <span className="ep-count-num">18</span>
+              </div>
+              <div className="ep-count">
+                <span className="ep-count-method post">POST</span>
+                <span className="ep-count-num">22</span>
+              </div>
+              <div className="ep-count">
+                <span className="ep-count-method put">PUT</span>
+                <span className="ep-count-num">5</span>
+              </div>
+              <div className="ep-count">
+                <span className="ep-count-method delete">DELETE</span>
+                <span className="ep-count-num">2</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h2>Import into Tools</h2>
+
+        <h3>Swagger UI</h3>
+        <CodeBlock
+          language="bash"
+          code={`# Run Swagger UI locally with Docker
+docker run -p 8080:8080 -e SWAGGER_JSON=/app/api-spec.json \\
+  -v $(pwd)/api-spec.json:/app/api-spec.json \\
+  swaggerapi/swagger-ui
+
+# Or use the online editor
+# Paste the spec at https://editor.swagger.io`}
+          onCopy={(code) => copyToClipboard(code, "swagger-import")}
+          copied={copiedCode === "swagger-import"}
+        />
+
+        <h3>Postman</h3>
+        <CodeBlock
+          language="bash"
+          code={`# Download and import via CLI
+curl -O https://power-to-the-people-vpp.web.app/postman-collection.json
+newman run postman-collection.json --env-var "API_KEY=your_key"
+
+# Or import in Postman app:
+# File → Import → Upload Files → Select postman-collection.json`}
+          onCopy={(code) => copyToClipboard(code, "postman-import")}
+          copied={copiedCode === "postman-import"}
+        />
+
+        <h3>Generate Client SDK</h3>
+        <CodeBlock
+          language="bash"
+          code={`# Generate TypeScript client from OpenAPI spec
+npx @openapitools/openapi-generator-cli generate \\
+  -i https://power-to-the-people-vpp.web.app/api-spec.json \\
+  -g typescript-axios \\
+  -o ./generated-client
+
+# Generate Python client
+npx @openapitools/openapi-generator-cli generate \\
+  -i https://power-to-the-people-vpp.web.app/api-spec.json \\
+  -g python \\
+  -o ./generated-client-python`}
+          onCopy={(code) => copyToClipboard(code, "sdk-gen")}
+          copied={copiedCode === "sdk-gen"}
+        />
+      </div>
+    ),
   };
 
   return (
     <div
-      className={`api-docs-container ${sidebarCollapsed ? "sidebar-collapsed" : ""}`}
+      className={`api-docs-container ${sidebarCollapsed ? "sidebar-collapsed" : ""} ${mobileSidebarOpen ? "mobile-sidebar-open" : ""}`}
     >
+      {/* Mobile Sidebar Toggle */}
+      <button
+        className="mobile-sidebar-toggle"
+        onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
+        aria-label={mobileSidebarOpen ? "Close navigation" : "Open navigation"}
+      >
+        {mobileSidebarOpen ? <X size={20} /> : <Menu size={20} />}
+      </button>
+
+      {/* Mobile overlay */}
+      {mobileSidebarOpen && (
+        <div
+          className="mobile-overlay"
+          onClick={() => setMobileSidebarOpen(false)}
+        />
+      )}
+
+      {/* Keyboard shortcuts modal */}
+      {showKeyboardHelp && (
+        <div
+          className="keyboard-modal"
+          onClick={() => setShowKeyboardHelp(false)}
+        >
+          <div
+            className="keyboard-modal-content"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="keyboard-modal-header">
+              <Keyboard size={20} />
+              <h3>Keyboard Shortcuts</h3>
+              <button onClick={() => setShowKeyboardHelp(false)}>
+                <X size={18} />
+              </button>
+            </div>
+            <div className="keyboard-shortcuts">
+              <div className="kb-shortcut">
+                <kbd>/</kbd>
+                <span>Focus search</span>
+              </div>
+              <div className="kb-shortcut">
+                <kbd>j</kbd> / <kbd>&darr;</kbd>
+                <span>Next section</span>
+              </div>
+              <div className="kb-shortcut">
+                <kbd>k</kbd> / <kbd>&uarr;</kbd>
+                <span>Previous section</span>
+              </div>
+              <div className="kb-shortcut">
+                <kbd>Esc</kbd>
+                <span>Close / blur</span>
+              </div>
+              <div className="kb-shortcut">
+                <kbd>?</kbd>
+                <span>Toggle this help</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Sidebar */}
-      <aside className="docs-sidebar">
+      <aside className={`docs-sidebar ${mobileSidebarOpen ? "open" : ""}`}>
         <div className="docs-logo">
           <Zap size={28} />
           <div className="logo-text">
