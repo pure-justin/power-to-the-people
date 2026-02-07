@@ -37,6 +37,7 @@ import AdminAnalytics from "../components/AdminAnalytics";
 import ReferralAdminPanel from "../components/ReferralAdminPanel";
 import AvaActivityPanel from "../components/AvaActivityPanel";
 import SmsNotificationPanel from "../components/SmsNotificationPanel";
+import WebhookDashboard from "../components/WebhookDashboard";
 import LeadQualityScoring from "../components/LeadQualityScoring";
 
 export default function Admin() {
