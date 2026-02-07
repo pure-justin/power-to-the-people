@@ -4094,7 +4094,7 @@ npx @openapitools/openapi-generator-cli generate \\
                         className={`nav-item ${activeSection === item.key ? "active" : ""}`}
                         onClick={() => {
                           setActiveSection(item.key);
-                          // Scroll content to top
+                          setMobileSidebarOpen(false);
                           document
                             .querySelector(".docs-content")
                             ?.scrollTo(0, 0);
