@@ -1006,9 +1006,8 @@ function Heatmap({ data }) {
 
       {/* Data rows */}
       {tiers.map((tier) => (
-        <>
+        <Fragment key={tier}>
           <div
-            key={`${tier}-label`}
             className="lqs-heatmap-label"
             style={{ color: TIER_CONFIG[tier].color, fontWeight: 700 }}
           >
@@ -1028,7 +1027,7 @@ function Heatmap({ data }) {
               </div>
             );
           })}
-        </>
+        </Fragment>
       ))}
     </div>
   );
