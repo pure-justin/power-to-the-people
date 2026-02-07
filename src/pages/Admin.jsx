@@ -37,6 +37,7 @@ import AdminAnalytics from "../components/AdminAnalytics";
 import ReferralAdminPanel from "../components/ReferralAdminPanel";
 import AvaActivityPanel from "../components/AvaActivityPanel";
 import SmsNotificationPanel from "../components/SmsNotificationPanel";
+import InvoicePanel from "../components/InvoicePanel";
 
 export default function Admin() {
   const navigate = useNavigate();
@@ -969,6 +970,30 @@ export default function Admin() {
               SMS
             </button>
             <button
+              onClick={() => setActiveTab("invoices")}
+              style={{
+                padding: "12px 24px",
+                background: "none",
+                border: "none",
+                borderBottom:
+                  activeTab === "invoices"
+                    ? "2px solid #10b981"
+                    : "2px solid transparent",
+                color: activeTab === "invoices" ? "#10b981" : "#6b7280",
+                fontWeight: activeTab === "invoices" ? 600 : 500,
+                cursor: "pointer",
+                fontSize: "0.95rem",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                marginBottom: "-2px",
+                transition: "all 0.2s",
+              }}
+            >
+              <DollarSign size={18} />
+              Invoices
+            </button>
+            <button
               onClick={() => setActiveTab("ava")}
               style={{
                 padding: "12px 24px",
@@ -999,6 +1024,9 @@ export default function Admin() {
 
           {/* SMS Notifications Tab */}
           {activeTab === "sms" && <SmsNotificationPanel />}
+
+          {/* Invoices & Payments Tab */}
+          {activeTab === "invoices" && <InvoicePanel />}
 
           {/* Ava AI Tab */}
           {activeTab === "ava" && <AvaActivityPanel />}

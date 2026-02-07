@@ -1,48 +1,48 @@
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { Zap, Search, ArrowRight, Loader2 } from 'lucide-react'
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Zap, Search, ArrowRight, Loader2, DollarSign } from "lucide-react";
 
 // Get project from local storage
 const getLocalProject = (id) => {
-  const projects = JSON.parse(localStorage.getItem('pttp_projects') || '[]')
-  return projects.find(p => p.id === id || p.id.includes(id))
-}
+  const projects = JSON.parse(localStorage.getItem("pttp_projects") || "[]");
+  return projects.find((p) => p.id === id || p.id.includes(id));
+};
 
 export default function Portal() {
-  const navigate = useNavigate()
-  const [projectId, setProjectId] = useState('')
-  const [email, setEmail] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState('')
+  const navigate = useNavigate();
+  const [projectId, setProjectId] = useState("");
+  const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleLookup = async (e) => {
-    e.preventDefault()
-    setError('')
+    e.preventDefault();
+    setError("");
 
     if (!projectId) {
-      setError('Please enter your reference ID')
-      return
+      setError("Please enter your reference ID");
+      return;
     }
 
-    setIsLoading(true)
+    setIsLoading(true);
 
     // Small delay for UX
-    await new Promise(resolve => setTimeout(resolve, 300))
+    await new Promise((resolve) => setTimeout(resolve, 300));
 
     try {
-      const project = getLocalProject(projectId.toUpperCase())
+      const project = getLocalProject(projectId.toUpperCase());
       if (project) {
-        navigate(`/project/${project.id}`)
+        navigate(`/project/${project.id}`);
       } else {
-        setError('Reference not found. Please check your ID and try again.')
+        setError("Reference not found. Please check your ID and try again.");
       }
     } catch (err) {
-      console.error('Lookup error:', err)
-      setError('Something went wrong. Please try again.')
+      console.error("Lookup error:", err);
+      setError("Something went wrong. Please try again.");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div className="page">
@@ -56,8 +56,12 @@ export default function Portal() {
             Power to the People
           </Link>
           <nav className="nav">
-            <Link to="/" className="nav-link">Home</Link>
-            <Link to="/qualify" className="nav-link">Get Started</Link>
+            <Link to="/" className="nav-link">
+              Home
+            </Link>
+            <Link to="/qualify" className="nav-link">
+              Get Started
+            </Link>
           </nav>
         </div>
       </header>
@@ -65,11 +69,24 @@ export default function Portal() {
       <div className="portal-page">
         <div className="form-card login-card">
           <div className="form-header">
-            <div style={{ width: 64, height: 64, background: 'var(--gray-100)', borderRadius: 'var(--radius-full)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
-              <Search size={28} style={{ color: 'var(--primary)' }} />
+            <div
+              style={{
+                width: 64,
+                height: 64,
+                background: "var(--gray-100)",
+                borderRadius: "var(--radius-full)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                margin: "0 auto 20px",
+              }}
+            >
+              <Search size={28} style={{ color: "var(--primary)" }} />
             </div>
             <h2 className="form-title">Customer Portal</h2>
-            <p className="form-subtitle">Check your project status and documents</p>
+            <p className="form-subtitle">
+              Check your project status, documents, and payments
+            </p>
           </div>
 
           <form onSubmit={handleLookup}>
@@ -81,8 +98,8 @@ export default function Portal() {
                 placeholder="e.g., PTTP-1234567890 or 7834"
                 value={projectId}
                 onChange={(e) => {
-                  setProjectId(e.target.value)
-                  setError('')
+                  setProjectId(e.target.value);
+                  setError("");
                 }}
               />
               <p className="form-help">
@@ -99,24 +116,23 @@ export default function Portal() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-              <p className="form-help">
-                For additional verification
-              </p>
+              <p className="form-help">For additional verification</p>
             </div>
 
-            {error && (
-              <div className="alert alert-error">{error}</div>
-            )}
+            {error && <div className="alert alert-error">{error}</div>}
 
             <button
               type="submit"
               className="btn btn-primary"
               disabled={isLoading}
-              style={{ width: '100%', marginTop: 8 }}
+              style={{ width: "100%", marginTop: 8 }}
             >
               {isLoading ? (
                 <>
-                  <Loader2 size={18} style={{ animation: 'spin 0.8s linear infinite' }} />
+                  <Loader2
+                    size={18}
+                    style={{ animation: "spin 0.8s linear infinite" }}
+                  />
                   Looking up...
                 </>
               ) : (
@@ -128,8 +144,15 @@ export default function Portal() {
             </button>
           </form>
 
-          <div style={{ marginTop: 32, paddingTop: 24, borderTop: '1px solid var(--gray-200)', textAlign: 'center' }}>
-            <p style={{ color: 'var(--gray-500)', marginBottom: 12 }}>
+          <div
+            style={{
+              marginTop: 32,
+              paddingTop: 24,
+              borderTop: "1px solid var(--gray-200)",
+              textAlign: "center",
+            }}
+          >
+            <p style={{ color: "var(--gray-500)", marginBottom: 12 }}>
               Don't have a project yet?
             </p>
             <Link to="/qualify" className="btn btn-outline btn-sm">
@@ -139,5 +162,5 @@ export default function Portal() {
         </div>
       </div>
     </div>
-  )
+  );
 }

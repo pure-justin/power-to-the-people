@@ -1,33 +1,49 @@
-import { useState, useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
-import { Zap, CheckCircle, XCircle, ArrowLeft, AlertCircle, MapPin, User, Mail, Phone, Home, Sun, Battery, Leaf } from 'lucide-react'
+import { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
+import {
+  Zap,
+  CheckCircle,
+  XCircle,
+  ArrowLeft,
+  AlertCircle,
+  MapPin,
+  User,
+  Mail,
+  Phone,
+  Home,
+  Sun,
+  Battery,
+  Leaf,
+  DollarSign,
+  ExternalLink,
+} from "lucide-react";
 
 // Get project from local storage
 const getLocalProject = (id) => {
-  const projects = JSON.parse(localStorage.getItem('pttp_projects') || '[]')
-  return projects.find(p => p.id === id)
-}
+  const projects = JSON.parse(localStorage.getItem("pttp_projects") || "[]");
+  return projects.find((p) => p.id === id);
+};
 
 export default function ProjectStatus() {
-  const { id } = useParams()
-  const [project, setProject] = useState(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState('')
+  const { id } = useParams();
+  const [project, setProject] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     // Small delay for UX
     const timer = setTimeout(() => {
-      const data = getLocalProject(id)
+      const data = getLocalProject(id);
       if (data) {
-        setProject(data)
+        setProject(data);
       } else {
-        setError('Reference not found. Please check your ID and try again.')
+        setError("Reference not found. Please check your ID and try again.");
       }
-      setIsLoading(false)
-    }, 300)
+      setIsLoading(false);
+    }, 300);
 
-    return () => clearTimeout(timer)
-  }, [id])
+    return () => clearTimeout(timer);
+  }, [id]);
 
   if (isLoading) {
     return (
@@ -46,7 +62,7 @@ export default function ProjectStatus() {
           <div className="spinner" style={{ width: 40, height: 40 }} />
         </div>
       </div>
-    )
+    );
   }
 
   if (error || !project) {
@@ -62,22 +78,33 @@ export default function ProjectStatus() {
             </Link>
           </div>
         </header>
-        <div style={{ padding: '80px 20px', textAlign: 'center' }}>
-          <div style={{ width: 64, height: 64, background: '#fef2f2', borderRadius: 'var(--radius-full)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
-            <AlertCircle size={32} style={{ color: 'var(--danger)' }} />
+        <div style={{ padding: "80px 20px", textAlign: "center" }}>
+          <div
+            style={{
+              width: 64,
+              height: 64,
+              background: "#fef2f2",
+              borderRadius: "var(--radius-full)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              margin: "0 auto 20px",
+            }}
+          >
+            <AlertCircle size={32} style={{ color: "var(--danger)" }} />
           </div>
           <h2 style={{ marginBottom: 8 }}>Not Found</h2>
-          <p style={{ color: 'var(--gray-500)', marginBottom: 24 }}>{error}</p>
+          <p style={{ color: "var(--gray-500)", marginBottom: 24 }}>{error}</p>
           <Link to="/portal" className="btn btn-primary">
             <ArrowLeft size={18} />
             Back to Lookup
           </Link>
         </div>
       </div>
-    )
+    );
   }
 
-  const isEligible = project.energyCommunity?.eligible
+  const isEligible = project.energyCommunity?.eligible;
 
   return (
     <div className="page">
@@ -91,8 +118,12 @@ export default function ProjectStatus() {
             Power to the People
           </Link>
           <nav className="nav">
-            <Link to="/" className="nav-link">Home</Link>
-            <Link to="/qualify" className="nav-link">Check Eligibility</Link>
+            <Link to="/" className="nav-link">
+              Home
+            </Link>
+            <Link to="/qualify" className="nav-link">
+              Check Eligibility
+            </Link>
           </nav>
         </div>
       </header>
@@ -100,7 +131,17 @@ export default function ProjectStatus() {
       {/* Status Content */}
       <section className="status-page">
         <div className="container">
-          <Link to="/portal" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: 'var(--gray-500)', textDecoration: 'none', marginBottom: 20 }}>
+          <Link
+            to="/portal"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 6,
+              color: "var(--gray-500)",
+              textDecoration: "none",
+              marginBottom: 20,
+            }}
+          >
             <ArrowLeft size={18} />
             Back to Lookup
           </Link>
@@ -110,146 +151,318 @@ export default function ProjectStatus() {
             <p className="status-subtitle">Reference: {project.id}</p>
           </div>
 
-          <div style={{ maxWidth: 600, margin: '0 auto' }}>
+          <div style={{ maxWidth: 600, margin: "0 auto" }}>
             {/* Energy Community Status Card */}
-            <div className="card" style={{
-              marginBottom: 24,
-              textAlign: 'center',
-              background: isEligible
-                ? 'linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05))'
-                : 'linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.05))',
-              border: `2px solid ${isEligible ? 'var(--primary)' : 'var(--accent)'}`
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, marginBottom: 16 }}>
+            <div
+              className="card"
+              style={{
+                marginBottom: 24,
+                textAlign: "center",
+                background: isEligible
+                  ? "linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05))"
+                  : "linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.05))",
+                border: `2px solid ${isEligible ? "var(--primary)" : "var(--accent)"}`,
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 12,
+                  marginBottom: 16,
+                }}
+              >
                 {isEligible ? (
-                  <CheckCircle size={32} style={{ color: 'var(--primary)' }} />
+                  <CheckCircle size={32} style={{ color: "var(--primary)" }} />
                 ) : (
-                  <XCircle size={32} style={{ color: 'var(--accent)' }} />
+                  <XCircle size={32} style={{ color: "var(--accent)" }} />
                 )}
-                <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: 700 }}>
-                  {isEligible ? 'Eligible!' : 'Not Eligible'}
+                <h2 style={{ margin: 0, fontSize: "1.5rem", fontWeight: 700 }}>
+                  {isEligible ? "Eligible!" : "Not Eligible"}
                 </h2>
               </div>
 
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, marginBottom: 16 }}>
-                <MapPin size={18} style={{ color: 'var(--gray-500)' }} />
-                <span style={{ fontSize: '1rem', color: 'var(--gray-600)' }}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 6,
+                  marginBottom: 16,
+                }}
+              >
+                <MapPin size={18} style={{ color: "var(--gray-500)" }} />
+                <span style={{ fontSize: "1rem", color: "var(--gray-600)" }}>
                   {project.address?.county} County
-                  {project.energyCommunity?.msa ? ` (${project.energyCommunity.msa} MSA)` : ''}
+                  {project.energyCommunity?.msa
+                    ? ` (${project.energyCommunity.msa} MSA)`
+                    : ""}
                 </span>
               </div>
 
-              <p style={{ fontSize: '1rem', color: 'var(--gray-600)', marginBottom: 0 }}>
+              <p
+                style={{
+                  fontSize: "1rem",
+                  color: "var(--gray-600)",
+                  marginBottom: 0,
+                }}
+              >
                 {isEligible
-                  ? 'Your location qualifies for federal energy community incentives under IRS Notice 2025-31. This may increase your savings by up to 10%.'
-                  : 'Your location is not currently in a designated energy community, but you may still qualify for other federal and state incentives.'}
+                  ? "Your location qualifies for federal energy community incentives under IRS Notice 2025-31. This may increase your savings by up to 10%."
+                  : "Your location is not currently in a designated energy community, but you may still qualify for other federal and state incentives."}
               </p>
             </div>
 
             {/* System Design Card */}
             {project.systemDesign && (
-              <div className="card" style={{
-                marginBottom: 24,
-                background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.02))',
-                border: '2px solid #3b82f6'
-              }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
-                  <Sun size={24} style={{ color: '#3b82f6' }} />
-                  <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 700 }}>Your Custom System Design</h3>
+              <div
+                className="card"
+                style={{
+                  marginBottom: 24,
+                  background:
+                    "linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.02))",
+                  border: "2px solid #3b82f6",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 12,
+                    marginBottom: 20,
+                  }}
+                >
+                  <Sun size={24} style={{ color: "#3b82f6" }} />
+                  <h3
+                    style={{ margin: 0, fontSize: "1.1rem", fontWeight: 700 }}
+                  >
+                    Your Custom System Design
+                  </h3>
                 </div>
 
                 {/* Solar Panels */}
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 16,
-                  padding: '16px',
-                  background: 'white',
-                  borderRadius: 'var(--radius)',
-                  marginBottom: 12
-                }}>
-                  <div style={{
-                    width: 48, height: 48,
-                    background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
-                    borderRadius: 'var(--radius-full)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center'
-                  }}>
-                    <Sun size={24} style={{ color: 'white' }} />
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 16,
+                    padding: "16px",
+                    background: "white",
+                    borderRadius: "var(--radius)",
+                    marginBottom: 12,
+                  }}
+                >
+                  <div
+                    style={{
+                      width: 48,
+                      height: 48,
+                      background: "linear-gradient(135deg, #fbbf24, #f59e0b)",
+                      borderRadius: "var(--radius-full)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Sun size={24} style={{ color: "white" }} />
                   </div>
                   <div style={{ flex: 1 }}>
-                    <p style={{ margin: 0, fontWeight: 600, fontSize: '1rem' }}>
+                    <p style={{ margin: 0, fontWeight: 600, fontSize: "1rem" }}>
                       {project.systemDesign.panels.count} SolRite Panels
                     </p>
-                    <p style={{ margin: '4px 0 0', color: 'var(--gray-500)', fontSize: '0.85rem' }}>
-                      {project.systemDesign.panels.systemSizeKw.toFixed(1)} kW System
+                    <p
+                      style={{
+                        margin: "4px 0 0",
+                        color: "var(--gray-500)",
+                        fontSize: "0.85rem",
+                      }}
+                    >
+                      {project.systemDesign.panels.systemSizeKw.toFixed(1)} kW
+                      System
                     </p>
                   </div>
-                  <div style={{ textAlign: 'right' }}>
-                    <p style={{ margin: 0, fontWeight: 700, color: 'var(--primary)', fontSize: '1rem' }}>
+                  <div style={{ textAlign: "right" }}>
+                    <p
+                      style={{
+                        margin: 0,
+                        fontWeight: 700,
+                        color: "var(--primary)",
+                        fontSize: "1rem",
+                      }}
+                    >
                       {project.systemDesign.usage.actualOffset}%
                     </p>
-                    <p style={{ margin: 0, color: 'var(--gray-500)', fontSize: '0.75rem' }}>offset</p>
+                    <p
+                      style={{
+                        margin: 0,
+                        color: "var(--gray-500)",
+                        fontSize: "0.75rem",
+                      }}
+                    >
+                      offset
+                    </p>
                   </div>
                 </div>
 
                 {/* Batteries */}
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 16,
-                  padding: '16px',
-                  background: 'white',
-                  borderRadius: 'var(--radius)',
-                  marginBottom: 12
-                }}>
-                  <div style={{
-                    width: 48, height: 48,
-                    background: 'linear-gradient(135deg, #10b981, #059669)',
-                    borderRadius: 'var(--radius-full)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center'
-                  }}>
-                    <Battery size={24} style={{ color: 'white' }} />
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 16,
+                    padding: "16px",
+                    background: "white",
+                    borderRadius: "var(--radius)",
+                    marginBottom: 12,
+                  }}
+                >
+                  <div
+                    style={{
+                      width: 48,
+                      height: 48,
+                      background: "linear-gradient(135deg, #10b981, #059669)",
+                      borderRadius: "var(--radius-full)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Battery size={24} style={{ color: "white" }} />
                   </div>
                   <div style={{ flex: 1 }}>
-                    <p style={{ margin: 0, fontWeight: 600, fontSize: '1rem' }}>
-                      {project.systemDesign.batteries.count} Battery Storage Units
+                    <p style={{ margin: 0, fontWeight: 600, fontSize: "1rem" }}>
+                      {project.systemDesign.batteries.count} Battery Storage
+                      Units
                     </p>
-                    <p style={{ margin: '4px 0 0', color: 'var(--gray-500)', fontSize: '0.85rem' }}>
-                      {project.systemDesign.batteries.totalCapacityKwh} kWh Total
+                    <p
+                      style={{
+                        margin: "4px 0 0",
+                        color: "var(--gray-500)",
+                        fontSize: "0.85rem",
+                      }}
+                    >
+                      {project.systemDesign.batteries.totalCapacityKwh} kWh
+                      Total
                     </p>
                   </div>
-                  <div style={{ textAlign: 'right' }}>
-                    <p style={{ margin: 0, fontWeight: 700, color: 'var(--primary)', fontSize: '1rem' }}>
+                  <div style={{ textAlign: "right" }}>
+                    <p
+                      style={{
+                        margin: 0,
+                        fontWeight: 700,
+                        color: "var(--primary)",
+                        fontSize: "1rem",
+                      }}
+                    >
                       {project.systemDesign.batteries.peakPowerKw} kW
                     </p>
-                    <p style={{ margin: 0, color: 'var(--gray-500)', fontSize: '0.75rem' }}>peak</p>
+                    <p
+                      style={{
+                        margin: 0,
+                        color: "var(--gray-500)",
+                        fontSize: "0.75rem",
+                      }}
+                    >
+                      peak
+                    </p>
                   </div>
                 </div>
 
                 {/* Production Stats */}
-                <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: '1fr 1fr 1fr',
-                  gap: 8,
-                  marginTop: 12
-                }}>
-                  <div style={{ textAlign: 'center', padding: '10px', background: 'white', borderRadius: 'var(--radius)' }}>
-                    <p style={{ margin: 0, fontSize: '1.1rem', fontWeight: 700, color: '#3b82f6' }}>
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr 1fr 1fr",
+                    gap: 8,
+                    marginTop: 12,
+                  }}
+                >
+                  <div
+                    style={{
+                      textAlign: "center",
+                      padding: "10px",
+                      background: "white",
+                      borderRadius: "var(--radius)",
+                    }}
+                  >
+                    <p
+                      style={{
+                        margin: 0,
+                        fontSize: "1.1rem",
+                        fontWeight: 700,
+                        color: "#3b82f6",
+                      }}
+                    >
                       {project.systemDesign.production.annualKwh.toLocaleString()}
                     </p>
-                    <p style={{ margin: '2px 0 0', color: 'var(--gray-500)', fontSize: '0.7rem' }}>kWh/year</p>
-                  </div>
-                  <div style={{ textAlign: 'center', padding: '10px', background: 'white', borderRadius: 'var(--radius)' }}>
-                    <p style={{ margin: 0, fontSize: '1.1rem', fontWeight: 700, color: '#10b981' }}>
-                      {project.systemDesign.environmental.carbonOffsetTonsPerYear}
+                    <p
+                      style={{
+                        margin: "2px 0 0",
+                        color: "var(--gray-500)",
+                        fontSize: "0.7rem",
+                      }}
+                    >
+                      kWh/year
                     </p>
-                    <p style={{ margin: '2px 0 0', color: 'var(--gray-500)', fontSize: '0.7rem' }}>tons CO₂/yr</p>
                   </div>
-                  <div style={{ textAlign: 'center', padding: '10px', background: 'white', borderRadius: 'var(--radius)' }}>
-                    <p style={{ margin: 0, fontSize: '1.1rem', fontWeight: 700, color: '#f59e0b' }}>
+                  <div
+                    style={{
+                      textAlign: "center",
+                      padding: "10px",
+                      background: "white",
+                      borderRadius: "var(--radius)",
+                    }}
+                  >
+                    <p
+                      style={{
+                        margin: 0,
+                        fontSize: "1.1rem",
+                        fontWeight: 700,
+                        color: "#10b981",
+                      }}
+                    >
+                      {
+                        project.systemDesign.environmental
+                          .carbonOffsetTonsPerYear
+                      }
+                    </p>
+                    <p
+                      style={{
+                        margin: "2px 0 0",
+                        color: "var(--gray-500)",
+                        fontSize: "0.7rem",
+                      }}
+                    >
+                      tons CO₂/yr
+                    </p>
+                  </div>
+                  <div
+                    style={{
+                      textAlign: "center",
+                      padding: "10px",
+                      background: "white",
+                      borderRadius: "var(--radius)",
+                    }}
+                  >
+                    <p
+                      style={{
+                        margin: 0,
+                        fontSize: "1.1rem",
+                        fontWeight: 700,
+                        color: "#f59e0b",
+                      }}
+                    >
                       {project.systemDesign.environmental.treesEquivalent}
                     </p>
-                    <p style={{ margin: '2px 0 0', color: 'var(--gray-500)', fontSize: '0.7rem' }}>trees equiv</p>
+                    <p
+                      style={{
+                        margin: "2px 0 0",
+                        color: "var(--gray-500)",
+                        fontSize: "0.7rem",
+                      }}
+                    >
+                      trees equiv
+                    </p>
                   </div>
                 </div>
               </div>
@@ -257,11 +470,22 @@ export default function ProjectStatus() {
 
             {/* Submission Details */}
             <div className="card" style={{ marginBottom: 24 }}>
-              <h3 style={{ marginBottom: 16, fontSize: '1.1rem', fontWeight: 600 }}>Submission Details</h3>
+              <h3
+                style={{
+                  marginBottom: 16,
+                  fontSize: "1.1rem",
+                  fontWeight: 600,
+                }}
+              >
+                Submission Details
+              </h3>
 
               <div className="info-row">
                 <span className="info-label">
-                  <User size={16} style={{ marginRight: 8, verticalAlign: 'middle' }} />
+                  <User
+                    size={16}
+                    style={{ marginRight: 8, verticalAlign: "middle" }}
+                  />
                   Name
                 </span>
                 <span className="info-value">
@@ -271,7 +495,10 @@ export default function ProjectStatus() {
 
               <div className="info-row">
                 <span className="info-label">
-                  <Mail size={16} style={{ marginRight: 8, verticalAlign: 'middle' }} />
+                  <Mail
+                    size={16}
+                    style={{ marginRight: 8, verticalAlign: "middle" }}
+                  />
                   Email
                 </span>
                 <span className="info-value">{project.customer?.email}</span>
@@ -280,7 +507,10 @@ export default function ProjectStatus() {
               {project.customer?.phone && (
                 <div className="info-row">
                   <span className="info-label">
-                    <Phone size={16} style={{ marginRight: 8, verticalAlign: 'middle' }} />
+                    <Phone
+                      size={16}
+                      style={{ marginRight: 8, verticalAlign: "middle" }}
+                    />
                     Phone
                   </span>
                   <span className="info-value">{project.customer?.phone}</span>
@@ -289,38 +519,187 @@ export default function ProjectStatus() {
 
               <div className="info-row">
                 <span className="info-label">
-                  <Home size={16} style={{ marginRight: 8, verticalAlign: 'middle' }} />
+                  <Home
+                    size={16}
+                    style={{ marginRight: 8, verticalAlign: "middle" }}
+                  />
                   Address
                 </span>
                 <span className="info-value">
-                  {project.address?.street}<br />
-                  {project.address?.city}, {project.address?.state} {project.address?.postalCode}
+                  {project.address?.street}
+                  <br />
+                  {project.address?.city}, {project.address?.state}{" "}
+                  {project.address?.postalCode}
                 </span>
               </div>
 
               <div className="info-row">
                 <span className="info-label">Submitted</span>
                 <span className="info-value">
-                  {new Date(project.createdAt).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
+                  {new Date(project.createdAt).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
                   })}
                 </span>
               </div>
             </div>
 
+            {/* Payment Status */}
+            {project.mercury && (
+              <div
+                className="card"
+                style={{
+                  marginBottom: 24,
+                  background:
+                    project.mercury.paymentStatus === "paid"
+                      ? "linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.02))"
+                      : "linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.02))",
+                  border: `2px solid ${project.mercury.paymentStatus === "paid" ? "#10b981" : "#3b82f6"}`,
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 12,
+                    marginBottom: 20,
+                  }}
+                >
+                  <DollarSign
+                    size={24}
+                    style={{
+                      color:
+                        project.mercury.paymentStatus === "paid"
+                          ? "#10b981"
+                          : "#3b82f6",
+                    }}
+                  />
+                  <h3
+                    style={{ margin: 0, fontSize: "1.1rem", fontWeight: 700 }}
+                  >
+                    Payment Status
+                  </h3>
+                </div>
+
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    padding: "16px",
+                    background: "white",
+                    borderRadius: "var(--radius)",
+                    marginBottom: 12,
+                  }}
+                >
+                  <div>
+                    <p style={{ margin: 0, fontWeight: 600, fontSize: "1rem" }}>
+                      Invoice Total
+                    </p>
+                    <p
+                      style={{
+                        margin: "4px 0 0",
+                        fontSize: "1.5rem",
+                        fontWeight: 700,
+                        color: "var(--gray-900)",
+                      }}
+                    >
+                      $
+                      {(project.mercury.totalInvoiced || 0).toLocaleString(
+                        "en-US",
+                        { minimumFractionDigits: 2 },
+                      )}
+                    </p>
+                  </div>
+                  <span
+                    style={{
+                      padding: "6px 16px",
+                      borderRadius: "var(--radius-full)",
+                      fontSize: "0.85rem",
+                      fontWeight: 600,
+                      background:
+                        project.mercury.paymentStatus === "paid"
+                          ? "#d1fae5"
+                          : project.mercury.paymentStatus === "processing"
+                            ? "#dbeafe"
+                            : "#fef3c7",
+                      color:
+                        project.mercury.paymentStatus === "paid"
+                          ? "#065f46"
+                          : project.mercury.paymentStatus === "processing"
+                            ? "#1e40af"
+                            : "#92400e",
+                    }}
+                  >
+                    {(project.mercury.paymentStatus || "unpaid")
+                      .charAt(0)
+                      .toUpperCase() +
+                      (project.mercury.paymentStatus || "unpaid").slice(1)}
+                  </span>
+                </div>
+
+                {project.mercury.paymentStatus !== "paid" &&
+                  project.mercury.invoiceSlug && (
+                    <a
+                      href={`https://app.mercury.com/invoices/${project.mercury.invoiceSlug}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-primary"
+                      style={{
+                        width: "100%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: 8,
+                        textDecoration: "none",
+                      }}
+                    >
+                      <DollarSign size={18} />
+                      Pay Now — Secure Bank Transfer
+                      <ExternalLink size={16} />
+                    </a>
+                  )}
+
+                {project.mercury.paymentStatus === "paid" && (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: 8,
+                      padding: "12px",
+                      color: "#065f46",
+                    }}
+                  >
+                    <CheckCircle size={20} />
+                    <span style={{ fontWeight: 600 }}>
+                      Payment received — thank you!
+                    </span>
+                  </div>
+                )}
+              </div>
+            )}
+
             {/* Next Steps */}
             <div className="card">
-              <h3 style={{ marginBottom: 16, fontSize: '1.1rem', fontWeight: 600 }}>What's Next?</h3>
-              <p style={{ color: 'var(--gray-600)', marginBottom: 16 }}>
+              <h3
+                style={{
+                  marginBottom: 16,
+                  fontSize: "1.1rem",
+                  fontWeight: 600,
+                }}
+              >
+                What's Next?
+              </h3>
+              <p style={{ color: "var(--gray-600)", marginBottom: 16 }}>
                 {isEligible
-                  ? 'Our team will review your information and contact you within 24-48 hours to discuss your options and schedule a site assessment.'
-                  : 'Even though your location isn\'t in an energy community, you may still qualify for other incentives. Our team will review your submission and contact you with available options.'}
+                  ? "Our team will review your information and contact you within 24-48 hours to discuss your options and schedule a site assessment."
+                  : "Even though your location isn't in an energy community, you may still qualify for other incentives. Our team will review your submission and contact you with available options."}
               </p>
-              <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+              <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
                 <Link to="/" className="btn btn-secondary">
                   Back to Home
                 </Link>
@@ -333,5 +712,5 @@ export default function ProjectStatus() {
         </div>
       </section>
     </div>
-  )
+  );
 }

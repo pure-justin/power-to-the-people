@@ -281,6 +281,18 @@ service cloud.firestore {
       allow delete: if isAdmin();
     }
 
+    // INVOICES COLLECTION (Mercury ACH payments)
+    match /invoices/{invoiceId} {
+      // Admins have full access
+      allow read, write: if isAdmin();
+
+      // Customers can read their own invoices (by email match)
+      allow read: if isSignedIn() &&
+                    resource.data.customerEmail == request.auth.token.email;
+
+      // No direct client writes - Cloud Functions only
+    }
+
     // Default deny all other collections
     match /{document=**} {
       allow read, write: if false;
