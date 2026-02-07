@@ -115,11 +115,57 @@ const StatusBadge = ({ status }) => {
   );
 };
 
+// Section content keywords for full-text search
+const SECTION_KEYWORDS = {
+  introduction:
+    "solar battery design api overview getting started base url cloud functions netlify",
+  authentication:
+    "auth api key bearer token firebase login password environment variables",
+  quickstart: "install npm firebase initialize setup quick start dependencies",
+  solarApi:
+    "solar building insights panels design system geotiff flux data layers production",
+  firebaseApi:
+    "firebase firestore leads create update delete status projects collection crud",
+  utilityBillApi:
+    "utility bill scan gemini ai image extract usage history esiid",
+  addressApi:
+    "address geocoding location places autocomplete energy community irs county",
+  referralApi: "referral tracking rewards earnings code link stats payout",
+  installerApi:
+    "installer search filter compare rating certification nabcep warranty score",
+  smsApi: "sms notification message send bulk template phone twilio",
+  adminApi:
+    "admin dashboard stats analytics project lead lifecycle scoring search",
+  commercialApi:
+    "commercial lead scrape property warehouse retail office industrial import batch",
+  solriteApi:
+    "solrite subhub enrollment proposal finance solnova utility texas contact",
+  coordinatorApi:
+    "agent coordinator mac studio ava task queue message register health",
+  webhooks:
+    "webhook event notification payload signature hmac lead referral project",
+  visualization:
+    "3d visualization cesium cesium3d tiles google photorealistic roof panel render",
+  playground: "playground test live endpoint execute api call interactive",
+  sdks: "sdk library javascript python rest postman collection cesium installation",
+  examples: "example code workflow design lead real-time firebase project",
+  rateLimiting:
+    "rate limit quota best practices cache batch retry backoff security",
+  errorHandling:
+    "error handling code response not found invalid location permission denied retry",
+  changelog:
+    "changelog version update release new feature improvement breaking change",
+  openApiSpec:
+    "openapi specification swagger schema download json postman import export",
+};
+
 const ApiDocs = () => {
   const [activeSection, setActiveSection] = useState("introduction");
   const [copiedCode, setCopiedCode] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const [showKeyboardHelp, setShowKeyboardHelp] = useState(false);
   const [expandedGroups, setExpandedGroups] = useState({
     overview: true,
     apis: true,
@@ -127,6 +173,7 @@ const ApiDocs = () => {
     tools: true,
     resources: true,
   });
+  const searchInputRef = useRef(null);
 
   // Set section from URL hash on mount
   useEffect(() => {
@@ -139,6 +186,65 @@ const ApiDocs = () => {
   // Update URL hash when section changes
   useEffect(() => {
     window.location.hash = activeSection;
+  }, [activeSection]);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      // "/" to focus search
+      if (e.key === "/" && !e.ctrlKey && !e.metaKey) {
+        const active = document.activeElement;
+        if (
+          active?.tagName !== "INPUT" &&
+          active?.tagName !== "TEXTAREA" &&
+          active?.tagName !== "SELECT"
+        ) {
+          e.preventDefault();
+          searchInputRef.current?.focus();
+        }
+      }
+      // Escape to close mobile sidebar or blur search
+      if (e.key === "Escape") {
+        setMobileSidebarOpen(false);
+        setShowKeyboardHelp(false);
+        searchInputRef.current?.blur();
+      }
+      // "?" to show keyboard shortcuts
+      if (e.key === "?" && e.shiftKey) {
+        const active = document.activeElement;
+        if (active?.tagName !== "INPUT" && active?.tagName !== "TEXTAREA") {
+          e.preventDefault();
+          setShowKeyboardHelp((prev) => !prev);
+        }
+      }
+      // Arrow keys for section navigation (when not in input)
+      if (
+        (e.key === "ArrowDown" ||
+          e.key === "ArrowUp" ||
+          e.key === "j" ||
+          e.key === "k") &&
+        !e.ctrlKey &&
+        !e.metaKey
+      ) {
+        const active = document.activeElement;
+        if (
+          active?.tagName !== "INPUT" &&
+          active?.tagName !== "TEXTAREA" &&
+          active?.tagName !== "SELECT"
+        ) {
+          e.preventDefault();
+          const idx = sectionList.findIndex((s) => s.key === activeSection);
+          const next =
+            e.key === "ArrowDown" || e.key === "j" ? idx + 1 : idx - 1;
+          if (next >= 0 && next < sectionList.length) {
+            setActiveSection(sectionList[next].key);
+            document.querySelector(".docs-content")?.scrollTo(0, 0);
+          }
+        }
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [activeSection]);
 
   const copyToClipboard = useCallback((code, id) => {
