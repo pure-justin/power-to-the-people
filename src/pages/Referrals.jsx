@@ -738,6 +738,171 @@ export default function Referrals() {
             )}
           </div>
         )}
+
+        {activeTab === "payouts" && (
+          <div className="space-y-6">
+            {/* Request Payout */}
+            <div className="bg-gray-900 rounded-xl p-6 border border-gray-800">
+              <h3 className="text-xl font-bold text-white mb-2">
+                Request Payout
+              </h3>
+              <p className="text-gray-400 text-sm mb-6">
+                Minimum payout: $25. Available balance: $
+                {referralData.pendingEarnings.toFixed(2)}
+              </p>
+
+              {payoutError && (
+                <div className="flex items-center gap-2 p-4 mb-4 bg-red-900/20 border border-red-800/30 rounded-lg text-red-300 text-sm">
+                  <AlertCircle size={18} />
+                  {payoutError}
+                </div>
+              )}
+
+              {payoutSuccess && (
+                <div className="flex items-center gap-2 p-4 mb-4 bg-emerald-900/20 border border-emerald-800/30 rounded-lg text-emerald-300 text-sm">
+                  <CheckCircle size={18} />
+                  {payoutSuccess}
+                </div>
+              )}
+
+              {referralData.pendingEarnings >= 25 ? (
+                <form onSubmit={handlePayoutRequest} className="space-y-4">
+                  <div>
+                    <label className="block text-gray-400 text-sm mb-2">
+                      Amount ($)
+                    </label>
+                    <input
+                      type="number"
+                      min="25"
+                      max={referralData.pendingEarnings}
+                      step="0.01"
+                      value={payoutAmount}
+                      onChange={(e) => setPayoutAmount(e.target.value)}
+                      placeholder="Enter amount"
+                      className="w-full px-4 py-3 bg-gray-800 text-white rounded-lg outline-none focus:ring-2 focus:ring-emerald-500"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-gray-400 text-sm mb-2">
+                      Payout Method
+                    </label>
+                    <select
+                      value={payoutMethod}
+                      onChange={(e) => setPayoutMethod(e.target.value)}
+                      className="w-full px-4 py-3 bg-gray-800 text-white rounded-lg outline-none focus:ring-2 focus:ring-emerald-500"
+                    >
+                      <option value="direct_deposit">
+                        Direct Deposit (ACH)
+                      </option>
+                      <option value="check">Check by Mail</option>
+                      <option value="paypal">PayPal</option>
+                    </select>
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={payoutSubmitting}
+                    className="w-full px-6 py-3 bg-emerald-600 hover:bg-emerald-700 disabled:bg-gray-700 disabled:text-gray-500 text-white rounded-lg font-semibold transition flex items-center justify-center gap-2"
+                  >
+                    {payoutSubmitting ? (
+                      <>
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                        Processing...
+                      </>
+                    ) : (
+                      <>
+                        <DollarSign size={18} />
+                        Request Payout
+                      </>
+                    )}
+                  </button>
+                </form>
+              ) : (
+                <div className="text-center py-8 text-gray-400">
+                  <Wallet className="w-12 h-12 mx-auto mb-3 opacity-50" />
+                  <p>
+                    You need at least $25 in pending earnings to request a
+                    payout.
+                  </p>
+                  <p className="text-sm mt-2">
+                    Current balance: ${referralData.pendingEarnings.toFixed(2)}
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Earnings Summary */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="bg-gray-900 rounded-xl p-6 border border-gray-800">
+                <div className="text-gray-400 text-sm mb-1">Total Earned</div>
+                <div className="text-2xl font-bold text-white">
+                  ${referralData.totalEarnings.toFixed(2)}
+                </div>
+              </div>
+              <div className="bg-gray-900 rounded-xl p-6 border border-gray-800">
+                <div className="text-gray-400 text-sm mb-1">Available</div>
+                <div className="text-2xl font-bold text-emerald-400">
+                  ${referralData.pendingEarnings.toFixed(2)}
+                </div>
+              </div>
+              <div className="bg-gray-900 rounded-xl p-6 border border-gray-800">
+                <div className="text-gray-400 text-sm mb-1">Paid Out</div>
+                <div className="text-2xl font-bold text-white">
+                  ${referralData.paidEarnings.toFixed(2)}
+                </div>
+              </div>
+            </div>
+
+            {/* Payout History */}
+            <div className="bg-gray-900 rounded-xl p-6 border border-gray-800">
+              <h3 className="text-xl font-bold text-white mb-6">
+                Payout History
+              </h3>
+              {payouts.length > 0 ? (
+                <div className="space-y-3">
+                  {payouts.map((payout) => (
+                    <div
+                      key={payout.id}
+                      className="flex items-center justify-between p-4 bg-gray-800 rounded-lg"
+                    >
+                      <div>
+                        <div className="text-white font-semibold">
+                          ${payout.amount.toFixed(2)}
+                        </div>
+                        <div className="text-gray-400 text-sm">
+                          {payout.method === "direct_deposit"
+                            ? "Direct Deposit"
+                            : payout.method === "check"
+                              ? "Check"
+                              : "PayPal"}
+                          {" · "}
+                          {payout.requestedAt?.toDate
+                            ? new Date(
+                                payout.requestedAt.toDate(),
+                              ).toLocaleDateString()
+                            : "Pending"}
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        {getPayoutStatusBadge(payout.status)}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-8 text-gray-400">
+                  <Clock className="w-12 h-12 mx-auto mb-3 opacity-50" />
+                  <p>No payouts yet</p>
+                  <p className="text-sm mt-1">
+                    Request your first payout when you have $25+ in earnings
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
