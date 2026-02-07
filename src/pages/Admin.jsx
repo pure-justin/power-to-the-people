@@ -972,6 +972,30 @@ export default function Admin() {
               SMS
             </button>
             <button
+              onClick={() => setActiveTab("webhooks")}
+              style={{
+                padding: "12px 24px",
+                background: "none",
+                border: "none",
+                borderBottom:
+                  activeTab === "webhooks"
+                    ? "2px solid #8b5cf6"
+                    : "2px solid transparent",
+                color: activeTab === "webhooks" ? "#8b5cf6" : "#6b7280",
+                fontWeight: activeTab === "webhooks" ? 600 : 500,
+                cursor: "pointer",
+                fontSize: "0.95rem",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                marginBottom: "-2px",
+                transition: "all 0.2s",
+              }}
+            >
+              <Webhook size={18} />
+              Webhooks
+            </button>
+            <button
               onClick={() => setActiveTab("ava")}
               style={{
                 padding: "12px 24px",
