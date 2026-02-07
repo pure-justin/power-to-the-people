@@ -153,23 +153,21 @@ export const createSubscription = functions
           },
         });
 
-        // Create Stripe subscription
+        // Create Stripe product + price, then subscription
         const tierConfig = SOLAR_TIERS[tier];
+        const product = await stripe.products.create({
+          name: `Solar CRM - ${tierConfig.name}`,
+          metadata: { tier },
+        });
+        const price = await stripe.prices.create({
+          product: product.id,
+          currency: "usd",
+          unit_amount: tierConfig.price_monthly,
+          recurring: { interval: "month" },
+        });
         const subscription = await stripe.subscriptions.create({
           customer: customer.id,
-          items: [
-            {
-              price_data: {
-                currency: "usd",
-                product_data: {
-                  name: `Solar CRM - ${tierConfig.name}`,
-                  metadata: { tier },
-                },
-                unit_amount: tierConfig.price_monthly,
-                recurring: { interval: "month" },
-              },
-            },
-          ],
+          items: [{ price: price.id }],
           metadata: {
             firebase_uid: userId,
             tier,
