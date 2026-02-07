@@ -64,8 +64,12 @@ export default function ReferralAdminPanel() {
         ...doc.data(),
       }));
 
+      // Load all payouts
+      const payoutsData = await getAllPayouts().catch(() => []);
+
       setReferrals(trackingData);
       setAllReferrers(referrersData);
+      setPayouts(payoutsData);
     } catch (error) {
       console.error("Error loading admin data:", error);
     } finally {
