@@ -298,7 +298,7 @@ export const getMercuryInvoice = functions
 
       try {
         const result = await mercuryFetch(
-          `/invoices/${mercuryInvoiceId}`,
+          `/ar/invoices/${mercuryInvoiceId}`,
           "GET",
         );
 
@@ -382,7 +382,7 @@ export const cancelMercuryInvoice = functions
       }
 
       try {
-        await mercuryFetch(`/invoices/${mercuryInvoiceId}/cancel`, "PUT");
+        await mercuryFetch(`/ar/invoices/${mercuryInvoiceId}/cancel`, "PUT");
 
         const db = admin.firestore();
 
@@ -447,7 +447,7 @@ export const syncInvoiceStatus = functions.pubsub
 
       try {
         const mercuryInvoice = await mercuryFetch(
-          `/invoices/${invoice.mercuryInvoiceId}`,
+          `/ar/invoices/${invoice.mercuryInvoiceId}`,
           "GET",
         );
 
