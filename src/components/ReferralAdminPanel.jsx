@@ -12,17 +12,7 @@ import {
   Mail,
   AlertCircle,
 } from "lucide-react";
-import {
-  collection,
-  getDocs,
-  query,
-  where,
-  orderBy,
-  limit,
-  updateDoc,
-  doc,
-} from "firebase/firestore";
-import { db } from "../services/firebase";
+import { collection, getDocs, query, orderBy, db } from "../services/firebase";
 import { updateReferralStatus } from "../services/referralService";
 
 /**
