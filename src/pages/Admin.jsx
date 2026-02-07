@@ -1072,6 +1072,21 @@ export default function Admin() {
               </div>
 
               {showAnalytics && <AdminAnalytics />}
+
+              {/* Lead Quality Scoring */}
+              <div style={{ marginTop: 24 }}>
+                <h3
+                  style={{
+                    fontSize: "1.1rem",
+                    fontWeight: 700,
+                    color: "#111827",
+                    marginBottom: 16,
+                  }}
+                >
+                  Lead Quality Scoring
+                </h3>
+                <LeadQualityScoring projects={projects} />
+              </div>
             </>
           )}
 
