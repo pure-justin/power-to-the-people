@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { Link } from "react-router-dom";
 import {
   Zap,
@@ -17,22 +17,17 @@ import {
   ChevronUp,
   Award,
   Users,
-  Calendar,
   Battery,
   Sun,
   Filter,
   Download,
-  Share2,
-  BarChart3,
   Grid,
   List,
   ArrowRight,
   Target,
-  Sliders,
   Trophy,
   ThumbsUp,
   Sparkles,
-  Info,
   CircleDot,
 } from "lucide-react";
 import {
