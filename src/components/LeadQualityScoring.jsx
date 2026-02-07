@@ -972,7 +972,6 @@ function TrendLine({ data }) {
 
 function Heatmap({ data }) {
   const { tiers, categories, grid } = data;
-  const cols = categories.length + 1;
 
   const getHeatColor = (value) => {
     if (value >= 80) return { bg: "#dcfce7", text: "#166534" };
