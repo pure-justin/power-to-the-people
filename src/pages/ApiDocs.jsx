@@ -1463,6 +1463,1231 @@ console.log(referral.trackingCode);`,
       </div>
     ),
 
+    installerApi: (
+      <div className="doc-section">
+        <h1>Installer Search API</h1>
+        <p className="lead">
+          Search, filter, compare, and score solar installers from our Firestore
+          database with support for location-based queries, certification
+          filters, and intelligent ranking.
+        </p>
+
+        <ApiEndpoint
+          method="GET"
+          endpoint="searchInstallers(options)"
+          description="Search installers with comprehensive filtering including state, city, rating, certifications, company size, and sorting"
+          status="stable"
+          parameters={[
+            {
+              name: "state",
+              type: "string",
+              required: false,
+              description: "US state code (e.g., 'TX', 'CA')",
+            },
+            {
+              name: "city",
+              type: "string",
+              required: false,
+              description: "City name for service area filtering",
+            },
+            {
+              name: "minRating",
+              type: "number",
+              required: false,
+              description: "Minimum rating threshold (0-5)",
+            },
+            {
+              name: "certifications",
+              type: "string[]",
+              required: false,
+              description: "Required certifications (e.g., ['NABCEP'])",
+            },
+            {
+              name: "companySize",
+              type: "string",
+              required: false,
+              description: "'small' | 'medium' | 'large'",
+            },
+            {
+              name: "maxResults",
+              type: "number",
+              required: false,
+              description: "Max results to return (default: 50)",
+            },
+            {
+              name: "sortBy",
+              type: "string",
+              required: false,
+              description: "'rating' | 'reviewCount' | 'annualInstalls'",
+            },
+            {
+              name: "sortOrder",
+              type: "string",
+              required: false,
+              description: "'asc' | 'desc' (default: 'desc')",
+            },
+          ]}
+          returns="Promise<object> - { success, count, installers[] }"
+          responseExample={`{
+  "success": true,
+  "count": 12,
+  "installers": [
+    {
+      "id": "inst_abc123",
+      "name": "SunPower Texas",
+      "rating": 4.8,
+      "reviews": 342,
+      "yearsInBusiness": 15,
+      "installsCompleted": 2800,
+      "pricePerWatt": 2.85,
+      "certifications": ["NABCEP", "Tesla Powerwall"],
+      "serviceAreas": ["TX-Austin", "TX-San Antonio"],
+      "customerSatisfaction": 96,
+      "warranty": {
+        "workmanship": 25,
+        "panels": 25,
+        "inverters": 12,
+        "batteries": 10
+      }
+    }
+  ]
+}`}
+          examples={{
+            javascript: `import { searchInstallers } from './services/installerApi';
+
+const results = await searchInstallers({
+  state: 'TX',
+  city: 'Austin',
+  minRating: 4.0,
+  certifications: ['NABCEP'],
+  sortBy: 'rating',
+  maxResults: 10
+});
+
+results.installers.forEach(inst => {
+  console.log(\`\${inst.name}: \${inst.rating}/5 (\${inst.reviews} reviews)\`);
+});`,
+            python: `from google.cloud import firestore
+
+db = firestore.Client()
+installers = db.collection('installers') \\
+    .where('state', '==', 'TX') \\
+    .where('rating', '>=', 4.0) \\
+    .order_by('rating', direction='DESCENDING') \\
+    .limit(10) \\
+    .stream()
+
+for inst in installers:
+    data = inst.to_dict()
+    print(f"{data['name']}: {data['rating']}/5")`,
+          }}
+          onCopy={copyToClipboard}
+          copiedId={copiedCode}
+        />
+
+        <ApiEndpoint
+          method="GET"
+          endpoint="getTopInstallers(state, count)"
+          description="Get the highest-rated solar installers in a specific state"
+          status="stable"
+          parameters={[
+            {
+              name: "state",
+              type: "string",
+              required: true,
+              description: "US state code",
+            },
+            {
+              name: "count",
+              type: "number",
+              required: false,
+              description: "Number of results (default: 10)",
+            },
+          ]}
+          returns="Promise<object> - { success, count, installers[] }"
+          examples={{
+            javascript: `import { getTopInstallers } from './services/installerApi';
+
+const top = await getTopInstallers('TX', 5);
+console.log(\`Top \${top.count} Texas installers:\`);
+top.installers.forEach(i => console.log(\`  \${i.name} - \${i.rating}/5\`));`,
+          }}
+          onCopy={copyToClipboard}
+          copiedId={copiedCode}
+        />
+
+        <ApiEndpoint
+          method="GET"
+          endpoint="getInstallerStats(state)"
+          description="Get aggregate installer statistics for a state including counts by size, average rating, and certification data"
+          status="stable"
+          parameters={[
+            {
+              name: "state",
+              type: "string",
+              required: true,
+              description: "US state code",
+            },
+          ]}
+          returns="Promise<object> - { success, state, stats }"
+          responseExample={`{
+  "success": true,
+  "state": "TX",
+  "stats": {
+    "total": 147,
+    "bySize": { "small": 82, "medium": 45, "large": 20 },
+    "avgRating": 4.2,
+    "totalReviews": 12450,
+    "certified": 89
+  }
+}`}
+          examples={{
+            javascript: `import { getInstallerStats } from './services/installerApi';
+
+const stats = await getInstallerStats('TX');
+console.log(\`Total: \${stats.stats.total} installers\`);
+console.log(\`Avg Rating: \${stats.stats.avgRating}/5\`);
+console.log(\`NABCEP Certified: \${stats.stats.certified}\`);`,
+          }}
+          onCopy={copyToClipboard}
+          copiedId={copiedCode}
+        />
+
+        <h2>Installer Comparison</h2>
+        <ApiEndpoint
+          method="POST"
+          endpoint="compareInstallers(installerIds, systemSizeKw)"
+          description="Compare multiple installers side-by-side with pricing calculations including tax credits and monthly payments"
+          status="stable"
+          parameters={[
+            {
+              name: "installerIds",
+              type: "string[]",
+              required: true,
+              description: "Array of installer IDs to compare",
+            },
+            {
+              name: "systemSizeKw",
+              type: "number",
+              required: false,
+              description: "System size in kW (default: 10)",
+            },
+          ]}
+          returns="Array - Installers with pricing, sorted by total score"
+          responseExample={`[
+  {
+    "name": "SunPower Texas",
+    "pricing": {
+      "basePrice": 28500,
+      "batteryCost": 15000,
+      "totalPrice": 43500,
+      "federalTaxCredit": 13050,
+      "netCost": 30450,
+      "pricePerWatt": 2.85,
+      "monthlyPayment": 145
+    },
+    "score": {
+      "total": 92,
+      "breakdown": {
+        "rating": 24, "customerSatisfaction": 19,
+        "onTimeCompletion": 18, "priceValue": 16
+      }
+    }
+  }
+]`}
+          examples={{
+            javascript: `import { compareInstallers } from './services/installerService';
+
+const comparison = compareInstallers(
+  ['inst_abc', 'inst_def', 'inst_ghi'],
+  11.48  // 11.48 kW system
+);
+
+comparison.forEach(inst => {
+  console.log(\`\${inst.name}: $\${inst.pricing.netCost} net cost\`);
+  console.log(\`  Score: \${inst.score.total}/100\`);
+  console.log(\`  Monthly: $\${inst.pricing.monthlyPayment}/mo\`);
+});`,
+          }}
+          onCopy={copyToClipboard}
+          copiedId={copiedCode}
+        />
+
+        <h2>Installer Score Breakdown</h2>
+        <div className="callout info">
+          <BarChart3 size={20} />
+          <div>
+            <strong>Scoring Algorithm</strong>
+            <p>
+              Installers are scored 0-100 based on weighted factors: Customer
+              Rating (25%), Customer Satisfaction (20%), On-Time Completion
+              (20%), Permitting Success (15%), Years in Business (10%), and
+              Price Value (10%).
+            </p>
+          </div>
+        </div>
+      </div>
+    ),
+
+    smsApi: (
+      <div className="doc-section">
+        <h1>SMS Notifications API</h1>
+        <p className="lead">
+          Send SMS notifications to leads and customers via Firebase Cloud
+          Functions. Supports individual messages, bulk sending, and pre-built
+          templates for common solar CRM workflows.
+        </p>
+
+        <ApiEndpoint
+          method="POST"
+          endpoint="sendCustomSMS(phone, message)"
+          description="Send a custom SMS message to a single recipient (admin-only)"
+          status="stable"
+          parameters={[
+            {
+              name: "phone",
+              type: "string",
+              required: true,
+              description:
+                "US phone number (any format, auto-converted to E.164)",
+            },
+            {
+              name: "message",
+              type: "string",
+              required: true,
+              description: "Message text (max 160 characters)",
+            },
+          ]}
+          returns="Promise<boolean> - true if sent successfully"
+          examples={{
+            javascript: `import { sendCustomSMS } from './services/smsService';
+
+const sent = await sendCustomSMS(
+  '512-555-0100',
+  'Your solar proposal is ready! Check your email for details.'
+);
+
+if (sent) console.log('SMS sent successfully');`,
+            curl: `curl -X POST \\
+  'https://us-central1-power-to-the-people-vpp.cloudfunctions.net/sendSMS' \\
+  -H 'Authorization: Bearer YOUR_TOKEN' \\
+  -H 'Content-Type: application/json' \\
+  -d '{
+    "data": {
+      "phone": "+15125550100",
+      "message": "Your solar proposal is ready!"
+    }
+  }'`,
+          }}
+          onCopy={copyToClipboard}
+          copiedId={copiedCode}
+        />
+
+        <ApiEndpoint
+          method="POST"
+          endpoint="sendBulkSMS(recipients, message)"
+          description="Send the same SMS message to multiple recipients (max 100 per batch)"
+          status="stable"
+          parameters={[
+            {
+              name: "recipients",
+              type: "string[]",
+              required: true,
+              description: "Array of phone numbers (max 100)",
+            },
+            {
+              name: "message",
+              type: "string",
+              required: true,
+              description: "Message text (max 160 characters)",
+            },
+          ]}
+          returns="Promise<object> - { total, successful, failed }"
+          responseExample={`{
+  "total": 25,
+  "successful": 23,
+  "failed": 2
+}`}
+          examples={{
+            javascript: `import { sendBulkSMS } from './services/smsService';
+
+const result = await sendBulkSMS(
+  ['512-555-0100', '512-555-0200', '512-555-0300'],
+  'New solar incentives available! Reply YES for details.'
+);
+
+console.log(\`Sent: \${result.successful}/\${result.total}\`);`,
+          }}
+          onCopy={copyToClipboard}
+          copiedId={copiedCode}
+        />
+
+        <h2>SMS Templates</h2>
+        <p>Pre-built message templates for common CRM workflows:</p>
+        <CodeBlock
+          language="javascript"
+          code={`import { SMS_TEMPLATES } from './services/smsService';
+
+// Enrollment confirmation
+SMS_TEMPLATES.enrollmentConfirmation('John', 'proj_123');
+// → "Hi John! Your solar enrollment (proj_123) has been received..."
+
+// Enrollment approved
+SMS_TEMPLATES.enrollmentApproved('John', '$142');
+// → "Great news John! Your enrollment is approved. Est. savings: $142/mo"
+
+// Referral reward
+SMS_TEMPLATES.referralReward('John', '$500', 'Jane');
+// → "Congrats John! You earned $500 for referring Jane..."
+
+// Installation scheduled
+SMS_TEMPLATES.installationScheduled('John', 'Mar 15', 'SunPower TX');
+// → "John, your solar installation is scheduled for Mar 15 with SunPower TX"
+
+// Payment reminder
+SMS_TEMPLATES.paymentReminder('John', '$145', 'Feb 15');
+// → "Reminder: $145 payment due Feb 15..."`}
+          onCopy={(code) => copyToClipboard(code, "sms-templates")}
+          copied={copiedCode === "sms-templates"}
+        />
+
+        <h2>Phone Number Utilities</h2>
+        <CodeBlock
+          language="javascript"
+          code={`import { formatPhoneNumber, isValidPhoneNumber } from './services/smsService';
+
+formatPhoneNumber('(512) 555-0100');  // → '+15125550100'
+formatPhoneNumber('512.555.0100');    // → '+15125550100'
+
+isValidPhoneNumber('+15125550100');   // → true
+isValidPhoneNumber('123');            // → false`}
+          onCopy={(code) => copyToClipboard(code, "sms-utils")}
+          copied={copiedCode === "sms-utils"}
+        />
+
+        <ApiEndpoint
+          method="GET"
+          endpoint="getSmsStats()"
+          description="Get SMS usage statistics including send counts and estimated costs"
+          status="stable"
+          parameters={[]}
+          returns="Promise<object> - { total, successful, failed, estimatedCost, period }"
+          responseExample={`{
+  "total": 1250,
+  "successful": 1223,
+  "failed": 27,
+  "estimatedCost": "$15.60",
+  "period": "2026-02"
+}`}
+          examples={{
+            javascript: `import { getSmsStats } from './services/smsService';
+
+const stats = await getSmsStats();
+console.log(\`Total SMS: \${stats.total} (\${stats.successful} delivered)\`);
+console.log(\`Cost: \${stats.estimatedCost}\`);`,
+          }}
+          onCopy={copyToClipboard}
+          copiedId={copiedCode}
+        />
+      </div>
+    ),
+
+    adminApi: (
+      <div className="doc-section">
+        <h1>Admin Dashboard API</h1>
+        <p className="lead">
+          Administrative endpoints for lead management, analytics, project
+          tracking, and CRM operations. Requires admin-level Firebase Auth.
+        </p>
+
+        <ApiEndpoint
+          method="GET"
+          endpoint="getAdminStats()"
+          description="Get comprehensive dashboard statistics aggregated across all leads and projects"
+          status="stable"
+          parameters={[]}
+          returns="Promise<object> - AdminStats with counts, revenue, and growth metrics"
+          responseExample={`{
+  "totalProjects": 487,
+  "residential": 432,
+  "commercial": 55,
+  "newThisMonth": 34,
+  "activeCustomers": 312,
+  "customerGrowth": 12.5,
+  "totalCapacity": "4,250 kW",
+  "estimatedRevenue": "$2,125,000",
+  "avgLeadScore": 72
+}`}
+          examples={{
+            javascript: `import { getAdminStats } from './services/adminService';
+
+const stats = await getAdminStats();
+console.log(\`Total Projects: \${stats.totalProjects}\`);
+console.log(\`Revenue: \${stats.estimatedRevenue}\`);
+console.log(\`Growth: +\${stats.customerGrowth}% this month\`);`,
+          }}
+          onCopy={copyToClipboard}
+          copiedId={copiedCode}
+        />
+
+        <ApiEndpoint
+          method="GET"
+          endpoint="getAdminProjects()"
+          description="Get all leads (up to 500) ordered by creation date, normalized for admin display"
+          status="stable"
+          parameters={[]}
+          returns="Promise<Array> - Normalized lead objects with computed fields"
+          examples={{
+            javascript: `import { getAdminProjects } from './services/adminService';
+
+const projects = await getAdminProjects();
+projects.forEach(p => {
+  console.log(\`[\${p.status}] \${p.customerName} - \${p.systemSize}\`);
+  console.log(\`  Score: \${p.leadScore} | Priority: \${p.priority}\`);
+  console.log(\`  Type: \${p.leadType} | Source: \${p.source}\`);
+});`,
+          }}
+          onCopy={copyToClipboard}
+          copiedId={copiedCode}
+        />
+
+        <ApiEndpoint
+          method="PUT"
+          endpoint="updateProjectStatus(leadId, newStatus)"
+          description="Update a lead's status in the CRM pipeline"
+          status="stable"
+          parameters={[
+            {
+              name: "leadId",
+              type: "string",
+              required: true,
+              description: "Lead document ID",
+            },
+            {
+              name: "newStatus",
+              type: "string",
+              required: true,
+              description: "New status value",
+            },
+          ]}
+          returns="Promise<boolean>"
+          examples={{
+            javascript: `import { updateProjectStatus } from './services/adminService';
+
+await updateProjectStatus('lead_abc123', 'qualified');`,
+          }}
+          onCopy={copyToClipboard}
+          copiedId={copiedCode}
+        />
+
+        <ApiEndpoint
+          method="GET"
+          endpoint="searchProjects(searchTerm)"
+          description="Search leads by name, email, phone, address, or document ID"
+          status="stable"
+          parameters={[
+            {
+              name: "searchTerm",
+              type: "string",
+              required: true,
+              description: "Search query (case-insensitive)",
+            },
+          ]}
+          returns="Promise<Array> - Matching lead objects"
+          examples={{
+            javascript: `import { searchProjects } from './services/adminService';
+
+const results = await searchProjects('john@example.com');
+const byPhone = await searchProjects('512-555');
+const byAddress = await searchProjects('Austin, TX');`,
+          }}
+          onCopy={copyToClipboard}
+          copiedId={copiedCode}
+        />
+
+        <h2>Lead Lifecycle Management</h2>
+        <CodeBlock
+          language="javascript"
+          code={`import { LEAD_STATUS } from './services/leadsService';
+
+// Available statuses
+LEAD_STATUS = {
+  NEW: 'new',
+  QUALIFIED: 'qualified',
+  CONTACTED: 'contacted',
+  PROPOSAL_SENT: 'proposal_sent',
+  SITE_VISIT_SCHEDULED: 'site_visit_scheduled',
+  CONTRACT_SIGNED: 'contract_signed',
+  CLOSED_WON: 'closed_won',
+  CLOSED_LOST: 'closed_lost'
+};
+
+// Update status with validation
+import { updateLeadStatus } from './services/leadsService';
+await updateLeadStatus('lead_123', LEAD_STATUS.QUALIFIED);
+
+// Assign to sales rep
+import { assignLead } from './services/leadsService';
+await assignLead('lead_123', 'user_abc');
+
+// Add note
+import { addLeadNote } from './services/leadsService';
+await addLeadNote('lead_123', 'user_abc', 'Justin', 'Called customer, interested in 10kW system');
+
+// Track progress milestones
+import { updateLeadProgress } from './services/leadsService';
+await updateLeadProgress('lead_123', 'proposalSent', true);`}
+          onCopy={(code) => copyToClipboard(code, "lead-lifecycle")}
+          copied={copiedCode === "lead-lifecycle"}
+        />
+
+        <h2>Lead Quality Scoring</h2>
+        <div className="callout info">
+          <BarChart3 size={20} />
+          <div>
+            <strong>Lead Score (0-100)</strong>
+            <p>
+              Leads are automatically scored based on: homeownership status,
+              credit score, energy usage, system size potential, energy
+              community eligibility, and source quality. Scores above 75 are
+              flagged as high-value leads.
+            </p>
+          </div>
+        </div>
+      </div>
+    ),
+
+    commercialApi: (
+      <div className="doc-section">
+        <h1>Commercial Leads API</h1>
+        <p className="lead">
+          AI-powered commercial solar lead generation pipeline. Scrape
+          commercial properties from Google Places, estimate energy consumption
+          and system sizing, score leads, and batch import to Firestore.
+        </p>
+
+        <h2>Property Scraping</h2>
+        <ApiEndpoint
+          method="GET"
+          endpoint="searchCommercialProperties(location, propertyType, radius)"
+          description="Search Google Places API for commercial properties suitable for solar installation"
+          status="stable"
+          parameters={[
+            {
+              name: "location",
+              type: "object",
+              required: true,
+              description: "{ name, lat, lng } of search center",
+            },
+            {
+              name: "propertyType",
+              type: "string",
+              required: true,
+              description:
+                "'warehouse' | 'retail_center' | 'office_building' | 'industrial_park' | 'distribution_center' | 'self_storage'",
+            },
+            {
+              name: "radius",
+              type: "number",
+              required: false,
+              description: "Search radius in meters (default: 5000)",
+            },
+          ]}
+          returns="Promise<Array> - Commercial property data with contact info"
+          examples={{
+            javascript: `import { searchCommercialProperties } from './services/commercialLeadScraper';
+
+const properties = await searchCommercialProperties(
+  { name: 'Las Vegas', lat: 36.1699, lng: -115.1398 },
+  'warehouse',
+  10000  // 10km radius
+);
+
+console.log(\`Found \${properties.length} warehouses\`);`,
+          }}
+          onCopy={copyToClipboard}
+          copiedId={copiedCode}
+        />
+
+        <ApiEndpoint
+          method="POST"
+          endpoint="scrapeLocation(location, propertyType, maxResults)"
+          description="Full scrape pipeline: find properties, get details, estimate energy, calculate systems, and score leads"
+          status="stable"
+          parameters={[
+            {
+              name: "location",
+              type: "object",
+              required: true,
+              description: "{ name, lat, lng }",
+            },
+            {
+              name: "propertyType",
+              type: "string",
+              required: true,
+              description: "Property type to scrape",
+            },
+            {
+              name: "maxResults",
+              type: "number",
+              required: false,
+              description: "Max results (default: 20)",
+            },
+          ]}
+          returns="Promise<Array<CommercialLead>> - Fully scored commercial leads"
+          responseExample={`[
+  {
+    "propertyName": "Desert Ridge Industrial",
+    "propertyType": "warehouse",
+    "priority": "high",
+    "leadScore": 87,
+    "address": {
+      "street": "4500 Industrial Pkwy",
+      "city": "Las Vegas",
+      "state": "NV"
+    },
+    "metrics": {
+      "buildingSqFt": 45000,
+      "roofSqFt": 40500
+    },
+    "energyProfile": {
+      "annualKwh": 675000,
+      "monthlyBill": 6750,
+      "annualBill": 81000
+    },
+    "solarSystem": {
+      "recommendedPanels": 750,
+      "systemSizeKw": 307.5,
+      "annualProductionKwh": 553500,
+      "systemCost": 461250,
+      "federalTaxCredit": 138375,
+      "netCost": 322875,
+      "annualSavings": 66420,
+      "paybackYears": 4.9
+    }
+  }
+]`}
+          examples={{
+            javascript: `import { scrapeLocation } from './services/commercialLeadScraper';
+
+const leads = await scrapeLocation(
+  { name: 'Las Vegas', lat: 36.1699, lng: -115.1398 },
+  'warehouse',
+  50
+);
+
+// Filter high-priority leads
+const hotLeads = leads.filter(l => l.priority === 'high');
+console.log(\`\${hotLeads.length} high-priority leads found\`);
+hotLeads.forEach(l => {
+  console.log(\`  \${l.propertyName}: \${l.solarSystem.paybackYears}yr payback\`);
+});`,
+          }}
+          onCopy={copyToClipboard}
+          copiedId={copiedCode}
+        />
+
+        <h2>Batch Import</h2>
+        <ApiEndpoint
+          method="POST"
+          endpoint="importPropertiesBatch(properties, batchSize)"
+          description="Batch import commercial leads to Firestore with deduplication and chunking"
+          status="stable"
+          parameters={[
+            {
+              name: "properties",
+              type: "Array",
+              required: true,
+              description: "Array of commercial lead objects",
+            },
+            {
+              name: "batchSize",
+              type: "number",
+              required: false,
+              description: "Chunk size (default: 100)",
+            },
+          ]}
+          returns="Promise<object> - { total, imported, duplicates, errors }"
+          responseExample={`{
+  "total": 150,
+  "imported": 142,
+  "duplicates": 6,
+  "errors": 2
+}`}
+          examples={{
+            javascript: `import { importPropertiesBatch } from './services/commercialLeadImporter';
+import { scrapeAllNevada } from './services/commercialLeadScraper';
+
+// Scrape all Nevada commercial properties
+const allLeads = await scrapeAllNevada(15);
+
+// Import to Firestore
+const result = await importPropertiesBatch(allLeads);
+console.log(\`Imported \${result.imported}/\${result.total} leads\`);
+console.log(\`Duplicates skipped: \${result.duplicates}\`);`,
+          }}
+          onCopy={copyToClipboard}
+          copiedId={copiedCode}
+        />
+
+        <h2>Property Types & Markets</h2>
+        <div className="collections-grid">
+          <CollectionCard
+            name="Warehouse"
+            description="Large flat roofs, high energy usage, excellent solar candidates"
+            fields={["40-200k sqft", "15-30 kWh/sqft/yr", "$0.08-0.12/kWh"]}
+          />
+          <CollectionCard
+            name="Retail Center"
+            description="Strip malls and shopping centers with significant HVAC loads"
+            fields={["20-100k sqft", "20-40 kWh/sqft/yr", "$0.10-0.15/kWh"]}
+          />
+          <CollectionCard
+            name="Office Building"
+            description="Multi-story offices with moderate energy density"
+            fields={["10-60k sqft", "15-25 kWh/sqft/yr", "$0.09-0.14/kWh"]}
+          />
+          <CollectionCard
+            name="Industrial Park"
+            description="Heavy industrial with high baseload and peak demand"
+            fields={["50-500k sqft", "25-50 kWh/sqft/yr", "$0.07-0.11/kWh"]}
+          />
+        </div>
+      </div>
+    ),
+
+    solriteApi: (
+      <div className="doc-section">
+        <h1>SolRite / SubHub Integration API</h1>
+        <p className="lead">
+          Integration with SubHub and SolRite for solar proposal creation,
+          financing, utility verification, and customer enrollment. Supports the
+          complete flow from contact creation through Solnova financing.
+        </p>
+
+        <h2>Customer Enrollment Flow</h2>
+        <div className="status-flow">
+          <span className="flow-badge pending">Create Contact</span>
+          <ChevronRight size={16} className="flow-arrow" />
+          <span className="flow-badge contacted">Create Proposal</span>
+          <ChevronRight size={16} className="flow-arrow" />
+          <span className="flow-badge qualified">Save Utility</span>
+          <ChevronRight size={16} className="flow-arrow" />
+          <span className="flow-badge proposal">Finance Products</span>
+          <ChevronRight size={16} className="flow-arrow" />
+          <span className="flow-badge contracted">Solnova Account</span>
+          <ChevronRight size={16} className="flow-arrow" />
+          <span className="flow-badge installed">Podio Sync</span>
+        </div>
+
+        <ApiEndpoint
+          method="POST"
+          endpoint="sendCustomerToSolRite(customerData, systemDesign)"
+          description="Complete end-to-end enrollment flow: creates contact, proposal, saves utility data, and creates Solnova account"
+          status="stable"
+          parameters={[
+            {
+              name: "customerData",
+              type: "object",
+              required: true,
+              description: "Customer contact and address information",
+            },
+            {
+              name: "systemDesign",
+              type: "object",
+              required: true,
+              description:
+                "Solar system design with panels, production, and battery",
+            },
+          ]}
+          returns="Promise<object> - { contactId, proposalId, optionId, status, message }"
+          examples={{
+            javascript: `import { sendCustomerToSolRite } from './services/solriteApi';
+
+const result = await sendCustomerToSolRite(
+  {
+    firstName: 'John',
+    lastName: 'Smith',
+    email: 'john@example.com',
+    phone: '5125550100',
+    street: '123 Solar St',
+    city: 'Austin',
+    state: 'TX',
+    county: 'Travis',
+    postalCode: '78701',
+    utilityId: 3010,
+    utilityName: 'Austin Energy'
+  },
+  {
+    panels: { count: 28, systemSizeKw: 11.48, wattage: 410 },
+    production: { annualKwh: 14250 },
+    batteries: { totalCapacityKwh: 60 }
+  }
+);
+
+console.log(\`Proposal ID: \${result.proposalId}\`);
+console.log(\`Status: \${result.status}\`);`,
+          }}
+          onCopy={copyToClipboard}
+          copiedId={copiedCode}
+        />
+
+        <h2>SubHub Projects API</h2>
+        <ApiEndpoint
+          method="GET"
+          endpoint="getProjects(limit, page)"
+          description="Fetch paginated project list from SubHub API"
+          status="stable"
+          parameters={[
+            {
+              name: "limit",
+              type: "number",
+              required: false,
+              description: "Results per page (default: 10)",
+            },
+            {
+              name: "page",
+              type: "number",
+              required: false,
+              description: "Page number (default: 1)",
+            },
+          ]}
+          returns="Promise<object> - Paginated project data"
+          examples={{
+            javascript: `import { getProjects, parseSubHubProject } from './services/subhubApi';
+
+const data = await getProjects(50, 1);
+const normalized = data.projects.map(parseSubHubProject);
+
+normalized.forEach(p => {
+  console.log(\`\${p.address.full}: \${p.system.systemSizeKw} kW\`);
+  console.log(\`  Production: \${p.production.annualKwh} kWh/yr\`);
+  console.log(\`  Panels: \${p.system.panelCount}x \${p.system.panelName}\`);
+});`,
+          }}
+          onCopy={copyToClipboard}
+          copiedId={copiedCode}
+        />
+
+        <h2>Finance Products</h2>
+        <ApiEndpoint
+          method="GET"
+          endpoint="getFinanceProducts(proposalId)"
+          description="Get available Solnova financing products for a proposal"
+          status="stable"
+          parameters={[
+            {
+              name: "proposalId",
+              type: "string",
+              required: true,
+              description: "SubHub proposal ID",
+            },
+          ]}
+          returns="Promise<Array> - Available financing options"
+          examples={{
+            javascript: `import { getFinanceProducts } from './services/solriteApi';
+
+const products = await getFinanceProducts('prop_abc123');
+products.forEach(p => {
+  console.log(\`\${p.name}: \${p.apr}% APR, \${p.term} months\`);
+});`,
+          }}
+          onCopy={copyToClipboard}
+          copiedId={copiedCode}
+        />
+
+        <h2>Texas Utilities</h2>
+        <CodeBlock
+          language="javascript"
+          code={`import { TEXAS_UTILITIES } from './services/solriteApi';
+
+// Pre-configured Texas utility providers
+TEXAS_UTILITIES = [
+  { id: 3010, name: 'Austin Energy' },
+  { id: 3020, name: 'CPS Energy' },
+  { id: 3030, name: 'Oncor' },
+  { id: 3040, name: 'CenterPoint Energy' },
+  { id: 3050, name: 'AEP Texas' },
+  // ... 20+ more utilities
+];`}
+          onCopy={(code) => copyToClipboard(code, "tx-utilities")}
+          copied={copiedCode === "tx-utilities"}
+        />
+      </div>
+    ),
+
+    coordinatorApi: (
+      <div className="doc-section">
+        <h1>Agent Coordinator API</h1>
+        <p className="lead">
+          Multi-agent orchestration system running on the Mac Studio
+          (100.124.119.18:5050). Register agents, share task queues, send
+          inter-agent messages, and monitor the Ava AI agent's status and
+          activities.
+        </p>
+
+        <div className="callout info">
+          <Bot size={20} />
+          <div>
+            <strong>Mac Studio (24/7 Server)</strong>
+            <p>
+              The coordinator runs on the Mac Studio via Tailscale at
+              <code> http://100.124.119.18:5050</code>. All endpoints are
+              available on the local Tailscale network.
+            </p>
+          </div>
+        </div>
+
+        <h2>Agent Registration</h2>
+        <ApiEndpoint
+          method="POST"
+          endpoint="/coord/register"
+          description="Register a new agent with the coordinator system"
+          status="stable"
+          parameters={[
+            {
+              name: "agent_id",
+              type: "string",
+              required: true,
+              description: "Unique agent identifier",
+            },
+            {
+              name: "agent_type",
+              type: "string",
+              required: true,
+              description: "'claude-code' | 'gemini' | 'ava' | 'custom'",
+            },
+            {
+              name: "description",
+              type: "string",
+              required: false,
+              description: "What this agent is working on",
+            },
+          ]}
+          returns="object - Registration confirmation"
+          examples={{
+            curl: `curl -X POST http://100.124.119.18:5050/coord/register \\
+  -H 'Content-Type: application/json' \\
+  -d '{
+    "agent_id": "claude-macbook",
+    "agent_type": "claude-code",
+    "description": "Working on API documentation"
+  }'`,
+            javascript: `const response = await fetch('http://100.124.119.18:5050/coord/register', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    agent_id: 'claude-macbook',
+    agent_type: 'claude-code',
+    description: 'Working on API documentation'
+  })
+});`,
+          }}
+          onCopy={copyToClipboard}
+          copiedId={copiedCode}
+        />
+
+        <h2>Task Queue</h2>
+        <ApiEndpoint
+          method="GET"
+          endpoint="/coord/tasks"
+          description="Get shared task queue with optional status filter"
+          status="stable"
+          parameters={[
+            {
+              name: "status",
+              type: "string",
+              required: false,
+              description: "'pending' | 'in_progress' | 'completed' | 'failed'",
+            },
+          ]}
+          returns="Array - Task objects with status, priority, and assignment"
+          examples={{
+            curl: `# Get all pending tasks
+curl 'http://100.124.119.18:5050/coord/tasks?status=pending'
+
+# Get all tasks
+curl 'http://100.124.119.18:5050/coord/tasks'`,
+          }}
+          onCopy={copyToClipboard}
+          copiedId={copiedCode}
+        />
+
+        <ApiEndpoint
+          method="POST"
+          endpoint="/coord/tasks"
+          description="Add a new task to the shared queue"
+          status="stable"
+          parameters={[
+            {
+              name: "task",
+              type: "string",
+              required: true,
+              description: "Task description",
+            },
+            {
+              name: "priority",
+              type: "string",
+              required: false,
+              description: "'high' | 'normal' | 'low' (default: 'normal')",
+            },
+            {
+              name: "assigned_to",
+              type: "string",
+              required: false,
+              description: "Agent ID to assign to",
+            },
+          ]}
+          returns="object - Created task with ID"
+          examples={{
+            curl: `curl -X POST http://100.124.119.18:5050/coord/tasks \\
+  -H 'Content-Type: application/json' \\
+  -d '{
+    "task": "Research Nevada solar incentives",
+    "priority": "high",
+    "assigned_to": "ava"
+  }'`,
+          }}
+          onCopy={copyToClipboard}
+          copiedId={copiedCode}
+        />
+
+        <h2>Inter-Agent Messaging</h2>
+        <ApiEndpoint
+          method="POST"
+          endpoint="/coord/messages"
+          description="Send a message to another registered agent"
+          status="stable"
+          parameters={[
+            {
+              name: "from",
+              type: "string",
+              required: true,
+              description: "Sender agent ID",
+            },
+            {
+              name: "to",
+              type: "string",
+              required: true,
+              description: "Recipient agent ID",
+            },
+            {
+              name: "message",
+              type: "string",
+              required: true,
+              description: "Message content",
+            },
+            {
+              name: "type",
+              type: "string",
+              required: false,
+              description: "Message type (e.g., 'context_save', 'task_update')",
+            },
+          ]}
+          returns="object - Message confirmation"
+          examples={{
+            javascript: `// Send message to Ava
+await fetch('http://100.124.119.18:5050/coord/messages', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    from: 'claude-macbook',
+    to: 'ava',
+    message: 'Need solar research for Harris County, TX',
+    type: 'task_request'
+  })
+});
+
+// Check for responses
+const msgs = await fetch(
+  'http://100.124.119.18:5050/coord/messages?agent_id=claude-macbook'
+).then(r => r.json());`,
+          }}
+          onCopy={copyToClipboard}
+          copiedId={copiedCode}
+        />
+
+        <h2>Ava AI Agent Status</h2>
+        <ApiEndpoint
+          method="GET"
+          endpoint="/api/status (port 5055)"
+          description="Get Ava's current status, task history, and activity feed"
+          status="beta"
+          parameters={[]}
+          returns="Promise<object> - Ava status with tasks and activity"
+          responseExample={`{
+  "running": true,
+  "tasks": {
+    "total": 45,
+    "completed": 38,
+    "pending": 3,
+    "in_progress": 2,
+    "failed": 2
+  },
+  "activity": {
+    "total": 156,
+    "by_type": {
+      "research": 45,
+      "analysis": 32,
+      "communication": 28,
+      "learning": 51
+    }
+  }
+}`}
+          examples={{
+            javascript: `import { getAvaStatus, getAvaTasks } from './services/avaService';
+
+const status = await getAvaStatus();
+if (status.running) {
+  console.log('Ava is online');
+  console.log(\`Tasks: \${status.tasks.completed}/\${status.tasks.total} completed\`);
+}
+
+const tasks = await getAvaTasks();
+tasks.forEach(t => console.log(\`[\${t.status}] \${t.description}\`));`,
+            curl: `# Check Ava status
+curl http://100.124.119.18:5055/api/status
+
+# System health
+curl http://100.124.119.18:5050/health
+
+# Full system onboarding
+curl http://100.124.119.18:5050/coord/onboard`,
+          }}
+          onCopy={copyToClipboard}
+          copiedId={copiedCode}
+        />
+
+        <h2>System Endpoints</h2>
+        <div className="coord-grid">
+          <div className="coord-item">
+            <strong>Health Check</strong>
+            <span>GET /health</span>
+          </div>
+          <div className="coord-item">
+            <strong>Onboard</strong>
+            <span>GET /coord/onboard</span>
+          </div>
+          <div className="coord-item">
+            <strong>List Agents</strong>
+            <span>GET /coord/agents</span>
+          </div>
+          <div className="coord-item">
+            <strong>Think (as Justin)</strong>
+            <span>POST /think</span>
+          </div>
+          <div className="coord-item">
+            <strong>Respond</strong>
+            <span>POST /respond</span>
+          </div>
+          <div className="coord-item">
+            <strong>Agent Tasks</strong>
+            <span>GET /coord/tasks</span>
+          </div>
+        </div>
+      </div>
+    ),
+
     webhooks: (
       <div className="doc-section">
         <h1>Webhooks</h1>
