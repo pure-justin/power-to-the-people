@@ -1,5 +1,5 @@
-import { useState, useMemo, useCallback, useRef } from "react";
-import { Link } from "react-router-dom";
+import { useState, useMemo, useCallback, useRef, useEffect } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import {
   Sun,
   DollarSign,
@@ -19,12 +19,25 @@ import {
   MapPin,
   Download,
   Target,
+  Share2,
+  Check,
+  AlertTriangle,
+  Activity,
+  Clock,
+  Percent,
+  LineChart,
+  Shuffle,
 } from "lucide-react";
 import {
   calculateAdvancedROI,
   ROI_DEFAULTS,
   STATE_UTILITY_RATES,
   STATE_SUNSHINE_HOURS,
+  runMonteCarloSimulation,
+  generateRateForecast,
+  generateScenarioComparison,
+  encodeProjectionParams,
+  decodeProjectionParams,
 } from "../services/roiProjection";
 
 const fmt = (n) =>
@@ -87,25 +100,56 @@ const STATE_NAMES = {
 };
 
 export default function RoiProjection() {
-  const [monthlyBill, setMonthlyBill] = useState(200);
-  const [utilityRate, setUtilityRate] = useState(0.16);
-  const [systemSizeKw, setSystemSizeKw] = useState(0);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Decode shared params from URL
+  const sharedParams = useMemo(() => {
+    const encoded = searchParams.get("p");
+    if (encoded) return decodeProjectionParams(encoded);
+    return null;
+  }, []);
+
+  const [monthlyBill, setMonthlyBill] = useState(
+    sharedParams?.monthlyBill ?? 200,
+  );
+  const [utilityRate, setUtilityRate] = useState(
+    sharedParams?.utilityRate ?? 0.16,
+  );
+  const [systemSizeKw, setSystemSizeKw] = useState(
+    sharedParams?.systemSizeKw ?? 0,
+  );
   const [showAdvanced, setShowAdvanced] = useState(false);
-  const [solarRate, setSolarRate] = useState(ROI_DEFAULTS.solarRate);
+  const [solarRate, setSolarRate] = useState(
+    sharedParams?.solarRate ?? ROI_DEFAULTS.solarRate,
+  );
   const [solarEscalator, setSolarEscalator] = useState(
-    ROI_DEFAULTS.solarEscalator,
+    sharedParams?.solarEscalator ?? ROI_DEFAULTS.solarEscalator,
   );
   const [utilityEscalator, setUtilityEscalator] = useState(
-    ROI_DEFAULTS.utilityEscalator,
+    sharedParams?.utilityEscalator ?? ROI_DEFAULTS.utilityEscalator,
   );
   const [viewMode, setViewMode] = useState("lease");
   const [hoveredYear, setHoveredYear] = useState(null);
-  const [selectedState, setSelectedState] = useState("TX");
-  const [homeValue, setHomeValue] = useState(300000);
-  const [activeSection, setActiveSection] = useState("cumulative"); // cumulative | cashflow | sensitivity
+  const [selectedState, setSelectedState] = useState(
+    sharedParams?.selectedState ?? "TX",
+  );
+  const [homeValue, setHomeValue] = useState(sharedParams?.homeValue ?? 300000);
+  const [activeSection, setActiveSection] = useState("cumulative");
   const [showTable, setShowTable] = useState(false);
   const [hoveredBar, setHoveredBar] = useState(null);
+  const [shareTooltip, setShareTooltip] = useState(false);
+  const [showMonteCarlo, setShowMonteCarlo] = useState(false);
   const printRef = useRef(null);
+
+  // Sync state when shared URL is loaded
+  useEffect(() => {
+    if (
+      sharedParams?.selectedState &&
+      STATE_UTILITY_RATES[sharedParams.selectedState]
+    ) {
+      setUtilityRate(STATE_UTILITY_RATES[sharedParams.selectedState]);
+    }
+  }, []);
 
   const handleStateChange = useCallback((e) => {
     const state = e.target.value;
@@ -146,8 +190,99 @@ export default function RoiProjection() {
     homeValue,
   ]);
 
+  // Monte Carlo (computed lazily)
+  const monteCarlo = useMemo(() => {
+    if (!showMonteCarlo) return null;
+    const sunshineHours =
+      STATE_SUNSHINE_HOURS[selectedState] || ROI_DEFAULTS.sunshineHoursPerYear;
+    const annualUsageKwh = (monthlyBill / utilityRate) * 12;
+    return runMonteCarloSimulation(
+      {
+        annualUsageKwh,
+        utilityRate,
+        solarRate,
+        solarEscalator,
+        utilityEscalator,
+        sunshineHoursPerYear: sunshineHours,
+        homeValue,
+      },
+      500,
+    );
+  }, [
+    showMonteCarlo,
+    monthlyBill,
+    utilityRate,
+    solarRate,
+    solarEscalator,
+    utilityEscalator,
+    selectedState,
+    homeValue,
+  ]);
+
+  // Rate forecast
+  const rateForecast = useMemo(() => {
+    return generateRateForecast({
+      utilityRate,
+      solarRate,
+      solarEscalator,
+      utilityEscalator,
+    });
+  }, [utilityRate, solarRate, solarEscalator, utilityEscalator]);
+
+  // Scenario comparison
+  const scenarios = useMemo(() => {
+    const sunshineHours =
+      STATE_SUNSHINE_HOURS[selectedState] || ROI_DEFAULTS.sunshineHoursPerYear;
+    const annualUsageKwh = (monthlyBill / utilityRate) * 12;
+    return generateScenarioComparison({
+      annualUsageKwh,
+      utilityRate,
+      solarRate,
+      solarEscalator,
+      utilityEscalator,
+      sunshineHoursPerYear: sunshineHours,
+      homeValue,
+    });
+  }, [
+    monthlyBill,
+    utilityRate,
+    solarRate,
+    solarEscalator,
+    utilityEscalator,
+    selectedState,
+    homeValue,
+  ]);
+
   const { system, costs, metrics, environmental, yearlyData, advanced } =
     projection;
+
+  // ---- Share URL ----
+  const handleShare = useCallback(() => {
+    const encoded = encodeProjectionParams({
+      monthlyBill,
+      utilityRate,
+      systemSizeKw,
+      solarRate,
+      solarEscalator,
+      utilityEscalator,
+      homeValue,
+      selectedState,
+    });
+    const url = `${window.location.origin}/roi?p=${encoded}`;
+    navigator.clipboard.writeText(url).then(() => {
+      setShareTooltip(true);
+      setTimeout(() => setShareTooltip(false), 2000);
+    });
+  }, [
+    monthlyBill,
+    utilityRate,
+    systemSizeKw,
+    solarRate,
+    solarEscalator,
+    utilityEscalator,
+    homeValue,
+    selectedState,
+  ]);
 
   // ---- Cumulative Cost Chart ----
   const chartWidth = 800;
@@ -256,6 +391,48 @@ export default function RoiProjection() {
     (d) => Math.abs(d.paramValue - utilityEscalator) < 0.001,
   );
 
+  // ---- Rate Forecast Chart ----
+  const rateChartH = 240;
+  const ratePad = { top: 20, right: 30, bottom: 40, left: 60 };
+  const ratePlotW = chartWidth - ratePad.left - ratePad.right;
+  const ratePlotH = rateChartH - ratePad.top - ratePad.bottom;
+  const rateMax = Math.max(...rateForecast.map((d) => d.utilityRate));
+  const rateXScale = (yr) => ratePad.left + (yr / 25) * ratePlotW;
+  const rateYScale = (val) =>
+    ratePad.top + ratePlotH - (val / rateMax) * ratePlotH;
+  const utilityRatePath = rateForecast
+    .map(
+      (d, i) =>
+        `${i === 0 ? "M" : "L"} ${rateXScale(d.year)} ${rateYScale(d.utilityRate)}`,
+    )
+    .join(" ");
+  const solarRatePath = rateForecast
+    .map(
+      (d, i) =>
+        `${i === 0 ? "M" : "L"} ${rateXScale(d.year)} ${rateYScale(d.solarRate)}`,
+    )
+    .join(" ");
+  const rateSpreadArea =
+    rateForecast
+      .map(
+        (d, i) =>
+          `${i === 0 ? "M" : "L"} ${rateXScale(d.year)} ${rateYScale(d.utilityRate)}`,
+      )
+      .join(" ") +
+    " " +
+    rateForecast
+      .slice()
+      .reverse()
+      .map((d) => `L ${rateXScale(d.year)} ${rateYScale(d.solarRate)}`)
+      .join(" ") +
+    " Z";
+
+  // ---- Monte Carlo Chart ----
+  const mcChartH = 280;
+  const mcPad = { top: 20, right: 30, bottom: 40, left: 70 };
+  const mcPlotW = chartWidth - mcPad.left - mcPad.right;
+  const mcPlotH = mcChartH - mcPad.top - mcPad.bottom;
+
   const totalSavings =
     viewMode === "lease"
       ? metrics.totalSavingsLease
@@ -271,36 +448,35 @@ export default function RoiProjection() {
 
   const handleExportCSV = useCallback(() => {
     const header =
-      "Year,Production (kWh),Utility Rate,Utility Cost,Solar Cost,Annual Savings,Cumulative Savings\n";
+      "Year,Production (kWh),Utility Rate,Utility Cost,Solar Cost (Lease),Lease Savings,Lease Cumulative,Purchase Cost,Purchase Savings,Purchase Cumulative\n";
     const rows = yearlyData
-      .map((d) => {
-        const solarCost =
-          viewMode === "lease" ? d.leaseYearlyCost : d.purchaseYearlyCost;
-        const annSavings =
-          viewMode === "lease" ? d.leaseSavings : d.purchaseSavings;
-        const cumSavings =
-          viewMode === "lease"
-            ? d.leaseCumulativeSavings
-            : d.purchaseCumulativeSavings;
-        return `${d.year},${d.production},${d.utilityRate},${d.utilityOnlyCost},${solarCost},${annSavings},${cumSavings}`;
-      })
+      .map(
+        (d) =>
+          `${d.year},${d.production},${d.utilityRate},${d.utilityOnlyCost},${d.leaseYearlyCost},${d.leaseSavings},${d.leaseCumulativeSavings},${d.purchaseYearlyCost},${d.purchaseSavings},${d.purchaseCumulativeSavings}`,
+      )
       .join("\n");
     const blob = new Blob([header + rows], { type: "text/csv" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `solar-roi-projection-${selectedState}.csv`;
+    a.download = `solar-roi-projection-${selectedState}-${system.sizeKw}kw.csv`;
     a.click();
     URL.revokeObjectURL(url);
-  }, [yearlyData, viewMode, selectedState]);
+  }, [yearlyData, selectedState, system.sizeKw]);
+
+  const handlePrint = useCallback(() => {
+    window.print();
+  }, []);
 
   return (
     <div className="page" ref={printRef}>
       <style>{`
         .roi-page { background: linear-gradient(180deg, #f0fdf4 0%, #f9fafb 30%); min-height: 100vh; padding-bottom: 80px; }
-        .roi-hero { background: linear-gradient(135deg, #064e3b 0%, #065f46 50%, #047857 100%); padding: 48px 0 56px; color: white; text-align: center; }
-        .roi-hero-title { font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 800; margin-bottom: 12px; line-height: 1.15; }
-        .roi-hero-subtitle { font-size: 1.1rem; color: rgba(255,255,255,0.8); max-width: 600px; margin: 0 auto; }
+        .roi-hero { background: linear-gradient(135deg, #064e3b 0%, #065f46 50%, #047857 100%); padding: 48px 0 56px; color: white; text-align: center; position: relative; overflow: hidden; }
+        .roi-hero::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at 30% 50%, rgba(16,185,129,0.15) 0%, transparent 50%); pointer-events: none; }
+        .roi-hero-title { font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 800; margin-bottom: 12px; line-height: 1.15; position: relative; }
+        .roi-hero-subtitle { font-size: 1.1rem; color: rgba(255,255,255,0.8); max-width: 600px; margin: 0 auto; position: relative; }
+        .roi-hero-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 16px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); border-radius: 999px; font-size: 0.82rem; font-weight: 600; margin-bottom: 16px; backdrop-filter: blur(10px); position: relative; }
         .roi-content { max-width: 1100px; margin: -32px auto 0; padding: 0 20px; position: relative; z-index: 2; }
         .roi-input-card { background: white; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); padding: 32px; margin-bottom: 28px; }
         .roi-input-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
@@ -331,7 +507,7 @@ export default function RoiProjection() {
         .roi-chart-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
         .roi-chart-title { font-size: 1.15rem; font-weight: 700; color: #111827; display: flex; align-items: center; gap: 8px; }
         .roi-chart-svg { width: 100%; max-width: ${chartWidth}px; margin: 0 auto; display: block; }
-        .roi-chart-legend { display: flex; justify-content: center; gap: 28px; margin-top: 12px; }
+        .roi-chart-legend { display: flex; justify-content: center; gap: 28px; margin-top: 12px; flex-wrap: wrap; }
         .roi-legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 500; color: #374151; }
         .roi-legend-dot { width: 12px; height: 12px; border-radius: 3px; }
         .roi-tooltip { position: absolute; background: #1f2937; color: white; padding: 12px 16px; border-radius: 10px; font-size: 0.8rem; pointer-events: none; z-index: 10; min-width: 180px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
@@ -389,6 +565,39 @@ export default function RoiProjection() {
         .roi-home-value-item { text-align: center; padding: 16px; background: rgba(255,255,255,0.12); border-radius: 12px; }
         .roi-home-value-val { font-size: 1.5rem; font-weight: 800; }
         .roi-home-value-label { font-size: 0.78rem; color: rgba(255,255,255,0.7); margin-top: 4px; }
+        /* Scenario Comparison */
+        .roi-scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px; }
+        .roi-scenario-card { border-radius: 16px; padding: 24px; border: 2px solid #e5e7eb; background: white; transition: all 0.2s; position: relative; overflow: hidden; }
+        .roi-scenario-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+        .roi-scenario-card.highlight { border-color: #10b981; }
+        .roi-scenario-card.highlight::before { content: 'RECOMMENDED'; position: absolute; top: 0; right: 0; background: #10b981; color: white; font-size: 0.65rem; font-weight: 800; padding: 4px 12px; border-radius: 0 0 0 10px; letter-spacing: 0.05em; }
+        .roi-scenario-name { font-size: 1rem; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .roi-scenario-price { font-size: 2rem; font-weight: 800; margin-bottom: 4px; }
+        .roi-scenario-sub { font-size: 0.78rem; color: #6b7280; margin-bottom: 16px; }
+        .roi-scenario-divider { border: none; border-top: 1px solid #f3f4f6; margin: 12px 0; }
+        .roi-scenario-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 0.82rem; }
+        .roi-scenario-row-label { color: #6b7280; }
+        .roi-scenario-row-val { font-weight: 700; color: #111827; }
+        .roi-scenario-row-val.good { color: #059669; }
+        .roi-scenario-row-val.bad { color: #dc2626; }
+        /* Monte Carlo */
+        .roi-mc-card { background: linear-gradient(135deg, #581c87, #7c3aed); border-radius: 16px; padding: 28px; color: white; margin-bottom: 28px; }
+        .roi-mc-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 16px; }
+        .roi-mc-item { text-align: center; padding: 14px 8px; background: rgba(255,255,255,0.1); border-radius: 12px; }
+        .roi-mc-val { font-size: 1.15rem; font-weight: 800; }
+        .roi-mc-label { font-size: 0.72rem; color: rgba(255,255,255,0.7); margin-top: 4px; }
+        .roi-mc-toggle { display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px; background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.3); border-radius: 999px; font-size: 0.82rem; font-weight: 600; color: #7c3aed; cursor: pointer; transition: all 0.2s; margin-bottom: 20px; }
+        .roi-mc-toggle:hover { background: rgba(124,58,237,0.25); }
+        .roi-mc-toggle.active { background: #7c3aed; color: white; border-color: #7c3aed; }
+        /* Breakeven timeline */
+        .roi-breakeven { background: white; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); border: 1px solid #f3f4f6; margin-bottom: 28px; }
+        .roi-breakeven-track { position: relative; height: 60px; background: #f3f4f6; border-radius: 30px; margin: 24px 0 16px; overflow: visible; }
+        .roi-breakeven-fill { position: absolute; top: 0; left: 0; height: 100%; border-radius: 30px; transition: width 0.8s ease; }
+        .roi-breakeven-marker { position: absolute; top: -8px; transform: translateX(-50%); text-align: center; }
+        .roi-breakeven-dot { width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.2); margin: 0 auto 4px; }
+        .roi-breakeven-label { font-size: 0.7rem; font-weight: 700; white-space: nowrap; }
+        .roi-breakeven-years { display: flex; justify-content: space-between; font-size: 0.75rem; color: #9ca3af; padding: 0 4px; }
+        .roi-share-tooltip { position: absolute; top: -36px; left: 50%; transform: translateX(-50%); background: #1f2937; color: white; padding: 6px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; white-space: nowrap; pointer-events: none; }
         @media (max-width: 768px) {
           .roi-input-grid { grid-template-columns: 1fr; }
           .roi-summary-grid { grid-template-columns: 1fr 1fr; }
@@ -399,20 +608,25 @@ export default function RoiProjection() {
           .roi-metrics-row { grid-template-columns: 1fr; }
           .roi-home-value-grid { grid-template-columns: 1fr; }
           .roi-section-tabs { flex-wrap: wrap; }
+          .roi-scenario-grid { grid-template-columns: 1fr; }
+          .roi-mc-grid { grid-template-columns: repeat(3, 1fr); }
         }
         @media (max-width: 480px) {
           .roi-summary-grid { grid-template-columns: 1fr; }
           .roi-advanced-grid { grid-template-columns: 1fr; }
+          .roi-mc-grid { grid-template-columns: 1fr 1fr; }
         }
         @media print {
-          .roi-nav, .roi-advanced-toggle, .roi-export-btn, .roi-cta-btn, .roi-section-tabs { display: none !important; }
+          .roi-nav, .roi-advanced-toggle, .roi-export-btn, .roi-cta-btn, .roi-section-tabs, .roi-mc-toggle, .no-print { display: none !important; }
           .roi-page { background: white !important; }
-          .roi-chart-card, .roi-input-card { box-shadow: none !important; border: 1px solid #e5e7eb; }
+          .roi-chart-card, .roi-input-card { box-shadow: none !important; border: 1px solid #e5e7eb; break-inside: avoid; }
+          .roi-scenario-grid, .roi-bottom-grid, .roi-metrics-row { break-inside: avoid; }
+          .roi-hero { padding: 24px 0 32px; }
         }
       `}</style>
 
       {/* Navigation */}
-      <nav className="roi-nav">
+      <nav className="roi-nav no-print">
         <div className="roi-nav-content">
           <Link to="/" className="roi-nav-logo">
             <div className="roi-nav-logo-icon">
@@ -438,11 +652,14 @@ export default function RoiProjection() {
         {/* Hero */}
         <div className="roi-hero">
           <div className="container">
+            <div className="roi-hero-badge">
+              <Calculator size={14} /> Advanced Financial Analysis
+            </div>
             <div className="roi-hero-title">Solar ROI Projection Tool</div>
             <p className="roi-hero-subtitle">
-              Complete 25-year financial analysis with NPV, IRR, sensitivity
-              modeling, and home value impact. Adjust your inputs and watch
-              projections update in real-time.
+              Complete 25-year financial analysis with Monte Carlo risk
+              modeling, scenario comparison, rate forecasting, and shareable
+              projections.
             </p>
           </div>
         </div>
@@ -469,7 +686,6 @@ export default function RoiProjection() {
                     ))}
                 </select>
               </div>
-
               <div className="roi-input-group">
                 <label className="roi-input-label">
                   <DollarSign size={14} /> Monthly Electric Bill
@@ -487,7 +703,6 @@ export default function RoiProjection() {
                   <span className="roi-slider-value">{fmt(monthlyBill)}</span>
                 </div>
               </div>
-
               <div className="roi-input-group">
                 <label className="roi-input-label">
                   <Zap size={14} /> Utility Rate ($/kWh)
@@ -594,7 +809,7 @@ export default function RoiProjection() {
             </span>
           </div>
 
-          {/* Summary Cards - 5 columns */}
+          {/* Summary Cards */}
           <div className="roi-summary-grid">
             <div className="roi-summary-card">
               <div
@@ -621,7 +836,7 @@ export default function RoiProjection() {
                 className="roi-summary-icon"
                 style={{ background: "#fef3c7", color: "#d97706" }}
               >
-                <Calculator size={20} />
+                <Clock size={20} />
               </div>
               <div className="roi-summary-value">Yr {paybackYear}</div>
               <div className="roi-summary-label">Savings Start</div>
@@ -649,6 +864,216 @@ export default function RoiProjection() {
                 {fmtRate(metrics.utilityRateYear25)}
               </div>
               <div className="roi-summary-label">Utility Rate Yr 25</div>
+            </div>
+          </div>
+
+          {/* ===== SCENARIO COMPARISON ===== */}
+          <div className="roi-chart-card">
+            <div className="roi-chart-title" style={{ marginBottom: 20 }}>
+              <BarChart3 size={20} /> Side-by-Side Scenario Comparison
+            </div>
+            <div className="roi-scenario-grid">
+              {scenarios.scenarios.map((sc, idx) => (
+                <div
+                  key={sc.name}
+                  className={`roi-scenario-card ${idx === 1 ? "highlight" : ""}`}
+                >
+                  <div className="roi-scenario-name">
+                    <div
+                      style={{
+                        width: 12,
+                        height: 12,
+                        borderRadius: 3,
+                        background: sc.color,
+                      }}
+                    />
+                    {sc.name}
+                  </div>
+                  <div
+                    className="roi-scenario-price"
+                    style={{ color: sc.color }}
+                  >
+                    {fmt(sc.monthlyCost)}
+                  </div>
+                  <div className="roi-scenario-sub">
+                    /month in year 1
+                    {sc.upfrontCost > 0
+                      ? ` + ${fmt(sc.upfrontCost)} financed`
+                      : ""}
+                  </div>
+                  <hr className="roi-scenario-divider" />
+                  <div className="roi-scenario-row">
+                    <span className="roi-scenario-row-label">5-Year Total</span>
+                    <span className="roi-scenario-row-val">
+                      {fmt(sc.year5Total)}
+                    </span>
+                  </div>
+                  <div className="roi-scenario-row">
+                    <span className="roi-scenario-row-label">
+                      10-Year Total
+                    </span>
+                    <span className="roi-scenario-row-val">
+                      {fmt(sc.year10Total)}
+                    </span>
+                  </div>
+                  <div className="roi-scenario-row">
+                    <span className="roi-scenario-row-label">
+                      25-Year Total
+                    </span>
+                    <span className="roi-scenario-row-val">
+                      {fmt(sc.year25Total)}
+                    </span>
+                  </div>
+                  <hr className="roi-scenario-divider" />
+                  {sc.savings25yr != null && (
+                    <div className="roi-scenario-row">
+                      <span className="roi-scenario-row-label">
+                        25-Year Savings
+                      </span>
+                      <span
+                        className={`roi-scenario-row-val ${sc.savings25yr >= 0 ? "good" : "bad"}`}
+                      >
+                        {sc.savings25yr >= 0 ? "+" : ""}
+                        {fmt(sc.savings25yr)}
+                      </span>
+                    </div>
+                  )}
+                  <div className="roi-scenario-row">
+                    <span className="roi-scenario-row-label">
+                      Rate in Year 25
+                    </span>
+                    <span className="roi-scenario-row-val">
+                      {sc.rateYear25 === 0
+                        ? "Paid Off"
+                        : fmtRate(sc.rateYear25) + "/kWh"}
+                    </span>
+                  </div>
+                  <div className="roi-scenario-row">
+                    <span className="roi-scenario-row-label">
+                      Battery Backup
+                    </span>
+                    <span
+                      className={`roi-scenario-row-val ${sc.hasBackup ? "good" : "bad"}`}
+                    >
+                      {sc.hasBackup ? "60 kWh" : "None"}
+                    </span>
+                  </div>
+                  <div className="roi-scenario-row">
+                    <span className="roi-scenario-row-label">Home Value</span>
+                    <span
+                      className={`roi-scenario-row-val ${sc.homeValueBoost > 0 ? "good" : ""}`}
+                    >
+                      {sc.homeValueBoost > 0
+                        ? `+${fmt(sc.homeValueBoost)}`
+                        : "No Change"}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* ===== BREAKEVEN TIMELINE ===== */}
+          <div className="roi-breakeven">
+            <div className="roi-chart-title">
+              <Target size={20} /> Breakeven Timeline
+            </div>
+            <p
+              style={{
+                fontSize: "0.85rem",
+                color: "#6b7280",
+                marginTop: 8,
+                marginBottom: 0,
+              }}
+            >
+              Visual timeline showing when solar savings surpass costs for each
+              scenario.
+            </p>
+            <div className="roi-breakeven-track">
+              <div
+                className="roi-breakeven-fill"
+                style={{
+                  width: `${Math.min((metrics.leasePaybackYear / 25) * 100, 100)}%`,
+                  background: "linear-gradient(90deg, #dcfce7, #10b981)",
+                }}
+              />
+              {/* Year 1 marker */}
+              <div
+                className="roi-breakeven-marker"
+                style={{ left: `${(1 / 25) * 100}%`, top: 14 }}
+              >
+                <div
+                  className="roi-breakeven-dot"
+                  style={{ background: "#f59e0b" }}
+                />
+                <div
+                  className="roi-breakeven-label"
+                  style={{ color: "#f59e0b" }}
+                >
+                  Start
+                </div>
+              </div>
+              {/* Lease breakeven marker */}
+              <div
+                className="roi-breakeven-marker"
+                style={{
+                  left: `${Math.min((metrics.leasePaybackYear / 25) * 100, 100)}%`,
+                  top: 14,
+                }}
+              >
+                <div
+                  className="roi-breakeven-dot"
+                  style={{ background: "#10b981" }}
+                />
+                <div
+                  className="roi-breakeven-label"
+                  style={{ color: "#10b981" }}
+                >
+                  Lease Yr {metrics.leasePaybackYear}
+                </div>
+              </div>
+              {/* Purchase breakeven marker */}
+              {metrics.purchasePaybackYear <= 25 && (
+                <div
+                  className="roi-breakeven-marker"
+                  style={{
+                    left: `${(metrics.purchasePaybackYear / 25) * 100}%`,
+                    top: 14,
+                  }}
+                >
+                  <div
+                    className="roi-breakeven-dot"
+                    style={{ background: "#3b82f6" }}
+                  />
+                  <div
+                    className="roi-breakeven-label"
+                    style={{ color: "#3b82f6" }}
+                  >
+                    Purchase Yr {metrics.purchasePaybackYear}
+                  </div>
+                </div>
+              )}
+              {/* Year 25 marker */}
+              <div
+                className="roi-breakeven-marker"
+                style={{ left: "100%", top: 14 }}
+              >
+                <div
+                  className="roi-breakeven-dot"
+                  style={{ background: "#064e3b" }}
+                />
+                <div
+                  className="roi-breakeven-label"
+                  style={{ color: "#064e3b" }}
+                >
+                  {fmt(totalSavings)} saved
+                </div>
+              </div>
+            </div>
+            <div className="roi-breakeven-years">
+              {[0, 5, 10, 15, 20, 25].map((yr) => (
+                <span key={yr}>Yr {yr}</span>
+              ))}
             </div>
           </div>
 
@@ -744,6 +1169,239 @@ export default function RoiProjection() {
             </div>
           </div>
 
+          {/* ===== MONTE CARLO RISK ANALYSIS ===== */}
+          <div style={{ textAlign: "center" }}>
+            <button
+              className={`roi-mc-toggle ${showMonteCarlo ? "active" : ""}`}
+              onClick={() => setShowMonteCarlo(!showMonteCarlo)}
+            >
+              <Shuffle size={14} /> {showMonteCarlo ? "Hide" : "Show"} Monte
+              Carlo Risk Analysis
+            </button>
+          </div>
+
+          {showMonteCarlo &&
+            monteCarlo &&
+            (() => {
+              const mc =
+                viewMode === "lease" ? monteCarlo.lease : monteCarlo.purchase;
+              const bands = monteCarlo.yearBands;
+              const mcMax = Math.max(
+                ...bands.map((b) =>
+                  viewMode === "lease" ? b.lease.p90 : b.purchase.p90,
+                ),
+              );
+              const mcMin = Math.min(
+                ...bands.map((b) =>
+                  viewMode === "lease" ? b.lease.p10 : b.purchase.p10,
+                ),
+              );
+              const mcRange = mcMax - mcMin || 1;
+              const mcXS = (yr) => mcPad.left + ((yr - 1) / 24) * mcPlotW;
+              const mcYS = (val) =>
+                mcPad.top + mcPlotH - ((val - mcMin) / mcRange) * mcPlotH;
+
+              const bandPath = (pKey) =>
+                bands
+                  .map((b, i) => {
+                    const val =
+                      viewMode === "lease" ? b.lease[pKey] : b.purchase[pKey];
+                    return `${i === 0 ? "M" : "L"} ${mcXS(b.year)} ${mcYS(val)}`;
+                  })
+                  .join(" ");
+
+              const p90Path = bandPath("p90");
+              const p75Path = bandPath("p75");
+              const p50Path = bandPath("p50");
+              const p25Path = bandPath("p25");
+              const p10Path = bandPath("p10");
+
+              // Area between p10 and p90
+              const outerArea =
+                p90Path +
+                " " +
+                bands
+                  .slice()
+                  .reverse()
+                  .map((b) => {
+                    const val =
+                      viewMode === "lease" ? b.lease.p10 : b.purchase.p10;
+                    return `L ${mcXS(b.year)} ${mcYS(val)}`;
+                  })
+                  .join(" ") +
+                " Z";
+
+              // Area between p25 and p75
+              const innerArea =
+                p75Path +
+                " " +
+                bands
+                  .slice()
+                  .reverse()
+                  .map((b) => {
+                    const val =
+                      viewMode === "lease" ? b.lease.p25 : b.purchase.p25;
+                    return `L ${mcXS(b.year)} ${mcYS(val)}`;
+                  })
+                  .join(" ") +
+                " Z";
+
+              return (
+                <div className="roi-mc-card">
+                  <div className="roi-env-title">
+                    <Activity size={20} /> Monte Carlo Risk Analysis (
+                    {monteCarlo.iterations} Simulations)
+                  </div>
+                  <p
+                    style={{
+                      fontSize: "0.85rem",
+                      color: "rgba(255,255,255,0.8)",
+                      marginTop: -12,
+                      marginBottom: 8,
+                    }}
+                  >
+                    Simulates uncertainty in utility rates, solar degradation,
+                    and weather patterns. Bands show the range of likely
+                    outcomes.
+                  </p>
+
+                  <div className="roi-mc-grid">
+                    <div className="roi-mc-item">
+                      <div className="roi-mc-val" style={{ color: "#fca5a5" }}>
+                        {fmt(mc.p10)}
+                      </div>
+                      <div className="roi-mc-label">Pessimistic (P10)</div>
+                    </div>
+                    <div className="roi-mc-item">
+                      <div className="roi-mc-val" style={{ color: "#fcd34d" }}>
+                        {fmt(mc.p25)}
+                      </div>
+                      <div className="roi-mc-label">Conservative (P25)</div>
+                    </div>
+                    <div className="roi-mc-item">
+                      <div className="roi-mc-val" style={{ color: "#86efac" }}>
+                        {fmt(mc.p50)}
+                      </div>
+                      <div className="roi-mc-label">Expected (P50)</div>
+                    </div>
+                    <div className="roi-mc-item">
+                      <div className="roi-mc-val" style={{ color: "#93c5fd" }}>
+                        {fmt(mc.p75)}
+                      </div>
+                      <div className="roi-mc-label">Optimistic (P75)</div>
+                    </div>
+                    <div className="roi-mc-item">
+                      <div className="roi-mc-val" style={{ color: "#c4b5fd" }}>
+                        {fmt(mc.p90)}
+                      </div>
+                      <div className="roi-mc-label">Best Case (P90)</div>
+                    </div>
+                  </div>
+
+                  {/* Monte Carlo Confidence Band Chart */}
+                  <div
+                    style={{
+                      marginTop: 20,
+                      background: "rgba(0,0,0,0.15)",
+                      borderRadius: 12,
+                      padding: 16,
+                    }}
+                  >
+                    <svg
+                      className="roi-chart-svg"
+                      viewBox={`0 0 ${chartWidth} ${mcChartH}`}
+                      preserveAspectRatio="xMidYMid meet"
+                    >
+                      {/* Grid */}
+                      {[0, 0.25, 0.5, 0.75, 1].map((pct) => {
+                        const val = mcMin + pct * mcRange;
+                        return (
+                          <g key={pct}>
+                            <line
+                              x1={mcPad.left}
+                              x2={chartWidth - mcPad.right}
+                              y1={mcYS(val)}
+                              y2={mcYS(val)}
+                              stroke="rgba(255,255,255,0.1)"
+                              strokeWidth="1"
+                            />
+                            <text
+                              x={mcPad.left - 8}
+                              y={mcYS(val) + 4}
+                              textAnchor="end"
+                              fill="rgba(255,255,255,0.5)"
+                              fontSize="10"
+                              fontWeight="500"
+                            >
+                              ${(val / 1000).toFixed(0)}k
+                            </text>
+                          </g>
+                        );
+                      })}
+                      {/* Outer band (P10-P90) */}
+                      <path d={outerArea} fill="rgba(139,92,246,0.2)" />
+                      {/* Inner band (P25-P75) */}
+                      <path d={innerArea} fill="rgba(139,92,246,0.3)" />
+                      {/* P50 median line */}
+                      <path
+                        d={p50Path}
+                        fill="none"
+                        stroke="#a78bfa"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                      />
+                      {/* X-axis */}
+                      {[1, 5, 10, 15, 20, 25].map((yr) => (
+                        <text
+                          key={yr}
+                          x={mcXS(yr)}
+                          y={mcChartH - 8}
+                          textAnchor="middle"
+                          fill="rgba(255,255,255,0.5)"
+                          fontSize="11"
+                          fontWeight="500"
+                        >
+                          Yr {yr}
+                        </text>
+                      ))}
+                    </svg>
+                    <div className="roi-chart-legend">
+                      <div
+                        className="roi-legend-item"
+                        style={{ color: "rgba(255,255,255,0.7)" }}
+                      >
+                        <div
+                          className="roi-legend-dot"
+                          style={{ background: "rgba(139,92,246,0.2)" }}
+                        />{" "}
+                        P10-P90 Range
+                      </div>
+                      <div
+                        className="roi-legend-item"
+                        style={{ color: "rgba(255,255,255,0.7)" }}
+                      >
+                        <div
+                          className="roi-legend-dot"
+                          style={{ background: "rgba(139,92,246,0.4)" }}
+                        />{" "}
+                        P25-P75 (Likely)
+                      </div>
+                      <div
+                        className="roi-legend-item"
+                        style={{ color: "rgba(255,255,255,0.7)" }}
+                      >
+                        <div
+                          className="roi-legend-dot"
+                          style={{ background: "#a78bfa" }}
+                        />{" "}
+                        Median (P50)
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
+
           {/* Chart Section with Tabs */}
           <div className="roi-chart-card">
             <div className="roi-chart-header">
@@ -775,6 +1433,22 @@ export default function RoiProjection() {
                 <button className="roi-export-btn" onClick={handleExportCSV}>
                   <Download size={14} /> Export CSV
                 </button>
+                <div style={{ position: "relative" }}>
+                  <button className="roi-export-btn" onClick={handleShare}>
+                    <Share2 size={14} /> Share
+                  </button>
+                  {shareTooltip && (
+                    <div className="roi-share-tooltip">
+                      <Check size={12} /> Link copied!
+                    </div>
+                  )}
+                </div>
+                <button
+                  className="roi-export-btn no-print"
+                  onClick={handlePrint}
+                >
+                  <Download size={14} /> Print
+                </button>
               </div>
             </div>
 
@@ -793,10 +1467,16 @@ export default function RoiProjection() {
                 Annual Cash Flow
               </button>
               <button
+                className={`roi-section-tab ${activeSection === "rates" ? "active" : ""}`}
+                onClick={() => setActiveSection("rates")}
+              >
+                Rate Forecast
+              </button>
+              <button
                 className={`roi-section-tab ${activeSection === "sensitivity" ? "active" : ""}`}
                 onClick={() => setActiveSection("sensitivity")}
               >
-                Sensitivity Analysis
+                Sensitivity
               </button>
             </div>
 
@@ -995,7 +1675,6 @@ export default function RoiProjection() {
                   preserveAspectRatio="xMidYMid meet"
                   onMouseLeave={() => setHoveredBar(null)}
                 >
-                  {/* Zero line */}
                   {minSavings < 0 && (
                     <line
                       x1={barPadding.left}
@@ -1007,7 +1686,6 @@ export default function RoiProjection() {
                       strokeDasharray="4 3"
                     />
                   )}
-                  {/* Bars */}
                   {cashFlowData.map((d, i) => {
                     const val =
                       viewMode === "lease" ? d.leaseSavings : d.purchaseSavings;
@@ -1017,21 +1695,19 @@ export default function RoiProjection() {
                       (minSavings < 0 ? barPlotH / 2 : barPlotH);
                     const barY = val >= 0 ? barYScale(0) - barH : barYScale(0);
                     return (
-                      <g key={d.year}>
-                        <rect
-                          x={barX}
-                          y={barY}
-                          width={barW}
-                          height={Math.max(barH, 1)}
-                          fill={val >= 0 ? "#10b981" : "#ef4444"}
-                          rx="2"
-                          opacity={hoveredBar === d.year ? 1 : 0.8}
-                          onMouseEnter={() => setHoveredBar(d.year)}
-                        />
-                      </g>
+                      <rect
+                        key={d.year}
+                        x={barX}
+                        y={barY}
+                        width={barW}
+                        height={Math.max(barH, 1)}
+                        fill={val >= 0 ? "#10b981" : "#ef4444"}
+                        rx="2"
+                        opacity={hoveredBar === d.year ? 1 : 0.8}
+                        onMouseEnter={() => setHoveredBar(d.year)}
+                      />
                     );
                   })}
-                  {/* X-axis labels */}
                   {[1, 5, 10, 15, 20, 25].map((yr) => (
                     <text
                       key={yr}
@@ -1050,7 +1726,6 @@ export default function RoiProjection() {
                       Yr {yr}
                     </text>
                   ))}
-                  {/* Y-axis labels */}
                   {[-barRange, -barRange / 2, 0, barRange / 2, barRange]
                     .filter((v) => minSavings < 0 || v >= 0)
                     .map((val, i) => (
@@ -1128,6 +1803,131 @@ export default function RoiProjection() {
               </div>
             )}
 
+            {/* === Rate Forecast Chart === */}
+            {activeSection === "rates" && (
+              <div>
+                <p
+                  style={{
+                    fontSize: "0.85rem",
+                    color: "#6b7280",
+                    marginBottom: 16,
+                  }}
+                >
+                  Projected utility vs. solar rate over 25 years. The shaded
+                  area represents your savings per kWh. Utility rate escalates
+                  at {(utilityEscalator * 100).toFixed(1)}%/yr, solar at{" "}
+                  {(solarEscalator * 100).toFixed(1)}%/yr.
+                </p>
+                <svg
+                  className="roi-chart-svg"
+                  viewBox={`0 0 ${chartWidth} ${rateChartH}`}
+                  preserveAspectRatio="xMidYMid meet"
+                >
+                  {/* Grid */}
+                  {[0, 0.25, 0.5, 0.75, 1].map((pct) => {
+                    const val = pct * rateMax;
+                    return (
+                      <g key={pct}>
+                        <line
+                          x1={ratePad.left}
+                          x2={chartWidth - ratePad.right}
+                          y1={rateYScale(val)}
+                          y2={rateYScale(val)}
+                          stroke="#f3f4f6"
+                          strokeWidth="1"
+                        />
+                        <text
+                          x={ratePad.left - 8}
+                          y={rateYScale(val) + 4}
+                          textAnchor="end"
+                          fill="#9ca3af"
+                          fontSize="10"
+                          fontWeight="500"
+                        >
+                          ${val.toFixed(2)}
+                        </text>
+                      </g>
+                    );
+                  })}
+                  {/* Spread area */}
+                  <path d={rateSpreadArea} fill="#dcfce7" opacity="0.4" />
+                  {/* Utility rate line */}
+                  <path
+                    d={utilityRatePath}
+                    fill="none"
+                    stroke="#ef4444"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeDasharray="6 3"
+                  />
+                  {/* Solar rate line */}
+                  <path
+                    d={solarRatePath}
+                    fill="none"
+                    stroke="#10b981"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                  />
+                  {/* X-axis labels */}
+                  {[0, 5, 10, 15, 20, 25].map((yr) => (
+                    <text
+                      key={yr}
+                      x={rateXScale(yr)}
+                      y={rateChartH - 8}
+                      textAnchor="middle"
+                      fill="#9ca3af"
+                      fontSize="11"
+                      fontWeight="500"
+                    >
+                      Yr {yr}
+                    </text>
+                  ))}
+                  {/* Endpoint labels */}
+                  <text
+                    x={chartWidth - ratePad.right + 5}
+                    y={rateYScale(rateForecast[25].utilityRate) + 4}
+                    fill="#ef4444"
+                    fontSize="10"
+                    fontWeight="700"
+                  >
+                    {fmtRate(rateForecast[25].utilityRate)}
+                  </text>
+                  <text
+                    x={chartWidth - ratePad.right + 5}
+                    y={rateYScale(rateForecast[25].solarRate) + 4}
+                    fill="#10b981"
+                    fontSize="10"
+                    fontWeight="700"
+                  >
+                    {fmtRate(rateForecast[25].solarRate)}
+                  </text>
+                </svg>
+                <div className="roi-chart-legend">
+                  <div className="roi-legend-item">
+                    <div
+                      className="roi-legend-dot"
+                      style={{ background: "#ef4444" }}
+                    />{" "}
+                    Utility Rate (projected)
+                  </div>
+                  <div className="roi-legend-item">
+                    <div
+                      className="roi-legend-dot"
+                      style={{ background: "#10b981" }}
+                    />{" "}
+                    Solar PPA Rate
+                  </div>
+                  <div className="roi-legend-item">
+                    <div
+                      className="roi-legend-dot"
+                      style={{ background: "#dcfce7" }}
+                    />{" "}
+                    Savings Per kWh
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* === Sensitivity Analysis Chart === */}
             {activeSection === "sensitivity" && (
               <div>
@@ -1147,7 +1947,6 @@ export default function RoiProjection() {
                   viewBox={`0 0 ${chartWidth} ${sensChartH}`}
                   preserveAspectRatio="xMidYMid meet"
                 >
-                  {/* Grid */}
                   {[0, 0.25, 0.5, 0.75, 1].map((pct) => {
                     const val = sensMinSavings + pct * sensRange;
                     return (
@@ -1173,7 +1972,6 @@ export default function RoiProjection() {
                       </g>
                     );
                   })}
-                  {/* Area fill */}
                   <path
                     d={
                       sensPath +
@@ -1188,7 +1986,6 @@ export default function RoiProjection() {
                       <stop offset="100%" stopColor="#10b981" stopOpacity="0" />
                     </linearGradient>
                   </defs>
-                  {/* Line */}
                   <path
                     d={sensPath}
                     fill="none"
@@ -1197,7 +1994,6 @@ export default function RoiProjection() {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
-                  {/* Data points */}
                   {sensData.map((d, i) => {
                     const val =
                       viewMode === "lease"
@@ -1226,7 +2022,6 @@ export default function RoiProjection() {
                       </g>
                     );
                   })}
-                  {/* Current indicator label */}
                   {currentEscIdx >= 0 && (
                     <text
                       x={sensXScale(currentEscIdx)}
