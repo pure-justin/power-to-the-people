@@ -409,5 +409,7 @@ export default {
   processReferralPayout,
   getReferralLeaderboard,
   generateReferralLink,
+  trackReferralClick,
+  getReferralClickStats,
   getReferralAnalytics,
 };
