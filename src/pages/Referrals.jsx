@@ -124,6 +124,61 @@ export default function Referrals() {
     }
   };
 
+  const handlePayoutRequest = async (e) => {
+    e.preventDefault();
+    setPayoutError("");
+    setPayoutSuccess("");
+
+    const amount = parseFloat(payoutAmount);
+    if (isNaN(amount) || amount < 25) {
+      setPayoutError("Minimum payout amount is $25");
+      return;
+    }
+
+    if (amount > (referralData?.pendingEarnings || 0)) {
+      setPayoutError("Amount exceeds your pending earnings");
+      return;
+    }
+
+    try {
+      setPayoutSubmitting(true);
+      await requestPayout(user.uid, amount, payoutMethod);
+      setPayoutSuccess(
+        `Payout of $${amount.toFixed(2)} requested successfully!`,
+      );
+      setPayoutAmount("");
+      // Reload data to reflect updated balances
+      await loadReferralData(user.uid);
+    } catch (error) {
+      setPayoutError(error.message);
+    } finally {
+      setPayoutSubmitting(false);
+    }
+  };
+
+  const getPayoutStatusBadge = (status) => {
+    const badges = {
+      pending: { label: "Pending", color: "bg-yellow-900/30 text-yellow-300" },
+      processing: {
+        label: "Processing",
+        color: "bg-blue-900/30 text-blue-300",
+      },
+      completed: {
+        label: "Completed",
+        color: "bg-green-900/30 text-green-300",
+      },
+      failed: { label: "Failed", color: "bg-red-900/30 text-red-300" },
+    };
+    const badge = badges[status] || badges.pending;
+    return (
+      <span
+        className={`px-3 py-1 rounded-full text-xs font-semibold ${badge.color}`}
+      >
+        {badge.label}
+      </span>
+    );
+  };
+
   const getStatusBadge = (status) => {
     const badges = {
       signed_up: {
