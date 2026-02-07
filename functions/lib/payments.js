@@ -158,23 +158,21 @@ exports.createSubscription = functions
                 default_payment_method: payment_method_id,
             },
         });
-        // Create Stripe subscription
+        // Create Stripe product + price, then subscription
         const tierConfig = exports.SOLAR_TIERS[tier];
+        const product = await stripe.products.create({
+            name: `Solar CRM - ${tierConfig.name}`,
+            metadata: { tier },
+        });
+        const price = await stripe.prices.create({
+            product: product.id,
+            currency: "usd",
+            unit_amount: tierConfig.price_monthly,
+            recurring: { interval: "month" },
+        });
         const subscription = await stripe.subscriptions.create({
             customer: customer.id,
-            items: [
-                {
-                    price_data: {
-                        currency: "usd",
-                        product_data: {
-                            name: `Solar CRM - ${tierConfig.name}`,
-                            metadata: { tier },
-                        },
-                        unit_amount: tierConfig.price_monthly,
-                        recurring: { interval: "month" },
-                    },
-                },
-            ],
+            items: [{ price: price.id }],
             metadata: {
                 firebase_uid: userId,
                 tier,
@@ -243,21 +241,23 @@ exports.updateSubscription = functions
     const subData = subDoc.data();
     try {
         const stripeSubscription = await stripe.subscriptions.retrieve(subData.stripeSubscriptionId);
-        // Update the subscription item with new price
+        // Create new price for the updated tier
         const tierConfig = exports.SOLAR_TIERS[new_tier];
+        const product = await stripe.products.create({
+            name: `Solar CRM - ${tierConfig.name}`,
+            metadata: { tier: new_tier },
+        });
+        const newPrice = await stripe.prices.create({
+            product: product.id,
+            currency: "usd",
+            unit_amount: tierConfig.price_monthly,
+            recurring: { interval: "month" },
+        });
         await stripe.subscriptions.update(subData.stripeSubscriptionId, {
             items: [
                 {
                     id: stripeSubscription.items.data[0].id,
-                    price_data: {
-                        currency: "usd",
-                        product_data: {
-                            name: `Solar CRM - ${tierConfig.name}`,
-                            metadata: { tier: new_tier },
-                        },
-                        unit_amount: tierConfig.price_monthly,
-                        recurring: { interval: "month" },
-                    },
+                    price: newPrice.id,
                 },
             ],
             proration_behavior: "create_prorations",
