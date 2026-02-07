@@ -40,7 +40,13 @@ export default function Referrals() {
   const [analytics, setAnalytics] = useState(null);
   const [leaderboard, setLeaderboard] = useState([]);
   const [copied, setCopied] = useState(false);
-  const [activeTab, setActiveTab] = useState("overview"); // overview, dashboard, share, referrals, leaderboard
+  const [activeTab, setActiveTab] = useState("overview"); // overview, dashboard, share, referrals, leaderboard, payouts
+  const [payouts, setPayouts] = useState([]);
+  const [payoutAmount, setPayoutAmount] = useState("");
+  const [payoutMethod, setPayoutMethod] = useState("direct_deposit");
+  const [payoutSubmitting, setPayoutSubmitting] = useState(false);
+  const [payoutError, setPayoutError] = useState("");
+  const [payoutSuccess, setPayoutSuccess] = useState("");
 
   useEffect(() => {
     const currentUser = getCurrentUser();
