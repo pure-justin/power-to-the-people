@@ -330,7 +330,8 @@ const ApiDocs = () => {
         items: group.items.filter(
           (item) =>
             item.title.toLowerCase().includes(q) ||
-            item.key.toLowerCase().includes(q),
+            item.key.toLowerCase().includes(q) ||
+            (SECTION_KEYWORDS[item.key] || "").toLowerCase().includes(q),
         ),
       }))
       .filter((group) => group.items.length > 0);
