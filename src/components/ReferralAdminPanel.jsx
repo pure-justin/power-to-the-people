@@ -13,7 +13,11 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { collection, getDocs, query, orderBy, db } from "../services/firebase";
-import { updateReferralStatus } from "../services/referralService";
+import {
+  updateReferralStatus,
+  getAllPayouts,
+  updatePayoutStatus,
+} from "../services/referralService";
 
 /**
  * Admin Panel for Managing Referrals
