@@ -403,7 +403,7 @@ export default function ReferralAdminPanel() {
       )}
 
       {/* Filters and Actions */}
-      <div className="bg-gray-900 rounded-xl p-6 border border-gray-800">
+      {adminSubTab === "referrals" && <div className="bg-gray-900 rounded-xl p-6 border border-gray-800">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3 flex-1 w-full">
             <div className="relative flex-1">
