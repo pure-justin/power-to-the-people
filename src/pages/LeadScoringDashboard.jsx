@@ -1,11 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, BarChart3, RefreshCw, Database } from "lucide-react";
-import {
-  onAuthChange,
-  getUserProfile,
-  signInWithEmail,
-} from "../services/firebase";
+import { onAuthChange, getUserProfile } from "../services/firebase";
 import { getAdminProjects } from "../services/adminService";
 import LeadQualityScoring from "../components/LeadQualityScoring";
 
