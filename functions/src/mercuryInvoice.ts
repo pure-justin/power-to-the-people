@@ -197,7 +197,7 @@ export const createMercuryInvoice = functions
           unitPrice: item.unitPrice,
         }));
 
-        const result = await mercuryFetch("/invoices", "POST", {
+        const result = await mercuryFetch("/ar/invoices", "POST", {
           accountId: MERCURY_ACCOUNT_ID,
           amount,
           currency: "USD",
