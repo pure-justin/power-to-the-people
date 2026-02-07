@@ -18,14 +18,10 @@ import {
   Home,
   MapPin,
   Download,
-  Info,
-  ArrowUpRight,
-  Percent,
   Target,
 } from "lucide-react";
 import {
   calculateAdvancedROI,
-  quickEstimate,
   ROI_DEFAULTS,
   STATE_UTILITY_RATES,
   STATE_SUNSHINE_HOURS,
