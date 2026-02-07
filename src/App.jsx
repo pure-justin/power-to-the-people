@@ -10,6 +10,7 @@ import SmtCallback from "./pages/SmtCallback";
 import Admin from "./pages/Admin";
 import Referrals from "./pages/Referrals";
 import ApiDocs from "./pages/ApiDocs";
+import LeadScoringDashboard from "./pages/LeadScoringDashboard";
 import InstallerComparison from "./pages/InstallerComparison";
 import RoiProjection from "./pages/RoiProjection";
 import SavingsCalculator from "./pages/SavingsCalculator";
