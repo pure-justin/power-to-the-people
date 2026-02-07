@@ -202,7 +202,7 @@ export function subscribeToNotifications(projectId, callback) {
     limit(20),
   );
 
-  return firestoreOnSnapshot(q, (snapshot) => {
+  return onSnapshot(q, (snapshot) => {
     const notifications = snapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
@@ -228,7 +228,7 @@ export function subscribeToUserNotifications(userId, callback) {
     limit(20),
   );
 
-  return firestoreOnSnapshot(q, (snapshot) => {
+  return onSnapshot(q, (snapshot) => {
     const notifications = snapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
