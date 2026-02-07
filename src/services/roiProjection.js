@@ -291,4 +291,292 @@ export function quickEstimate(monthlyBill, utilityRate = 0.16) {
   });
 }
 
+// ============================================
+// STATE-SPECIFIC UTILITY RATES (2026 averages)
+// ============================================
+export const STATE_UTILITY_RATES = {
+  AL: 0.14,
+  AK: 0.23,
+  AZ: 0.13,
+  AR: 0.11,
+  CA: 0.3,
+  CO: 0.14,
+  CT: 0.27,
+  DE: 0.14,
+  FL: 0.14,
+  GA: 0.13,
+  HI: 0.43,
+  ID: 0.11,
+  IL: 0.16,
+  IN: 0.14,
+  IA: 0.14,
+  KS: 0.14,
+  KY: 0.12,
+  LA: 0.11,
+  ME: 0.22,
+  MD: 0.16,
+  MA: 0.28,
+  MI: 0.18,
+  MN: 0.14,
+  MS: 0.12,
+  MO: 0.13,
+  MT: 0.12,
+  NE: 0.12,
+  NV: 0.13,
+  NH: 0.23,
+  NJ: 0.18,
+  NM: 0.14,
+  NY: 0.22,
+  NC: 0.12,
+  ND: 0.11,
+  OH: 0.14,
+  OK: 0.11,
+  OR: 0.12,
+  PA: 0.16,
+  RI: 0.27,
+  SC: 0.13,
+  SD: 0.13,
+  TN: 0.12,
+  TX: 0.14,
+  UT: 0.11,
+  VT: 0.2,
+  VA: 0.13,
+  WA: 0.11,
+  WV: 0.12,
+  WI: 0.16,
+  WY: 0.11,
+  DC: 0.14,
+};
+
+// State sunshine hours (annual peak sun hours)
+export const STATE_SUNSHINE_HOURS = {
+  AL: 1700,
+  AK: 1050,
+  AZ: 2350,
+  AR: 1700,
+  CA: 2100,
+  CO: 2000,
+  CT: 1400,
+  DE: 1500,
+  FL: 1900,
+  GA: 1750,
+  HI: 2100,
+  ID: 1750,
+  IL: 1500,
+  IN: 1450,
+  IA: 1550,
+  KS: 1800,
+  KY: 1500,
+  LA: 1700,
+  ME: 1350,
+  MD: 1550,
+  MA: 1400,
+  MI: 1350,
+  MN: 1500,
+  MS: 1700,
+  MO: 1650,
+  MT: 1650,
+  NE: 1700,
+  NV: 2300,
+  NH: 1350,
+  NJ: 1500,
+  NM: 2350,
+  NY: 1350,
+  NC: 1650,
+  ND: 1550,
+  OH: 1400,
+  OK: 1800,
+  OR: 1450,
+  PA: 1450,
+  RI: 1400,
+  SC: 1700,
+  SD: 1650,
+  TN: 1600,
+  TX: 1800,
+  UT: 2050,
+  VT: 1350,
+  VA: 1550,
+  WA: 1250,
+  WV: 1400,
+  WI: 1400,
+  WY: 1800,
+  DC: 1550,
+};
+
+// ============================================
+// ADVANCED FINANCIAL CALCULATIONS
+// ============================================
+
+/**
+ * Calculate Net Present Value (NPV) of solar investment
+ */
+export function calculateNPV(cashFlows, discountRate = 0.06) {
+  return cashFlows.reduce((npv, cf, i) => {
+    return npv + cf / Math.pow(1 + discountRate, i);
+  }, 0);
+}
+
+/**
+ * Calculate Internal Rate of Return (IRR) using Newton's method
+ */
+export function calculateIRR(
+  cashFlows,
+  maxIterations = 100,
+  tolerance = 0.0001,
+) {
+  let rate = 0.1; // initial guess
+  for (let i = 0; i < maxIterations; i++) {
+    let npv = 0;
+    let dnpv = 0;
+    for (let j = 0; j < cashFlows.length; j++) {
+      const factor = Math.pow(1 + rate, j);
+      npv += cashFlows[j] / factor;
+      if (j > 0) dnpv -= (j * cashFlows[j]) / Math.pow(1 + rate, j + 1);
+    }
+    if (Math.abs(npv) < tolerance) return rate;
+    if (dnpv === 0) return null;
+    rate = rate - npv / dnpv;
+    if (rate < -0.5 || rate > 10) return null; // diverged
+  }
+  return rate;
+}
+
+/**
+ * Calculate Levelized Cost of Energy (LCOE)
+ */
+export function calculateLCOE(
+  totalCost,
+  totalProductionKwh,
+  discountRate = 0.06,
+  years = 25,
+) {
+  let discountedCost = 0;
+  let discountedProduction = 0;
+  const annualCost = totalCost / years;
+  const annualProduction = totalProductionKwh / years;
+
+  for (let y = 1; y <= years; y++) {
+    const factor = Math.pow(1 + discountRate, y);
+    discountedCost += annualCost / factor;
+    discountedProduction += annualProduction / factor;
+  }
+  return discountedCost / discountedProduction;
+}
+
+/**
+ * Estimate home value increase from solar
+ * Based on Zillow/NREL research: ~$20/kWh of annual production or ~4.1% increase
+ */
+export function calculateHomeValueImpact(systemSizeKw, homeValue = 300000) {
+  const annualProductionKwh = systemSizeKw * 1500; // national avg
+  const solarPremium = annualProductionKwh * 20; // ~$20 per kWh annual production
+  const percentIncrease = (solarPremium / homeValue) * 100;
+  return {
+    valueIncrease: Math.round(solarPremium),
+    percentIncrease: parseFloat(percentIncrease.toFixed(1)),
+    newHomeValue: Math.round(homeValue + solarPremium),
+  };
+}
+
+/**
+ * Run sensitivity analysis across a range of parameter values
+ */
+export function runSensitivityAnalysis(baseInputs = {}, parameter, range) {
+  return range.map((value) => {
+    const modified = { ...baseInputs, [parameter]: value };
+    const result = calculateROIProjection(modified);
+    return {
+      paramValue: value,
+      totalSavingsLease: result.metrics.totalSavingsLease,
+      totalSavingsPurchase: result.metrics.totalSavingsPurchase,
+      leasePaybackYear: result.metrics.leasePaybackYear,
+      purchasePaybackYear: result.metrics.purchasePaybackYear,
+      monthlySavingsLease: result.metrics.monthlySavingsLease,
+    };
+  });
+}
+
+/**
+ * Calculate full ROI with advanced metrics (wraps base calculation)
+ */
+export function calculateAdvancedROI(inputs = {}) {
+  const base = calculateROIProjection(inputs);
+  const config = { ...DEFAULTS, ...inputs };
+  const systemSizeKw =
+    config.systemSizeKw || (config.panelCount * config.panelWattage) / 1000;
+
+  // Cash flows for NPV/IRR (purchase scenario)
+  const grossCost = systemSizeKw * config.systemCostPerWatt * 1000;
+  const itcAmount = grossCost * config.itcRate;
+  const netCost = grossCost - itcAmount;
+
+  const purchaseCashFlows = [-netCost];
+  const leaseCashFlows = [0]; // no upfront for lease
+
+  base.yearlyData.forEach((d) => {
+    purchaseCashFlows.push(d.purchaseSavings);
+    leaseCashFlows.push(d.leaseSavings);
+  });
+
+  const purchaseNPV = calculateNPV(purchaseCashFlows);
+  const purchaseIRR = calculateIRR(purchaseCashFlows);
+  const leaseNPV = calculateNPV(leaseCashFlows);
+
+  const lifetimeProduction = base.yearlyData.reduce(
+    (s, y) => s + y.production,
+    0,
+  );
+  const leaseLCOE = calculateLCOE(
+    base.metrics.lifetimeLeaseCost,
+    lifetimeProduction,
+  );
+  const purchaseLCOE = calculateLCOE(netCost, lifetimeProduction);
+
+  const homeImpact = calculateHomeValueImpact(
+    systemSizeKw,
+    inputs.homeValue || 300000,
+  );
+
+  // Annual cash flow for bar chart
+  const annualCashFlow = base.yearlyData.map((d) => ({
+    year: d.year,
+    leaseSavings: d.leaseSavings,
+    purchaseSavings: d.purchaseSavings,
+    cumulativeLease: d.leaseCumulativeSavings,
+    cumulativePurchase: d.purchaseCumulativeSavings,
+  }));
+
+  // Sensitivity data: utility escalation rates
+  const sensitivityUtilityEsc = runSensitivityAnalysis(
+    {
+      ...config,
+      annualUsageKwh:
+        config.annualUsageKwh ||
+        ((inputs.monthlyBill || 200) / config.utilityRate) * 12,
+    },
+    "utilityEscalator",
+    [0.02, 0.025, 0.03, 0.035, 0.04, 0.045, 0.05],
+  );
+
+  return {
+    ...base,
+    advanced: {
+      purchaseNPV: Math.round(purchaseNPV),
+      purchaseIRR: purchaseIRR
+        ? parseFloat((purchaseIRR * 100).toFixed(1))
+        : null,
+      leaseNPV: Math.round(leaseNPV),
+      leaseLCOE: parseFloat(leaseLCOE.toFixed(3)),
+      purchaseLCOE: parseFloat(purchaseLCOE.toFixed(3)),
+      homeValueImpact: homeImpact,
+      annualCashFlow,
+      sensitivityUtilityEsc,
+      lifetimeProductionMwh: parseFloat((lifetimeProduction / 1000).toFixed(1)),
+      costPerWatt: config.systemCostPerWatt,
+      grossSystemCost: Math.round(grossCost),
+      netSystemCost: Math.round(netCost),
+    },
+  };
+}
+
 export { DEFAULTS as ROI_DEFAULTS };
