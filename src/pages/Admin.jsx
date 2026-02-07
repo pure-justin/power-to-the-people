@@ -24,6 +24,7 @@ import {
   BarChart3,
   Gift,
   Bot,
+  Webhook,
 } from "lucide-react";
 import {
   onAuthChange,
