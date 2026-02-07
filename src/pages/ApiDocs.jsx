@@ -3524,19 +3524,63 @@ except requests.exceptions.ConnectionError:
         <div className="changelog-entries">
           <div className="changelog-entry">
             <div className="changelog-version">
-              <span className="version-number">v2.1.0</span>
+              <span className="version-number">v3.0.0</span>
               <span className="version-date">February 6, 2026</span>
             </div>
             <div className="changelog-content">
-              <h3>API Documentation Portal</h3>
+              <h3>Comprehensive API Documentation Portal</h3>
               <ul>
                 <li>
-                  <span className="change-tag added">Added</span> Comprehensive
-                  interactive API documentation portal
+                  <span className="change-tag added">Added</span> Installer
+                  Search API with filtering, comparison, and scoring
                 </li>
+                <li>
+                  <span className="change-tag added">Added</span> SMS
+                  Notifications API with templates and bulk sending
+                </li>
+                <li>
+                  <span className="change-tag added">Added</span> Admin
+                  Dashboard API with stats, search, and lead lifecycle
+                </li>
+                <li>
+                  <span className="change-tag added">Added</span> Commercial
+                  Leads API with scraping, scoring, and batch import
+                </li>
+                <li>
+                  <span className="change-tag added">Added</span> SolRite /
+                  SubHub Integration API with full enrollment flow
+                </li>
+                <li>
+                  <span className="change-tag added">Added</span> Agent
+                  Coordinator API with task queues and inter-agent messaging
+                </li>
+                <li>
+                  <span className="change-tag improved">Improved</span>{" "}
+                  Navigation restructured into Core APIs and Service APIs
+                </li>
+                <li>
+                  <span className="change-tag improved">Improved</span>{" "}
+                  Introduction with 8 quick-access cards for all major APIs
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="changelog-entry">
+            <div className="changelog-version">
+              <span className="version-number">v2.1.0</span>
+              <span className="version-date">February 2026</span>
+            </div>
+            <div className="changelog-content">
+              <h3>Interactive Documentation</h3>
+              <ul>
                 <li>
                   <span className="change-tag added">Added</span> Multi-language
                   code examples (JavaScript, Python, cURL)
+                </li>
+                <li>
+                  <span className="change-tag added">Added</span> API Playground
+                  with live endpoint testing
                 </li>
                 <li>
                   <span className="change-tag added">Added</span> Webhook
@@ -3544,19 +3588,7 @@ except requests.exceptions.ConnectionError:
                 </li>
                 <li>
                   <span className="change-tag added">Added</span> SDK
-                  installation guides
-                </li>
-                <li>
-                  <span className="change-tag added">Added</span> API Playground
-                  with live endpoint testing
-                </li>
-                <li>
-                  <span className="change-tag improved">Improved</span>{" "}
-                  Navigation with grouped sidebar sections
-                </li>
-                <li>
-                  <span className="change-tag improved">Improved</span> Mobile
-                  responsive design
+                  installation guides and Postman collection
                 </li>
               </ul>
             </div>
