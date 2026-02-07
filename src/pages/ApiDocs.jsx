@@ -119,6 +119,7 @@ const ApiDocs = () => {
   const [expandedGroups, setExpandedGroups] = useState({
     overview: true,
     apis: true,
+    services: true,
     tools: true,
     resources: true,
   });
