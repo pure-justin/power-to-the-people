@@ -30,6 +30,15 @@ export default function ProjectStatus() {
   const [project, setProject] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  const [toastQueue, setToastQueue] = useState([]);
+
+  const handleNewNotification = useCallback((notif) => {
+    setToastQueue((q) => [...q, notif]);
+  }, []);
+
+  const handleDismissToast = useCallback((notifId) => {
+    setToastQueue((q) => q.filter((n) => n.id !== notifId));
+  }, []);
 
   useEffect(() => {
     // Small delay for UX
