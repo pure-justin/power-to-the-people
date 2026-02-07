@@ -347,8 +347,8 @@ export const createAccount = async (email, password, displayName) => {
 
   // Auto-create referral record so user can start referring immediately
   try {
-    const { createReferralRecord } = await import("./referralService");
-    await createReferralRecord(userCredential.user.uid, {
+    const referralService = await import("./referralService.js");
+    await referralService.createReferralRecord(userCredential.user.uid, {
       email,
       displayName: displayName || "",
     });
