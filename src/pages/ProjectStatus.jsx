@@ -127,16 +127,32 @@ export default function ProjectStatus() {
             </div>
             Power to the People
           </Link>
-          <nav className="nav">
+          <nav
+            className="nav"
+            style={{ display: "flex", alignItems: "center", gap: 16 }}
+          >
             <Link to="/" className="nav-link">
               Home
             </Link>
             <Link to="/qualify" className="nav-link">
               Check Eligibility
             </Link>
+            {project?.id && (
+              <NotificationCenter
+                projectId={project.id}
+                onNotification={handleNewNotification}
+                darkMode={true}
+              />
+            )}
           </nav>
         </div>
       </header>
+
+      {/* Toast Notifications */}
+      <NotificationToastContainer
+        notifications={toastQueue}
+        onDismiss={handleDismissToast}
+      />
 
       {/* Status Content */}
       <section className="status-page">
