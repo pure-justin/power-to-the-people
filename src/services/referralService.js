@@ -308,6 +308,53 @@ export const generateReferralLink = (referralCode) => {
 };
 
 /**
+ * Track a referral link click for analytics
+ */
+export const trackReferralClick = async (referralCode, source = "direct") => {
+  if (!db) return;
+
+  try {
+    await addDoc(collection(db, "referralClicks"), {
+      referralCode: referralCode.toUpperCase(),
+      source, // direct, email, sms, facebook, twitter, linkedin, qr
+      userAgent: navigator.userAgent,
+      timestamp: serverTimestamp(),
+    });
+  } catch (error) {
+    // Silently fail - click tracking is non-critical
+    console.warn("Click tracking failed:", error);
+  }
+};
+
+/**
+ * Get click analytics for a referral code
+ */
+export const getReferralClickStats = async (referralCode) => {
+  if (!db) throw new Error("Firestore not initialized");
+
+  const clicksRef = collection(db, "referralClicks");
+  const q = query(
+    clicksRef,
+    where("referralCode", "==", referralCode.toUpperCase()),
+  );
+
+  const snapshot = await getDocs(q);
+  const clicks = [];
+  const sourceCounts = {};
+
+  snapshot.forEach((doc) => {
+    const data = doc.data();
+    clicks.push(data);
+    sourceCounts[data.source] = (sourceCounts[data.source] || 0) + 1;
+  });
+
+  return {
+    totalClicks: clicks.length,
+    sourceCounts,
+  };
+};
+
+/**
  * Get referral analytics
  */
 export const getReferralAnalytics = async (userId) => {
