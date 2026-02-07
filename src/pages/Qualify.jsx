@@ -362,6 +362,7 @@ export default function Qualify() {
     lastName: "",
     email: "",
     phone: "",
+    smsOptIn: true,
     // Account
     password: "",
     confirmPassword: "",
