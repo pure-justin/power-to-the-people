@@ -516,3 +516,210 @@ export const twilioStatusCallback = functions.https.onRequest(
     res.status(200).send("OK");
   },
 );
+
+/**
+ * HTTP Callable: Update SMS Preferences
+ * Allows customers to opt-in or opt-out of SMS notifications
+ */
+export const updateSmsPreferences = functions.https.onCall(
+  async (data, context) => {
+    if (!context.auth) {
+      throw new functions.https.HttpsError(
+        "unauthenticated",
+        "Must be authenticated to update preferences",
+      );
+    }
+
+    const { projectId, smsOptIn } = data;
+
+    if (!projectId || typeof smsOptIn !== "boolean") {
+      throw new functions.https.HttpsError(
+        "invalid-argument",
+        "projectId and smsOptIn (boolean) are required",
+      );
+    }
+
+    // Update project SMS preference
+    const projectRef = admin.firestore().collection("projects").doc(projectId);
+    const projectDoc = await projectRef.get();
+
+    if (!projectDoc.exists) {
+      throw new functions.https.HttpsError("not-found", "Project not found");
+    }
+
+    await projectRef.update({
+      smsOptIn,
+      smsPreferencesUpdatedAt: admin.firestore.FieldValue.serverTimestamp(),
+    });
+
+    // If opting out, send confirmation SMS
+    const project = projectDoc.data();
+    const phone = project?.phone || project?.customer?.phone;
+    if (!smsOptIn && phone) {
+      await sendSMS(
+        phone,
+        "You've been unsubscribed from Power to the People SMS notifications. Reply START to re-subscribe.",
+      );
+    }
+
+    return { success: true, smsOptIn };
+  },
+);
+
+/**
+ * HTTP Endpoint: Handle Incoming SMS (Twilio webhook)
+ * Processes STOP/START keywords for opt-out/opt-in
+ */
+export const handleIncomingSms = functions.https.onRequest(async (req, res) => {
+  const { From, Body } = req.body;
+
+  if (!From || !Body) {
+    res.status(400).send("Missing From or Body");
+    return;
+  }
+
+  const normalizedBody = Body.trim().toUpperCase();
+  const formattedPhone = From.startsWith("+")
+    ? From
+    : `+1${From.replace(/\D/g, "")}`;
+
+  // Handle STOP/UNSUBSCRIBE
+  if (["STOP", "UNSUBSCRIBE", "CANCEL", "QUIT"].includes(normalizedBody)) {
+    // Find projects with this phone number and opt them out
+    const projectsSnapshot = await admin
+      .firestore()
+      .collection("projects")
+      .where("customer.phone", "==", formattedPhone)
+      .get();
+
+    // Also check flat phone field
+    const flatSnapshot = await admin
+      .firestore()
+      .collection("projects")
+      .where("phone", "==", formattedPhone)
+      .get();
+
+    const allDocs = [...projectsSnapshot.docs, ...flatSnapshot.docs];
+    const updatePromises = allDocs.map((doc) =>
+      doc.ref.update({
+        smsOptIn: false,
+        smsPreferencesUpdatedAt: admin.firestore.FieldValue.serverTimestamp(),
+      }),
+    );
+
+    await Promise.all(updatePromises);
+
+    // Log the opt-out
+    await admin.firestore().collection("smsLog").add({
+      from: formattedPhone,
+      action: "opt_out",
+      keyword: normalizedBody,
+      projectsUpdated: allDocs.length,
+      timestamp: admin.firestore.FieldValue.serverTimestamp(),
+    });
+  }
+
+  // Handle START/SUBSCRIBE
+  if (["START", "SUBSCRIBE", "YES"].includes(normalizedBody)) {
+    const projectsSnapshot = await admin
+      .firestore()
+      .collection("projects")
+      .where("customer.phone", "==", formattedPhone)
+      .get();
+
+    const flatSnapshot = await admin
+      .firestore()
+      .collection("projects")
+      .where("phone", "==", formattedPhone)
+      .get();
+
+    const allDocs = [...projectsSnapshot.docs, ...flatSnapshot.docs];
+    const updatePromises = allDocs.map((doc) =>
+      doc.ref.update({
+        smsOptIn: true,
+        smsPreferencesUpdatedAt: admin.firestore.FieldValue.serverTimestamp(),
+      }),
+    );
+
+    await Promise.all(updatePromises);
+
+    await admin.firestore().collection("smsLog").add({
+      from: formattedPhone,
+      action: "opt_in",
+      keyword: normalizedBody,
+      projectsUpdated: allDocs.length,
+      timestamp: admin.firestore.FieldValue.serverTimestamp(),
+    });
+  }
+
+  // Respond with TwiML (empty response - Twilio handles STOP/START natively too)
+  res.set("Content-Type", "text/xml");
+  res.send("<Response></Response>");
+});
+
+/**
+ * HTTP Callable: Get SMS History for a Project
+ * Returns SMS log entries for a specific project's phone number
+ */
+export const getProjectSmsHistory = functions.https.onCall(
+  async (data, context) => {
+    if (!context.auth) {
+      throw new functions.https.HttpsError(
+        "unauthenticated",
+        "Must be authenticated to view SMS history",
+      );
+    }
+
+    const { projectId } = data;
+
+    if (!projectId) {
+      throw new functions.https.HttpsError(
+        "invalid-argument",
+        "projectId is required",
+      );
+    }
+
+    // Get the project to find the phone number
+    const projectDoc = await admin
+      .firestore()
+      .collection("projects")
+      .doc(projectId)
+      .get();
+
+    if (!projectDoc.exists) {
+      throw new functions.https.HttpsError("not-found", "Project not found");
+    }
+
+    const project = projectDoc.data();
+    const phone = project?.phone || project?.customer?.phone;
+
+    if (!phone) {
+      return { messages: [], smsOptIn: project?.smsOptIn !== false };
+    }
+
+    // Format phone for matching
+    const formattedPhone = phone.startsWith("+")
+      ? phone
+      : `+1${phone.replace(/\D/g, "")}`;
+
+    // Get SMS log entries for this phone
+    const logsSnapshot = await admin
+      .firestore()
+      .collection("smsLog")
+      .where("to", "==", formattedPhone)
+      .orderBy("sentAt", "desc")
+      .limit(50)
+      .get();
+
+    const messages = logsSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+      sentAt: doc.data().sentAt?.toDate?.()?.toISOString() || null,
+    }));
+
+    return {
+      messages,
+      smsOptIn: project?.smsOptIn !== false,
+    };
+  },
+);
