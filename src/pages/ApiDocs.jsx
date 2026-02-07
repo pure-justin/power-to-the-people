@@ -4045,11 +4045,29 @@ npx @openapitools/openapi-generator-cli generate \\
         <div className="search-box">
           <Search size={16} />
           <input
+            ref={searchInputRef}
             type="text"
-            placeholder="Search docs..."
+            placeholder="Search docs... (press /)"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Escape") {
+                setSearchQuery("");
+                searchInputRef.current?.blur();
+              }
+            }}
           />
+          {searchQuery && (
+            <button
+              className="search-clear"
+              onClick={() => {
+                setSearchQuery("");
+                searchInputRef.current?.focus();
+              }}
+            >
+              <X size={14} />
+            </button>
+          )}
         </div>
 
         <nav className="docs-nav">
