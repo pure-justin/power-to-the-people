@@ -312,6 +312,7 @@ const ApiDocs = () => {
         { key: "examples", title: "Code Examples", icon: Code },
         { key: "rateLimiting", title: "Rate Limits", icon: Shield },
         { key: "errorHandling", title: "Error Handling", icon: AlertCircle },
+        { key: "openApiSpec", title: "OpenAPI Spec", icon: Download },
         { key: "changelog", title: "Changelog", icon: History },
       ],
     },
