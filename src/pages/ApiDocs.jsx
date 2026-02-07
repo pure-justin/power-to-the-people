@@ -28,6 +28,14 @@ import {
   Users,
   Image,
   MapPin,
+  MessageSquare,
+  Building2,
+  Wrench,
+  Bot,
+  BarChart3,
+  CreditCard,
+  Truck,
+  Link,
 } from "lucide-react";
 import ApiPlayground from "../components/ApiPlayground";
 import "../styles/ApiDocs.css";
