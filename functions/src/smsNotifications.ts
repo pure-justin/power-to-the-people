@@ -489,18 +489,27 @@ export const sendPaymentReminders = functions.pubsub
         return;
       }
 
-      const message = SMS_TEMPLATES.PAYMENT_REMINDER(
+      const paymentMessage = SMS_TEMPLATES.PAYMENT_REMINDER(
         project.firstName || "there",
         project.nextPaymentAmount.toFixed(2),
         new Date(project.nextPaymentDate).toLocaleDateString(),
       );
 
-      const success = await sendSMS(project.phone, message);
+      const success = await sendSMS(project.phone, paymentMessage);
 
       if (success) {
         // Mark reminder as sent
         await doc.ref.update({
           paymentReminderSent: true,
+        });
+
+        // Create in-app notification
+        await createInAppNotification({
+          projectId: doc.id,
+          type: "payment_reminder",
+          title: "Payment Reminder",
+          message: paymentMessage,
+          link: "https://power-to-the-people-vpp.web.app/portal",
         });
       }
     });

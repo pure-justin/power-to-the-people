@@ -119,6 +119,30 @@ async function sendSMS(to, message) {
     }
 }
 /**
+ * Create an in-app notification in Firestore
+ * These are displayed in the NotificationCenter component
+ */
+async function createInAppNotification(params) {
+    try {
+        await admin
+            .firestore()
+            .collection("notifications")
+            .add({
+            projectId: params.projectId || null,
+            userId: params.userId || null,
+            type: params.type,
+            title: params.title,
+            message: params.message,
+            link: params.link || null,
+            read: false,
+            createdAt: admin.firestore.FieldValue.serverTimestamp(),
+        });
+    }
+    catch (error) {
+        console.error("Error creating in-app notification:", error);
+    }
+}
+/**
  * Firestore Trigger: New Project Created
  * Sends SMS to customer and admin team
  */
@@ -139,6 +163,14 @@ exports.onProjectCreated = functions.firestore
         const message = SMS_TEMPLATES.ENROLLMENT_CONFIRMATION(firstName, projectId);
         await sendSMS(phone, message);
     }
+    // Create in-app notification for the project
+    await createInAppNotification({
+        projectId,
+        type: "enrollment_confirmation",
+        title: "Enrollment Confirmed",
+        message: `Welcome ${firstName}! Your solar application ${projectId} is being reviewed. We'll notify you of updates.`,
+        link: `https://power-to-the-people-vpp.web.app/project/${projectId}`,
+    });
     // Send admin notification
     const adminPhone = ((_e = functions.config().admin) === null || _e === void 0 ? void 0 : _e.phone) || process.env.ADMIN_PHONE;
     if (adminPhone && project.systemSize) {
@@ -194,6 +226,36 @@ exports.onProjectStatusUpdate = functions.firestore
     if (message) {
         await sendSMS(phone, message);
     }
+    // Create in-app notification for status changes
+    const projectId = context.params.projectId;
+    const notifMap = {
+        approved: {
+            type: "application_approved",
+            title: "Application Approved",
+        },
+        pending_info: {
+            type: "status_update",
+            title: "Info Required",
+        },
+        installation_scheduled: {
+            type: "installation_scheduled",
+            title: "Installation Scheduled",
+        },
+        installed: {
+            type: "installation_complete",
+            title: "System Installed",
+        },
+    };
+    const notifConfig = notifMap[after.status];
+    if (notifConfig && message) {
+        await createInAppNotification({
+            projectId,
+            type: notifConfig.type,
+            title: notifConfig.title,
+            message,
+            link: `https://power-to-the-people-vpp.web.app/project/${projectId}`,
+        });
+    }
 });
 /**
  * Firestore Trigger: Referral Reward Earned
@@ -218,8 +280,16 @@ exports.onReferralReward = functions.firestore
     const referrer = referrerDoc.data();
     if (!(referrer === null || referrer === void 0 ? void 0 : referrer.phone))
         return;
-    const message = SMS_TEMPLATES.REFERRAL_REWARD(referrer.firstName || "there", ((_a = after.rewardAmount) === null || _a === void 0 ? void 0 : _a.toFixed(0)) || "500", after.referredName || "Your friend");
-    await sendSMS(referrer.phone, message);
+    const rewardMessage = SMS_TEMPLATES.REFERRAL_REWARD(referrer.firstName || "there", ((_a = after.rewardAmount) === null || _a === void 0 ? void 0 : _a.toFixed(0)) || "500", after.referredName || "Your friend");
+    await sendSMS(referrer.phone, rewardMessage);
+    // Create in-app notification for referral reward
+    await createInAppNotification({
+        userId: after.referrerId,
+        type: "referral_reward",
+        title: "Referral Reward Earned",
+        message: rewardMessage,
+        link: "https://power-to-the-people-vpp.web.app/referrals",
+    });
 });
 /**
  * HTTP Callable: Send Custom SMS
@@ -313,12 +383,20 @@ exports.sendPaymentReminders = functions.pubsub
             !project.nextPaymentDate) {
             return;
         }
-        const message = SMS_TEMPLATES.PAYMENT_REMINDER(project.firstName || "there", project.nextPaymentAmount.toFixed(2), new Date(project.nextPaymentDate).toLocaleDateString());
-        const success = await sendSMS(project.phone, message);
+        const paymentMessage = SMS_TEMPLATES.PAYMENT_REMINDER(project.firstName || "there", project.nextPaymentAmount.toFixed(2), new Date(project.nextPaymentDate).toLocaleDateString());
+        const success = await sendSMS(project.phone, paymentMessage);
         if (success) {
             // Mark reminder as sent
             await doc.ref.update({
                 paymentReminderSent: true,
+            });
+            // Create in-app notification
+            await createInAppNotification({
+                projectId: doc.id,
+                type: "payment_reminder",
+                title: "Payment Reminder",
+                message: paymentMessage,
+                link: "https://power-to-the-people-vpp.web.app/portal",
             });
         }
     });
