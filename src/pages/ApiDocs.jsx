@@ -4120,6 +4120,13 @@ npx @openapitools/openapi-generator-cli generate \\
             <Shield size={14} />
             Admin Portal
           </a>
+          <button
+            className="footer-link keyboard-link"
+            onClick={() => setShowKeyboardHelp(true)}
+          >
+            <Keyboard size={14} />
+            Shortcuts <kbd>?</kbd>
+          </button>
         </div>
       </aside>
 
