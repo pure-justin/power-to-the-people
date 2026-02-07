@@ -205,8 +205,10 @@ export const createMercuryInvoice = functions
           lineItems: mercuryLineItems,
           achDebitEnabled: true,
           creditCardEnabled: false,
+          useRealAccountNumber: false,
           sendEmailOption: "SendNow",
-          payerMemo: memo || undefined,
+          payerMemo: memo || "",
+          ccEmails: [],
         });
 
         const db = admin.firestore();
