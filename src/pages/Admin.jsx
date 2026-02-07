@@ -1027,6 +1027,9 @@ export default function Admin() {
           {/* SMS Notifications Tab */}
           {activeTab === "sms" && <SmsNotificationPanel />}
 
+          {/* Webhooks Tab */}
+          {activeTab === "webhooks" && <WebhookDashboard />}
+
           {/* Ava AI Tab */}
           {activeTab === "ava" && <AvaActivityPanel />}
 
