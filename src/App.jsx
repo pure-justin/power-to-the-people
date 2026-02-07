@@ -11,6 +11,7 @@ import Admin from "./pages/Admin";
 import Referrals from "./pages/Referrals";
 import ApiDocs from "./pages/ApiDocs";
 import InstallerComparison from "./pages/InstallerComparison";
+import RoiProjection from "./pages/RoiProjection";
 import "./App.css";
 
 function App() {
