@@ -577,6 +577,9 @@ export default function Home() {
             <Link to="/qualify" className="dark-nav-link">
               Get Started
             </Link>
+            <Link to="/roi" className="dark-nav-link">
+              ROI Calculator
+            </Link>
             <Link to="/portal" className="dark-nav-link">
               Portal
             </Link>
