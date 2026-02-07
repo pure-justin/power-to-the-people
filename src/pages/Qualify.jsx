@@ -38,6 +38,7 @@ import {
 import {
   validateReferralCode,
   trackReferral,
+  trackReferralClick,
 } from "../services/referralService";
 import AddressAutocomplete from "../components/AddressAutocomplete";
 
