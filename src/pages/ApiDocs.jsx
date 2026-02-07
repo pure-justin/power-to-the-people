@@ -159,7 +159,7 @@ const ApiDocs = () => {
     },
     {
       id: "apis",
-      label: "API Reference",
+      label: "Core APIs",
       items: [
         { key: "solarApi", title: "Solar API", icon: Sun },
         { key: "firebaseApi", title: "Firebase / Leads", icon: Database },
@@ -171,6 +171,18 @@ const ApiDocs = () => {
         { key: "addressApi", title: "Address & Location", icon: MapPin },
         { key: "referralApi", title: "Referral System", icon: Users },
         { key: "webhooks", title: "Webhooks", icon: Globe },
+      ],
+    },
+    {
+      id: "services",
+      label: "Service APIs",
+      items: [
+        { key: "installerApi", title: "Installer Search", icon: Wrench },
+        { key: "smsApi", title: "SMS Notifications", icon: MessageSquare },
+        { key: "adminApi", title: "Admin Dashboard", icon: BarChart3 },
+        { key: "commercialApi", title: "Commercial Leads", icon: Building2 },
+        { key: "solriteApi", title: "SolRite / SubHub", icon: Link },
+        { key: "coordinatorApi", title: "Agent Coordinator", icon: Bot },
       ],
     },
     {
