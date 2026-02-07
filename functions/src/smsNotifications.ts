@@ -127,13 +127,21 @@ export const onProjectCreated = functions.firestore
     const project = snap.data();
     const projectId = context.params.projectId;
 
-    // Send customer confirmation
-    if (project.phone) {
+    // Support both flat and nested data structures
+    const phone = project.phone || project.customer?.phone;
+    const firstName =
+      project.firstName || project.customer?.firstName || "there";
+    const lastName = project.lastName || project.customer?.lastName || "";
+    const city = project.city || project.address?.city || "Unknown";
+    const smsOptIn = project.smsOptIn !== false; // Default to true for backward compat
+
+    // Send customer confirmation (only if opted in)
+    if (phone && smsOptIn) {
       const message = SMS_TEMPLATES.ENROLLMENT_CONFIRMATION(
-        project.firstName || "there",
+        firstName,
         projectId,
       );
-      await sendSMS(project.phone, message);
+      await sendSMS(phone, message);
     }
 
     // Send admin notification
@@ -141,8 +149,8 @@ export const onProjectCreated = functions.firestore
       functions.config().admin?.phone || process.env.ADMIN_PHONE;
     if (adminPhone && project.systemSize) {
       const message = SMS_TEMPLATES.NEW_LEAD_ADMIN(
-        project.firstName + " " + project.lastName,
-        project.city || "Unknown",
+        firstName + " " + lastName,
+        city,
         project.systemSize.toString(),
       );
       await sendSMS(adminPhone, message);
@@ -151,11 +159,13 @@ export const onProjectCreated = functions.firestore
     // Check if high-value lead (>$40k system)
     if (project.systemCost && project.systemCost > 40000) {
       const message = SMS_TEMPLATES.HIGH_VALUE_LEAD(
-        project.firstName + " " + project.lastName,
+        firstName + " " + lastName,
         project.systemCost.toLocaleString(),
         project.leadScore || "85",
       );
-      await sendSMS(adminPhone, message);
+      if (adminPhone) {
+        await sendSMS(adminPhone, message);
+      }
     }
   });
 
