@@ -1,0 +1,1127 @@
+{
+  "metadata": {
+    "title": "Texas & Federal Solar Incentives Database - February 2026",
+    "last_updated": "2026-02-06",
+    "data_status": "post_OBBBA_enactment",
+    "key_legislation": {
+      "obbba": {
+        "name": "One Big Beautiful Bill Act",
+        "signed": "2025-07-04",
+        "impact": "Accelerated phase-out of IRA clean energy credits, ended residential ITC, new FEOC restrictions"
+      },
+      "ira": {
+        "name": "Inflation Reduction Act of 2022",
+        "signed": "2022-08-16",
+        "status": "Significantly modified by OBBBA"
+      }
+    },
+    "critical_changes": [
+      "Section 25D residential ITC (30%) EXPIRED December 31, 2025",
+      "Section 48E commercial ITC accelerated phase-out: begin construction by July 4, 2026 or place in service by Dec 31, 2027",
+      "Five Percent Safe Harbor ELIMINATED for solar/wind construction starting after September 2, 2025",
+      "Only Physical Work Test permitted for begin-construction determination",
+      "100% bonus depreciation reinstated permanently by OBBBA",
+      "FEOC restrictions now apply to all credits",
+      "No residential federal solar tax credit available for homeowner-owned systems in 2026"
+    ]
+  },
+
+  "federal_incentives": {
+    "section_25d_residential_itc": {
+      "name": "Residential Clean Energy Credit (Section 25D)",
+      "status": "EXPIRED",
+      "expiration_date": "2025-12-31",
+      "previous_rate": "30%",
+      "current_rate": "0%",
+      "notes": "Terminated by OBBBA. No residential ITC available for homeowner-owned systems installed after December 31, 2025. Unused credits from prior years may still roll over.",
+      "alternative": "Homeowners can still benefit through TPO (lease/PPA) arrangements where the commercial entity claims Section 48E"
+    },
+
+    "section_48e_commercial_itc": {
+      "name": "Clean Electricity Investment Tax Credit (Section 48E)",
+      "status": "ACTIVE_WITH_ACCELERATED_PHASEOUT",
+      "applies_to": ["commercial_solar", "third_party_owned_residential", "community_solar", "battery_storage"],
+      "base_rate_percent": 6,
+      "enhanced_rate_percent": 30,
+      "enhanced_rate_requirements": {
+        "prevailing_wage": "Laborers and mechanics paid no less than applicable prevailing wage rates",
+        "apprenticeship": "Qualified apprentices employed from registered apprenticeship programs for required hours"
+      },
+      "small_project_exception": {
+        "threshold_mw": 1,
+        "benefit": "Projects under 1 MW AC qualify for 30% rate WITHOUT prevailing wage/apprenticeship requirements"
+      },
+      "critical_deadlines": {
+        "begin_construction_by": "2026-07-04",
+        "placed_in_service_by": "2027-12-31",
+        "safe_harbor_window": "4 years from construction start if begun before July 4, 2026",
+        "construction_test": {
+          "small_solar_under_1_5mw": "Pay or incur 5%+ of total eligible project costs",
+          "large_solar_over_1_5mw": "Physical work of substantial nature at project site required",
+          "five_percent_safe_harbor": "ELIMINATED for projects starting after September 2, 2025 (IRS Notice 2025-42)"
+        }
+      },
+      "tpo_residential_impact": {
+        "description": "Leases and PPAs where commercial entity owns system can still claim 48E",
+        "deadline": "System must be placed in service by December 31, 2027",
+        "consumer_benefit": "Lower monthly payments due to tax credit passed through to consumer"
+      }
+    },
+
+    "section_45y_production_credit": {
+      "name": "Clean Electricity Production Tax Credit (Section 45Y)",
+      "status": "ACTIVE_WITH_ACCELERATED_PHASEOUT",
+      "base_rate_per_kwh": 0.003,
+      "enhanced_rate_per_kwh": 0.015,
+      "duration_years": 10,
+      "same_deadlines_as_48e": true,
+      "notes": "Alternative to ITC; developer chooses one or the other. Same begin-construction and placed-in-service deadlines apply."
+    },
+
+    "domestic_content_bonus": {
+      "name": "Domestic Content Bonus Credit",
+      "status": "ACTIVE",
+      "bonus_percentage_points": 10,
+      "description": "Additional 10 percentage points added to ITC (e.g., 30% becomes 40%) for projects meeting domestic content thresholds",
+      "iron_steel_requirement": "100% U.S. iron and steel for structural components",
+      "manufactured_products_thresholds": {
+        "construction_before_2025_06_16": "40% (20% offshore wind)",
+        "construction_2025_06_16_to_2025_12_31": "45% (27.5% offshore wind)",
+        "construction_2026": "50% (35% offshore wind)",
+        "construction_after_2026": "55%"
+      },
+      "notes": "Thresholds significantly increased by OBBBA. Must use non-FEOC compliant manufacturers."
+    },
+
+    "energy_community_bonus": {
+      "name": "Energy Community Bonus Credit",
+      "status": "ACTIVE",
+      "bonus_percentage_points": 10,
+      "description": "Additional 10 percentage points for projects in designated energy communities",
+      "qualifying_criteria": [
+        {
+          "type": "brownfield",
+          "definition": "EPA-designated brownfield sites"
+        },
+        {
+          "type": "statistical_area",
+          "definition": "MSA or non-MSA with >= 0.17% fossil fuel employment AND unemployment rate at or above national average"
+        },
+        {
+          "type": "coal_closure",
+          "definition": "Census tract containing or adjacent to coal mine closed after 1999 or coal-fired plant retired after 2009"
+        }
+      ],
+      "texas_qualifying_areas": {
+        "description": "Multiple Texas counties and census tracts qualify, particularly in West Texas oil/gas regions and areas with retired coal plants",
+        "verification_tools": [
+          "DOE Energy Data eXchange (EDX) mapping tool",
+          "IRS Notice 2024-48 appendices",
+          "energycommunities.gov interactive map"
+        ],
+        "notable_qualifying_regions": [
+          "Permian Basin area (fossil fuel employment)",
+          "Gulf Coast refinery communities",
+          "Areas near retired coal plants (e.g., Monticello, Big Brown, Sandow)"
+        ]
+      },
+      "obbba_expansion": "Nuclear facilities in MSAs with 0.17%+ nuclear employment also qualify"
+    },
+
+    "low_income_community_bonus": {
+      "name": "Low-Income Communities Bonus Credit",
+      "status": "ACTIVE_COMPETITIVE",
+      "bonus_percentage_points": {
+        "category_1_low_income_community": 10,
+        "category_2_indian_land": 10,
+        "category_3_affordable_housing": 20,
+        "category_4_low_income_benefit": 20
+      },
+      "annual_capacity_allocation_gw": 1.8,
+      "max_project_size_mw": 5,
+      "application_process": "Competitive allocation from Treasury Department",
+      "placed_in_service_deadline": "Within 4 years of allocation",
+      "qualifying_communities": {
+        "category_1": "Poverty rate >= 20% OR median family income <= 80% of statewide median"
+      }
+    },
+
+    "bonus_depreciation_macrs": {
+      "name": "Modified Accelerated Cost Recovery System (MACRS) + Bonus Depreciation",
+      "status": "ACTIVE_MODIFIED",
+      "depreciation_class_years": 5,
+      "bonus_depreciation_rate_percent": 100,
+      "bonus_depreciation_permanent": true,
+      "obbba_changes": {
+        "100_percent_reinstated": "OBBBA reinstates 100% bonus depreciation permanently for property placed in service after January 19, 2025",
+        "macrs_5_year_status": "Solar continues to qualify as 5-year MACRS property under Sections 45Y/48E",
+        "energy_property_reclassification": "Energy property (solar, wind, standalone storage) with construction beginning after December 31, 2024 removed from 5-year class designation, BUT 100% bonus depreciation effectively supersedes this",
+        "net_effect": "Full immediate write-off of capital costs in year of placement in service"
+      },
+      "applies_to": "Commercial/business solar installations only (not residential homeowner-owned)",
+      "basis_reduction": "ITC reduces depreciable basis by 50% of credit amount (e.g., 30% ITC reduces basis by 15%)"
+    },
+
+    "credit_transferability": {
+      "name": "Tax Credit Transferability (Section 6418)",
+      "status": "ACTIVE",
+      "description": "Project developers can sell tax credits to unrelated third parties for cash",
+      "market_rates": {
+        "typical_range_cents_per_dollar": "89-96",
+        "average_2025_cents_per_dollar": "93.5-96.0",
+        "large_deal_high_watermark": "96 cents per dollar"
+      },
+      "obbba_restrictions": [
+        "Transfers to Specified Foreign Entities (SFEs) prohibited",
+        "Transfers to Foreign-Influenced Entities (FIEs) prohibited"
+      ],
+      "availability": "Continues for duration of underlying credit period"
+    },
+
+    "direct_pay_elective_pay": {
+      "name": "Direct Pay / Elective Pay (Section 6417)",
+      "status": "ACTIVE_FOR_ELIGIBLE_ENTITIES",
+      "eligible_entities": [
+        "Tax-exempt organizations",
+        "State and local governments",
+        "Indian tribal governments",
+        "Alaska Native Corporations",
+        "Tennessee Valley Authority",
+        "Rural electric cooperatives"
+      ],
+      "mechanism": "Credit treated as overpayment of tax, refundable as cash",
+      "obbba_impact": "Direct pay mechanism preserved, but subject to same credit phase-out deadlines. If underlying credit expires, direct pay has nothing to apply to.",
+      "solar_deadline": "Begin construction by July 4, 2026; placed in service by December 31, 2027"
+    },
+
+    "section_45x_manufacturing_credits": {
+      "name": "Advanced Manufacturing Production Credit (Section 45X)",
+      "status": "ACTIVE_WITH_PHASEOUT",
+      "description": "Credits for U.S. manufacturing of solar components, reducing domestic equipment costs",
+      "solar_component_deadline": "No credit for integrated solar components (assembled panels) sold after December 31, 2028",
+      "wind_component_deadline": "Credit terminates for production/sales after 2027",
+      "integration_requirement": {
+        "effective": "After 2026",
+        "rule": "65% of total direct material costs of secondary components must come from U.S.-mined/produced/manufactured primary components"
+      },
+      "feoc_restriction": "Components produced with material assistance from prohibited foreign entities ineligible after July 4, 2025",
+      "impact_on_equipment_costs": "Supports domestic manufacturing buildout, potentially reducing compliant equipment costs"
+    },
+
+    "feoc_requirements": {
+      "name": "Foreign Entity of Concern (FEOC) Requirements",
+      "status": "ACTIVE",
+      "effective_date": "2026-01-01",
+      "prohibited_countries": ["China", "Russia", "Iran", "North Korea"],
+      "specified_foreign_entities": "Entities organized under laws of prohibited countries or controlled by them",
+      "foreign_influenced_entities": {
+        "criteria": [
+          "25%+ ownership by single SFE",
+          "40%+ ownership by multiple SFEs",
+          "15%+ debt issued to SFEs",
+          "Effective control via payment agreements",
+          "IP agreements entered/modified after July 4, 2025"
+        ]
+      },
+      "material_assistance_cost_ratios_by_year": {
+        "qualified_facilities": {
+          "2026": "40%",
+          "2027": "45%",
+          "2028": "50%",
+          "2029": "55%",
+          "2030_plus": "60%"
+        },
+        "energy_storage": {
+          "2026": "55%",
+          "2027": "60%",
+          "2028": "65%",
+          "2029": "70%",
+          "2030_plus": "75%"
+        }
+      },
+      "solar_component_ratios_by_sale_year": {
+        "2026": {"solar": "50%", "inverter": "50%", "battery": "60%"},
+        "2027": {"solar": "60%", "inverter": "55%", "battery": "65%"},
+        "2028": {"solar": "70%", "inverter": "60%", "battery": "70%"},
+        "2029": {"solar": "80%", "inverter": "65%", "battery": "80%"},
+        "2030_plus": {"solar": "85%", "inverter": "70%", "battery": "85%"}
+      }
+    },
+
+    "maximum_combined_itc_example": {
+      "description": "Maximum possible ITC stack for qualifying commercial solar project in 2026",
+      "base_itc": "30% (with prevailing wage/apprenticeship)",
+      "domestic_content_bonus": "+10%",
+      "energy_community_bonus": "+10%",
+      "low_income_bonus": "+10% to +20%",
+      "theoretical_maximum": "60% to 70%",
+      "practical_maximum": "50% (30% + 10% domestic + 10% energy community)",
+      "notes": "Low-income bonus requires competitive allocation and is capacity-limited"
+    }
+  },
+
+  "texas_state_incentives": {
+    "property_tax_exemption": {
+      "name": "Texas Renewable Energy Property Tax Exemption",
+      "status": "ACTIVE",
+      "statute": "Texas Tax Code Section 11.27",
+      "exemption_percent": 100,
+      "description": "100% property tax exemption for the added value of solar or wind-powered energy devices installed on residential or commercial property",
+      "eligible_systems": ["solar_pv", "solar_thermal", "wind"],
+      "requirements": {
+        "primary_use": "System must primarily provide power for on-site use",
+        "application_form": "Form 50-123 (Exemption Application for Solar or Wind-Powered Energy Devices)",
+        "filing_entity": "County Appraisal District (CAD)",
+        "filing_window": "January 1 through April 30 of the year following installation",
+        "automatic": false
+      },
+      "estimated_value": {
+        "description": "Varies by system size and local tax rates",
+        "example_8kw_system": "Prevents ~$3,000-$6,000 in added property taxes over system life at typical Texas tax rates of 2-2.5%"
+      }
+    },
+
+    "sales_tax": {
+      "name": "Texas Sales Tax on Solar Equipment",
+      "status": "NO_RESIDENTIAL_EXEMPTION",
+      "state_sales_tax_rate_percent": 6.25,
+      "local_tax_additional_percent": "up to 2.0",
+      "combined_max_percent": 8.25,
+      "residential_exemption": false,
+      "commercial_manufacturing_exemption": {
+        "available": true,
+        "statute": "Section 151.318(a)(2)",
+        "applies_to": "Solar modules/panels used in commercial electricity generation for sale",
+        "description": "Qualifies as manufacturing equipment exemption"
+      },
+      "notes": "No sales tax exemption for residential solar purchases. Solar equipment for homes is subject to full state + local sales tax."
+    },
+
+    "pace_financing": {
+      "name": "Texas PACE (Property Assessed Clean Energy)",
+      "status": "ACTIVE_COMMERCIAL_ONLY",
+      "statute": "Senate Bill 385 (83R), 2013",
+      "administrator": "Texas PACE Authority",
+      "eligible_property_types": [
+        "commercial",
+        "industrial",
+        "multi-family_residential_5_plus_units"
+      ],
+      "residential_single_family": false,
+      "eligible_improvements": ["solar_pv", "solar_thermal", "wind", "hvac", "lighting", "insulation", "water_management"],
+      "participating_cities": [
+        "Dallas", "Houston", "Austin", "San Antonio", "Fort Worth",
+        "Plano", "Laredo", "Universal City", "Travis County"
+      ],
+      "benefits": [
+        "Low-cost, long-term financing",
+        "Repayment through property tax assessment",
+        "Transfers with property on sale",
+        "100% financing available",
+        "Terms up to 20+ years"
+      ],
+      "notes": "NOT available for single-family residential properties in Texas"
+    },
+
+    "solar_rights_act": {
+      "name": "Texas Solar Rights Act",
+      "status": "ACTIVE",
+      "statute": "Texas Property Code Section 202.010 / HB 362",
+      "effective_date": "2025-05-29",
+      "key_provisions": [
+        "HOAs/POAs cannot prohibit or restrict solar energy device installation",
+        "Homeowners must follow normal improvement approval procedures",
+        "Written request to Architecture Review Committee required"
+      ],
+      "permitted_hoa_restrictions": [
+        "Systems on common property",
+        "Panels extending above roofline or not conforming to roof slope",
+        "Ground-mounted systems above fence line",
+        "Installation voiding existing warranties",
+        "Elements not in silver, bronze, or black tones",
+        "Installation without prior HOA approval"
+      ],
+      "homeowner_petition_right": {
+        "description": "Homeowner can petition for alternate placement if alternate location increases estimated annual production by >10%",
+        "tool": "NREL PVWatts Calculator accepted as modeling tool"
+      },
+      "developer_exception": {
+        "statute": "SB 1626",
+        "description": "Developers may prohibit solar during development phase for subdivisions of 50 or fewer units"
+      },
+      "related_legislation": {
+        "hb_431_solar_roof_tiles": {
+          "statute": "HB 431 (89th Legislature)",
+          "effective_date": "2025-05-29",
+          "description": "Amends Property Code Section 202.010 to explicitly include 'solar roof tiles' in the definition of 'solar energy device', extending HOA protection to integrated solar roof products like Tesla Solar Roof"
+        }
+      }
+    },
+
+    "sb_1036_consumer_protection": {
+      "name": "Residential Solar Retailer Regulatory Act",
+      "status": "ACTIVE_IMPLEMENTATION",
+      "statute": "SB 1036 (89th Legislature)",
+      "effective_date": "2025-09-01",
+      "registration_required_date": "2026-09-01",
+      "administering_agency": "Texas Department of Licensing and Regulation (TDLR)",
+      "key_provisions": [
+        "All residential solar retailers and salespersons must register with TDLR by September 1, 2026",
+        "Standardized contract language required for clarity",
+        "Mandatory cost and financing disclosures at time of solicitation",
+        "5 business day right to cancel solar panel sales contracts",
+        "Prohibition on implying affiliation with utilities or government agencies",
+        "Cannot solicit at residences with 'no soliciting' signs unless invited",
+        "Enhanced civil penalties when victims are 65 or older"
+      ],
+      "rule_adoption_deadline": "2026-06-01",
+      "impact_on_industry": "Increases consumer trust; may reduce door-to-door sales fraud that has plagued Texas solar market"
+    },
+
+    "texas_backup_power_package_program": {
+      "name": "Texas Backup Power Package Program",
+      "status": "ACTIVE",
+      "statute": "89th Legislature appropriation",
+      "description": "Financial incentives to help businesses install reliable backup power sources including solar and storage at critical facilities",
+      "eligible_facilities": ["nursing_homes", "water_treatment_plants", "critical_infrastructure"],
+      "funding_source": "Texas Energy Fund ($10 billion total authorized)",
+      "notes": "Part of $5 billion additional TEF funding approved in 89th Legislature for FY2025-2026"
+    },
+
+    "hb_3228_decommissioning": {
+      "name": "Solar and Wind Decommissioning and Recycling Requirements",
+      "status": "ACTIVE",
+      "statute": "HB 3228 (89th Legislature)",
+      "description": "Requires recycling of all components capable of being reused or recycled at end of solar or wind facility life",
+      "impact": "Adds decommissioning cost considerations to large-scale solar project economics"
+    },
+
+    "net_metering_state_policy": {
+      "name": "Texas Net Metering Policy",
+      "status": "NO_STATE_MANDATE",
+      "description": "Texas does not mandate net metering at the state level. Each Retail Electricity Provider (REP), municipal utility, or co-op sets its own solar buyback/export policy.",
+      "deregulated_market_share_percent": 85,
+      "regulated_market_share_percent": 15,
+      "notes": "Approximately 85% of Texas operates in the deregulated ERCOT market where customers choose their REP and buyback terms depend on the chosen plan"
+    }
+  },
+
+  "municipal_local_incentives": {
+    "austin_energy": {
+      "name": "Austin Energy Solar Programs",
+      "utility_type": "municipal",
+      "service_territory": "City of Austin",
+      "programs": {
+        "solar_rebate": {
+          "name": "Residential Rooftop Solar Rebate",
+          "status": "ACTIVE",
+          "amount": 2500,
+          "amount_type": "flat",
+          "requirements": [
+            "System minimum 3 kW",
+            "Installed by Austin Energy Participating Contractor",
+            "Complete Austin Energy Solar Education Course before applying"
+          ]
+        },
+        "value_of_solar": {
+          "name": "Value of Solar (VoS) Rate",
+          "status": "ACTIVE_RATE_CHANGING",
+          "current_rate_per_kwh": 0.0991,
+          "rate_update_schedule": "Every 3 years",
+          "next_rate_update": "March 2026",
+          "mechanism": "Credits residential solar production at VoS rate for excess energy fed to grid",
+          "notes": "Rate may change in March 2026 update"
+        },
+        "solar_standard_offer": {
+          "name": "Solar Standard Offer Program",
+          "status": "ACTIVE",
+          "description": "First-of-its-kind commercial solar incentive program where Austin Energy purchases all solar production at a fixed rate",
+          "eligible_system_size": {
+            "minimum_kw_ac": 50,
+            "maximum_mw_ac": 10
+          },
+          "rates_per_kwh": {
+            "under_1mw": 0.1124,
+            "1mw_and_above": 0.0841
+          },
+          "rate_update_schedule": "Every 3 years based on rolling 5-year avoided cost analysis",
+          "next_rate_update": "March 2026",
+          "interconnection": "Utility side of meter",
+          "host_benefit": "No utility bill impact to System Host; can lease roof space",
+          "expansion_planned": "Program expansion to small commercial and residential under development",
+          "source_url": "https://austinenergy.com/green-power/solar-solutions/solar-standard-offer-program"
+        }
+      }
+    },
+
+    "cps_energy_san_antonio": {
+      "name": "CPS Energy (San Antonio) Solar Programs",
+      "utility_type": "municipal",
+      "service_territory": "San Antonio and surrounding area",
+      "programs": {
+        "solar_rebate": {
+          "name": "Residential Solar PV Rebate",
+          "status": "ENDED",
+          "notes": "CPS Energy ended residential solar rebates. Program no longer accepting applications."
+        },
+        "solarhost": {
+          "name": "SolarHost Program",
+          "status": "ACTIVE",
+          "operator": "PowerFin",
+          "credit_per_kwh": 0.03,
+          "duration_years": 20,
+          "customer_cost": 0,
+          "mechanism": "CPS installs panels on customer roof at no cost; customer receives bill credit per kWh produced",
+          "eligible_customers": ["residential", "commercial", "non-profit"]
+        },
+        "net_billing": {
+          "name": "Net Billing / Solar Buyback",
+          "status": "ACTIVE",
+          "retail_rate_credit_per_kwh": 0.12,
+          "credit_scope": "Up to monthly usage amount",
+          "excess_credit_per_kwh": 0.02,
+          "notes": "Excess generation above monthly usage credited at avoided-cost rate of $0.02/kWh"
+        }
+      }
+    },
+
+    "oncor_dallas_fort_worth": {
+      "name": "Oncor Residential Solar + Storage Program",
+      "utility_type": "transmission_distribution",
+      "service_territory": "Dallas/Fort Worth metroplex and surrounding areas",
+      "programs": {
+        "solar_battery_rebate": {
+          "name": "Residential Solar PV + Battery Incentive",
+          "status": "ACTIVE",
+          "max_incentive": 9000,
+          "average_incentive": 2300,
+          "requirements": [
+            "Oncor must be electric delivery provider",
+            "Homeowner-only (no renters)",
+            "Solar PV system 3-15 kW DC",
+            "Battery storage REQUIRED (must be installed simultaneously with solar)",
+            "Installed by Oncor-approved Service Provider"
+          ],
+          "payment_structure": {
+            "schedule": "Paid over 5 years",
+            "annual_payment": "1/5 of total approved incentive per year"
+          },
+          "program_window": "January through November annually",
+          "budget_note": "Fixed annual budget (~$12.8M residential, ~$8.5M commercial from $21M+ total); funds often exhausted early in the year. Apply early.",
+          "program_end_date": "2026-11-30",
+          "program_end_notes": "Scheduled to close November 30, 2026, or whenever budget is depleted",
+          "payment_method": "Incentive paid to Service Provider who passes savings to customer as invoice discount",
+          "battery_location_requirement": "All Energy Storage systems must be installed outside the residence (garages, sheds, external walls acceptable)"
+        }
+      }
+    },
+
+    "centerpoint_houston": {
+      "name": "CenterPoint Energy (Houston) Programs",
+      "utility_type": "transmission_distribution",
+      "service_territory": "Houston metropolitan area",
+      "programs": {
+        "solar_rebate": {
+          "name": "Standard Offer Solar Rebate",
+          "status": "LIMITED_FUNDING",
+          "historical_rate_per_kw": 135,
+          "historical_max": 3000,
+          "notes": "Program has experienced rapid fund exhaustion. Verify availability directly with CenterPoint before counting on this incentive. First-come, first-served.",
+          "current_availability": "uncertain_check_directly"
+        },
+        "energy_efficiency": {
+          "name": "Energy Efficiency Programs",
+          "status": "ACTIVE",
+          "programs": [
+            {"name": "CoolSaver A/C tune-up", "value": "Free ($150-200 value)"},
+            {"name": "Smart Thermostat Rebate", "value": "Up to $75 off ENERGY STAR thermostats"}
+          ]
+        }
+      }
+    },
+
+    "el_paso_electric": {
+      "name": "El Paso Electric Solar Programs",
+      "utility_type": "investor_owned",
+      "service_territory": "El Paso and surrounding area",
+      "programs": {
+        "net_metering": {
+          "name": "Net Metering (Rate Schedule 48)",
+          "status": "ACTIVE",
+          "max_system_size_kw": 50,
+          "credit_type": "full_retail_rate",
+          "credit_description": "One-to-one retail rate credit (one of most favorable in Texas)",
+          "cash_out_threshold": 50,
+          "cash_out_description": "EPE pays accumulated credits when balance reaches $50",
+          "minimum_monthly_bill": 30.25,
+          "meter_installation": "Bidirectional meter installed at no cost to customer",
+          "sizing_requirement": "System sized based on previous year electricity consumption"
+        }
+      }
+    },
+
+    "aep_texas": {
+      "name": "AEP Texas",
+      "utility_type": "transmission_distribution",
+      "service_territory": "South and West Texas",
+      "programs": {
+        "solar_rebate": {
+          "status": "CHECK_DIRECTLY",
+          "notes": "AEP Texas has historically offered solar rebates. Contact directly for current 2026 availability."
+        }
+      }
+    },
+
+    "bryan_texas_utilities": {
+      "name": "Bryan Texas Utilities (BTU)",
+      "utility_type": "municipal",
+      "service_territory": "City of Bryan",
+      "programs": {
+        "solar_rebate": {
+          "name": "Solar Rebate",
+          "status": "NONE",
+          "notes": "BTU does not offer any local incentives or rebates for solar installation"
+        },
+        "net_metering": {
+          "name": "Net Metering / Distributed Generation",
+          "status": "ACTIVE",
+          "description": "Net metering provides credit when solar energy is produced and put back onto the BTU grid",
+          "additional_fees": false,
+          "interconnection_fee": 300,
+          "interconnection_notes": "Application and initial inspection fee payable through City of Bryan CitizenServe Portal",
+          "source_url": "https://www.btutilities.com/solar-resources"
+        }
+      }
+    },
+
+    "pedernales_electric_cooperative": {
+      "name": "Pedernales Electric Cooperative (PEC)",
+      "utility_type": "cooperative",
+      "service_territory": "Texas Hill Country (24 counties)",
+      "programs": {
+        "solar_buyback": {
+          "name": "Sustainable Power Credit / DG Interconnection",
+          "status": "ACTIVE",
+          "buyback_rate_per_kwh": 0.082666,
+          "rate_basis": "Value of Solar Study - market value plus avoided costs",
+          "max_system_size_kw_ac": 50,
+          "interconnection_fee_under_50kw": 500,
+          "interconnection_fee_notes": "One-time, non-refundable application fee",
+          "eligible_customers": ["residential", "small_power_service"],
+          "source_url": "https://mypec.com/solar-and-distributed-generation-dg/"
+        },
+        "community_solar": {
+          "name": "PEC Community Solar Program",
+          "status": "ACTIVE",
+          "description": "Members subscribe to a portion of energy from solar sites across PEC territory, up to 100% of average 12-month usage",
+          "credit_type": "Solar Transmission Cost Adjustment (STCA) on bill"
+        }
+      }
+    },
+
+    "denton_municipal_electric": {
+      "name": "Denton Municipal Electric (DME)",
+      "utility_type": "municipal",
+      "service_territory": "City of Denton",
+      "programs": {
+        "solar_rebate": {
+          "name": "Solar PV Rebate",
+          "status": "ENDED",
+          "ended_date": "2023-10-01",
+          "notes": "Solar rebate program discontinued October 2023. Funds redirected to GreenSense energy efficiency program."
+        },
+        "greensense": {
+          "name": "GreenSense Energy Efficiency Rebate Program",
+          "status": "ACTIVE",
+          "description": "Rebates for energy efficiency home upgrades including HVAC, insulation, and EV chargers",
+          "solar_pv_included": false,
+          "notes": "Solar PV incentive no longer available through GreenSense as of October 2023",
+          "source_url": "https://www.cityofdenton.com/1192/Sustainability-Incentives"
+        },
+        "net_billing": {
+          "name": "Solar Export Credit",
+          "status": "ACTIVE_RATE_REDUCED",
+          "historical_rate_per_kwh": 0.1065,
+          "proposed_new_rate_per_kwh": 0.0379,
+          "notes": "DME proposed reducing export credit from 10.65 cents to 3.79 cents per kWh. Verify current rate directly."
+        }
+      }
+    },
+
+    "gvec_guadalupe_valley": {
+      "name": "Guadalupe Valley Electric Cooperative (GVEC)",
+      "utility_type": "cooperative",
+      "service_territory": "South Central Texas (120,000+ consumers)",
+      "programs": {
+        "peak_time_payback": {
+          "name": "Peak-Time Payback (PTP) Battery Demand Response",
+          "status": "ACTIVE",
+          "description": "Battery-based demand response program. Enrolled batteries automatically discharge during peak events to support home and send excess to grid.",
+          "eligible_batteries": ["Tesla Powerwall", "Enphase"],
+          "initial_incentive_per_kw": 220,
+          "annual_incentive_per_kw": 75,
+          "financing": "0% on-bill financing for 10 years available",
+          "cumulative_member_savings": "Over $1M in G&T costs through 2023",
+          "source_url": "https://www.gvec.org/peak-time-payback/"
+        },
+        "vpp_partnership": {
+          "name": "GVEC + Base Power VPP",
+          "status": "ACTIVE",
+          "capacity_mw": 2,
+          "description": "Residential batteries provide blackout protection and enable price arbitrage and transmission cost management",
+          "source_url": "https://www.utilitydive.com/news/base-power-gvec-texas-vpp-virtual-power-plant/752102/"
+        }
+      }
+    },
+
+    "bandera_electric_cooperative": {
+      "name": "Bandera Electric Cooperative (BEC)",
+      "utility_type": "cooperative",
+      "service_territory": "Texas Hill Country",
+      "programs": {
+        "smart_battery_program": {
+          "name": "Smart Battery Program",
+          "status": "LAUNCHING_2026",
+          "launch_date": "Early 2026",
+          "device": "Enphase 10C 20 kWh home batteries",
+          "monthly_cost": 36.99,
+          "upfront_cost": 0,
+          "requirement": "Must live in BEC Fiber zone",
+          "grid_dispatch": "80% of battery capacity available for grid support during high-demand days; 20% reserved for member",
+          "source_url": "https://www.banderaelectric.com/energy-services/solar-battery/battery-storage/battery-storage-program/"
+        }
+      }
+    },
+
+    "farmers_electric_cooperative": {
+      "name": "Farmers Electric Cooperative",
+      "utility_type": "cooperative",
+      "service_territory": "East Texas",
+      "programs": {
+        "residential_battery_program": {
+          "name": "Residential Battery Program",
+          "status": "LAUNCHING_2026",
+          "launch_date": "January 2026",
+          "partner": "Base Power",
+          "description": "First installations of residential battery program for grid support and outage protection"
+        }
+      }
+    }
+  },
+
+  "utility_buyback_programs": {
+    "ercot_deregulated_market": {
+      "description": "Most of Texas (excluding Austin, San Antonio, El Paso, co-ops) operates in ERCOT deregulated market",
+      "how_it_works": "Customers choose Retail Electricity Provider (REP). Solar export value depends on chosen plan.",
+      "no_mandated_net_metering": true,
+      "wholesale_price_context": {
+        "average_wholesale_per_mwh": "27-34",
+        "average_wholesale_per_kwh": "0.027-0.034",
+        "summer_peak_potential_per_mwh": "110-165",
+        "real_time_price_update_interval_minutes": 5,
+        "extreme_spike_potential_per_kwh": "up to $5.00",
+        "notes": "Real-time prices average ~3 cents/kWh but can spike dramatically during peak demand"
+      }
+    },
+
+    "solar_buyback_plans": {
+      "green_mountain_energy": {
+        "name": "Renewable Rewards Buyback",
+        "plans": [
+          {
+            "name": "Solar Credit 12",
+            "type": "fixed_credit",
+            "notes": "Credits don't expire; good for large arrays with surplus production"
+          },
+          {
+            "name": "Essential 12",
+            "type": "standard",
+            "notes": "Standard plan with solar buyback"
+          }
+        ]
+      },
+      "txu_energy": {
+        "name": "TXU Solar Buyback",
+        "plans": [
+          {
+            "name": "Solar Buyback Match 36",
+            "type": "one_to_one_buyback",
+            "export_rate_range_per_kwh": "0.035-0.06",
+            "features": ["100% renewable energy from grid", "Competitive one-to-one buyback rate"]
+          }
+        ]
+      },
+      "octopus_energy": {
+        "name": "Real-Time Wholesale Buyback",
+        "type": "real_time_wholesale",
+        "mechanism": "Unlimited credits at real-time ERCOT wholesale rate updated every 15 minutes",
+        "best_for": "Battery storage owners who can time exports to peak pricing"
+      },
+      "champion_energy": {
+        "name": "Real-Time Wholesale Solar Plan",
+        "type": "real_time_wholesale",
+        "mechanism": "Based on actual ERCOT market rates"
+      },
+      "market_trend_2026": {
+        "description": "Most REPs moved away from 1-to-1 net metering",
+        "fixed_export_rates": "3-5 cents/kWh typical",
+        "real_time_plans": "Available but volatile; can earn more during peak summer hours",
+        "recommendation": "Battery storage significantly increases export value by enabling peak-hour dispatch"
+      }
+    }
+  },
+
+  "vpp_and_demand_response": {
+    "ercot_ader_pilot": {
+      "name": "ERCOT Aggregate Distributed Energy Resource (ADER) Pilot",
+      "status": "ACTIVE",
+      "total_approved_mw": 80,
+      "description": "Allows up to 80 MW of capacity from homes and businesses to bid into ERCOT wholesale markets",
+      "participating_aders_count": 7,
+      "participating_aders_as_of": "December 2025",
+      "eligible_devices": ["battery_storage", "backup_generators", "controllable_ev_chargers"],
+      "mechanism": "Consumer-owned devices virtually aggregated to participate in wholesale electricity market",
+      "growth_trend": "Participation doubled from 3 to 7 ADERs between mid-2025 and late 2025"
+    },
+    "ercot_drrs": {
+      "name": "Dispatchable Reliability Reserve Service (DRRS)",
+      "status": "LAUNCHING_2026",
+      "description": "New ancillary service compensating resources capable of delivering 4 hours of sustained energy during grid emergencies",
+      "voluntary": true,
+      "target_resources": "2-to-4 hour battery storage systems",
+      "impact": "Encourages buildout of longer-duration storage; creates new revenue stream for solar+storage"
+    },
+    "ercot_rtcb": {
+      "name": "Real-Time Co-optimization plus Batteries (RTC+B)",
+      "status": "ACTIVE",
+      "description": "ERCOT's biggest market change in 15 years; integrates ancillary services into real-time market instead of day-ahead",
+      "impact_on_battery_owners": "Creates more opportunities for battery storage to earn revenue by providing multiple grid services simultaneously",
+      "source_url": "https://www.ess-news.com/2025/12/10/what-to-know-about-ercots-new-rtcb-program/"
+    },
+    "tesla_powerwall_vpp": {
+      "name": "Tesla Virtual Power Plant",
+      "status": "ACTIVE",
+      "platform": "ERCOT ADER pilot",
+      "service_areas": ["Houston", "Dallas"],
+      "device": "Tesla Powerwall (minimum 1 unit)",
+      "monthly_compensation_per_powerwall": 10,
+      "additional_compensation": "Sellback credit for energy exported to grid",
+      "enrollment_process": "Via Tesla app; qualification takes up to 2 months after enrollment",
+      "restrictions": ["Cannot be enrolled in another VPP or demand response program"],
+      "dispatch_mechanism": "Powerwall dispatched with others during grid need; never below user's Backup Reserve setting",
+      "source_url": "https://www.tesla.com/support/energy/virtual-power-plant/tesla-electric"
+    },
+    "sonnen_vpp": {
+      "name": "Sonnen-SOLRITE Virtual Power Plant",
+      "status": "ACTIVE_GROWING",
+      "partner": "SOLRITE Energy",
+      "model": "No upfront cost; solar panels + two sonnenCore+20 batteries installed under 25-year PPA",
+      "battery_per_home": "2x sonnenCore+20 (4.8kW/20kWh each = 40kWh total per home)",
+      "customer_savings": "Up to 40% compared to typical solar PPA",
+      "current_fleet_capacity_mwh": 60,
+      "growth_projection": "Expected to become largest VPP in Texas by end of 2026, surpassing Tesla",
+      "grid_operations": "Batteries charge during low wholesale prices (overnight/wind surplus); discharge at daily peaks and during weather-related grid stress",
+      "source_url": "https://www.microgridknowledge.com/distributed-energy/virtual-power-plant/news/55287768/new-battery-enabled-virtual-power-plant-taking-shape-in-texas"
+    },
+    "rhythm_energy_vpp": {
+      "name": "Rhythm Energy VPP",
+      "status": "LAUNCHING_2026",
+      "description": "Residential battery management through VPP, launching in Texas first in 2026"
+    },
+    "sunrun_nrg_vpp": {
+      "name": "Sunrun + NRG Virtual Power Plant Partnership",
+      "status": "ACTIVE",
+      "launch_date": "2025-12",
+      "focus": "Solar-plus-storage systems aggregated for dispatch during high demand periods"
+    },
+    "grid_context_2026": {
+      "description": "ERCOT predicts potential supply shortfall during peak summer 2026 demand",
+      "demand_growth_2026_percent": 14,
+      "solar_capacity_additions_2026_gw": 22,
+      "vpp_opportunity": "High demand creates significant earning potential for VPP participants during summer peaks"
+    }
+  },
+
+  "federal_programs_affecting_solar": {
+    "usda_reap": {
+      "name": "USDA Rural Energy for America Program (REAP)",
+      "status": "ACTIVE_FY2026_UNCERTAIN",
+      "ira_funding": "Over $2 billion through 2031",
+      "fy2025_funding": "$145 million for 700 awards",
+      "eligible_applicants": ["agricultural_producers", "rural_small_businesses"],
+      "grant_maximum_percent": 50,
+      "loan_guarantee_percent": 75,
+      "fy2025_guarantee_percent": 80,
+      "eligible_areas": "Rural areas (use USDA eligibility map)",
+      "eligible_projects": ["solar_pv", "wind", "geothermal", "biomass", "energy_efficiency"],
+      "fy2026_status": "Applications expected to open October 1, 2025; delayed. Check USDA Rural Development for updates.",
+      "texas_contact": "USDA Rural Development Texas State Office",
+      "notes": "Significant opportunity for rural Texas agricultural operations and small businesses"
+    },
+
+    "fha_solar_wind_technologies": {
+      "name": "FHA Solar and Wind Technologies (SWT) Program",
+      "status": "ACTIVE",
+      "financing_limit": "Up to 20% of home's appraised value for solar/wind system",
+      "loan_terms": ["15 years", "20 years", "25 years", "30 years"],
+      "rate_type": "fixed",
+      "minimum_credit_score": 580,
+      "eligible_properties": "1-4 unit owner-occupied homes or manufactured housing (no condos)",
+      "eligible_states_include_texas": true,
+      "requirement": "Must OWN the system (no leases)",
+      "notes": "Allows solar cost to be rolled into FHA mortgage"
+    },
+
+    "fha_energy_efficient_mortgage": {
+      "name": "FHA Energy Efficient Mortgage (EEM)",
+      "status": "ACTIVE",
+      "max_additional_financing": 25000,
+      "repayment_term_years": 20,
+      "eligible_improvements": ["solar_pv", "insulation", "windows", "hvac"],
+      "notes": "Can finance energy-efficient improvements including solar with FHA-insured mortgage"
+    },
+
+    "va_solar_loans": {
+      "name": "VA Energy Efficient Mortgage",
+      "status": "ACTIVE",
+      "description": "Veterans can use VA loans for solar installations when purchasing or refinancing",
+      "solar_impact_on_appraisal": "VA recognizes added value of solar in home appraisal",
+      "benefit": "Can positively affect loan terms and eligible borrowing amount",
+      "eligible_borrowers": "Veterans, active-duty service members, eligible surviving spouses"
+    },
+
+    "hud_programs": {
+      "name": "HUD Community Development Block Grant (CDBG)",
+      "status": "ACTIVE",
+      "description": "Communities can use CDBG funds for solar installations as community development",
+      "programs": [
+        "Public and Indian Housing energy improvements",
+        "Community Planning and Development grants",
+        "Multifamily housing energy retrofits",
+        "Single-family housing energy programs"
+      ]
+    },
+
+    "doe_loan_programs": {
+      "name": "DOE Loan Programs Office (LPO)",
+      "status": "ACTIVE",
+      "programs": {
+        "title_17": {
+          "name": "Title 17 Clean Energy Financing",
+          "target": "Innovative energy projects, utility-scale solar"
+        },
+        "atvm": {
+          "name": "Advanced Technology Vehicles Manufacturing",
+          "target": "EV and clean vehicle manufacturing"
+        }
+      },
+      "notes": "Primarily for utility-scale and innovative projects, not typical residential"
+    },
+
+    "clean_energy_fund_of_texas": {
+      "name": "Clean Energy Fund of Texas (CEFTX)",
+      "status": "ACTIVE",
+      "type": "green_bank",
+      "description": "First green bank in Texas; nonprofit providing affordable financing for solar, weatherization, and energy efficiency",
+      "loan_apr_range_percent": "6-9",
+      "federal_award": {
+        "program": "EPA Solar for All (Greenhouse Gas Reduction Fund)",
+        "amount_millions": 156.12,
+        "funding_source": "Inflation Reduction Act",
+        "purpose": "Deploy residential solar, storage, and upgrades in low-income and disadvantaged communities across the South and Southeast"
+      },
+      "eligible_sectors": ["residential", "commercial", "nonprofit"],
+      "target_communities": "Low-income and disadvantaged communities",
+      "partner_institutions": "Nearly 40 minority-serving institutions (MSIs)",
+      "services": [
+        "Solar installation financing",
+        "Home weatherization loans",
+        "Energy efficiency improvement financing",
+        "Technical assistance for community solar projects"
+      ],
+      "website": "https://cleanfundtx.org/",
+      "source_url": "https://www.epa.gov/newsreleases/biden-harris-administration-announces-two-texas-groups-will-receive-over-405-million"
+    }
+  },
+
+  "net_metering_value_of_solar_by_utility": {
+    "austin_energy": {
+      "type": "value_of_solar",
+      "rate_per_kwh": 0.0991,
+      "mechanism": "Production-based credit at VoS rate",
+      "true_net_metering": false,
+      "rate_update": "Every 3 years; next update March 2026",
+      "favorable_rating": "moderate"
+    },
+    "cps_energy": {
+      "type": "net_billing",
+      "retail_credit_per_kwh": 0.12,
+      "retail_credit_scope": "Up to monthly usage",
+      "excess_credit_per_kwh": 0.02,
+      "true_net_metering": false,
+      "favorable_rating": "moderate"
+    },
+    "el_paso_electric": {
+      "type": "net_metering",
+      "credit_per_kwh": "full_retail_rate",
+      "max_system_kw": 50,
+      "cash_out_threshold": 50,
+      "minimum_bill": 30.25,
+      "true_net_metering": true,
+      "favorable_rating": "most_favorable_in_texas"
+    },
+    "ercot_deregulated_area": {
+      "type": "retail_choice_buyback",
+      "mechanism": "Varies by chosen REP and plan",
+      "typical_fixed_export_per_kwh": "0.03-0.06",
+      "real_time_option": "Some REPs offer real-time wholesale rate exports",
+      "true_net_metering": false,
+      "favorable_rating": "varies_widely",
+      "recommendation": "Compare plans on TexasPowerGuide.com or ChooseEnergy.com"
+    },
+    "pedernales_electric": {
+      "type": "buyback_credit",
+      "rate_per_kwh": 0.082666,
+      "rate_name": "Sustainable Power Credit",
+      "rate_basis": "Value of Solar Study",
+      "max_system_kw_ac": 50,
+      "interconnection_fee": 500,
+      "true_net_metering": false,
+      "favorable_rating": "moderate"
+    },
+    "bryan_texas_utilities": {
+      "type": "net_metering",
+      "mechanism": "Credit for solar energy produced and put back onto BTU grid",
+      "interconnection_fee": 300,
+      "additional_solar_fees": false,
+      "true_net_metering": true,
+      "favorable_rating": "moderate"
+    },
+    "denton_municipal_electric": {
+      "type": "net_billing",
+      "historical_rate_per_kwh": 0.1065,
+      "proposed_rate_per_kwh": 0.0379,
+      "status": "RATE_REDUCTION_PROPOSED",
+      "true_net_metering": false,
+      "favorable_rating": "declining",
+      "notes": "Significant rate reduction proposed; verify current rate directly with DME"
+    },
+    "rural_co_ops": {
+      "type": "varies",
+      "mechanism": "Each co-op sets own policy",
+      "notes": "Contact individual co-op for current buyback rates and policies",
+      "common_structure": "Avoided cost or wholesale rate credit",
+      "notable_co_ops_with_battery_programs": ["GVEC", "Bandera Electric", "Farmers Electric"]
+    }
+  },
+
+  "practical_scenarios_2026": {
+    "residential_homeowner_owned": {
+      "scenario": "Homeowner purchases and owns solar system in 2026",
+      "federal_itc": "NONE (Section 25D expired)",
+      "depreciation": "N/A (not a business asset)",
+      "texas_property_tax_exemption": "YES - 100% of added value",
+      "texas_sales_tax_exemption": "NO - full sales tax applies",
+      "utility_programs": "Varies by location and REP",
+      "net_savings_impact": "Significant reduction in financial incentives compared to 2025. System payback extended 3-5 years.",
+      "best_strategy": "Consider TPO (lease/PPA) instead to benefit from commercial ITC passed through as lower payments"
+    },
+    "residential_tpo_lease_ppa": {
+      "scenario": "Homeowner uses lease or PPA (third-party ownership) in 2026",
+      "federal_itc": "30% claimed by TPO company (Section 48E)",
+      "deadline": "System must be placed in service by December 31, 2027",
+      "consumer_benefit": "Lower monthly payments due to ITC passed through by commercial owner",
+      "depreciation": "100% bonus depreciation claimed by TPO company",
+      "texas_property_tax": "Depends on ownership structure",
+      "notes": "TPO now more attractive than purchase for residential customers due to ITC availability"
+    },
+    "commercial_owned": {
+      "scenario": "Business purchases and owns commercial solar system in 2026",
+      "federal_itc_base": "6% (or 30% with prevailing wage/apprenticeship)",
+      "small_project_under_1mw": "30% without PWA requirements",
+      "domestic_content_bonus": "+10% (if 50% domestic content met in 2026)",
+      "energy_community_bonus": "+10% (if located in qualifying area)",
+      "low_income_bonus": "+10-20% (if competitive allocation received)",
+      "maximum_itc": "50-70% theoretical; 40-50% practical",
+      "bonus_depreciation": "100% immediate write-off (reduced by 50% of ITC)",
+      "critical_deadline": "Begin construction by July 4, 2026",
+      "feoc_compliance": "Required - 40% non-FEOC content minimum",
+      "credit_transferability": "Can sell credits at ~93-96 cents on dollar"
+    }
+  },
+
+  "sources": {
+    "federal": [
+      {"name": "Grant Thornton - OBBBA Energy Incentives", "url": "https://www.grantthornton.com/insights/alerts/tax/2025/insights/energy-incentives-under-obbba-what-you-need-to-know"},
+      {"name": "SEIA - Clean Energy Provisions in OBBBA", "url": "https://seia.org/research-resources/clean-energy-provisions-big-beautiful-bill/"},
+      {"name": "Solar Insure - Final Changes to Solar Tax Credit", "url": "https://www.solarinsure.com/final-changes-to-solar-tax-credit-from-h-r-1"},
+      {"name": "Frost Brown Todd - OBBBA Phase-outs", "url": "https://frostbrowntodd.com/one-big-beautiful-bill-act-cuts-the-power-phase%E2%80%91outs-foreign%E2%80%91entity-restrictions-and-domestic-content-in-clean%E2%80%91energy-credits/"},
+      {"name": "Sidley Austin - OBBBA Energy Landscape", "url": "https://www.sidley.com/en/insights/newsupdates/2025/07/the-one-big-beautiful-bill-act-navigating-the-new-energy-landscape"},
+      {"name": "IRS - Clean Electricity Investment Credit", "url": "https://www.irs.gov/credits-deductions/clean-electricity-investment-credit"},
+      {"name": "IRS - Prevailing Wage and Apprenticeship FAQ", "url": "https://www.irs.gov/credits-deductions/frequently-asked-questions-about-the-prevailing-wage-and-apprenticeship-under-the-inflation-reduction-act"},
+      {"name": "KBKG - OBBBA 100% Bonus Depreciation Permanent", "url": "https://www.kbkg.com/feature/obbb-tax-bill-makes-100-bonus-depreciation-permanent-what-you-need-to-know"},
+      {"name": "RSM US - OBBBA Clean Energy Credits Changes", "url": "https://rsmus.com/insights/services/business-tax/obbba-tax-clean-energy.html"},
+      {"name": "Novogradac - OBBBA Clean Energy Race", "url": "https://www.novoco.com/periodicals/articles/obbba-and-the-clean-energy-race-against-the-clock"},
+      {"name": "IRS - Low-Income Communities Bonus Credit Program", "url": "https://www.irs.gov/credits-deductions/clean-electricity-low-income-communities-bonus-credit-amount-program"},
+      {"name": "Energy Communities - Tax Credit Bonus FAQ", "url": "https://energycommunities.gov/energy-community-tax-credit-bonus-faqs/"}
+    ],
+    "texas_state": [
+      {"name": "Texas Comptroller - PACE", "url": "https://comptroller.texas.gov/programs/seco/funding/pace.php"},
+      {"name": "Texas PACE Authority", "url": "https://www.texaspaceauthority.org/property-assessed-clean-energy/"},
+      {"name": "Go Solar Texas - Solar Rights", "url": "https://www.gosolartexas.org/solar-rights-regulations"},
+      {"name": "DSIRE - Texas Solar Rights", "url": "https://programs.dsireusa.org/system/program/detail/4880"},
+      {"name": "DSIRE - Texas Property Tax Exemption", "url": "https://programs.dsireusa.org/system/program/detail/173"},
+      {"name": "EnergySage - Texas Solar Incentives 2026", "url": "https://www.energysage.com/local-data/solar-rebates-incentives/tx/"},
+      {"name": "SolarReviews - Texas Solar Incentives 2026", "url": "https://www.solarreviews.com/solar-incentives/texas"},
+      {"name": "Texas Land Conservation - Tax Code Incentives", "url": "https://www.texaslandcan.org/article/Texas-Tax-Code-Incentives-for-Renewable-Energy/2526"}
+    ],
+    "utility_programs": [
+      {"name": "Austin Energy - Solar Rebates", "url": "https://austinenergy.com/green-power/solar-solutions/for-your-home"},
+      {"name": "Austin Energy - Value of Solar Rate", "url": "https://austinenergy.com/rates/residential-rates/value-of-solar-rate"},
+      {"name": "CPS Energy - Net Metering", "url": "https://programs.dsireusa.org/system/program/detail/5547"},
+      {"name": "Oncor - Residential Solar", "url": "https://www.oncor.com/takealoadofftexas/pages/residentialsolar"},
+      {"name": "El Paso Electric - Net Metering", "url": "https://programs.dsireusa.org/system/program/detail/5545"},
+      {"name": "Texas Power Guide - Solar Buyback Plans", "url": "https://www.texaspowerguide.com/solar-buyback-plans-texas/"},
+      {"name": "Quick Electricity - TX Solar Buyback Programs", "url": "https://quickelectricity.com/texas-solar-buyback-net-metering-programs/"}
+    ],
+    "vpp_programs": [
+      {"name": "Texas Tribune - Virtual Power Plants Pilot", "url": "https://www.texastribune.org/2025/02/18/texas-electricity-grid-virtual-power-plants-bandera-coop/"},
+      {"name": "Tesla - VPP Pilot with ERCOT", "url": "https://www.tesla.com/support/energy/virtual-power-plant/tesla-electric"},
+      {"name": "Canary Media - Texas VPP Signup", "url": "https://www.canarymedia.com/articles/grid-edge/texans-can-now-sign-up-for-virtual-power-plant-to-help-grid-make-money"},
+      {"name": "Rhythm Energy - VPP Launch", "url": "https://www.businesswire.com/news/home/20251111155709/en/Rhythm-Energy-to-Launch-New-U.S.-Virtual-Power-Plant"},
+      {"name": "Electrek - Sunrun NRG Texas VPP", "url": "https://electrek.co/2025/12/16/sunrun-nrg-launch-a-virtual-power-plant-to-ease-texas-power-demand/"}
+    ],
+    "federal_programs": [
+      {"name": "USDA - REAP Program", "url": "https://www.rd.usda.gov/programs-services/energy-programs/rural-energy-america-program-renewable-energy-systems-energy-efficiency-improvement-guaranteed-loans"},
+      {"name": "USDA - REAP Texas", "url": "https://www.rd.usda.gov/programs-services/energy-programs/rural-energy-america-program-renewable-energy-systems-energy-efficiency-improvement-guaranteed-loans-5"},
+      {"name": "FHA Solar Program", "url": "https://www.fhasolarloanprogram.com/"},
+      {"name": "Rocket Mortgage - FHA EEM Guide", "url": "https://www.rocketmortgage.com/learn/fha-energy-efficient-mortgage-eem"},
+      {"name": "IRS - OBBBA FAQ on 25C/25D/25E", "url": "https://www.irs.gov/newsroom/faqs-for-modification-of-sections-25c-25d-25e-30c-30d-45l-45w-and-179d-under-public-law-119-21-139-stat-72-july-4-2025-commonly-known-as-the-one-big-beautiful-bill-obbb"},
+      {"name": "Tax Law Center - OBBBA Phaseouts", "url": "https://taxlawcenter.org/blog/navigating-obbba-phaseouts-prohibited-foreign-entity-rules-and-other-new-rules"},
+      {"name": "ICS Tax - 48E ITC Phaseout", "url": "https://ics-tax.com/news/48e-investment-tax-credit-obba-phaseout/"},
+      {"name": "DOE Energy Data Exchange - Energy Communities", "url": "https://edx.netl.doe.gov/dataset/ira-energy-community-data-layers"},
+      {"name": "Climate Cabinet - Tax Credit Bonuses Map", "url": "https://climatecabineteducation.org/tax-credit-bonuses-map/"},
+      {"name": "IRS - Domestic Content Bonus Credit", "url": "https://www.irs.gov/credits-deductions/domestic-content-bonus-credit"}
+    ],
+    "texas_legislation": [
+      {"name": "TDLR - Residential Solar Retailers (SB 1036)", "url": "https://www.tdlr.texas.gov/residential-solar-retailers/effect.htm"},
+      {"name": "89th Legislature Session Recap - McGuireWoods", "url": "https://www.mcguirewoods.com/client-resources/alerts/2025/6/89th-texas-legislative-session-recap-key-outcomes-for-power-generation-and-clean-energy-industry/"},
+      {"name": "Texas Legislature Online - HB 431 Solar Roof Tiles", "url": "https://capitol.texas.gov/tlodocs/89R/billtext/html/HB00431F.htm"},
+      {"name": "Texas Legislature Online - HB 3228 Decommissioning", "url": "https://capitol.texas.gov/tlodocs/89R/billtext/html/HB03228F.htm"}
+    ],
+    "green_banks_financing": [
+      {"name": "Clean Energy Fund of Texas", "url": "https://cleanfundtx.org/"},
+      {"name": "EPA Solar for All Grant Awards", "url": "https://www.epa.gov/greenhouse-gas-reduction-fund/solar-for-all"},
+      {"name": "Texas PACE Authority", "url": "https://www.texaspaceauthority.org/commercial/"}
+    ],
+    "demand_response_coops": [
+      {"name": "GVEC - Peak-Time Payback", "url": "https://www.gvec.org/peak-time-payback/"},
+      {"name": "Bandera Electric - Battery Storage Program", "url": "https://www.banderaelectric.com/energy-services/solar-battery/battery-storage/battery-storage-program/"},
+      {"name": "ERCOT - DER Operational Data", "url": "https://www.ercot.com/files/docs/2025/08/29/DER-Operational-Data.pdf"},
+      {"name": "ERCOT - RTC+B Program", "url": "https://www.ess-news.com/2025/12/10/what-to-know-about-ercots-new-rtcb-program/"},
+      {"name": "Sonnen-SOLRITE Texas VPP", "url": "https://www.microgridknowledge.com/distributed-energy/virtual-power-plant/news/55287768/new-battery-enabled-virtual-power-plant-taking-shape-in-texas"},
+      {"name": "PEC - Solar and DG Interconnection", "url": "https://mypec.com/solar-and-distributed-generation-dg/"},
+      {"name": "Austin Energy - Solar Standard Offer", "url": "https://austinenergy.com/green-power/solar-solutions/solar-standard-offer-program"}
+    ]
+  }
+}

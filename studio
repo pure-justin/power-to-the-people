@@ -1,0 +1,242 @@
+#!/bin/bash
+# Mac Studio Command Center
+# Control your M3 Ultra AI cluster from MacBook
+
+STUDIO="admin@100.124.119.18"
+API="http://100.124.119.18:5050"
+
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+case "$1" in
+  research)
+    if [ -z "$2" ]; then
+      echo -e "${RED}Usage: studio research <topic>${NC}"
+      exit 1
+    fi
+    echo -e "${BLUE}Dispatching research task to 235B model...${NC}"
+    curl -s -X POST "$API/coord/tasks" \
+      -H "Content-Type: application/json" \
+      -d "{\"type\": \"research\", \"title\": \"$2\", \"use_model\": \"235b\", \"priority\": 1}"
+    echo ""
+    ;;
+
+  code)
+    if [ -z "$2" ]; then
+      echo -e "${RED}Usage: studio code <task description>${NC}"
+      exit 1
+    fi
+    echo -e "${BLUE}Spawning Claude Code session...${NC}"
+    curl -s -X POST "$API/coord/claude" \
+      -H "Content-Type: application/json" \
+      -d "{\"title\": \"$2\", \"cwd\": \"/Users/admin/Projects/power-to-the-people\"}"
+    echo ""
+    ;;
+
+  parallel)
+    if [ -z "$2" ]; then
+      echo -e "${RED}Usage: studio parallel <tasks.json>${NC}"
+      exit 1
+    fi
+    if [ ! -f "$2" ]; then
+      echo -e "${RED}File not found: $2${NC}"
+      exit 1
+    fi
+    echo -e "${BLUE}Running parallel Claude sessions...${NC}"
+    curl -s -X POST "$API/coord/claude/parallel" \
+      -H "Content-Type: application/json" \
+      -d "@$2"
+    echo ""
+    ;;
+
+  deploy)
+    PROJECT="${2:-solar-crm}"
+    echo -e "${BLUE}Deploying $PROJECT...${NC}"
+    ssh $STUDIO "cd ~/Projects/power-to-the-people && git pull && firebase deploy --project power-to-the-people-vpp"
+    ;;
+
+  build)
+    PROJECT="${2:-solar-crm}"
+    echo -e "${BLUE}Building $PROJECT...${NC}"
+    ssh $STUDIO "cd ~/Projects/power-to-the-people && npm run build"
+    ;;
+
+  models)
+    echo -e "${BLUE}Checking LLM cluster status...${NC}"
+    echo ""
+    
+    # Check each model
+    if curl -s --connect-timeout 2 http://100.124.119.18:8003/v1/models > /dev/null 2>&1; then
+      echo -e "  8B (fast):      ${GREEN}✅ Ready${NC} - port 8003"
+    else
+      echo -e "  8B (fast):      ${RED}❌ Offline${NC} - port 8003"
+    fi
+    
+    if curl -s --connect-timeout 2 http://100.124.119.18:8002/v1/models > /dev/null 2>&1; then
+      echo -e "  32B (coding):   ${GREEN}✅ Ready${NC} - port 8002"
+    else
+      echo -e "  32B (coding):   ${RED}❌ Offline${NC} - port 8002"
+    fi
+    
+    if curl -s --connect-timeout 5 http://100.124.119.18:8001/v1/models > /dev/null 2>&1; then
+      echo -e "  235B (research): ${GREEN}✅ Ready${NC} - port 8001"
+    else
+      echo -e "  235B (research): ${YELLOW}⏳ Loading or Offline${NC} - port 8001"
+    fi
+    echo ""
+    ;;
+
+  start-llms)
+    echo -e "${BLUE}Starting LLM cluster on Mac Studio...${NC}"
+    ssh $STUDIO "/opt/digital-justin/start_llm_cluster.sh"
+    ;;
+
+  stop-llms)
+    echo -e "${YELLOW}Stopping LLM cluster...${NC}"
+    ssh $STUDIO "pkill -f 'mlx_lm.server' && echo 'LLM servers stopped'"
+    ;;
+
+  status)
+    echo -e "${BLUE}=== Mac Studio Status ===${NC}"
+    echo ""
+    
+    # API health
+    echo "API Health:"
+    curl -s "$API/health" 2>/dev/null | python3 -m json.tool 2>/dev/null || echo "  API unreachable"
+    echo ""
+    
+    # System resources
+    echo "System Resources:"
+    ssh $STUDIO "echo '  CPU: '\$(top -l 1 | grep 'CPU usage' | awk '{print \$3}') && echo '  Memory: '\$(top -l 1 | grep PhysMem | awk '{print \$2, \$6}')" 2>/dev/null || echo "  SSH failed"
+    echo ""
+    
+    # Agents
+    echo "Registered Agents:"
+    curl -s "$API/coord/agents" 2>/dev/null | python3 -m json.tool 2>/dev/null || echo "  None"
+    echo ""
+    
+    # Tasks
+    echo "Active Tasks:"
+    curl -s "$API/coord/tasks" 2>/dev/null | python3 -m json.tool 2>/dev/null || echo "  None"
+    ;;
+
+  agents)
+    echo -e "${BLUE}=== Registered Agents ===${NC}"
+    curl -s "$API/coord/agents" | python3 -m json.tool 2>/dev/null || echo "No agents registered"
+    ;;
+
+  tasks)
+    echo -e "${BLUE}=== Task Queue ===${NC}"
+    curl -s "$API/coord/tasks" | python3 -m json.tool 2>/dev/null || echo "No tasks"
+    ;;
+
+  logs)
+    TYPE="${2:-ava}"
+    case "$TYPE" in
+      ava)
+        ssh $STUDIO "tail -f /opt/digital-justin/runtime/logs/ava.log"
+        ;;
+      llm)
+        ssh $STUDIO "tail -f /opt/digital-justin/runtime/logs/llm-*.log"
+        ;;
+      claude)
+        ssh $STUDIO "tail -f /opt/digital-justin/runtime/logs/claude/*.log 2>/dev/null || echo 'No Claude logs yet'"
+        ;;
+      *)
+        ssh $STUDIO "tail -f /opt/digital-justin/runtime/logs/$TYPE.log"
+        ;;
+    esac
+    ;;
+
+  ssh)
+    ssh $STUDIO
+    ;;
+
+  exec)
+    shift
+    ssh $STUDIO "$@"
+    ;;
+
+  ask)
+    if [ -z "$2" ]; then
+      echo -e "${RED}Usage: studio ask <question>${NC}"
+      exit 1
+    fi
+    shift
+    QUESTION="$*"
+    echo -e "${BLUE}Asking Ava: $QUESTION${NC}"
+    curl -s -X POST "$API/think" \
+      -H "Content-Type: application/json" \
+      -d "{\"prompt\": \"$QUESTION\"}" | python3 -c "import sys, json; print(json.load(sys.stdin).get('response', 'No response'))"
+    echo ""
+    ;;
+
+  memory)
+    echo -e "${BLUE}=== Ava Memory ===${NC}"
+    curl -s "$API/memory/recall" 2>/dev/null | python3 -m json.tool 2>/dev/null || echo "Memory endpoint not available"
+    ;;
+
+  register)
+    echo -e "${BLUE}Registering this session with coordinator...${NC}"
+    curl -s -X POST "$API/coord/register" \
+      -H "Content-Type: application/json" \
+      -d '{"agent_id": "claude-macbook", "agent_type": "claude-code", "capabilities": ["coding", "research", "deploy"]}'
+    echo ""
+    ;;
+
+  onboard)
+    echo -e "${BLUE}Getting full system briefing from Ava...${NC}"
+    curl -s "$API/coord/onboard" | python3 -m json.tool 2>/dev/null
+    ;;
+
+  help|--help|-h|"")
+    echo -e "${BLUE}Mac Studio Command Center${NC}"
+    echo ""
+    echo "Usage: studio <command> [args]"
+    echo ""
+    echo -e "${GREEN}LLM Commands:${NC}"
+    echo "  models            Check LLM cluster status (8B, 32B, 235B)"
+    echo "  start-llms        Start the LLM cluster"
+    echo "  stop-llms         Stop all LLM servers"
+    echo ""
+    echo -e "${GREEN}Task Dispatch:${NC}"
+    echo "  research <topic>  Deep research with 235B model"
+    echo "  code <task>       Spawn Claude Code session"
+    echo "  parallel <file>   Run parallel Claude sessions from JSON"
+    echo "  ask <question>    Ask Ava a question"
+    echo ""
+    echo -e "${GREEN}Deployment:${NC}"
+    echo "  deploy [project]  Deploy to Firebase (default: solar-crm)"
+    echo "  build [project]   Build project"
+    echo ""
+    echo -e "${GREEN}System:${NC}"
+    echo "  status            Full system status"
+    echo "  agents            List registered agents"
+    echo "  tasks             Show task queue"
+    echo "  memory            Query Ava's memory"
+    echo "  register          Register this session"
+    echo "  onboard           Get full system briefing"
+    echo ""
+    echo -e "${GREEN}Logs & Access:${NC}"
+    echo "  logs [type]       Stream logs (ava, llm, claude)"
+    echo "  ssh               SSH to Mac Studio"
+    echo "  exec <cmd>        Run command on Mac Studio"
+    echo ""
+    echo -e "${YELLOW}Examples:${NC}"
+    echo "  studio models"
+    echo "  studio research \"Texas solar market 2026\""
+    echo "  studio code \"Add referral tracking\""
+    echo "  studio deploy solar-crm"
+    echo "  studio logs ava"
+    ;;
+
+  *)
+    echo -e "${RED}Unknown command: $1${NC}"
+    echo "Run 'studio help' for usage"
+    exit 1
+    ;;
+esac

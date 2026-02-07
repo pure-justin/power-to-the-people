@@ -38,7 +38,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.twilioStatusCallback = exports.getSmsStats = exports.sendPaymentReminders = exports.sendBulkSMS = exports.sendCustomSMS = exports.onReferralReward = exports.onProjectStatusUpdate = exports.smsOnProjectCreated = exports.referralStatsWebhook = exports.referralBulkUpdateWebhook = exports.referralStatusWebhook = exports.processWeeklyPayouts = exports.getReferralStats = exports.updateReferralStatusHttp = exports.onProjectUpdated = exports.onProjectCreated = exports.secureLeadQuery = exports.secureSolarWebhook = exports.secureLeadWebhook = exports.validateApiKeyFromRequest = exports.cleanupApiKeys = exports.getApiKeyUsage = exports.updateApiKey = exports.rotateApiKey = exports.revokeApiKey = exports.validateApiKey = exports.createApiKey = exports.leadWebhook = exports.recalculateLeadScores = exports.assignLead = exports.addLeadNote = exports.updateLead = exports.createLead = exports.smtWebhook = exports.fetchSmtUsage = void 0;
+exports.twilioStatusCallback = exports.getSmsStats = exports.sendPaymentReminders = exports.sendBulkSMS = exports.sendCustomSMS = exports.onReferralReward = exports.onProjectStatusUpdate = exports.smsOnProjectCreated = exports.triggerDataRefresh = exports.refreshSolarData = exports.stripeWebhook = exports.cancelSubscription = exports.updateSubscription = exports.createSubscription = exports.solarEstimate = exports.solarComplianceCheck = exports.solarPermits = exports.solarIncentives = exports.solarUtilities = exports.solarEquipment = exports.referralStatsWebhook = exports.referralBulkUpdateWebhook = exports.referralStatusWebhook = exports.processWeeklyPayouts = exports.getReferralStats = exports.updateReferralStatusHttp = exports.onProjectUpdated = exports.onProjectCreated = exports.secureLeadQuery = exports.secureSolarWebhook = exports.secureLeadWebhook = exports.validateApiKeyFromRequest = exports.cleanupApiKeys = exports.getApiKeyUsage = exports.updateApiKey = exports.rotateApiKey = exports.revokeApiKey = exports.validateApiKey = exports.createApiKey = exports.leadWebhook = exports.recalculateLeadScores = exports.assignLead = exports.addLeadNote = exports.updateLead = exports.createLead = exports.smtWebhook = exports.fetchSmtUsage = void 0;
 const admin = __importStar(require("firebase-admin"));
 // Initialize Firebase Admin SDK
 admin.initializeApp();
@@ -81,6 +81,24 @@ var referralWebhooks_1 = require("./referralWebhooks");
 Object.defineProperty(exports, "referralStatusWebhook", { enumerable: true, get: function () { return referralWebhooks_1.referralStatusWebhook; } });
 Object.defineProperty(exports, "referralBulkUpdateWebhook", { enumerable: true, get: function () { return referralWebhooks_1.referralBulkUpdateWebhook; } });
 Object.defineProperty(exports, "referralStatsWebhook", { enumerable: true, get: function () { return referralWebhooks_1.referralStatsWebhook; } });
+// Export Solar Data API functions
+var solarDataApi_1 = require("./solarDataApi");
+Object.defineProperty(exports, "solarEquipment", { enumerable: true, get: function () { return solarDataApi_1.solarEquipment; } });
+Object.defineProperty(exports, "solarUtilities", { enumerable: true, get: function () { return solarDataApi_1.solarUtilities; } });
+Object.defineProperty(exports, "solarIncentives", { enumerable: true, get: function () { return solarDataApi_1.solarIncentives; } });
+Object.defineProperty(exports, "solarPermits", { enumerable: true, get: function () { return solarDataApi_1.solarPermits; } });
+Object.defineProperty(exports, "solarComplianceCheck", { enumerable: true, get: function () { return solarDataApi_1.solarComplianceCheck; } });
+Object.defineProperty(exports, "solarEstimate", { enumerable: true, get: function () { return solarDataApi_1.solarEstimate; } });
+// Export Payment functions
+var payments_1 = require("./payments");
+Object.defineProperty(exports, "createSubscription", { enumerable: true, get: function () { return payments_1.createSubscription; } });
+Object.defineProperty(exports, "updateSubscription", { enumerable: true, get: function () { return payments_1.updateSubscription; } });
+Object.defineProperty(exports, "cancelSubscription", { enumerable: true, get: function () { return payments_1.cancelSubscription; } });
+Object.defineProperty(exports, "stripeWebhook", { enumerable: true, get: function () { return payments_1.stripeWebhook; } });
+// Export Data Refresh functions
+var dataRefresh_1 = require("./dataRefresh");
+Object.defineProperty(exports, "refreshSolarData", { enumerable: true, get: function () { return dataRefresh_1.refreshSolarData; } });
+Object.defineProperty(exports, "triggerDataRefresh", { enumerable: true, get: function () { return dataRefresh_1.triggerDataRefresh; } });
 // Export SMS Notification functions
 var smsNotifications_1 = require("./smsNotifications");
 Object.defineProperty(exports, "smsOnProjectCreated", { enumerable: true, get: function () { return smsNotifications_1.onProjectCreated; } });

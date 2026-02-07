@@ -57,6 +57,27 @@ export {
   referralStatsWebhook,
 } from "./referralWebhooks";
 
+// Export Solar Data API functions
+export {
+  solarEquipment,
+  solarUtilities,
+  solarIncentives,
+  solarPermits,
+  solarComplianceCheck,
+  solarEstimate,
+} from "./solarDataApi";
+
+// Export Payment functions
+export {
+  createSubscription,
+  updateSubscription,
+  cancelSubscription,
+  stripeWebhook,
+} from "./payments";
+
+// Export Data Refresh functions
+export { refreshSolarData, triggerDataRefresh } from "./dataRefresh";
+
 // Export SMS Notification functions
 export {
   onProjectCreated as smsOnProjectCreated,

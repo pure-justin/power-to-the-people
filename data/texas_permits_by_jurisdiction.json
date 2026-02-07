@@ -1,0 +1,1549 @@
+{
+  "metadata": {
+    "title": "Texas Solar Permit Requirements by Jurisdiction",
+    "last_updated": "2026-02-06",
+    "version": "1.0",
+    "total_jurisdictions": 21,
+    "data_sources": [
+      "City permitting websites and official documents",
+      "Houston Permitting Center (houstonpermittingcenter.org)",
+      "San Antonio DSD / BuildSA (sa.gov)",
+      "Dallas DallasNow / Accela (dallascityhall.com)",
+      "Austin Build + Connect / Austin Energy (austintexas.gov, austinenergy.com)",
+      "Fort Worth Development Services (fortworthtexas.gov)",
+      "GoSolarTexas.org (NCTCOG)",
+      "SolarAPP+ / NREL (solarapp.nrel.gov)",
+      "Texas Solar Energy Society (txses.org)",
+      "Environment America / Environment Texas reports",
+      "Residential Solar Authority",
+      "Solar Permit Solutions",
+      "Energyscape Renewables"
+    ],
+    "important_statewide_legislation": {
+      "sb_1202": {
+        "name": "Residential Backup Power Permitting Streamlining",
+        "effective_date": "2025-09-01",
+        "summary": "Allows licensed third-party professionals (engineers or certified inspectors) to review and inspect residential backup power systems in place of city building departments. If city permitting takes longer than 2 business days, private vendors may approve home solar, battery, and generator installations.",
+        "impact": "Significant acceleration of residential solar permitting statewide"
+      },
+      "sb_1252": {
+        "name": "Residential Energy Storage Permitting",
+        "effective_date": "2025-09-01",
+        "summary": "Municipalities can no longer regulate installation or inspection of residential energy backup systems for generators up to 50kW and solar/ESS up to 100kWh storage capacity.",
+        "impact": "Reduces municipal permitting barriers for battery storage"
+      },
+      "sb_1036": {
+        "name": "Solar Consumer Protection - TDLR Registration",
+        "effective_date": "2025-09-01",
+        "summary": "Requires solar retailer registration with Texas Department of Licensing and Regulation (TDLR)",
+        "impact": "New contractor registration requirements statewide"
+      },
+      "sb_1697": {
+        "name": "Solar Consumer Protection - PUCT Guide",
+        "effective_date": "2025-09-01",
+        "summary": "Requires PUCT-developed consumer information guides for all utilities",
+        "impact": "Standardized consumer disclosure requirements"
+      },
+      "hb_431": {
+        "name": "Solar Roof Tiles HOA Protection",
+        "effective_date": "2025-05-29",
+        "summary": "Amends Texas Property Code Section 202.010 to explicitly include solar roof tiles in the definition of solar energy device",
+        "impact": "HOAs cannot prohibit or restrict solar roof tiles"
+      }
+    },
+    "statewide_hoa_rules": {
+      "governing_law": "Texas Property Code Section 202.010",
+      "additional_laws": ["HB 362", "SB 1626", "HB 431"],
+      "key_provisions": [
+        "HOAs cannot outright prohibit solar energy devices",
+        "HOAs can designate placement location on roof",
+        "Homeowner can petition for alternate location if it increases annual production by more than 10% (per NREL PVWatts)",
+        "HOAs may impose reasonable aesthetic restrictions (black/bronze/silver color, parallel to roofline, not above roofline)",
+        "HOAs may require Architectural Review Committee approval but cannot deny compliant installations",
+        "Solar roof tiles explicitly protected as of May 2025",
+        "SB 1626 closes developer prohibition loophole for subdivisions of 50 or fewer units"
+      ]
+    },
+    "statewide_fire_setback_requirements": {
+      "code_reference": "IFC 605.11 (International Fire Code)",
+      "residential_hip_roof": "3-foot-wide clear access pathway from eave to ridge on each roof slope where panels are located",
+      "perimeter_setback": "3-foot clear perimeter from roof edges",
+      "ridge_setback": "Panels located no higher than 3 feet below the ridge for fire department ventilation operations",
+      "commercial_pathways": "Designated pathways capable of supporting firefighter live loads"
+    },
+    "statewide_pe_stamp_general_rule": "Systems exceeding 10kW typically require PE-stamped plans in major metros. Smaller jurisdictions may have different thresholds. Ground-mounted and carport systems usually require PE stamps regardless of size."
+  },
+
+  "jurisdictions": {
+    "houston": {
+      "name": "City of Houston",
+      "county": "Harris",
+      "population_estimate": 2300000,
+      "utility": "CenterPoint Energy (transmission/distribution)",
+      "retail_electric_providers": true,
+      "permit_portal": {
+        "name": "iPermits",
+        "url": "https://www.pdinet.pd.houstontx.gov/iPermits/",
+        "plan_submission": "ProjectDox (electronic plan submission)",
+        "type": "online"
+      },
+      "permit_fees": {
+        "residential_range": "$250 - $500",
+        "fee_structure": "Flat fee plus plan review (25% of permit fee)",
+        "notes": "Fee varies by system size and complexity"
+      },
+      "required_documents": [
+        "Building Permit Application (via iPermits)",
+        "Declaration Supporting Building Permit Application (signed by property owner, validated against HCAD records)",
+        "Proof of ownership (if HCAD mismatch)",
+        "PE-sealed, signed, and dated engineered sheets (Texas licensed engineer)",
+        "Specification sheets with approved logos for all solar equipment",
+        "Electrical plans compliant with NEC Article 690",
+        "Site plan showing panel layout",
+        "One-line electrical diagram",
+        "Equipment data sheets (panels, inverters, racking)",
+        "iPermits Acknowledgement Form (first-time users)",
+        "Contractor license registration with City of Houston"
+      ],
+      "pe_stamp_requirement": {
+        "threshold_kw": 10,
+        "description": "Systems exceeding 10kW require PE-stamped plans",
+        "notes": "All engineered sheets shall be sealed, signed and dated by a Texas licensed engineer"
+      },
+      "solarapp_plus": {
+        "participating": true,
+        "status": "Active pilot since July 2024",
+        "notes": "Houston is the first and primary AHJ in Texas using SolarAPP+ automated permitting. Licensed contractors can use SolarAPP+ for residential PV applications."
+      },
+      "inspections": {
+        "types": ["Electrical inspection", "Building/structural inspection", "Final inspection"],
+        "three_phase": true,
+        "scheduling": "Online via iPermits or call 713-222-9922",
+        "utility_inspection": "CenterPoint Energy inspection required before interconnection"
+      },
+      "processing_time": {
+        "standard_days": "10-15 business days",
+        "solarapp_plus_days": "Same-day (instant for qualifying systems)",
+        "notes": "SolarAPP+ provides instant automated approval for code-compliant residential PV systems"
+      },
+      "common_rejection_reasons": [
+        "Generic or inaccurate site plans",
+        "Missing or outdated equipment specification sheets",
+        "PE seal/signature missing or not from Texas-licensed engineer",
+        "NEC Article 690 compliance issues",
+        "HCAD ownership mismatch without proof of ownership",
+        "Contractor license not registered with City of Houston",
+        "Fire setback pathway violations (3-ft perimeter, 3-ft below ridge)",
+        "Rapid shutdown labeling deficiencies (NEC 2017+)"
+      ],
+      "contact": {
+        "phone": "713-222-9922",
+        "department": "Houston Permitting Center",
+        "website": "https://www.houstonpermittingcenter.org/hpwcode1119",
+        "solar_guide": "CE1198 - Solar Photovoltaic Panel Permit & Inspection Guide and Checklist"
+      },
+      "setback_requirements": {
+        "fire_code": "IFC 605.11 - 3-ft perimeter, 3-ft below ridge, clear access pathways",
+        "property_line": "Standard building setbacks apply"
+      },
+      "special_notes": [
+        "CenterPoint Energy interconnection application required before installation begins",
+        "SolarAPP+ is available for qualifying residential systems",
+        "All plans must be submitted electronically",
+        "Houston is the first Texas city to fully adopt SolarAPP+"
+      ]
+    },
+
+    "san_antonio": {
+      "name": "City of San Antonio",
+      "county": "Bexar",
+      "population_estimate": 1500000,
+      "utility": "CPS Energy (municipal utility)",
+      "retail_electric_providers": false,
+      "permit_portal": {
+        "name": "BuildSA",
+        "url": "https://www.sa.gov/Directory/Departments/DSD/BuildSA",
+        "plan_submission": "BuildSA Plan Room (electronic upload after application)",
+        "type": "online"
+      },
+      "permit_fees": {
+        "residential_range": "$275 - $525",
+        "fee_structure": "Based on system valuation; plan review fees invoiced after completeness review",
+        "notes": "Solar application is a subtype of the general-electric permit"
+      },
+      "required_documents": [
+        "BuildSA online application (building module tab, type SOLAR)",
+        "Site plan with panel layout",
+        "Electrical one-line diagram",
+        "Equipment specification sheets",
+        "PE-stamped structural and electrical plans (for systems >10kW)",
+        "CPS Energy contractor registration documentation",
+        "Roof structural assessment"
+      ],
+      "pe_stamp_requirement": {
+        "threshold_kw": 10,
+        "description": "Systems exceeding 10kW require PE-stamped plans",
+        "notes": "Structural review required for complex installations"
+      },
+      "solarapp_plus": {
+        "participating": true,
+        "status": "Piloting",
+        "notes": "San Antonio is piloting SolarAPP+ as of 2024-2025"
+      },
+      "inspections": {
+        "types": ["Electrical inspection", "Building inspection", "Final inspection / CPS Energy Commissioning Test"],
+        "scheduling": "Online via BuildSA portal",
+        "utility_inspection": "CPS Energy Commissioning Test required after DSD releases permit",
+        "notes": "CPS Energy will only schedule Commissioning Test after DSD permit is released"
+      },
+      "processing_time": {
+        "standard_days": "10-20 business days",
+        "notes": "Completeness review is first step before technical reviews begin"
+      },
+      "common_rejection_reasons": [
+        "Incomplete documents (fails completeness review before technical review)",
+        "Mismatched site plan and electrical diagrams",
+        "Missing CPS Energy contractor registration",
+        "Solar array exceeding 150-ft on any one side",
+        "Outdated equipment specification sheets",
+        "NEC compliance issues"
+      ],
+      "contact": {
+        "phone": "210-207-1111",
+        "email": "DSDPlansManagement@sanantonio.gov",
+        "department": "Department of Sustainable Development (DSD)",
+        "website": "https://www.sa.gov/Directory/Departments/DSD",
+        "solar_bulletin": "Information Bulletin IB153 - Solar Photovoltaic Systems"
+      },
+      "setback_requirements": {
+        "fire_code": "IFC 605.11 standard setbacks",
+        "array_max_dimension": "Solar arrays shall not be greater than 150-feet on any one side",
+        "property_line": "Standard building setbacks apply"
+      },
+      "special_notes": [
+        "CPS Energy is municipal utility - no retail choice",
+        "Contractors must be registered with CPS Energy",
+        "CPS Energy net metering/buyback program available",
+        "San Antonio market has lower electricity rates - ROI may be longer",
+        "No residential ITC since Jan 2026 - focus on TPO/lease arrangements"
+      ]
+    },
+
+    "dallas": {
+      "name": "City of Dallas",
+      "county": "Dallas",
+      "population_estimate": 1340000,
+      "utility": "Oncor (transmission/distribution)",
+      "retail_electric_providers": true,
+      "permit_portal": {
+        "name": "DallasNow (powered by Accela)",
+        "url": "https://aca-prod.accela.com/DALLASTX/Default.aspx",
+        "plan_submission": "DallasNow integrated system (formerly ProjectDox)",
+        "type": "online"
+      },
+      "permit_fees": {
+        "residential_range": "$300 - $600",
+        "fee_structure": "Separate building and electrical permits; fees paid by check or money order",
+        "notes": "No fees required for initial plan submission; payment required before approval. Fees must be paid by check or money order."
+      },
+      "required_documents": [
+        "DallasNow permit application",
+        "Site plan with panel layout and dimensions",
+        "Electrical one-line diagram",
+        "Structural drawings (if roof modifications needed)",
+        "PE-stamped plans (for systems >10kW)",
+        "Equipment specification sheets (panels, inverters, racking)",
+        "Licensed contractor documentation"
+      ],
+      "pe_stamp_requirement": {
+        "threshold_kw": 10,
+        "description": "Systems exceeding 10kW require PE-stamped plans",
+        "notes": "Both structural and electrical PE stamps may be needed"
+      },
+      "solarapp_plus": {
+        "participating": false,
+        "status": "Considering adoption",
+        "notes": "Dallas is reportedly considering SolarAPP+ adoption but has not launched as of early 2026"
+      },
+      "inspections": {
+        "types": ["Building inspection", "Electrical inspection", "Fire code inspection"],
+        "scheduling": "Via DallasNow portal",
+        "review_process": "Sequential review (building, electrical, and fire reviewers review in sequence, not simultaneously)",
+        "notes": "Sequential review process is a known bottleneck - reviewers do not work simultaneously"
+      },
+      "processing_time": {
+        "standard_days": "15-25 business days",
+        "slow_cases": "5+ weeks for slowest 10% of projects",
+        "notes": "Sequential review process causes delays. Multiple city staffers review one at a time."
+      },
+      "common_rejection_reasons": [
+        "Incomplete site plans or electrical diagrams",
+        "Discrepancies between site plan and electrical one-line",
+        "Missing PE stamps for >10kW systems",
+        "Fire setback violations",
+        "Outdated equipment data sheets",
+        "Missing or incorrect licensing information"
+      ],
+      "contact": {
+        "phone": "214-948-4480",
+        "department": "Development Services - Sustainable Development",
+        "website": "https://dallascityhall.com/departments/sustainabledevelopment/",
+        "portal": "https://aca-prod.accela.com/DALLASTX/"
+      },
+      "setback_requirements": {
+        "fire_code": "IFC 605.11 standard setbacks (3-ft perimeter, 3-ft below ridge)",
+        "property_line": "Standard building setbacks apply"
+      },
+      "special_notes": [
+        "Sequential review process makes Dallas one of the slower permitting jurisdictions",
+        "No fees for initial plan submission - payment at approval",
+        "Payment by check or money order only",
+        "Oncor handles interconnection separately",
+        "Two separate permit portals historically (now unified in DallasNow)"
+      ]
+    },
+
+    "austin": {
+      "name": "City of Austin",
+      "county": "Travis",
+      "population_estimate": 980000,
+      "utility": "Austin Energy (municipal utility)",
+      "retail_electric_providers": false,
+      "permit_portal": {
+        "name": "Austin Build + Connect (AB+C)",
+        "url": "https://www.austintexas.gov/abc-applications",
+        "plan_submission": "Online via AB+C portal",
+        "type": "online",
+        "austin_energy_portal": "Austin Energy Distributed Generation Planning Application"
+      },
+      "permit_fees": {
+        "residential_range": "$200 - $400",
+        "fee_structure": "Streamlined green energy permit; varies by system size",
+        "notes": "Fast-track processing available. Austin Energy has separate fee schedule for interconnection."
+      },
+      "required_documents": [
+        "Austin Energy Distributed Generation Planning Application (DGPA)",
+        "Auxiliary Power electrical permit application",
+        "Site plan with panel layout",
+        "One-line electrical diagram (PE-stamped or NABCEP certified for residential)",
+        "Equipment specification sheets",
+        "Load calculations",
+        "Structural assessment (for non-standard installations)",
+        "Contractor licensing documentation"
+      ],
+      "pe_stamp_requirement": {
+        "threshold_kw": 10,
+        "description": "Systems exceeding 10kW require PE-stamped plans",
+        "notes": "NABCEP certification may substitute for PE stamp on some residential plans. Commercial projects require full PE-stamped plans and DSD Commercial Plan Review."
+      },
+      "solarapp_plus": {
+        "participating": false,
+        "status": "Not currently using SolarAPP+",
+        "notes": "Austin has its own streamlined process through Austin Energy but does not use SolarAPP+"
+      },
+      "inspections": {
+        "types": ["Electrical inspection (Austin Energy inspector)", "Building inspection", "Final inspection"],
+        "scheduling": "Online via AB+C portal",
+        "utility_inspection": "Austin Energy solar inspection required",
+        "pre_construction_meeting": "Recommended with Austin Energy inspector before installation",
+        "notes": "Austin Energy recommends pre-construction meeting to review finished electrical drawings"
+      },
+      "processing_time": {
+        "standard_days": "10-15 business days for permit review",
+        "interconnection_timeline": "4-6 weeks total for interconnection and installation process",
+        "notes": "Residential DGPA does not need Austin Energy pre-approval before proceeding to permit"
+      },
+      "common_rejection_reasons": [
+        "Missing Distributed Generation Planning Application",
+        "Incomplete one-line diagrams",
+        "Missing equipment certifications",
+        "NEC compliance issues",
+        "Fire setback violations",
+        "Missing contractor licensing"
+      ],
+      "contact": {
+        "phone": "512-974-2000",
+        "department": "Austin Development Services / Austin Energy",
+        "website_permits": "https://www.austintexas.gov/abc-applications",
+        "website_solar": "https://austinenergy.com/green-power/solar-solutions/",
+        "solar_permitting_manual": "https://austinenergy.com/-/media/project/websites/austinenergy/green-power/solar/austinenergy_solarpermittingmanual.pdf"
+      },
+      "setback_requirements": {
+        "fire_code": "IFC 605.11 standard setbacks",
+        "property_line": "Standard building setbacks apply",
+        "austin_specific": "Must comply with 2021 IRC and current NEC adopted codes"
+      },
+      "special_notes": [
+        "Austin Energy is municipal utility - no retail choice",
+        "Austin Energy Solar Standard Offer Program provides rebates",
+        "January 2025 Solar Permitting Manual available online",
+        "Auxiliary Power permit type used for solar installations",
+        "Pre-construction meeting with Austin Energy inspector recommended",
+        "Residential DGPA can proceed without Austin Energy pre-approval"
+      ]
+    },
+
+    "fort_worth": {
+      "name": "City of Fort Worth",
+      "county": "Tarrant",
+      "population_estimate": 960000,
+      "utility": "Oncor (transmission/distribution)",
+      "retail_electric_providers": true,
+      "permit_portal": {
+        "name": "Accela Citizen Access",
+        "url": "https://aca-prod.accela.com/CFW/Default.aspx",
+        "plan_submission": "Online via Accela",
+        "type": "online"
+      },
+      "permit_fees": {
+        "residential_range": "$200 - $450",
+        "fee_structure": "Based on project valuation; development fees schedule available on city website",
+        "notes": "Single combined permit (building + electrical) for residential solar"
+      },
+      "required_documents": [
+        "Complete application via Accela",
+        "Conformity checklist",
+        "Complete set of plans (panel layout, electrical, structural if needed)",
+        "Certified copy of plat",
+        "Site plans",
+        "Urban forestry permit (if common ownership equals 1 acre or more)",
+        "PE-stamped plans (for systems >10kW)",
+        "Equipment specification sheets"
+      ],
+      "pe_stamp_requirement": {
+        "threshold_kw": 10,
+        "description": "Systems exceeding 10kW require PE-stamped plans",
+        "notes": "Structural review requirements vary based on system complexity"
+      },
+      "solarapp_plus": {
+        "participating": false,
+        "status": "Not currently using SolarAPP+",
+        "notes": "Fort Worth has its own online permitting via Accela but does not use SolarAPP+"
+      },
+      "inspections": {
+        "types": ["Electrical inspection", "Building inspection", "Final inspection"],
+        "scheduling": "Online via Accela or call (817) 392-6370",
+        "notes": "Inspections can be scheduled online; residential solar uses series of guided questions on website"
+      },
+      "processing_time": {
+        "standard_days": "10-15 business days",
+        "notes": "Fort Worth has streamlined to single permit for residential solar"
+      },
+      "common_rejection_reasons": [
+        "Incomplete plan sets",
+        "Missing conformity checklist",
+        "Missing plat copy",
+        "Fire setback violations",
+        "Missing PE stamps for larger systems",
+        "NEC compliance issues"
+      ],
+      "contact": {
+        "phone": "(817) 392-6370",
+        "department": "Development Services",
+        "website": "https://www.fortworthtexas.gov/departments/development-services/permits"
+      },
+      "setback_requirements": {
+        "fire_code": "IFC 605.11 standard setbacks",
+        "property_line": "Standard building setbacks apply"
+      },
+      "special_notes": [
+        "Single permit process (combined building + electrical) for residential solar",
+        "Website uses guided questions to determine correct permit type",
+        "Online application and inspection scheduling available",
+        "Urban forestry permit may be needed for larger properties"
+      ]
+    },
+
+    "el_paso": {
+      "name": "City of El Paso",
+      "county": "El Paso",
+      "population_estimate": 680000,
+      "utility": "El Paso Electric (investor-owned)",
+      "retail_electric_providers": false,
+      "permit_portal": {
+        "name": "Accela Citizen Access",
+        "url": "https://aca-prod.accela.com/ELPASO",
+        "plan_submission": "Online via Citizen Access Portal or in-person at One-Stop Shop",
+        "type": "online"
+      },
+      "permit_fees": {
+        "residential_range": "$150 - $400",
+        "fee_structure": "Based on project valuation per city fee schedule",
+        "utility_interconnection_fees": {
+          "1_to_100_kw": "$85.00",
+          "over_100_kw": "$230.00"
+        },
+        "notes": "Updated fee schedule effective September 1, 2025"
+      },
+      "required_documents": [
+        "Permit application via Citizen Access Portal",
+        "Site plan with panel layout",
+        "Electrical one-line diagram",
+        "PE-stamped plans (for systems >10kW)",
+        "Equipment specification sheets",
+        "El Paso Electric interconnection application",
+        "Contractor licensing documentation"
+      ],
+      "pe_stamp_requirement": {
+        "threshold_kw": 10,
+        "description": "Systems exceeding 10kW require PE-stamped plans",
+        "notes": "Hurricane-zone engineering not typically required (inland location)"
+      },
+      "solarapp_plus": {
+        "participating": false,
+        "status": "Not currently using SolarAPP+",
+        "notes": "El Paso has cross-trained inspection and permitting staff on solar PV but does not use SolarAPP+"
+      },
+      "inspections": {
+        "types": ["Electrical inspection", "Building inspection", "Final inspection"],
+        "scheduling": "Via Citizen Access Portal or in-person",
+        "utility_inspection": "El Paso Electric field inspection required after final city electrical inspection",
+        "notes": "Contractor must contact EPE for field inspection and meter installation after final city inspection"
+      },
+      "processing_time": {
+        "standard_days": "7-15 business days",
+        "notes": "El Paso has streamlined permitting with cross-trained staff"
+      },
+      "common_rejection_reasons": [
+        "Incomplete site plans",
+        "Missing PE stamps for larger systems",
+        "NEC compliance issues",
+        "Equipment specification deficiencies"
+      ],
+      "contact": {
+        "phone": "(915) 212-0104",
+        "department": "Planning & Inspections - One-Stop Shop",
+        "address": "811 Texas Ave, El Paso, TX 79901",
+        "website": "https://www.elpasotexas.gov/planning-and-inspections/"
+      },
+      "setback_requirements": {
+        "fire_code": "IFC 605.11 standard setbacks",
+        "property_line": "Standard building setbacks apply"
+      },
+      "special_notes": [
+        "Solar allowed as by-right accessory use in all zones",
+        "Cross-trained inspection and permitting staff on solar PV",
+        "SolSmart designated community",
+        "El Paso Electric is regulated utility (no retail choice)",
+        "EPE interconnection application fees: $85 (1-100kW), $230 (>100kW)"
+      ]
+    },
+
+    "arlington": {
+      "name": "City of Arlington",
+      "county": "Tarrant",
+      "population_estimate": 395000,
+      "utility": "Oncor (transmission/distribution)",
+      "retail_electric_providers": true,
+      "permit_portal": {
+        "name": "Arlington Permits (online portal)",
+        "url": "https://ap.arlingtontx.gov/AP/sfjsp?interviewID=SignOn",
+        "type": "online"
+      },
+      "permit_fees": {
+        "residential_range": "$200 - $450",
+        "fee_structure": "Single combined permit fee",
+        "notes": "Arlington consolidated to single permit (previously required separate residential and electrical permits)"
+      },
+      "required_documents": [
+        "Online permit application",
+        "Site plan with panel layout",
+        "Electrical one-line diagram",
+        "Equipment specification sheets",
+        "PE-stamped plans (for systems >10kW)",
+        "Contractor licensing documentation"
+      ],
+      "pe_stamp_requirement": {
+        "threshold_kw": 10,
+        "description": "Systems exceeding 10kW require PE-stamped plans"
+      },
+      "solarapp_plus": {
+        "participating": false,
+        "status": "Not currently using SolarAPP+"
+      },
+      "inspections": {
+        "types": ["Electrical inspection", "Building inspection", "Final inspection"],
+        "scheduling": "Online via permit portal or in-person at City Hall"
+      },
+      "processing_time": {
+        "standard_days": "10-15 business days"
+      },
+      "common_rejection_reasons": [
+        "Incomplete plan sets",
+        "Missing PE stamps for larger systems",
+        "Fire setback violations",
+        "NEC compliance issues"
+      ],
+      "contact": {
+        "phone": "(817) 459-6777",
+        "department": "Planning and Development Services",
+        "website": "https://www.arlingtontx.gov/City-Services/Permits"
+      },
+      "setback_requirements": {
+        "fire_code": "IFC 605.11 standard setbacks",
+        "sb_1202_note": "SB 1202 applies to solar panels, battery storage, and standby generators"
+      },
+      "special_notes": [
+        "Arlington streamlined to single permit (previously required separate permits)",
+        "Online application, payment, and inspection scheduling available",
+        "SB 1202 explicitly referenced for solar/battery/generator systems"
+      ]
+    },
+
+    "corpus_christi": {
+      "name": "City of Corpus Christi",
+      "county": "Nueces",
+      "population_estimate": 320000,
+      "utility": "AEP Texas (transmission/distribution)",
+      "retail_electric_providers": true,
+      "permit_portal": {
+        "name": "Dynamic Portal",
+        "url": "https://www.corpuschristitx.gov/department-directory/development-services/applications-permits-and-guidance/dynamic-portal-guides/",
+        "type": "online",
+        "notes": "Apply for permits, view status, upload documents, pay fees, schedule inspections"
+      },
+      "permit_fees": {
+        "residential_range": "$150 - $400",
+        "fee_structure": "Based on project valuation",
+        "notes": "First-time users must apply for online account"
+      },
+      "required_documents": [
+        "Online application via Dynamic Portal",
+        "Site plan with panel layout",
+        "Exterior elevations (window sills, ceiling heights, eave heights, wall finishes)",
+        "Building sections with typical framing members and specifications",
+        "Electrical one-line diagram",
+        "PE-stamped plans (for systems >10kW)",
+        "Equipment specification sheets"
+      ],
+      "pe_stamp_requirement": {
+        "threshold_kw": 10,
+        "description": "Systems exceeding 10kW require PE-stamped plans",
+        "notes": "Coastal area - hurricane-zone engineering may be required for wind load calculations"
+      },
+      "solarapp_plus": {
+        "participating": false,
+        "status": "Not currently using SolarAPP+"
+      },
+      "inspections": {
+        "types": ["Electrical inspection", "Building inspection", "Final inspection"],
+        "scheduling": "Via Dynamic Portal"
+      },
+      "processing_time": {
+        "standard_days": "10-20 business days"
+      },
+      "common_rejection_reasons": [
+        "Missing exterior elevation details",
+        "Incomplete structural framing specifications",
+        "Wind load calculation deficiencies (coastal zone)",
+        "NEC compliance issues"
+      ],
+      "contact": {
+        "phone": "361-826-3240",
+        "department": "Development Services",
+        "website": "https://www.corpuschristitx.gov/department-directory/development-services/"
+      },
+      "setback_requirements": {
+        "fire_code": "IFC 605.11 standard setbacks",
+        "wind_zone": "Coastal wind zone - ASCE 7-22 wind load standards apply"
+      },
+      "special_notes": [
+        "Coastal location requires hurricane-zone engineering considerations",
+        "Wind load analysis per ASCE 7-22 standards required",
+        "Dynamic Portal handles full permitting lifecycle online"
+      ]
+    },
+
+    "plano": {
+      "name": "City of Plano",
+      "county": "Collin",
+      "population_estimate": 290000,
+      "utility": "Oncor (transmission/distribution)",
+      "retail_electric_providers": true,
+      "permit_portal": {
+        "name": "E-TRAKIT",
+        "url": "https://etrakit.plano.gov/",
+        "type": "online",
+        "notes": "Must be a registered contractor/designer to submit electronically"
+      },
+      "permit_fees": {
+        "residential_range": "$300 - $450",
+        "fee_structure": "Miscellaneous Simple Permit Application",
+        "notes": "No fees required for initial plan submission"
+      },
+      "required_documents": [
+        "Miscellaneous Simple Permit Application",
+        "Site plan with panel layout",
+        "Electrical one-line diagram",
+        "PE-stamped plans (for systems >10kW)",
+        "Equipment specification sheets",
+        "Registered contractor documentation"
+      ],
+      "pe_stamp_requirement": {
+        "threshold_kw": 10,
+        "description": "Systems exceeding 10kW require PE-stamped plans"
+      },
+      "solarapp_plus": {
+        "participating": false,
+        "status": "Not currently using SolarAPP+"
+      },
+      "inspections": {
+        "types": ["Electrical inspection", "Building inspection", "Final inspection"],
+        "scheduling": "Via E-TRAKIT system"
+      },
+      "processing_time": {
+        "standard_days": "3-5 business days",
+        "notes": "Plano has a turnaround goal of 3 days for review and comments on residential applications"
+      },
+      "common_rejection_reasons": [
+        "Incomplete plan sets",
+        "Missing contractor registration",
+        "PE stamp deficiencies for larger systems",
+        "NEC compliance issues"
+      ],
+      "contact": {
+        "phone": "(972) 941-7143",
+        "department": "Building Inspections",
+        "website": "https://www.plano.gov/149/Building-Inspections"
+      },
+      "setback_requirements": {
+        "fire_code": "IFC 605.11 standard setbacks"
+      },
+      "special_notes": [
+        "Fast 3-day turnaround goal for residential permit review",
+        "No fees for initial plan submission",
+        "Must be registered contractor to submit electronically",
+        "Active Plano Solar Advocates community group"
+      ]
+    },
+
+    "laredo": {
+      "name": "City of Laredo",
+      "county": "Webb",
+      "population_estimate": 260000,
+      "utility": "AEP Texas (transmission/distribution)",
+      "retail_electric_providers": true,
+      "permit_portal": {
+        "name": "City of Laredo Building Development Services",
+        "url": "https://www.cityoflaredo.com/departments/building-development-services/building-permit-resources",
+        "type": "online_and_in_person"
+      },
+      "permit_fees": {
+        "residential_range": "$150 - $400",
+        "fee_structure": "Updated by Ordinance 2024-O-247",
+        "notes": "Ordinance addresses Solar Panel Permit, Pre-Development Meeting, After-Hour inspection, and Partial inspection fees"
+      },
+      "required_documents": [
+        "Solar Panel permit application",
+        "Site plan with panel layout",
+        "Electrical one-line diagram",
+        "PE-stamped plans (for systems >10kW)",
+        "Equipment specification sheets",
+        "Contractor licensing documentation"
+      ],
+      "pe_stamp_requirement": {
+        "threshold_kw": 10,
+        "description": "Systems exceeding 10kW require PE-stamped plans"
+      },
+      "solarapp_plus": {
+        "participating": false,
+        "status": "Not currently using SolarAPP+"
+      },
+      "inspections": {
+        "types": ["Electrical inspection", "Building inspection", "Final inspection"],
+        "notes": "After-hour and partial inspections available per Ordinance 2024-O-247"
+      },
+      "processing_time": {
+        "standard_days": "10-15 business days"
+      },
+      "common_rejection_reasons": [
+        "Incomplete plan sets",
+        "Missing PE stamps",
+        "NEC compliance issues",
+        "Missing contractor licensing"
+      ],
+      "contact": {
+        "phone": "956-794-1625",
+        "department": "Building Development Services",
+        "address": "1413 Houston St, Laredo, TX 78040",
+        "solar_guide": "Bulletin 001 - Solar Panel Guide"
+      },
+      "setback_requirements": {
+        "fire_code": "IFC 605.11 standard setbacks"
+      },
+      "special_notes": [
+        "Solar Panel Guide available as Bulletin 001",
+        "Fee schedule updated by Ordinance 2024-O-247",
+        "After-hour inspections available"
+      ]
+    },
+
+    "lubbock": {
+      "name": "City of Lubbock",
+      "county": "Lubbock",
+      "population_estimate": 260000,
+      "utility": "Lubbock Power & Light (LP&L, municipal utility)",
+      "retail_electric_providers": false,
+      "permit_portal": {
+        "name": "City of Lubbock Building Safety",
+        "url": "https://ci.lubbock.tx.us/departments/building-safety/forms",
+        "type": "in_person_primary"
+      },
+      "permit_fees": {
+        "residential_range": "$150 - $450",
+        "fee_structure": "Electrical permit fee based on system size",
+        "notes": "Electrical permit required before installation"
+      },
+      "required_documents": [
+        "LP&L interconnection agreement (must be completed FIRST)",
+        "Electrical permit application",
+        "Site plan with panel layout",
+        "Electrical one-line diagram",
+        "PE-stamped plans (for systems >10kW)",
+        "Equipment specification sheets"
+      ],
+      "pe_stamp_requirement": {
+        "threshold_kw": 10,
+        "description": "Systems exceeding 10kW require PE-stamped plans"
+      },
+      "solarapp_plus": {
+        "participating": false,
+        "status": "Not currently using SolarAPP+"
+      },
+      "inspections": {
+        "types": ["Electrical inspection", "Final inspection"],
+        "notes": "City inspection required before LP&L interconnection approval"
+      },
+      "processing_time": {
+        "standard_days": "5-10 business days",
+        "notes": "LP&L interconnection agreement must be completed before permit application"
+      },
+      "common_rejection_reasons": [
+        "Missing LP&L interconnection agreement",
+        "Incomplete electrical plans",
+        "NEC compliance issues"
+      ],
+      "contact": {
+        "phone": "(806) 775-2087",
+        "department": "Building Safety Department",
+        "website": "https://ci.lubbock.tx.us/departments/building-safety",
+        "lpl_solar_info": "http://lpandl.com/pluggedin/about-solar-energy-systems/"
+      },
+      "setback_requirements": {
+        "fire_code": "IFC 605.11 standard setbacks"
+      },
+      "special_notes": [
+        "MUST complete LP&L interconnection agreement BEFORE applying for permit",
+        "LP&L is municipal utility - no retail choice",
+        "Electrical permit (not building permit) is primary permit type",
+        "LP&L solar FAQ available online"
+      ]
+    },
+
+    "irving": {
+      "name": "City of Irving",
+      "county": "Dallas",
+      "population_estimate": 240000,
+      "utility": "Oncor (transmission/distribution)",
+      "retail_electric_providers": true,
+      "permit_portal": {
+        "name": "My Government Online (MGO)",
+        "url": "https://irvingtx.gov/Online-Permit-Instructions",
+        "type": "online",
+        "support_phone": "(866) 957-3764"
+      },
+      "permit_fees": {
+        "residential_range": "$200 - $500",
+        "fee_structure": "Paid via MGO portal at conclusion of application process",
+        "notes": "Permit issued after payment and license verification on state website"
+      },
+      "required_documents": [
+        "MGO permit application (Solar Panel permit type)",
+        "Site plan with panel layout",
+        "Electrical one-line diagram",
+        "PE-stamped plans (for systems >10kW)",
+        "Equipment specification sheets",
+        "State-verified contractor license"
+      ],
+      "pe_stamp_requirement": {
+        "threshold_kw": 10,
+        "description": "Systems exceeding 10kW require PE-stamped plans"
+      },
+      "solarapp_plus": {
+        "participating": false,
+        "status": "Not currently using SolarAPP+"
+      },
+      "inspections": {
+        "types": ["Electrical inspection", "Building inspection", "Final inspection"],
+        "scheduling": "Online via MGO; deadline is 6 AM on business day requested",
+        "notes": "After 6 AM, next business day is earliest available"
+      },
+      "processing_time": {
+        "standard_days": "15-25 business days",
+        "notes": "Irving has a reputation among installers as one of the most challenging jurisdictions"
+      },
+      "common_rejection_reasons": [
+        "Incomplete plan sets",
+        "State license verification failures",
+        "PE stamp deficiencies",
+        "Strict plan review requirements"
+      ],
+      "contact": {
+        "phone": "(972) 721-2600",
+        "department": "Inspections Department",
+        "website": "https://irvingtx.gov/permits-inspections"
+      },
+      "setback_requirements": {
+        "fire_code": "IFC 605.11 standard setbacks"
+      },
+      "special_notes": [
+        "WARNING: Multiple installers report Irving as one of the most challenging jurisdictions for solar permits",
+        "Some installers avoid Irving entirely due to permitting difficulties",
+        "Separate permits required for solar energy systems",
+        "Inspection scheduling has strict 6 AM daily deadline",
+        "MGO portal technical support: (866) 957-3764"
+      ]
+    },
+
+    "garland": {
+      "name": "City of Garland",
+      "county": "Dallas",
+      "population_estimate": 240000,
+      "utility": "Garland Power & Light (GP&L, municipal utility)",
+      "retail_electric_providers": false,
+      "permit_portal": {
+        "name": "City of Garland Building Inspections",
+        "url": "https://www.garlandtx.gov/2172/Electrical-Repair-Meter-Base-Upgrade",
+        "type": "in_person_primary",
+        "notes": "Documents submitted on USB in PDF format with paper copy of Subcontractor Permit Application"
+      },
+      "permit_fees": {
+        "residential_total": "$175",
+        "fee_breakdown": "$140 permit fee + $35 processing fee",
+        "fee_structure": "Flat fee",
+        "notes": "One of the most transparent and affordable fee structures in the DFW area"
+      },
+      "required_documents": [
+        "Subcontractor Permit Application (paper copy)",
+        "State of Texas Engineered plans for installation",
+        "Electrical engineer stamp (when no structural work needed)",
+        "Structural engineer stamp (when roof modifications required)",
+        "Equipment specification sheets",
+        "All documents on USB in PDF format",
+        "City-registered Electrical Contractor documentation"
+      ],
+      "pe_stamp_requirement": {
+        "threshold_kw": 10,
+        "description": "10kW-AC maximum exception; systems above require additional PE review",
+        "electrical_pe": "Required for standard installations",
+        "structural_pe": "Required when roof modifications are needed"
+      },
+      "solarapp_plus": {
+        "participating": false,
+        "status": "Not currently using SolarAPP+"
+      },
+      "inspections": {
+        "types": ["Electrical inspection", "Final inspection"],
+        "utility_inspection": "GP&L installs bi-directional meter after all inspections approved"
+      },
+      "processing_time": {
+        "standard_days": "5-10 business days"
+      },
+      "common_rejection_reasons": [
+        "Missing PE stamps (electrical or structural)",
+        "Documents not on USB in PDF format",
+        "Company not registered as Electrical Contractor with City",
+        "Incomplete engineered plans"
+      ],
+      "contact": {
+        "phone": "972-205-2300",
+        "department": "Building Inspections Department",
+        "website": "https://www.garlandtx.gov/2172/Electrical-Repair-Meter-Base-Upgrade",
+        "utility_website": "https://www.gpltexas.org/business/solar-installation-requirements"
+      },
+      "setback_requirements": {
+        "fire_code": "IFC 605.11 standard setbacks"
+      },
+      "special_notes": [
+        "GP&L is municipal utility - installs bi-directional meter after approval",
+        "Documents MUST be on USB in PDF format",
+        "Paper copy of Subcontractor Permit Application also required",
+        "Solar companies must be registered with City as Electrical Contractor",
+        "Transparent flat fee structure: $175 total"
+      ]
+    },
+
+    "frisco": {
+      "name": "City of Frisco",
+      "county": "Collin / Denton",
+      "population_estimate": 220000,
+      "utility": "Oncor (transmission/distribution)",
+      "retail_electric_providers": true,
+      "permit_portal": {
+        "name": "Frisco Plans & Permits / eTRAKiT",
+        "url": "https://www.friscotexas.gov/401/Permit-Applications-Plan-Review-Forms",
+        "inspection_system": "eTRAKiT",
+        "type": "online"
+      },
+      "permit_fees": {
+        "residential_formula": "$75 + $0.59 per square foot of gross area",
+        "maximum_fee": "$550",
+        "fee_structure": "Formula-based with cap",
+        "effective_date": "October 1, 2025",
+        "notes": "Fee schedule updated October 1, 2025"
+      },
+      "required_documents": [
+        "Online permit application via Plans & Permits system",
+        "Site plan with panel layout and dimensions",
+        "Electrical one-line diagram",
+        "PE-stamped plans (for systems >10kW)",
+        "Equipment specification sheets",
+        "Contractor licensing documentation"
+      ],
+      "pe_stamp_requirement": {
+        "threshold_kw": 10,
+        "description": "Systems exceeding 10kW require PE-stamped plans"
+      },
+      "solarapp_plus": {
+        "participating": false,
+        "status": "Not currently using SolarAPP+"
+      },
+      "inspections": {
+        "types": ["Electrical inspection", "Building inspection", "Final inspection"],
+        "scheduling": "Contractors via eTRAKiT; homeowners without contractor may request by email",
+        "notes": "Inspection requests NOT accepted over the phone"
+      },
+      "processing_time": {
+        "standard_days": "5-10 business days"
+      },
+      "common_rejection_reasons": [
+        "Incomplete uploaded documents",
+        "Missing PE stamps for larger systems",
+        "Inaccurate square footage calculations",
+        "NEC compliance issues"
+      ],
+      "contact": {
+        "phone": "(972) 292-5300",
+        "department": "Development Services",
+        "address": "George A. Purefoy Municipal Center, 6101 Frisco Square Blvd, 3rd Floor, Frisco, TX 75034",
+        "hours": "Monday-Friday 8am-5pm",
+        "website": "https://www.friscotexas.gov/395/Building-Inspections"
+      },
+      "setback_requirements": {
+        "fire_code": "IFC 605.11 standard setbacks"
+      },
+      "special_notes": [
+        "Fee is formula-based: $75 + $0.59/sqft, max $550",
+        "Inspections requested via eTRAKiT (contractors) or email (homeowners) only - no phone requests",
+        "Fee schedule last updated October 1, 2025"
+      ]
+    },
+
+    "mckinney": {
+      "name": "City of McKinney",
+      "county": "Collin",
+      "population_estimate": 200000,
+      "utility": "Oncor (transmission/distribution)",
+      "retail_electric_providers": true,
+      "permit_portal": {
+        "name": "Citizen Self-Service",
+        "url": "https://www.mckinneytexas.org/165/Permits",
+        "type": "online"
+      },
+      "permit_fees": {
+        "residential_range": "$200 - $400",
+        "fee_structure": "Per city fee schedule (Appendix A - Schedule of Fees)",
+        "notes": "Fee schedule available via McKinney Code of Ordinances"
+      },
+      "required_documents": [
+        "Online permit application via Citizen Self-Service",
+        "Site plan with panel layout",
+        "Electrical one-line diagram",
+        "PE-stamped plans (for systems >10kW)",
+        "Equipment specification sheets",
+        "Contractor licensing documentation"
+      ],
+      "pe_stamp_requirement": {
+        "threshold_kw": 10,
+        "description": "Systems exceeding 10kW require PE-stamped plans"
+      },
+      "solarapp_plus": {
+        "participating": false,
+        "status": "Not currently using SolarAPP+"
+      },
+      "inspections": {
+        "types": ["Electrical inspection", "Building inspection", "Final inspection"],
+        "scheduling": "Via Citizen Self-Service portal"
+      },
+      "processing_time": {
+        "standard_days": "5-10 business days"
+      },
+      "common_rejection_reasons": [
+        "Incomplete plan sets",
+        "Missing PE stamps for larger systems",
+        "NEC compliance issues"
+      ],
+      "contact": {
+        "phone": "469-617-4800",
+        "department": "Building Inspections",
+        "website": "https://www.mckinneytexas.org/243/Building-Inspections"
+      },
+      "setback_requirements": {
+        "fire_code": "IFC 605.11 standard setbacks"
+      },
+      "special_notes": [
+        "Rapidly growing city - permitting volumes increasing",
+        "All inspections scheduled via Citizen Self-Service portal"
+      ]
+    },
+
+    "round_rock": {
+      "name": "City of Round Rock",
+      "county": "Williamson",
+      "population_estimate": 135000,
+      "utility": "Oncor (transmission/distribution)",
+      "retail_electric_providers": true,
+      "permit_portal": {
+        "name": "Round Rock Permit Portal",
+        "url": "https://permits.roundrocktexas.gov",
+        "type": "online"
+      },
+      "permit_fees": {
+        "residential_flat_fee": "$150",
+        "fee_structure": "Flat fee",
+        "payment_methods": "E-Check, Visa, or Mastercard via permit portal",
+        "notes": "Simple flat fee of $150 - one of the more affordable in the Austin metro"
+      },
+      "required_documents": [
+        "Online permit application",
+        "One complete set of one-line drawings stamped by electrical engineer (or NABCEP certified)",
+        "Type of equipment being used",
+        "Load calculations",
+        "Torque letter (must be uploaded before final inspection - on letterhead with master's license number and signature)",
+        "Note: Structural drawings are NOT required"
+      ],
+      "pe_stamp_requirement": {
+        "threshold_kw": null,
+        "description": "Electrical engineer stamp (or NABCEP certification) required for one-line drawings regardless of system size",
+        "structural_pe": "NOT required (structural drawings not needed)",
+        "notes": "Round Rock accepts NABCEP certification as alternative to PE stamp"
+      },
+      "solarapp_plus": {
+        "participating": false,
+        "status": "Not currently using SolarAPP+"
+      },
+      "inspections": {
+        "types": ["Electrical inspection", "Final inspection"],
+        "scheduling": "Via permit portal",
+        "torque_letter": "Must be uploaded before final inspection",
+        "notes": "Torque letter must be on letterhead with master's license number and signature"
+      },
+      "processing_time": {
+        "standard_days": "5-10 business days"
+      },
+      "common_rejection_reasons": [
+        "Missing electrical engineer stamp or NABCEP certification on one-line drawings",
+        "Incomplete load calculations",
+        "Missing torque letter before final inspection",
+        "Equipment type not specified"
+      ],
+      "contact": {
+        "phone": "(512) 218-5509",
+        "department": "Building Inspection Division - Planning and Development Services",
+        "website": "https://www.roundrocktexas.gov/city-departments/planning-and-development-services/building-inspection/"
+      },
+      "setback_requirements": {
+        "fire_code": "IFC 605.11 standard setbacks"
+      },
+      "special_notes": [
+        "Structural drawings NOT required - simplified process",
+        "Flat $150 fee - affordable and transparent",
+        "NABCEP certification accepted as alternative to PE stamp",
+        "Torque letter required before final inspection",
+        "Online payment via E-Check, Visa, or Mastercard"
+      ]
+    },
+
+    "sugar_land": {
+      "name": "City of Sugar Land",
+      "county": "Fort Bend",
+      "population_estimate": 115000,
+      "utility": "CenterPoint Energy (transmission/distribution)",
+      "retail_electric_providers": true,
+      "permit_portal": {
+        "name": "Sugar Land Permits & Inspections",
+        "url": "https://www.sugarlandtx.gov/2362/Permits-Inspections",
+        "type": "online"
+      },
+      "permit_fees": {
+        "residential_range": "$200 - $450",
+        "fee_structure": "Based on project valuation",
+        "notes": "Fee may change due to SB 1252 impact on permitting scope"
+      },
+      "required_documents": [
+        "Permit application",
+        "Site plan with panel layout",
+        "Electrical one-line diagram",
+        "Stamped structural plans",
+        "Safety plans",
+        "Equipment specification sheets",
+        "PE-stamped plans (for systems >10kW)",
+        "Compliance documentation for 2023 NEC (Texas adopted code)",
+        "HOA approval documentation (if applicable)"
+      ],
+      "pe_stamp_requirement": {
+        "threshold_kw": 10,
+        "description": "Systems exceeding 10kW require PE-stamped plans",
+        "notes": "Must be designed to 2023 NEC National Electrical Code"
+      },
+      "solarapp_plus": {
+        "participating": false,
+        "status": "Not currently using SolarAPP+"
+      },
+      "inspections": {
+        "types": ["Electrical inspection", "Building/structural inspection", "Final inspection"],
+        "sb_1252_impact": "Under SB 1252 (effective Sept 1, 2025), municipalities can no longer regulate installation/inspection of residential backup systems up to 50kW or storage up to 100kWh"
+      },
+      "processing_time": {
+        "standard_days": "10-15 business days"
+      },
+      "common_rejection_reasons": [
+        "Missing HOA approval documentation",
+        "Incomplete structural plans",
+        "NEC 2023 compliance issues",
+        "Missing PE stamps"
+      ],
+      "contact": {
+        "phone": "(281) 275-2450",
+        "department": "Permits & Inspections",
+        "website": "https://www.sugarlandtx.gov/2362/Permits-Inspections"
+      },
+      "setback_requirements": {
+        "fire_code": "IFC 605.11 standard setbacks"
+      },
+      "special_notes": [
+        "Strong HOA presence - ensure HOA approval before permitting",
+        "SB 1252 significantly impacts permitting scope for backup power systems",
+        "Must comply with 2023 NEC (state-adopted code)",
+        "CenterPoint Energy serves as T&D utility"
+      ]
+    },
+
+    "denton": {
+      "name": "City of Denton",
+      "county": "Denton",
+      "population_estimate": 150000,
+      "utility": "Denton Municipal Electric (DME, municipal utility)",
+      "retail_electric_providers": false,
+      "permit_portal": {
+        "name": "eTRAKiT Portal",
+        "url": "https://www.cityofdenton.com/622/Residential-Permits",
+        "type": "online",
+        "notes": "Building Safety Division upgraded to eTRAKiT portal"
+      },
+      "permit_fees": {
+        "residential_range": "$150 - $350",
+        "fee_structure": "Per city fee schedule"
+      },
+      "required_documents": [
+        "Completed and signed DG Manual Permit Application (for DME customers) OR residential permit application",
+        "Aerial views of panel locations",
+        "Structural engineering letter verifying roof capacity",
+        "Electrical one-line diagram",
+        "PE-stamped plans (for systems >10kW)",
+        "Equipment specification sheets",
+        "Plans designed per 2021 IRC and 2020 NEC (City of Denton adopted codes)"
+      ],
+      "pe_stamp_requirement": {
+        "threshold_kw": 10,
+        "description": "Systems exceeding 10kW require PE-stamped plans",
+        "structural": "Structural engineering letter verifying roof capacity required for all installations"
+      },
+      "solarapp_plus": {
+        "participating": false,
+        "status": "Not currently using SolarAPP+"
+      },
+      "inspections": {
+        "types": ["Structural inspection", "Mechanical inspection", "Plumbing inspection (if applicable)", "Electrical inspection", "Final inspection"],
+        "scheduling": "Via eTRAKiT portal"
+      },
+      "processing_time": {
+        "standard_days": "7-15 business days"
+      },
+      "common_rejection_reasons": [
+        "Missing structural engineering letter",
+        "Plans not compliant with 2021 IRC / 2020 NEC",
+        "Missing aerial views",
+        "Incomplete DG Manual Permit Application (DME customers)"
+      ],
+      "contact": {
+        "phone": "(940) 349-8500",
+        "department": "Building Safety Division",
+        "website": "https://www.cityofdenton.com/690/Solar-Panels-Wind-Turbines"
+      },
+      "setback_requirements": {
+        "fire_code": "IFC 605.11 standard setbacks"
+      },
+      "special_notes": [
+        "DME customers need separate DG Manual Permit Application",
+        "Structural engineering letter required for ALL installations (not just >10kW)",
+        "Must comply with 2021 IRC and 2020 NEC specifically",
+        "Aerial views of panel locations required",
+        "DME is municipal utility - no retail choice"
+      ]
+    },
+
+    "pearland": {
+      "name": "City of Pearland",
+      "county": "Brazoria / Harris",
+      "population_estimate": 130000,
+      "utility": "CenterPoint Energy (transmission/distribution)",
+      "retail_electric_providers": true,
+      "permit_portal": {
+        "name": "CityWorks",
+        "url": "https://www.pearlandtx.gov/departments/community-development/permits/inspections",
+        "type": "online",
+        "notes": "Submit applications, make payments, schedule inspections online"
+      },
+      "permit_fees": {
+        "residential_range": "$150 - $400",
+        "fee_structure": "Per city development fee schedule"
+      },
+      "required_documents": [
+        "Permit application (online via CityWorks or paper)",
+        "Site plan with panel layout",
+        "Electrical one-line diagram",
+        "PE-stamped plans (for systems >10kW)",
+        "Equipment specification sheets",
+        "Contractor licensing documentation",
+        "System design and specifications"
+      ],
+      "pe_stamp_requirement": {
+        "threshold_kw": 10,
+        "description": "Systems exceeding 10kW require PE-stamped plans"
+      },
+      "solarapp_plus": {
+        "participating": false,
+        "status": "Not currently using SolarAPP+"
+      },
+      "inspections": {
+        "types": ["Electrical inspection", "Building inspection", "Final inspection"],
+        "scheduling": "Online via CityWorks or in-person"
+      },
+      "processing_time": {
+        "standard_days": "7-15 business days"
+      },
+      "common_rejection_reasons": [
+        "Incomplete plan sets",
+        "Missing PE stamps",
+        "NEC compliance issues",
+        "Missing contractor licensing"
+      ],
+      "contact": {
+        "phone": "281-652-1638",
+        "department": "Permits and Inspections Division",
+        "address": "3519 Liberty Drive, Pearland, TX",
+        "website": "https://www.pearlandtx.gov/departments/community-development/permits"
+      },
+      "setback_requirements": {
+        "fire_code": "IFC 605.11 standard setbacks"
+      },
+      "special_notes": [
+        "CityWorks portal handles applications, payments, and inspection scheduling",
+        "Paper applications also available on website",
+        "CenterPoint Energy serves as T&D utility"
+      ]
+    },
+
+    "leander": {
+      "name": "City of Leander",
+      "county": "Williamson / Travis",
+      "population_estimate": 75000,
+      "utility": "Pedernales Electric Cooperative (PEC)",
+      "retail_electric_providers": false,
+      "permit_portal": {
+        "name": "Development Hub",
+        "url": "https://www.leandertx.gov/338/Development-Hub",
+        "type": "online",
+        "notes": "Predominantly paperless permitting system"
+      },
+      "permit_fees": {
+        "residential_range": "$100 - $300",
+        "fee_structure": "Per city ordinance fee schedule; technology fee added to all permits",
+        "notes": "Refer to City of Leander Code of Ordinances for most current fees"
+      },
+      "required_documents": [
+        "Online permit application via Development Hub",
+        "Site plan with panel layout",
+        "Electrical one-line diagram",
+        "PE-stamped plans (for systems >10kW)",
+        "Equipment specification sheets",
+        "PEC interconnection documentation"
+      ],
+      "pe_stamp_requirement": {
+        "threshold_kw": 10,
+        "description": "Systems exceeding 10kW require PE-stamped plans"
+      },
+      "solarapp_plus": {
+        "participating": false,
+        "status": "Not currently using SolarAPP+"
+      },
+      "inspections": {
+        "types": ["Electrical inspection", "Building inspection", "Final inspection"],
+        "scheduling": "Via Development Hub portal"
+      },
+      "processing_time": {
+        "standard_days": "5-10 business days"
+      },
+      "common_rejection_reasons": [
+        "Incomplete plan sets",
+        "Missing PE stamps",
+        "Missing PEC interconnection documentation"
+      ],
+      "contact": {
+        "phone": "(512) 528-9027",
+        "department": "Permits & Building Inspection",
+        "address": "201 N Brushy Street, Leander, TX 78641",
+        "website": "https://www.leandertx.gov/325/Permits-Building-Inspection"
+      },
+      "setback_requirements": {
+        "fire_code": "IFC 605.11 standard setbacks"
+      },
+      "special_notes": [
+        "Predominantly paperless permitting via Development Hub",
+        "Technology fee added to all permits",
+        "PEC (cooperative) serves as electric utility - different interconnection process than IOUs",
+        "Rapidly growing city in Austin metro"
+      ]
+    },
+
+    "cedar_park": {
+      "name": "City of Cedar Park",
+      "county": "Williamson / Travis",
+      "population_estimate": 80000,
+      "utility": "Pedernales Electric Cooperative (PEC)",
+      "retail_electric_providers": false,
+      "permit_portal": {
+        "name": "MGO Connect",
+        "url": "https://www.cedarparktexas.gov/163/Building-Permits-Inspections",
+        "type": "online"
+      },
+      "permit_fees": {
+        "residential_range": "$100 - $300",
+        "fee_structure": "Per city fee schedule"
+      },
+      "required_documents": [
+        "Online permit application via MGO Connect",
+        "Site plan with panel layout",
+        "Electrical one-line diagram",
+        "PE-stamped plans (for systems >10kW)",
+        "Equipment specification sheets",
+        "PEC interconnection documentation"
+      ],
+      "pe_stamp_requirement": {
+        "threshold_kw": 10,
+        "description": "Systems exceeding 10kW require PE-stamped plans"
+      },
+      "solarapp_plus": {
+        "participating": false,
+        "status": "Not currently using SolarAPP+"
+      },
+      "inspections": {
+        "types": ["Electrical inspection", "Building inspection", "Final inspection"],
+        "scheduling": "Via MGO Connect portal; inspections scheduled before 3pm listed on next business day",
+        "notes": "Required inspections vary by project type"
+      },
+      "processing_time": {
+        "standard_days": "5-10 business days"
+      },
+      "common_rejection_reasons": [
+        "Incomplete plan sets",
+        "Missing PE stamps",
+        "Missing PEC interconnection documentation"
+      ],
+      "contact": {
+        "phone": "512-401-5100",
+        "department": "Building Permits and Inspections Division",
+        "address": "450 Cypress Creek Rd, Bldg 1, Cedar Park, TX 78613",
+        "website": "https://www.cedarparktexas.gov/163/Building-Permits-Inspections"
+      },
+      "setback_requirements": {
+        "fire_code": "IFC 605.11 standard setbacks"
+      },
+      "special_notes": [
+        "MGO Connect for online permit applications and inspection scheduling",
+        "PEC (cooperative) serves as electric utility",
+        "Inspections scheduled before 3pm appear on next business day",
+        "Contact Building division at 512-401-5100 for project-specific requirements"
+      ]
+    }
+  },
+
+  "third_party_services": {
+    "solarapp_plus": {
+      "name": "SolarAPP+",
+      "provider": "NREL (National Renewable Energy Laboratory)",
+      "website": "https://solarapp.nrel.gov/",
+      "description": "Free automated online permitting platform providing instant permits for code-compliant residential PV and PV-plus-storage systems",
+      "texas_participants": {
+        "active": ["Houston"],
+        "piloting": ["San Antonio"],
+        "considering": ["Dallas"],
+        "total_national_jurisdictions": 275,
+        "total_national_states": 13
+      },
+      "cost_to_jurisdiction": "Free",
+      "benefits": [
+        "Instant automated code compliance check",
+        "Same-day permit issuance for qualifying systems",
+        "Compiles inspection checklist",
+        "Reduces review time from weeks to minutes"
+      ]
+    },
+    "opensolar_permit": {
+      "name": "OpenSolarPermit",
+      "description": "Open-source solar permitting platform",
+      "texas_adoption": "Limited adoption in Texas as of early 2026",
+      "notes": "No major Texas cities confirmed using OpenSolarPermit"
+    },
+    "third_party_plan_review": {
+      "description": "Under SB 1202 (effective Sept 1, 2025), licensed third-party professionals can review and inspect residential backup power systems if city permitting takes >2 business days",
+      "impact": "Available statewide as fallback when city process is slow",
+      "concerns": [
+        "Quality consistency varies by reviewer",
+        "Potential bias since reviewers are hired/paid by installer",
+        "Some cities oppose the legislation"
+      ]
+    }
+  },
+
+  "summary_comparison": {
+    "fastest_processing": [
+      {"jurisdiction": "Plano", "days": "3-5", "notes": "3-day turnaround goal"},
+      {"jurisdiction": "Houston (SolarAPP+)", "days": "Same day", "notes": "Instant for qualifying systems via SolarAPP+"},
+      {"jurisdiction": "Round Rock", "days": "5-10", "notes": "Simplified process, no structural drawings required"},
+      {"jurisdiction": "Lubbock", "days": "5-10", "notes": "Simple electrical permit process"}
+    ],
+    "slowest_processing": [
+      {"jurisdiction": "Dallas", "days": "15-25+", "notes": "Sequential review process"},
+      {"jurisdiction": "Irving", "days": "15-25", "notes": "Known difficult jurisdiction"},
+      {"jurisdiction": "San Antonio", "days": "10-20", "notes": "Completeness review step adds time"}
+    ],
+    "lowest_fees": [
+      {"jurisdiction": "Leander", "range": "$100-$300"},
+      {"jurisdiction": "Cedar Park", "range": "$100-$300"},
+      {"jurisdiction": "Round Rock", "flat_fee": "$150"},
+      {"jurisdiction": "Garland", "flat_fee": "$175"}
+    ],
+    "highest_fees": [
+      {"jurisdiction": "Dallas", "range": "$300-$600"},
+      {"jurisdiction": "San Antonio", "range": "$275-$525"},
+      {"jurisdiction": "Houston", "range": "$250-$500"},
+      {"jurisdiction": "Frisco", "range": "$75-$550", "notes": "Formula-based: $75 + $0.59/sqft, max $550"}
+    ],
+    "solarapp_plus_available": ["Houston (active)", "San Antonio (piloting)"],
+    "municipal_utilities": ["San Antonio (CPS Energy)", "Austin (Austin Energy)", "Lubbock (LP&L)", "Garland (GP&L)", "Denton (DME)", "Leander (PEC)", "Cedar Park (PEC)"],
+    "most_installer_friendly": ["Houston", "Austin", "Plano", "Round Rock"],
+    "most_challenging": ["Irving", "Dallas"]
+  }
+}

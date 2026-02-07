@@ -1,0 +1,889 @@
+{
+  "metadata": {
+    "title": "Texas Solar Utility Buyback Rates Database",
+    "version": "1.0.0",
+    "last_updated": "2026-02-06",
+    "notes": "Texas has a deregulated ERCOT market. T&D utilities handle wires/meters, REPs set retail/buyback rates. Municipal utilities and co-ops are vertically integrated and set their own rates. As of 2026, true 1:1 net metering is rare in Texas. Most REPs offer fixed-credit or real-time wholesale buyback plans. Residential ITC ended Jan 1 2026, making TPO (lease/PPA) dominant for new installs.",
+    "data_sources": [
+      "https://quickelectricity.com/texas-solar-buyback-net-metering-programs/",
+      "https://www.texaspowerguide.com/solar-buyback-plans-texas/",
+      "https://www.choosetexaspower.org/solar-buyback-plans/",
+      "https://homeenergyclub.com/solar/best-buyback-program-texas",
+      "https://programs.dsireusa.org/",
+      "Individual utility/REP websites"
+    ]
+  },
+  "market_context": {
+    "regulatory_framework": "Texas has no statewide net metering mandate. Each REP and municipal utility sets its own buyback terms.",
+    "ercot_deregulated_areas": "Most of Texas excluding El Paso, parts of East Texas (Entergy), and municipal/co-op territories",
+    "2026_trends": {
+      "fixed_export_rates": "Most REPs offer 3-5 cents/kWh fixed export credits",
+      "real_time_plans": "Growing trend toward real-time wholesale pricing that can spike during peak summer hours",
+      "battery_incentives": "Increasing focus on battery+solar plans with higher buyback rates during peak demand",
+      "itc_change": "Residential ITC expired Jan 1 2026; TPO (lease/PPA) now dominant as commercial ITC still available through TPO"
+    }
+  },
+  "municipal_utilities": [
+    {
+      "id": "austin_energy",
+      "name": "Austin Energy",
+      "type": "municipal",
+      "service_territory": "Austin, TX metro area (Travis County)",
+      "solar_program": {
+        "program_name": "Value of Solar (VoS)",
+        "buyback_rate_kwh": 0.0991,
+        "buyback_rate_description": "9.91 cents/kWh credit for 100% of solar production",
+        "net_metering_type": "value_of_solar",
+        "credit_mechanism": "Separate production meter; all solar production credited at VoS rate regardless of consumption timing",
+        "credit_rollover": "Month-to-month as bill credits; non-transferable; no cash-out",
+        "system_size_cap_kw": 20,
+        "system_size_notes": "Residential VoS limited to 20 kW; commercial systems 50 kW - 10 MW eligible for Solar Standard Offer Program",
+        "minimum_bill": null,
+        "interconnection": {
+          "process": "Submit application through Austin Energy; requires one-line diagram, site plan, equipment specs",
+          "fees": "Customer responsible for all interconnection costs",
+          "timeline_days": "30-60 days typical",
+          "meter": "Separate production meter installed by Austin Energy",
+          "requirements_doc": "Distribution System Interconnection Guide Rev 14.0 (March 2025)"
+        },
+        "rebates": {
+          "residential": "Check current availability - historically offered rebates but funding varies",
+          "commercial": "Solar Standard Offer Program for systems 50 kW - 10 MW"
+        }
+      },
+      "retail_rate_avg_kwh": 0.11,
+      "sources": [
+        "https://austinenergy.com/rates/residential-rates/value-of-solar-rate",
+        "https://programs.dsireusa.org/system/program/detail/5669",
+        "https://austinenergy.com/-/media/project/websites/shared/pdfs/rates/value-of-solarrider.pdf"
+      ]
+    },
+    {
+      "id": "cps_energy",
+      "name": "CPS Energy",
+      "type": "municipal",
+      "service_territory": "San Antonio, TX metro area (Bexar County and surrounding)",
+      "solar_program": {
+        "program_name": "Net Billing / Solar Buyback",
+        "buyback_rate_kwh": null,
+        "buyback_rate_description": "Full retail credit for generation up to monthly consumption; excess above consumption credited at avoided cost: ~2.0 cents/kWh summer (Jun-Sep), ~1.65 cents/kWh non-summer (Oct-May)",
+        "buyback_rates_detailed": {
+          "up_to_consumption": "Full retail rate (~12 cents/kWh)",
+          "excess_summer_kwh": 0.02,
+          "excess_nonsummer_kwh": 0.0165
+        },
+        "net_metering_type": "net_billing",
+        "credit_mechanism": "Net billing - generation offsets consumption at retail rate, excess at avoided cost",
+        "credit_rollover": "Dollar credits roll over month-to-month; forfeited each December with no payout",
+        "system_size_cap_kw": null,
+        "system_size_notes": "System must be sized based on historical consumption; no explicit kW cap published but sized to load",
+        "minimum_bill": null,
+        "interconnection": {
+          "process": "Submit interconnection application with one-line diagram, site plan, and equipment specs",
+          "fees": "Minimal application fees",
+          "timeline_days": "30-45 days typical",
+          "meter": "Bidirectional meter installed",
+          "requirements_doc": "CPS Energy Residential Solar Interconnection Process document"
+        },
+        "rebates": {
+          "residential": "Historically offered rebates up to $2,500; check current availability as funding cycles",
+          "notes": "San Antonio market - no ITC means cheap non-compliant panels acceptable"
+        }
+      },
+      "retail_rate_avg_kwh": 0.12,
+      "sources": [
+        "https://programs.dsireusa.org/system/program/detail/5547",
+        "https://www.solarreviews.com/blog/going-solar-with-cps-energy",
+        "https://www.cpsenergy.com/content/dam/corporate/en/Documents/EnergyEfficiency/Residential_Solar_Process_31425_ADA.pdf"
+      ]
+    },
+    {
+      "id": "el_paso_electric",
+      "name": "El Paso Electric (EPE)",
+      "type": "municipal_regulated",
+      "service_territory": "El Paso, TX and surrounding West Texas; also southern New Mexico",
+      "solar_program": {
+        "program_name": "Net Metering",
+        "buyback_rate_kwh": null,
+        "buyback_rate_description": "Retail rate credit for generation up to consumption; excess credited at avoided cost (~2-4 cents/kWh). Post-July 2025: only 10% of prior year usage can be exported at retail, remainder at avoided cost.",
+        "buyback_rates_detailed": {
+          "up_to_consumption": "Full retail rate credit",
+          "excess_avoided_cost_kwh": 0.03,
+          "excess_avoided_cost_note": "Varies; approximately 2-4 cents/kWh"
+        },
+        "net_metering_type": "net_metering_modified",
+        "credit_mechanism": "Monthly netting at retail rate up to consumption; excess at avoided cost; EPE pays out when balance reaches $50",
+        "credit_rollover": "Credits accumulate; EPE pays when balance reaches $50",
+        "system_size_cap_kw": 50,
+        "system_size_notes": "Systems up to 50 kW; must be sized based on prior 12 months consumption; cannot oversize",
+        "minimum_bill": 30.25,
+        "minimum_bill_note": "Monthly minimum bill of $30.25 regardless of solar offset",
+        "interconnection": {
+          "process": "Submit interconnection application for facilities up to 10 MW",
+          "fees": "Bidirectional meter installed at no cost to customer",
+          "timeline_days": "30-60 days",
+          "meter": "Bidirectional meter provided free by EPE",
+          "requirements_doc": "https://www.epelectric.com/renewables-tech/distributed-generation/texas-interconnection-of-facilities-up-to-10-mw"
+        },
+        "important_changes_2025": {
+          "effective_date": "2025-07-01",
+          "description": "New customers after July 1 2025 face export caps (10% of prior year usage) and lower compensation. Existing solar customers grandfathered on prior terms."
+        }
+      },
+      "retail_rate_avg_kwh": 0.13,
+      "sources": [
+        "https://programs.dsireusa.org/system/program/detail/5545",
+        "https://www.epelectric.com/renewables-tech/distributed-generation/texas-interconnection-of-facilities-up-to-10-mw",
+        "https://solarsmartliving.com/blogs/-what-el-paso-electrics-2025-rate-case-means-for-homeowners-and-solar-customers"
+      ]
+    },
+    {
+      "id": "denton_municipal_electric",
+      "name": "Denton Municipal Electric (DME)",
+      "type": "municipal",
+      "service_territory": "Denton, TX",
+      "solar_program": {
+        "program_name": "Solar Buyback / Value of Solar Rate",
+        "buyback_rate_kwh": 0.05,
+        "buyback_rate_description": "5.0 cents/kWh for excess energy exported to grid (effective Jan 1, 2025; reduced from prior ~10.65 cents/kWh)",
+        "net_metering_type": "value_of_solar",
+        "credit_mechanism": "Bidirectional meter measures flows; excess generation credited at buyback rate",
+        "credit_rollover": "Monthly bill credits",
+        "system_size_cap_kw": null,
+        "system_size_notes": "Check with DME for current limits",
+        "minimum_bill": null,
+        "interconnection": {
+          "process": "Apply through DME; bidirectional meter installed",
+          "fees": "Contact DME for current fees",
+          "timeline_days": null,
+          "meter": "Bidirectional meter replaces existing meter"
+        }
+      },
+      "retail_rate_avg_kwh": 0.11,
+      "sources": [
+        "https://www.cityofdenton.com/CivicAlerts.aspx?AID=897",
+        "https://voiceofdenton.com/denton-city-council-solar-buyback-rate-2025/"
+      ]
+    },
+    {
+      "id": "brownsville_pub",
+      "name": "Brownsville Public Utilities Board (BPUB)",
+      "type": "municipal",
+      "service_territory": "Brownsville, TX (Cameron County)",
+      "solar_program": {
+        "program_name": "Solar Buyback Program",
+        "buyback_rate_kwh": 0.05,
+        "buyback_rate_description": "Excess energy valued at Fuel & Purchase Energy Charge (FPEC) rate; approximately 5 cents/kWh as of Jan 2025",
+        "net_metering_type": "avoided_cost",
+        "credit_mechanism": "Real-time metering; excess valued at FPEC rate",
+        "credit_rollover": "Bill credits",
+        "system_size_cap_kw": null,
+        "system_size_notes": "Contact BPUB for current limits",
+        "minimum_bill": null,
+        "interconnection": {
+          "process": "Contact BPUB for application",
+          "fees": null,
+          "timeline_days": null,
+          "meter": "Bidirectional meter"
+        }
+      },
+      "retail_rate_avg_kwh": 0.10,
+      "sources": [
+        "https://www.solarreviews.com/blog/texas-net-metering-complete-guide"
+      ]
+    },
+    {
+      "id": "new_braunfels_utilities",
+      "name": "New Braunfels Utilities (NBU)",
+      "type": "municipal",
+      "service_territory": "New Braunfels, TX (Comal County)",
+      "solar_program": {
+        "program_name": "Solar Net Metering",
+        "buyback_rate_kwh": 0,
+        "buyback_rate_description": "NBU does NOT purchase excess solar energy. Net metering offsets consumption only; no buyback for overproduction.",
+        "net_metering_type": "net_metering_no_export_credit",
+        "credit_mechanism": "Solar offsets consumption only; excess generation not compensated",
+        "credit_rollover": "N/A - no export credits",
+        "system_size_cap_kw": null,
+        "system_size_notes": "System should be sized to match or stay below consumption",
+        "minimum_bill": null,
+        "monthly_dg_fee_per_kw": 1.37,
+        "monthly_dg_fee_note": "Monthly renewable generation fee of $1.37 per kW of installed capacity",
+        "interconnection": {
+          "process": "Apply through NBU",
+          "fees": "Monthly $1.37/kW DG fee",
+          "timeline_days": null,
+          "meter": "Bidirectional meter"
+        },
+        "rebates": {
+          "residential": "Solar Rebate Program up to $3,000 credited to electric account after installation"
+        }
+      },
+      "retail_rate_avg_kwh": 0.11,
+      "sources": [
+        "https://www.hesolarllc.com/nbu/",
+        "https://www.gofreedompower.com/blog/guide-to-going-solar-with-new-braunfels-utilities-nbu"
+      ]
+    }
+  ],
+  "cooperatives": [
+    {
+      "id": "pedernales_electric_coop",
+      "name": "Pedernales Electric Cooperative (PEC)",
+      "type": "cooperative",
+      "service_territory": "Texas Hill Country - 24 counties west of Austin (largest electric co-op in US)",
+      "solar_program": {
+        "program_name": "Sustainable Power Credit / DG Interconnection",
+        "buyback_rate_kwh": 0.0827,
+        "buyback_rate_description": "Sustainable Power Credit at 8.27 cents/kWh (increased 19% effective March 2025, from 6.95 cents/kWh). Rate determined by Value of Solar Study.",
+        "net_metering_type": "value_of_solar",
+        "credit_mechanism": "All power flowing into distribution system credited at Sustainable Power Credit rate",
+        "credit_rollover": "Bill credits",
+        "system_size_cap_kw": null,
+        "system_size_notes": "Tier I: up to 50 kW; Tier II: greater than 50 kW (different fee structure)",
+        "minimum_bill": null,
+        "interconnection": {
+          "process": "Must apply and receive PEC approval BEFORE installation; permission to operate (PTO) required before generating",
+          "fees": {
+            "tier_1_up_to_50kw": 500,
+            "tier_2_over_50kw": 400,
+            "engineering_study": "At cost if required"
+          },
+          "timeline_days": "30-45 days typical",
+          "meter": "Bidirectional meter installed by PEC",
+          "requirements_doc": "https://mypec.com/solar-and-distributed-generation-dg/"
+        }
+      },
+      "retail_rate_avg_kwh": 0.12,
+      "sources": [
+        "https://mypec.com/solar-and-distributed-generation-dg/",
+        "https://mypec.com/dg-interconnection-rates/",
+        "https://freedomsolarpower.com/blog/pec-solar-buyback-rate-increases-by-19"
+      ]
+    },
+    {
+      "id": "bluebonnet_electric_coop",
+      "name": "Bluebonnet Electric Cooperative",
+      "type": "cooperative",
+      "service_territory": "Central Texas - 14 counties east of Austin",
+      "solar_program": {
+        "program_name": "Solar Tariff / DG Interconnection",
+        "buyback_rate_kwh": 0.063,
+        "buyback_rate_description": "Returned Energy credited at 6.3 cents/kWh; Delivered Energy charged at 8.7 cents/kWh. Solar Tariff Rate recalculated every August.",
+        "buyback_rates_detailed": {
+          "delivered_energy_kwh": 0.087,
+          "returned_energy_credit_kwh": 0.063
+        },
+        "net_metering_type": "net_billing",
+        "credit_mechanism": "Two options: (1) Sell all solar production at ERCOT market value, or (2) Self-consume and sell excess at market value",
+        "credit_rollover": "Bill credits",
+        "system_size_cap_kw": null,
+        "system_size_notes": "Contact Bluebonnet for current limits",
+        "minimum_bill": null,
+        "interconnection": {
+          "process": "Apply through Bluebonnet; interconnection agreement required",
+          "fees": null,
+          "timeline_days": null,
+          "meter": "Bidirectional meter with separate delivered/returned energy tracking"
+        }
+      },
+      "retail_rate_avg_kwh": 0.087,
+      "sources": [
+        "https://www.bluebonnet.coop/large-scale-solar",
+        "https://bluebonnet.coop/solar-101",
+        "https://www.hesolarllc.com/bluebonnet-electric-solar/"
+      ]
+    }
+  ],
+  "regulated_utilities": [
+    {
+      "id": "entergy_texas",
+      "name": "Entergy Texas",
+      "type": "regulated_iou",
+      "service_territory": "Southeast Texas - 17 counties (Beaumont, Port Arthur, The Woodlands, Conroe area)",
+      "regulatory_note": "Not in ERCOT; regulated by PUCT; vertically integrated",
+      "solar_program": {
+        "program_name": "Net Metering (Schedule SQF / LQF)",
+        "buyback_rate_kwh": null,
+        "buyback_rate_description": "Avoided cost rate based on monthly MISO energy settlement data; varies monthly. Typically 2-5 cents/kWh.",
+        "net_metering_options": {
+          "option_1": "No purchase - one meter measures net consumption; no credits for export",
+          "option_2": "Excess solar purchased at avoided cost rate (best savings option)",
+          "option_3": "All solar production purchased at avoided cost rate"
+        },
+        "net_metering_type": "avoided_cost",
+        "credit_mechanism": "Under Option 2: excess beyond consumption purchased at avoided cost. On-peak and off-peak rates calculated from MISO data.",
+        "credit_rollover": "Bill credits",
+        "system_size_cap_kw": 100,
+        "system_size_notes": "Schedule SQF for systems under 100 kW; Schedule LQF for systems over 100 kW with separately calculated rates",
+        "minimum_bill": null,
+        "interconnection": {
+          "process": "Contact Entergy Texas for interconnection application",
+          "fees": null,
+          "timeline_days": null,
+          "meter": "Bidirectional meter"
+        }
+      },
+      "retail_rate_avg_kwh": 0.12,
+      "sources": [
+        "https://www.entergytexas.com/net-metering",
+        "https://www.solarreviews.com/blog/should-you-go-solar-with-entergy-texas"
+      ]
+    }
+  ],
+  "retail_electric_providers": [
+    {
+      "id": "chariot_energy",
+      "name": "Chariot Energy",
+      "type": "REP",
+      "service_territories": ["Oncor", "AEP Texas", "TNMP"],
+      "solar_plans": [
+        {
+          "plan_name": "Shine (Real-Time Wholesale)",
+          "buyback_rate_kwh": null,
+          "buyback_rate_description": "Real-time ERCOT wholesale settlement rate, capped at 25 cents/kWh",
+          "buyback_type": "real_time_wholesale",
+          "import_rate_kwh": 0.087,
+          "import_rate_note": "~8.7 cents/kWh energy charge (varies by area)",
+          "base_charge_monthly": 9.95,
+          "contract_term_months": 36,
+          "early_termination_fee": null,
+          "credit_rollover": "Credits roll over month-to-month indefinitely; no cap or expiration",
+          "credit_cashout": false,
+          "notes": "Best for high-export homes; summer credits can be significant"
+        },
+        {
+          "plan_name": "GreenVolt (Fixed Rate)",
+          "buyback_rate_kwh": 0.07,
+          "buyback_rate_description": "Fixed 7.0 cents/kWh solar buyback credit",
+          "buyback_type": "fixed",
+          "import_rate_kwh": 0.119,
+          "import_rate_note": "~11.9 cents/kWh energy charge",
+          "base_charge_monthly": 29.95,
+          "contract_term_months": 12,
+          "early_termination_fee": null,
+          "credit_rollover": "Credits roll over month-to-month indefinitely",
+          "credit_cashout": false,
+          "notes": "Higher than average fixed buyback rate; higher base charge"
+        },
+        {
+          "plan_name": "PowerBank (Fixed Rate)",
+          "buyback_rate_kwh": 0.03,
+          "buyback_rate_description": "Fixed 3.0 cents/kWh solar buyback credit",
+          "buyback_type": "fixed",
+          "import_rate_kwh": null,
+          "base_charge_monthly": null,
+          "contract_term_months": null,
+          "early_termination_fee": null,
+          "credit_rollover": "Credits roll over month-to-month indefinitely",
+          "credit_cashout": false,
+          "notes": "Lower buyback but potentially lower import rate"
+        }
+      ],
+      "sources": [
+        "https://chariotenergy.com/solar-buyback/",
+        "https://quickelectricity.com/texas-solar-buyback-net-metering-programs/"
+      ]
+    },
+    {
+      "id": "txu_energy",
+      "name": "TXU Energy",
+      "type": "REP",
+      "service_territories": ["Oncor", "CenterPoint", "AEP Texas", "TNMP"],
+      "solar_plans": [
+        {
+          "plan_name": "Solar Buyback Match 36",
+          "buyback_rate_kwh": null,
+          "buyback_rate_description": "Competitive 1-to-1 buyback rate - credits at same rate you pay for energy. Rate varies by ZIP code; typically 3.5-6.0 cents/kWh as of Jan 2026.",
+          "buyback_type": "matched_rate",
+          "import_rate_kwh": null,
+          "import_rate_note": "Varies by ZIP code and TDU; check EFL for specific rate",
+          "base_charge_monthly": null,
+          "contract_term_months": 36,
+          "early_termination_fee": 395,
+          "credit_rollover": "Credits bank indefinitely while on eligible TXU solar plan; up to $1,000 max banked credits",
+          "credit_cashout": false,
+          "max_banked_credits": 1000,
+          "notes": "Best for homes with large solar that produces more than consumed; 36-month commitment"
+        },
+        {
+          "plan_name": "Solar Buyback Saver 24",
+          "buyback_rate_kwh": null,
+          "buyback_rate_description": "Lower energy rate with buyback credits; best for homes using more grid power than solar produces. Rate varies 3.5-6.0 cents/kWh.",
+          "buyback_type": "fixed",
+          "import_rate_kwh": null,
+          "import_rate_note": "Lower import rate than Match plan; varies by ZIP",
+          "base_charge_monthly": null,
+          "contract_term_months": 24,
+          "early_termination_fee": null,
+          "credit_rollover": "Credits bank indefinitely while on eligible TXU solar plan",
+          "credit_cashout": false,
+          "notes": "Lower import rate favors homes that consume more from grid"
+        }
+      ],
+      "sources": [
+        "https://www.txu.com/electricity-plans/home-solar-buyback",
+        "https://homeenergyclub.com/texas-electricity-companies/txu-energy/solar-buyback-match-36"
+      ]
+    },
+    {
+      "id": "green_mountain_energy",
+      "name": "Green Mountain Energy",
+      "type": "REP",
+      "service_territories": ["Oncor", "CenterPoint", "AEP Texas"],
+      "solar_plans": [
+        {
+          "plan_name": "Renewable Rewards Solar Max",
+          "buyback_rate_kwh": null,
+          "buyback_rate_description": "Real-time wholesale rate for Load Zone; no cap on amount earned",
+          "buyback_type": "real_time_wholesale",
+          "import_rate_kwh": null,
+          "base_charge_monthly": null,
+          "contract_term_months": null,
+          "early_termination_fee": null,
+          "credit_rollover": "Bill credits",
+          "credit_cashout": false,
+          "notes": "Best for maximizing export value during peak demand periods"
+        },
+        {
+          "plan_name": "Renewable Rewards Perfect Match",
+          "buyback_rate_kwh": null,
+          "buyback_rate_description": "Export credit at same per-kWh rate as import (1:1 match). Rate varies 15.9-16.9 cents/kWh.",
+          "buyback_type": "matched_rate",
+          "import_rate_kwh": null,
+          "import_rate_note": "15.9-16.9 cents/kWh (higher than average but matched for export)",
+          "base_charge_monthly": null,
+          "contract_term_months": 36,
+          "early_termination_fee": 395,
+          "credit_rollover": "Bill credits",
+          "credit_cashout": false,
+          "notes": "High import rate but true 1:1 net metering equivalent; limited to GME solar installs"
+        },
+        {
+          "plan_name": "Renewable Rewards Essential",
+          "buyback_rate_kwh": 0.039,
+          "buyback_rate_description": "Fixed 3.9 cents/kWh export credit",
+          "buyback_type": "fixed",
+          "import_rate_kwh": null,
+          "base_charge_monthly": null,
+          "contract_term_months": 12,
+          "early_termination_fee": 150,
+          "credit_rollover": "Bill credits",
+          "credit_cashout": false,
+          "notes": "100% renewable; lower fixed buyback rate"
+        }
+      ],
+      "sources": [
+        "https://www.greenmountainenergy.com/en/home-energy-solutions/renewable-rewards-buyback-program",
+        "https://www.greenmountainenergy.com/en/home-energy-solutions/renewable-rewards-solar-max-plan"
+      ]
+    },
+    {
+      "id": "gexa_energy",
+      "name": "Gexa Energy",
+      "type": "REP",
+      "service_territories": ["Oncor", "CenterPoint", "AEP Texas", "TNMP"],
+      "solar_plans": [
+        {
+          "plan_name": "Solar Export 12",
+          "buyback_rate_kwh": 0.03,
+          "buyback_rate_description": "Fixed 3.0 cents/kWh export credit",
+          "buyback_type": "fixed",
+          "import_rate_kwh": null,
+          "import_rate_note": "Varies by area; affordable fixed grid rate",
+          "base_charge_monthly": null,
+          "contract_term_months": 12,
+          "early_termination_fee": 150,
+          "credit_rollover": "Credits roll over monthly; no cash-out",
+          "credit_cashout": false,
+          "notes": "Straightforward fixed export rate; lower than competitors"
+        },
+        {
+          "plan_name": "Battery Benefits 12",
+          "buyback_rate_kwh": null,
+          "buyback_rate_description": "Higher buyback rate for solar+battery systems; requires battery storage. Rate not publicly listed - check EFL.",
+          "buyback_type": "fixed_premium",
+          "import_rate_kwh": null,
+          "base_charge_monthly": null,
+          "contract_term_months": 12,
+          "early_termination_fee": 150,
+          "credit_rollover": "Credits roll over monthly; no cash-out",
+          "credit_cashout": false,
+          "battery_required": true,
+          "notes": "Higher buyback rate incentivizes battery dispatch during peak demand"
+        }
+      ],
+      "sources": [
+        "https://www.gexaenergy.com/solar",
+        "https://www.choosetexaspower.org/solar-buyback-plans/"
+      ]
+    },
+    {
+      "id": "reliant_energy",
+      "name": "Reliant Energy",
+      "type": "REP",
+      "service_territories": ["Oncor", "CenterPoint", "AEP Texas"],
+      "solar_plans": [
+        {
+          "plan_name": "Solar Payback Plus",
+          "buyback_rate_kwh": null,
+          "buyback_rate_description": "Bill credits for excess energy; credit rate differs from import rate - see EFL for specific rate. Typically lower than retail rate.",
+          "buyback_type": "fixed",
+          "import_rate_kwh": null,
+          "base_charge_monthly": null,
+          "contract_term_months": null,
+          "early_termination_fee": null,
+          "credit_rollover": "Bill credits up to monthly usage",
+          "credit_cashout": false,
+          "notes": "Credits up to monthly usage; relatively low buyback vs competitors"
+        },
+        {
+          "plan_name": "Solar Payback Match",
+          "buyback_rate_kwh": null,
+          "buyback_rate_description": "Real-time ERCOT Load Zone Real-Time Settlement Point Price (RTSPP) in 15-minute intervals; no cap on earnings",
+          "buyback_type": "real_time_wholesale",
+          "import_rate_kwh": null,
+          "base_charge_monthly": null,
+          "contract_term_months": null,
+          "early_termination_fee": null,
+          "credit_rollover": "Bill credits",
+          "credit_cashout": false,
+          "notes": "Wholesale rate plan; earnings vary significantly by season and time of day"
+        }
+      ],
+      "sources": [
+        "https://www.reliant.com/en/residential/electricity/renewable-energy/solar/solar-payback-plan",
+        "https://www.reliant.com/en/residential/electricity/renewable-energy/solar/solarmatch"
+      ]
+    },
+    {
+      "id": "rhythm_energy",
+      "name": "Rhythm Energy",
+      "type": "REP",
+      "service_territories": ["Oncor", "CenterPoint", "AEP Texas"],
+      "solar_plans": [
+        {
+          "plan_name": "PowerShift Solar Buyback 12",
+          "buyback_rate_kwh": null,
+          "buyback_rate_description": "Time-of-use rates with three zones: off-peak, on-peak, and ultra on-peak. Export rates above 20 cents/kWh between 7-9 PM. Both import and export rates vary by hour.",
+          "buyback_type": "time_of_use",
+          "import_rate_kwh": null,
+          "import_rate_note": "Time-of-use with different rates per hour zone",
+          "base_charge_monthly": null,
+          "contract_term_months": 12,
+          "early_termination_fee_per_month": 20,
+          "early_termination_fee_note": "$20 per remaining month",
+          "credit_rollover": "Bill credits; unlimited rollover",
+          "credit_cashout": false,
+          "system_size_cap_kw": 20,
+          "battery_friendly": true,
+          "notes": "Battery-friendly plan; store daytime solar and export during 7-9 PM peak for 20+ cents/kWh. 100% renewable."
+        }
+      ],
+      "sources": [
+        "https://www.gotrhythm.com/texas-solar-buyback",
+        "https://homeenergyclub.com/solar/best-buyback-program-texas"
+      ]
+    },
+    {
+      "id": "octopus_energy",
+      "name": "Octopus Energy",
+      "type": "REP",
+      "service_territories": ["Oncor", "CenterPoint", "AEP Texas"],
+      "solar_plans": [
+        {
+          "plan_name": "Solar Buyback (Wholesale)",
+          "buyback_rate_kwh": null,
+          "buyback_rate_description": "Real-time Texas wholesale rate; changes every 15 minutes. Summer avg 14-17 cents/kWh; winter/spring/fall avg 1-3 cents/kWh.",
+          "buyback_type": "real_time_wholesale",
+          "buyback_rates_seasonal": {
+            "summer_avg_kwh": "0.14-0.17",
+            "winter_spring_fall_avg_kwh": "0.01-0.03"
+          },
+          "import_rate_kwh": null,
+          "base_charge_monthly": null,
+          "contract_term_months": null,
+          "early_termination_fee": null,
+          "credit_rollover": "Credits roll over indefinitely; no cap; no expiration",
+          "credit_cashout": false,
+          "notes": "Top customers earn $600-900+ in summer months. Octopus GridBoost pays $40/month extra for Enphase IQ battery dispatch during peak grid stress.",
+          "gridboost": {
+            "monthly_payment": 40,
+            "description": "Pays $40/month to manage your Enphase IQ battery and dispatch during peak grid stress",
+            "compatible_batteries": ["Enphase IQ"]
+          }
+        }
+      ],
+      "sources": [
+        "https://octopusenergy.com/help-and-faqs/how-does-our-buyback-rate-work",
+        "https://octopusenergy.com/blog/guide-to-solar-buyback-texas"
+      ]
+    },
+    {
+      "id": "almika_energy",
+      "name": "Almika Solar",
+      "type": "REP",
+      "service_territories": ["Oncor", "CenterPoint", "AEP Texas", "TNMP"],
+      "solar_plans": [
+        {
+          "plan_name": "60 Energy Plus Buyback",
+          "buyback_rate_kwh": 0.10,
+          "buyback_rate_description": "Fixed 10.0 cents/kWh solar buyback credit - one of the highest fixed rates in Texas",
+          "buyback_type": "fixed",
+          "import_rate_kwh": 0.145,
+          "import_rate_note": "14.5 cents/kWh + TDU charges",
+          "base_charge_monthly": 14.95,
+          "contract_term_months": 60,
+          "early_termination_fee_per_month": 14.95,
+          "credit_rollover": "Bill credits",
+          "credit_cashout": false,
+          "notes": "Highest fixed buyback rate available; 60-month commitment; 100% green energy. Higher import rate than average."
+        }
+      ],
+      "sources": [
+        "https://almikasolar.net/",
+        "https://www.texaspowerguide.com/solar-buyback-plans-texas/"
+      ]
+    },
+    {
+      "id": "ambit_energy",
+      "name": "Ambit Energy",
+      "type": "REP",
+      "service_territories": ["Oncor", "CenterPoint", "AEP Texas", "TNMP"],
+      "solar_plans": [
+        {
+          "plan_name": "Texas Solar Buyback",
+          "buyback_rate_kwh": 0.035,
+          "buyback_rate_description": "Fixed 3.5 cents/kWh export credit",
+          "buyback_type": "fixed",
+          "import_rate_kwh": null,
+          "import_rate_note": "12.2-12.6 cents/kWh + TDU (varies by utility)",
+          "base_charge_monthly": 9.95,
+          "contract_term_months": 12,
+          "early_termination_fee": 199,
+          "credit_rollover": "Bill credits",
+          "credit_cashout": false,
+          "notes": "Standard fixed buyback; moderate import rate"
+        }
+      ],
+      "sources": [
+        "https://www.texaspowerguide.com/solar-buyback-plans-texas/"
+      ]
+    },
+    {
+      "id": "tesla_electric",
+      "name": "Tesla Electric",
+      "type": "REP",
+      "service_territories": ["Oncor", "CenterPoint"],
+      "solar_plans": [
+        {
+          "plan_name": "Dynamic Plan",
+          "buyback_rate_kwh": null,
+          "buyback_rate_description": "90% of ERCOT Real-Time Market Price; rate fluctuates every 15 minutes",
+          "buyback_type": "real_time_wholesale",
+          "buyback_rate_percentage_of_wholesale": 90,
+          "import_rate_kwh": null,
+          "import_rate_note": "~10.7 cents/kWh + TDU",
+          "base_charge_monthly": null,
+          "contract_term_months": 12,
+          "early_termination_fee": 0,
+          "credit_rollover": "Bill credits",
+          "credit_cashout": false,
+          "notes": "Designed for Tesla vehicle and Powerwall owners. No ETF. Virtual Power Plant available in Oncor/CenterPoint areas: $10/month bill credit for Powerwall dispatch permission.",
+          "virtual_power_plant": {
+            "monthly_payment": 10,
+            "description": "$10/month bill credit in exchange for permission to discharge Powerwall during grid stress",
+            "compatible_hardware": ["Tesla Powerwall"],
+            "service_territories": ["Oncor", "CenterPoint"]
+          },
+          "powerwall_rebate": {
+            "amount_per_unit": 500,
+            "max_units": 2,
+            "max_total": 1000,
+            "program_end": "2026-03-31",
+            "description": "Powerwall 3 rebate: $500 per unit (max $1,000) through March 31, 2026"
+          }
+        }
+      ],
+      "sources": [
+        "https://www.tesla.com/support/tesla-electric/dynamic",
+        "https://www.texaspowerguide.com/solar-buyback-plans-texas/"
+      ]
+    },
+    {
+      "id": "champion_energy",
+      "name": "Champion Energy",
+      "type": "REP",
+      "service_territories": ["Oncor", "CenterPoint", "AEP Texas", "TNMP"],
+      "solar_plans": [
+        {
+          "plan_name": "Indexed Solar Buyback",
+          "buyback_rate_kwh": null,
+          "buyback_rate_description": "Real-time wholesale market price; credits roll over monthly but no cash-out option. Most Champion plans include indexed solar buyback by default.",
+          "buyback_type": "real_time_wholesale",
+          "import_rate_kwh": null,
+          "base_charge_monthly": null,
+          "contract_term_months": null,
+          "early_termination_fee": null,
+          "credit_rollover": "Credits roll over monthly; no cash-out",
+          "credit_cashout": false,
+          "notes": "Dynamic pricing tied to wholesale market; included with most Champion electricity plans"
+        }
+      ],
+      "sources": [
+        "https://www.championenergyservices.com/Residential/Customer-Care/Energy-101/Solar-Buyback-FAQs/Solar-Buyback-Rate-History",
+        "https://championenergyservices.com/Residential/Customer-Care/Energy-101/Solar-Buyback-FAQs"
+      ]
+    }
+  ],
+  "transmission_distribution_utilities": [
+    {
+      "id": "oncor",
+      "name": "Oncor Electric Delivery",
+      "type": "T&D",
+      "service_territory": "Dallas-Fort Worth metro, North/Central/West Texas (largest T&D in Texas, 10+ million customers)",
+      "role": "Handles wires, meters, and interconnection. Does NOT set retail or buyback rates (REPs do that).",
+      "interconnection": {
+        "process": "Web-based installer portal for application submission and tracking. Steps: (1) Installer submits tariff application, (2) Customer signs, (3) Submit via web portal, (4) Oncor reviews and performs study, (5) Interconnection Agreement issued, (6) Permission to Operate granted, (7) Meter reprogrammed (~3 weeks after PTO)",
+        "residential_timeline_days": "30-45 average; can be longer in some cases",
+        "large_scale_timeline_months": "9-12 for large-scale DG projects",
+        "impact_study_weeks": "6-8 weeks if required",
+        "fees": {
+          "small_inverter_residential": "No pre-interconnection study fees for small inverter-based systems",
+          "over_500kw": "Study fees required for systems >500 kW"
+        },
+        "meter": "Bidirectional smart meter; reprogramming takes ~3 weeks after PTO",
+        "disconnect_requirements": "Manual disconnect device must be visible, lockable, labeled, with visual break, accessible to Oncor, capable of being locked open. Located on exterior wall near Oncor meter.",
+        "portal_url": "https://www.oncor.com/content/oncorwww/us/en/home/smart-energy/renewables-solar-and-more/for-installers.html",
+        "contact": "dg@oncor.com",
+        "requirements_updated": "May 1, 2025"
+      },
+      "delivery_charges": {
+        "base_monthly": 4.23,
+        "per_kwh": 0.056032,
+        "note": "TDU delivery charges are in addition to REP energy charges"
+      },
+      "sources": [
+        "https://www.oncor.com/content/oncorwww/us/en/home/smart-energy/renewables-solar-and-more/for-installers.html",
+        "https://www.oncor.com/content/oncorwww/us/en/home/smart-energy/renewables-solar-and-more/residential-small-commercial-thinking-about-solar.html"
+      ]
+    },
+    {
+      "id": "centerpoint_energy",
+      "name": "CenterPoint Energy",
+      "type": "T&D",
+      "service_territory": "Houston metro, greater Houston area (2.8+ million metered customers)",
+      "role": "Handles wires, meters, and interconnection. Does NOT set retail or buyback rates (REPs do that).",
+      "interconnection": {
+        "process": "Register on DG interconnection portal (https://plus.anbetrack.com/cnp-dg/). Steps: (1) Submit application with one-line diagram, layout diagram, inverter/panel specs, (2) CenterPoint design review (no study for <25kW), (3) Install system, (4) Submit inspection photos, (5) CenterPoint sends Interconnection Agreement (ICA), (6) Sign ICA, (7) PTO issued, (8) Meter reprogrammed",
+        "residential_timeline_days": "30-45 typical for systems <25kW",
+        "fees": {
+          "small_residential": "Minimal; typically $50-500 total",
+          "study_threshold_kw": 25,
+          "study_note": "Systems <25kW AC typically do not require interconnection study"
+        },
+        "meter": "Existing smart meter captures excess generation; reprogrammed after PTO",
+        "portal_url": "https://plus.anbetrack.com/cnp-dg/",
+        "contact": "residential.dg@centerpointenergy.com or 713-945-4155"
+      },
+      "delivery_charges": {
+        "base_monthly": 4.90,
+        "per_kwh": 0.060009,
+        "note": "TDU delivery charges are in addition to REP energy charges"
+      },
+      "sources": [
+        "https://www.centerpointenergy.com/en-us/Services/Pages/wind-solar-application-guidelines.aspx",
+        "https://www.centerpointenergy.com/en-us/Services/Pages/DGAP-FAQs.aspx"
+      ]
+    },
+    {
+      "id": "aep_texas",
+      "name": "AEP Texas",
+      "type": "T&D",
+      "service_territory": "South Texas (Corpus Christi, Rio Grande Valley, Laredo) and West Texas; split into AEP Texas Central and AEP Texas North",
+      "role": "Handles wires, meters, and interconnection. Does NOT set retail or buyback rates (REPs do that).",
+      "interconnection": {
+        "process": "Submit application with documentation and fees. Steps: (1) Submit DG application, (2) AEP technical review, (3) Interconnection Service Agreement (ISA) issued, (4) Customer signs ISA and pays for equipment, (5) Permission to Operate (PTO) letter issued, (6) Meter installed/replaced for inflow-outflow measurement",
+        "residential_timeline_days": "30-60 typical",
+        "fees": {
+          "meter_replacement": "Customer expense if requesting in-flow/out-flow metering",
+          "study_fees": "Applicable for larger systems; specific amounts vary"
+        },
+        "meter": "Bidirectional meter; replaced at customer expense if new meter needed. Metered values provided to REP for billing.",
+        "contact": "https://www.aeptexas.com/business/builders/generating-equipment"
+      },
+      "delivery_charges": {
+        "note": "Varies between AEP Central and AEP North territories"
+      },
+      "sources": [
+        "https://www.aeptexas.com/clean-energy/renewable/solar/",
+        "https://www.aeptexas.com/business/builders/generating-equipment"
+      ]
+    },
+    {
+      "id": "tnmp",
+      "name": "Texas-New Mexico Power (TNMP)",
+      "type": "T&D",
+      "service_territory": "Scattered service areas across Texas including parts of Midlothian, Lewisville, Galveston area, and other communities",
+      "role": "Handles wires, meters, and interconnection. Does NOT set retail or buyback rates (REPs do that).",
+      "interconnection": {
+        "process": "Steps: (1) Optional preliminary inquiry, (2) Submit interconnection application, (3) TNMP engineering analysis, (4) System installation and inspection, (5) Permission to Operate (PTO) granted",
+        "residential_timeline_days": "30-60 typical",
+        "fees": {
+          "note": "Contact TNMP for current fee schedule"
+        },
+        "meter": "Bidirectional meter",
+        "application_form": "https://tnmp.com/sites/default/files/2020-02/tnmp-dg-interconnection-app-0220.pdf",
+        "contact": "https://tnmp.com/customers/interconnecting"
+      },
+      "delivery_charges": {
+        "note": "Check TNMP tariff for current charges"
+      },
+      "sources": [
+        "https://tnmp.com/customers/interconnecting",
+        "https://www.solchasolar.com/texas/texas-new-mexico-power-(tnmp)-solar-interconnection"
+      ]
+    }
+  ],
+  "rate_comparison_summary": {
+    "best_fixed_rate": {
+      "provider": "Almika Solar",
+      "plan": "60 Energy Plus Buyback",
+      "rate_kwh": 0.10,
+      "caveat": "60-month commitment; 14.5 cents/kWh import rate is high"
+    },
+    "best_matched_rate": {
+      "provider": "Green Mountain Energy",
+      "plan": "Renewable Rewards Perfect Match",
+      "rate_kwh": "15.9-16.9 cents/kWh (1:1 match)",
+      "caveat": "High import rate; limited to GME installations; $395 ETF; 36-month term"
+    },
+    "best_real_time": {
+      "provider": "Octopus Energy",
+      "plan": "Solar Buyback (Wholesale)",
+      "rate_kwh": "14-17 cents/kWh summer avg; 1-3 cents/kWh off-season",
+      "caveat": "Highly seasonal; low earnings in winter. GridBoost adds $40/month for battery owners."
+    },
+    "best_municipal": {
+      "provider": "Austin Energy",
+      "plan": "Value of Solar",
+      "rate_kwh": 0.0991,
+      "caveat": "Only available in Austin Energy service territory"
+    },
+    "best_coop": {
+      "provider": "Pedernales Electric Cooperative",
+      "plan": "Sustainable Power Credit",
+      "rate_kwh": 0.0827,
+      "caveat": "Only available in PEC service territory (TX Hill Country)"
+    },
+    "best_battery_plan": {
+      "provider": "Rhythm Energy",
+      "plan": "PowerShift Solar Buyback 12",
+      "rate_kwh": "20+ cents/kWh during 7-9 PM peak",
+      "caveat": "Requires battery to time-shift solar; TOU rates mean variable costs"
+    },
+    "typical_fixed_range": "3-7 cents/kWh",
+    "typical_wholesale_summer": "10-25 cents/kWh (can spike to $5/kWh)",
+    "typical_wholesale_winter": "1-3 cents/kWh"
+  }
+}

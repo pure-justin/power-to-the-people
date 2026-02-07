@@ -1,0 +1,610 @@
+{
+  "metadata": {
+    "title": "TPO & Solar Finance Providers - Texas 2026",
+    "description": "Third-Party Ownership solar providers and finance companies active in Texas, post-residential ITC expiration",
+    "last_updated": "2026-02-06",
+    "regulatory_context": {
+      "residential_itc_25D": "EXPIRED January 1, 2026 (One Big Beautiful Bill)",
+      "commercial_itc_48E": "ACTIVE - 30% baseline for TPO providers through end of 2027 (construction must begin by July 4, 2026)",
+      "feoc_compliance_2026": "40% domestic content threshold for 48E eligibility",
+      "feoc_compliance_2027": "45% domestic content threshold",
+      "feoc_compliance_2030": "60% domestic content threshold (caps out)",
+      "impact": "TPO (lease/PPA) is now the ONLY way for residential customers to access federal tax credits",
+      "market_shift": "TPO projected to grow 25% in 2026 vs 2025; already ~45% of US residential installs",
+      "residential_installations_decline": "18% YoY decline expected in 2026 due to ITC expiration for owned systems"
+    },
+    "texas_market_context": {
+      "average_electricity_rate_cents_kwh": 14,
+      "national_average_comparison": "31% below national average",
+      "net_metering": "Not mandated statewide; Retail Electric Providers (REPs) offer solar buyback programs",
+      "average_system_cost_per_watt": 2.16,
+      "average_system_size_kw": 13.73,
+      "average_system_cost_before_incentives": 29628,
+      "property_tax_exemption": true,
+      "state_itc": false,
+      "state_rebates": "Varies by utility - Austin Energy, CPS Energy, Oncor have programs"
+    }
+  },
+
+  "tpo_providers": [
+    {
+      "id": "sunrun",
+      "name": "Sunrun",
+      "status": "ACTIVE",
+      "type": "tpo_provider",
+      "headquarters": "San Francisco, CA",
+      "publicly_traded": true,
+      "ticker": "RUN",
+      "market_position": "#1 residential solar company in US",
+      "texas_active": true,
+      "texas_markets": ["Houston", "Dallas", "Austin", "San Antonio", "Grand Prairie", "Sugar Land"],
+      "products": {
+        "ppa": {
+          "available": true,
+          "name": "Sunrun PPA",
+          "description": "Pay per kWh of solar electricity generated",
+          "rate_range_cents_kwh": {
+            "texas_low": 8,
+            "texas_high": 15,
+            "notes": "Varies by market, system size, credit profile"
+          },
+          "escalator_rate_percent": 3.5,
+          "escalator_notes": "Higher than industry average of ~3%",
+          "contract_term_years": 25,
+          "money_down": 0,
+          "performance_guarantee": true,
+          "performance_guarantee_detail": "Refund for shortfall if system underproduces promised output"
+        },
+        "lease": {
+          "available": true,
+          "name": "Sunrun Monthly Solar Lease / Subscription",
+          "description": "Fixed monthly payment for solar system use",
+          "escalator_rate_percent": 3.5,
+          "contract_term_years": 25,
+          "money_down": 0
+        },
+        "loan": {
+          "available": true,
+          "name": "Sunrun Owned Plans",
+          "description": "Purchase via loan or cash through Sunrun"
+        },
+        "prepaid_ppa": {
+          "available": true,
+          "name": "Sunrun Prepaid",
+          "description": "Upfront payment at ~70% of system cost; ownership transfer after 6 years",
+          "notes": "Homeowner benefits from 48E tax credit value passed through as discount"
+        }
+      },
+      "buyout_options": {
+        "early_buyout": true,
+        "earliest_buyout_year": 5,
+        "buyout_price_method": "Fair Market Value (FMV) assessed by 3rd party appraiser",
+        "end_of_term_options": ["Purchase at FMV", "Extend lease", "Remove system at no charge"],
+        "warnings": "Consumer complaints suggest FMV estimates may be inflated vs expectations set during sales"
+      },
+      "credit_requirements": {
+        "minimum_fico": 650,
+        "notes": "Sunrun advertises flexible credit options; some sources say no hard credit check for leases",
+        "income_verification": "Required"
+      },
+      "system_requirements": {
+        "owns_equipment": true,
+        "maintenance_included": true,
+        "monitoring_included": true,
+        "insurance_included": true,
+        "equipment_brands": "Varies - uses multiple panel/inverter manufacturers",
+        "battery_available": true,
+        "battery_product": "Brightbox (rechargeable solar battery system)",
+        "battery_available_texas": true
+      },
+      "dealer_program": {
+        "name": "Sunrun Certified Partner Program",
+        "description": "Tiered channel partner network with differentiated value levels",
+        "benefits": [
+          "Access to Sunrun BrightPath automated project platform",
+          "Sales and operations training",
+          "Marketing support",
+          "Preferred pricing through equipment suppliers (AEE Solar, SnapNrack)"
+        ],
+        "how_to_apply": "Visit sunrun.com/partner-with-us",
+        "partner_portal": "sunrun.my.site.com/partner/PartnerPortalLogin",
+        "commission_structure": "Not publicly disclosed; varies by tier and volume",
+        "notes": "Sunrun works with local installation companies who sell Sunrun lease/PPA products"
+      }
+    },
+
+    {
+      "id": "sunnova_solaris",
+      "name": "Sunnova / Solaris Assets (SunStrong)",
+      "status": "RESTRUCTURED - Under new ownership",
+      "type": "tpo_provider",
+      "headquarters": "Houston, TX (originally)",
+      "publicly_traded": false,
+      "previous_ticker": "NOVA",
+      "texas_active": "UNCERTAIN - Legacy systems being serviced; new installations status unclear",
+      "bankruptcy_timeline": {
+        "filed": "June 8, 2025",
+        "court": "US Bankruptcy Court, Southern District of Texas",
+        "sale_approved": "August 2025",
+        "acquisition_completed": "September 4, 2025",
+        "plan_confirmed": "November 12, 2025",
+        "effective_date": "November 14, 2025"
+      },
+      "new_ownership": {
+        "acquirer": "Solaris Assets LLC",
+        "formed_by": "GoodFinch Management",
+        "transaction_value_million": 118,
+        "cash_component_million": 25,
+        "credit_bid_million": 90,
+        "servicer": "SunStrong Management LLC",
+        "omnidian_purchase": "Sunnova's solar servicing platform sold to Omnidian for $7 million"
+      },
+      "products_legacy": {
+        "ppa": {
+          "available_legacy": true,
+          "new_originations": "UNKNOWN - Contact SunStrong",
+          "contract_term_years": 25,
+          "service_plan": "Sunnova Protect Platinum - 25 years maintenance, monitoring, repairs, replacements, energy guarantee"
+        },
+        "lease": {
+          "available_legacy": true,
+          "new_originations": "UNKNOWN"
+        },
+        "loan": {
+          "available_legacy": true,
+          "new_originations": "UNKNOWN"
+        }
+      },
+      "dealer_program": {
+        "name": "Sunnova Catalyst (legacy)",
+        "description": "Residential quoting platform for dealers",
+        "current_status": "UNCERTAIN post-bankruptcy; contact SunStrong for current programs",
+        "previous_dealer_network_size": "Large national network, particularly strong in Texas"
+      },
+      "notes": "Sunnova was headquartered in Houston and was a major Texas TPO player. Post-bankruptcy under Solaris/SunStrong, the focus appears to be on servicing existing customer portfolios rather than new originations. Platform may be rebuilt under new ownership."
+    },
+
+    {
+      "id": "tesla_energy",
+      "name": "Tesla Energy",
+      "status": "ACTIVE",
+      "type": "tpo_provider",
+      "headquarters": "Austin, TX",
+      "publicly_traded": true,
+      "ticker": "TSLA",
+      "texas_active": true,
+      "products": {
+        "lease": {
+          "available": true,
+          "name": "Tesla Solar Lease",
+          "description": "Fixed monthly payment with 3% annual escalator",
+          "upfront_cost": 600,
+          "upfront_breakdown": "$100 deposit + $500 progress payment",
+          "escalator_rate_percent": 3.0,
+          "contract_term_years": 25,
+          "performance_guarantee": "95% system availability guarantee (calculated every 2 years)",
+          "maintenance_included": true,
+          "maintenance_detail": "All maintenance, service and monitoring for full lease term including battery and inverter replacement"
+        },
+        "subscription": {
+          "available": "Select states only",
+          "available_in_texas": "CHECK - Tesla financing confirmed for TX but subscription availability varies",
+          "name": "Tesla Solar Subscription",
+          "monthly_range_low": 65,
+          "monthly_range_high": 195,
+          "description": "Flat monthly rate for solar + storage, no long-term commitment"
+        },
+        "purchase": {
+          "available": true,
+          "financing_states_include_texas": true
+        }
+      },
+      "buyout_options": {
+        "early_buyout": true,
+        "earliest_buyout_year": 5,
+        "buyout_price_method": "Fair Market Value outlined in contract"
+      },
+      "system_requirements": {
+        "panels": "Tesla Solar Panels or Solar Roof",
+        "battery_required": "Powerwall strongly encouraged/bundled",
+        "powerwall_model": "Powerwall 3",
+        "powerwall_cost": 15400,
+        "powerwall_cost_after_itc_30pct": 10780,
+        "battery_lease_deposit": "$100 per Powerwall",
+        "battery_lease_term_years": 12,
+        "direct_sales_only": true,
+        "no_dealer_program": true,
+        "installation": "Tesla certified installers only"
+      },
+      "credit_requirements": {
+        "minimum_fico": "Not publicly disclosed",
+        "notes": "Credit check required for lease"
+      },
+      "dealer_program": null,
+      "dealer_program_notes": "Tesla does NOT operate a dealer program. Direct-to-consumer only. Cannot partner as a dealer."
+    },
+
+    {
+      "id": "palmetto",
+      "name": "Palmetto Solar (LightReach)",
+      "status": "ACTIVE",
+      "type": "tpo_provider",
+      "headquarters": "Charleston, SC",
+      "publicly_traded": false,
+      "texas_active": true,
+      "texas_availability_notes": "Varies by utility provider. Most Texas utilities support PPAs. Some co-ops offer leasing. Austin Energy and CPS Energy (San Antonio) may have restrictions on TPO.",
+      "products": {
+        "ppa": {
+          "available": true,
+          "name": "LightReach PPA",
+          "description": "Pay per kWh produced; rate varies with production (higher in summer)",
+          "escalator_options_percent": [0.0, 0.99, 1.99, 2.99],
+          "escalator_notes": "Sales rep selects escalator during pricing phase",
+          "contract_term_years": 25,
+          "money_down": 0
+        },
+        "lease": {
+          "available": true,
+          "name": "LightReach Lease",
+          "description": "Fixed monthly payment regardless of production",
+          "escalator_options_percent": [0.0, 0.99, 1.99, 2.99],
+          "contract_term_years": 25,
+          "money_down": 0
+        }
+      },
+      "system_requirements": {
+        "maintenance_included": true,
+        "monitoring_included": true,
+        "installation_included": true
+      },
+      "credit_requirements": {
+        "minimum_fico": "Not publicly disclosed",
+        "credit_check_required": true
+      },
+      "dealer_program": {
+        "name": "Palmetto Partner Program",
+        "integration": "Enerflo platform integration available",
+        "tools": "LightReach quoting and proposal tools for dealers",
+        "how_to_apply": "Contact Palmetto partnership team"
+      }
+    },
+
+    {
+      "id": "enfin",
+      "name": "EnFin (by Qcells)",
+      "status": "ACTIVE - GROWING",
+      "type": "tpo_finance_platform",
+      "headquarters": "Backed by Qcells (Hanwha Group)",
+      "publicly_traded": false,
+      "parent_company": "Qcells North America (Hanwha Solutions)",
+      "texas_active": true,
+      "market_position": "Major emerging TPO platform; part of the ~45% TPO market share alongside Sunrun, Palmetto, GoodLeap",
+      "products": {
+        "ppa": {
+          "available": true,
+          "description": "PPA financing through installer partners"
+        },
+        "lease": {
+          "available": true,
+          "description": "Lease financing through installer partners"
+        }
+      },
+      "financial_strength": {
+        "abs_transaction": "$252.86 million inaugural asset-backed securities (ABS) transaction",
+        "backed_by": "Hanwha Group (Fortune Global 500)"
+      },
+      "dealer_program": {
+        "name": "EnFin Partner Program",
+        "integration": "Aurora Solar Sales Mode integration",
+        "how_to_become_partner": "Register through EnFin website or Aurora Solar integration",
+        "notes": "Only current EnFin partners can activate Aurora integration"
+      },
+      "equipment_notes": "Strong alignment with Qcells panels (FEOC compliant, US-manufactured in Dalton, GA)",
+      "competitive_advantage": "Qcells panels manufactured in the US, making them FEOC-compliant and 48E eligible"
+    },
+
+    {
+      "id": "momentum_solar",
+      "name": "Momentum Solar",
+      "status": "ACTIVE",
+      "type": "tpo_provider",
+      "headquarters": "Metuchen, NJ",
+      "publicly_traded": false,
+      "founded": 2009,
+      "employees": 1200,
+      "texas_active": true,
+      "texas_markets": "Texas is in their 12-state service area",
+      "products": {
+        "ppa": {
+          "available": true,
+          "description": "Fixed rate per kWh with project manager handling design, permitting, financing, installation"
+        },
+        "lease": {
+          "available": true,
+          "description": "Rent panels with maintenance, repair, and monitoring included"
+        },
+        "loan": {
+          "available": true
+        },
+        "cash": {
+          "available": true
+        }
+      },
+      "system_requirements": {
+        "battery_available": "Only in 5 states (check if Texas is included)"
+      },
+      "dealer_program": {
+        "notes": "Not a major dealer/channel partner platform; primarily direct sales"
+      }
+    },
+
+    {
+      "id": "freedom_solar",
+      "name": "Freedom Solar Power",
+      "status": "ACTIVE",
+      "type": "installer_with_tpo_options",
+      "headquarters": "Austin, TX",
+      "publicly_traded": false,
+      "founded": 2007,
+      "texas_active": true,
+      "texas_focus": "Texas-based, Texas-focused company",
+      "installations_completed": 24000,
+      "products": {
+        "cash": { "available": true },
+        "loan": { "available": true },
+        "lease": {
+          "available": true,
+          "notes": "Offers solar leases; likely through TPO financing partners"
+        }
+      },
+      "equipment": {
+        "panels": "SunPower Master Dealer",
+        "battery": "Tesla Powerwall Certified Installer",
+        "mount_types": ["Roof mount", "Ground mount", "Pole mount", "Carport/parking structures", "Off-grid battery backup"]
+      },
+      "tpo_notes": "Freedom Solar is primarily an installer. For TPO products (lease/PPA), they likely partner with finance providers like Sunrun, Palmetto LightReach, or EnFin rather than originating their own TPO products.",
+      "service_areas": ["Austin", "San Antonio", "Houston", "Dallas-Fort Worth", "Florida"]
+    }
+  ],
+
+  "defunct_tpo_providers": [
+    {
+      "id": "sunpower",
+      "name": "SunPower",
+      "status": "BANKRUPT - No new TPO originations",
+      "type": "tpo_provider",
+      "texas_active": false,
+      "timeline": {
+        "lease_ppa_halted": "July 17, 2024",
+        "bankruptcy_filed": "August 5, 2024",
+        "chapter": 11,
+        "assets_acquired_by": "Complete Solar (Blue Raven Solar + New Homes business)"
+      },
+      "existing_contracts": {
+        "status": "Still being serviced",
+        "servicer": "Launch Servicing and SunStrong Management",
+        "terms_honored": true,
+        "notes": "Existing lease/PPA contracts remain in effect and must be honored by successor entities"
+      }
+    },
+    {
+      "id": "adt_solar",
+      "name": "ADT Solar (formerly Vivint Solar)",
+      "status": "SHUT DOWN - January 2024",
+      "type": "tpo_provider",
+      "texas_active": false,
+      "timeline": {
+        "vivint_acquired_by_sunrun": "October 2020",
+        "adt_acquired_sunpro": "2021 for ~$825 million",
+        "revenue_decline": "68% drop from $179M (2022) to $58M (2023)",
+        "shutdown_announced": "January 24, 2024",
+        "full_shutdown": "March 2024"
+      },
+      "existing_contracts": {
+        "warranty_status": "25-year workmanship warranty and power production guarantee claimed to remain in effect",
+        "practical_reality": "Fulfilling long-term labor obligations without dedicated service team is extremely difficult",
+        "notes": "Lenders have pressured ADT back into limited solar operations to protect outstanding loan portfolios"
+      }
+    },
+    {
+      "id": "vivint_solar",
+      "name": "Vivint Solar (now under Sunrun)",
+      "status": "ABSORBED into Sunrun (2020)",
+      "type": "tpo_provider",
+      "texas_active": "Legacy contracts serviced by Sunrun",
+      "notes": "Integration issues led to widespread customer dissatisfaction. Sunrun facing class action allegations of misleading PPA sales tactics.",
+      "existing_contracts": {
+        "servicer": "Sunrun",
+        "terms_honored": "Contractually yes; customer satisfaction disputed"
+      }
+    }
+  ],
+
+  "solar_loan_providers": [
+    {
+      "id": "goodleap",
+      "name": "GoodLeap",
+      "status": "ACTIVE",
+      "type": "solar_loan_provider",
+      "products": {
+        "standard_installment": {
+          "apr_range_low": 1.99,
+          "apr_range_high": 9.0,
+          "term_years_range": [7, 10, 12, 15, 20, 25],
+          "notes": "Advertised APR as low as 1.99%; typical range 5-9% with dealer fees included"
+        },
+        "flexpay": {
+          "description": "Choose payment amount; interest-only period of 18, 36, or 60 months",
+          "notes": "Deferred principal payments"
+        },
+        "gogreen_refi": {
+          "description": "Refinance existing solar loans"
+        }
+      },
+      "dealer_fees": {
+        "average_percent": 19.32,
+        "range_percent_low": 0,
+        "range_percent_high": 36,
+        "impact": "A $20,000 install with 35% dealer fee becomes a $27,000 loan principal",
+        "controversy": "Minnesota AG lawsuit alleging inflated costs through hidden dealer fees"
+      },
+      "credit_requirements": {
+        "minimum_fico": 600,
+        "notes": "Credit score impacts APR, dealer fee percentage, and borrowing limit"
+      },
+      "tpo_relevance": "GoodLeap also entering TPO space as a PPA/lease finance platform",
+      "legal_issues": "Minnesota AG lawsuit (2024) over dealer fee disclosure practices"
+    },
+    {
+      "id": "mosaic",
+      "name": "Mosaic",
+      "status": "BANKRUPT - Operating during restructuring",
+      "type": "solar_loan_provider",
+      "bankruptcy_filed": "June 2025",
+      "chapter": 11,
+      "operating_during_restructuring": true,
+      "products": {
+        "solar_loan": {
+          "apr_range_low": 0.99,
+          "apr_range_high": 10.59,
+          "promotional_rates": "As low as 0.99% for qualified borrowers",
+          "autopay_discount": "0.50% APR reduction",
+          "term_years_range": [10, 15, 20, 25],
+          "loan_amount_min": 10001,
+          "loan_amount_max": 100000
+        }
+      },
+      "dealer_fees": {
+        "structure": "Percentage of loan balance; varies by loan and risk characteristics",
+        "controversy": "Part of Minnesota AG lawsuit over dealer fee disclosure"
+      },
+      "notes": "Existing loan customers continue making payments as normal. New loan originations continue during Chapter 11."
+    },
+    {
+      "id": "dividend_finance",
+      "name": "Dividend Finance",
+      "status": "ACTIVE - Being acquired by Fifth Third Bancorp",
+      "type": "solar_loan_provider",
+      "acquisition": {
+        "acquirer": "Fifth Third Bancorp",
+        "purpose": "Upgrade renewables portfolio and ESG commitment"
+      },
+      "products": {
+        "empower_loan": {
+          "apr_range_low": 3.49,
+          "apr_range_high": 6.99,
+          "term_options_years": [12, 20],
+          "max_loan_amount": 120000,
+          "minimum_credit_score": 660
+        }
+      },
+      "dealer_fees": {
+        "average_percent": 18.8,
+        "includes_zero_fee_loans": true,
+        "controversy": "Part of Minnesota AG lawsuit over dealer fee disclosure"
+      }
+    },
+    {
+      "id": "sunlight_financial",
+      "name": "Sunlight Financial",
+      "status": "RESTRUCTURED - Acquired by consortium (2023)",
+      "type": "solar_loan_provider",
+      "bankruptcy_filed": "October 31, 2023",
+      "acquired_by": ["Greenbacker Capital Management", "Sunstone Credit", "IGS Ventures", "Cross River Bank"],
+      "operating": true,
+      "notes": "Loans continue to be originated through Cross River Bank partnership. Company struggled due to delayed response to rising interest rates.",
+      "legal_issues": "Part of Minnesota AG lawsuit over dealer fee disclosure"
+    }
+  ],
+
+  "market_dynamics_texas_2026": {
+    "tpo_market_share_national_percent": 45,
+    "tpo_growth_2026_vs_2025_percent": 25,
+    "residential_installations_decline_2026_yoy_percent": -18,
+    "average_ppa_rate_texas": {
+      "low_cents_kwh": 8,
+      "high_cents_kwh": 15,
+      "typical_cents_kwh": 10,
+      "comparison": "PPA rates typically 10-30% below local utility rate"
+    },
+    "average_lease_payment": {
+      "notes": "Varies widely by system size; Tesla range $65-$195/month for subscription; other providers similar",
+      "escalator_range_percent": [0, 3.5]
+    },
+    "financing_breakdown_estimate": {
+      "tpo_lease_ppa_percent": 50,
+      "loan_percent": 30,
+      "cash_percent": 20,
+      "notes": "ESTIMATE based on national trends. TPO share rising rapidly post-ITC expiration. Pre-2026 breakdown was approximately 35% TPO, 45% loan, 20% cash."
+    },
+    "prepaid_ppa_trend": {
+      "description": "Emerging model: pay ~70% of system cost upfront, take ownership after 6 years",
+      "benefits": "Access to 48E tax credit value as discount + eventual ownership",
+      "irs_requirements": [
+        "Business must hold property for at least 5 years",
+        "Buyout options must approximate fair market value",
+        "Title transfers must not be automatic",
+        "Term must be shorter than expected useful life",
+        "Service provider must bear benefits and burden of ownership (production guarantee required)"
+      ],
+      "potential_credit_value_percent": "Up to 50% of project cost (30% base + bonus adders)",
+      "feoc_restriction": "System must use FEOC-compliant equipment since TPO owner claims 48E credit"
+    },
+    "key_market_drivers": [
+      "25D residential ITC expired Jan 1, 2026 - homeowners cannot claim tax credit on owned systems",
+      "48E commercial ITC available to TPO providers through end of 2027",
+      "Construction must begin by July 4, 2026 for 48E eligibility",
+      "FEOC compliance required: 40% domestic content in 2026",
+      "Major TPO competitors (Sunnova, SunPower, ADT Solar) exited market via bankruptcy",
+      "Sunrun is now dominant TPO player with reduced competition",
+      "New entrants like EnFin (Qcells) filling the gap",
+      "Prepaid PPA / lease-to-own models emerging as hybrid option",
+      "Solar loan sector also distressed (Mosaic Chapter 11, Sunlight restructured)",
+      "Dealer fee controversy and lawsuits creating regulatory pressure on loan providers"
+    ]
+  },
+
+  "competitive_landscape_summary": {
+    "tier_1_active_tpo": [
+      {
+        "provider": "Sunrun",
+        "strength": "Market leader, full Texas coverage, strong dealer network, public company financial stability",
+        "weakness": "3.5% escalator is highest in industry; FMV buyout complaints"
+      },
+      {
+        "provider": "Tesla Energy",
+        "strength": "Brand power, Powerwall integration, Austin HQ, 3% escalator, strong performance guarantee",
+        "weakness": "No dealer program (direct only), limited flexibility, Powerwall bundling"
+      },
+      {
+        "provider": "Palmetto (LightReach)",
+        "strength": "Flexible escalator options (0-2.99%), strong dealer platform via Enerflo",
+        "weakness": "Availability varies by Texas utility; restrictions in Austin Energy and CPS Energy areas"
+      },
+      {
+        "provider": "EnFin (Qcells)",
+        "strength": "Qcells US-manufactured panels (FEOC compliant), strong ABS financing, Aurora integration",
+        "weakness": "Newer platform, less brand recognition"
+      }
+    ],
+    "tier_2_active_but_limited": [
+      {
+        "provider": "Momentum Solar",
+        "strength": "Established since 2009, offers lease + PPA",
+        "weakness": "NJ-based, limited Texas market depth, battery only in 5 states"
+      },
+      {
+        "provider": "Freedom Solar Power",
+        "strength": "Texas-based (Austin), 24K+ installs, SunPower Master Dealer, Tesla Powerwall certified",
+        "weakness": "Primarily an installer, not a TPO originator; relies on third-party finance partners"
+      }
+    ],
+    "exited_or_restructured": [
+      "SunPower - Bankrupt Aug 2024, no new TPO",
+      "Sunnova - Bankrupt Jun 2025, acquired by Solaris/SunStrong, new originations unclear",
+      "ADT Solar - Shut down Jan 2024",
+      "Vivint Solar - Absorbed into Sunrun 2020, brand defunct"
+    ],
+    "recommendation_for_solar_platform": "Partner with Sunrun (largest TPO, Texas coverage), Palmetto LightReach (flexible terms, dealer-friendly), and EnFin (Qcells-backed, FEOC compliant). Tesla is direct-only so cannot partner as dealer. For loans, GoodLeap is most stable option despite dealer fee controversy."
+  }
+}

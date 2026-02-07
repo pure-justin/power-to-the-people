@@ -65,6 +65,11 @@ var ApiKeyScope;
     ApiKeyScope["WRITE_SOLAR"] = "write_solar";
     ApiKeyScope["READ_SMT"] = "read_smt";
     ApiKeyScope["WRITE_SMT"] = "write_smt";
+    ApiKeyScope["READ_EQUIPMENT"] = "read_equipment";
+    ApiKeyScope["READ_UTILITIES"] = "read_utilities";
+    ApiKeyScope["READ_INCENTIVES"] = "read_incentives";
+    ApiKeyScope["READ_PERMITS"] = "read_permits";
+    ApiKeyScope["READ_COMPLIANCE"] = "read_compliance";
     ApiKeyScope["ADMIN"] = "admin";
 })(ApiKeyScope || (exports.ApiKeyScope = ApiKeyScope = {}));
 /**

@@ -29,6 +29,11 @@ export enum ApiKeyScope {
   WRITE_SOLAR = "write_solar", // Trigger solar analysis
   READ_SMT = "read_smt", // Access SMT data
   WRITE_SMT = "write_smt", // Trigger SMT fetch
+  READ_EQUIPMENT = "read_equipment", // Access equipment database
+  READ_UTILITIES = "read_utilities", // Access utility rate data
+  READ_INCENTIVES = "read_incentives", // Access incentive programs
+  READ_PERMITS = "read_permits", // Access permit requirements
+  READ_COMPLIANCE = "read_compliance", // Run compliance checks
   ADMIN = "admin", // Full access
 }
 
