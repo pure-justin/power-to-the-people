@@ -25,7 +25,8 @@ import {
   Users,
 } from "lucide-react";
 import RoofVisualizer from "../components/RoofVisualizer";
-import { createAccount } from "../services/firebase";
+import { createAccount, getCurrentUser } from "../services/firebase";
+import { createReferralRecord } from "../services/referralService";
 
 export default function Success() {
   // Get data from session storage
