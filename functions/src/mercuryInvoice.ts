@@ -112,7 +112,7 @@ export const createMercuryCustomer = functions
       }
 
       try {
-        const result = await mercuryFetch("/customers", "POST", {
+        const result = await mercuryFetch("/ar/customers", "POST", {
           name,
           email,
           phone: phone || undefined,
