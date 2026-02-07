@@ -35,13 +35,24 @@ export default function ReferralDashboard({ userId }) {
   const loadDashboardData = async () => {
     try {
       setLoading(true);
-      const [analyticsData, referralsData] = await Promise.all([
+      const [analyticsData, referralsData, referralData] = await Promise.all([
         getReferralAnalytics(userId),
         getUserReferrals(userId),
+        getReferralData(userId),
       ]);
 
       setAnalytics(analyticsData);
       setReferrals(filterByTimeframe(referralsData, timeframe));
+
+      // Load click stats if we have a referral code
+      if (referralData?.referralCode) {
+        try {
+          const clicks = await getReferralClickStats(referralData.referralCode);
+          setClickStats(clicks);
+        } catch {
+          // Click stats are non-critical
+        }
+      }
     } catch (error) {
       console.error("Error loading dashboard:", error);
     } finally {
