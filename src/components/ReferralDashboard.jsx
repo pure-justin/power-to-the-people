@@ -9,6 +9,7 @@ import {
   Gift,
   Target,
   Zap,
+  MousePointer,
 } from "lucide-react";
 import {
   getReferralAnalytics,
