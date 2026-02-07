@@ -2326,9 +2326,31 @@ export default function Success() {
           {/* Account Creation */}
           <div className="account-section">
             {accountCreated ? (
-              <div className="account-success">
-                <CheckCircle size={22} />
-                <span>Account created! You can now track your project.</span>
+              <div style={{ textAlign: "center" }}>
+                <div className="account-success">
+                  <CheckCircle size={22} />
+                  <span>Account created! You can now track your project.</span>
+                </div>
+                <Link
+                  to="/referrals"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 8,
+                    marginTop: 16,
+                    padding: "12px 24px",
+                    background: "linear-gradient(135deg, #10b981, #059669)",
+                    color: "#fff",
+                    borderRadius: 12,
+                    fontWeight: 600,
+                    textDecoration: "none",
+                    transition: "transform 0.2s",
+                  }}
+                >
+                  <Users size={18} />
+                  Refer Friends & Earn $500
+                  <ArrowRight size={18} />
+                </Link>
               </div>
             ) : (
               <>
