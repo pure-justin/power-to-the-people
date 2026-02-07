@@ -254,6 +254,154 @@ export default function ReferralAdminPanel() {
         </div>
       </div>
 
+      {/* Sub-tab Navigation */}
+      <div className="flex items-center gap-2">
+        <button
+          onClick={() => setAdminSubTab("referrals")}
+          className={`px-4 py-2 rounded-lg font-medium transition ${
+            adminSubTab === "referrals"
+              ? "bg-emerald-600 text-white"
+              : "bg-gray-800 text-gray-400 hover:bg-gray-700"
+          }`}
+        >
+          Referrals
+        </button>
+        <button
+          onClick={() => setAdminSubTab("payouts")}
+          className={`px-4 py-2 rounded-lg font-medium transition ${
+            adminSubTab === "payouts"
+              ? "bg-emerald-600 text-white"
+              : "bg-gray-800 text-gray-400 hover:bg-gray-700"
+          }`}
+        >
+          Payouts ({payouts.filter((p) => p.status === "pending").length}{" "}
+          pending)
+        </button>
+      </div>
+
+      {/* Payouts Management Tab */}
+      {adminSubTab === "payouts" && (
+        <div className="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-gray-800">
+                <tr>
+                  <th className="text-left py-4 px-6 text-gray-400 font-semibold">
+                    User
+                  </th>
+                  <th className="text-left py-4 px-6 text-gray-400 font-semibold">
+                    Amount
+                  </th>
+                  <th className="text-left py-4 px-6 text-gray-400 font-semibold">
+                    Method
+                  </th>
+                  <th className="text-left py-4 px-6 text-gray-400 font-semibold">
+                    Status
+                  </th>
+                  <th className="text-left py-4 px-6 text-gray-400 font-semibold">
+                    Requested
+                  </th>
+                  <th className="text-left py-4 px-6 text-gray-400 font-semibold">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {payouts.map((payout) => (
+                  <tr
+                    key={payout.id}
+                    className="border-t border-gray-800 hover:bg-gray-800/50 transition"
+                  >
+                    <td className="py-4 px-6">
+                      <div className="text-white font-medium">
+                        {payout.userName || "N/A"}
+                      </div>
+                      <div className="text-gray-400 text-sm">
+                        {payout.userEmail}
+                      </div>
+                    </td>
+                    <td className="py-4 px-6 text-emerald-400 font-semibold">
+                      ${payout.amount?.toFixed(2)}
+                    </td>
+                    <td className="py-4 px-6 text-gray-300 capitalize">
+                      {payout.method?.replace("_", " ")}
+                    </td>
+                    <td className="py-4 px-6">
+                      <span
+                        className={`px-3 py-1 rounded-full text-xs font-semibold text-white ${
+                          payout.status === "pending"
+                            ? "bg-yellow-600"
+                            : payout.status === "processing"
+                              ? "bg-blue-600"
+                              : payout.status === "completed"
+                                ? "bg-green-600"
+                                : "bg-red-600"
+                        }`}
+                      >
+                        {payout.status}
+                      </span>
+                    </td>
+                    <td className="py-4 px-6 text-gray-400">
+                      {payout.requestedAt?.toDate?.().toLocaleDateString() ||
+                        "N/A"}
+                    </td>
+                    <td className="py-4 px-6">
+                      {payout.status === "pending" && (
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() =>
+                              handlePayoutStatusUpdate(payout.id, "processing")
+                            }
+                            disabled={updating}
+                            className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm transition"
+                          >
+                            Process
+                          </button>
+                          <button
+                            onClick={() =>
+                              handlePayoutStatusUpdate(payout.id, "failed")
+                            }
+                            disabled={updating}
+                            className="px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded text-sm transition"
+                          >
+                            Reject
+                          </button>
+                        </div>
+                      )}
+                      {payout.status === "processing" && (
+                        <button
+                          onClick={() =>
+                            handlePayoutStatusUpdate(payout.id, "completed")
+                          }
+                          disabled={updating}
+                          className="px-3 py-1 bg-green-600 hover:bg-green-700 text-white rounded text-sm transition"
+                        >
+                          Mark Paid
+                        </button>
+                      )}
+                      {(payout.status === "completed" ||
+                        payout.status === "failed") && (
+                        <span className="text-gray-500 text-sm">
+                          {payout.processedAt
+                            ?.toDate?.()
+                            .toLocaleDateString() || "—"}
+                        </span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            {payouts.length === 0 && (
+              <div className="text-center py-12 text-gray-400">
+                <DollarSign className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                <p>No payout requests yet</p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Filters and Actions */}
       <div className="bg-gray-900 rounded-xl p-6 border border-gray-800">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
