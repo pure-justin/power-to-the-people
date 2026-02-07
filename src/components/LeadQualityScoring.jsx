@@ -172,7 +172,6 @@ export default function LeadQualityScoring({ projects }) {
   }
 
   const maxHistCount = Math.max(...analytics.histogram.map((h) => h.count), 1);
-  const maxTrendScore = Math.max(...scoreTrend.map((t) => t.avgScore), 1);
 
   return (
     <>
