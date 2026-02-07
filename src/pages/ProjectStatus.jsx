@@ -546,6 +546,13 @@ export default function ProjectStatus() {
               </div>
             </div>
 
+            {/* SMS Notifications */}
+            {project.customer?.phone && (
+              <div style={{ marginBottom: 24 }}>
+                <SmsHistoryPanel projectId={project.id} />
+              </div>
+            )}
+
             {/* Next Steps */}
             <div className="card">
               <h3

@@ -38,7 +38,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.twilioStatusCallback = exports.getSmsStats = exports.sendPaymentReminders = exports.sendBulkSMS = exports.sendCustomSMS = exports.onReferralReward = exports.onProjectStatusUpdate = exports.smsOnProjectCreated = exports.referralStatsWebhook = exports.referralBulkUpdateWebhook = exports.referralStatusWebhook = exports.processWeeklyPayouts = exports.getReferralStats = exports.updateReferralStatusHttp = exports.onProjectUpdated = exports.onProjectCreated = exports.secureLeadQuery = exports.secureSolarWebhook = exports.secureLeadWebhook = exports.validateApiKeyFromRequest = exports.cleanupApiKeys = exports.getApiKeyUsage = exports.updateApiKey = exports.rotateApiKey = exports.revokeApiKey = exports.validateApiKey = exports.createApiKey = exports.leadWebhook = exports.recalculateLeadScores = exports.assignLead = exports.addLeadNote = exports.updateLead = exports.createLead = exports.smtWebhook = exports.fetchSmtUsage = void 0;
+exports.getProjectSmsHistory = exports.handleIncomingSms = exports.updateSmsPreferences = exports.twilioStatusCallback = exports.getSmsStats = exports.sendPaymentReminders = exports.sendBulkSMS = exports.sendCustomSMS = exports.onReferralReward = exports.onProjectStatusUpdate = exports.smsOnProjectCreated = exports.referralStatsWebhook = exports.referralBulkUpdateWebhook = exports.referralStatusWebhook = exports.processWeeklyPayouts = exports.getReferralStats = exports.updateReferralStatusHttp = exports.onProjectUpdated = exports.onProjectCreated = exports.secureLeadQuery = exports.secureSolarWebhook = exports.secureLeadWebhook = exports.validateApiKeyFromRequest = exports.cleanupApiKeys = exports.getApiKeyUsage = exports.updateApiKey = exports.rotateApiKey = exports.revokeApiKey = exports.validateApiKey = exports.createApiKey = exports.leadWebhook = exports.recalculateLeadScores = exports.assignLead = exports.addLeadNote = exports.updateLead = exports.createLead = exports.smtWebhook = exports.fetchSmtUsage = void 0;
 const admin = __importStar(require("firebase-admin"));
 // Initialize Firebase Admin SDK
 admin.initializeApp();
@@ -91,4 +91,7 @@ Object.defineProperty(exports, "sendBulkSMS", { enumerable: true, get: function 
 Object.defineProperty(exports, "sendPaymentReminders", { enumerable: true, get: function () { return smsNotifications_1.sendPaymentReminders; } });
 Object.defineProperty(exports, "getSmsStats", { enumerable: true, get: function () { return smsNotifications_1.getSmsStats; } });
 Object.defineProperty(exports, "twilioStatusCallback", { enumerable: true, get: function () { return smsNotifications_1.twilioStatusCallback; } });
+Object.defineProperty(exports, "updateSmsPreferences", { enumerable: true, get: function () { return smsNotifications_1.updateSmsPreferences; } });
+Object.defineProperty(exports, "handleIncomingSms", { enumerable: true, get: function () { return smsNotifications_1.handleIncomingSms; } });
+Object.defineProperty(exports, "getProjectSmsHistory", { enumerable: true, get: function () { return smsNotifications_1.getProjectSmsHistory; } });
 //# sourceMappingURL=index.js.map
