@@ -17,6 +17,7 @@ import {
   Save,
 } from "lucide-react";
 import { updateProjectStatus } from "../services/adminService";
+import { syncLeadStatusToReferral } from "../services/referralService";
 
 /**
  * Project Detail Modal Component
