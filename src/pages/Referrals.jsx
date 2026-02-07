@@ -70,17 +70,21 @@ export default function Referrals() {
   const loadReferralData = async (userId) => {
     try {
       setLoading(true);
-      const [data, refs, analytics, board] = await Promise.all([
-        getReferralData(userId),
-        getUserReferrals(userId),
-        getReferralAnalytics(userId),
-        getReferralLeaderboard(10),
-      ]);
+      const [data, refs, analyticsData, board, userPayouts] = await Promise.all(
+        [
+          getReferralData(userId),
+          getUserReferrals(userId),
+          getReferralAnalytics(userId),
+          getReferralLeaderboard(10),
+          getUserPayouts(userId).catch(() => []),
+        ],
+      );
 
       setReferralData(data);
       setReferrals(refs);
-      setAnalytics(analytics);
+      setAnalytics(analyticsData);
       setLeaderboard(board);
+      setPayouts(userPayouts);
     } catch (error) {
       console.error("Error loading referral data:", error);
     } finally {
