@@ -3690,6 +3690,43 @@ export default function Qualify() {
                 />
               </div>
 
+              {formData.phone && (
+                <div className="q-form-group" style={{ marginTop: 8 }}>
+                  <label
+                    style={{
+                      display: "flex",
+                      alignItems: "flex-start",
+                      gap: 10,
+                      cursor: "pointer",
+                      fontSize: 13,
+                      color: "#94a3b8",
+                      lineHeight: 1.4,
+                    }}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={formData.smsOptIn}
+                      onChange={(e) =>
+                        updateField("smsOptIn", e.target.checked)
+                      }
+                      style={{
+                        marginTop: 2,
+                        accentColor: "#22c55e",
+                        width: 16,
+                        height: 16,
+                        flexShrink: 0,
+                      }}
+                    />
+                    <span>
+                      I agree to receive SMS notifications about my solar
+                      project status, installation updates, and referral
+                      rewards. Msg & data rates may apply. Reply STOP to
+                      unsubscribe.
+                    </span>
+                  </label>
+                </div>
+              )}
+
               {!referralInfo && (
                 <div className="q-form-group" style={{ marginTop: 16 }}>
                   <label className="q-label">Referral Code (optional)</label>
