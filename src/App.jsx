@@ -33,6 +33,7 @@ function App() {
         <Route path="/roi" element={<RoiProjection />} />
         <Route path="/savings" element={<SavingsCalculator />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/lead-scoring" element={<LeadScoringDashboard />} />
         <Route path="/api-docs" element={<ApiDocs />} />
       </Routes>
     </BrowserRouter>
