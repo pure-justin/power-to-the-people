@@ -124,6 +124,7 @@ function App() {
               path="/dashboard/equipment"
               element={<DashboardEquipment />}
             />
+            <Route path="/dashboard/tasks" element={<DashboardTasks />} />
             <Route
               path="/dashboard/marketplace"
               element={<DashboardMarketplace />}
