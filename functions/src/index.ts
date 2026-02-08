@@ -74,6 +74,9 @@ export {
   updateSubscription,
   cancelSubscription,
   stripeWebhook,
+  createCheckoutSession,
+  createBillingPortalSession,
+  getSubscriptionStatus,
 } from "./payments";
 
 // Export Data Refresh functions

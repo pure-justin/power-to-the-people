@@ -2,8 +2,8 @@
 /**
  * Solar CRM Payments - Cloud Functions
  *
- * Uses the @agntc/universal-payments package for Stripe integration.
- * Configures solar-specific subscription tiers, usage billing, and webhooks.
+ * Stripe subscription management, usage metering, checkout, and billing portal.
+ * Covers: SaaS subscriptions, per-API-call billing, lead billing, compliance checks.
  */
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
@@ -43,9 +43,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 var _a, _b;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.stripeWebhook = exports.cancelSubscription = exports.updateSubscription = exports.createSubscription = exports.SOLAR_TIERS = void 0;
+exports.getSubscriptionStatus = exports.createBillingPortalSession = exports.createCheckoutSession = exports.stripeWebhook = exports.cancelSubscription = exports.updateSubscription = exports.createSubscription = exports.SOLAR_TIERS = exports.STRIPE_PAYGO_PRICE_IDS = void 0;
 exports.recordUsage = recordUsage;
 exports.checkUsageLimit = checkUsageLimit;
+exports.recordAndCheckUsage = recordAndCheckUsage;
 const functions = __importStar(require("firebase-functions/v1"));
 const admin = __importStar(require("firebase-admin"));
 const stripe_1 = __importDefault(require("stripe"));
@@ -55,6 +56,18 @@ const STRIPE_WEBHOOK_SECRET = ((_b = functions.config().stripe) === null || _b =
 const stripe = STRIPE_SECRET_KEY
     ? new stripe_1.default(STRIPE_SECRET_KEY, { apiVersion: "2024-12-18.acacia" })
     : null;
+// ─── Pre-Created Stripe Price IDs (Test Mode) ──────────────────────────────────
+const STRIPE_PRICE_IDS = {
+    starter: "price_1SyMrCQhgZdyZ7qRyWDGrr9U",
+    professional: "price_1SyMrEQhgZdyZ7qRYLfqv0Ds",
+    enterprise: "price_1SyMrFQhgZdyZ7qRcQk9fAqh",
+};
+// Pay-as-you-go price IDs (for future one-off purchases)
+exports.STRIPE_PAYGO_PRICE_IDS = {
+    solar_lead: "price_1SyMrGQhgZdyZ7qRixVanOLJ", // $5/lead
+    api_call_pack: "price_1SyMrHQhgZdyZ7qRfeQQUUI6", // $25/1000 calls
+    compliance_check: "price_1SyMrIQhgZdyZ7qRZKDhbgKL", // $2/check
+};
 /**
  * Solar CRM subscription tiers
  */
@@ -158,21 +171,15 @@ exports.createSubscription = functions
                 default_payment_method: payment_method_id,
             },
         });
-        // Create Stripe product + price, then subscription
+        // Create subscription using pre-created price ID
         const tierConfig = exports.SOLAR_TIERS[tier];
-        const product = await stripe.products.create({
-            name: `Solar CRM - ${tierConfig.name}`,
-            metadata: { tier },
-        });
-        const price = await stripe.prices.create({
-            product: product.id,
-            currency: "usd",
-            unit_amount: tierConfig.price_monthly,
-            recurring: { interval: "month" },
-        });
+        const priceId = STRIPE_PRICE_IDS[tier];
+        if (!priceId) {
+            throw new functions.https.HttpsError("internal", `No Stripe price configured for tier: ${tier}`);
+        }
         const subscription = await stripe.subscriptions.create({
             customer: customer.id,
-            items: [{ price: price.id }],
+            items: [{ price: priceId }],
             metadata: {
                 firebase_uid: userId,
                 tier,
@@ -241,23 +248,17 @@ exports.updateSubscription = functions
     const subData = subDoc.data();
     try {
         const stripeSubscription = await stripe.subscriptions.retrieve(subData.stripeSubscriptionId);
-        // Create new price for the updated tier
+        // Use pre-created price ID for the new tier
         const tierConfig = exports.SOLAR_TIERS[new_tier];
-        const product = await stripe.products.create({
-            name: `Solar CRM - ${tierConfig.name}`,
-            metadata: { tier: new_tier },
-        });
-        const newPrice = await stripe.prices.create({
-            product: product.id,
-            currency: "usd",
-            unit_amount: tierConfig.price_monthly,
-            recurring: { interval: "month" },
-        });
+        const newPriceId = STRIPE_PRICE_IDS[new_tier];
+        if (!newPriceId) {
+            throw new functions.https.HttpsError("internal", `No Stripe price configured for tier: ${new_tier}`);
+        }
         await stripe.subscriptions.update(subData.stripeSubscriptionId, {
             items: [
                 {
                     id: stripeSubscription.items.data[0].id,
-                    price: newPrice.id,
+                    price: newPriceId,
                 },
             ],
             proration_behavior: "create_prorations",
@@ -403,6 +404,7 @@ async function checkUsageLimit(userId, usageType) {
 exports.stripeWebhook = functions
     .runWith({ timeoutSeconds: 60, memory: "256MB" })
     .https.onRequest(async (req, res) => {
+    var _a;
     if (req.method !== "POST") {
         res.status(405).send("Method not allowed");
         return;
@@ -478,6 +480,36 @@ exports.stripeWebhook = functions
                 console.warn(`Payment failed for subscription ${invoice.subscription}`);
                 break;
             }
+            case "checkout.session.completed": {
+                const session = event.data.object;
+                if (session.mode === "subscription" &&
+                    session.subscription &&
+                    ((_a = session.metadata) === null || _a === void 0 ? void 0 : _a.firebase_uid)) {
+                    const subId = typeof session.subscription === "string"
+                        ? session.subscription
+                        : session.subscription.id;
+                    const stripeSub = await stripe.subscriptions.retrieve(subId);
+                    const tier = (session.metadata.tier || "starter");
+                    const tierConfig = exports.SOLAR_TIERS[tier] || exports.SOLAR_TIERS.starter;
+                    await db
+                        .collection("subscriptions")
+                        .doc(subId)
+                        .set({
+                        userId: session.metadata.firebase_uid,
+                        stripeCustomerId: session.customer,
+                        stripeSubscriptionId: subId,
+                        tier,
+                        status: stripeSub.status,
+                        currentPeriodStart: admin.firestore.Timestamp.fromMillis(stripeSub.current_period_start * 1000),
+                        currentPeriodEnd: admin.firestore.Timestamp.fromMillis(stripeSub.current_period_end * 1000),
+                        limits: tierConfig.limits,
+                        createdAt: admin.firestore.Timestamp.now(),
+                        updatedAt: admin.firestore.Timestamp.now(),
+                    }, { merge: true });
+                    console.log(`Checkout completed: subscription ${subId} for user ${session.metadata.firebase_uid}`);
+                }
+                break;
+            }
             default:
                 console.log(`Unhandled event type: ${event.type}`);
         }
@@ -488,4 +520,221 @@ exports.stripeWebhook = functions
         res.status(500).json({ error: "Webhook handler failed" });
     }
 });
+// ─── Checkout & Billing Portal ───────────────────────────────────────────────
+/**
+ * Create a Stripe Checkout Session for subscription signup
+ *
+ * Takes: { tier, successUrl?, cancelUrl? }
+ * Returns: { sessionId, url }
+ */
+exports.createCheckoutSession = functions
+    .runWith({ timeoutSeconds: 30, memory: "256MB" })
+    .https.onCall(async (data, context) => {
+    if (!context.auth) {
+        throw new functions.https.HttpsError("unauthenticated", "Must be authenticated");
+    }
+    if (!stripe) {
+        throw new functions.https.HttpsError("failed-precondition", "Stripe is not configured");
+    }
+    const { tier } = data;
+    if (!exports.SOLAR_TIERS[tier]) {
+        throw new functions.https.HttpsError("invalid-argument", `Invalid tier: ${tier}`);
+    }
+    const priceId = STRIPE_PRICE_IDS[tier];
+    if (!priceId) {
+        throw new functions.https.HttpsError("internal", `No Stripe price configured for tier: ${tier}`);
+    }
+    const userId = context.auth.uid;
+    const userEmail = context.auth.token.email || `user_${userId}@solar.app`;
+    try {
+        // Check for existing subscription
+        const existingSub = await admin
+            .firestore()
+            .collection("subscriptions")
+            .where("userId", "==", userId)
+            .where("status", "in", ["active", "trialing"])
+            .limit(1)
+            .get();
+        if (!existingSub.empty) {
+            throw new functions.https.HttpsError("already-exists", "User already has an active subscription. Use the billing portal to manage it.");
+        }
+        // Find or create Stripe customer
+        const customers = await stripe.customers.list({
+            email: userEmail,
+            limit: 1,
+        });
+        let customerId;
+        if (customers.data.length > 0) {
+            customerId = customers.data[0].id;
+        }
+        else {
+            const customer = await stripe.customers.create({
+                email: userEmail,
+                metadata: { firebase_uid: userId },
+            });
+            customerId = customer.id;
+        }
+        const successUrl = data.successUrl ||
+            "https://power-to-the-people-vpp.web.app/portal?payment=success";
+        const cancelUrl = data.cancelUrl ||
+            "https://power-to-the-people-vpp.web.app/portal?payment=canceled";
+        const session = await stripe.checkout.sessions.create({
+            customer: customerId,
+            mode: "subscription",
+            line_items: [{ price: priceId, quantity: 1 }],
+            success_url: successUrl,
+            cancel_url: cancelUrl,
+            metadata: {
+                firebase_uid: userId,
+                tier,
+            },
+            subscription_data: {
+                metadata: {
+                    firebase_uid: userId,
+                    tier,
+                },
+            },
+        });
+        return {
+            sessionId: session.id,
+            url: session.url,
+        };
+    }
+    catch (error) {
+        console.error("Create checkout session error:", error);
+        if (error instanceof functions.https.HttpsError)
+            throw error;
+        throw new functions.https.HttpsError("internal", error.message || "Failed to create checkout session");
+    }
+});
+/**
+ * Create a Stripe Billing Portal session for subscription self-service
+ *
+ * Takes: { returnUrl? }
+ * Returns: { url }
+ */
+exports.createBillingPortalSession = functions
+    .runWith({ timeoutSeconds: 30, memory: "256MB" })
+    .https.onCall(async (data, context) => {
+    if (!context.auth) {
+        throw new functions.https.HttpsError("unauthenticated", "Must be authenticated");
+    }
+    if (!stripe) {
+        throw new functions.https.HttpsError("failed-precondition", "Stripe is not configured");
+    }
+    const db = admin.firestore();
+    const userId = context.auth.uid;
+    // Find active subscription to get Stripe customer ID
+    const subSnapshot = await db
+        .collection("subscriptions")
+        .where("userId", "==", userId)
+        .where("status", "in", ["active", "trialing", "past_due"])
+        .limit(1)
+        .get();
+    if (subSnapshot.empty) {
+        throw new functions.https.HttpsError("not-found", "No active subscription found");
+    }
+    const subData = subSnapshot.docs[0].data();
+    try {
+        const returnUrl = (data === null || data === void 0 ? void 0 : data.returnUrl) || "https://power-to-the-people-vpp.web.app/portal";
+        const session = await stripe.billingPortal.sessions.create({
+            customer: subData.stripeCustomerId,
+            return_url: returnUrl,
+        });
+        return { url: session.url };
+    }
+    catch (error) {
+        console.error("Create billing portal session error:", error);
+        throw new functions.https.HttpsError("internal", error.message || "Failed to create billing portal session");
+    }
+});
+// ─── Subscription Status & Usage ─────────────────────────────────────────────
+/**
+ * Get current subscription status, usage, and limits
+ *
+ * Returns: tier, status, usage this month, limits, next billing date
+ */
+exports.getSubscriptionStatus = functions
+    .runWith({ timeoutSeconds: 15, memory: "256MB" })
+    .https.onCall(async (_data, context) => {
+    if (!context.auth) {
+        throw new functions.https.HttpsError("unauthenticated", "Must be authenticated");
+    }
+    const db = admin.firestore();
+    const userId = context.auth.uid;
+    // Get subscription
+    const subSnapshot = await db
+        .collection("subscriptions")
+        .where("userId", "==", userId)
+        .limit(1)
+        .get();
+    if (subSnapshot.empty) {
+        return {
+            hasSubscription: false,
+            tier: null,
+            status: null,
+            usage: null,
+            limits: null,
+        };
+    }
+    const subData = subSnapshot.docs[0].data();
+    // Get usage for current month
+    const now = new Date();
+    const monthKey = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+    const usageDoc = await db
+        .collection("usage_records")
+        .doc(`${userId}_${monthKey}`)
+        .get();
+    const usage = usageDoc.exists
+        ? usageDoc.data()
+        : {
+            api_call_count: 0,
+            lead_count: 0,
+            compliance_check_count: 0,
+        };
+    return {
+        hasSubscription: true,
+        subscriptionId: subData.stripeSubscriptionId,
+        tier: subData.tier,
+        status: subData.status,
+        cancelAtPeriodEnd: subData.cancelAtPeriodEnd || false,
+        currentPeriodStart: subData.currentPeriodStart,
+        currentPeriodEnd: subData.currentPeriodEnd,
+        lastPaymentAt: subData.lastPaymentAt || null,
+        lastPaymentAmount: subData.lastPaymentAmount || null,
+        paymentFailedAt: subData.paymentFailedAt || null,
+        usage: {
+            month: monthKey,
+            api_calls: usage.api_call_count || 0,
+            leads: usage.lead_count || 0,
+            compliance_checks: usage.compliance_check_count || 0,
+        },
+        limits: subData.limits || null,
+    };
+});
+// ─── Usage-Aware API Key Billing ─────────────────────────────────────────────
+/**
+ * Record billable API usage and check limits in one call.
+ * Used by API endpoints to enforce subscription limits per API call.
+ *
+ * Returns: { allowed, current, limit, usageType }
+ * Throws resource-exhausted if limit exceeded.
+ */
+async function recordAndCheckUsage(userId, usageType, quantity = 1) {
+    const limitType = usageType === "api_call"
+        ? "api_calls_per_month"
+        : usageType === "lead"
+            ? "leads_per_month"
+            : "compliance_checks_per_month";
+    const check = await checkUsageLimit(userId, limitType);
+    if (!check.allowed) {
+        return check;
+    }
+    await recordUsage(userId, usageType, quantity);
+    return {
+        allowed: true,
+        current: check.current + quantity,
+        limit: check.limit,
+    };
+}
 //# sourceMappingURL=payments.js.map
