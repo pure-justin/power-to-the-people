@@ -1,0 +1,1375 @@
+{
+  "project": "power-to-the-people-vpp",
+  "version": "1.0.0",
+  "generated": "2026-02-08T01:58:55.214Z",
+  "baseUrl": "https://us-central1-power-to-the-people-vpp.cloudfunctions.net",
+  "functions": {
+    "createApiKey": {
+      "description": "Creates a new API key with specified scopes and rate limits",
+      "type": "onCall",
+      "auth": "firebase",
+      "input": "{{ name: string, description?: string, scopes: ApiKeyScope[], environment?: \"development\" | \"production\", expiresInDays?: number, rateLimit?: Partial<RateLimit>, allowedIps?: string[], allowedDomains?: string[] }}",
+      "output": "{{ success: boolean, apiKeyId: string, apiKey: string, keyPrefix: string, message: string }}",
+      "errors": [
+        "unauthenticated",
+        "invalid-argument",
+        "internal"
+      ],
+      "billing": "none",
+      "rateLimit": "none",
+      "firestore": [
+        "apiKeys"
+      ],
+      "file": "apiKeys.ts"
+    },
+    "validateApiKey": {
+      "description": "Validates an API key, checks scopes and rate limits, and increments usage counters",
+      "type": "onCall",
+      "auth": "firebase",
+      "input": "{{ apiKey: string, requiredScope?: ApiKeyScope, endpoint?: string }}",
+      "output": "{{ valid: boolean, apiKeyId: string, userId: string, scopes: ApiKeyScope[], environment: string, usageStats: UsageStats }}",
+      "errors": [
+        "invalid-argument",
+        "unauthenticated",
+        "permission-denied",
+        "resource-exhausted"
+      ],
+      "billing": "none",
+      "rateLimit": "api_key",
+      "firestore": [
+        "apiKeys",
+        "apiKeyUsageLogs"
+      ],
+      "file": "apiKeys.ts"
+    },
+    "revokeApiKey": {
+      "description": "Permanently revokes an API key, preventing any further use",
+      "type": "onCall",
+      "auth": "firebase",
+      "input": "{{ apiKeyId: string, reason?: string }}",
+      "output": "{{ success: boolean, apiKeyId: string, message: string }}",
+      "errors": [
+        "unauthenticated",
+        "invalid-argument",
+        "not-found",
+        "permission-denied",
+        "internal"
+      ],
+      "billing": "none",
+      "rateLimit": "none",
+      "firestore": [
+        "apiKeys"
+      ],
+      "file": "apiKeys.ts"
+    },
+    "rotateApiKey": {
+      "description": "Rotates an API key by generating a new secret while preserving the key ID and settings",
+      "type": "onCall",
+      "auth": "firebase",
+      "input": "{{ apiKeyId: string }}",
+      "output": "{{ success: boolean, apiKeyId: string, apiKey: string, keyPrefix: string, message: string }}",
+      "errors": [
+        "unauthenticated",
+        "invalid-argument",
+        "not-found",
+        "permission-denied",
+        "internal"
+      ],
+      "billing": "none",
+      "rateLimit": "none",
+      "firestore": [
+        "apiKeys"
+      ],
+      "file": "apiKeys.ts"
+    },
+    "updateApiKey": {
+      "description": "Updates mutable settings on an existing API key (name, scopes, rate limits, etc.)",
+      "type": "onCall",
+      "auth": "firebase",
+      "input": "{{ apiKeyId: string, updates: Partial<ApiKey> }}",
+      "output": "{{ success: boolean, apiKeyId: string }}",
+      "errors": [
+        "unauthenticated",
+        "invalid-argument",
+        "not-found",
+        "permission-denied",
+        "internal"
+      ],
+      "billing": "none",
+      "rateLimit": "none",
+      "firestore": [
+        "apiKeys"
+      ],
+      "file": "apiKeys.ts"
+    },
+    "getApiKeyUsage": {
+      "description": "Retrieves usage statistics and recent request logs for an API key",
+      "type": "onCall",
+      "auth": "firebase",
+      "input": "{{ apiKeyId: string, days?: number }}",
+      "output": "{{ success: boolean, apiKeyId: string, usageStats: UsageStats, logs: ApiKeyUsageLog[], logCount: number }}",
+      "errors": [
+        "unauthenticated",
+        "invalid-argument",
+        "not-found",
+        "permission-denied",
+        "internal"
+      ],
+      "billing": "none",
+      "rateLimit": "none",
+      "firestore": [
+        "apiKeys",
+        "apiKeyUsageLogs"
+      ],
+      "file": "apiKeys.ts"
+    },
+    "validateApiKeyFromRequest": {
+      "description": "Extracts and validates an API key from an HTTP request's Authorization header",
+      "type": "helper",
+      "auth": "api_key",
+      "input": "{{ req: functions.https.Request, requiredScope?: ApiKeyScope }}",
+      "output": "{ApiKey}",
+      "errors": [
+        "unauthenticated",
+        "permission-denied",
+        "resource-exhausted"
+      ],
+      "billing": "none",
+      "rateLimit": "api_key",
+      "firestore": [
+        "apiKeys",
+        "apiKeyUsageLogs"
+      ],
+      "file": "apiKeys.ts"
+    },
+    "cleanupApiKeys": {
+      "description": "Marks expired API keys and deletes usage logs older than 90 days",
+      "type": "pubsub",
+      "auth": "none",
+      "input": "{}",
+      "output": "{void}",
+      "errors": [
+        "internal"
+      ],
+      "billing": "none",
+      "rateLimit": "none",
+      "firestore": [
+        "apiKeys",
+        "apiKeyUsageLogs"
+      ],
+      "file": "apiKeys.ts"
+    },
+    "refreshSolarData": {
+      "description": "Scheduled weekly refresh of utility rate data from OpenEI URDB for priority states every Sunday at 2 AM CST",
+      "type": "pubsub",
+      "auth": "none",
+      "input": "{{ }}",
+      "output": "{{ void }}",
+      "errors": [
+        "console.log on failure"
+      ],
+      "billing": "none",
+      "rateLimit": "none",
+      "firestore": [
+        "solar_utility_rates",
+        "data_refresh_log"
+      ],
+      "file": "dataRefresh.ts"
+    },
+    "triggerDataRefresh": {
+      "description": "Manually triggers a utility rate data refresh for a specific state or all priority states (admin only)",
+      "type": "onCall",
+      "auth": "firebase",
+      "input": "{{ state?: string }}",
+      "output": "{{ success: boolean, states: string[], records_processed: number, records_updated: number, errors: string[], duration_ms: number }}",
+      "errors": [
+        "unauthenticated",
+        "permission-denied"
+      ],
+      "billing": "none",
+      "rateLimit": "none",
+      "firestore": [
+        "users",
+        "solar_utility_rates",
+        "data_refresh_log"
+      ],
+      "file": "dataRefresh.ts"
+    },
+    "createLead": {
+      "description": "Creates a new lead in the sales pipeline with initial scoring",
+      "type": "onCall",
+      "auth": "firebase",
+      "input": "{{ customerName: string, email: string, phone: string, address: string, city: string, state: string, zip: string, source?: LeadSource, utmSource?: string, utmMedium?: string, utmCampaign?: string, systemSize?: number, batterySize?: number, annualKwh?: number, solarApiData?: any }}",
+      "output": "{{ success: boolean, leadId: string, lead: Lead }}",
+      "errors": [
+        "invalid-argument",
+        "internal"
+      ],
+      "billing": "lead",
+      "rateLimit": "none",
+      "firestore": [
+        "leads"
+      ],
+      "file": "leads.ts"
+    },
+    "updateLead": {
+      "description": "Updates lead status, details, and recalculates score when relevant fields change",
+      "type": "onCall",
+      "auth": "firebase",
+      "input": "{{ leadId: string, updates: Partial<Lead> }}",
+      "output": "{{ success: boolean, leadId: string }}",
+      "errors": [
+        "unauthenticated",
+        "invalid-argument",
+        "not-found",
+        "internal"
+      ],
+      "billing": "lead",
+      "rateLimit": "none",
+      "firestore": [
+        "leads"
+      ],
+      "file": "leads.ts"
+    },
+    "addLeadNote": {
+      "description": "Adds a sales note (call, email, meeting, or general note) to an existing lead",
+      "type": "onCall",
+      "auth": "firebase",
+      "input": "{{ leadId: string, text: string, type?: \"call\" | \"email\" | \"meeting\" | \"note\" }}",
+      "output": "{{ success: boolean, note: SalesNote }}",
+      "errors": [
+        "unauthenticated",
+        "invalid-argument",
+        "internal"
+      ],
+      "billing": "none",
+      "rateLimit": "none",
+      "firestore": [
+        "leads"
+      ],
+      "file": "leads.ts"
+    },
+    "assignLead": {
+      "description": "Assigns a lead to a sales representative for follow-up",
+      "type": "onCall",
+      "auth": "firebase",
+      "input": "{{ leadId: string, assignToUserId: string, assignToName?: string }}",
+      "output": "{{ success: boolean, leadId: string, assignedTo: string }}",
+      "errors": [
+        "unauthenticated",
+        "invalid-argument",
+        "internal"
+      ],
+      "billing": "none",
+      "rateLimit": "none",
+      "firestore": [
+        "leads"
+      ],
+      "file": "leads.ts"
+    },
+    "recalculateLeadScores": {
+      "description": "Batch recalculates lead quality scores for all non-archived leads",
+      "type": "onCall",
+      "auth": "firebase",
+      "input": "{{ }}",
+      "output": "{{ success: boolean, totalLeads: number, updatedLeads: number }}",
+      "errors": [
+        "unauthenticated",
+        "internal"
+      ],
+      "billing": "none",
+      "rateLimit": "none",
+      "firestore": [
+        "leads"
+      ],
+      "file": "leads.ts"
+    },
+    "leadWebhook": {
+      "description": "HTTP webhook to create leads from external API integrations and partner sites",
+      "type": "onRequest",
+      "method": "POST",
+      "auth": "api_key",
+      "scope": "LEAD_WEBHOOK_API_KEY",
+      "input": "{{ customerName: string, email: string, phone: string, address: string, city: string, state: string, zip: string, source?: LeadSource, utmSource?: string, utmMedium?: string, utmCampaign?: string, systemSize?: number, batterySize?: number, annualKwh?: number, solarApiData?: any }}",
+      "output": "{{ success: boolean, leadId: string, message: string }}",
+      "errors": [
+        "400",
+        "401",
+        "405",
+        "500"
+      ],
+      "billing": "lead",
+      "rateLimit": "none",
+      "firestore": [
+        "leads"
+      ],
+      "file": "leads.ts"
+    },
+    "mercuryFetch": {
+      "description": "Internal helper for authenticated Mercury Banking API requests",
+      "type": "helper",
+      "auth": "api_key",
+      "input": "{{ endpoint: string, method: string, body?: any }}",
+      "output": "any (Mercury API response JSON)",
+      "errors": [
+        "failed-precondition",
+        "internal"
+      ],
+      "billing": "none",
+      "rateLimit": "none",
+      "firestore": [
+        "none"
+      ],
+      "file": "mercuryInvoice.ts"
+    },
+    "verifyAdmin": {
+      "description": "Verify the caller is authenticated and has the admin role in Firestore",
+      "type": "helper",
+      "auth": "firebase",
+      "input": "{{ context: functions.https.CallableContext }}",
+      "output": "void",
+      "errors": [
+        "unauthenticated",
+        "permission-denied"
+      ],
+      "billing": "none",
+      "rateLimit": "none",
+      "firestore": [
+        "users"
+      ],
+      "file": "mercuryInvoice.ts"
+    },
+    "createMercuryCustomer": {
+      "description": "Create a Mercury Accounts Receivable customer linked to a lead",
+      "type": "onCall",
+      "auth": "admin",
+      "input": "{{ leadId: string, name: string, email: string, phone?: string }}",
+      "output": "{{ success: boolean, customerId: string }}",
+      "errors": [
+        "unauthenticated",
+        "permission-denied",
+        "invalid-argument",
+        "internal"
+      ],
+      "billing": "none",
+      "rateLimit": "none",
+      "firestore": [
+        "leads"
+      ],
+      "file": "mercuryInvoice.ts"
+    },
+    "createMercuryInvoice": {
+      "description": "Create a Mercury invoice for a lead and save it to Firestore",
+      "type": "onCall",
+      "auth": "admin",
+      "input": "{{ leadId: string, customerId: string, amount: number, lineItems: Array<{ description: string, quantity: number, unitPrice: number }>, dueDate: string, memo?: string, customerName: string, customerEmail: string }}",
+      "output": "{{ success: boolean, invoiceId: string, mercuryInvoiceId: string, slug: string }}",
+      "errors": [
+        "unauthenticated",
+        "permission-denied",
+        "invalid-argument",
+        "internal"
+      ],
+      "billing": "none",
+      "rateLimit": "none",
+      "firestore": [
+        "invoices",
+        "leads"
+      ],
+      "file": "mercuryInvoice.ts"
+    },
+    "getMercuryInvoice": {
+      "description": "Retrieve a single Mercury invoice by its Mercury invoice ID",
+      "type": "onCall",
+      "auth": "admin",
+      "input": "{{ mercuryInvoiceId: string }}",
+      "output": "{{ success: boolean, invoice: object }}",
+      "errors": [
+        "unauthenticated",
+        "permission-denied",
+        "invalid-argument",
+        "internal"
+      ],
+      "billing": "none",
+      "rateLimit": "none",
+      "firestore": [
+        "none"
+      ],
+      "file": "mercuryInvoice.ts"
+    },
+    "listMercuryInvoices": {
+      "description": "List Mercury invoices with optional status filtering and pagination",
+      "type": "onCall",
+      "auth": "admin",
+      "input": "{{ status?: string, limit?: number, offset?: number }}",
+      "output": "{{ success: boolean, invoices: object }}",
+      "errors": [
+        "unauthenticated",
+        "permission-denied",
+        "internal"
+      ],
+      "billing": "none",
+      "rateLimit": "none",
+      "firestore": [
+        "none"
+      ],
+      "file": "mercuryInvoice.ts"
+    },
+    "cancelMercuryInvoice": {
+      "description": "Cancel a Mercury invoice and update the corresponding Firestore records",
+      "type": "onCall",
+      "auth": "admin",
+      "input": "{{ mercuryInvoiceId: string, firestoreInvoiceId: string, leadId: string }}",
+      "output": "{{ success: boolean, mercuryInvoiceId: string }}",
+      "errors": [
+        "unauthenticated",
+        "permission-denied",
+        "invalid-argument",
+        "internal"
+      ],
+      "billing": "none",
+      "rateLimit": "none",
+      "firestore": [
+        "invoices",
+        "leads"
+      ],
+      "file": "mercuryInvoice.ts"
+    },
+    "syncInvoiceStatus": {
+      "description": "Sync invoice statuses from Mercury every 30 minutes and send SMS on payment receipt",
+      "type": "pubsub",
+      "auth": "none",
+      "input": "none (scheduled trigger)",
+      "output": "null",
+      "errors": [
+        "internal (per-invoice",
+        "non-fatal)"
+      ],
+      "billing": "sms",
+      "rateLimit": "none",
+      "firestore": [
+        "invoices",
+        "leads"
+      ],
+      "file": "mercuryInvoice.ts"
+    },
+    "createSubscription": {
+      "description": "Create a new Stripe subscription for an authenticated user",
+      "type": "onCall",
+      "auth": "firebase",
+      "input": "{{ tier: TierKey, payment_method_id: string }}",
+      "output": "{{ success: boolean, subscriptionId: string, tier: string, status: string }}",
+      "errors": [
+        "unauthenticated",
+        "failed-precondition",
+        "invalid-argument",
+        "already-exists",
+        "internal"
+      ],
+      "billing": "none",
+      "rateLimit": "subscription_tier",
+      "firestore": [
+        "subscriptions"
+      ],
+      "file": "payments.ts"
+    },
+    "updateSubscription": {
+      "description": "Update an existing subscription tier (upgrade or downgrade with proration)",
+      "type": "onCall",
+      "auth": "firebase",
+      "input": "{{ new_tier: TierKey }}",
+      "output": "{{ success: boolean, previousTier: string, newTier: string }}",
+      "errors": [
+        "unauthenticated",
+        "failed-precondition",
+        "invalid-argument",
+        "not-found",
+        "internal"
+      ],
+      "billing": "none",
+      "rateLimit": "subscription_tier",
+      "firestore": [
+        "subscriptions"
+      ],
+      "file": "payments.ts"
+    },
+    "cancelSubscription": {
+      "description": "Cancel a user's active subscription immediately or at period end",
+      "type": "onCall",
+      "auth": "firebase",
+      "input": "{{ immediate?: boolean }}",
+      "output": "{{ success: boolean, immediate: boolean, message: string }}",
+      "errors": [
+        "unauthenticated",
+        "failed-precondition",
+        "not-found",
+        "internal"
+      ],
+      "billing": "none",
+      "rateLimit": "subscription_tier",
+      "firestore": [
+        "subscriptions"
+      ],
+      "file": "payments.ts"
+    },
+    "recordUsage": {
+      "description": "Record API usage for a user by incrementing the monthly usage counter",
+      "type": "helper",
+      "auth": "none",
+      "input": "{{ userId: string, usageType: \"api_call\" | \"lead\" | \"compliance_check\", quantity?: number }}",
+      "output": "void",
+      "errors": [
+        "none"
+      ],
+      "billing": "none",
+      "rateLimit": "none",
+      "firestore": [
+        "usage_records"
+      ],
+      "file": "payments.ts"
+    },
+    "checkUsageLimit": {
+      "description": "Check if a user is within their subscription usage limits for a given metric",
+      "type": "helper",
+      "auth": "none",
+      "input": "{{ userId: string, usageType: \"leads_per_month\" | \"api_calls_per_month\" | \"compliance_checks_per_month\" }}",
+      "output": "{{ allowed: boolean, current: number, limit: number }}",
+      "errors": [
+        "none"
+      ],
+      "billing": "none",
+      "rateLimit": "none",
+      "firestore": [
+        "subscriptions",
+        "usage_records"
+      ],
+      "file": "payments.ts"
+    },
+    "stripeWebhook": {
+      "description": "Handle Stripe webhook events for subscription lifecycle updates",
+      "type": "onRequest",
+      "method": "POST",
+      "auth": "none",
+      "input": "Stripe webhook event (verified via stripe-signature header)",
+      "output": "{{ received: boolean }}",
+      "errors": [
+        "400 (invalid signature)",
+        "405 (wrong method)",
+        "500 (handler failure)"
+      ],
+      "billing": "none",
+      "rateLimit": "none",
+      "firestore": [
+        "subscriptions"
+      ],
+      "file": "payments.ts"
+    },
+    "createCheckoutSession": {
+      "description": "Create a Stripe Checkout Session for subscription signup",
+      "type": "onCall",
+      "auth": "firebase",
+      "input": "{{ tier: TierKey, successUrl?: string, cancelUrl?: string }}",
+      "output": "{{ sessionId: string, url: string }}",
+      "errors": [
+        "unauthenticated",
+        "failed-precondition",
+        "invalid-argument",
+        "already-exists",
+        "internal"
+      ],
+      "billing": "none",
+      "rateLimit": "subscription_tier",
+      "firestore": [
+        "subscriptions"
+      ],
+      "file": "payments.ts"
+    },
+    "createBillingPortalSession": {
+      "description": "Create a Stripe Billing Portal session for subscription self-service management",
+      "type": "onCall",
+      "auth": "firebase",
+      "input": "{{ returnUrl?: string }}",
+      "output": "{{ url: string }}",
+      "errors": [
+        "unauthenticated",
+        "failed-precondition",
+        "not-found",
+        "internal"
+      ],
+      "billing": "none",
+      "rateLimit": "subscription_tier",
+      "firestore": [
+        "subscriptions"
+      ],
+      "file": "payments.ts"
+    },
+    "getSubscriptionStatus": {
+      "description": "Get current subscription status, monthly usage, and tier limits for the authenticated user",
+      "type": "onCall",
+      "auth": "firebase",
+      "input": "{{}}",
+      "output": "{{ hasSubscription: boolean, subscriptionId?: string, tier?: string, status?: string, cancelAtPeriodEnd?: boolean, currentPeriodStart?: Timestamp, currentPeriodEnd?: Timestamp, usage?: { month: string, api_calls: number, leads: number, compliance_checks: number }, limits?: object }}",
+      "errors": [
+        "unauthenticated"
+      ],
+      "billing": "none",
+      "rateLimit": "subscription_tier",
+      "firestore": [
+        "subscriptions",
+        "usage_records"
+      ],
+      "file": "payments.ts"
+    },
+    "recordAndCheckUsage": {
+      "description": "Record billable API usage and check subscription limits in a single atomic call",
+      "type": "helper",
+      "auth": "none",
+      "input": "{{ userId: string, usageType: \"api_call\" | \"lead\" | \"compliance_check\", quantity?: number }}",
+      "output": "{{ allowed: boolean, current: number, limit: number }}",
+      "errors": [
+        "none"
+      ],
+      "billing": "api_call | lead | compliance_check",
+      "rateLimit": "none",
+      "firestore": [
+        "subscriptions",
+        "usage_records"
+      ],
+      "file": "payments.ts"
+    },
+    "referralStatusWebhook": {
+      "description": "Receives external webhook to update a single referral tracking status and calculate milestone earnings",
+      "type": "onRequest",
+      "method": "POST",
+      "auth": "api_key",
+      "scope": "X-Webhook-Signature (HMAC-SHA256)",
+      "input": "{{ projectId: string, status: \"signed_up\" | \"qualified\" | \"site_survey\" | \"installed\", timestamp?: string }}",
+      "output": "{{ success: boolean, projectId: string, status: string, earningsAdded: number }}",
+      "errors": [
+        "400",
+        "401",
+        "404",
+        "405",
+        "500"
+      ],
+      "billing": "none",
+      "rateLimit": "none",
+      "firestore": [
+        "referralTracking",
+        "referrals",
+        "webhookLogs"
+      ],
+      "file": "referralWebhooks.ts"
+    },
+    "referralBulkUpdateWebhook": {
+      "description": "Receives external webhook to update multiple referral tracking statuses in a single request",
+      "type": "onRequest",
+      "method": "POST",
+      "auth": "api_key",
+      "scope": "X-Webhook-Signature (HMAC-SHA256)",
+      "input": "{{ updates: Array<{ projectId: string, status: string }> }}",
+      "output": "{{ successful: number, failed: number, errors: Array<{ projectId: string, error: string }> }}",
+      "errors": [
+        "400",
+        "401",
+        "405"
+      ],
+      "billing": "none",
+      "rateLimit": "none",
+      "firestore": [
+        "referralTracking",
+        "referrals",
+        "webhookLogs"
+      ],
+      "file": "referralWebhooks.ts"
+    },
+    "referralStatsWebhook": {
+      "description": "Returns aggregate referral program statistics for external dashboards via API key authentication",
+      "type": "onRequest",
+      "method": "GET",
+      "auth": "api_key",
+      "scope": "webhook.api_key (query parameter)",
+      "input": "{{ apiKey: string }}",
+      "output": "{{ totalReferrers: number, totalReferrals: number, totalEarnings: number, pendingEarnings: number, paidEarnings: number, statusCounts: Record<string, number>, generatedAt: string }}",
+      "errors": [
+        "401",
+        "405",
+        "500"
+      ],
+      "billing": "none",
+      "rateLimit": "none",
+      "firestore": [
+        "referrals",
+        "referralTracking"
+      ],
+      "file": "referralWebhooks.ts"
+    },
+    "onProjectCreated": {
+      "description": "Sends enrollment confirmation SMS to customer and new lead alert to admin on project creation",
+      "type": "trigger",
+      "auth": "none",
+      "input": "{{ projectId: string }}",
+      "output": "{{ void }}",
+      "errors": [
+        "Twilio API errors"
+      ],
+      "billing": "sms",
+      "rateLimit": "none",
+      "firestore": [
+        "projects",
+        "smsLog"
+      ],
+      "file": "smsNotifications.ts"
+    },
+    "onProjectUpdated": {
+      "description": "Updates referral milestone status and sends notifications when a project status progresses through the pipeline",
+      "type": "trigger",
+      "auth": "none",
+      "input": "{{ projectId: string }}",
+      "output": "{{ null }}",
+      "errors": [
+        "console.error on failure"
+      ],
+      "billing": "none",
+      "rateLimit": "none",
+      "firestore": [
+        "projects",
+        "referralTracking",
+        "referrals",
+        "pendingNotifications"
+      ],
+      "file": "referrals.ts"
+    },
+    "updateReferralStatusHttp": {
+      "description": "Allows admins to manually update a referral tracking record's status and recalculate earnings",
+      "type": "onCall",
+      "auth": "firebase",
+      "input": "{{ trackingId: string, newStatus: \"signed_up\" | \"qualified\" | \"site_survey\" | \"installed\" }}",
+      "output": "{{ success: boolean, earningsAdded: number }}",
+      "errors": [
+        "unauthenticated",
+        "permission-denied",
+        "invalid-argument",
+        "internal"
+      ],
+      "billing": "none",
+      "rateLimit": "none",
+      "firestore": [
+        "users",
+        "referralTracking",
+        "referrals"
+      ],
+      "file": "referrals.ts"
+    },
+    "getReferralStats": {
+      "description": "Returns aggregate referral program statistics including referrer counts, earnings, and status breakdowns",
+      "type": "onCall",
+      "auth": "firebase",
+      "input": "{{ }}",
+      "output": "{{ totalReferrers: number, totalReferrals: number, totalEarnings: number, totalPaid: number, pendingPayouts: number, statusCounts: Record<string, number> }}",
+      "errors": [
+        "unauthenticated",
+        "permission-denied",
+        "internal"
+      ],
+      "billing": "none",
+      "rateLimit": "none",
+      "firestore": [
+        "users",
+        "referrals",
+        "referralTracking"
+      ],
+      "file": "referrals.ts"
+    },
+    "processWeeklyPayouts": {
+      "description": "Processes pending referral payouts every Monday at 9 AM CST for referrers with earnings >= $100",
+      "type": "pubsub",
+      "auth": "none",
+      "input": "{{ }}",
+      "output": "{{ null }}",
+      "errors": [
+        "console.error on failure"
+      ],
+      "billing": "none",
+      "rateLimit": "none",
+      "firestore": [
+        "referrals",
+        "payouts",
+        "pendingNotifications"
+      ],
+      "file": "referrals.ts"
+    },
+    "secureLeadWebhook": {
+      "description": "Creates a new lead via API key authentication with automatic rate limiting and usage tracking",
+      "type": "onRequest",
+      "method": "POST",
+      "auth": "api_key",
+      "scope": "WRITE_LEADS",
+      "input": "{{ customerName: string, email: string, phone: string, address: string, city: string, state: string, zip: string, source?: LeadSource, utmSource?: string, utmMedium?: string, utmCampaign?: string, systemSize?: number, batterySize?: number, annualKwh?: number, solarApiData?: any }}",
+      "output": "{{ success: boolean, leadId: string, message: string, usage: { requestsThisHour: number, hourlyLimit: number, requestsThisDay: number, dailyLimit: number } }}",
+      "errors": [
+        "400",
+        "401",
+        "403",
+        "405",
+        "429",
+        "500"
+      ],
+      "billing": "api_call, lead",
+      "rateLimit": "api_key",
+      "firestore": [
+        "leads",
+        "apiKeys"
+      ],
+      "file": "secureLeadWebhook.ts"
+    },
+    "secureSolarWebhook": {
+      "description": "Triggers solar analysis for an address via API key authentication and optionally updates an existing lead",
+      "type": "onRequest",
+      "method": "POST",
+      "auth": "api_key",
+      "scope": "WRITE_SOLAR",
+      "input": "{{ address: string, leadId?: string }}",
+      "output": "{{ success: boolean, data: { address: string, maxArrayPanels: number, maxArrayArea: number, maxSunshineHours: number, carbonOffset: number, estimatedSystemSize: number, estimatedAnnualProduction: number }, usage: { requestsThisHour: number, hourlyLimit: number } }}",
+      "errors": [
+        "400",
+        "401",
+        "403",
+        "405",
+        "429",
+        "500"
+      ],
+      "billing": "api_call",
+      "rateLimit": "api_key",
+      "firestore": [
+        "leads",
+        "apiKeys"
+      ],
+      "file": "secureLeadWebhook.ts"
+    },
+    "secureLeadQuery": {
+      "description": "Queries leads owned by the API key holder with optional status filtering and pagination",
+      "type": "onRequest",
+      "method": "GET",
+      "auth": "api_key",
+      "scope": "READ_LEADS",
+      "input": "{{ status?: string, limit?: number, offset?: number }}",
+      "output": "{{ success: boolean, leads: Lead[], count: number, pagination: { limit: number, offset: number }, usage: { requestsThisHour: number, hourlyLimit: number } }}",
+      "errors": [
+        "401",
+        "403",
+        "405",
+        "429",
+        "500"
+      ],
+      "billing": "api_call",
+      "rateLimit": "api_key",
+      "firestore": [
+        "leads",
+        "apiKeys"
+      ],
+      "file": "secureLeadWebhook.ts"
+    },
+    "sendSMS": {
+      "description": "Sends an SMS message via Twilio and logs the result to Firestore",
+      "type": "helper",
+      "auth": "none",
+      "input": "{{ to: string, message: string }}",
+      "output": "{{ boolean }}",
+      "errors": [
+        "Twilio API errors"
+      ],
+      "billing": "sms",
+      "rateLimit": "none",
+      "firestore": [
+        "smsLog"
+      ],
+      "file": "smsNotifications.ts"
+    },
+    "onProjectStatusUpdate": {
+      "description": "Sends status update SMS to customer when project status changes (approved, pending_info, installation_scheduled, installed)",
+      "type": "trigger",
+      "auth": "none",
+      "input": "{{ projectId: string }}",
+      "output": "{{ void }}",
+      "errors": [
+        "Twilio API errors"
+      ],
+      "billing": "sms",
+      "rateLimit": "none",
+      "firestore": [
+        "projects",
+        "smsLog"
+      ],
+      "file": "smsNotifications.ts"
+    },
+    "onReferralReward": {
+      "description": "Sends reward notification SMS to the referrer when a referral earns a reward",
+      "type": "trigger",
+      "auth": "none",
+      "input": "{{ referralId: string }}",
+      "output": "{{ void }}",
+      "errors": [
+        "Twilio API errors"
+      ],
+      "billing": "sms",
+      "rateLimit": "none",
+      "firestore": [
+        "referrals",
+        "users",
+        "smsLog"
+      ],
+      "file": "smsNotifications.ts"
+    },
+    "sendCustomSMS": {
+      "description": "Allows admins to send a custom SMS message to a single phone number",
+      "type": "onCall",
+      "auth": "firebase",
+      "input": "{{ phone: string, message: string }}",
+      "output": "{{ success: boolean }}",
+      "errors": [
+        "unauthenticated",
+        "permission-denied",
+        "invalid-argument"
+      ],
+      "billing": "sms",
+      "rateLimit": "none",
+      "firestore": [
+        "users",
+        "smsLog"
+      ],
+      "file": "smsNotifications.ts"
+    },
+    "sendBulkSMS": {
+      "description": "Sends the same SMS message to multiple recipients in bulk (max 100 per call)",
+      "type": "onCall",
+      "auth": "firebase",
+      "input": "{{ recipients: string[], message: string }}",
+      "output": "{{ total: number, successful: number, failed: number }}",
+      "errors": [
+        "unauthenticated",
+        "permission-denied",
+        "invalid-argument"
+      ],
+      "billing": "sms",
+      "rateLimit": "none",
+      "firestore": [
+        "users",
+        "smsLog"
+      ],
+      "file": "smsNotifications.ts"
+    },
+    "sendPaymentReminders": {
+      "description": "Sends payment reminder SMS daily at 9 AM CST for payments due within 1-3 days",
+      "type": "pubsub",
+      "auth": "none",
+      "input": "{{ }}",
+      "output": "{{ void }}",
+      "errors": [
+        "Twilio API errors"
+      ],
+      "billing": "sms",
+      "rateLimit": "none",
+      "firestore": [
+        "projects",
+        "smsLog"
+      ],
+      "file": "smsNotifications.ts"
+    },
+    "getSmsStats": {
+      "description": "Returns SMS usage statistics for the last 30 days including success/failure counts and estimated cost",
+      "type": "onCall",
+      "auth": "firebase",
+      "input": "{{ }}",
+      "output": "{{ total: number, successful: number, failed: number, estimatedCost: string, period: string }}",
+      "errors": [
+        "unauthenticated",
+        "permission-denied"
+      ],
+      "billing": "none",
+      "rateLimit": "none",
+      "firestore": [
+        "users",
+        "smsLog"
+      ],
+      "file": "smsNotifications.ts"
+    },
+    "twilioStatusCallback": {
+      "description": "Receives Twilio delivery status callbacks and updates SMS log records with delivery status",
+      "type": "onRequest",
+      "method": "POST",
+      "auth": "none",
+      "input": "{{ MessageSid: string, MessageStatus: string, To: string, ErrorCode?: string, ErrorMessage?: string }}",
+      "output": "{{ string }}",
+      "errors": [
+        "400"
+      ],
+      "billing": "none",
+      "rateLimit": "none",
+      "firestore": [
+        "smsLog"
+      ],
+      "file": "smsNotifications.ts"
+    },
+    "fetchSmtUsage": {
+      "description": "Fetches energy usage data from Smart Meter Texas using headless browser and saves results to Firestore",
+      "type": "onCall",
+      "auth": "firebase",
+      "input": "{{ username: string, password: string, projectId?: string, customerId?: string }}",
+      "output": "{{ success: boolean, data: SmtUsageData, savedTo: string }}",
+      "errors": [
+        "invalid-argument",
+        "unauthenticated",
+        "internal"
+      ],
+      "billing": "none",
+      "rateLimit": "none",
+      "firestore": [
+        "projects",
+        "smtData"
+      ],
+      "file": "smtConnector.ts"
+    },
+    "smtWebhook": {
+      "description": "HTTP endpoint for non-Firebase clients to fetch Smart Meter Texas data and save to Firestore",
+      "type": "onRequest",
+      "method": "POST",
+      "auth": "none",
+      "input": "{{ username: string, password: string, projectId?: string }}",
+      "output": "{{ success: boolean, data: SmtUsageData, savedTo: string }}",
+      "errors": [
+        "400",
+        "405",
+        "500"
+      ],
+      "billing": "none",
+      "rateLimit": "none",
+      "firestore": [
+        "projects",
+        "smtData"
+      ],
+      "file": "smtConnector.ts"
+    },
+    "solarEquipment": {
+      "description": "Queries the solar equipment database with optional compliance and manufacturer filters",
+      "type": "onRequest",
+      "method": "GET",
+      "auth": "api_key",
+      "scope": "read_equipment",
+      "input": "{{ type?: \"panel\" | \"inverter\" | \"battery\" | \"optimizer\", manufacturer?: string, feoc_compliant?: \"true\" | \"false\", domestic_content?: \"true\" | \"false\", tariff_safe?: \"true\" | \"false\", limit?: number }}",
+      "output": "{{ success: boolean, count: number, data: object[] }}",
+      "errors": [
+        "unauthenticated",
+        "permission-denied",
+        "resource-exhausted",
+        "internal"
+      ],
+      "billing": "api_call",
+      "rateLimit": "api_key",
+      "firestore": [
+        "solar_equipment"
+      ],
+      "file": "solarDataApi.ts"
+    },
+    "solarUtilities": {
+      "description": "Queries utility rate data by state, ZIP code, or utility name",
+      "type": "onRequest",
+      "method": "GET",
+      "auth": "api_key",
+      "scope": "read_utilities",
+      "input": "{{ state?: string, zip?: string, utility_name?: string, has_net_metering?: \"true\" | \"false\", limit?: number }}",
+      "output": "{{ success: boolean, count: number, data: object[] }}",
+      "errors": [
+        "unauthenticated",
+        "permission-denied",
+        "resource-exhausted",
+        "internal"
+      ],
+      "billing": "api_call",
+      "rateLimit": "api_key",
+      "firestore": [
+        "solar_utility_rates"
+      ],
+      "file": "solarDataApi.ts"
+    },
+    "solarIncentives": {
+      "description": "Queries active, expired, or upcoming solar incentive programs by state and sector",
+      "type": "onRequest",
+      "method": "GET",
+      "auth": "api_key",
+      "scope": "read_incentives",
+      "input": "{{ state?: string, type?: \"tax_credit\" | \"rebate\" | \"srec\" | \"performance\" | \"grant\", status?: \"active\" | \"expired\" | \"upcoming\", sector?: \"residential\" | \"commercial\" | \"both\", limit?: number }}",
+      "output": "{{ success: boolean, count: number, data: object[] }}",
+      "errors": [
+        "unauthenticated",
+        "permission-denied",
+        "resource-exhausted",
+        "internal"
+      ],
+      "billing": "api_call",
+      "rateLimit": "api_key",
+      "firestore": [
+        "solar_incentives"
+      ],
+      "file": "solarDataApi.ts"
+    },
+    "solarPermits": {
+      "description": "Queries solar permit requirements by state, jurisdiction, or county",
+      "type": "onRequest",
+      "method": "GET",
+      "auth": "api_key",
+      "scope": "read_permits",
+      "input": "{{ state?: string, jurisdiction?: string, county?: string, limit?: number }}",
+      "output": "{{ success: boolean, count: number, data: object[] }}",
+      "errors": [
+        "unauthenticated",
+        "permission-denied",
+        "resource-exhausted",
+        "internal"
+      ],
+      "billing": "api_call",
+      "rateLimit": "api_key",
+      "firestore": [
+        "solar_permits"
+      ],
+      "file": "solarDataApi.ts"
+    },
+    "solarComplianceCheck": {
+      "description": "Runs a compound compliance report across equipment FEOC/domestic content, permits, and incentives",
+      "type": "onRequest",
+      "method": "POST",
+      "auth": "api_key",
+      "scope": "read_compliance",
+      "input": "{{ equipment_ids: string[], jurisdiction?: string, state?: string, project_type?: \"residential\" | \"commercial\" }}",
+      "output": "{{ success: boolean, compliance_summary: object, equipment: object[], permit_requirements: object | null, incentives: object[] }}",
+      "errors": [
+        "unauthenticated",
+        "permission-denied",
+        "resource-exhausted",
+        "internal"
+      ],
+      "billing": "compliance_check",
+      "rateLimit": "api_key",
+      "firestore": [
+        "solar_equipment",
+        "solar_permits",
+        "solar_incentives"
+      ],
+      "file": "solarDataApi.ts"
+    },
+    "solarEstimate": {
+      "description": "Generates a full solar estimate including cost, production, incentives, equipment, permits, and financing",
+      "type": "onRequest",
+      "method": "POST",
+      "auth": "api_key",
+      "scope": "read_solar",
+      "input": "{{ state: string, zip?: string, jurisdiction?: string, system_size_kw: number, monthly_bill?: number, project_type?: \"residential\" | \"commercial\", equipment_preferences?: { panel_type?: string, feoc_required?: boolean, domestic_content_required?: boolean } }}",
+      "output": "{{ success: boolean, estimate: object, utility_rates: object[], recommended_equipment: object[], incentives: object[], permit_requirements: object | null, financing_options: object[] }}",
+      "errors": [
+        "unauthenticated",
+        "permission-denied",
+        "resource-exhausted",
+        "internal"
+      ],
+      "billing": "api_call",
+      "rateLimit": "api_key",
+      "firestore": [
+        "solar_utility_rates",
+        "solar_equipment",
+        "solar_incentives",
+        "solar_permits",
+        "solar_tpo_providers"
+      ],
+      "file": "solarDataApi.ts"
+    }
+  },
+  "collections": {
+    "subscriptions": {
+      "description": "Stripe subscription records",
+      "fields": [
+        "userId",
+        "stripeCustomerId",
+        "stripeSubscriptionId",
+        "tier",
+        "status",
+        "limits",
+        "currentPeriodStart",
+        "currentPeriodEnd"
+      ],
+      "usedBy": [
+        "createSubscription",
+        "stripeWebhook",
+        "getSubscriptionStatus"
+      ]
+    },
+    "usage_records": {
+      "description": "Monthly usage metering per user",
+      "fields": [
+        "userId",
+        "month",
+        "api_call_count",
+        "lead_count",
+        "compliance_check_count"
+      ],
+      "usedBy": [
+        "recordUsage",
+        "checkUsageLimit",
+        "getSubscriptionStatus"
+      ]
+    },
+    "leads": {
+      "description": "Solar lead records",
+      "usedBy": [
+        "createLead",
+        "updateLead",
+        "assignLead"
+      ]
+    },
+    "invoices": {
+      "description": "Mercury ACH invoices",
+      "usedBy": [
+        "createMercuryInvoice",
+        "syncInvoiceStatus"
+      ]
+    },
+    "apiKeys": {
+      "description": "API key management",
+      "usedBy": [
+        "createApiKey",
+        "validateApiKey",
+        "validateApiKeyFromRequest"
+      ]
+    },
+    "apiKeyUsageLogs": {
+      "description": "API key usage audit log",
+      "usedBy": [
+        "validateApiKey",
+        "getApiKeyUsage",
+        "cleanupApiKeys"
+      ]
+    },
+    "solar_equipment": {
+      "description": "Solar panel/inverter/battery database"
+    },
+    "solar_utility_rates": {
+      "description": "Utility rate data by state/zip"
+    },
+    "solar_incentives": {
+      "description": "Solar incentive programs by state"
+    },
+    "solar_permits": {
+      "description": "Permit requirements by jurisdiction"
+    },
+    "solar_tpo_providers": {
+      "description": "Third-party ownership providers"
+    },
+    "referrals": {
+      "description": "Referral tracking and commissions"
+    },
+    "projects": {
+      "description": "Solar installation projects"
+    },
+    "users": {
+      "description": "User profiles and roles"
+    }
+  },
+  "integrations": {
+    "stripe": {
+      "mode": "test",
+      "products": {
+        "starter": {
+          "productId": "prod_TwFLid7j0JHnSl",
+          "priceId": "price_1SyMrCQhgZdyZ7qRyWDGrr9U",
+          "amount": 7900
+        },
+        "professional": {
+          "productId": "prod_TwFLxXsbBanKDG",
+          "priceId": "price_1SyMrEQhgZdyZ7qRYLfqv0Ds",
+          "amount": 14900
+        },
+        "enterprise": {
+          "productId": "prod_TwFL2VeL1zzZmF",
+          "priceId": "price_1SyMrFQhgZdyZ7qRcQk9fAqh",
+          "amount": 29900
+        }
+      },
+      "paygo": {
+        "solar_lead": {
+          "priceId": "price_1SyMrGQhgZdyZ7qRixVanOLJ",
+          "amount": 500
+        },
+        "api_call_pack": {
+          "priceId": "price_1SyMrHQhgZdyZ7qRfeQQUUI6",
+          "amount": 2500
+        },
+        "compliance_check": {
+          "priceId": "price_1SyMrIQhgZdyZ7qRZKDhbgKL",
+          "amount": 200
+        }
+      },
+      "webhookEndpoint": "we_1SyMveQhgZdyZ7qR5IbbddaH",
+      "webhookUrl": "https://us-central1-power-to-the-people-vpp.cloudfunctions.net/stripeWebhook",
+      "webhookEvents": [
+        "customer.subscription.created",
+        "customer.subscription.updated",
+        "customer.subscription.deleted",
+        "invoice.payment_succeeded",
+        "invoice.payment_failed",
+        "checkout.session.completed"
+      ]
+    },
+    "mercury": {
+      "baseUrl": "https://api.mercury.com/api/v1",
+      "accountId": "ecc22c2c-aabf-11f0-955b-13f894471589",
+      "configKey": "mercury.api_token"
+    },
+    "twilio": {
+      "configKeys": [
+        "twilio.account_sid",
+        "twilio.auth_token",
+        "twilio.phone_number"
+      ]
+    }
+  },
+  "config": {
+    "stripe.secret_key": "Stripe API key (test mode: sk_test_...)",
+    "stripe.webhook_secret": "Stripe webhook signing secret (whsec_...)",
+    "mercury.api_token": "Mercury Banking API token",
+    "mercury.account_id": "Mercury checking account ID",
+    "twilio.account_sid": "Twilio account SID",
+    "twilio.auth_token": "Twilio auth token",
+    "twilio.phone_number": "Twilio phone number for sending SMS"
+  },
+  "billing": {
+    "tiers": {
+      "starter": {
+        "price": 79,
+        "leads_per_month": 50,
+        "api_calls_per_month": 1000,
+        "compliance_checks_per_month": 25
+      },
+      "professional": {
+        "price": 149,
+        "leads_per_month": 200,
+        "api_calls_per_month": 10000,
+        "compliance_checks_per_month": 200
+      },
+      "enterprise": {
+        "price": 299,
+        "leads_per_month": -1,
+        "api_calls_per_month": 100000,
+        "compliance_checks_per_month": -1
+      }
+    },
+    "usageTypes": [
+      "api_call",
+      "lead",
+      "compliance_check",
+      "sms"
+    ],
+    "meteringCollections": [
+      "usage_records",
+      "apiKeyUsageLogs"
+    ]
+  }
+}

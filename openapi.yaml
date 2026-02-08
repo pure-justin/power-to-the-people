@@ -1,0 +1,913 @@
+openapi: '3.0.3'
+info:
+  title: Power to the People - Solar CRM API
+  description: >-
+    REST API for the Power to the People solar CRM platform.
+    Provides endpoints for solar data queries, lead management,
+    payment webhooks, referral tracking, and SMT data integration.
+  version: '1.0.0'
+  contact:
+    email: justin@agntc.tech
+servers:
+  - url: https://us-central1-power-to-the-people-vpp.cloudfunctions.net
+    description: Firebase Cloud Functions (us-central1)
+
+security:
+  - BearerAuth: []
+
+paths:
+  /leadWebhook:
+    post:
+      operationId: leadWebhook
+      summary: HTTP webhook to create leads from external API integrations and partner sites
+      description: HTTP webhook to create leads from external API integrations and partner sites
+      tags:
+        - leads
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - customerName
+                - email
+                - phone
+                - address
+                - city
+                - state
+                - zip
+              properties:
+                customerName:
+                  type: string
+                email:
+                  type: string
+                phone:
+                  type: string
+                address:
+                  type: string
+                city:
+                  type: string
+                state:
+                  type: string
+                zip:
+                  type: string
+                source:
+                  type: string
+                utmSource:
+                  type: string
+                utmMedium:
+                  type: string
+                utmCampaign:
+                  type: string
+                systemSize:
+                  type: number
+                batterySize:
+                  type: number
+                annualKwh:
+                  type: number
+                solarApiData:
+                  type: object
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    success:
+                      type: boolean
+                    leadId:
+                      type: string
+                    message:
+                      type: string
+        '400':
+          description: Bad request - missing or invalid parameters
+        '401':
+          description: Unauthorized - invalid or missing API key
+        '405':
+          description: Method not allowed
+        '500':
+          description: Internal server error
+  /stripeWebhook:
+    post:
+      operationId: stripeWebhook
+      summary: Handle Stripe webhook events for subscription lifecycle updates
+      description: Handle Stripe webhook events for subscription lifecycle updates
+      tags:
+        - payments
+      security: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    received:
+                      type: boolean
+  /referralStatusWebhook:
+    post:
+      operationId: referralStatusWebhook
+      summary: Receives external webhook to update a single referral tracking status and calculate milestone earnings
+      description: Receives external webhook to update a single referral tracking status and calculate milestone earnings
+      tags:
+        - referralWebhooks
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - projectId
+                - status
+              properties:
+                projectId:
+                  type: string
+                status:
+                  type: string
+                  enum:
+                    - "signed_up"
+                    - "qualified"
+                    - "site_survey"
+                    - "installed"
+                timestamp:
+                  type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    success:
+                      type: boolean
+                    projectId:
+                      type: string
+                    status:
+                      type: string
+                    earningsAdded:
+                      type: number
+        '400':
+          description: Bad request - missing or invalid parameters
+        '401':
+          description: Unauthorized - invalid or missing API key
+        '405':
+          description: Method not allowed
+        '500':
+          description: Internal server error
+  /referralBulkUpdateWebhook:
+    post:
+      operationId: referralBulkUpdateWebhook
+      summary: Receives external webhook to update multiple referral tracking statuses in a single request
+      description: Receives external webhook to update multiple referral tracking statuses in a single request
+      tags:
+        - referralWebhooks
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - updates
+              properties:
+                updates:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    successful:
+                      type: number
+                    failed:
+                      type: number
+                    errors:
+                      type: array
+                      items:
+                        type: string
+        '400':
+          description: Bad request - missing or invalid parameters
+        '401':
+          description: Unauthorized - invalid or missing API key
+        '405':
+          description: Method not allowed
+  /referralStatsWebhook:
+    get:
+      operationId: referralStatsWebhook
+      summary: Returns aggregate referral program statistics for external dashboards via API key authentication
+      description: Returns aggregate referral program statistics for external dashboards via API key authentication
+      tags:
+        - referralWebhooks
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: apiKey
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    totalReferrers:
+                      type: number
+                    totalReferrals:
+                      type: number
+                    totalEarnings:
+                      type: number
+                    pendingEarnings:
+                      type: number
+                    paidEarnings:
+                      type: number
+                    statusCounts:
+                      type: string
+                    generatedAt:
+                      type: string
+        '401':
+          description: Unauthorized - invalid or missing API key
+        '405':
+          description: Method not allowed
+        '500':
+          description: Internal server error
+  /secureLeadWebhook:
+    post:
+      operationId: secureLeadWebhook
+      summary: Creates a new lead via API key authentication with automatic rate limiting and usage tracking
+      description: Creates a new lead via API key authentication with automatic rate limiting and usage tracking
+      tags:
+        - secureLeadWebhook
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - customerName
+                - email
+                - phone
+                - address
+                - city
+                - state
+                - zip
+              properties:
+                customerName:
+                  type: string
+                email:
+                  type: string
+                phone:
+                  type: string
+                address:
+                  type: string
+                city:
+                  type: string
+                state:
+                  type: string
+                zip:
+                  type: string
+                source:
+                  type: string
+                utmSource:
+                  type: string
+                utmMedium:
+                  type: string
+                utmCampaign:
+                  type: string
+                systemSize:
+                  type: number
+                batterySize:
+                  type: number
+                annualKwh:
+                  type: number
+                solarApiData:
+                  type: object
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    success:
+                      type: boolean
+                    leadId:
+                      type: string
+                    message:
+                      type: string
+                    usage:
+                      type: string
+        '400':
+          description: Bad request - missing or invalid parameters
+        '401':
+          description: Unauthorized - invalid or missing API key
+        '403':
+          description: Forbidden - insufficient permissions or scope
+        '405':
+          description: Method not allowed
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+  /secureSolarWebhook:
+    post:
+      operationId: secureSolarWebhook
+      summary: Triggers solar analysis for an address via API key authentication and optionally updates an existing lead
+      description: Triggers solar analysis for an address via API key authentication and optionally updates an existing lead
+      tags:
+        - secureLeadWebhook
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - address
+              properties:
+                address:
+                  type: string
+                leadId:
+                  type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    success:
+                      type: boolean
+                    data:
+                      type: string
+                    usage:
+                      type: string
+        '400':
+          description: Bad request - missing or invalid parameters
+        '401':
+          description: Unauthorized - invalid or missing API key
+        '403':
+          description: Forbidden - insufficient permissions or scope
+        '405':
+          description: Method not allowed
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+  /secureLeadQuery:
+    get:
+      operationId: secureLeadQuery
+      summary: Queries leads owned by the API key holder with optional status filtering and pagination
+      description: Queries leads owned by the API key holder with optional status filtering and pagination
+      tags:
+        - secureLeadWebhook
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: number
+        - name: offset
+          in: query
+          required: false
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    success:
+                      type: boolean
+                    leads:
+                      type: array
+                      items:
+                        type: string
+                    count:
+                      type: number
+                    pagination:
+                      type: string
+                    usage:
+                      type: string
+        '401':
+          description: Unauthorized - invalid or missing API key
+        '403':
+          description: Forbidden - insufficient permissions or scope
+        '405':
+          description: Method not allowed
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+  /twilioStatusCallback:
+    post:
+      operationId: twilioStatusCallback
+      summary: Receives Twilio delivery status callbacks and updates SMS log records with delivery status
+      description: Receives Twilio delivery status callbacks and updates SMS log records with delivery status
+      tags:
+        - smsNotifications
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - MessageSid
+                - MessageStatus
+                - To
+              properties:
+                MessageSid:
+                  type: string
+                MessageStatus:
+                  type: string
+                To:
+                  type: string
+                ErrorCode:
+                  type: string
+                ErrorMessage:
+                  type: string
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad request - missing or invalid parameters
+  /smtWebhook:
+    post:
+      operationId: smtWebhook
+      summary: HTTP endpoint for non-Firebase clients to fetch Smart Meter Texas data and save to Firestore
+      description: HTTP endpoint for non-Firebase clients to fetch Smart Meter Texas data and save to Firestore
+      tags:
+        - smtConnector
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - username
+                - password
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+                projectId:
+                  type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    success:
+                      type: boolean
+                    data:
+                      type: string
+                    savedTo:
+                      type: string
+        '400':
+          description: Bad request - missing or invalid parameters
+        '405':
+          description: Method not allowed
+        '500':
+          description: Internal server error
+  /solarEquipment:
+    get:
+      operationId: solarEquipment
+      summary: Queries the solar equipment database with optional compliance and manufacturer filters
+      description: Queries the solar equipment database with optional compliance and manufacturer filters
+      tags:
+        - solarDataApi
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: type
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: manufacturer
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: feoc_compliant
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: domestic_content
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: tariff_safe
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    success:
+                      type: boolean
+                    count:
+                      type: number
+                    data:
+                      type: array
+                      items:
+                        type: string
+        '401':
+          description: Unauthorized - invalid or missing API key
+        '403':
+          description: Forbidden - insufficient permissions or scope
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+  /solarUtilities:
+    get:
+      operationId: solarUtilities
+      summary: Queries utility rate data by state, ZIP code, or utility name
+      description: Queries utility rate data by state, ZIP code, or utility name
+      tags:
+        - solarDataApi
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: state
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: zip
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: utility_name
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: has_net_metering
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    success:
+                      type: boolean
+                    count:
+                      type: number
+                    data:
+                      type: array
+                      items:
+                        type: string
+        '401':
+          description: Unauthorized - invalid or missing API key
+        '403':
+          description: Forbidden - insufficient permissions or scope
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+  /solarIncentives:
+    get:
+      operationId: solarIncentives
+      summary: Queries active, expired, or upcoming solar incentive programs by state and sector
+      description: Queries active, expired, or upcoming solar incentive programs by state and sector
+      tags:
+        - solarDataApi
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: state
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: type
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: sector
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    success:
+                      type: boolean
+                    count:
+                      type: number
+                    data:
+                      type: array
+                      items:
+                        type: string
+        '401':
+          description: Unauthorized - invalid or missing API key
+        '403':
+          description: Forbidden - insufficient permissions or scope
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+  /solarPermits:
+    get:
+      operationId: solarPermits
+      summary: Queries solar permit requirements by state, jurisdiction, or county
+      description: Queries solar permit requirements by state, jurisdiction, or county
+      tags:
+        - solarDataApi
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: state
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: jurisdiction
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: county
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    success:
+                      type: boolean
+                    count:
+                      type: number
+                    data:
+                      type: array
+                      items:
+                        type: string
+        '401':
+          description: Unauthorized - invalid or missing API key
+        '403':
+          description: Forbidden - insufficient permissions or scope
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+  /solarComplianceCheck:
+    post:
+      operationId: solarComplianceCheck
+      summary: Runs a compound compliance report across equipment FEOC/domestic content, permits, and incentives
+      description: Runs a compound compliance report across equipment FEOC/domestic content, permits, and incentives
+      tags:
+        - solarDataApi
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - equipment_ids
+              properties:
+                equipment_ids:
+                  type: array
+                  items:
+                    type: string
+                jurisdiction:
+                  type: string
+                state:
+                  type: string
+                project_type:
+                  type: string
+                  enum:
+                    - "residential"
+                    - "commercial"
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    success:
+                      type: boolean
+                    compliance_summary:
+                      type: object
+                    equipment:
+                      type: array
+                      items:
+                        type: string
+                    permit_requirements:
+                      type: string
+                    incentives:
+                      type: array
+                      items:
+                        type: string
+        '401':
+          description: Unauthorized - invalid or missing API key
+        '403':
+          description: Forbidden - insufficient permissions or scope
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+  /solarEstimate:
+    post:
+      operationId: solarEstimate
+      summary: Generates a full solar estimate including cost, production, incentives, equipment, permits, and financing
+      description: Generates a full solar estimate including cost, production, incentives, equipment, permits, and financing
+      tags:
+        - solarDataApi
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - state
+                - system_size_kw
+              properties:
+                state:
+                  type: string
+                zip:
+                  type: string
+                jurisdiction:
+                  type: string
+                system_size_kw:
+                  type: number
+                monthly_bill:
+                  type: number
+                project_type:
+                  type: string
+                  enum:
+                    - "residential"
+                    - "commercial"
+                equipment_preferences:
+                  type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    success:
+                      type: boolean
+                    estimate:
+                      type: object
+                    utility_rates:
+                      type: array
+                      items:
+                        type: string
+                    recommended_equipment:
+                      type: array
+                      items:
+                        type: string
+                    incentives:
+                      type: array
+                      items:
+                        type: string
+                    permit_requirements:
+                      type: string
+                    financing_options:
+                      type: array
+                      items:
+                        type: string
+        '401':
+          description: Unauthorized - invalid or missing API key
+        '403':
+          description: Forbidden - insufficient permissions or scope
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API Key
+      description: >-
+        API key authentication. Pass your API key as a Bearer token
+        in the Authorization header: "Authorization: Bearer pk_live_..."
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+        success:
+          type: boolean
+          example: false
+    SuccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true

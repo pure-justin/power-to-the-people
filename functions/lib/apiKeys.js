@@ -169,7 +169,17 @@ function getResetUsageStats(current, limits) {
     return updates;
 }
 /**
- * Cloud Function: Create a new API key
+ * Creates a new API key with specified scopes and rate limits
+ *
+ * @function createApiKey
+ * @type onCall
+ * @auth firebase
+ * @input {{ name: string, description?: string, scopes: ApiKeyScope[], environment?: "development" | "production", expiresInDays?: number, rateLimit?: Partial<RateLimit>, allowedIps?: string[], allowedDomains?: string[] }}
+ * @output {{ success: boolean, apiKeyId: string, apiKey: string, keyPrefix: string, message: string }}
+ * @errors unauthenticated, invalid-argument, internal
+ * @billing none
+ * @rateLimit none
+ * @firestore apiKeys
  */
 exports.createApiKey = functions
     .runWith({
@@ -247,8 +257,17 @@ exports.createApiKey = functions
     }
 });
 /**
- * Cloud Function: Validate API key and check permissions
- * This is called by other Cloud Functions to authenticate API requests
+ * Validates an API key, checks scopes and rate limits, and increments usage counters
+ *
+ * @function validateApiKey
+ * @type onCall
+ * @auth firebase
+ * @input {{ apiKey: string, requiredScope?: ApiKeyScope, endpoint?: string }}
+ * @output {{ valid: boolean, apiKeyId: string, userId: string, scopes: ApiKeyScope[], environment: string, usageStats: UsageStats }}
+ * @errors invalid-argument, unauthenticated, permission-denied, resource-exhausted
+ * @billing none
+ * @rateLimit api_key
+ * @firestore apiKeys, apiKeyUsageLogs
  */
 exports.validateApiKey = functions
     .runWith({
@@ -352,7 +371,17 @@ exports.validateApiKey = functions
     }
 });
 /**
- * Cloud Function: Revoke an API key
+ * Permanently revokes an API key, preventing any further use
+ *
+ * @function revokeApiKey
+ * @type onCall
+ * @auth firebase
+ * @input {{ apiKeyId: string, reason?: string }}
+ * @output {{ success: boolean, apiKeyId: string, message: string }}
+ * @errors unauthenticated, invalid-argument, not-found, permission-denied, internal
+ * @billing none
+ * @rateLimit none
+ * @firestore apiKeys
  */
 exports.revokeApiKey = functions
     .runWith({
@@ -401,7 +430,17 @@ exports.revokeApiKey = functions
     }
 });
 /**
- * Cloud Function: Rotate API key (generate new key, keep same ID)
+ * Rotates an API key by generating a new secret while preserving the key ID and settings
+ *
+ * @function rotateApiKey
+ * @type onCall
+ * @auth firebase
+ * @input {{ apiKeyId: string }}
+ * @output {{ success: boolean, apiKeyId: string, apiKey: string, keyPrefix: string, message: string }}
+ * @errors unauthenticated, invalid-argument, not-found, permission-denied, internal
+ * @billing none
+ * @rateLimit none
+ * @firestore apiKeys
  */
 exports.rotateApiKey = functions
     .runWith({
@@ -455,7 +494,17 @@ exports.rotateApiKey = functions
     }
 });
 /**
- * Cloud Function: Update API key settings
+ * Updates mutable settings on an existing API key (name, scopes, rate limits, etc.)
+ *
+ * @function updateApiKey
+ * @type onCall
+ * @auth firebase
+ * @input {{ apiKeyId: string, updates: Partial<ApiKey> }}
+ * @output {{ success: boolean, apiKeyId: string }}
+ * @errors unauthenticated, invalid-argument, not-found, permission-denied, internal
+ * @billing none
+ * @rateLimit none
+ * @firestore apiKeys
  */
 exports.updateApiKey = functions
     .runWith({
@@ -521,7 +570,17 @@ exports.updateApiKey = functions
     }
 });
 /**
- * Cloud Function: Get API key usage statistics
+ * Retrieves usage statistics and recent request logs for an API key
+ *
+ * @function getApiKeyUsage
+ * @type onCall
+ * @auth firebase
+ * @input {{ apiKeyId: string, days?: number }}
+ * @output {{ success: boolean, apiKeyId: string, usageStats: UsageStats, logs: ApiKeyUsageLog[], logCount: number }}
+ * @errors unauthenticated, invalid-argument, not-found, permission-denied, internal
+ * @billing none
+ * @rateLimit none
+ * @firestore apiKeys, apiKeyUsageLogs
  */
 exports.getApiKeyUsage = functions
     .runWith({
@@ -595,8 +654,17 @@ async function logApiKeyUsage(log) {
     }
 }
 /**
- * HTTP Middleware Helper: Validate API key from HTTP request
- * Use this in HTTP functions that need API key authentication
+ * Extracts and validates an API key from an HTTP request's Authorization header
+ *
+ * @function validateApiKeyFromRequest
+ * @type helper
+ * @auth api_key
+ * @input {{ req: functions.https.Request, requiredScope?: ApiKeyScope }}
+ * @output {ApiKey}
+ * @errors unauthenticated, permission-denied, resource-exhausted
+ * @billing none
+ * @rateLimit api_key
+ * @firestore apiKeys, apiKeyUsageLogs
  */
 async function validateApiKeyFromRequest(req, requiredScope) {
     // Get API key from Authorization header
@@ -680,8 +748,17 @@ async function validateApiKeyFromRequest(req, requiredScope) {
     return apiKeyData;
 }
 /**
- * Scheduled Function: Clean up expired API keys and old logs
- * Runs daily at midnight
+ * Marks expired API keys and deletes usage logs older than 90 days
+ *
+ * @function cleanupApiKeys
+ * @type pubsub
+ * @auth none
+ * @input {}
+ * @output {void}
+ * @errors internal
+ * @billing none
+ * @rateLimit none
+ * @firestore apiKeys, apiKeyUsageLogs
  */
 exports.cleanupApiKeys = functions
     .runWith({

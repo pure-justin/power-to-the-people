@@ -169,7 +169,17 @@ function processUsageData(esiid, apiData) {
     };
 }
 /**
- * Cloud Function: Fetch SMT data and save to Firestore
+ * Fetches energy usage data from Smart Meter Texas using headless browser and saves results to Firestore
+ *
+ * @function fetchSmtUsage
+ * @type onCall
+ * @auth firebase
+ * @input {{ username: string, password: string, projectId?: string, customerId?: string }}
+ * @output {{ success: boolean, data: SmtUsageData, savedTo: string }}
+ * @errors invalid-argument, unauthenticated, internal
+ * @billing none
+ * @rateLimit none
+ * @firestore projects, smtData
  */
 exports.fetchSmtUsage = functions
     .runWith({
@@ -214,7 +224,18 @@ exports.fetchSmtUsage = functions
     }
 });
 /**
- * Alternative: HTTP endpoint for non-Firebase clients
+ * HTTP endpoint for non-Firebase clients to fetch Smart Meter Texas data and save to Firestore
+ *
+ * @function smtWebhook
+ * @type onRequest
+ * @method POST
+ * @auth none
+ * @input {{ username: string, password: string, projectId?: string }}
+ * @output {{ success: boolean, data: SmtUsageData, savedTo: string }}
+ * @errors 400, 405, 500
+ * @billing none
+ * @rateLimit none
+ * @firestore projects, smtData
  */
 exports.smtWebhook = functions
     .runWith({

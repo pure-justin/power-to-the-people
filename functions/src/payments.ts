@@ -3,6 +3,8 @@
  *
  * Stripe subscription management, usage metering, checkout, and billing portal.
  * Covers: SaaS subscriptions, per-API-call billing, lead billing, compliance checks.
+ *
+ * @module payments
  */
 
 import * as functions from "firebase-functions/v1";
@@ -20,22 +22,21 @@ const stripe = STRIPE_SECRET_KEY
 
 // ─── Pre-Created Stripe Price IDs (Test Mode) ──────────────────────────────────
 
+/** @const STRIPE_PRICE_IDS - Maps subscription tier names to Stripe recurring price IDs (test mode) */
 const STRIPE_PRICE_IDS: Record<string, string> = {
   starter: "price_1SyMrCQhgZdyZ7qRyWDGrr9U",
   professional: "price_1SyMrEQhgZdyZ7qRYLfqv0Ds",
   enterprise: "price_1SyMrFQhgZdyZ7qRcQk9fAqh",
 };
 
-// Pay-as-you-go price IDs (for future one-off purchases)
+/** @const STRIPE_PAYGO_PRICE_IDS - Maps pay-as-you-go product names to Stripe one-off price IDs (test mode) */
 export const STRIPE_PAYGO_PRICE_IDS = {
   solar_lead: "price_1SyMrGQhgZdyZ7qRixVanOLJ", // $5/lead
   api_call_pack: "price_1SyMrHQhgZdyZ7qRfeQQUUI6", // $25/1000 calls
   compliance_check: "price_1SyMrIQhgZdyZ7qRZKDhbgKL", // $2/check
 };
 
-/**
- * Solar CRM subscription tiers
- */
+/** @const SOLAR_TIERS - Subscription tier definitions with pricing, features, and usage limits */
 export const SOLAR_TIERS = {
   starter: {
     name: "Starter",
@@ -85,9 +86,17 @@ type TierKey = keyof typeof SOLAR_TIERS;
 // ─── Subscription Management ───────────────────────────────────────────────────
 
 /**
- * Create a new subscription for a user
+ * Create a new Stripe subscription for an authenticated user
  *
- * Callable function - requires authentication
+ * @function createSubscription
+ * @type onCall
+ * @auth firebase
+ * @input {{ tier: TierKey, payment_method_id: string }}
+ * @output {{ success: boolean, subscriptionId: string, tier: string, status: string }}
+ * @errors unauthenticated, failed-precondition, invalid-argument, already-exists, internal
+ * @billing none
+ * @rateLimit subscription_tier
+ * @firestore subscriptions
  */
 export const createSubscription = functions
   .runWith({ timeoutSeconds: 30, memory: "256MB" })
@@ -227,7 +236,17 @@ export const createSubscription = functions
   );
 
 /**
- * Update subscription tier (upgrade/downgrade)
+ * Update an existing subscription tier (upgrade or downgrade with proration)
+ *
+ * @function updateSubscription
+ * @type onCall
+ * @auth firebase
+ * @input {{ new_tier: TierKey }}
+ * @output {{ success: boolean, previousTier: string, newTier: string }}
+ * @errors unauthenticated, failed-precondition, invalid-argument, not-found, internal
+ * @billing none
+ * @rateLimit subscription_tier
+ * @firestore subscriptions
  */
 export const updateSubscription = functions
   .runWith({ timeoutSeconds: 30, memory: "256MB" })
@@ -323,7 +342,17 @@ export const updateSubscription = functions
   });
 
 /**
- * Cancel subscription
+ * Cancel a user's active subscription immediately or at period end
+ *
+ * @function cancelSubscription
+ * @type onCall
+ * @auth firebase
+ * @input {{ immediate?: boolean }}
+ * @output {{ success: boolean, immediate: boolean, message: string }}
+ * @errors unauthenticated, failed-precondition, not-found, internal
+ * @billing none
+ * @rateLimit subscription_tier
+ * @firestore subscriptions
  */
 export const cancelSubscription = functions
   .runWith({ timeoutSeconds: 30, memory: "256MB" })
@@ -401,7 +430,17 @@ export const cancelSubscription = functions
 // ─── Usage Metering ────────────────────────────────────────────────────────────
 
 /**
- * Record API usage for a user (called internally by other functions)
+ * Record API usage for a user by incrementing the monthly usage counter
+ *
+ * @function recordUsage
+ * @type helper
+ * @auth none
+ * @input {{ userId: string, usageType: "api_call" | "lead" | "compliance_check", quantity?: number }}
+ * @output void
+ * @errors none
+ * @billing none
+ * @rateLimit none
+ * @firestore usage_records
  */
 export async function recordUsage(
   userId: string,
@@ -428,7 +467,17 @@ export async function recordUsage(
 }
 
 /**
- * Check if user is within their subscription limits
+ * Check if a user is within their subscription usage limits for a given metric
+ *
+ * @function checkUsageLimit
+ * @type helper
+ * @auth none
+ * @input {{ userId: string, usageType: "leads_per_month" | "api_calls_per_month" | "compliance_checks_per_month" }}
+ * @output {{ allowed: boolean, current: number, limit: number }}
+ * @errors none
+ * @billing none
+ * @rateLimit none
+ * @firestore subscriptions, usage_records
  */
 export async function checkUsageLimit(
   userId: string,
@@ -486,7 +535,18 @@ export async function checkUsageLimit(
 // ─── Stripe Webhook Handler ────────────────────────────────────────────────────
 
 /**
- * Handle Stripe webhook events for subscription lifecycle
+ * Handle Stripe webhook events for subscription lifecycle updates
+ *
+ * @function stripeWebhook
+ * @type onRequest
+ * @method POST
+ * @auth none
+ * @input Stripe webhook event (verified via stripe-signature header)
+ * @output {{ received: boolean }}
+ * @errors 400 (invalid signature), 405 (wrong method), 500 (handler failure)
+ * @billing none
+ * @rateLimit none
+ * @firestore subscriptions
  */
 export const stripeWebhook = functions
   .runWith({ timeoutSeconds: 60, memory: "256MB" })
@@ -644,8 +704,15 @@ export const stripeWebhook = functions
 /**
  * Create a Stripe Checkout Session for subscription signup
  *
- * Takes: { tier, successUrl?, cancelUrl? }
- * Returns: { sessionId, url }
+ * @function createCheckoutSession
+ * @type onCall
+ * @auth firebase
+ * @input {{ tier: TierKey, successUrl?: string, cancelUrl?: string }}
+ * @output {{ sessionId: string, url: string }}
+ * @errors unauthenticated, failed-precondition, invalid-argument, already-exists, internal
+ * @billing none
+ * @rateLimit subscription_tier
+ * @firestore subscriptions
  */
 export const createCheckoutSession = functions
   .runWith({ timeoutSeconds: 30, memory: "256MB" })
@@ -766,10 +833,17 @@ export const createCheckoutSession = functions
   );
 
 /**
- * Create a Stripe Billing Portal session for subscription self-service
+ * Create a Stripe Billing Portal session for subscription self-service management
  *
- * Takes: { returnUrl? }
- * Returns: { url }
+ * @function createBillingPortalSession
+ * @type onCall
+ * @auth firebase
+ * @input {{ returnUrl?: string }}
+ * @output {{ url: string }}
+ * @errors unauthenticated, failed-precondition, not-found, internal
+ * @billing none
+ * @rateLimit subscription_tier
+ * @firestore subscriptions
  */
 export const createBillingPortalSession = functions
   .runWith({ timeoutSeconds: 30, memory: "256MB" })
@@ -830,9 +904,17 @@ export const createBillingPortalSession = functions
 // ─── Subscription Status & Usage ─────────────────────────────────────────────
 
 /**
- * Get current subscription status, usage, and limits
+ * Get current subscription status, monthly usage, and tier limits for the authenticated user
  *
- * Returns: tier, status, usage this month, limits, next billing date
+ * @function getSubscriptionStatus
+ * @type onCall
+ * @auth firebase
+ * @input {{}}
+ * @output {{ hasSubscription: boolean, subscriptionId?: string, tier?: string, status?: string, cancelAtPeriodEnd?: boolean, currentPeriodStart?: Timestamp, currentPeriodEnd?: Timestamp, usage?: { month: string, api_calls: number, leads: number, compliance_checks: number }, limits?: object }}
+ * @errors unauthenticated
+ * @billing none
+ * @rateLimit subscription_tier
+ * @firestore subscriptions, usage_records
  */
 export const getSubscriptionStatus = functions
   .runWith({ timeoutSeconds: 15, memory: "256MB" })
@@ -906,11 +988,17 @@ export const getSubscriptionStatus = functions
 // ─── Usage-Aware API Key Billing ─────────────────────────────────────────────
 
 /**
- * Record billable API usage and check limits in one call.
- * Used by API endpoints to enforce subscription limits per API call.
+ * Record billable API usage and check subscription limits in a single atomic call
  *
- * Returns: { allowed, current, limit, usageType }
- * Throws resource-exhausted if limit exceeded.
+ * @function recordAndCheckUsage
+ * @type helper
+ * @auth none
+ * @input {{ userId: string, usageType: "api_call" | "lead" | "compliance_check", quantity?: number }}
+ * @output {{ allowed: boolean, current: number, limit: number }}
+ * @errors none
+ * @billing api_call | lead | compliance_check
+ * @rateLimit none
+ * @firestore subscriptions, usage_records
  */
 export async function recordAndCheckUsage(
   userId: string,

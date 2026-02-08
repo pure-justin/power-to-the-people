@@ -11,10 +11,19 @@ import { validateApiKeyFromRequest, ApiKeyScope } from "./apiKeys";
 import { Lead, LeadStatus, LeadSource, CreateLeadInput } from "./leads";
 
 /**
- * Secure Lead Webhook: Create lead with API key authentication
+ * Creates a new lead via API key authentication with automatic rate limiting and usage tracking
  *
- * This endpoint requires a valid API key with write_leads scope.
- * Rate limiting and usage tracking are handled automatically.
+ * @function secureLeadWebhook
+ * @type onRequest
+ * @method POST
+ * @auth api_key
+ * @scope WRITE_LEADS
+ * @input {{ customerName: string, email: string, phone: string, address: string, city: string, state: string, zip: string, source?: LeadSource, utmSource?: string, utmMedium?: string, utmCampaign?: string, systemSize?: number, batterySize?: number, annualKwh?: number, solarApiData?: any }}
+ * @output {{ success: boolean, leadId: string, message: string, usage: { requestsThisHour: number, hourlyLimit: number, requestsThisDay: number, dailyLimit: number } }}
+ * @errors 400, 401, 403, 405, 429, 500
+ * @billing api_call, lead
+ * @rateLimit api_key
+ * @firestore leads, apiKeys
  */
 export const secureLeadWebhook = functions
   .runWith({
@@ -178,10 +187,19 @@ function calculateLeadScore(lead: Partial<Lead>): number {
 }
 
 /**
- * Secure Solar Analysis Webhook
+ * Triggers solar analysis for an address via API key authentication and optionally updates an existing lead
  *
- * Allows external services to trigger solar analysis with API key.
- * Requires write_solar scope.
+ * @function secureSolarWebhook
+ * @type onRequest
+ * @method POST
+ * @auth api_key
+ * @scope WRITE_SOLAR
+ * @input {{ address: string, leadId?: string }}
+ * @output {{ success: boolean, data: { address: string, maxArrayPanels: number, maxArrayArea: number, maxSunshineHours: number, carbonOffset: number, estimatedSystemSize: number, estimatedAnnualProduction: number }, usage: { requestsThisHour: number, hourlyLimit: number } }}
+ * @errors 400, 401, 403, 405, 429, 500
+ * @billing api_call
+ * @rateLimit api_key
+ * @firestore leads, apiKeys
  */
 export const secureSolarWebhook = functions
   .runWith({
@@ -263,10 +281,19 @@ export const secureSolarWebhook = functions
   });
 
 /**
- * Secure Read-Only Lead Endpoint
+ * Queries leads owned by the API key holder with optional status filtering and pagination
  *
- * Allows external services to query leads with API key.
- * Requires read_leads scope.
+ * @function secureLeadQuery
+ * @type onRequest
+ * @method GET
+ * @auth api_key
+ * @scope READ_LEADS
+ * @input {{ status?: string, limit?: number, offset?: number }}
+ * @output {{ success: boolean, leads: Lead[], count: number, pagination: { limit: number, offset: number }, usage: { requestsThisHour: number, hourlyLimit: number } }}
+ * @errors 401, 403, 405, 429, 500
+ * @billing api_call
+ * @rateLimit api_key
+ * @firestore leads, apiKeys
  */
 export const secureLeadQuery = functions
   .runWith({

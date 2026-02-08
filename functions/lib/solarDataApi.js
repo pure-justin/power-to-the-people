@@ -62,15 +62,19 @@ function handleOptions(req, res) {
 }
 // ─── Equipment Endpoint ────────────────────────────────────────────────────────
 /**
- * GET /equipment - Query solar equipment database
+ * Queries the solar equipment database with optional compliance and manufacturer filters
  *
- * Query params:
- *   type: "panel" | "inverter" | "battery" | "optimizer"
- *   manufacturer: string
- *   feoc_compliant: "true" | "false"
- *   domestic_content: "true" | "false"
- *   tariff_safe: "true" | "false"
- *   limit: number (default 50, max 200)
+ * @function solarEquipment
+ * @type onRequest
+ * @method GET
+ * @auth api_key
+ * @scope read_equipment
+ * @input {{ type?: "panel" | "inverter" | "battery" | "optimizer", manufacturer?: string, feoc_compliant?: "true" | "false", domestic_content?: "true" | "false", tariff_safe?: "true" | "false", limit?: number }}
+ * @output {{ success: boolean, count: number, data: object[] }}
+ * @errors unauthenticated, permission-denied, resource-exhausted, internal
+ * @billing api_call
+ * @rateLimit api_key
+ * @firestore solar_equipment
  */
 exports.solarEquipment = functions
     .runWith({ timeoutSeconds: 30, memory: "256MB" })
@@ -131,14 +135,19 @@ exports.solarEquipment = functions
 });
 // ─── Utility Rates Endpoint ────────────────────────────────────────────────────
 /**
- * GET /utilities - Query utility rate data
+ * Queries utility rate data by state, ZIP code, or utility name
  *
- * Query params:
- *   state: string (e.g., "TX")
- *   zip: string (e.g., "78701")
- *   utility_name: string
- *   has_net_metering: "true" | "false"
- *   limit: number (default 50, max 200)
+ * @function solarUtilities
+ * @type onRequest
+ * @method GET
+ * @auth api_key
+ * @scope read_utilities
+ * @input {{ state?: string, zip?: string, utility_name?: string, has_net_metering?: "true" | "false", limit?: number }}
+ * @output {{ success: boolean, count: number, data: object[] }}
+ * @errors unauthenticated, permission-denied, resource-exhausted, internal
+ * @billing api_call
+ * @rateLimit api_key
+ * @firestore solar_utility_rates
  */
 exports.solarUtilities = functions
     .runWith({ timeoutSeconds: 30, memory: "256MB" })
@@ -195,14 +204,19 @@ exports.solarUtilities = functions
 });
 // ─── Incentives Endpoint ───────────────────────────────────────────────────────
 /**
- * GET /incentives - Query solar incentive programs
+ * Queries active, expired, or upcoming solar incentive programs by state and sector
  *
- * Query params:
- *   state: string (e.g., "TX")
- *   type: "tax_credit" | "rebate" | "srec" | "performance" | "grant"
- *   status: "active" | "expired" | "upcoming"
- *   sector: "residential" | "commercial" | "both"
- *   limit: number (default 50, max 200)
+ * @function solarIncentives
+ * @type onRequest
+ * @method GET
+ * @auth api_key
+ * @scope read_incentives
+ * @input {{ state?: string, type?: "tax_credit" | "rebate" | "srec" | "performance" | "grant", status?: "active" | "expired" | "upcoming", sector?: "residential" | "commercial" | "both", limit?: number }}
+ * @output {{ success: boolean, count: number, data: object[] }}
+ * @errors unauthenticated, permission-denied, resource-exhausted, internal
+ * @billing api_call
+ * @rateLimit api_key
+ * @firestore solar_incentives
  */
 exports.solarIncentives = functions
     .runWith({ timeoutSeconds: 30, memory: "256MB" })
@@ -259,13 +273,19 @@ exports.solarIncentives = functions
 });
 // ─── Permits Endpoint ──────────────────────────────────────────────────────────
 /**
- * GET /permits - Query permit requirements by jurisdiction
+ * Queries solar permit requirements by state, jurisdiction, or county
  *
- * Query params:
- *   state: string (e.g., "TX")
- *   jurisdiction: string (e.g., "houston_tx")
- *   county: string
- *   limit: number (default 50, max 200)
+ * @function solarPermits
+ * @type onRequest
+ * @method GET
+ * @auth api_key
+ * @scope read_permits
+ * @input {{ state?: string, jurisdiction?: string, county?: string, limit?: number }}
+ * @output {{ success: boolean, count: number, data: object[] }}
+ * @errors unauthenticated, permission-denied, resource-exhausted, internal
+ * @billing api_call
+ * @rateLimit api_key
+ * @firestore solar_permits
  */
 exports.solarPermits = functions
     .runWith({ timeoutSeconds: 30, memory: "256MB" })
@@ -319,13 +339,19 @@ exports.solarPermits = functions
 });
 // ─── Compliance Check Endpoint ─────────────────────────────────────────────────
 /**
- * POST /compliance/check - Compound compliance report
+ * Runs a compound compliance report across equipment FEOC/domestic content, permits, and incentives
  *
- * Body:
- *   equipment_ids: string[]  - Equipment document IDs to check
- *   jurisdiction: string     - Jurisdiction ID for permit requirements
- *   state: string           - State code for incentives
- *   project_type: "residential" | "commercial"
+ * @function solarComplianceCheck
+ * @type onRequest
+ * @method POST
+ * @auth api_key
+ * @scope read_compliance
+ * @input {{ equipment_ids: string[], jurisdiction?: string, state?: string, project_type?: "residential" | "commercial" }}
+ * @output {{ success: boolean, compliance_summary: object, equipment: object[], permit_requirements: object | null, incentives: object[] }}
+ * @errors unauthenticated, permission-denied, resource-exhausted, internal
+ * @billing compliance_check
+ * @rateLimit api_key
+ * @firestore solar_equipment, solar_permits, solar_incentives
  */
 exports.solarComplianceCheck = functions
     .runWith({ timeoutSeconds: 60, memory: "512MB" })
@@ -435,20 +461,19 @@ exports.solarComplianceCheck = functions
 });
 // ─── Solar Estimate Endpoint ───────────────────────────────────────────────────
 /**
- * POST /estimate - Full solar estimate for an address
+ * Generates a full solar estimate including cost, production, incentives, equipment, permits, and financing
  *
- * Body:
- *   state: string          - State code (e.g., "TX")
- *   zip: string            - ZIP code
- *   jurisdiction: string   - Jurisdiction ID (optional)
- *   system_size_kw: number - Desired system size in kW
- *   monthly_bill: number   - Current monthly electric bill ($)
- *   project_type: "residential" | "commercial"
- *   equipment_preferences: {
- *     panel_type?: string
- *     feoc_required?: boolean
- *     domestic_content_required?: boolean
- *   }
+ * @function solarEstimate
+ * @type onRequest
+ * @method POST
+ * @auth api_key
+ * @scope read_solar
+ * @input {{ state: string, zip?: string, jurisdiction?: string, system_size_kw: number, monthly_bill?: number, project_type?: "residential" | "commercial", equipment_preferences?: { panel_type?: string, feoc_required?: boolean, domestic_content_required?: boolean } }}
+ * @output {{ success: boolean, estimate: object, utility_rates: object[], recommended_equipment: object[], incentives: object[], permit_requirements: object | null, financing_options: object[] }}
+ * @errors unauthenticated, permission-denied, resource-exhausted, internal
+ * @billing api_call
+ * @rateLimit api_key
+ * @firestore solar_utility_rates, solar_equipment, solar_incentives, solar_permits, solar_tpo_providers
  */
 exports.solarEstimate = functions
     .runWith({ timeoutSeconds: 60, memory: "512MB" })

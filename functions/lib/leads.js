@@ -97,7 +97,17 @@ function calculateLeadScore(lead) {
     return Math.max(0, Math.min(100, Math.round(score)));
 }
 /**
- * Cloud Function: Create a new lead
+ * Creates a new lead in the sales pipeline with initial scoring
+ *
+ * @function createLead
+ * @type onCall
+ * @auth firebase
+ * @input {{ customerName: string, email: string, phone: string, address: string, city: string, state: string, zip: string, source?: LeadSource, utmSource?: string, utmMedium?: string, utmCampaign?: string, systemSize?: number, batterySize?: number, annualKwh?: number, solarApiData?: any }}
+ * @output {{ success: boolean, leadId: string, lead: Lead }}
+ * @errors invalid-argument, internal
+ * @billing lead
+ * @rateLimit none
+ * @firestore leads
  */
 exports.createLead = functions
     .runWith({
@@ -163,7 +173,17 @@ exports.createLead = functions
     }
 });
 /**
- * Cloud Function: Update lead status and details
+ * Updates lead status, details, and recalculates score when relevant fields change
+ *
+ * @function updateLead
+ * @type onCall
+ * @auth firebase
+ * @input {{ leadId: string, updates: Partial<Lead> }}
+ * @output {{ success: boolean, leadId: string }}
+ * @errors unauthenticated, invalid-argument, not-found, internal
+ * @billing lead
+ * @rateLimit none
+ * @firestore leads
  */
 exports.updateLead = functions
     .runWith({
@@ -231,7 +251,17 @@ exports.updateLead = functions
     }
 });
 /**
- * Cloud Function: Add a note to a lead
+ * Adds a sales note (call, email, meeting, or general note) to an existing lead
+ *
+ * @function addLeadNote
+ * @type onCall
+ * @auth firebase
+ * @input {{ leadId: string, text: string, type?: "call" | "email" | "meeting" | "note" }}
+ * @output {{ success: boolean, note: SalesNote }}
+ * @errors unauthenticated, invalid-argument, internal
+ * @billing none
+ * @rateLimit none
+ * @firestore leads
  */
 exports.addLeadNote = functions
     .runWith({
@@ -275,7 +305,17 @@ exports.addLeadNote = functions
     }
 });
 /**
- * Cloud Function: Assign lead to sales rep
+ * Assigns a lead to a sales representative for follow-up
+ *
+ * @function assignLead
+ * @type onCall
+ * @auth firebase
+ * @input {{ leadId: string, assignToUserId: string, assignToName?: string }}
+ * @output {{ success: boolean, leadId: string, assignedTo: string }}
+ * @errors unauthenticated, invalid-argument, internal
+ * @billing none
+ * @rateLimit none
+ * @firestore leads
  */
 exports.assignLead = functions
     .runWith({
@@ -312,8 +352,17 @@ exports.assignLead = functions
     }
 });
 /**
- * Cloud Function: Recalculate scores for all leads
- * (For batch processing / admin use)
+ * Batch recalculates lead quality scores for all non-archived leads
+ *
+ * @function recalculateLeadScores
+ * @type onCall
+ * @auth firebase
+ * @input {{ }}
+ * @output {{ success: boolean, totalLeads: number, updatedLeads: number }}
+ * @errors unauthenticated, internal
+ * @billing none
+ * @rateLimit none
+ * @firestore leads
  */
 exports.recalculateLeadScores = functions
     .runWith({
@@ -357,8 +406,19 @@ exports.recalculateLeadScores = functions
     }
 });
 /**
- * HTTP Webhook: Create lead from external sources
- * (For API integrations, partner sites, etc.)
+ * HTTP webhook to create leads from external API integrations and partner sites
+ *
+ * @function leadWebhook
+ * @type onRequest
+ * @method POST
+ * @auth api_key
+ * @scope LEAD_WEBHOOK_API_KEY
+ * @input {{ customerName: string, email: string, phone: string, address: string, city: string, state: string, zip: string, source?: LeadSource, utmSource?: string, utmMedium?: string, utmCampaign?: string, systemSize?: number, batterySize?: number, annualKwh?: number, solarApiData?: any }}
+ * @output {{ success: boolean, leadId: string, message: string }}
+ * @errors 400, 401, 405, 500
+ * @billing lead
+ * @rateLimit none
+ * @firestore leads
  */
 exports.leadWebhook = functions
     .runWith({

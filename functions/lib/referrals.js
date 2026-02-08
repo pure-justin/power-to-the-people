@@ -42,8 +42,17 @@ const functions = __importStar(require("firebase-functions"));
 const admin = __importStar(require("firebase-admin"));
 const db = admin.firestore();
 /**
- * Trigger when a new project is created
- * Automatically marks referral as "qualified" if project qualifies
+ * Automatically marks referral as qualified when a new project with a referral code meets qualification criteria
+ *
+ * @function onProjectCreated
+ * @type trigger
+ * @auth none
+ * @input {{ projectId: string }}
+ * @output {{ null }}
+ * @errors console.error on failure
+ * @billing none
+ * @rateLimit none
+ * @firestore projects, referralTracking, referrals
  */
 exports.onProjectCreated = functions.firestore
     .document("projects/{projectId}")
@@ -87,8 +96,17 @@ exports.onProjectCreated = functions.firestore
     }
 });
 /**
- * Trigger when project status changes
- * Automatically updates referral milestones
+ * Updates referral milestone status and sends notifications when a project status progresses through the pipeline
+ *
+ * @function onProjectUpdated
+ * @type trigger
+ * @auth none
+ * @input {{ projectId: string }}
+ * @output {{ null }}
+ * @errors console.error on failure
+ * @billing none
+ * @rateLimit none
+ * @firestore projects, referralTracking, referrals, pendingNotifications
  */
 exports.onProjectUpdated = functions.firestore
     .document("projects/{projectId}")
@@ -147,7 +165,17 @@ exports.onProjectUpdated = functions.firestore
     }
 });
 /**
- * HTTP endpoint to manually update referral status (admin only)
+ * Allows admins to manually update a referral tracking record's status and recalculate earnings
+ *
+ * @function updateReferralStatusHttp
+ * @type onCall
+ * @auth firebase
+ * @input {{ trackingId: string, newStatus: "signed_up" | "qualified" | "site_survey" | "installed" }}
+ * @output {{ success: boolean, earningsAdded: number }}
+ * @errors unauthenticated, permission-denied, invalid-argument, internal
+ * @billing none
+ * @rateLimit none
+ * @firestore users, referralTracking, referrals
  */
 exports.updateReferralStatusHttp = functions.https.onCall(async (data, context) => {
     var _a;
@@ -174,7 +202,17 @@ exports.updateReferralStatusHttp = functions.https.onCall(async (data, context) 
     }
 });
 /**
- * HTTP endpoint to get referral statistics (admin only)
+ * Returns aggregate referral program statistics including referrer counts, earnings, and status breakdowns
+ *
+ * @function getReferralStats
+ * @type onCall
+ * @auth firebase
+ * @input {{ }}
+ * @output {{ totalReferrers: number, totalReferrals: number, totalEarnings: number, totalPaid: number, pendingPayouts: number, statusCounts: Record<string, number> }}
+ * @errors unauthenticated, permission-denied, internal
+ * @billing none
+ * @rateLimit none
+ * @firestore users, referrals, referralTracking
  */
 exports.getReferralStats = functions.https.onCall(async (data, context) => {
     var _a;
@@ -230,8 +268,17 @@ exports.getReferralStats = functions.https.onCall(async (data, context) => {
     }
 });
 /**
- * Scheduled function to process pending payouts
- * Runs every Monday at 9am Central
+ * Processes pending referral payouts every Monday at 9 AM CST for referrers with earnings >= $100
+ *
+ * @function processWeeklyPayouts
+ * @type pubsub
+ * @auth none
+ * @input {{ }}
+ * @output {{ null }}
+ * @errors console.error on failure
+ * @billing none
+ * @rateLimit none
+ * @firestore referrals, payouts, pendingNotifications
  */
 exports.processWeeklyPayouts = functions.pubsub
     .schedule("0 9 * * 1")

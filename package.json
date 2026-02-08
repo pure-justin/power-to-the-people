@@ -19,7 +19,8 @@
     "installers:import": "node scripts/import-installers-to-firestore.js",
     "campaign:run": "node campaigns/commercial-outbound/run-campaign.js",
     "campaign:dryrun": "node campaigns/commercial-outbound/run-campaign.js --dry-run",
-    "campaign:test": "node campaigns/commercial-outbound/run-campaign.js --target 10 --dry-run"
+    "campaign:test": "node campaigns/commercial-outbound/run-campaign.js --target 10 --dry-run",
+    "generate:docs": "node scripts/generate-api-docs.js"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.0",

@@ -132,8 +132,17 @@ async function refreshUtilityRatesFromOpenEI(state, db) {
 }
 // ─── Scheduled Refresh Function ────────────────────────────────────────────────
 /**
- * Weekly data refresh from free APIs
- * Runs every Sunday at 2 AM CST
+ * Scheduled weekly refresh of utility rate data from OpenEI URDB for priority states every Sunday at 2 AM CST
+ *
+ * @function refreshSolarData
+ * @type pubsub
+ * @auth none
+ * @input {{ }}
+ * @output {{ void }}
+ * @errors console.log on failure
+ * @billing none
+ * @rateLimit none
+ * @firestore solar_utility_rates, data_refresh_log
  */
 exports.refreshSolarData = functions
     .runWith({
@@ -184,10 +193,17 @@ exports.refreshSolarData = functions
 });
 // ─── Manual Refresh Trigger ────────────────────────────────────────────────────
 /**
- * HTTP endpoint to manually trigger a data refresh (admin only)
+ * Manually triggers a utility rate data refresh for a specific state or all priority states (admin only)
  *
- * POST /triggerDataRefresh
- * Body: { state?: string } (optional, defaults to all priority states)
+ * @function triggerDataRefresh
+ * @type onCall
+ * @auth firebase
+ * @input {{ state?: string }}
+ * @output {{ success: boolean, states: string[], records_processed: number, records_updated: number, errors: string[], duration_ms: number }}
+ * @errors unauthenticated, permission-denied
+ * @billing none
+ * @rateLimit none
+ * @firestore users, solar_utility_rates, data_refresh_log
  */
 exports.triggerDataRefresh = functions
     .runWith({

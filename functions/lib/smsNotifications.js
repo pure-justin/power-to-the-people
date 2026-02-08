@@ -75,7 +75,17 @@ const SMS_TEMPLATES = {
     INSTALLATION_ISSUE: (projectId, issue) => `⚠️ Installation issue - ${projectId}: ${issue}`,
 };
 /**
- * Send SMS via Twilio
+ * Sends an SMS message via Twilio and logs the result to Firestore
+ *
+ * @function sendSMS
+ * @type helper
+ * @auth none
+ * @input {{ to: string, message: string }}
+ * @output {{ boolean }}
+ * @errors Twilio API errors
+ * @billing sms
+ * @rateLimit none
+ * @firestore smsLog
  */
 async function sendSMS(to, message) {
     if (!twilioClient) {
@@ -119,8 +129,17 @@ async function sendSMS(to, message) {
     }
 }
 /**
- * Firestore Trigger: New Project Created
- * Sends SMS to customer and admin team
+ * Sends enrollment confirmation SMS to customer and new lead alert to admin on project creation
+ *
+ * @function onProjectCreated
+ * @type trigger
+ * @auth none
+ * @input {{ projectId: string }}
+ * @output {{ void }}
+ * @errors Twilio API errors
+ * @billing sms
+ * @rateLimit none
+ * @firestore projects, smsLog
  */
 exports.onProjectCreated = functions.firestore
     .document("projects/{projectId}")
@@ -146,8 +165,17 @@ exports.onProjectCreated = functions.firestore
     }
 });
 /**
- * Firestore Trigger: Project Status Updated
- * Sends SMS when status changes to approved, pending, or installed
+ * Sends status update SMS to customer when project status changes (approved, pending_info, installation_scheduled, installed)
+ *
+ * @function onProjectStatusUpdate
+ * @type trigger
+ * @auth none
+ * @input {{ projectId: string }}
+ * @output {{ void }}
+ * @errors Twilio API errors
+ * @billing sms
+ * @rateLimit none
+ * @firestore projects, smsLog
  */
 exports.onProjectStatusUpdate = functions.firestore
     .document("projects/{projectId}")
@@ -185,8 +213,17 @@ exports.onProjectStatusUpdate = functions.firestore
     }
 });
 /**
- * Firestore Trigger: Referral Reward Earned
- * Sends SMS when a referral earns a reward
+ * Sends reward notification SMS to the referrer when a referral earns a reward
+ *
+ * @function onReferralReward
+ * @type trigger
+ * @auth none
+ * @input {{ referralId: string }}
+ * @output {{ void }}
+ * @errors Twilio API errors
+ * @billing sms
+ * @rateLimit none
+ * @firestore referrals, users, smsLog
  */
 exports.onReferralReward = functions.firestore
     .document("referrals/{referralId}")
@@ -211,8 +248,17 @@ exports.onReferralReward = functions.firestore
     await sendSMS(referrer.phone, message);
 });
 /**
- * HTTP Callable: Send Custom SMS
- * Allows admin to send custom SMS messages
+ * Allows admins to send a custom SMS message to a single phone number
+ *
+ * @function sendCustomSMS
+ * @type onCall
+ * @auth firebase
+ * @input {{ phone: string, message: string }}
+ * @output {{ success: boolean }}
+ * @errors unauthenticated, permission-denied, invalid-argument
+ * @billing sms
+ * @rateLimit none
+ * @firestore users, smsLog
  */
 exports.sendCustomSMS = functions.https.onCall(async (data, context) => {
     // Verify admin auth
@@ -237,8 +283,17 @@ exports.sendCustomSMS = functions.https.onCall(async (data, context) => {
     return { success };
 });
 /**
- * HTTP Callable: Send Bulk SMS
- * Sends SMS to multiple recipients (max 100 per call)
+ * Sends the same SMS message to multiple recipients in bulk (max 100 per call)
+ *
+ * @function sendBulkSMS
+ * @type onCall
+ * @auth firebase
+ * @input {{ recipients: string[], message: string }}
+ * @output {{ total: number, successful: number, failed: number }}
+ * @errors unauthenticated, permission-denied, invalid-argument
+ * @billing sms
+ * @rateLimit none
+ * @firestore users, smsLog
  */
 exports.sendBulkSMS = functions.https.onCall(async (data, context) => {
     // Verify admin auth
@@ -276,8 +331,17 @@ exports.sendBulkSMS = functions.https.onCall(async (data, context) => {
     };
 });
 /**
- * Scheduled Function: Send Payment Reminders
- * Runs daily at 9 AM to check for upcoming payments
+ * Sends payment reminder SMS daily at 9 AM CST for payments due within 1-3 days
+ *
+ * @function sendPaymentReminders
+ * @type pubsub
+ * @auth none
+ * @input {{ }}
+ * @output {{ void }}
+ * @errors Twilio API errors
+ * @billing sms
+ * @rateLimit none
+ * @firestore projects, smsLog
  */
 exports.sendPaymentReminders = functions.pubsub
     .schedule("0 9 * * *")
@@ -315,8 +379,17 @@ exports.sendPaymentReminders = functions.pubsub
     console.log(`Sent ${reminderPromises.length} payment reminders`);
 });
 /**
- * HTTP Endpoint: Get SMS Stats
- * Returns SMS usage statistics
+ * Returns SMS usage statistics for the last 30 days including success/failure counts and estimated cost
+ *
+ * @function getSmsStats
+ * @type onCall
+ * @auth firebase
+ * @input {{ }}
+ * @output {{ total: number, successful: number, failed: number, estimatedCost: string, period: string }}
+ * @errors unauthenticated, permission-denied
+ * @billing none
+ * @rateLimit none
+ * @firestore users, smsLog
  */
 exports.getSmsStats = functions.https.onCall(async (data, context) => {
     // Verify admin auth
@@ -355,8 +428,18 @@ exports.getSmsStats = functions.https.onCall(async (data, context) => {
     };
 });
 /**
- * HTTP Endpoint: Webhook for Twilio Status Callbacks
- * Receives delivery status updates from Twilio
+ * Receives Twilio delivery status callbacks and updates SMS log records with delivery status
+ *
+ * @function twilioStatusCallback
+ * @type onRequest
+ * @method POST
+ * @auth none
+ * @input {{ MessageSid: string, MessageStatus: string, To: string, ErrorCode?: string, ErrorMessage?: string }}
+ * @output {{ string }}
+ * @errors 400
+ * @billing none
+ * @rateLimit none
+ * @firestore smsLog
  */
 exports.twilioStatusCallback = functions.https.onRequest(async (req, res) => {
     const { MessageSid, MessageStatus, To, ErrorCode, ErrorMessage } = req.body;

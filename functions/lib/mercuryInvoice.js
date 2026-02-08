@@ -4,6 +4,8 @@
  *
  * Manages invoicing via Mercury Banking API for solar installations.
  * Handles customer creation, invoice CRUD, and status sync.
+ *
+ * @module mercuryInvoice
  */
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
@@ -47,7 +49,17 @@ const smsNotifications_1 = require("./smsNotifications");
 const MERCURY_API_BASE = "https://api.mercury.com/api/v1";
 const MERCURY_ACCOUNT_ID = "ecc22c2c-aabf-11f0-955b-13f894471589";
 /**
- * Internal helper for Mercury API calls
+ * Internal helper for authenticated Mercury Banking API requests
+ *
+ * @function mercuryFetch
+ * @type helper
+ * @auth api_key
+ * @input {{ endpoint: string, method: string, body?: any }}
+ * @output any (Mercury API response JSON)
+ * @errors failed-precondition, internal
+ * @billing none
+ * @rateLimit none
+ * @firestore none
  */
 async function mercuryFetch(endpoint, method, body) {
     var _a;
@@ -74,7 +86,17 @@ async function mercuryFetch(endpoint, method, body) {
     return response.json();
 }
 /**
- * Verify caller is authenticated and has admin role
+ * Verify the caller is authenticated and has the admin role in Firestore
+ *
+ * @function verifyAdmin
+ * @type helper
+ * @auth firebase
+ * @input {{ context: functions.https.CallableContext }}
+ * @output void
+ * @errors unauthenticated, permission-denied
+ * @billing none
+ * @rateLimit none
+ * @firestore users
  */
 async function verifyAdmin(context) {
     if (!context.auth) {
@@ -92,7 +114,17 @@ async function verifyAdmin(context) {
 }
 // ─── Customer Management ──────────────────────────────────────────────────────
 /**
- * Create a Mercury AR customer for a lead
+ * Create a Mercury Accounts Receivable customer linked to a lead
+ *
+ * @function createMercuryCustomer
+ * @type onCall
+ * @auth admin
+ * @input {{ leadId: string, name: string, email: string, phone?: string }}
+ * @output {{ success: boolean, customerId: string }}
+ * @errors unauthenticated, permission-denied, invalid-argument, internal
+ * @billing none
+ * @rateLimit none
+ * @firestore leads
  */
 exports.createMercuryCustomer = functions
     .runWith({ timeoutSeconds: 30, memory: "256MB" })
@@ -129,7 +161,17 @@ exports.createMercuryCustomer = functions
 });
 // ─── Invoice Management ───────────────────────────────────────────────────────
 /**
- * Create a Mercury invoice for a lead
+ * Create a Mercury invoice for a lead and save it to Firestore
+ *
+ * @function createMercuryInvoice
+ * @type onCall
+ * @auth admin
+ * @input {{ leadId: string, customerId: string, amount: number, lineItems: Array<{ description: string, quantity: number, unitPrice: number }>, dueDate: string, memo?: string, customerName: string, customerEmail: string }}
+ * @output {{ success: boolean, invoiceId: string, mercuryInvoiceId: string, slug: string }}
+ * @errors unauthenticated, permission-denied, invalid-argument, internal
+ * @billing none
+ * @rateLimit none
+ * @firestore invoices, leads
  */
 exports.createMercuryInvoice = functions
     .runWith({ timeoutSeconds: 30, memory: "256MB" })
@@ -210,7 +252,17 @@ exports.createMercuryInvoice = functions
     }
 });
 /**
- * Get a Mercury invoice by ID
+ * Retrieve a single Mercury invoice by its Mercury invoice ID
+ *
+ * @function getMercuryInvoice
+ * @type onCall
+ * @auth admin
+ * @input {{ mercuryInvoiceId: string }}
+ * @output {{ success: boolean, invoice: object }}
+ * @errors unauthenticated, permission-denied, invalid-argument, internal
+ * @billing none
+ * @rateLimit none
+ * @firestore none
  */
 exports.getMercuryInvoice = functions
     .runWith({ timeoutSeconds: 15, memory: "256MB" })
@@ -235,7 +287,17 @@ exports.getMercuryInvoice = functions
     }
 });
 /**
- * List Mercury invoices
+ * List Mercury invoices with optional status filtering and pagination
+ *
+ * @function listMercuryInvoices
+ * @type onCall
+ * @auth admin
+ * @input {{ status?: string, limit?: number, offset?: number }}
+ * @output {{ success: boolean, invoices: object }}
+ * @errors unauthenticated, permission-denied, internal
+ * @billing none
+ * @rateLimit none
+ * @firestore none
  */
 exports.listMercuryInvoices = functions
     .runWith({ timeoutSeconds: 15, memory: "256MB" })
@@ -263,7 +325,17 @@ exports.listMercuryInvoices = functions
     }
 });
 /**
- * Cancel a Mercury invoice
+ * Cancel a Mercury invoice and update the corresponding Firestore records
+ *
+ * @function cancelMercuryInvoice
+ * @type onCall
+ * @auth admin
+ * @input {{ mercuryInvoiceId: string, firestoreInvoiceId: string, leadId: string }}
+ * @output {{ success: boolean, mercuryInvoiceId: string }}
+ * @errors unauthenticated, permission-denied, invalid-argument, internal
+ * @billing none
+ * @rateLimit none
+ * @firestore invoices, leads
  */
 exports.cancelMercuryInvoice = functions
     .runWith({ timeoutSeconds: 15, memory: "256MB" })
@@ -303,8 +375,17 @@ exports.cancelMercuryInvoice = functions
 });
 // ─── Scheduled Sync ───────────────────────────────────────────────────────────
 /**
- * Sync invoice statuses from Mercury every 30 minutes
- * Checks unpaid/processing invoices and updates Firestore + leads
+ * Sync invoice statuses from Mercury every 30 minutes and send SMS on payment receipt
+ *
+ * @function syncInvoiceStatus
+ * @type pubsub
+ * @auth none
+ * @input none (scheduled trigger)
+ * @output null
+ * @errors internal (per-invoice, non-fatal)
+ * @billing sms
+ * @rateLimit none
+ * @firestore invoices, leads
  */
 exports.syncInvoiceStatus = functions.pubsub
     .schedule("every 30 minutes")

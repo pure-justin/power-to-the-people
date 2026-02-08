@@ -28,18 +28,19 @@ function verifyWebhookSignature(payload: any, signature: string): boolean {
 }
 
 /**
- * Webhook endpoint for referral status updates
- * POST /webhooks/referral-status
+ * Receives external webhook to update a single referral tracking status and calculate milestone earnings
  *
- * Payload:
- * {
- *   "projectId": "PTTP-xxx",
- *   "status": "installed",
- *   "timestamp": "2024-01-01T00:00:00Z"
- * }
- *
- * Headers:
- * - X-Webhook-Signature: HMAC-SHA256 signature of payload
+ * @function referralStatusWebhook
+ * @type onRequest
+ * @method POST
+ * @auth api_key
+ * @scope X-Webhook-Signature (HMAC-SHA256)
+ * @input {{ projectId: string, status: "signed_up" | "qualified" | "site_survey" | "installed", timestamp?: string }}
+ * @output {{ success: boolean, projectId: string, status: string, earningsAdded: number }}
+ * @errors 400, 401, 404, 405, 500
+ * @billing none
+ * @rateLimit none
+ * @firestore referralTracking, referrals, webhookLogs
  */
 export const referralStatusWebhook = functions.https.onRequest(
   async (req, res) => {
@@ -137,16 +138,19 @@ export const referralStatusWebhook = functions.https.onRequest(
 );
 
 /**
- * Webhook for bulk referral updates
- * POST /webhooks/referral-bulk-update
+ * Receives external webhook to update multiple referral tracking statuses in a single request
  *
- * Payload:
- * {
- *   "updates": [
- *     { "projectId": "PTTP-xxx", "status": "installed" },
- *     { "projectId": "PTTP-yyy", "status": "site_survey" }
- *   ]
- * }
+ * @function referralBulkUpdateWebhook
+ * @type onRequest
+ * @method POST
+ * @auth api_key
+ * @scope X-Webhook-Signature (HMAC-SHA256)
+ * @input {{ updates: Array<{ projectId: string, status: string }> }}
+ * @output {{ successful: number, failed: number, errors: Array<{ projectId: string, error: string }> }}
+ * @errors 400, 401, 405
+ * @billing none
+ * @rateLimit none
+ * @firestore referralTracking, referrals, webhookLogs
  */
 export const referralBulkUpdateWebhook = functions.https.onRequest(
   async (req, res) => {
@@ -224,8 +228,19 @@ export const referralBulkUpdateWebhook = functions.https.onRequest(
 );
 
 /**
- * Webhook to get referral stats for external dashboards
- * GET /webhooks/referral-stats?apiKey=xxx
+ * Returns aggregate referral program statistics for external dashboards via API key authentication
+ *
+ * @function referralStatsWebhook
+ * @type onRequest
+ * @method GET
+ * @auth api_key
+ * @scope webhook.api_key (query parameter)
+ * @input {{ apiKey: string }}
+ * @output {{ totalReferrers: number, totalReferrals: number, totalEarnings: number, pendingEarnings: number, paidEarnings: number, statusCounts: Record<string, number>, generatedAt: string }}
+ * @errors 401, 405, 500
+ * @billing none
+ * @rateLimit none
+ * @firestore referrals, referralTracking
  */
 export const referralStatsWebhook = functions.https.onRequest(
   async (req, res) => {
