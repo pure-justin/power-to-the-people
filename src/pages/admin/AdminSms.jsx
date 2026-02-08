@@ -5,47 +5,76 @@ import {
   collection,
   query,
   orderBy,
+  limit,
   getDocs,
 } from "../../services/firebase";
-import { MessageSquare, Send, DollarSign, BarChart3 } from "lucide-react";
+import {
+  MessageSquare,
+  Send,
+  Users,
+  DollarSign,
+  CheckCircle,
+  XCircle,
+  Clock,
+  Search,
+  RefreshCw,
+} from "lucide-react";
 
 const SMS_COST = 0.0075;
 
 export default function AdminSms() {
   const { user } = useAuth();
   const [loading, setLoading] = useState(true);
-  const [smsLogs, setSmsLogs] = useState([]);
-  const [to, setTo] = useState("");
-  const [message, setMessage] = useState("");
-  const [sending, setSending] = useState(false);
+  const [logs, setLogs] = useState([]);
+  const [stats, setStats] = useState({
+    total: 0,
+    delivered: 0,
+    failed: 0,
+    pending: 0,
+    cost: 0,
+  });
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [bulkMode, setBulkMode] = useState(false);
+  const [smsForm, setSmsForm] = useState({ to: "", message: "" });
+  const [bulkRecipients, setBulkRecipients] = useState("");
 
   useEffect(() => {
-    loadSmsLogs();
+    loadData();
   }, []);
 
-  const loadSmsLogs = async () => {
+  const loadData = async () => {
     try {
       setLoading(true);
       const ref = collection(db, "smsLog");
-      const snap = await getDocs(query(ref, orderBy("sentAt", "desc")));
-      setSmsLogs(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
+      const snap = await getDocs(
+        query(ref, orderBy("sentAt", "desc"), limit(500)),
+      );
+      const items = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+      setLogs(items);
+
+      const delivered = items.filter((l) => l.status === "delivered").length;
+      const failed = items.filter(
+        (l) => l.status === "failed" || l.status === "undelivered",
+      ).length;
+      const pending = items.filter(
+        (l) =>
+          l.status === "queued" ||
+          l.status === "sent" ||
+          l.status === "sending",
+      ).length;
+      setStats({
+        total: items.length,
+        delivered,
+        failed,
+        pending,
+        cost: items.length * SMS_COST,
+      });
     } catch (err) {
       console.error("Error loading SMS logs:", err);
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleSend = async (e) => {
-    e.preventDefault();
-    if (!to || !message) return;
-    setSending(true);
-    // Placeholder - would call sendCustomSMS cloud function
-    setTimeout(() => {
-      setSending(false);
-      setTo("");
-      setMessage("");
-    }, 1000);
   };
 
   const formatDate = (ts) => {
@@ -59,137 +88,246 @@ export default function AdminSms() {
     });
   };
 
-  const statusBadge = (status) => {
+  const statusIcon = (status) => {
     const s = (status || "").toLowerCase();
-    const map = {
-      delivered: "bg-green-100 text-green-700",
-      sent: "bg-blue-100 text-blue-700",
-      queued: "bg-amber-100 text-amber-700",
-      failed: "bg-red-100 text-red-700",
-      undelivered: "bg-red-100 text-red-700",
-    };
-    return map[s] || "bg-gray-100 text-gray-600";
+    if (s === "delivered")
+      return <CheckCircle size={14} className="text-green-500" />;
+    if (s === "failed" || s === "undelivered")
+      return <XCircle size={14} className="text-red-500" />;
+    return <Clock size={14} className="text-amber-500" />;
   };
 
-  const totalCost = smsLogs.length * SMS_COST;
-  const deliveredCount = smsLogs.filter((s) => s.status === "delivered").length;
+  const statusBadge = (status) => {
+    const s = (status || "").toLowerCase();
+    if (s === "delivered") return "bg-green-100 text-green-700";
+    if (s === "failed" || s === "undelivered") return "bg-red-100 text-red-700";
+    return "bg-amber-100 text-amber-700";
+  };
+
+  const filtered = logs.filter((l) => {
+    const term = searchTerm.toLowerCase();
+    const matchesSearch =
+      !term ||
+      (l.to || "").includes(term) ||
+      (l.message || "").toLowerCase().includes(term);
+    const matchesStatus =
+      statusFilter === "all" || (l.status || "").toLowerCase() === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
+
+  const metricCards = [
+    {
+      label: "Total Sent",
+      value: stats.total.toLocaleString(),
+      icon: MessageSquare,
+      color: "bg-blue-50 text-blue-600",
+    },
+    {
+      label: "Delivered",
+      value: stats.delivered.toLocaleString(),
+      icon: CheckCircle,
+      color: "bg-green-50 text-green-600",
+    },
+    {
+      label: "Failed",
+      value: stats.failed.toLocaleString(),
+      icon: XCircle,
+      color: "bg-red-50 text-red-600",
+    },
+    {
+      label: "Est. Cost",
+      value: `$${stats.cost.toFixed(2)}`,
+      icon: DollarSign,
+      color: "bg-amber-50 text-amber-600",
+    },
+  ];
 
   if (loading) {
     return (
-      <div className="space-y-4">
-        <div className="bg-white rounded-xl border border-gray-200 p-6 animate-pulse h-40" />
-        <div className="bg-white rounded-xl border border-gray-200 p-6 animate-pulse h-64" />
+      <div className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+          {[1, 2, 3, 4].map((i) => (
+            <div
+              key={i}
+              className="bg-white rounded-xl border border-gray-200 p-6 animate-pulse"
+            >
+              <div className="h-4 bg-gray-200 rounded w-1/2 mb-4" />
+              <div className="h-8 bg-gray-200 rounded w-1/3" />
+            </div>
+          ))}
+        </div>
+        <div className="bg-white rounded-xl border border-gray-200 p-6 animate-pulse">
+          <div className="h-6 bg-gray-200 rounded w-1/4 mb-6" />
+          {[1, 2, 3, 4, 5].map((i) => (
+            <div key={i} className="h-12 bg-gray-100 rounded mb-3" />
+          ))}
+        </div>
       </div>
     );
   }
 
   return (
     <div className="space-y-6">
-      {/* Composer */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6">
-        <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-          <MessageSquare size={20} className="text-blue-500" />
-          SMS Composer
-        </h3>
-        <form onSubmit={handleSend} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              To
-            </label>
-            <input
-              type="tel"
-              placeholder="+1 (555) 123-4567"
-              value={to}
-              onChange={(e) => setTo(e.target.value)}
-              className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Message
-            </label>
-            <textarea
-              placeholder="Type your message..."
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              rows={3}
-              className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 resize-none"
-            />
-            <p className="text-xs text-gray-400 mt-1">
-              {message.length}/160 characters
-            </p>
-          </div>
-          <button
-            type="submit"
-            disabled={sending || !to || !message}
-            className="flex items-center gap-2 px-5 py-2.5 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+      {/* Metrics */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+        {metricCards.map((m) => (
+          <div
+            key={m.label}
+            className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-md transition-all"
           >
-            <Send size={16} />
-            {sending ? "Sending..." : "Send SMS"}
-          </button>
-        </form>
+            <div className="flex items-center justify-between mb-4">
+              <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                {m.label}
+              </span>
+              <div
+                className={`w-10 h-10 rounded-lg flex items-center justify-center ${m.color}`}
+              >
+                <m.icon size={20} />
+              </div>
+            </div>
+            <div className="text-3xl font-extrabold text-gray-900">
+              {m.value}
+            </div>
+          </div>
+        ))}
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-        <div className="bg-white rounded-xl border border-gray-200 p-6">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-              Total Messages
-            </span>
-            <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center text-blue-600">
-              <MessageSquare size={20} />
-            </div>
-          </div>
-          <p className="text-3xl font-extrabold text-gray-900">
-            {smsLogs.length}
-          </p>
+      {/* Compose Panel */}
+      <div className="bg-white rounded-xl border border-gray-200 p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+            <Send size={20} className="text-emerald-500" />
+            Compose SMS
+          </h3>
+          <label className="flex items-center gap-2 text-sm text-gray-600">
+            <input
+              type="checkbox"
+              checked={bulkMode}
+              onChange={(e) => setBulkMode(e.target.checked)}
+              className="rounded border-gray-300"
+            />
+            Bulk Mode
+          </label>
         </div>
 
-        <div className="bg-white rounded-xl border border-gray-200 p-6">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-              Cost Tracker
-            </span>
-            <div className="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center text-green-600">
-              <DollarSign size={20} />
+        {bulkMode ? (
+          <div className="space-y-3">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Recipients (one per line)
+              </label>
+              <textarea
+                value={bulkRecipients}
+                onChange={(e) => setBulkRecipients(e.target.value)}
+                placeholder={"+15551234567\n+15559876543"}
+                rows={4}
+                className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 resize-none"
+              />
+              <p className="text-xs text-gray-400 mt-1">
+                {bulkRecipients
+                  ? bulkRecipients.split("\n").filter((l) => l.trim()).length
+                  : 0}{" "}
+                recipients (max 100)
+              </p>
             </div>
-          </div>
-          <p className="text-3xl font-extrabold text-gray-900">
-            ${totalCost.toFixed(2)}
-          </p>
-          <p className="text-xs text-gray-500 mt-1">${SMS_COST}/message</p>
-        </div>
-
-        <div className="bg-white rounded-xl border border-gray-200 p-6">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-              Delivery Rate
-            </span>
-            <div className="w-10 h-10 bg-purple-50 rounded-lg flex items-center justify-center text-purple-600">
-              <BarChart3 size={20} />
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Message
+              </label>
+              <textarea
+                value={smsForm.message}
+                onChange={(e) =>
+                  setSmsForm((p) => ({ ...p, message: e.target.value }))
+                }
+                placeholder="Type your message..."
+                rows={3}
+                className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 resize-none"
+              />
+              <p className="text-xs text-gray-400 mt-1">
+                {smsForm.message.length}/160 characters
+              </p>
             </div>
+            <button className="flex items-center gap-2 px-4 py-2.5 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors">
+              <Users size={16} />
+              Send Bulk SMS
+            </button>
           </div>
-          <div className="h-8 bg-gray-50 rounded border-2 border-dashed border-gray-200 flex items-center justify-center">
-            <p className="text-xs text-gray-400">
-              {smsLogs.length > 0
-                ? `${Math.round((deliveredCount / smsLogs.length) * 100)}% delivered`
-                : "No data"}
-            </p>
+        ) : (
+          <div className="flex flex-wrap gap-3">
+            <input
+              type="text"
+              value={smsForm.to}
+              onChange={(e) =>
+                setSmsForm((p) => ({ ...p, to: e.target.value }))
+              }
+              placeholder="+15551234567"
+              className="w-48 px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+            />
+            <input
+              type="text"
+              value={smsForm.message}
+              onChange={(e) =>
+                setSmsForm((p) => ({ ...p, message: e.target.value }))
+              }
+              placeholder="Type your message..."
+              className="flex-1 min-w-[240px] px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+            />
+            <button className="flex items-center gap-2 px-4 py-2.5 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors">
+              <Send size={16} />
+              Send
+            </button>
           </div>
-        </div>
+        )}
       </div>
 
       {/* Delivery Log */}
       <div className="bg-white rounded-xl border border-gray-200 p-6">
-        <h3 className="text-lg font-bold text-gray-900 mb-4">Delivery Log</h3>
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
+          <h3 className="text-lg font-bold text-gray-900">Delivery Log</h3>
+          <div className="flex items-center gap-3">
+            <div className="relative">
+              <Search
+                size={16}
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+              />
+              <input
+                type="text"
+                placeholder="Search logs..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-9 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              />
+            </div>
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            >
+              <option value="all">All Status</option>
+              <option value="delivered">Delivered</option>
+              <option value="sent">Sent</option>
+              <option value="queued">Queued</option>
+              <option value="failed">Failed</option>
+              <option value="undelivered">Undelivered</option>
+            </select>
+            <button
+              onClick={loadData}
+              className="flex items-center gap-1.5 px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+            >
+              <RefreshCw size={14} />
+              Refresh
+            </button>
+          </div>
+        </div>
 
-        {smsLogs.length === 0 ? (
+        <p className="text-sm text-gray-500 mb-4">
+          {filtered.length} message{filtered.length !== 1 ? "s" : ""}
+        </p>
+
+        {filtered.length === 0 ? (
           <div className="text-center py-16">
             <MessageSquare size={40} className="mx-auto text-gray-300 mb-3" />
-            <p className="text-gray-500 font-medium">
-              No SMS messages sent yet
-            </p>
+            <p className="text-gray-500 font-medium">No SMS logs found</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
@@ -206,31 +344,35 @@ export default function AdminSms() {
                     Status
                   </th>
                   <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                    SID
+                  </th>
+                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
                     Sent At
                   </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
-                {smsLogs.map((log) => (
-                  <tr
-                    key={log.id}
-                    className="hover:bg-gray-50 transition-colors"
-                  >
+                {filtered.map((l) => (
+                  <tr key={l.id} className="hover:bg-gray-50 transition-colors">
                     <td className="px-4 py-3 text-sm font-semibold text-gray-900">
-                      {log.to || "N/A"}
+                      {l.to || "N/A"}
                     </td>
                     <td className="px-4 py-3 text-sm text-gray-600 max-w-xs truncate">
-                      {log.message || "N/A"}
+                      {l.message || "N/A"}
                     </td>
                     <td className="px-4 py-3">
                       <span
-                        className={`px-2.5 py-1 rounded-md text-xs font-semibold capitalize ${statusBadge(log.status)}`}
+                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold capitalize ${statusBadge(l.status)}`}
                       >
-                        {log.status || "unknown"}
+                        {statusIcon(l.status)}
+                        {l.status || "unknown"}
                       </span>
                     </td>
+                    <td className="px-4 py-3 text-xs text-gray-400 font-mono">
+                      {l.sid ? l.sid.slice(-8) : "N/A"}
+                    </td>
                     <td className="px-4 py-3 text-sm text-gray-400">
-                      {formatDate(log.sentAt)}
+                      {formatDate(l.sentAt)}
                     </td>
                   </tr>
                 ))}
