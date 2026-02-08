@@ -13,6 +13,8 @@ import Signup from "./pages/Signup";
 import ApiDocs from "./pages/ApiDocs";
 import InstallerComparison from "./pages/InstallerComparison";
 import SubHubCompare from "./pages/SubHubCompare";
+import CreditMarketplace from "./pages/marketplace/CreditMarketplace";
+import CreditDetail from "./pages/marketplace/CreditDetail";
 
 // Portal (customer)
 import PortalHome from "./pages/portal/PortalHome";
@@ -23,6 +25,9 @@ import PortalUsage from "./pages/portal/PortalUsage";
 import PortalSettings from "./pages/portal/PortalSettings";
 import PortalSavings from "./pages/portal/PortalSavings";
 import PortalFinancing from "./pages/portal/PortalFinancing";
+import PortalSurvey from "./pages/portal/PortalSurvey";
+import PortalSchedule from "./pages/portal/PortalSchedule";
+import PortalCredits from "./pages/portal/PortalCredits";
 
 // Dashboard (installer)
 import DashboardHome from "./pages/dashboard/DashboardHome";
@@ -39,6 +44,13 @@ import DashboardProjectDetail from "./pages/dashboard/DashboardProjectDetail";
 import DashboardMarketplace from "./pages/dashboard/DashboardMarketplace";
 import DashboardWorkerProfile from "./pages/dashboard/DashboardWorkerProfile";
 import DashboardTasks from "./pages/dashboard/DashboardTasks";
+import DashboardSurvey from "./pages/dashboard/DashboardSurvey";
+import DashboardPermits from "./pages/dashboard/DashboardPermits";
+import DashboardDesigns from "./pages/dashboard/DashboardDesigns";
+import DashboardSchedule from "./pages/dashboard/DashboardSchedule";
+import DashboardInstall from "./pages/dashboard/DashboardInstall";
+import DashboardFunding from "./pages/dashboard/DashboardFunding";
+import DashboardCredits from "./pages/dashboard/DashboardCredits";
 
 // Sales
 import SalesHome from "./pages/sales/SalesHome";
@@ -65,6 +77,7 @@ import AdminAva from "./pages/admin/AdminAva";
 import AdminCampaigns from "./pages/admin/AdminCampaigns";
 import AdminAnalytics from "./pages/admin/AdminAnalytics";
 import AdminTasks from "./pages/admin/AdminTasks";
+import AdminCredits from "./pages/admin/AdminCredits";
 
 function App() {
   return (
@@ -82,6 +95,8 @@ function App() {
           <Route path="/api-docs" element={<ApiDocs />} />
           <Route path="/compare" element={<SubHubCompare />} />
           <Route path="/installers" element={<InstallerComparison />} />
+          <Route path="/marketplace/credits" element={<CreditMarketplace />} />
+          <Route path="/marketplace/credits/:id" element={<CreditDetail />} />
 
           {/* Homeowner Portal */}
           <Route element={<AppShell requiredRole="customer" />}>
@@ -94,6 +109,13 @@ function App() {
             <Route path="/portal/settings" element={<PortalSettings />} />
             <Route path="/portal/savings" element={<PortalSavings />} />
             <Route path="/portal/financing" element={<PortalFinancing />} />
+            <Route path="/portal/survey" element={<PortalSurvey />} />
+            <Route
+              path="/portal/survey/:projectId"
+              element={<PortalSurvey />}
+            />
+            <Route path="/portal/schedule" element={<PortalSchedule />} />
+            <Route path="/portal/credits" element={<PortalCredits />} />
           </Route>
 
           {/* Installer Dashboard */}
@@ -125,6 +147,16 @@ function App() {
               element={<DashboardEquipment />}
             />
             <Route path="/dashboard/tasks" element={<DashboardTasks />} />
+            <Route
+              path="/dashboard/survey/:projectId"
+              element={<DashboardSurvey />}
+            />
+            <Route path="/dashboard/permits" element={<DashboardPermits />} />
+            <Route path="/dashboard/designs" element={<DashboardDesigns />} />
+            <Route path="/dashboard/schedule" element={<DashboardSchedule />} />
+            <Route path="/dashboard/install" element={<DashboardInstall />} />
+            <Route path="/dashboard/funding" element={<DashboardFunding />} />
+            <Route path="/dashboard/credits" element={<DashboardCredits />} />
             <Route
               path="/dashboard/marketplace"
               element={<DashboardMarketplace />}
@@ -163,6 +195,7 @@ function App() {
             <Route path="/admin/campaigns" element={<AdminCampaigns />} />
             <Route path="/admin/analytics" element={<AdminAnalytics />} />
             <Route path="/admin/tasks" element={<AdminTasks />} />
+            <Route path="/admin/credits" element={<AdminCredits />} />
           </Route>
 
           {/* Legacy redirect */}

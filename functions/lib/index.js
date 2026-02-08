@@ -40,7 +40,9 @@ var __importStar = (this && this.__importStar) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getSmsStats = exports.sendPaymentReminders = exports.sendBulkSMS = exports.sendCustomSMS = exports.onReferralReward = exports.onProjectStatusUpdate = exports.smsOnProjectCreated = exports.triggerDataRefresh = exports.refreshSolarData = exports.getSubscriptionStatus = exports.createBillingPortalSession = exports.createCheckoutSession = exports.stripeWebhook = exports.cancelSubscription = exports.updateSubscription = exports.createSubscription = exports.solarEstimate = exports.solarComplianceQuickCheck = exports.solarComplianceCheck = exports.solarPermits = exports.solarIncentives = exports.solarUtilities = exports.solarEquipment = exports.referralStatsWebhook = exports.referralBulkUpdateWebhook = exports.referralStatusWebhook = exports.processWeeklyPayouts = exports.getReferralStats = exports.updateReferralStatusHttp = exports.onProjectUpdated = exports.onProjectCreated = exports.secureLeadQuery = exports.secureSolarWebhook = exports.secureLeadWebhook = exports.validateApiKeyFromRequest = exports.cleanupApiKeys = exports.getApiKeyUsage = exports.updateApiKey = exports.rotateApiKey = exports.revokeApiKey = exports.validateApiKey = exports.createApiKey = exports.leadWebhook = exports.recalculateLeadScores = exports.assignLead = exports.addLeadNote = exports.updateLead = exports.createLead = exports.smtWebhook = exports.fetchSmtUsage = void 0;
-exports.getAhjStats = exports.verifyAhj = exports.getPermitSop = exports.createPermitSop = exports.updateAhjRequirements = exports.findAhjForAddress = exports.searchAhj = exports.getAhj = exports.createAhj = exports.getTaskStats = exports.retryAiTask = exports.getTaskQueue = exports.completeHumanTask = exports.escalateToHuman = exports.processAiTask = exports.createAiTask = exports.getMarketplaceListings = exports.searchWorkers = exports.registerWorker = exports.rateWorker = exports.completeMarketplaceJob = exports.acceptBid = exports.submitBid = exports.createMarketplaceListing = exports.getProjectTimeline = exports.completeProjectTask = exports.assignProjectTask = exports.createProjectTask = exports.advanceProjectStage = exports.syncInvoiceStatus = exports.cancelMercuryInvoice = exports.listMercuryInvoices = exports.getMercuryInvoice = exports.createMercuryInvoice = exports.createMercuryCustomer = exports.twilioStatusCallback = void 0;
+exports.resolveCorrection = exports.addPermitCorrection = exports.getPermitsByProject = exports.getPermit = exports.updatePermitStatus = exports.submitPermit = exports.createPermit = exports.addSurveyPhoto = exports.reviewSurvey = exports.getSurveysByProject = exports.getSurvey = exports.submitSurvey = exports.updateSurvey = exports.createSurvey = exports.getAhjStats = exports.verifyAhj = exports.getPermitSop = exports.createPermitSop = exports.updateAhjRequirements = exports.findAhjForAddress = exports.searchAhj = exports.getAhj = exports.createAhj = exports.getTaskStats = exports.retryAiTask = exports.getTaskQueue = exports.completeHumanTask = exports.escalateToHuman = exports.processAiTask = exports.createAiTask = exports.getMarketplaceListings = exports.searchWorkers = exports.registerWorker = exports.rateWorker = exports.completeMarketplaceJob = exports.acceptBid = exports.submitBid = exports.createMarketplaceListing = exports.getProjectTimeline = exports.completeProjectTask = exports.assignProjectTask = exports.createProjectTask = exports.advanceProjectStage = exports.syncInvoiceStatus = exports.cancelMercuryInvoice = exports.listMercuryInvoices = exports.getMercuryInvoice = exports.createMercuryInvoice = exports.createMercuryCustomer = exports.twilioStatusCallback = void 0;
+exports.getCreditTransactions = exports.completeCreditTransfer = exports.initiateCreditTransfer = exports.respondToOffer = exports.makeOffer = exports.getCreditListing = exports.searchCreditListings = exports.createCreditListing = exports.getInsurance = exports.activateInsurance = exports.quoteCreditInsurance = exports.assessCreditRisk = exports.addAuditCheck = exports.certifyAudit = exports.getAuditsByProject = exports.getAudit = exports.auditProjectCredits = exports.generateBankabilityPackage = exports.getFundingByProject = exports.requestMilestonePayment = exports.updateFundingStatus = exports.submitFunding = exports.checkDocumentReadiness = exports.createFundingPackage = exports.getInstallProgress = exports.signOffPhase = exports.requestPhotoReview = exports.getPhaseStatus = exports.getPhotosByProject = exports.uploadInstallPhoto = exports.getCustomerSchedule = exports.getUpcomingInstalls = exports.getInstallSchedule = exports.reschedule = exports.confirmSchedule = exports.proposeSchedule = exports.getAvailability = exports.setAvailability = exports.shouldOrderEagleview = exports.getEagleviewReport = exports.processEagleviewDelivery = exports.checkEagleviewStatus = exports.orderEagleviewReport = exports.calculateSystemSize = exports.approveDesign = exports.updateDesign = exports.getDesignsByProject = exports.getDesign = exports.generateDesign = exports.checkPermitStatuses = void 0;
+exports.getCreditMarketStats = void 0;
 const admin = __importStar(require("firebase-admin"));
 // Initialize Firebase Admin SDK
 admin.initializeApp();
@@ -160,4 +162,85 @@ Object.defineProperty(exports, "createPermitSop", { enumerable: true, get: funct
 Object.defineProperty(exports, "getPermitSop", { enumerable: true, get: function () { return ahjDatabase_1.getPermitSop; } });
 Object.defineProperty(exports, "verifyAhj", { enumerable: true, get: function () { return ahjDatabase_1.verifyAhj; } });
 Object.defineProperty(exports, "getAhjStats", { enumerable: true, get: function () { return ahjDatabase_1.getAhjStats; } });
+// Export Site Survey functions
+var surveyService_1 = require("./surveyService");
+Object.defineProperty(exports, "createSurvey", { enumerable: true, get: function () { return surveyService_1.createSurvey; } });
+Object.defineProperty(exports, "updateSurvey", { enumerable: true, get: function () { return surveyService_1.updateSurvey; } });
+Object.defineProperty(exports, "submitSurvey", { enumerable: true, get: function () { return surveyService_1.submitSurvey; } });
+Object.defineProperty(exports, "getSurvey", { enumerable: true, get: function () { return surveyService_1.getSurvey; } });
+Object.defineProperty(exports, "getSurveysByProject", { enumerable: true, get: function () { return surveyService_1.getSurveysByProject; } });
+Object.defineProperty(exports, "reviewSurvey", { enumerable: true, get: function () { return surveyService_1.reviewSurvey; } });
+Object.defineProperty(exports, "addSurveyPhoto", { enumerable: true, get: function () { return surveyService_1.addSurveyPhoto; } });
+// Export Permit Lifecycle functions
+var permitService_1 = require("./permitService");
+Object.defineProperty(exports, "createPermit", { enumerable: true, get: function () { return permitService_1.createPermit; } });
+Object.defineProperty(exports, "submitPermit", { enumerable: true, get: function () { return permitService_1.submitPermit; } });
+Object.defineProperty(exports, "updatePermitStatus", { enumerable: true, get: function () { return permitService_1.updatePermitStatus; } });
+Object.defineProperty(exports, "getPermit", { enumerable: true, get: function () { return permitService_1.getPermit; } });
+Object.defineProperty(exports, "getPermitsByProject", { enumerable: true, get: function () { return permitService_1.getPermitsByProject; } });
+Object.defineProperty(exports, "addPermitCorrection", { enumerable: true, get: function () { return permitService_1.addPermitCorrection; } });
+Object.defineProperty(exports, "resolveCorrection", { enumerable: true, get: function () { return permitService_1.resolveCorrection; } });
+Object.defineProperty(exports, "checkPermitStatuses", { enumerable: true, get: function () { return permitService_1.checkPermitStatuses; } });
+// Export CAD Design Engine functions
+var cadService_1 = require("./cadService");
+Object.defineProperty(exports, "generateDesign", { enumerable: true, get: function () { return cadService_1.generateDesign; } });
+Object.defineProperty(exports, "getDesign", { enumerable: true, get: function () { return cadService_1.getDesign; } });
+Object.defineProperty(exports, "getDesignsByProject", { enumerable: true, get: function () { return cadService_1.getDesignsByProject; } });
+Object.defineProperty(exports, "updateDesign", { enumerable: true, get: function () { return cadService_1.updateDesign; } });
+Object.defineProperty(exports, "approveDesign", { enumerable: true, get: function () { return cadService_1.approveDesign; } });
+Object.defineProperty(exports, "calculateSystemSize", { enumerable: true, get: function () { return cadService_1.calculateSystemSize; } });
+// Export EagleView Integration functions
+var eagleviewService_1 = require("./eagleviewService");
+Object.defineProperty(exports, "orderEagleviewReport", { enumerable: true, get: function () { return eagleviewService_1.orderEagleviewReport; } });
+Object.defineProperty(exports, "checkEagleviewStatus", { enumerable: true, get: function () { return eagleviewService_1.checkEagleviewStatus; } });
+Object.defineProperty(exports, "processEagleviewDelivery", { enumerable: true, get: function () { return eagleviewService_1.processEagleviewDelivery; } });
+Object.defineProperty(exports, "getEagleviewReport", { enumerable: true, get: function () { return eagleviewService_1.getEagleviewReport; } });
+Object.defineProperty(exports, "shouldOrderEagleview", { enumerable: true, get: function () { return eagleviewService_1.shouldOrderEagleview; } });
+// Export Scheduling & Install Coordination functions
+var schedulingService_1 = require("./schedulingService");
+Object.defineProperty(exports, "setAvailability", { enumerable: true, get: function () { return schedulingService_1.setAvailability; } });
+Object.defineProperty(exports, "getAvailability", { enumerable: true, get: function () { return schedulingService_1.getAvailability; } });
+Object.defineProperty(exports, "proposeSchedule", { enumerable: true, get: function () { return schedulingService_1.proposeSchedule; } });
+Object.defineProperty(exports, "confirmSchedule", { enumerable: true, get: function () { return schedulingService_1.confirmSchedule; } });
+Object.defineProperty(exports, "reschedule", { enumerable: true, get: function () { return schedulingService_1.reschedule; } });
+Object.defineProperty(exports, "getInstallSchedule", { enumerable: true, get: function () { return schedulingService_1.getInstallSchedule; } });
+Object.defineProperty(exports, "getUpcomingInstalls", { enumerable: true, get: function () { return schedulingService_1.getUpcomingInstalls; } });
+Object.defineProperty(exports, "getCustomerSchedule", { enumerable: true, get: function () { return schedulingService_1.getCustomerSchedule; } });
+// Export Install Photo QC functions
+var photoAnalysisService_1 = require("./photoAnalysisService");
+Object.defineProperty(exports, "uploadInstallPhoto", { enumerable: true, get: function () { return photoAnalysisService_1.uploadInstallPhoto; } });
+Object.defineProperty(exports, "getPhotosByProject", { enumerable: true, get: function () { return photoAnalysisService_1.getPhotosByProject; } });
+Object.defineProperty(exports, "getPhaseStatus", { enumerable: true, get: function () { return photoAnalysisService_1.getPhaseStatus; } });
+Object.defineProperty(exports, "requestPhotoReview", { enumerable: true, get: function () { return photoAnalysisService_1.requestPhotoReview; } });
+Object.defineProperty(exports, "signOffPhase", { enumerable: true, get: function () { return photoAnalysisService_1.signOffPhase; } });
+Object.defineProperty(exports, "getInstallProgress", { enumerable: true, get: function () { return photoAnalysisService_1.getInstallProgress; } });
+// Export Funding & Bankability functions
+var fundingService_1 = require("./fundingService");
+Object.defineProperty(exports, "createFundingPackage", { enumerable: true, get: function () { return fundingService_1.createFundingPackage; } });
+Object.defineProperty(exports, "checkDocumentReadiness", { enumerable: true, get: function () { return fundingService_1.checkDocumentReadiness; } });
+Object.defineProperty(exports, "submitFunding", { enumerable: true, get: function () { return fundingService_1.submitFunding; } });
+Object.defineProperty(exports, "updateFundingStatus", { enumerable: true, get: function () { return fundingService_1.updateFundingStatus; } });
+Object.defineProperty(exports, "requestMilestonePayment", { enumerable: true, get: function () { return fundingService_1.requestMilestonePayment; } });
+Object.defineProperty(exports, "getFundingByProject", { enumerable: true, get: function () { return fundingService_1.getFundingByProject; } });
+Object.defineProperty(exports, "generateBankabilityPackage", { enumerable: true, get: function () { return fundingService_1.generateBankabilityPackage; } });
+// Export Tax Credit Marketplace functions
+var taxCreditService_1 = require("./taxCreditService");
+Object.defineProperty(exports, "auditProjectCredits", { enumerable: true, get: function () { return taxCreditService_1.auditProjectCredits; } });
+Object.defineProperty(exports, "getAudit", { enumerable: true, get: function () { return taxCreditService_1.getAudit; } });
+Object.defineProperty(exports, "getAuditsByProject", { enumerable: true, get: function () { return taxCreditService_1.getAuditsByProject; } });
+Object.defineProperty(exports, "certifyAudit", { enumerable: true, get: function () { return taxCreditService_1.certifyAudit; } });
+Object.defineProperty(exports, "addAuditCheck", { enumerable: true, get: function () { return taxCreditService_1.addAuditCheck; } });
+Object.defineProperty(exports, "assessCreditRisk", { enumerable: true, get: function () { return taxCreditService_1.assessCreditRisk; } });
+Object.defineProperty(exports, "quoteCreditInsurance", { enumerable: true, get: function () { return taxCreditService_1.quoteCreditInsurance; } });
+Object.defineProperty(exports, "activateInsurance", { enumerable: true, get: function () { return taxCreditService_1.activateInsurance; } });
+Object.defineProperty(exports, "getInsurance", { enumerable: true, get: function () { return taxCreditService_1.getInsurance; } });
+Object.defineProperty(exports, "createCreditListing", { enumerable: true, get: function () { return taxCreditService_1.createCreditListing; } });
+Object.defineProperty(exports, "searchCreditListings", { enumerable: true, get: function () { return taxCreditService_1.searchCreditListings; } });
+Object.defineProperty(exports, "getCreditListing", { enumerable: true, get: function () { return taxCreditService_1.getCreditListing; } });
+Object.defineProperty(exports, "makeOffer", { enumerable: true, get: function () { return taxCreditService_1.makeOffer; } });
+Object.defineProperty(exports, "respondToOffer", { enumerable: true, get: function () { return taxCreditService_1.respondToOffer; } });
+Object.defineProperty(exports, "initiateCreditTransfer", { enumerable: true, get: function () { return taxCreditService_1.initiateCreditTransfer; } });
+Object.defineProperty(exports, "completeCreditTransfer", { enumerable: true, get: function () { return taxCreditService_1.completeCreditTransfer; } });
+Object.defineProperty(exports, "getCreditTransactions", { enumerable: true, get: function () { return taxCreditService_1.getCreditTransactions; } });
+Object.defineProperty(exports, "getCreditMarketStats", { enumerable: true, get: function () { return taxCreditService_1.getCreditMarketStats; } });
 //# sourceMappingURL=index.js.map

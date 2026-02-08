@@ -149,3 +149,100 @@ export {
   verifyAhj,
   getAhjStats,
 } from "./ahjDatabase";
+
+// Export Site Survey functions
+export {
+  createSurvey,
+  updateSurvey,
+  submitSurvey,
+  getSurvey,
+  getSurveysByProject,
+  reviewSurvey,
+  addSurveyPhoto,
+} from "./surveyService";
+
+// Export Permit Lifecycle functions
+export {
+  createPermit,
+  submitPermit,
+  updatePermitStatus,
+  getPermit,
+  getPermitsByProject,
+  addPermitCorrection,
+  resolveCorrection,
+  checkPermitStatuses,
+} from "./permitService";
+
+// Export CAD Design Engine functions
+export {
+  generateDesign,
+  getDesign,
+  getDesignsByProject,
+  updateDesign,
+  approveDesign,
+  calculateSystemSize,
+} from "./cadService";
+
+// Export EagleView Integration functions
+export {
+  orderEagleviewReport,
+  checkEagleviewStatus,
+  processEagleviewDelivery,
+  getEagleviewReport,
+  shouldOrderEagleview,
+} from "./eagleviewService";
+
+// Export Scheduling & Install Coordination functions
+export {
+  setAvailability,
+  getAvailability,
+  proposeSchedule,
+  confirmSchedule,
+  reschedule,
+  getInstallSchedule,
+  getUpcomingInstalls,
+  getCustomerSchedule,
+} from "./schedulingService";
+
+// Export Install Photo QC functions
+export {
+  uploadInstallPhoto,
+  getPhotosByProject,
+  getPhaseStatus,
+  requestPhotoReview,
+  signOffPhase,
+  getInstallProgress,
+} from "./photoAnalysisService";
+
+// Export Funding & Bankability functions
+export {
+  createFundingPackage,
+  checkDocumentReadiness,
+  submitFunding,
+  updateFundingStatus,
+  requestMilestonePayment,
+  getFundingByProject,
+  generateBankabilityPackage,
+} from "./fundingService";
+
+// Export Tax Credit Marketplace functions
+export {
+  auditProjectCredits,
+  getAudit,
+  getAuditsByProject,
+  certifyAudit,
+  addAuditCheck,
+  assessCreditRisk,
+  quoteCreditInsurance,
+  activateInsurance,
+  getInsurance,
+  createCreditListing,
+  searchCreditListings,
+  getCreditListing,
+  makeOffer,
+  respondToOffer,
+  initiateCreditTransfer,
+  completeCreditTransfer,
+  getCreditTransactions,
+  getCreditMarketStats,
+} from "./taxCreditService";
