@@ -1,7 +1,702 @@
 {
-  "total_states": 51,
+  "total_jurisdictions": 51,
   "data_compiled": "2026-02-08",
-  "states_requiring_permit": 51,
-  "states_with_net_metering": 39,
-  "states_with_statewide_program": 11
+  "sources": [
+    "DSIRE (dsireusa.org)",
+    "NCSL State Net Metering Policies",
+    "DOE SunShot/SolarAPP+",
+    "IREC Solar Licensing Database",
+    "State energy office websites",
+    "SolarReviews",
+    "EnergySage",
+    "NREL permitting data"
+  ],
+  "permit_summary": {
+    "all_require_permits": true,
+    "building_and_electrical": 40,
+    "electrical_only": 11,
+    "all_require_inspection": true,
+    "statewide_permit_programs": [
+      {
+        "state": "AZ",
+        "state_name": "Arizona",
+        "program": "ARS 11-323 Standardized Solar Construction Permits - requires counties to adopt standardized permitting for residential systems under 10 kW"
+      },
+      {
+        "state": "CA",
+        "state_name": "California",
+        "program": "AB 2188 Solar Permitting Efficiency Act - requires streamlined, expedited online permitting for rooftop solar under 10 kW. SB 379 mandates automated online permitting platforms for residential solar and storage. Fee cap: $450 + $15/kW above 15 kW."
+      },
+      {
+        "state": "CO",
+        "state_name": "Colorado",
+        "program": "Colorado DORA + SolarAPP+ partnership - automates electrical plan review for residential solar in 200+ jurisdictions statewide. Permit fees capped at $500 for residential solar."
+      },
+      {
+        "state": "DC",
+        "state_name": "District of Columbia",
+        "program": "DC Department of Consumer and Regulatory Affairs (DCRA) manages all permits. Streamlined solar permitting process available for residential systems under 10 kW."
+      },
+      {
+        "state": "FL",
+        "state_name": "Florida",
+        "program": "Florida streamlined permitting for Tier 1 solar systems (up to 10 kW on single-family residential). No insurance requirement and no application fee for Tier 1 grid connection."
+      },
+      {
+        "state": "MD",
+        "state_name": "Maryland",
+        "program": "Maryland mandates automated solar permitting adoption by jurisdictions. Incentivizes SolarAPP+ through grants. State requires expedited permitting for residential solar."
+      },
+      {
+        "state": "MN",
+        "state_name": "Minnesota",
+        "program": "Minnesota offers SolarAPP+ permitting incentive program through Dept of Commerce. Provides financial incentives and technical assistance to jurisdictions adopting SolarAPP+ automated permitting."
+      },
+      {
+        "state": "NJ",
+        "state_name": "New Jersey",
+        "program": "New Jersey passed automated solar permitting legislation in 2025 (unanimously). Developing state automated permitting platform. UCC (Uniform Construction Code) applies statewide."
+      },
+      {
+        "state": "NY",
+        "state_name": "New York",
+        "program": "New York State Unified Solar Permit (NYS-USP). Standardizes permit application across municipalities. Permit determinations issued within 14 calendar days. Municipalities provide feedback within 7 days for incomplete applications."
+      },
+      {
+        "state": "RI",
+        "state_name": "Rhode Island",
+        "program": "Standardized statewide solar permit application process. All municipalities must use consistent procedures. Residential Solar Energy Disclosure and Homeowners Bill of Rights Act effective March 2025."
+      },
+      {
+        "state": "VT",
+        "state_name": "Vermont",
+        "program": "State-level permitting through Division of Fire Safety electrical board. Some cities like Burlington have own inspectors. Certificate of Public Good (CPG) required from Public Utility Commission."
+      }
+    ]
+  },
+  "interconnection_summary": {
+    "net_metering_available": [
+      "AK",
+      "AR",
+      "CO",
+      "CT",
+      "DC",
+      "DE",
+      "FL",
+      "IA",
+      "ID",
+      "IL",
+      "KS",
+      "MA",
+      "MD",
+      "ME",
+      "MN",
+      "MO",
+      "MT",
+      "NC",
+      "ND",
+      "NE",
+      "NH",
+      "NJ",
+      "NM",
+      "NV",
+      "NY",
+      "OH",
+      "OK",
+      "OR",
+      "PA",
+      "RI",
+      "SC",
+      "SD",
+      "UT",
+      "VA",
+      "VT",
+      "WA",
+      "WI",
+      "WV",
+      "WY"
+    ],
+    "net_metering_not_available": [
+      "AL",
+      "AZ",
+      "CA",
+      "GA",
+      "HI",
+      "IN",
+      "KY",
+      "LA",
+      "MI",
+      "MS",
+      "TN",
+      "TX"
+    ],
+    "net_metering_count": 39,
+    "no_net_metering_count": 12
+  },
+  "licensing_summary": {
+    "contractor_license_required": 51,
+    "nabcep_required_states": [
+      "DE",
+      "ID"
+    ]
+  },
+  "solar_access_laws": {
+    "states_with_protections": [
+      "AK",
+      "AL",
+      "AR",
+      "AZ",
+      "CA",
+      "CO",
+      "CT",
+      "DC",
+      "DE",
+      "FL",
+      "GA",
+      "HI",
+      "ID",
+      "IL",
+      "IN",
+      "KS",
+      "KY",
+      "LA",
+      "MA",
+      "MD",
+      "ME",
+      "MI",
+      "MN",
+      "MO",
+      "MS",
+      "ND",
+      "NE",
+      "NH",
+      "NJ",
+      "NM",
+      "NV",
+      "NY",
+      "OH",
+      "OR",
+      "PA",
+      "RI",
+      "SC",
+      "SD",
+      "TN",
+      "TX",
+      "UT",
+      "VA",
+      "WA",
+      "WV",
+      "WY"
+    ],
+    "states_without_protections": [
+      "AK",
+      "AL",
+      "MS",
+      "ND",
+      "NE",
+      "PA",
+      "SD",
+      "WV",
+      "WY"
+    ]
+  },
+  "special_considerations_summary": {
+    "hurricane_wind_zones": [
+      "AL",
+      "FL",
+      "GA",
+      "HI",
+      "LA",
+      "MS",
+      "NC",
+      "NY",
+      "SC",
+      "TX"
+    ],
+    "significant_snow_load_states": [
+      "AK",
+      "AZ",
+      "CA",
+      "CO",
+      "IA",
+      "ID",
+      "MA",
+      "ME",
+      "MI",
+      "MN",
+      "MT",
+      "ND",
+      "NH",
+      "NM",
+      "NV",
+      "NY",
+      "OR",
+      "UT",
+      "VT",
+      "WA",
+      "WI",
+      "WY"
+    ]
+  },
+  "states": [
+    {
+      "state": "AK",
+      "state_name": "Alaska",
+      "permit_type": "both",
+      "net_metering": true,
+      "statewide_program": false,
+      "typical_fee_range": "$100-$400",
+      "typical_timeline_days": "7-30"
+    },
+    {
+      "state": "AL",
+      "state_name": "Alabama",
+      "permit_type": "both",
+      "net_metering": false,
+      "statewide_program": false,
+      "typical_fee_range": "$100-$500",
+      "typical_timeline_days": "7-21"
+    },
+    {
+      "state": "AR",
+      "state_name": "Arkansas",
+      "permit_type": "both",
+      "net_metering": true,
+      "statewide_program": false,
+      "typical_fee_range": "$100-$400",
+      "typical_timeline_days": "7-21"
+    },
+    {
+      "state": "AZ",
+      "state_name": "Arizona",
+      "permit_type": "both",
+      "net_metering": false,
+      "statewide_program": true,
+      "typical_fee_range": "$200-$500",
+      "typical_timeline_days": "5-14"
+    },
+    {
+      "state": "CA",
+      "state_name": "California",
+      "permit_type": "both",
+      "net_metering": false,
+      "statewide_program": true,
+      "typical_fee_range": "$400-$1000",
+      "typical_timeline_days": "3-14"
+    },
+    {
+      "state": "CO",
+      "state_name": "Colorado",
+      "permit_type": "both",
+      "net_metering": true,
+      "statewide_program": true,
+      "typical_fee_range": "$100-$500",
+      "typical_timeline_days": "7-21"
+    },
+    {
+      "state": "CT",
+      "state_name": "Connecticut",
+      "permit_type": "both",
+      "net_metering": true,
+      "statewide_program": false,
+      "typical_fee_range": "$200-$500",
+      "typical_timeline_days": "7-21"
+    },
+    {
+      "state": "DC",
+      "state_name": "District of Columbia",
+      "permit_type": "both",
+      "net_metering": true,
+      "statewide_program": true,
+      "typical_fee_range": "$200-$600",
+      "typical_timeline_days": "10-30"
+    },
+    {
+      "state": "DE",
+      "state_name": "Delaware",
+      "permit_type": "both",
+      "net_metering": true,
+      "statewide_program": false,
+      "typical_fee_range": "$100-$400",
+      "typical_timeline_days": "7-21"
+    },
+    {
+      "state": "FL",
+      "state_name": "Florida",
+      "permit_type": "both",
+      "net_metering": true,
+      "statewide_program": true,
+      "typical_fee_range": "$200-$600",
+      "typical_timeline_days": "5-14"
+    },
+    {
+      "state": "GA",
+      "state_name": "Georgia",
+      "permit_type": "both",
+      "net_metering": false,
+      "statewide_program": false,
+      "typical_fee_range": "$150-$500",
+      "typical_timeline_days": "7-21"
+    },
+    {
+      "state": "HI",
+      "state_name": "Hawaii",
+      "permit_type": "both",
+      "net_metering": false,
+      "statewide_program": false,
+      "typical_fee_range": "$200-$600",
+      "typical_timeline_days": "7-21"
+    },
+    {
+      "state": "IA",
+      "state_name": "Iowa",
+      "permit_type": "electrical",
+      "net_metering": true,
+      "statewide_program": false,
+      "typical_fee_range": "$100-$300",
+      "typical_timeline_days": "5-14"
+    },
+    {
+      "state": "ID",
+      "state_name": "Idaho",
+      "permit_type": "both",
+      "net_metering": true,
+      "statewide_program": false,
+      "typical_fee_range": "$100-$400",
+      "typical_timeline_days": "7-21"
+    },
+    {
+      "state": "IL",
+      "state_name": "Illinois",
+      "permit_type": "both",
+      "net_metering": true,
+      "statewide_program": false,
+      "typical_fee_range": "$100-$500",
+      "typical_timeline_days": "5-14"
+    },
+    {
+      "state": "IN",
+      "state_name": "Indiana",
+      "permit_type": "both",
+      "net_metering": false,
+      "statewide_program": false,
+      "typical_fee_range": "$100-$400",
+      "typical_timeline_days": "7-21"
+    },
+    {
+      "state": "KS",
+      "state_name": "Kansas",
+      "permit_type": "both",
+      "net_metering": true,
+      "statewide_program": false,
+      "typical_fee_range": "$100-$400",
+      "typical_timeline_days": "7-21"
+    },
+    {
+      "state": "KY",
+      "state_name": "Kentucky",
+      "permit_type": "electrical",
+      "net_metering": false,
+      "statewide_program": false,
+      "typical_fee_range": "$100-$300",
+      "typical_timeline_days": "7-21"
+    },
+    {
+      "state": "LA",
+      "state_name": "Louisiana",
+      "permit_type": "both",
+      "net_metering": false,
+      "statewide_program": false,
+      "typical_fee_range": "$150-$500",
+      "typical_timeline_days": "7-21"
+    },
+    {
+      "state": "MA",
+      "state_name": "Massachusetts",
+      "permit_type": "both",
+      "net_metering": true,
+      "statewide_program": false,
+      "typical_fee_range": "$200-$500",
+      "typical_timeline_days": "7-21"
+    },
+    {
+      "state": "MD",
+      "state_name": "Maryland",
+      "permit_type": "both",
+      "net_metering": true,
+      "statewide_program": true,
+      "typical_fee_range": "$200-$500",
+      "typical_timeline_days": "7-21"
+    },
+    {
+      "state": "ME",
+      "state_name": "Maine",
+      "permit_type": "electrical",
+      "net_metering": true,
+      "statewide_program": false,
+      "typical_fee_range": "$100-$300",
+      "typical_timeline_days": "7-21"
+    },
+    {
+      "state": "MI",
+      "state_name": "Michigan",
+      "permit_type": "both",
+      "net_metering": false,
+      "statewide_program": false,
+      "typical_fee_range": "$150-$500",
+      "typical_timeline_days": "10-30"
+    },
+    {
+      "state": "MN",
+      "state_name": "Minnesota",
+      "permit_type": "both",
+      "net_metering": true,
+      "statewide_program": true,
+      "typical_fee_range": "$100-$400",
+      "typical_timeline_days": "7-21"
+    },
+    {
+      "state": "MO",
+      "state_name": "Missouri",
+      "permit_type": "both",
+      "net_metering": true,
+      "statewide_program": false,
+      "typical_fee_range": "$100-$500",
+      "typical_timeline_days": "7-21"
+    },
+    {
+      "state": "MS",
+      "state_name": "Mississippi",
+      "permit_type": "both",
+      "net_metering": false,
+      "statewide_program": false,
+      "typical_fee_range": "$100-$400",
+      "typical_timeline_days": "7-21"
+    },
+    {
+      "state": "MT",
+      "state_name": "Montana",
+      "permit_type": "both",
+      "net_metering": true,
+      "statewide_program": false,
+      "typical_fee_range": "$100-$400",
+      "typical_timeline_days": "7-21"
+    },
+    {
+      "state": "NC",
+      "state_name": "North Carolina",
+      "permit_type": "both",
+      "net_metering": true,
+      "statewide_program": false,
+      "typical_fee_range": "$100-$400",
+      "typical_timeline_days": "5-21"
+    },
+    {
+      "state": "ND",
+      "state_name": "North Dakota",
+      "permit_type": "electrical",
+      "net_metering": true,
+      "statewide_program": false,
+      "typical_fee_range": "$50-$200",
+      "typical_timeline_days": "7-21"
+    },
+    {
+      "state": "NE",
+      "state_name": "Nebraska",
+      "permit_type": "electrical",
+      "net_metering": true,
+      "statewide_program": false,
+      "typical_fee_range": "$100-$300",
+      "typical_timeline_days": "7-21"
+    },
+    {
+      "state": "NH",
+      "state_name": "New Hampshire",
+      "permit_type": "electrical",
+      "net_metering": true,
+      "statewide_program": false,
+      "typical_fee_range": "$100-$300",
+      "typical_timeline_days": "7-21"
+    },
+    {
+      "state": "NJ",
+      "state_name": "New Jersey",
+      "permit_type": "both",
+      "net_metering": true,
+      "statewide_program": true,
+      "typical_fee_range": "$200-$800",
+      "typical_timeline_days": "10-30"
+    },
+    {
+      "state": "NM",
+      "state_name": "New Mexico",
+      "permit_type": "both",
+      "net_metering": true,
+      "statewide_program": false,
+      "typical_fee_range": "$100-$400",
+      "typical_timeline_days": "7-21"
+    },
+    {
+      "state": "NV",
+      "state_name": "Nevada",
+      "permit_type": "both",
+      "net_metering": true,
+      "statewide_program": false,
+      "typical_fee_range": "$200-$500",
+      "typical_timeline_days": "3-10"
+    },
+    {
+      "state": "NY",
+      "state_name": "New York",
+      "permit_type": "both",
+      "net_metering": true,
+      "statewide_program": true,
+      "typical_fee_range": "$200-$800",
+      "typical_timeline_days": "5-14"
+    },
+    {
+      "state": "OH",
+      "state_name": "Ohio",
+      "permit_type": "both",
+      "net_metering": true,
+      "statewide_program": false,
+      "typical_fee_range": "$150-$500",
+      "typical_timeline_days": "5-15"
+    },
+    {
+      "state": "OK",
+      "state_name": "Oklahoma",
+      "permit_type": "electrical",
+      "net_metering": true,
+      "statewide_program": false,
+      "typical_fee_range": "$50-$300",
+      "typical_timeline_days": "7-21"
+    },
+    {
+      "state": "OR",
+      "state_name": "Oregon",
+      "permit_type": "both",
+      "net_metering": true,
+      "statewide_program": false,
+      "typical_fee_range": "$300-$600",
+      "typical_timeline_days": "3-14"
+    },
+    {
+      "state": "PA",
+      "state_name": "Pennsylvania",
+      "permit_type": "both",
+      "net_metering": true,
+      "statewide_program": false,
+      "typical_fee_range": "$100-$500",
+      "typical_timeline_days": "7-21"
+    },
+    {
+      "state": "RI",
+      "state_name": "Rhode Island",
+      "permit_type": "both",
+      "net_metering": true,
+      "statewide_program": true,
+      "typical_fee_range": "$50-$200",
+      "typical_timeline_days": "5-14"
+    },
+    {
+      "state": "SC",
+      "state_name": "South Carolina",
+      "permit_type": "both",
+      "net_metering": true,
+      "statewide_program": false,
+      "typical_fee_range": "$200-$500",
+      "typical_timeline_days": "7-21"
+    },
+    {
+      "state": "SD",
+      "state_name": "South Dakota",
+      "permit_type": "electrical",
+      "net_metering": true,
+      "statewide_program": false,
+      "typical_fee_range": "$50-$200",
+      "typical_timeline_days": "7-14"
+    },
+    {
+      "state": "TN",
+      "state_name": "Tennessee",
+      "permit_type": "both",
+      "net_metering": false,
+      "statewide_program": false,
+      "typical_fee_range": "$75-$300",
+      "typical_timeline_days": "5-14"
+    },
+    {
+      "state": "TX",
+      "state_name": "Texas",
+      "permit_type": "both",
+      "net_metering": false,
+      "statewide_program": false,
+      "typical_fee_range": "$200-$600",
+      "typical_timeline_days": "7-28"
+    },
+    {
+      "state": "UT",
+      "state_name": "Utah",
+      "permit_type": "both",
+      "net_metering": true,
+      "statewide_program": false,
+      "typical_fee_range": "$100-$400",
+      "typical_timeline_days": "5-14"
+    },
+    {
+      "state": "VA",
+      "state_name": "Virginia",
+      "permit_type": "both",
+      "net_metering": true,
+      "statewide_program": false,
+      "typical_fee_range": "$100-$400",
+      "typical_timeline_days": "7-21"
+    },
+    {
+      "state": "VT",
+      "state_name": "Vermont",
+      "permit_type": "electrical",
+      "net_metering": true,
+      "statewide_program": true,
+      "typical_fee_range": "$50-$200",
+      "typical_timeline_days": "5-14"
+    },
+    {
+      "state": "WA",
+      "state_name": "Washington",
+      "permit_type": "both",
+      "net_metering": true,
+      "statewide_program": false,
+      "typical_fee_range": "$100-$500",
+      "typical_timeline_days": "1-14"
+    },
+    {
+      "state": "WI",
+      "state_name": "Wisconsin",
+      "permit_type": "both",
+      "net_metering": true,
+      "statewide_program": false,
+      "typical_fee_range": "$100-$400",
+      "typical_timeline_days": "7-21"
+    },
+    {
+      "state": "WV",
+      "state_name": "West Virginia",
+      "permit_type": "electrical",
+      "net_metering": true,
+      "statewide_program": false,
+      "typical_fee_range": "$50-$200",
+      "typical_timeline_days": "7-21"
+    },
+    {
+      "state": "WY",
+      "state_name": "Wyoming",
+      "permit_type": "electrical",
+      "net_metering": true,
+      "statewide_program": false,
+      "typical_fee_range": "$50-$200",
+      "typical_timeline_days": "7-14"
+    }
+  ]
 }

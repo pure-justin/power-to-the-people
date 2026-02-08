@@ -125,3 +125,14 @@ export {
   searchWorkers,
   getMarketplaceListings,
 } from "./marketplace";
+
+// Export AI Task Engine functions
+export {
+  createAiTask,
+  processAiTask,
+  escalateToHuman,
+  completeHumanTask,
+  getTaskQueue,
+  retryAiTask,
+  getTaskStats,
+} from "./aiTaskEngine";

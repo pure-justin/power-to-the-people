@@ -40,7 +40,7 @@ var __importStar = (this && this.__importStar) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getSmsStats = exports.sendPaymentReminders = exports.sendBulkSMS = exports.sendCustomSMS = exports.onReferralReward = exports.onProjectStatusUpdate = exports.smsOnProjectCreated = exports.triggerDataRefresh = exports.refreshSolarData = exports.getSubscriptionStatus = exports.createBillingPortalSession = exports.createCheckoutSession = exports.stripeWebhook = exports.cancelSubscription = exports.updateSubscription = exports.createSubscription = exports.solarEstimate = exports.solarComplianceQuickCheck = exports.solarComplianceCheck = exports.solarPermits = exports.solarIncentives = exports.solarUtilities = exports.solarEquipment = exports.referralStatsWebhook = exports.referralBulkUpdateWebhook = exports.referralStatusWebhook = exports.processWeeklyPayouts = exports.getReferralStats = exports.updateReferralStatusHttp = exports.onProjectUpdated = exports.onProjectCreated = exports.secureLeadQuery = exports.secureSolarWebhook = exports.secureLeadWebhook = exports.validateApiKeyFromRequest = exports.cleanupApiKeys = exports.getApiKeyUsage = exports.updateApiKey = exports.rotateApiKey = exports.revokeApiKey = exports.validateApiKey = exports.createApiKey = exports.leadWebhook = exports.recalculateLeadScores = exports.assignLead = exports.addLeadNote = exports.updateLead = exports.createLead = exports.smtWebhook = exports.fetchSmtUsage = void 0;
-exports.getMarketplaceListings = exports.searchWorkers = exports.registerWorker = exports.rateWorker = exports.completeMarketplaceJob = exports.acceptBid = exports.submitBid = exports.createMarketplaceListing = exports.getProjectTimeline = exports.completeProjectTask = exports.assignProjectTask = exports.createProjectTask = exports.advanceProjectStage = exports.syncInvoiceStatus = exports.cancelMercuryInvoice = exports.listMercuryInvoices = exports.getMercuryInvoice = exports.createMercuryInvoice = exports.createMercuryCustomer = exports.twilioStatusCallback = void 0;
+exports.getTaskStats = exports.retryAiTask = exports.getTaskQueue = exports.completeHumanTask = exports.escalateToHuman = exports.processAiTask = exports.createAiTask = exports.getMarketplaceListings = exports.searchWorkers = exports.registerWorker = exports.rateWorker = exports.completeMarketplaceJob = exports.acceptBid = exports.submitBid = exports.createMarketplaceListing = exports.getProjectTimeline = exports.completeProjectTask = exports.assignProjectTask = exports.createProjectTask = exports.advanceProjectStage = exports.syncInvoiceStatus = exports.cancelMercuryInvoice = exports.listMercuryInvoices = exports.getMercuryInvoice = exports.createMercuryInvoice = exports.createMercuryCustomer = exports.twilioStatusCallback = void 0;
 const admin = __importStar(require("firebase-admin"));
 // Initialize Firebase Admin SDK
 admin.initializeApp();
@@ -140,4 +140,13 @@ Object.defineProperty(exports, "rateWorker", { enumerable: true, get: function (
 Object.defineProperty(exports, "registerWorker", { enumerable: true, get: function () { return marketplace_1.registerWorker; } });
 Object.defineProperty(exports, "searchWorkers", { enumerable: true, get: function () { return marketplace_1.searchWorkers; } });
 Object.defineProperty(exports, "getMarketplaceListings", { enumerable: true, get: function () { return marketplace_1.getMarketplaceListings; } });
+// Export AI Task Engine functions
+var aiTaskEngine_1 = require("./aiTaskEngine");
+Object.defineProperty(exports, "createAiTask", { enumerable: true, get: function () { return aiTaskEngine_1.createAiTask; } });
+Object.defineProperty(exports, "processAiTask", { enumerable: true, get: function () { return aiTaskEngine_1.processAiTask; } });
+Object.defineProperty(exports, "escalateToHuman", { enumerable: true, get: function () { return aiTaskEngine_1.escalateToHuman; } });
+Object.defineProperty(exports, "completeHumanTask", { enumerable: true, get: function () { return aiTaskEngine_1.completeHumanTask; } });
+Object.defineProperty(exports, "getTaskQueue", { enumerable: true, get: function () { return aiTaskEngine_1.getTaskQueue; } });
+Object.defineProperty(exports, "retryAiTask", { enumerable: true, get: function () { return aiTaskEngine_1.retryAiTask; } });
+Object.defineProperty(exports, "getTaskStats", { enumerable: true, get: function () { return aiTaskEngine_1.getTaskStats; } });
 //# sourceMappingURL=index.js.map

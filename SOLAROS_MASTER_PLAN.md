@@ -622,6 +622,271 @@ Install Complete + Photos Approved
 
 ---
 
+## Phase 9: Tax Credit Audit, Insurance & Marketplace
+**Why this is the killer feature**: IRA Section 6418 made clean energy tax credits transferable. Currently, companies like Crux and Basis broker these deals — but NOBODY has the credit marketplace integrated into the platform that GENERATES and VERIFIES the credits. We control the entire chain: install verified on our platform → credit audited by our compliance engine → credit insured → listed on marketplace → buyer purchases with full audit trail. This makes SolarOS the most trusted platform for tax credit transactions on the planet.
+
+### 9A. `taxCreditAuditService` — Credit Verification Engine
+- **Collection**: `tax_credit_audits`
+- **Schema**:
+  ```
+  {
+    id: string,
+    projectId: string,
+    creditType: "itc_residential" | "itc_commercial" | "ptc" | "domestic_content_bonus" | "energy_community_bonus" | "low_income_bonus",
+    baseRate: number,              // e.g., 30% for ITC
+    bonuses: [{
+      type: "domestic_content" | "energy_community" | "low_income" | "prevailing_wage",
+      rate: number,                // Additional percentage
+      qualified: boolean,
+      evidence: string[],          // Document references proving qualification
+      verifiedAt: timestamp,
+      verifiedBy: "ai" | userId
+    }],
+    totalCreditRate: number,       // Base + all qualified bonuses
+    systemCost: number,            // Eligible cost basis
+    creditAmount: number,          // Dollar value of credit
+    status: "draft" | "auditing" | "verified" | "certified" | "listed" | "sold" | "transferred" | "disputed",
+
+    // Audit trail — EVERY piece of evidence
+    auditChecks: [{
+      checkType: string,           // "equipment_feoc" | "domestic_content_50pct" | "energy_community_census" | "prevailing_wage_records" | "install_completion" | "interconnection" | "pto"
+      status: "pending" | "pass" | "fail" | "waived",
+      evidence: {
+        documentUrl: string,
+        documentType: string,
+        extractedData: object,     // AI-extracted relevant data
+        verificationMethod: string // "automated" | "manual_review" | "third_party"
+      },
+      checkedAt: timestamp,
+      checkedBy: "ai" | userId,
+      notes: string
+    }],
+
+    // Equipment compliance (ties into existing compliance engine)
+    equipmentCompliance: {
+      allPanelsFeocCompliant: boolean,
+      domesticContentPercentage: number,
+      tariffExempt: boolean,
+      equipmentIds: string[]       // References to solar_equipment collection
+    },
+
+    // Certification
+    certification: {
+      certifiedAt: timestamp,
+      certifiedBy: string,         // Could be platform, could be third-party auditor
+      certificateUrl: string,      // PDF certificate
+      expiresAt: timestamp,
+      revocable: boolean,
+      revocationConditions: string[]
+    },
+
+    createdAt, updatedAt
+  }
+  ```
+
+### 9B. `taxCreditInsuranceService` — Risk Assessment & Coverage
+- **Collection**: `tax_credit_insurance`
+- **Schema**:
+  ```
+  {
+    id: string,
+    auditId: string,
+    projectId: string,
+    creditAmount: number,
+
+    // Risk scoring
+    riskAssessment: {
+      overallRisk: "low" | "medium" | "high",
+      riskScore: number,           // 0-100 (lower = less risk)
+      factors: [{
+        factor: string,            // "equipment_origin_uncertain" | "prevailing_wage_documentation_incomplete" | etc.
+        impact: "low" | "medium" | "high",
+        mitigated: boolean,
+        mitigation: string
+      }],
+      assessedAt: timestamp,
+      assessedBy: "ai" | userId
+    },
+
+    // Insurance/guarantee
+    coverage: {
+      type: "platform_guarantee" | "third_party_insurance" | "escrow_backed",
+      provider: string,
+      coverageAmount: number,      // What we guarantee
+      premium: number,             // Cost of insurance/guarantee
+      premiumRate: number,         // As percentage of credit value
+      termMonths: number,          // How long coverage lasts
+      conditions: string[],        // What voids coverage
+      policyUrl: string
+    },
+
+    status: "assessing" | "quoted" | "active" | "claimed" | "expired",
+    createdAt, updatedAt
+  }
+  ```
+
+### 9C. `taxCreditMarketplace` — Open Market for Credits
+- **Collection**: `tax_credit_listings`
+- **Schema**:
+  ```
+  {
+    id: string,
+    auditId: string,
+    insuranceId: string,           // Optional but increases buyer confidence
+    sellerId: string,              // Project owner or TPO company
+
+    // Listing details
+    listing: {
+      creditType: string,
+      creditAmount: number,        // Face value of credit
+      askingPrice: number,         // What seller wants (typically 85-92 cents per dollar)
+      discountRate: number,        // Percentage discount from face value
+      minimumBid: number,          // Lowest acceptable price
+      auctionStyle: "fixed_price" | "auction" | "negotiation",
+      expiresAt: timestamp         // Listing expiration
+    },
+
+    // Verification level (higher = more buyer confidence = higher price)
+    verificationLevel: {
+      platformAudited: boolean,    // Our audit engine verified it
+      thirdPartyAudited: boolean,  // External auditor confirmed
+      insured: boolean,            // Insurance/guarantee attached
+      escrowAvailable: boolean,    // Can use platform escrow
+      level: 1 | 2 | 3 | 4        // Bronze/Silver/Gold/Platinum
+    },
+
+    // Project summary (anonymized until deal)
+    projectSummary: {
+      state: string,
+      systemSizeKw: number,
+      installDate: string,
+      creditYear: number,          // Tax year the credit applies to
+      equipmentOrigin: string,     // "US manufactured" | "compliant import"
+      projectType: "residential" | "commercial" | "community"
+    },
+
+    status: "draft" | "active" | "under_offer" | "pending_transfer" | "sold" | "expired" | "withdrawn",
+
+    // Offers/bids
+    offers: [{
+      id: string,
+      buyerId: string,
+      offerAmount: number,
+      status: "pending" | "accepted" | "rejected" | "countered" | "expired",
+      message: string,
+      offeredAt: timestamp,
+      respondedAt: timestamp
+    }],
+
+    createdAt, updatedAt
+  }
+  ```
+
+- **Collection**: `tax_credit_transactions`
+- **Schema**:
+  ```
+  {
+    id: string,
+    listingId: string,
+    sellerId: string,
+    buyerId: string,
+
+    // Deal terms
+    creditAmount: number,          // Face value
+    salePrice: number,             // Actual price paid
+    discountRate: number,          // Effective discount
+    platformFee: number,           // Our cut
+    platformFeeRate: number,       // As percentage
+
+    // Transfer process (IRS Form 8978 / applicable forms)
+    transfer: {
+      status: "escrow_funded" | "documents_preparing" | "documents_signed" | "irs_filing" | "transfer_complete" | "disputed",
+      escrowId: string,            // Mercury escrow reference
+      documents: [{
+        type: "purchase_agreement" | "transfer_election" | "irs_form" | "certification",
+        url: string,
+        signedBySeller: boolean,
+        signedByBuyer: boolean,
+        signedAt: timestamp
+      }],
+      irsFilingReference: string,
+      completedAt: timestamp
+    },
+
+    // Payment (via Mercury ACH or Stripe)
+    payment: {
+      method: "ach" | "wire" | "stripe",
+      toSeller: { amount, status, paidAt, reference },
+      platformFee: { amount, status, collectedAt },
+      escrowRelease: { amount, releasedAt, conditions_met: string[] }
+    },
+
+    timeline: [{
+      event: string,
+      timestamp: timestamp,
+      actor: string,
+      notes: string
+    }],
+
+    createdAt, updatedAt
+  }
+  ```
+
+### 9D. Tax Credit Marketplace Frontend
+- `/marketplace/credits` — Public listing of available credits (anonymized)
+  - Filter by: credit type, state, size, price range, verification level
+  - Sort by: price, size, verification level, expiration
+- `/marketplace/credits/:id` — Credit detail page
+  - Full audit report (verification checks, compliance, equipment)
+  - Insurance/guarantee details
+  - Make offer / Buy now
+- `/dashboard/credits` — Seller dashboard
+  - List credits from completed projects
+  - Track offers and negotiations
+  - View transaction history
+  - Analytics: average sale price, time to sell
+- `/portal/credits` — Buyer dashboard
+  - Saved searches and alerts
+  - Active offers
+  - Purchased credits + transfer status
+  - Tax documentation downloads
+- `/admin/credits` — Admin oversight
+  - All listings and transactions
+  - Dispute resolution
+  - Audit review queue
+  - Platform revenue from fees
+
+### 9E. Tax Credit Marketplace Flow
+```
+Install Complete + PTO Received
+  → AI Task: "credit_audit"
+  → Compliance engine verifies ALL equipment (FEOC, domestic content)
+  → Verify energy community bonus eligibility (census tract check)
+  → Verify prevailing wage compliance (if applicable)
+  → Calculate total credit value (base + bonuses)
+  → Generate audit certificate
+  → Optional: AI risk assessment → insurance quote
+  → Seller lists credit on marketplace
+  → Buyers browse/search/bid
+  → Deal agreed → escrow funded (Mercury ACH)
+  → Documents generated + signed
+  → IRS transfer election filed
+  → Escrow released to seller
+  → Platform fee collected
+  → Transaction complete
+```
+
+### 9F. Why This Is Defensible
+1. **Audit trail from day one** — We built the system that verified the install
+2. **Equipment provenance** — Our equipment database knows exactly what was installed
+3. **Compliance certainty** — Our FEOC/domestic content engine already validates this
+4. **Photo evidence** — Our QC system has timestamped, geotagged, AI-analyzed install photos
+5. **Permit verification** — We tracked the permit through our system
+6. **Lower risk = higher prices** — Sellers get better prices because buyers trust our verification
+7. **Platform fee model** — 1-3% of transaction value (industry standard is 2-5%)
+
+---
+
 ## Build Order & Dependencies
 
 ```
@@ -664,8 +929,15 @@ Phase 7: Funding ─────────────────────
   ├── 7A: Funding Service                 │ MONEY
   └── 7B: Funding Flow                    │
                                           │
-Phase 8: Interconnection ─────────────────┘
-  └── 8A: Utility PTO                       FINAL
+Phase 8: Interconnection ─────────────────┤
+  └── 8A: Utility PTO                       FINAL STEP
+                                          │
+Phase 9: Tax Credit Marketplace ──────────┘
+  ├── 9A: Credit Audit Engine              KILLER
+  ├── 9B: Insurance/Risk Assessment        FEATURE
+  ├── 9C: Open Credit Marketplace          ($$$$)
+  ├── 9D: Marketplace Frontend
+  └── 9E: Transaction + Escrow Pipeline
 ```
 
 ## Code Standards for This Build
