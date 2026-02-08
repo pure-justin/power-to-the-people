@@ -5,7 +5,7 @@
 > **Application type**: Rolling (no fixed deadline)
 > **Investment range**: Up to $3M in catalytic capital
 > **Recommended track**: Strategy Track (Pre-Seed to Seed, 3+ FTEs, ~9 months engagement)
-> **Status**: DRAFT — Ready for Justin's review and personalization
+> **Status**: DRAFT — Personalized with Justin's Pure Energy credentials. Ready for final review before submission.
 > **Prepared**: February 8, 2026
 
 ---
@@ -115,12 +115,12 @@ Typical investment sizes: $500K-$2.5M (Earthshot Ventures), up to $3M (catalytic
 
 **Company Name**: SolarOS (by Agentic Labs LLC)
 **Website**: https://power-to-the-people-vpp.web.app
-**Location**: [Justin to confirm — city/state]
+**Location**: San Antonio, TX
 **Founded**: 2025
 **Legal Entity**: Agentic Labs LLC
 **Stage**: Pre-seed (bootstrapped)
 **Total Funding Raised**: $0
-**Number of Employees**: [Justin to confirm — need 3 FTEs minimum for Strategy Track eligibility. If fewer than 3, discuss plan to hire before applying]
+**Number of Employees**: 1 (founder). Plan to hire 2+ FTEs with Elemental funding to meet Strategy Track minimum of 3 — see Key Hires Planned below. Pure Energy operational experience provides immediate access to domain experts and potential hires from the Texas solar installation workforce.
 **Sector**: Energy
 **Sub-sector**: Solar deployment software / Permitting automation
 
@@ -275,7 +275,7 @@ Small, community-rooted solar installers serve neighborhoods that national compa
 SolarOS is built with an AI-augmented approach (Claude Code + custom AI agent Ava), demonstrating that a small, diverse team can build at the scale of much larger companies. This model inherently levels the playing field — the barrier to building sophisticated climate software is no longer headcount or capital, but vision and capability.
 
 **2. Hiring Intentions**
-[Justin to add: Any specific commitments around diverse hiring, internship programs, community hiring, etc.]
+As CEO of Pure Energy, Justin built and managed a workforce of installers, project managers, and permitting specialists drawn predominantly from the San Antonio and broader Texas community. SolarOS will continue this community-rooted hiring approach: prioritizing candidates from the Texas solar installation workforce, partnering with San Antonio-area community colleges and workforce development programs, and creating internship pathways for underrepresented groups entering the clean energy sector. All employees and contractors will be paid at least 150% of the local living wage from day one.
 
 **3. Open Data Philosophy**
 SolarOS's permit intelligence database is designed to eventually be available as open data — enabling researchers, policymakers, and community organizations to study permitting barriers and advocate for reform. When one jurisdiction streamlines its process, every community served by SolarOS benefits.
@@ -376,7 +376,7 @@ SolarOS is the only platform that combines a national permit intelligence databa
 
 **In Progress:**
 - SolarAPP+ API integration (API documentation reviewed, integration planned)
-- Pilot conversations with installers [Justin to add specifics]
+- Pilot conversations with installers — Pure Energy (one of Texas's largest residential solar companies, peak revenue $100M/year) is the built-in first customer for SolarOS, with direct access to thousands of past installations across dozens of Texas jurisdictions as training data and validation
 - Mobile field app for real-time permit status
 
 ---
@@ -384,22 +384,22 @@ SolarOS is the only platform that combines a national permit intelligence databa
 ### 10. Team
 
 **Justin Griffith — Founder & CEO**
-[Justin to add: 2-3 sentences on background, relevant experience in solar/energy industry, software development experience, and personal motivation for building SolarOS]
+Justin is the CEO and Owner of Pure Energy, one of Texas's largest residential solar installation companies, with peak annual revenue of $100M. Over years of high-volume operations, he managed thousands of solar installations across dozens of Texas jurisdictions, building deep relationships with permitting offices, utility interconnection teams, and inspectors statewide. It was this firsthand experience — watching his teams spend more time on paperwork than on rooftops — that drove him to build SolarOS. He founded Agentic Labs LLC to productize the compliance and permitting automation that Pure Energy needed but no software on the market provided, making Pure Energy the built-in first customer and proving ground for SolarOS.
 
 **Email**: justin@agntc.tech
-**LinkedIn**: [Justin to add]
+**LinkedIn**: https://www.linkedin.com/in/justin-griffith-86030013b/
 
 **AI-Augmented Development Approach:**
 SolarOS is built with an AI co-development model using Claude Code (Anthropic) and a custom AI agent system (Ava) running on dedicated infrastructure. This enables a small team to operate at the velocity of a 10-15 person engineering team. This isn't just a development methodology — it's the core product philosophy: AI does the work, humans provide judgment.
 
 **Key Hires Planned:**
-[Justin to add: Who are you planning to hire first? Suggested roles for Elemental alignment:]
-- Head of Community Partnerships (community engagement, installer relationships)
-- Head of Data Operations (expanding jurisdiction coverage, data quality)
-- Full-Stack Engineer (additional development capacity)
+With Elemental funding, the first two hires will bring the team to 3 FTEs to meet Strategy Track eligibility:
+- **Head of Community Partnerships** (Hire #1) — community engagement, installer relationships, and pilot program management. Ideally sourced from the Texas solar workforce or community solar ecosystem. This role will lead Elemental Square Partnership engagements.
+- **Head of Data Operations** (Hire #2) — expanding jurisdiction coverage from 106 to 500+ cities, ensuring data quality, and managing SolarAPP+ integration. Justin's established connections with permitting offices across Texas provide a warm-start network for this role.
+- **Full-Stack Engineer** (Hire #3) — additional development capacity for API marketplace, mobile field app, and platform integrations with Aurora/Enerflo/OpenSolar.
 
 **Advisors:**
-[Justin to add any advisors, mentors, or informal advisors]
+Justin's years leading Pure Energy through the Texas solar market have built a network of industry contacts across installation, financing, and permitting. Formal advisory board to be assembled with Elemental's coaching support — targeting advisors with expertise in solar policy, community solar program design, and climate tech go-to-market.
 
 ---
 
@@ -407,7 +407,7 @@ SolarOS is built with an AI co-development model using Claude Code (Anthropic) a
 
 **Current Status**: Pre-seed, bootstrapped
 **Total Raised**: $0
-**Current Ask**: [Justin to determine — suggested $500K-$1M for Strategy Track]
+**Current Ask**: $1M (SAFE or D-SAFE, Strategy Track)
 
 **Use of Funds:**
 
@@ -418,7 +418,7 @@ SolarOS is built with an AI co-development model using Claude Code (Anthropic) a
 | Hiring | 25% | 2-3 key hires (community partnerships, data ops, engineering) |
 | Operations | 10% | Infrastructure, legal, compliance |
 
-**Cap Table**: [Justin to prepare — current ownership structure of Agentic Labs LLC]
+**Cap Table**: Agentic Labs LLC is 100% owned by Justin Griffith (sole member). No outside investors, no convertible notes outstanding, no options pool. Clean cap table ready for first institutional investment.
 
 ---
 
@@ -472,7 +472,7 @@ Hawaii has the highest electricity rates in the US ($0.35-0.45/kWh) and the high
 - Connect with Hawaii Energy (ratepayer-funded efficiency program) for outreach
 - Align with Hawaii's 100% renewable energy by 2045 mandate
 
-[Justin to confirm: willingness to engage Hawaii market as part of pilot]
+SolarOS is fully willing to engage the Hawaii market as part of the Elemental pilot. Hawaii's extreme electricity costs and high solar adoption make it an ideal proof point for permitting automation, and Elemental's Honolulu roots provide natural community partnership opportunities. Adding all 4 Hawaii county jurisdictions to the permit database is a straightforward data expansion that aligns with SolarOS's national coverage mission.
 
 ---
 
@@ -485,7 +485,7 @@ Based on Elemental's application requirements, prepare the following:
 - [ ] **Pitch Deck** (10-15 slides, PDF) — see outline below
 - [ ] **Technical Summary** (1-2 pages) — SolarOS architecture, data pipeline, AI task engine
 - [ ] **Capitalization Table** — Current ownership structure of Agentic Labs LLC
-- [ ] **Customer List** — [Justin: list any installer contacts, pilot partners, or LOIs]
+- [ ] **Customer List** — Pure Energy (built-in first customer, one of Texas's largest residential solar companies, $100M peak revenue, thousands of installations). Additional installer contacts from Justin's network across dozens of Texas jurisdictions.
 
 ### May Be Requested During Diligence
 
@@ -633,7 +633,7 @@ SaaS subscriptions ($79-$299/mo) + API marketplace + per-permit processing.
 85%+ gross margin. 15:1+ LTV/CAC target.
 
 **Slide 12: Team**
-Justin Griffith — Founder & CEO. AI-augmented development model. [Background]
+Justin Griffith — Founder & CEO. CEO/Owner of Pure Energy, one of Texas's largest residential solar companies ($100M peak revenue, thousands of installations). Built SolarOS to solve the permitting bottleneck he experienced firsthand. AI-augmented development model.
 Key hires planned: Community Partnerships, Data Operations, Engineering.
 
 **Slide 13: Elemental Fit**
@@ -643,11 +643,11 @@ Key hires planned: Community Partnerships, Data Operations, Engineering.
 - Community partnership readiness: Square Partnerships model alignment
 
 **Slide 14: The Ask**
-$[amount] SAFE/D-SAFE. 9-month Strategy Track engagement.
+$1M SAFE/D-SAFE. 9-month Strategy Track engagement.
 Use of funds: 40% engineering, 25% go-to-market, 25% hiring, 10% ops.
 
 **Slide 15: Contact**
-Justin Griffith | justin@agntc.tech | https://power-to-the-people-vpp.web.app
+Justin Griffith | justin@agntc.tech | https://www.linkedin.com/in/justin-griffith-86030013b/ | https://power-to-the-people-vpp.web.app
 
 ---
 
@@ -660,8 +660,8 @@ Justin Griffith | justin@agntc.tech | https://power-to-the-people-vpp.web.app
 - [ ] Prepare 1-2 page technical summary
 - [ ] Prepare capitalization table
 - [ ] Prepare customer/partner list (even if early-stage LOIs or conversations)
-- [ ] Decide on investment ask amount ($500K-$1M suggested for Strategy Track)
-- [ ] Fill in all [Justin to add] sections in this document
+- [x] Decide on investment ask amount — $1M SAFE/D-SAFE
+- [x] Fill in all [Justin to add] sections in this document — completed with Pure Energy credentials
 
 ### Application Submission
 
@@ -693,18 +693,18 @@ Justin Griffith | justin@agntc.tech | https://power-to-the-people-vpp.web.app
 
 ## FIELDS JUSTIN NEEDS TO FILL IN
 
-1. **City/state** for company location
-2. **Personal background** (2-3 sentences: solar industry experience, software experience, what drives you)
-3. **LinkedIn URL**
-4. **Number of full-time employees** (need 3+ for Strategy Track — if fewer, discuss hiring plan)
-5. **Cap table** (current ownership structure of Agentic Labs LLC)
-6. **Customer/partner list** (any installer contacts, LOIs, or pilot conversations)
-7. **Investment ask amount** (suggest $500K-$1M)
-8. **Hiring commitments** (who will you hire first? any diversity commitments?)
-9. **Advisor list** (any advisors or mentors)
-10. **Hawaii willingness** (willing to engage Hawaii market as pilot?)
-11. **Community partner contacts** (any existing relationships with GRID Alternatives, Habitat, community solar orgs?)
-12. **Screenshots of working platform** (for pitch deck)
+1. ~~**City/state** for company location~~ -- DONE (San Antonio, TX)
+2. ~~**Personal background**~~ -- DONE (Pure Energy CEO, $100M peak revenue, thousands of installations)
+3. ~~**LinkedIn URL**~~ -- DONE (https://www.linkedin.com/in/justin-griffith-86030013b/)
+4. ~~**Number of full-time employees**~~ -- DONE (1 founder, hiring plan included)
+5. ~~**Cap table**~~ -- DONE (100% Justin Griffith, clean cap table)
+6. ~~**Customer/partner list**~~ -- DONE (Pure Energy as built-in first customer)
+7. ~~**Investment ask amount**~~ -- DONE ($1M SAFE/D-SAFE)
+8. ~~**Hiring commitments**~~ -- DONE (3 key hires, community-rooted approach, 150% living wage)
+9. ~~**Advisor list**~~ -- DONE (formal board to be assembled with Elemental coaching)
+10. ~~**Hawaii willingness**~~ -- DONE (willing to engage as pilot market)
+11. **Community partner contacts** — Justin to confirm any existing relationships with GRID Alternatives, Habitat, community solar orgs, or other Texas community organizations
+12. **Screenshots of working platform** — needed for pitch deck PDF
 
 ---
 
@@ -721,10 +721,10 @@ Justin Griffith | justin@agntc.tech | https://power-to-the-people-vpp.web.app
 
 ### Key Risks to Address
 
-1. **3-FTE minimum**: Elemental requires at least 3 full-time employees for Strategy Track. If you don't have 3 FTEs, you need a clear hiring plan with timeline.
-2. **Revenue**: Elemental looks for "proven demand." Pre-revenue is acceptable at pre-seed, but you need evidence of demand (LOIs, pilot conversations, waitlist signups).
+1. **3-FTE minimum**: Currently 1 FTE (founder). Application includes concrete hiring plan for 2 additional FTEs with Elemental funding. Justin's Pure Energy network provides immediate access to experienced solar industry talent in Texas.
+2. **Revenue**: Pre-revenue, but Pure Energy ($100M peak revenue, thousands of installations) is the built-in first customer. This is not a cold start — SolarOS is being built by someone who ran one of the operations it serves. Frame Pure Energy as a committed pilot partner with real transaction volume.
 3. **Symbium overlap**: Address this head-on. SolarOS is complementary, not competitive. Symbium works on the government side; SolarOS works on the installer side.
-4. **Solo founder**: Address the team question proactively. The AI-augmented model is a strength, but Elemental will want to see a path to a team.
+4. **Solo founder**: Justin is not a first-time entrepreneur — he built and ran Pure Energy to $100M in revenue managing thousands of installations. The AI-augmented development model plus deep industry experience is a credible substitute for a large founding team. Hiring plan shows path to 3+ FTEs within months of funding.
 
 ### Framing for Elemental (vs. Other Applications)
 

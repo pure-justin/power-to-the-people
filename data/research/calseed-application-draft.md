@@ -104,8 +104,8 @@ Applications are scored by a review committee of industry experts and California
 | Requirement | SolarOS Status | Notes |
 |-------------|---------------|-------|
 | Benefits CA ratepayers | YES | Reduces solar soft costs, accelerates deployment, supports AB 2188/SB 379 compliance |
-| California-based | NEEDS CONFIRMATION | [Justin: Confirm CA address. If not CA-based, need to establish CA presence before applying] |
-| Good standing with CA Secretary of State | NEEDS CONFIRMATION | [Justin: Verify Agentic Labs LLC registration status. If registered in another state, may need CA foreign qualification or new CA entity] |
+| California-based | NEEDS ACTION | Agentic Labs LLC is based in San Antonio, TX. Must establish CA presence before applying -- register as foreign LLC in CA or form new CA entity. |
+| Good standing with CA Secretary of State | NEEDS ACTION | Agentic Labs LLC is a Texas entity. Must file CA foreign qualification (Form LLC-5, ~$70) or form new CA LLC before application opens. |
 | Under $1M private funding | YES | $0 raised, fully bootstrapped |
 | TRL 2-4 | YES (TRL 3-4) | Working prototype deployed, production database, API endpoints live. This is analytical/experimental proof-of-concept (TRL 3) to component validation in lab environment (TRL 4) |
 | Fits technology areas | DEPENDS ON COHORT 8 | Must align with announced areas. If "clean energy generation," "grid software," "distributed energy," or "solar" categories appear, strong fit |
@@ -133,15 +133,16 @@ The following responses are drafted based on the 2024 application structure. Exa
 
 **Company Name**: SolarOS (by Agentic Labs LLC)
 **Website**: https://power-to-the-people-vpp.web.app
-**Location**: [Justin to confirm -- California address required]
-**State of Incorporation**: [Justin to confirm]
+**Location**: San Antonio, TX (California registration required -- see Eligibility section)
+**State of Incorporation**: Texas (Agentic Labs LLC)
 **Date Founded**: 2025
-**Number of Employees**: [Justin to confirm]
+**Number of Employees**: 1 (founder, with AI-augmented development infrastructure)
 **Total Private Funding Received**: $0 (bootstrapped)
 **Lead Applicant**: Justin Griffith
 **Title**: Founder & CEO
 **Email**: justin@agntc.tech
-**Phone**: [Justin to provide]
+**LinkedIn**: https://www.linkedin.com/in/justin-griffith-86030013b/
+**Phone**: [To be provided on application form]
 
 ---
 
@@ -359,7 +360,7 @@ CalSEED technology areas change each cohort. SolarOS may not fit the announced c
 
 **2. Installer Adoption Risk**
 Solar installers may resist changing their workflow for a new platform.
-*Mitigation*: Design SolarOS to integrate into existing workflows rather than replace them. API-first architecture means installers can use SolarOS through their current tools (Aurora, Enerflo). Pilot program includes hands-on onboarding and white-glove support.
+*Mitigation*: Design SolarOS to integrate into existing workflows rather than replace them. API-first architecture means installers can use SolarOS through their current tools (Aurora, Enerflo). Pure Energy serves as the built-in first pilot customer, providing immediate real-world validation before broader rollout. Pilot program includes hands-on onboarding and white-glove support informed by years of direct installer operations experience.
 
 **3. Data Accuracy Risk**
 Jurisdictional requirements change frequently, and stale data creates liability.
@@ -371,7 +372,7 @@ SolarAPP+ API access may be restricted or change.
 
 **5. California Registration**
 CalSEED requires California address and good standing.
-*Mitigation*: Ensure Agentic Labs LLC is properly registered in California before application window opens. [Justin to confirm current status]
+*Mitigation*: Agentic Labs LLC is currently a Texas entity (San Antonio, TX). Foreign LLC qualification in California (Form LLC-5, ~$70, 2-4 weeks processing) will be filed before the application window opens.
 
 ---
 
@@ -380,9 +381,10 @@ CalSEED requires California address and good standing.
 #### 5A. Describe the team that will execute this project. Include relevant experience and qualifications. (~300 words)
 
 **Justin Griffith -- Founder & CEO**
-[Justin to add: 2-3 sentences on relevant background -- solar industry experience, software engineering experience, entrepreneurial history, what drives your mission]
 
-Justin brings [experience to be added] to SolarOS. As the sole founder, he has built the entire platform from concept through working prototype, including the national permit database, compliance engine, API marketplace, and subscription billing system.
+Justin Griffith is the CEO and owner of Pure Energy, one of Texas's largest residential solar installation companies, with peak annual revenue of $100M covering most of the state. Over the course of building Pure Energy, he managed thousands of solar installations across dozens of Texas jurisdictions, giving him first-hand experience with the permitting chaos, compliance complexity, and administrative burden that SolarOS is designed to eliminate. He lived the problem SolarOS solves -- every day, at massive scale.
+
+Justin brings deep operational expertise from the front lines of high-volume residential solar deployment to SolarOS. His years running Pure Energy established connections with permitting offices across Texas, built institutional knowledge of how jurisdictions actually process solar permits versus what they publish, and revealed the enormous soft-cost overhead that manual permitting imposes on installers. Pure Energy serves as the built-in first customer and pilot partner for SolarOS, providing immediate access to real-world installation workflows, installer feedback, and production data. As the sole founder of Agentic Labs LLC, he has built the entire SolarOS platform from concept through working prototype, including the national permit database, compliance engine, API marketplace, and subscription billing system.
 
 **AI-Augmented Development Approach**
 
@@ -398,7 +400,8 @@ This approach enables a lean team to operate at the speed and output of a much l
 - 13 MCP (Model Context Protocol) servers for automated development workflows
 
 **Advisory Network**
-[Justin to add: Any advisors, mentors, industry contacts. CalSEED FAQ notes that letters of support "look good" -- consider obtaining from: solar installers, industry associations like CALSSA, municipal building department contacts, academic partners]
+
+Justin's extensive network from running Pure Energy includes established relationships with permitting offices across dozens of Texas jurisdictions, solar equipment distributors, and industry professionals. Pure Energy's operational team provides ongoing domain expertise and real-world validation of SolarOS features. Additional advisory relationships are being developed with California solar industry contacts through CALSSA and installer networks. Letters of support will be sought from: Pure Energy's installation operations (validating the permitting pain point at scale), California solar installers identified through pilot outreach, municipal building department contacts, and industry associations.
 
 **Planned Hires (with CalSEED funding)**
 - Solar industry domain expert (part-time, California market knowledge)
@@ -452,11 +455,13 @@ CalSEED FAQ states letters of support are "not required but look good if you hav
 - Quantifiable: every permit accelerated in a disadvantaged community = faster pollution reduction in that community
 
 **Weak Points to Address:**
-- No direct community engagement yet. Mitigate by: committing to pilot with at least one installer serving disadvantaged communities, partnering with community solar organization.
+- No direct California community engagement yet. Mitigate by: highlighting Pure Energy's extensive experience serving diverse Texas communities including low-income households, committing to pilot with at least one CA installer serving disadvantaged communities, and partnering with community solar organizations.
 
 #### 3. Team & Approach
 
 **Key Points to Emphasize:**
+- Founder ran Pure Energy, one of Texas's largest residential solar companies ($100M peak revenue, thousands of installations) -- deep operational credibility
+- Built-in first customer: Pure Energy provides immediate pilot deployment, real installer workflows, and production data
 - Working product demonstrates execution capability (built entire platform bootstrapped)
 - AI-augmented development approach is itself evidence of the product thesis
 - Clear, phased scope of work with measurable milestones
@@ -464,8 +469,8 @@ CalSEED FAQ states letters of support are "not required but look good if you hav
 - Lean team + AI tools = capital-efficient execution
 
 **Weak Points to Address:**
-- Solo founder risk. Mitigate by: emphasizing advisory network, planned hires with CalSEED funding, AI augmentation enabling solo execution at scale.
-- No solar industry track record (if applicable). Mitigate by: emphasizing deep technical research, data-driven approach, platform already contains more jurisdictional data than most industry veterans have memorized.
+- Solo founder risk. Mitigate by: emphasizing Pure Energy as a built-in operational partner and first pilot customer, extensive advisory network from years of high-volume solar operations, planned hires with CalSEED funding, and AI augmentation enabling solo execution at scale.
+- Texas-based, not California-based. Mitigate by: emphasizing that permitting complexity is universal across jurisdictions, Pure Energy's Texas experience directly translates to understanding California's challenges, and 7 California jurisdictions are already documented in the database. California registration will be completed before applying.
 
 ---
 
@@ -481,7 +486,7 @@ CalSEED FAQ states letters of support are "not required but look good if you hav
 - [ ] Energy equity responses (drafted above)
 - [ ] Scope of work and milestones (drafted above)
 - [ ] Risk mitigation plan (drafted above)
-- [ ] Team description (drafted above, needs Justin's bio)
+- [x] Team description (drafted above with Pure Energy credentials)
 
 ### Required if Awarded (Before Contracting)
 
@@ -505,9 +510,9 @@ CalSEED FAQ states letters of support are "not required but look good if you hav
 
 ### Immediate (Before Application Opens)
 
-1. **California registration**: Verify Agentic Labs LLC status with California Secretary of State. If not registered, file foreign LLC qualification (Form LLC-5, ~$70, takes 2-4 weeks). This is a hard eligibility requirement.
+1. **California registration**: Agentic Labs LLC is a Texas entity. File foreign LLC qualification in California (Form LLC-5, ~$70, takes 2-4 weeks). This is a hard eligibility requirement.
 
-2. **California address**: Confirm you have a California address for the application. If not, establish one (registered agent, co-working space, etc.).
+2. **California address**: Establish a California address for the application via registered agent service or co-working space.
 
 3. **Sign up for CalSEED notifications**: Go to https://calseed.fund/ and subscribe to their mailing list for Cohort 8 announcement.
 
@@ -517,12 +522,13 @@ CalSEED FAQ states letters of support are "not required but look good if you hav
    - Whether solar deployment software/AI would be eligible
    - Any changes to award amounts or eligibility criteria
 
-5. **Your bio**: Write 2-3 sentences about your background, experience, and motivation. This is needed for the Team section.
+5. ~~**Your bio**: Write 2-3 sentences about your background, experience, and motivation.~~ **DONE** -- Bio drafted in Team section based on Pure Energy credentials.
 
 6. **Letters of support**: Begin reaching out to:
-   - Any California solar installers you know or can connect with
+   - Pure Energy operations team (internal letter validating the permitting problem at scale)
+   - Any California solar installers you know or can connect with through Pure Energy's network
    - CALSSA (calssa.org) for industry endorsement
-   - Any municipal contacts in the 7 CA jurisdictions in your database
+   - Permitting office contacts from Pure Energy's Texas operations who can speak to the jurisdictional complexity problem
 
 ### When Application Opens
 
@@ -538,7 +544,7 @@ CalSEED FAQ states letters of support are "not required but look good if you hav
 
 11. **Expand CA jurisdictions**: More CA jurisdictions = stronger application. Target 20+ before applying.
 
-12. **Pilot conversations**: Even informal conversations with CA installers about permitting pain points strengthens the "Team & Approach" section.
+12. **Pilot conversations**: Leverage Pure Energy network to connect with CA installers about permitting pain points. Even informal conversations strengthen the "Team & Approach" section. Pure Energy itself serves as the primary pilot partner.
 
 13. **SolarAPP+ research**: Document specific SolarAPP+ jurisdictions in California for the application.
 

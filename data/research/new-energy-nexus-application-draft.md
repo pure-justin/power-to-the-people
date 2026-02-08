@@ -112,7 +112,7 @@ This is exactly what SolarOS solves. Our compliance automation directly addresse
 - Funded by California Energy Commission (EPIC program)
 
 **Potential challenges:**
-- Requires California address (Agentic Labs LLC — [Justin to confirm CA nexus])
+- Requires California address (Agentic Labs LLC is TX-based — would need CA registered agent)
 - Under $1M in private funding (we qualify — bootstrapped)
 - TRL 2-4 requirement — SolarOS may be TRL 5+ (working prototype/deployed)
 - Technology focus areas for recent cohorts have been hardware-heavy (batteries, EV, electrification)
