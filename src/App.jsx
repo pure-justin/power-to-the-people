@@ -1,4 +1,10 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useParams,
+} from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import { lazy, Suspense } from "react";
 import AppShell from "./layouts/AppShell";
@@ -124,6 +130,12 @@ const AdminCampaigns = lazy(() => import("./pages/admin/AdminCampaigns"));
 const AdminAnalytics = lazy(() => import("./pages/admin/AdminAnalytics"));
 const AdminTasks = lazy(() => import("./pages/admin/AdminTasks"));
 const AdminCredits = lazy(() => import("./pages/admin/AdminCredits"));
+
+/** Redirect /project/:id → /portal/project/:id with actual param substitution */
+function ProjectRedirect() {
+  const { id } = useParams();
+  return <Navigate to={`/portal/project/${id}`} replace />;
+}
 
 function App() {
   return (
@@ -279,10 +291,7 @@ function App() {
               path="/referrals"
               element={<Navigate to="/portal/referrals" replace />}
             />
-            <Route
-              path="/project/:id"
-              element={<Navigate to="/portal/project/:id" replace />}
-            />
+            <Route path="/project/:id" element={<ProjectRedirect />} />
 
             {/* 404 */}
             <Route path="*" element={<Navigate to="/" replace />} />
