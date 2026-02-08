@@ -8,7 +8,9 @@
     "typical_fee_range": "$200-$800",
     "typical_timeline_days": "5-14",
     "inspection_required": true,
-    "inspection_stages": ["final"],
+    "inspection_stages": [
+      "final"
+    ],
     "statewide_permit_program": true,
     "statewide_program_name": "New York State Unified Solar Permit (NYS-USP). Standardizes permit application across municipalities. Permit determinations issued within 14 calendar days. Municipalities provide feedback within 7 days for incomplete applications."
   },
@@ -30,5 +32,196 @@
     "license_type": "NYC requires licensed Master Electrician for electrical work and General Contractor for construction permits. Outside NYC, licensed electrician required. NABCEP certification or IBEW-NECA training valued but not mandatory statewide.",
     "nabcep_required": false
   },
-  "notes": "New York has the fastest solar permitting timeline in the nation (median 25 days) thanks to the NYS-USP framework. NY-Sun program administered by NYSERDA provides declining block incentives. Strong net metering for residential. VDER/Value Stack for commercial provides compensation based on multiple value components. Community solar program is one of the largest in the nation. NYC has unique requirements including fire code setbacks and electrical licensing. Property tax exemption (15 years) and sales tax exemption available. 70% renewable by 2030 mandate."
+  "notes": "New York has the fastest solar permitting timeline in the nation (median 25 days) thanks to the NYS-USP framework. NY-Sun program administered by NYSERDA provides declining block incentives. Strong net metering for residential. VDER/Value Stack for commercial provides compensation based on multiple value components. Community solar program is one of the largest in the nation. NYC has unique requirements including fire code setbacks and electrical licensing. Property tax exemption (15 years) and sales tax exemption available. 70% renewable by 2030 mandate.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "new_york_city_ny",
+      "name": "New York City",
+      "state": "NY",
+      "type": "city",
+      "population": 8336817,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.nyc.gov/site/buildings/codes/solar-panels.page",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "structural_calcs",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 100,
+        "estimated_total_residential": 350
+      },
+      "typical_timeline_days": 7,
+      "fire_code_requirements": "NYC Fire Code setbacks. Access pathways required. NYC-specific fire safety requirements.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "NYC Dept of Buildings",
+        "phone": "212-393-2550",
+        "url": "https://www.nyc.gov/site/buildings"
+      },
+      "special_requirements": [
+        "NYC-Licensed Master Electrician required",
+        "Registered Design Professional for plan filing",
+        "Electrical permit + construction work permit",
+        "Property tax abatement available"
+      ],
+      "notes": "Requires NYC-Licensed Master Electrician and Registered Design Professional. Complete applications reviewed in 5-10 days. Property tax abatement for solar installations.",
+      "source_url": "https://www.nyc.gov/site/buildings/codes/solar-panels.page",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "buffalo_ny",
+      "name": "Buffalo",
+      "state": "NY",
+      "type": "city",
+      "population": 278349,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.buffalony.gov/349/Permits-Inspections",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 25,
+      "fees": {
+        "base_fee": 75,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 150
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "NYS fire code setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Permit & Inspection Services",
+        "phone": "716-851-5858",
+        "url": "https://www.buffalony.gov"
+      },
+      "special_requirements": [
+        "NYS Unified Solar Permit",
+        "NYSEG or National Grid interconnection"
+      ],
+      "notes": "Uses NYS Unified Solar Permit. Fees $50-$150 range. Expedited for systems under 25 kW.",
+      "source_url": "https://www.buffalony.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "rochester_ny",
+      "name": "Rochester",
+      "state": "NY",
+      "type": "city",
+      "population": 211328,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.cityofrochester.gov/buildingpermits/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 25,
+      "fees": {
+        "base_fee": 75,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 150
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "NYS fire code setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Bureau of Buildings & Zoning",
+        "phone": "585-428-6520",
+        "url": "https://www.cityofrochester.gov"
+      },
+      "special_requirements": [
+        "NYS Unified Solar Permit",
+        "RG&E interconnection"
+      ],
+      "notes": "Uses NYS Unified Solar Permit. Standard processing.",
+      "source_url": "https://www.cityofrochester.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "albany_ny",
+      "name": "Albany",
+      "state": "NY",
+      "type": "city",
+      "population": 99224,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.albanyny.gov/Government/Departments/BuildingsRegulatoryCompliance.aspx",
+      "submission_method": "in_person",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 25,
+      "fees": {
+        "base_fee": 75,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 150
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "NYS fire code setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Buildings & Regulatory Compliance",
+        "phone": "518-434-5995",
+        "url": "https://www.albanyny.gov"
+      },
+      "special_requirements": [
+        "NYS Unified Solar Permit",
+        "National Grid interconnection"
+      ],
+      "notes": "Uses NYS Unified Solar Permit.",
+      "source_url": "https://www.albanyny.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "syracuse_ny",
+      "name": "Syracuse",
+      "state": "NY",
+      "type": "city",
+      "population": 148620,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.syrgov.net/Permits.aspx",
+      "submission_method": "in_person",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 25,
+      "fees": {
+        "base_fee": 75,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 150
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "NYS fire code setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Code Enforcement",
+        "phone": "315-448-8640",
+        "url": "https://www.syrgov.net"
+      },
+      "special_requirements": [
+        "NYS Unified Solar Permit",
+        "National Grid interconnection"
+      ],
+      "notes": "Uses NYS Unified Solar Permit.",
+      "source_url": "https://www.syrgov.net",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 5
 }

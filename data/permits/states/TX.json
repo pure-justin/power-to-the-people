@@ -33,5 +33,274 @@
     "license_type": "Master Electrician license required. San Antonio requires city-registered master electrician. TDLR registration for solar retailers effective September 2025.",
     "nabcep_required": false
   },
-  "notes": "Largest deregulated electricity market. Houston implemented SolarAPP+ July 2024. Dallas requires two separate online portals. Austin has streamlined green energy permits. San Antonio requires CPS Energy approval. PE stamp >10 kW in most metros. New consumer protection laws (SB 1036/SB 1697) require retailer registration."
+  "notes": "Largest deregulated electricity market. Houston implemented SolarAPP+ July 2024. Dallas requires two separate online portals. Austin has streamlined green energy permits. San Antonio requires CPS Energy approval. PE stamp >10 kW in most metros. New consumer protection laws (SB 1036/SB 1697) require retailer registration.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "houston_tx",
+      "name": "Houston",
+      "state": "TX",
+      "type": "city",
+      "population": 2304580,
+      "solarapp_enabled": true,
+      "permit_portal_url": "https://www.houstonpermittingcenter.org",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "structural_calcs",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 10,
+      "fees": {
+        "base_fee": 250,
+        "per_kw": null,
+        "inspection_fee": 100,
+        "estimated_total_residential": 400
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "2015 IFC Section 1204.5.1 rapid shutdown. Minimum 4-ft roof access pathways for firefighters.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Houston Permitting Center",
+        "phone": "832-394-8880",
+        "url": "https://www.houstonpermittingcenter.org"
+      },
+      "special_requirements": [
+        "SolarAPP+ implemented July 2024",
+        "CenterPoint Energy interconnection required",
+        "Electronic plan submission via iPermits",
+        "NEC Article 690 compliance"
+      ],
+      "notes": "SolarAPP+ implemented July 2024 for streamlined processing. PE stamp required for systems >10 kW. CenterPoint Energy handles interconnection.",
+      "source_url": "https://www.houstonpermittingcenter.org/hpwcode1119",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "san_antonio_tx",
+      "name": "San Antonio",
+      "state": "TX",
+      "type": "city",
+      "population": 1434625,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.sanantonio.gov/DSD",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "structural_calcs",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 10,
+      "fees": {
+        "base_fee": 275,
+        "per_kw": null,
+        "inspection_fee": 100,
+        "estimated_total_residential": 425
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "IFC rapid shutdown requirements. Roof access pathways.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Development Services Dept",
+        "phone": "210-207-1111",
+        "url": "https://www.sanantonio.gov/DSD"
+      },
+      "special_requirements": [
+        "CPS Energy approval required for all installations",
+        "City-registered master electrician required"
+      ],
+      "notes": "CPS Energy approval required. State-licensed master electrician registered with city of SA required for electrical permit. No ITC available (no net metering market).",
+      "source_url": "https://www.sanantonio.gov/DSD",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "dallas_tx",
+      "name": "Dallas",
+      "state": "TX",
+      "type": "city",
+      "population": 1304379,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://dallascityhall.com/departments/sustainabledevelopment/Pages/permits.aspx",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "structural_calcs",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 10,
+      "fees": {
+        "base_fee": 300,
+        "per_kw": null,
+        "inspection_fee": 150,
+        "estimated_total_residential": 500
+      },
+      "typical_timeline_days": 21,
+      "fire_code_requirements": "IFC rapid shutdown. Firefighter access pathways required.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Sustainable Development",
+        "phone": "214-948-4480",
+        "url": "https://dallascityhall.com"
+      },
+      "special_requirements": [
+        "Two separate online portals required",
+        "Sequential (not simultaneous) staff review",
+        "Oncor interconnection required"
+      ],
+      "notes": "Requires use of two different online portals that are not automatically connected. Multiple city staffers review sequentially, not simultaneously. Can slow the process.",
+      "source_url": "https://dallascityhall.com",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "austin_tx",
+      "name": "Austin",
+      "state": "TX",
+      "type": "city",
+      "population": 978908,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.austintexas.gov/department/residential-permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 10,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 325
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "IFC rapid shutdown. Standard firefighter access pathways.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Development Services Dept",
+        "phone": "512-978-4000",
+        "url": "https://www.austintexas.gov"
+      },
+      "special_requirements": [
+        "Austin Energy Distributed Generation Planning Application required",
+        "Fast-track green energy permits",
+        "Austin Energy review may be needed before electrical permit"
+      ],
+      "notes": "Streamlined green energy permits with fast-track processing. Austin Energy DG Planning Application required before electrical permit for certain system criteria.",
+      "source_url": "https://www.austintexas.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "fort_worth_tx",
+      "name": "Fort Worth",
+      "state": "TX",
+      "type": "city",
+      "population": 918915,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.fortworthtexas.gov/departments/development-services",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 10,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 325
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "IFC rapid shutdown. Standard access pathways.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Development Services",
+        "phone": "817-392-2222",
+        "url": "https://www.fortworthtexas.gov"
+      },
+      "special_requirements": [
+        "Streamlined online questionnaire-based permit application",
+        "Oncor interconnection required"
+      ],
+      "notes": "Streamlined permitting process asks series of questions to determine needed application. Online submission of all required documents.",
+      "source_url": "https://www.fortworthtexas.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "el_paso_tx",
+      "name": "El Paso",
+      "state": "TX",
+      "type": "city",
+      "population": 678815,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.elpasotexas.gov/development-services/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "structural_calcs",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 10,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 325
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "IFC rapid shutdown requirements.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Development Services",
+        "phone": "915-212-0095",
+        "url": "https://www.elpasotexas.gov"
+      },
+      "special_requirements": [
+        "Historic districts require additional plan review",
+        "El Paso Electric interconnection"
+      ],
+      "notes": "Older developments and historic districts may require city plan review before permit issuance. Newer areas have straightforward process.",
+      "source_url": "https://www.elpasotexas.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "arlington_tx",
+      "name": "Arlington",
+      "state": "TX",
+      "type": "city",
+      "population": 394266,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.arlingtontx.gov/city_hall/departments/planning_development_services",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 10,
+      "fees": {
+        "base_fee": 175,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 300
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "IFC rapid shutdown. Standard access pathways.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Planning & Development Services",
+        "phone": "817-459-6500",
+        "url": "https://www.arlingtontx.gov"
+      },
+      "special_requirements": [
+        "Oncor interconnection required"
+      ],
+      "notes": "Standard Texas permitting process. Oncor handles interconnection for the DFW area.",
+      "source_url": "https://www.arlingtontx.gov",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 7
 }

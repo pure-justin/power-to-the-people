@@ -33,5 +33,123 @@
     "license_type": "Residential builder specialty registration with electrical classification. Roof-mounted also needs roofing classification.",
     "nabcep_required": false
   },
-  "notes": "Growing solar market. Systems limited to 20 kW AC for residential net metering. Greenville County requires sealed structural review. Charleston requires certified engineer plans for historic areas."
+  "notes": "Growing solar market. Systems limited to 20 kW AC for residential net metering. Greenville County requires sealed structural review. Charleston requires certified engineer plans for historic areas.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "charleston_sc",
+      "name": "Charleston",
+      "state": "SC",
+      "type": "city",
+      "population": 150227,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://charleston-sc.gov/142/Building-Inspections",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "structural_calcs",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 300,
+        "per_kw": null,
+        "inspection_fee": 100,
+        "estimated_total_residential": 450
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "Coastal wind load requirements. Hurricane zone standards.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Inspections",
+        "phone": "843-724-3781",
+        "url": "https://charleston-sc.gov"
+      },
+      "special_requirements": [
+        "Certified engineer plans for historic areas",
+        "Wind load calculations",
+        "Systems limited to 20 kW AC"
+      ],
+      "notes": "Historic district has strict requirements. Permit $300-$500. Residential systems limited to 20 kW AC per SC law.",
+      "source_url": "https://charleston-sc.gov/DocumentCenter/View/39726/Solar-Panels--Residential-2",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "columbia_sc",
+      "name": "Columbia",
+      "state": "SC",
+      "type": "city",
+      "population": 136632,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.columbiasc.gov/building-inspections",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 325
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard SC fire code setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Inspections",
+        "phone": "803-545-3300",
+        "url": "https://www.columbiasc.gov"
+      },
+      "special_requirements": [
+        "Systems limited to 20 kW AC",
+        "Dominion Energy SC interconnection"
+      ],
+      "notes": "Standard SC permitting. 20 kW AC residential limit.",
+      "source_url": "https://www.columbiasc.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "greenville_sc",
+      "name": "Greenville",
+      "state": "SC",
+      "type": "city",
+      "population": 72095,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.greenvillecounty.org/BuildingSafety/",
+      "submission_method": "in_person",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "structural_calcs",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 325
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard SC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Safety",
+        "phone": "864-467-7220",
+        "url": "https://www.greenvillecounty.org"
+      },
+      "special_requirements": [
+        "Sealed structural review with plan view required",
+        "Systems limited to 20 kW AC",
+        "Duke Energy Carolinas interconnection"
+      ],
+      "notes": "Greenville County requires sealed/signed structural review with plan view of panel system. 20 kW AC limit.",
+      "source_url": "https://www.greenvillecounty.org/BuildingSafety/forms/ResidentialSolarPhotovoltaicPanels.pdf",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 3
 }

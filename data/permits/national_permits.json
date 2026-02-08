@@ -1,0 +1,3973 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "generated_at": "2026-02-08",
+    "total_jurisdictions": 106,
+    "states_covered": 50,
+    "data_sources": [
+      "SolarAPP+ (solarapp.nrel.gov)",
+      "City/county building department websites",
+      "State energy office resources",
+      "DSIRE database",
+      "Solar permit solutions guides",
+      "DOE/NREL permitting resources",
+      "State solar associations"
+    ],
+    "notes": "Data compiled from public sources. Fees and requirements may change. Always verify with local AHJ before submitting permits. PE stamp thresholds and fees are approximate and vary by specific project details."
+  },
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "los_angeles_ca",
+      "name": "Los Angeles",
+      "state": "CA",
+      "type": "city",
+      "population": 3898747,
+      "solarapp_enabled": true,
+      "permit_portal_url": "https://www.ladbs.org/services/online-services/online-permitting",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "structural_calcs",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 10,
+      "fees": {
+        "base_fee": 400,
+        "per_kw": 15,
+        "inspection_fee": 0,
+        "estimated_total_residential": 450
+      },
+      "typical_timeline_days": 3,
+      "fire_code_requirements": "LAFD requires 3-ft setback from ridge and edges. Pathways for firefighter access required per CFC 605.11.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "LA Dept of Building and Safety",
+        "phone": "213-482-0000",
+        "url": "https://www.ladbs.org"
+      },
+      "special_requirements": [
+        "AB 2188 streamlined permitting",
+        "Title 24 compliance",
+        "LADWP interconnection required"
+      ],
+      "notes": "AB 2188 mandates streamlined online permitting for rooftop solar <10 kW. Fee cap $450 + $15/kW above 15 kW.",
+      "source_url": "https://www.ladbs.org",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "san_diego_ca",
+      "name": "San Diego",
+      "state": "CA",
+      "type": "city",
+      "population": 1386932,
+      "solarapp_enabled": true,
+      "permit_portal_url": "https://www.sandiego.gov/development-services/permits/solar-photovoltaic-permit",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 38,
+      "fees": {
+        "base_fee": 0,
+        "per_kw": 0,
+        "inspection_fee": 0,
+        "estimated_total_residential": 0
+      },
+      "typical_timeline_days": 1,
+      "fire_code_requirements": "Standard CFC setbacks. Pathways required for rooftop access.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Development Services Dept",
+        "phone": "619-446-5000",
+        "url": "https://www.sandiego.gov/development-services"
+      },
+      "special_requirements": [
+        "Self-issued permits up to 38.4 kW AC with no plan review",
+        "SDG&E $132 interconnection fee"
+      ],
+      "notes": "Residential rooftop PV up to 38.4 kW AC self-issued with no plan review or structural review. Zero permit fee.",
+      "source_url": "https://www.sandiego.gov/development-services/permits/solar-photovoltaic-permit",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "san_jose_ca",
+      "name": "San Jose",
+      "state": "CA",
+      "type": "city",
+      "population": 1013240,
+      "solarapp_enabled": true,
+      "permit_portal_url": "https://www.sanjoseca.gov/your-government/departments-offices/planning-building-code-enforcement",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 10,
+      "fees": {
+        "base_fee": 250,
+        "per_kw": 15,
+        "inspection_fee": 0,
+        "estimated_total_residential": 300
+      },
+      "typical_timeline_days": 1,
+      "fire_code_requirements": "Standard CFC setbacks and pathways.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Planning Building & Code Enforcement",
+        "phone": "408-535-3555",
+        "url": "https://www.sanjoseca.gov"
+      },
+      "special_requirements": [
+        "Instant online permitting for standard systems",
+        "Battery storage requires traditional review"
+      ],
+      "notes": "Instant online permitting for standard residential systems. Traditional review mandatory for battery storage or older homes.",
+      "source_url": "https://www.sanjoseca.gov/your-government/departments-offices/energy",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "san_francisco_ca",
+      "name": "San Francisco",
+      "state": "CA",
+      "type": "city",
+      "population": 873965,
+      "solarapp_enabled": true,
+      "permit_portal_url": "https://www.sf.gov/step-by-step--get-permit-solar-photovoltaic-system",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 10,
+      "fees": {
+        "base_fee": 0,
+        "per_kw": 0,
+        "inspection_fee": 0,
+        "estimated_total_residential": 0
+      },
+      "typical_timeline_days": 3,
+      "fire_code_requirements": "SFFD setback requirements. Historic district installations may have additional fire access requirements.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "SF Dept of Building Inspection",
+        "phone": "415-558-6088",
+        "url": "https://www.sf.gov"
+      },
+      "special_requirements": [
+        "Free permits",
+        "Historic district delays possible",
+        "100% renewable electricity goal by 2025"
+      ],
+      "notes": "Free solar permits. Historic districts may add several weeks to timeline. City targeting 100% renewable electricity.",
+      "source_url": "https://www.sf.gov/step-by-step--get-permit-solar-photovoltaic-system",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "sacramento_ca",
+      "name": "Sacramento",
+      "state": "CA",
+      "type": "city",
+      "population": 524943,
+      "solarapp_enabled": true,
+      "permit_portal_url": "https://building.saccounty.gov",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 10,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": 10,
+        "inspection_fee": 0,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 3,
+      "fire_code_requirements": "Standard CFC setbacks and pathways.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Community Development Dept",
+        "phone": "916-808-5357",
+        "url": "https://www.cityofsacramento.gov"
+      },
+      "special_requirements": [
+        "Expedited review for systems under 10 kW",
+        "SMUD interconnection required"
+      ],
+      "notes": "Expedited review for systems under 10 kW. Fees determined by kW based on pre-determined fee schedule.",
+      "source_url": "https://building.saccounty.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "fresno_ca",
+      "name": "Fresno",
+      "state": "CA",
+      "type": "city",
+      "population": 542107,
+      "solarapp_enabled": true,
+      "permit_portal_url": "https://www.fresno.gov/planning/get-an-instantly-approved-solar-permit-through-solar-app/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 10,
+      "fees": {
+        "base_fee": 250,
+        "per_kw": 15,
+        "inspection_fee": 0,
+        "estimated_total_residential": 325
+      },
+      "typical_timeline_days": 1,
+      "fire_code_requirements": "Standard CFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Planning and Development",
+        "phone": "559-621-8277",
+        "url": "https://www.fresno.gov/planning"
+      },
+      "special_requirements": [
+        "SolarAPP+ instant approval for single-family and duplex"
+      ],
+      "notes": "SolarAPP+ adopted for instant permits on single-family and duplex projects.",
+      "source_url": "https://www.fresno.gov/planning/get-an-instantly-approved-solar-permit-through-solar-app/",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "long_beach_ca",
+      "name": "Long Beach",
+      "state": "CA",
+      "type": "city",
+      "population": 466742,
+      "solarapp_enabled": true,
+      "permit_portal_url": "https://www.longbeach.gov/lbcd/building/permit-center/solar-permit/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 10,
+      "fees": {
+        "base_fee": 250,
+        "per_kw": 15,
+        "inspection_fee": 0,
+        "estimated_total_residential": 325
+      },
+      "typical_timeline_days": 1,
+      "fire_code_requirements": "Standard CFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Development Services",
+        "phone": "562-570-7648",
+        "url": "https://www.longbeach.gov/lbcd"
+      },
+      "special_requirements": [
+        "One-step process: submit, pay, receive inspection card same visit",
+        "Permits sent immediately upon payment"
+      ],
+      "notes": "Streamlined one-step permit process. Submit application, pay fees, receive job inspection card all at once.",
+      "source_url": "https://www.longbeach.gov/lbcd/building/permit-center/solar-permit/",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "houston_tx",
+      "name": "Houston",
+      "state": "TX",
+      "type": "city",
+      "population": 2304580,
+      "solarapp_enabled": true,
+      "permit_portal_url": "https://www.houstonpermittingcenter.org",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "structural_calcs",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 10,
+      "fees": {
+        "base_fee": 250,
+        "per_kw": null,
+        "inspection_fee": 100,
+        "estimated_total_residential": 400
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "2015 IFC Section 1204.5.1 rapid shutdown. Minimum 4-ft roof access pathways for firefighters.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Houston Permitting Center",
+        "phone": "832-394-8880",
+        "url": "https://www.houstonpermittingcenter.org"
+      },
+      "special_requirements": [
+        "SolarAPP+ implemented July 2024",
+        "CenterPoint Energy interconnection required",
+        "Electronic plan submission via iPermits",
+        "NEC Article 690 compliance"
+      ],
+      "notes": "SolarAPP+ implemented July 2024 for streamlined processing. PE stamp required for systems >10 kW. CenterPoint Energy handles interconnection.",
+      "source_url": "https://www.houstonpermittingcenter.org/hpwcode1119",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "san_antonio_tx",
+      "name": "San Antonio",
+      "state": "TX",
+      "type": "city",
+      "population": 1434625,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.sanantonio.gov/DSD",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "structural_calcs",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 10,
+      "fees": {
+        "base_fee": 275,
+        "per_kw": null,
+        "inspection_fee": 100,
+        "estimated_total_residential": 425
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "IFC rapid shutdown requirements. Roof access pathways.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Development Services Dept",
+        "phone": "210-207-1111",
+        "url": "https://www.sanantonio.gov/DSD"
+      },
+      "special_requirements": [
+        "CPS Energy approval required for all installations",
+        "City-registered master electrician required"
+      ],
+      "notes": "CPS Energy approval required. State-licensed master electrician registered with city of SA required for electrical permit. No ITC available (no net metering market).",
+      "source_url": "https://www.sanantonio.gov/DSD",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "dallas_tx",
+      "name": "Dallas",
+      "state": "TX",
+      "type": "city",
+      "population": 1304379,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://dallascityhall.com/departments/sustainabledevelopment/Pages/permits.aspx",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "structural_calcs",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 10,
+      "fees": {
+        "base_fee": 300,
+        "per_kw": null,
+        "inspection_fee": 150,
+        "estimated_total_residential": 500
+      },
+      "typical_timeline_days": 21,
+      "fire_code_requirements": "IFC rapid shutdown. Firefighter access pathways required.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Sustainable Development",
+        "phone": "214-948-4480",
+        "url": "https://dallascityhall.com"
+      },
+      "special_requirements": [
+        "Two separate online portals required",
+        "Sequential (not simultaneous) staff review",
+        "Oncor interconnection required"
+      ],
+      "notes": "Requires use of two different online portals that are not automatically connected. Multiple city staffers review sequentially, not simultaneously. Can slow the process.",
+      "source_url": "https://dallascityhall.com",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "austin_tx",
+      "name": "Austin",
+      "state": "TX",
+      "type": "city",
+      "population": 978908,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.austintexas.gov/department/residential-permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 10,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 325
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "IFC rapid shutdown. Standard firefighter access pathways.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Development Services Dept",
+        "phone": "512-978-4000",
+        "url": "https://www.austintexas.gov"
+      },
+      "special_requirements": [
+        "Austin Energy Distributed Generation Planning Application required",
+        "Fast-track green energy permits",
+        "Austin Energy review may be needed before electrical permit"
+      ],
+      "notes": "Streamlined green energy permits with fast-track processing. Austin Energy DG Planning Application required before electrical permit for certain system criteria.",
+      "source_url": "https://www.austintexas.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "fort_worth_tx",
+      "name": "Fort Worth",
+      "state": "TX",
+      "type": "city",
+      "population": 918915,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.fortworthtexas.gov/departments/development-services",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 10,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 325
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "IFC rapid shutdown. Standard access pathways.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Development Services",
+        "phone": "817-392-2222",
+        "url": "https://www.fortworthtexas.gov"
+      },
+      "special_requirements": [
+        "Streamlined online questionnaire-based permit application",
+        "Oncor interconnection required"
+      ],
+      "notes": "Streamlined permitting process asks series of questions to determine needed application. Online submission of all required documents.",
+      "source_url": "https://www.fortworthtexas.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "el_paso_tx",
+      "name": "El Paso",
+      "state": "TX",
+      "type": "city",
+      "population": 678815,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.elpasotexas.gov/development-services/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "structural_calcs",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 10,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 325
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "IFC rapid shutdown requirements.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Development Services",
+        "phone": "915-212-0095",
+        "url": "https://www.elpasotexas.gov"
+      },
+      "special_requirements": [
+        "Historic districts require additional plan review",
+        "El Paso Electric interconnection"
+      ],
+      "notes": "Older developments and historic districts may require city plan review before permit issuance. Newer areas have straightforward process.",
+      "source_url": "https://www.elpasotexas.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "arlington_tx",
+      "name": "Arlington",
+      "state": "TX",
+      "type": "city",
+      "population": 394266,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.arlingtontx.gov/city_hall/departments/planning_development_services",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 10,
+      "fees": {
+        "base_fee": 175,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 300
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "IFC rapid shutdown. Standard access pathways.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Planning & Development Services",
+        "phone": "817-459-6500",
+        "url": "https://www.arlingtontx.gov"
+      },
+      "special_requirements": [
+        "Oncor interconnection required"
+      ],
+      "notes": "Standard Texas permitting process. Oncor handles interconnection for the DFW area.",
+      "source_url": "https://www.arlingtontx.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "jacksonville_fl",
+      "name": "Jacksonville",
+      "state": "FL",
+      "type": "city",
+      "population": 949611,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.coj.net/departments/building-inspection",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "structural_calcs",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 125,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 225
+      },
+      "typical_timeline_days": 5,
+      "fire_code_requirements": "Florida Building Code fire setbacks. Standard access pathways.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Inspection Division",
+        "phone": "904-255-7800",
+        "url": "https://www.coj.net"
+      },
+      "special_requirements": [
+        "HB 683: 5-day review mandate",
+        "Wind load calculations required",
+        "JEA interconnection"
+      ],
+      "notes": "HB 683 mandates 5 business day review with auto-approval if missed. Permit fees $125-$275 range. Wind load calcs required.",
+      "source_url": "https://www.coj.net",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "miami_fl",
+      "name": "Miami",
+      "state": "FL",
+      "type": "city",
+      "population": 442241,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.miami.gov/Permits-Construction/Permit-Catalog/Get-a-Permit-to-Install-Solar-Panels",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "structural_calcs",
+        "equipment_specs",
+        "wind_load_calcs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 100,
+        "estimated_total_residential": 400
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "High-Velocity Hurricane Zone (HVHZ) requirements. Enhanced wind load standards for all solar installations.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Dept",
+        "phone": "305-416-1100",
+        "url": "https://www.miami.gov"
+      },
+      "special_requirements": [
+        "HVHZ enhanced wind load standards mandatory",
+        "PE-stamped wind load calculations required",
+        "Miami-Dade product approvals may be required",
+        "FPL interconnection"
+      ],
+      "notes": "Strictest solar permitting in Florida due to HVHZ designation. All installations must meet enhanced wind load standards. PE stamp required for virtually all systems.",
+      "source_url": "https://www.miami.gov/Permits-Construction/Permit-Catalog/Get-a-Permit-to-Install-Solar-Panels",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "tampa_fl",
+      "name": "Tampa",
+      "state": "FL",
+      "type": "city",
+      "population": 384959,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.tampa.gov/construction-services",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "structural_calcs",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 100,
+        "estimated_total_residential": 375
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Florida Building Code fire setbacks. Wind load requirements for coastal location.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Construction Services",
+        "phone": "813-274-3100",
+        "url": "https://www.tampa.gov"
+      },
+      "special_requirements": [
+        "HB 683: 5-day review mandate",
+        "Wind load calculations",
+        "TECO interconnection"
+      ],
+      "notes": "HB 683 5-day review mandate with auto-approval. Residential permits $200-$500 based on system size. Private inspection providers now allowed.",
+      "source_url": "https://www.tampa.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "orlando_fl",
+      "name": "Orlando",
+      "state": "FL",
+      "type": "city",
+      "population": 307573,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.orlando.gov/Building-Development",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 100,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 225
+      },
+      "typical_timeline_days": 5,
+      "fire_code_requirements": "Florida Building Code setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Permitting Services",
+        "phone": "407-246-2271",
+        "url": "https://www.orlando.gov"
+      },
+      "special_requirements": [
+        "OUC interconnection",
+        "Expedited solar permit program",
+        "HB 683 5-day mandate"
+      ],
+      "notes": "Orange County expedited solar permit program. Fees $100-$300. Most residential reviewed within 3-5 business days.",
+      "source_url": "https://www.orlando.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "st_petersburg_fl",
+      "name": "St. Petersburg",
+      "state": "FL",
+      "type": "city",
+      "population": 258308,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.stpete.org/building_and_permitting/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 5,
+      "fire_code_requirements": "Florida Building Code setbacks. Coastal wind load requirements.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building & Permitting",
+        "phone": "727-893-7373",
+        "url": "https://www.stpete.org"
+      },
+      "special_requirements": [
+        "Duke Energy Florida interconnection",
+        "HB 683 5-day mandate"
+      ],
+      "notes": "HB 683 5-day review mandate. Duke Energy Florida serves most of the area.",
+      "source_url": "https://www.stpete.org",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "hialeah_fl",
+      "name": "Hialeah",
+      "state": "FL",
+      "type": "city",
+      "population": 223109,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.hialeahfl.gov/161/Building",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "structural_calcs",
+        "equipment_specs",
+        "wind_load_calcs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 100,
+        "estimated_total_residential": 400
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "HVHZ requirements same as Miami-Dade County.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Dept",
+        "phone": "305-883-8075",
+        "url": "https://www.hialeahfl.gov"
+      },
+      "special_requirements": [
+        "HVHZ enhanced wind load standards",
+        "Miami-Dade product approvals",
+        "FPL interconnection"
+      ],
+      "notes": "In Miami-Dade County HVHZ zone. Same strict wind load requirements as Miami.",
+      "source_url": "https://www.hialeahfl.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "port_st_lucie_fl",
+      "name": "Port St. Lucie",
+      "state": "FL",
+      "type": "city",
+      "population": 217223,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.cityofpsl.com/government/departments/building",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 5,
+      "fire_code_requirements": "Florida Building Code setbacks. Wind load requirements.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Dept",
+        "phone": "772-871-5132",
+        "url": "https://www.cityofpsl.com"
+      },
+      "special_requirements": [
+        "HB 683 5-day mandate",
+        "FPL interconnection"
+      ],
+      "notes": "Standard Florida permitting with HB 683 5-day mandate.",
+      "source_url": "https://www.cityofpsl.com",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "phoenix_az",
+      "name": "Phoenix",
+      "state": "AZ",
+      "type": "city",
+      "population": 1608139,
+      "solarapp_enabled": true,
+      "permit_portal_url": "https://www.phoenix.gov/pdd",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 300,
+        "per_kw": null,
+        "inspection_fee": 0,
+        "estimated_total_residential": 300
+      },
+      "typical_timeline_days": 1,
+      "fire_code_requirements": "Phoenix Fire Dept requires separate permit for PV and battery storage systems. Standard setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Planning & Development Dept",
+        "phone": "602-262-7811",
+        "url": "https://www.phoenix.gov/pdd"
+      },
+      "special_requirements": [
+        "SolarAPP+ accepted",
+        "Separate Phoenix Fire Dept permit required",
+        "APS or SRP interconnection"
+      ],
+      "notes": "SolarAPP+ approved designs accepted. $300 roof-mounted permit includes all plan reviews and inspection. Separate fire department permit required.",
+      "source_url": "https://www.phoenix.gov/pdd/residential-building/resident-plan-reviews/solarapp-photovoltaic.html",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "tucson_az",
+      "name": "Tucson",
+      "state": "AZ",
+      "type": "city",
+      "population": 542629,
+      "solarapp_enabled": true,
+      "permit_portal_url": "https://www.tucsonaz.gov/Departments/Planning-Development-Services/Permits/Residential-Solar-Permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 250,
+        "per_kw": null,
+        "inspection_fee": 0,
+        "estimated_total_residential": 250
+      },
+      "typical_timeline_days": 1,
+      "fire_code_requirements": "Standard fire setbacks. Pima County may have additional requirements.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Planning & Development Services",
+        "phone": "520-791-5550",
+        "url": "https://www.tucsonaz.gov"
+      },
+      "special_requirements": [
+        "SolarAPP+ accepted",
+        "TEP interconnection"
+      ],
+      "notes": "SolarAPP accepted for residential PV. Tucson Electric Power handles interconnection.",
+      "source_url": "https://www.tucsonaz.gov/Departments/Planning-Development-Services/Permits/Residential-Solar-Permits",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "mesa_az",
+      "name": "Mesa",
+      "state": "AZ",
+      "type": "city",
+      "population": 504258,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.mesaaz.gov/business/development-services",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 275,
+        "per_kw": null,
+        "inspection_fee": 0,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 5,
+      "fire_code_requirements": "Standard fire setbacks per IFC.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Development Services",
+        "phone": "480-644-2211",
+        "url": "https://www.mesaaz.gov"
+      },
+      "special_requirements": [
+        "APS or SRP interconnection depending on location"
+      ],
+      "notes": "Standard Arizona permitting. Split between APS and SRP service territories.",
+      "source_url": "https://www.mesaaz.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "chandler_az",
+      "name": "Chandler",
+      "state": "AZ",
+      "type": "city",
+      "population": 275987,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.chandleraz.gov/government/departments/development-services",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 250,
+        "per_kw": null,
+        "inspection_fee": 0,
+        "estimated_total_residential": 250
+      },
+      "typical_timeline_days": 5,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Development Services",
+        "phone": "480-782-3000",
+        "url": "https://www.chandleraz.gov"
+      },
+      "special_requirements": [
+        "SRP interconnection"
+      ],
+      "notes": "Standard Arizona permitting process. SRP service territory.",
+      "source_url": "https://www.chandleraz.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "scottsdale_az",
+      "name": "Scottsdale",
+      "state": "AZ",
+      "type": "city",
+      "population": 241361,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.scottsdaleaz.gov/planning-development/permit-services",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 275,
+        "per_kw": null,
+        "inspection_fee": 0,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 5,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Planning & Development",
+        "phone": "480-312-2500",
+        "url": "https://www.scottsdaleaz.gov"
+      },
+      "special_requirements": [
+        "SRP or APS interconnection"
+      ],
+      "notes": "Standard Arizona permitting process.",
+      "source_url": "https://www.scottsdaleaz.gov/planning-development/permit-services",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "gilbert_az",
+      "name": "Gilbert",
+      "state": "AZ",
+      "type": "city",
+      "population": 267918,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.gilbertaz.gov/departments/development-services",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 250,
+        "per_kw": null,
+        "inspection_fee": 0,
+        "estimated_total_residential": 250
+      },
+      "typical_timeline_days": 5,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Development Services",
+        "phone": "480-503-6700",
+        "url": "https://www.gilbertaz.gov"
+      },
+      "special_requirements": [
+        "SRP interconnection"
+      ],
+      "notes": "Standard Arizona permitting. SRP service territory.",
+      "source_url": "https://www.gilbertaz.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "glendale_az",
+      "name": "Glendale",
+      "state": "AZ",
+      "type": "city",
+      "population": 248325,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.glendaleaz.com/government/departments/building-safety",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 250,
+        "per_kw": null,
+        "inspection_fee": 0,
+        "estimated_total_residential": 250
+      },
+      "typical_timeline_days": 5,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Safety",
+        "phone": "623-930-2580",
+        "url": "https://www.glendaleaz.com"
+      },
+      "special_requirements": [
+        "APS interconnection"
+      ],
+      "notes": "Standard Arizona permitting. APS service territory.",
+      "source_url": "https://www.glendaleaz.com",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "new_york_city_ny",
+      "name": "New York City",
+      "state": "NY",
+      "type": "city",
+      "population": 8336817,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.nyc.gov/site/buildings/codes/solar-panels.page",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "structural_calcs",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 100,
+        "estimated_total_residential": 350
+      },
+      "typical_timeline_days": 7,
+      "fire_code_requirements": "NYC Fire Code setbacks. Access pathways required. NYC-specific fire safety requirements.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "NYC Dept of Buildings",
+        "phone": "212-393-2550",
+        "url": "https://www.nyc.gov/site/buildings"
+      },
+      "special_requirements": [
+        "NYC-Licensed Master Electrician required",
+        "Registered Design Professional for plan filing",
+        "Electrical permit + construction work permit",
+        "Property tax abatement available"
+      ],
+      "notes": "Requires NYC-Licensed Master Electrician and Registered Design Professional. Complete applications reviewed in 5-10 days. Property tax abatement for solar installations.",
+      "source_url": "https://www.nyc.gov/site/buildings/codes/solar-panels.page",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "buffalo_ny",
+      "name": "Buffalo",
+      "state": "NY",
+      "type": "city",
+      "population": 278349,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.buffalony.gov/349/Permits-Inspections",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 25,
+      "fees": {
+        "base_fee": 75,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 150
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "NYS fire code setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Permit & Inspection Services",
+        "phone": "716-851-5858",
+        "url": "https://www.buffalony.gov"
+      },
+      "special_requirements": [
+        "NYS Unified Solar Permit",
+        "NYSEG or National Grid interconnection"
+      ],
+      "notes": "Uses NYS Unified Solar Permit. Fees $50-$150 range. Expedited for systems under 25 kW.",
+      "source_url": "https://www.buffalony.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "rochester_ny",
+      "name": "Rochester",
+      "state": "NY",
+      "type": "city",
+      "population": 211328,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.cityofrochester.gov/buildingpermits/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 25,
+      "fees": {
+        "base_fee": 75,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 150
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "NYS fire code setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Bureau of Buildings & Zoning",
+        "phone": "585-428-6520",
+        "url": "https://www.cityofrochester.gov"
+      },
+      "special_requirements": [
+        "NYS Unified Solar Permit",
+        "RG&E interconnection"
+      ],
+      "notes": "Uses NYS Unified Solar Permit. Standard processing.",
+      "source_url": "https://www.cityofrochester.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "albany_ny",
+      "name": "Albany",
+      "state": "NY",
+      "type": "city",
+      "population": 99224,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.albanyny.gov/Government/Departments/BuildingsRegulatoryCompliance.aspx",
+      "submission_method": "in_person",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 25,
+      "fees": {
+        "base_fee": 75,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 150
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "NYS fire code setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Buildings & Regulatory Compliance",
+        "phone": "518-434-5995",
+        "url": "https://www.albanyny.gov"
+      },
+      "special_requirements": [
+        "NYS Unified Solar Permit",
+        "National Grid interconnection"
+      ],
+      "notes": "Uses NYS Unified Solar Permit.",
+      "source_url": "https://www.albanyny.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "syracuse_ny",
+      "name": "Syracuse",
+      "state": "NY",
+      "type": "city",
+      "population": 148620,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.syrgov.net/Permits.aspx",
+      "submission_method": "in_person",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 25,
+      "fees": {
+        "base_fee": 75,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 150
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "NYS fire code setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Code Enforcement",
+        "phone": "315-448-8640",
+        "url": "https://www.syrgov.net"
+      },
+      "special_requirements": [
+        "NYS Unified Solar Permit",
+        "National Grid interconnection"
+      ],
+      "notes": "Uses NYS Unified Solar Permit.",
+      "source_url": "https://www.syrgov.net",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "charlotte_nc",
+      "name": "Charlotte",
+      "state": "NC",
+      "type": "city",
+      "population": 874579,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.charlottenc.gov/Growth-and-Development/Getting-a-Permit",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 20,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Code Enforcement",
+        "phone": "704-336-2431",
+        "url": "https://www.charlottenc.gov"
+      },
+      "special_requirements": [
+        "Duke Energy Carolinas interconnection"
+      ],
+      "notes": "Standard NC permitting. Duke Energy Carolinas handles interconnection.",
+      "source_url": "https://www.charlottenc.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "raleigh_nc",
+      "name": "Raleigh",
+      "state": "NC",
+      "type": "city",
+      "population": 467665,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://raleighnc.gov/permits/services/residential-solar-photovoltaic-pv-system",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 20,
+      "fees": {
+        "base_fee": 100,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 200
+      },
+      "typical_timeline_days": 1,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Development Services",
+        "phone": "919-996-2499",
+        "url": "https://raleighnc.gov"
+      },
+      "special_requirements": [
+        "Same-day online permitting via Permit Portal",
+        "Duke Energy Progress interconnection"
+      ],
+      "notes": "Most residential rooftop solar eligible for same-day online permitting. Work must begin within 6 months.",
+      "source_url": "https://raleighnc.gov/permits/services/residential-solar-photovoltaic-pv-system",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "greensboro_nc",
+      "name": "Greensboro",
+      "state": "NC",
+      "type": "city",
+      "population": 299035,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.greensboro-nc.gov/departments/field-operations/inspections-permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 20,
+      "fees": {
+        "base_fee": 125,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 225
+      },
+      "typical_timeline_days": 7,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Inspections & Permits",
+        "phone": "336-373-2464",
+        "url": "https://www.greensboro-nc.gov"
+      },
+      "special_requirements": [
+        "Duke Energy interconnection"
+      ],
+      "notes": "Standard NC permitting process.",
+      "source_url": "https://www.greensboro-nc.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "durham_nc",
+      "name": "Durham",
+      "state": "NC",
+      "type": "city",
+      "population": 283506,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.durhamnc.gov/293/Building-Permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 20,
+      "fees": {
+        "base_fee": 125,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 225
+      },
+      "typical_timeline_days": 7,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Inspections Dept",
+        "phone": "919-560-4144",
+        "url": "https://www.durhamnc.gov"
+      },
+      "special_requirements": [
+        "Duke Energy Progress interconnection"
+      ],
+      "notes": "Standard NC permitting.",
+      "source_url": "https://www.durhamnc.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "denver_co",
+      "name": "Denver",
+      "state": "CO",
+      "type": "city",
+      "population": 715522,
+      "solarapp_enabled": true,
+      "permit_portal_url": "https://www.denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Community-Planning-and-Development",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 15,
+      "fees": {
+        "base_fee": 300,
+        "per_kw": null,
+        "inspection_fee": 0,
+        "estimated_total_residential": 350
+      },
+      "typical_timeline_days": 3,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Community Planning & Development",
+        "phone": "720-865-2700",
+        "url": "https://www.denvergov.org"
+      },
+      "special_requirements": [
+        "SolarAPP+ adopted",
+        "CO law caps permit fees at $500",
+        "Xcel Energy interconnection"
+      ],
+      "notes": "SolarAPP+ adopted. Colorado HB21-1284 caps residential solar permit fees at $500 through Dec 2029.",
+      "source_url": "https://www.denvergov.org",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "colorado_springs_co",
+      "name": "Colorado Springs",
+      "state": "CO",
+      "type": "city",
+      "population": 478961,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://coloradosprings.gov/pces",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 15,
+      "fees": {
+        "base_fee": 275,
+        "per_kw": null,
+        "inspection_fee": 0,
+        "estimated_total_residential": 325
+      },
+      "typical_timeline_days": 7,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Planning & Community Development",
+        "phone": "719-385-5905",
+        "url": "https://coloradosprings.gov"
+      },
+      "special_requirements": [
+        "CO fee cap $500",
+        "Colorado Springs Utilities interconnection"
+      ],
+      "notes": "Home-rule city handles building and electrical permits locally. CO fee cap applies.",
+      "source_url": "https://coloradosprings.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "aurora_co",
+      "name": "Aurora",
+      "state": "CO",
+      "type": "city",
+      "population": 386261,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.auroragov.org/business_services/permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 15,
+      "fees": {
+        "base_fee": 250,
+        "per_kw": null,
+        "inspection_fee": 0,
+        "estimated_total_residential": 300
+      },
+      "typical_timeline_days": 7,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Permits",
+        "phone": "303-739-7420",
+        "url": "https://www.auroragov.org"
+      },
+      "special_requirements": [
+        "CO fee cap $500",
+        "Xcel Energy interconnection"
+      ],
+      "notes": "Standard CO permitting with $500 fee cap.",
+      "source_url": "https://www.auroragov.org",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "las_vegas_nv",
+      "name": "Las Vegas",
+      "state": "NV",
+      "type": "city",
+      "population": 641903,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.lasvegasnevada.gov/Business/Permits-Licenses",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 325
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Panels must not extend beyond highest roofline point. Standard setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building & Safety",
+        "phone": "702-229-6251",
+        "url": "https://www.lasvegasnevada.gov"
+      },
+      "special_requirements": [
+        "Electrical sub-permit required",
+        "NV Energy $35 submittal fee",
+        "Panels must not exceed roofline"
+      ],
+      "notes": "Residential permit fees $200-$400. NV Energy charges $35 non-refundable submittal fee. Rooftop panels cannot extend beyond highest roofline.",
+      "source_url": "https://files.lasvegasnevada.gov/building-safety/Residential-Photovoltaic-Solar-Permits.pdf",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "henderson_nv",
+      "name": "Henderson",
+      "state": "NV",
+      "type": "city",
+      "population": 320189,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.cityofhenderson.com/government/departments/community-development",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 325
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard Clark County setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Community Development",
+        "phone": "702-267-1500",
+        "url": "https://www.cityofhenderson.com"
+      },
+      "special_requirements": [
+        "Clark County electrical permit",
+        "NV Energy interconnection"
+      ],
+      "notes": "Clark County permit process. Standard Nevada requirements.",
+      "source_url": "https://www.cityofhenderson.com",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "reno_nv",
+      "name": "Reno",
+      "state": "NV",
+      "type": "city",
+      "population": 264165,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.reno.gov/government/departments/community-development/building-safety",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 325
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard setbacks. Not within 30 ft of public right-of-way.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Safety",
+        "phone": "775-334-2090",
+        "url": "https://www.reno.gov"
+      },
+      "special_requirements": [
+        "NV Energy interconnection",
+        "Panels not within 30 ft of street curb"
+      ],
+      "notes": "Standard Nevada permitting. Timeline 30-120 days total including all phases.",
+      "source_url": "https://www.reno.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "north_las_vegas_nv",
+      "name": "North Las Vegas",
+      "state": "NV",
+      "type": "city",
+      "population": 262527,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.cityofnorthlasvegas.com/government/departments/community-development",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 325
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard Clark County setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Community Development",
+        "phone": "702-633-1200",
+        "url": "https://www.cityofnorthlasvegas.com"
+      },
+      "special_requirements": [
+        "NV Energy interconnection"
+      ],
+      "notes": "Standard Nevada permitting in Clark County.",
+      "source_url": "https://www.cityofnorthlasvegas.com",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "boston_ma",
+      "name": "Boston",
+      "state": "MA",
+      "type": "city",
+      "population": 675647,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.boston.gov/departments/inspectional-services",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "structural_calcs",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 15,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 100,
+        "estimated_total_residential": 350
+      },
+      "typical_timeline_days": 7,
+      "fire_code_requirements": "Massachusetts fire code setbacks. Historical district review may apply.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Inspectional Services Dept",
+        "phone": "617-635-5300",
+        "url": "https://www.boston.gov"
+      },
+      "special_requirements": [
+        "Same-day in-person permitting available",
+        "Online permitting available",
+        "Eversource or National Grid interconnection",
+        "SMART program incentives"
+      ],
+      "notes": "Same-day in-person and online permitting available. Structural reviews required for most systems. SMART solar incentive program.",
+      "source_url": "https://www.boston.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "worcester_ma",
+      "name": "Worcester",
+      "state": "MA",
+      "type": "city",
+      "population": 206518,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.worcesterma.gov/inspectional-services",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 15,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "MA fire code setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Inspectional Services",
+        "phone": "508-799-1127",
+        "url": "https://www.worcesterma.gov"
+      },
+      "special_requirements": [
+        "Online permitting",
+        "National Grid interconnection"
+      ],
+      "notes": "Online permitting available. Standard MA process.",
+      "source_url": "https://www.worcesterma.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "atlanta_ga",
+      "name": "Atlanta",
+      "state": "GA",
+      "type": "city",
+      "population": 498715,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.atlantaga.gov/government/departments/city-planning/office-of-buildings/permits-licenses",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 15,
+      "fees": {
+        "base_fee": 300,
+        "per_kw": null,
+        "inspection_fee": 100,
+        "estimated_total_residential": 445
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Office of Buildings",
+        "phone": "404-330-6140",
+        "url": "https://www.atlantaga.gov"
+      },
+      "special_requirements": [
+        "Online permit application",
+        "Georgia Power interconnection",
+        "Higher volume may extend timeline"
+      ],
+      "notes": "Online solar permit applications. DeKalb County permit fee approximately $445. Urban area may have longer processing due to volume.",
+      "source_url": "https://www.atlantaga.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "augusta_ga",
+      "name": "Augusta",
+      "state": "GA",
+      "type": "city",
+      "population": 202081,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.augustaga.gov/586/Building-Permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 15,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 325
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Planning & Development",
+        "phone": "706-821-1796",
+        "url": "https://www.augustaga.gov"
+      },
+      "special_requirements": [
+        "Georgia Power interconnection"
+      ],
+      "notes": "Online permit applications available. Standard GA process.",
+      "source_url": "https://www.augustaga.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "savannah_ga",
+      "name": "Savannah",
+      "state": "GA",
+      "type": "city",
+      "population": 147780,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.savannahga.gov/2052/Building-Permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 15,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 325
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard IFC setbacks. Historic district restrictions.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Development Services",
+        "phone": "912-651-6520",
+        "url": "https://www.savannahga.gov"
+      },
+      "special_requirements": [
+        "Historic district review may be required",
+        "Georgia Power interconnection"
+      ],
+      "notes": "Historic district (one of largest in US) may require additional review for solar installations.",
+      "source_url": "https://www.savannahga.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "philadelphia_pa",
+      "name": "Philadelphia",
+      "state": "PA",
+      "type": "city",
+      "population": 1603797,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.phila.gov/services/permits-violations-licenses/apply-for-a-permit/building-and-repair-permits/get-a-permit-to-install-solar-panels/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "structural_calcs",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 15,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 100,
+        "estimated_total_residential": 375
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "Philadelphia fire code setbacks. Historic district rules.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Dept of Licenses & Inspections",
+        "phone": "215-686-2463",
+        "url": "https://www.phila.gov"
+      },
+      "special_requirements": [
+        "DVRPC standardization effort",
+        "PECO interconnection",
+        "SREC market"
+      ],
+      "notes": "DVRPC working to standardize solar PV permit processes across Greater Philadelphia. SREC market provides additional revenue.",
+      "source_url": "https://www.phila.gov/services/permits-violations-licenses/apply-for-a-permit/building-and-repair-permits/get-a-permit-to-install-solar-panels/",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "pittsburgh_pa",
+      "name": "Pittsburgh",
+      "state": "PA",
+      "type": "city",
+      "population": 302971,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://pittsburghpa.gov/pli/permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 15,
+      "fees": {
+        "base_fee": 175,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 300
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Permits, Licenses & Inspections",
+        "phone": "412-255-2175",
+        "url": "https://pittsburghpa.gov"
+      },
+      "special_requirements": [
+        "Duquesne Light interconnection",
+        "SREC market"
+      ],
+      "notes": "Part of Western PA Rooftop Solar Challenge. Standard PA permitting.",
+      "source_url": "https://pittsburghpa.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "newark_nj",
+      "name": "Newark",
+      "state": "NJ",
+      "type": "city",
+      "population": 311549,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.newarknj.gov/departments/engineering/office-of-construction-codes-enforcement",
+      "submission_method": "in_person",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 65,
+        "per_kw": null,
+        "inspection_fee": 0,
+        "estimated_total_residential": 65
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "NJ fire code setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Construction Codes",
+        "phone": "973-733-3860",
+        "url": "https://www.newarknj.gov"
+      },
+      "special_requirements": [
+        "NJ PV fee: $65 for 1-50 kW",
+        "PSE&G interconnection",
+        "Strong SREC-II market"
+      ],
+      "notes": "NJ PV permit fees are kW-based: 1-50 kW=$65, 51-100 kW=$129, >100 kW=$640. Strong SREC-II incentive market.",
+      "source_url": "https://www.newarknj.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "jersey_city_nj",
+      "name": "Jersey City",
+      "state": "NJ",
+      "type": "city",
+      "population": 292449,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.jerseycitynj.gov/community/constructioncode",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 65,
+        "per_kw": null,
+        "inspection_fee": 0,
+        "estimated_total_residential": 65
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "NJ fire code setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Construction Code",
+        "phone": "201-547-5074",
+        "url": "https://www.jerseycitynj.gov"
+      },
+      "special_requirements": [
+        "NJ PV fee schedule",
+        "PSE&G interconnection"
+      ],
+      "notes": "NJ standardized PV fee schedule. $65 for systems up to 50 kW.",
+      "source_url": "https://www.jerseycitynj.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "charleston_sc",
+      "name": "Charleston",
+      "state": "SC",
+      "type": "city",
+      "population": 150227,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://charleston-sc.gov/142/Building-Inspections",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "structural_calcs",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 300,
+        "per_kw": null,
+        "inspection_fee": 100,
+        "estimated_total_residential": 450
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "Coastal wind load requirements. Hurricane zone standards.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Inspections",
+        "phone": "843-724-3781",
+        "url": "https://charleston-sc.gov"
+      },
+      "special_requirements": [
+        "Certified engineer plans for historic areas",
+        "Wind load calculations",
+        "Systems limited to 20 kW AC"
+      ],
+      "notes": "Historic district has strict requirements. Permit $300-$500. Residential systems limited to 20 kW AC per SC law.",
+      "source_url": "https://charleston-sc.gov/DocumentCenter/View/39726/Solar-Panels--Residential-2",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "columbia_sc",
+      "name": "Columbia",
+      "state": "SC",
+      "type": "city",
+      "population": 136632,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.columbiasc.gov/building-inspections",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 325
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard SC fire code setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Inspections",
+        "phone": "803-545-3300",
+        "url": "https://www.columbiasc.gov"
+      },
+      "special_requirements": [
+        "Systems limited to 20 kW AC",
+        "Dominion Energy SC interconnection"
+      ],
+      "notes": "Standard SC permitting. 20 kW AC residential limit.",
+      "source_url": "https://www.columbiasc.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "greenville_sc",
+      "name": "Greenville",
+      "state": "SC",
+      "type": "city",
+      "population": 72095,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.greenvillecounty.org/BuildingSafety/",
+      "submission_method": "in_person",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "structural_calcs",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 325
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard SC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Safety",
+        "phone": "864-467-7220",
+        "url": "https://www.greenvillecounty.org"
+      },
+      "special_requirements": [
+        "Sealed structural review with plan view required",
+        "Systems limited to 20 kW AC",
+        "Duke Energy Carolinas interconnection"
+      ],
+      "notes": "Greenville County requires sealed/signed structural review with plan view of panel system. 20 kW AC limit.",
+      "source_url": "https://www.greenvillecounty.org/BuildingSafety/forms/ResidentialSolarPhotovoltaicPanels.pdf",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "virginia_beach_va",
+      "name": "Virginia Beach",
+      "state": "VA",
+      "type": "city",
+      "population": 459470,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.vbgov.com/government/departments/planning/permits/Pages/default.aspx",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 12,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Coastal wind load requirements. Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Planning & Community Development",
+        "phone": "757-385-4621",
+        "url": "https://www.vbgov.com"
+      },
+      "special_requirements": [
+        "Dominion Energy interconnection",
+        "Coastal wind load calcs may be required"
+      ],
+      "notes": "Standard VA permitting. Coastal location may require wind load calculations.",
+      "source_url": "https://www.vbgov.com",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "richmond_va",
+      "name": "Richmond",
+      "state": "VA",
+      "type": "city",
+      "population": 226610,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.rva.gov/building-inspections/permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 12,
+      "fees": {
+        "base_fee": 125,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 250
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Inspections",
+        "phone": "804-646-6430",
+        "url": "https://www.rva.gov"
+      },
+      "special_requirements": [
+        "Dominion Energy interconnection"
+      ],
+      "notes": "Standard VA permitting. Dominion Energy serves the area.",
+      "source_url": "https://www.rva.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "baltimore_md",
+      "name": "Baltimore",
+      "state": "MD",
+      "type": "city",
+      "population": 585708,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.baltimorecity.gov/housing/permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 15,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 100,
+        "estimated_total_residential": 350
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Baltimore fire code setbacks. Row house considerations.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Housing & Community Development",
+        "phone": "410-396-4673",
+        "url": "https://www.baltimorecity.gov"
+      },
+      "special_requirements": [
+        "BGE interconnection",
+        "SREC market",
+        "Row house structural considerations"
+      ],
+      "notes": "Row house roofs may require additional structural review. Maryland SREC market provides incentives.",
+      "source_url": "https://www.baltimorecity.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "seattle_wa",
+      "name": "Seattle",
+      "state": "WA",
+      "type": "city",
+      "population": 737015,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.seattle.gov/sdci/permits/permits-we-issue",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 1,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Seattle Dept of Construction & Inspections",
+        "phone": "206-684-8850",
+        "url": "https://www.seattle.gov/sdci"
+      },
+      "special_requirements": [
+        "Same-day online issuance for systems <7.7 kW",
+        "No plan review needed for small systems",
+        "Seattle City Light interconnection"
+      ],
+      "notes": "Systems under 7.7 kW can apply online with same-day issuance and no plan review. Larger systems require plan review with tiered fees.",
+      "source_url": "https://www.seattle.gov/DPD/publications/CAM/cam420.pdf",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "spokane_wa",
+      "name": "Spokane",
+      "state": "WA",
+      "type": "city",
+      "population": 228989,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://my.spokanecity.org/permits/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 7,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Permits",
+        "phone": "509-625-6300",
+        "url": "https://my.spokanecity.org"
+      },
+      "special_requirements": [
+        "Avista Utilities interconnection"
+      ],
+      "notes": "Standard WA permitting process.",
+      "source_url": "https://my.spokanecity.org",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "tacoma_wa",
+      "name": "Tacoma",
+      "state": "WA",
+      "type": "city",
+      "population": 219346,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.cityoftacoma.org/government/city_departments/planning_and_development_services",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 7,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Planning & Development Services",
+        "phone": "253-591-5030",
+        "url": "https://www.cityoftacoma.org"
+      },
+      "special_requirements": [
+        "Tacoma Power interconnection"
+      ],
+      "notes": "Standard WA permitting. Tacoma Power provides interconnection.",
+      "source_url": "https://www.cityoftacoma.org",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "portland_or",
+      "name": "Portland",
+      "state": "OR",
+      "type": "city",
+      "population": 652503,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.portland.gov/ppd/solar-development/solar-permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 300,
+        "per_kw": null,
+        "inspection_fee": 100,
+        "estimated_total_residential": 450
+      },
+      "typical_timeline_days": 7,
+      "fire_code_requirements": "Standard IFC setbacks. Historic district installations require additional review.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Bureau of Development Services",
+        "phone": "503-823-7300",
+        "url": "https://www.portland.gov/ppd"
+      },
+      "special_requirements": [
+        "Solar Prescriptive Path for simple roofs",
+        "DevHub online application",
+        "Historic district delays possible",
+        "PGE interconnection"
+      ],
+      "notes": "Solar Prescriptive Path streamlines simple roof installations. Historic districts may add weeks. Fees $300-$600. Clackamas County requires structural engineering for older homes.",
+      "source_url": "https://www.portland.gov/ppd/solar-development/solar-permits",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "salem_or",
+      "name": "Salem",
+      "state": "OR",
+      "type": "city",
+      "population": 175535,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.cityofsalem.net/community/permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 250,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 375
+      },
+      "typical_timeline_days": 7,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building & Safety Division",
+        "phone": "503-588-6256",
+        "url": "https://www.cityofsalem.net"
+      },
+      "special_requirements": [
+        "PGE or Pacific Power interconnection"
+      ],
+      "notes": "Standard OR permitting.",
+      "source_url": "https://www.cityofsalem.net",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "minneapolis_mn",
+      "name": "Minneapolis",
+      "state": "MN",
+      "type": "city",
+      "population": 429954,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.minneapolismn.gov/business/licenses-permits/building-permits/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 325
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "MN building code. PV arrays limited to 150 ft in any direction.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Community Planning & Economic Development",
+        "phone": "612-673-3000",
+        "url": "https://www.minneapolismn.gov"
+      },
+      "special_requirements": [
+        "MN SolarAPP+ permitting incentive",
+        "Xcel Energy interconnection",
+        "PV arrays max 150 ft in any direction"
+      ],
+      "notes": "Minnesota offers SolarAPP+ permitting incentive program. Xcel Energy serves Minneapolis.",
+      "source_url": "https://www.minneapolismn.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "st_paul_mn",
+      "name": "St. Paul",
+      "state": "MN",
+      "type": "city",
+      "population": 311527,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.stpaul.gov/departments/safety-inspections/permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 175,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 300
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "MN building code setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Safety & Inspections",
+        "phone": "651-266-9090",
+        "url": "https://www.stpaul.gov"
+      },
+      "special_requirements": [
+        "Xcel Energy interconnection"
+      ],
+      "notes": "Standard MN permitting. Xcel Energy serves the area.",
+      "source_url": "https://www.stpaul.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "milwaukee_wi",
+      "name": "Milwaukee",
+      "state": "WI",
+      "type": "city",
+      "population": 577222,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://city.milwaukee.gov/DNS/permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 175,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 300
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Dept of Neighborhood Services",
+        "phone": "414-286-2268",
+        "url": "https://city.milwaukee.gov"
+      },
+      "special_requirements": [
+        "WI Stat 66.0401 protects solar rights",
+        "We Energies interconnection",
+        "Focus on Energy rebates"
+      ],
+      "notes": "Milwaukee amended ordinances to comply with WI solar access statute. Focus on Energy rebates available.",
+      "source_url": "https://city.milwaukee.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "madison_wi",
+      "name": "Madison",
+      "state": "WI",
+      "type": "city",
+      "population": 269840,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.cityofmadison.com/dpced/bi/permits/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 7,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Inspection",
+        "phone": "608-266-4551",
+        "url": "https://www.cityofmadison.com"
+      },
+      "special_requirements": [
+        "MGE interconnection",
+        "Focus on Energy rebates"
+      ],
+      "notes": "Standard WI permitting. Madison Gas & Electric serves the area.",
+      "source_url": "https://www.cityofmadison.com",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "detroit_mi",
+      "name": "Detroit",
+      "state": "MI",
+      "type": "city",
+      "population": 639111,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://detroitmi.gov/departments/buildings-safety-engineering-and-environmental-department",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 100,
+        "per_kw": 2,
+        "inspection_fee": 50,
+        "estimated_total_residential": 200
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Buildings, Safety & Environment",
+        "phone": "313-224-2733",
+        "url": "https://detroitmi.gov"
+      },
+      "special_requirements": [
+        "Online solar permitting",
+        "DTE Energy interconnection",
+        "MI fee: $2/panel"
+      ],
+      "notes": "Online solar permitting available. MI state fee $2/panel for systems <5,000 kW inverter capacity. Median permitting time ~53 days in MI.",
+      "source_url": "https://detroitmi.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "grand_rapids_mi",
+      "name": "Grand Rapids",
+      "state": "MI",
+      "type": "city",
+      "population": 198917,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.grandrapidsmi.gov/Services/Apply-for-a-Solar-Permit",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 75,
+        "per_kw": 2,
+        "inspection_fee": 50,
+        "estimated_total_residential": 175
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Community Development",
+        "phone": "616-456-3674",
+        "url": "https://www.grandrapidsmi.gov"
+      },
+      "special_requirements": [
+        "Online solar permit application",
+        "Consumers Energy interconnection"
+      ],
+      "notes": "Dedicated online solar permit application. Standard MI process.",
+      "source_url": "https://www.grandrapidsmi.gov/Services/Apply-for-a-Solar-Permit",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "columbus_oh",
+      "name": "Columbus",
+      "state": "OH",
+      "type": "city",
+      "population": 905748,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.columbus.gov/building-and-zoning/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "structural_calcs",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 100,
+        "estimated_total_residential": 350
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building & Zoning Services",
+        "phone": "614-645-7433",
+        "url": "https://www.columbus.gov"
+      },
+      "special_requirements": [
+        "Plans sealed by Ohio-registered design professional required",
+        "Approved special inspector required",
+        "AEP Ohio interconnection"
+      ],
+      "notes": "Requires Ohio-registered design professional sealed plans and approved special inspector for PV inspections.",
+      "source_url": "https://www.columbus.gov/files/sharedassets/city/v/1/building-and-zoning/document-library/rooftop-solar-installations.pdf",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "cleveland_oh",
+      "name": "Cleveland",
+      "state": "OH",
+      "type": "city",
+      "population": 372624,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.clevelandohio.gov/city-hall/departments/building-housing/divisions/permits/solar-panel-permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 300
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building & Housing",
+        "phone": "216-664-2282",
+        "url": "https://www.clevelandohio.gov"
+      },
+      "special_requirements": [
+        "Zoning review required",
+        "Valuation-based permit fees",
+        "FirstEnergy/CEI interconnection"
+      ],
+      "notes": "Solar defined as exterior alteration requiring building permit. Zoning review required. Fees are valuation-based.",
+      "source_url": "https://www.clevelandohio.gov/city-hall/departments/building-housing/divisions/permits/solar-panel-permits",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "cincinnati_oh",
+      "name": "Cincinnati",
+      "state": "OH",
+      "type": "city",
+      "population": 309317,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.cincinnati-oh.gov/buildings/building-permit-forms-applications/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 5,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building & Inspections",
+        "phone": "513-352-3276",
+        "url": "https://www.cincinnati-oh.gov"
+      },
+      "special_requirements": [
+        "Residential reviewed within 5 business days",
+        "Duke Energy Ohio interconnection"
+      ],
+      "notes": "Best efforts to review residential within 5 business days, commercial within 10 business days.",
+      "source_url": "https://www.cincinnati-oh.gov/buildings/building-permit-forms-applications/",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "chicago_il",
+      "name": "Chicago",
+      "state": "IL",
+      "type": "city",
+      "population": 2746388,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.chicago.gov/city/en/sites/guide-to-building-permits/home/instructions/EPP/SOLAR.html",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 275,
+        "per_kw": null,
+        "inspection_fee": 0,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 1,
+      "fire_code_requirements": "Chicago fire code setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Dept of Buildings",
+        "phone": "312-744-3449",
+        "url": "https://www.chicago.gov"
+      },
+      "special_requirements": [
+        "Express Permit Program: same-day at $275",
+        "Licensed electrical contractor + ICC DG Installer cert required",
+        "ComEd interconnection",
+        "IL Shines SREC program"
+      ],
+      "notes": "Express Permit Program offers same-day approval at $275 (reduced from $375). Requires licensed electrical contractor and ICC DG Installer certification.",
+      "source_url": "https://www.chicago.gov/city/en/sites/guide-to-building-permits/home/instructions/EPP/SOLAR.html",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "indianapolis_in",
+      "name": "Indianapolis",
+      "state": "IN",
+      "type": "city",
+      "population": 887642,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.indy.gov/agency/department-of-business-and-neighborhood-services",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 15,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Business & Neighborhood Services",
+        "phone": "317-327-8700",
+        "url": "https://www.indy.gov"
+      },
+      "special_requirements": [
+        "IURC interconnection approval required",
+        "AES Indiana or Duke Energy Indiana interconnection"
+      ],
+      "notes": "IURC approval required for grid interconnection. Standard IN permitting.",
+      "source_url": "https://www.indy.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "kansas_city_mo",
+      "name": "Kansas City",
+      "state": "MO",
+      "type": "city",
+      "population": 508090,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.kcmo.gov/city-hall/departments/city-planning-development/permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 15,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": false,
+      "contacts": {
+        "department": "City Planning & Development",
+        "phone": "816-513-1500",
+        "url": "https://www.kcmo.gov"
+      },
+      "special_requirements": [
+        "Evergy or KCP&L interconnection"
+      ],
+      "notes": "Missouri is one of 4 states without statewide NEC adoption (exists in some cities). Check local code.",
+      "source_url": "https://www.kcmo.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "st_louis_mo",
+      "name": "St. Louis",
+      "state": "MO",
+      "type": "city",
+      "population": 301578,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.stlouis-mo.gov/government/departments/public-safety/building/permits/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 15,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "Standard setbacks.",
+      "rapid_shutdown_required": false,
+      "contacts": {
+        "department": "Building Division",
+        "phone": "314-622-3313",
+        "url": "https://www.stlouis-mo.gov"
+      },
+      "special_requirements": [
+        "Ameren Missouri interconnection"
+      ],
+      "notes": "Standard MO permitting. No statewide NEC.",
+      "source_url": "https://www.stlouis-mo.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "nashville_tn",
+      "name": "Nashville",
+      "state": "TN",
+      "type": "city",
+      "population": 689447,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.nashville.gov/departments/codes/construction-and-permits/trades-permits/solar-panel-photovoltaic-permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 15,
+      "fees": {
+        "base_fee": 75,
+        "per_kw": null,
+        "inspection_fee": 0,
+        "estimated_total_residential": 100
+      },
+      "typical_timeline_days": 7,
+      "fire_code_requirements": "Nashville fire code setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Metropolitan Codes",
+        "phone": "615-862-6590",
+        "url": "https://www.nashville.gov"
+      },
+      "special_requirements": [
+        "Licensed and experienced electrical installer required",
+        "Registered with Metropolitan Codes",
+        "NES (Nashville Electric Service) interconnection",
+        "No traditional net metering (TVA territory)"
+      ],
+      "notes": "Electrical PV permits start at $75. May increase based on fixtures/equipment. TVA territory - no traditional net metering.",
+      "source_url": "https://www.nashville.gov/departments/codes/construction-and-permits/trades-permits/solar-panel-photovoltaic-permits",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "memphis_tn",
+      "name": "Memphis",
+      "state": "TN",
+      "type": "city",
+      "population": 633104,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.memphistn.gov/government/construction-code-enforcement/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 15,
+      "fees": {
+        "base_fee": 100,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 175
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Construction Code Enforcement",
+        "phone": "901-576-6619",
+        "url": "https://www.memphistn.gov"
+      },
+      "special_requirements": [
+        "MLGW interconnection",
+        "TVA territory"
+      ],
+      "notes": "TVA territory. MLGW (Memphis Light Gas & Water) handles interconnection.",
+      "source_url": "https://www.memphistn.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "new_orleans_la",
+      "name": "New Orleans",
+      "state": "LA",
+      "type": "city",
+      "population": 383997,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://nola.gov/solar-permitting/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 325
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "Hurricane zone wind load requirements.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Safety & Permits",
+        "phone": "504-658-7100",
+        "url": "https://nola.gov"
+      },
+      "special_requirements": [
+        "Hurricane zone wind load calcs",
+        "Entergy New Orleans interconnection",
+        "Solar for All NOLA program available"
+      ],
+      "notes": "Hurricane zone requires wind load calculations. Solar for All NOLA program offers free site evaluations.",
+      "source_url": "https://nola.gov/solar-permitting/",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "baton_rouge_la",
+      "name": "Baton Rouge",
+      "state": "LA",
+      "type": "city",
+      "population": 227470,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.brla.gov/169/Building-Permits",
+      "submission_method": "in_person",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "Standard setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Permits & Inspections",
+        "phone": "225-389-3044",
+        "url": "https://www.brla.gov"
+      },
+      "special_requirements": [
+        "Entergy Louisiana interconnection"
+      ],
+      "notes": "Standard LA permitting.",
+      "source_url": "https://www.brla.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "salt_lake_city_ut",
+      "name": "Salt Lake City",
+      "state": "UT",
+      "type": "city",
+      "population": 199723,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.slc.gov/buildingservices/solar-pv/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 12,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 7,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Services",
+        "phone": "801-535-6000",
+        "url": "https://www.slc.gov/buildingservices"
+      },
+      "special_requirements": [
+        "Online solar permitting",
+        "Rocky Mountain Power interconnection"
+      ],
+      "notes": "Online solar permitting available. PE stamps typically required >12 kW. Rocky Mountain Power handles interconnection.",
+      "source_url": "https://www.slc.gov/buildingservices/solar-pv/",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "hartford_ct",
+      "name": "Hartford",
+      "state": "CT",
+      "type": "city",
+      "population": 121054,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.hartfordct.gov/Government/Departments/DDS/DDS-Divisions/Licenses-Inspections",
+      "submission_method": "in_person",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "CT fire code setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Licenses & Inspections",
+        "phone": "860-757-9780",
+        "url": "https://www.hartfordct.gov"
+      },
+      "special_requirements": [
+        "CT standardized solar PV permit supplement",
+        "Eversource interconnection",
+        "ZREC/LREC incentives"
+      ],
+      "notes": "CT standardized solar PV permit application supplement available. Strong ZREC/LREC incentive programs.",
+      "source_url": "https://www.hartfordct.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "stamford_ct",
+      "name": "Stamford",
+      "state": "CT",
+      "type": "city",
+      "population": 135470,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.stamfordct.gov/building-department",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "CT fire code setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Dept",
+        "phone": "203-977-4180",
+        "url": "https://www.stamfordct.gov"
+      },
+      "special_requirements": [
+        "CT standardized permit supplement",
+        "Eversource interconnection"
+      ],
+      "notes": "Standard CT permitting with standardized permit supplement.",
+      "source_url": "https://www.stamfordct.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "honolulu_hi",
+      "name": "Honolulu",
+      "state": "HI",
+      "type": "city",
+      "population": 350964,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.honolulu.gov/dpp/solar-permit/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 20,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 100,
+        "estimated_total_residential": 350
+      },
+      "typical_timeline_days": 7,
+      "fire_code_requirements": "Hawaii fire code setbacks. Wind load requirements for Pacific storm exposure.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Dept of Planning & Permitting",
+        "phone": "808-768-8000",
+        "url": "https://www.honolulu.gov/dpp"
+      },
+      "special_requirements": [
+        "Expedited permitting for systems up to 20 kW",
+        "HECO interconnection",
+        "High solar penetration area - interconnection study may be needed"
+      ],
+      "notes": "Expedited permitting for qualifying PV systems up to 20 kW. Hawaii has highest solar penetration in US - interconnection studies sometimes required.",
+      "source_url": "https://www.honolulu.gov/dpp/solar-permit/",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "des_moines_ia",
+      "name": "Des Moines",
+      "state": "IA",
+      "type": "city",
+      "population": 214133,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.dsm.city/departments/development_services/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 100,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 200
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Development Services",
+        "phone": "515-283-4200",
+        "url": "https://www.dsm.city"
+      },
+      "special_requirements": [
+        "MidAmerican Energy interconnection"
+      ],
+      "notes": "Standard IA permitting. Some SolarAPP+ adoption in Iowa.",
+      "source_url": "https://www.dsm.city",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "wichita_ks",
+      "name": "Wichita",
+      "state": "KS",
+      "type": "city",
+      "population": 397532,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.wichita.gov/Planning/Pages/Permits.aspx",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 100,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 200
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Planning Dept",
+        "phone": "316-268-4421",
+        "url": "https://www.wichita.gov"
+      },
+      "special_requirements": [
+        "Evergy interconnection"
+      ],
+      "notes": "Standard KS permitting.",
+      "source_url": "https://www.wichita.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "louisville_ky",
+      "name": "Louisville",
+      "state": "KY",
+      "type": "city",
+      "population": 633045,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://louisvilleky.gov/government/develop-louisville/building-permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 15,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Develop Louisville",
+        "phone": "502-574-3321",
+        "url": "https://louisvilleky.gov"
+      },
+      "special_requirements": [
+        "LG&E interconnection"
+      ],
+      "notes": "Standard KY permitting. LG&E serves Louisville area.",
+      "source_url": "https://louisvilleky.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "oklahoma_city_ok",
+      "name": "Oklahoma City",
+      "state": "OK",
+      "type": "city",
+      "population": 681054,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.okc.gov/departments/development-services/building-permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 100,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 200
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Enhanced wind loads for tornado area.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Development Services",
+        "phone": "405-297-2525",
+        "url": "https://www.okc.gov"
+      },
+      "special_requirements": [
+        "OG&E interconnection",
+        "Enhanced wind load for tornado zone"
+      ],
+      "notes": "Oklahoma Solar Rights Act prevents HOA prohibition. Enhanced wind loads for tornado area.",
+      "source_url": "https://www.okc.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "little_rock_ar",
+      "name": "Little Rock",
+      "state": "AR",
+      "type": "city",
+      "population": 202591,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.littlerock.gov/for-businesses/permits-licensing/",
+      "submission_method": "in_person",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 100,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 200
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Planning & Development",
+        "phone": "501-371-4790",
+        "url": "https://www.littlerock.gov"
+      },
+      "special_requirements": [
+        "Entergy Arkansas interconnection"
+      ],
+      "notes": "Residential Building Contractor + Electrical license required in AR.",
+      "source_url": "https://www.littlerock.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "jackson_ms",
+      "name": "Jackson",
+      "state": "MS",
+      "type": "city",
+      "population": 153701,
+      "solarapp_enabled": false,
+      "permit_portal_url": null,
+      "submission_method": "in_person",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 75,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 150
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "Local codes (no statewide NEC).",
+      "rapid_shutdown_required": false,
+      "contacts": {
+        "department": "Planning & Development",
+        "phone": "601-960-1993",
+        "url": "https://www.jacksonms.gov"
+      },
+      "special_requirements": [
+        "No statewide NEC (check local code)",
+        "Entergy Mississippi interconnection"
+      ],
+      "notes": "MS is one of 4 states without statewide NEC adoption. Local codes vary. Generally user-friendly permitting.",
+      "source_url": "https://www.jacksonms.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "birmingham_al",
+      "name": "Birmingham",
+      "state": "AL",
+      "type": "city",
+      "population": 200733,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.birminghamal.gov/permits",
+      "submission_method": "in_person",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 100,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 200
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Inspections Dept",
+        "phone": "205-254-2481",
+        "url": "https://www.birminghamal.gov"
+      },
+      "special_requirements": [
+        "Alabama Power interconnection"
+      ],
+      "notes": "Standard AL permitting. Alabama Power handles interconnection.",
+      "source_url": "https://www.birminghamal.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "boise_id",
+      "name": "Boise",
+      "state": "ID",
+      "type": "city",
+      "population": 235684,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.cityofboise.org/departments/planning-and-development-services/permits/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 100,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 200
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Planning & Development Services",
+        "phone": "208-384-3830",
+        "url": "https://www.cityofboise.org"
+      },
+      "special_requirements": [
+        "Idaho Power interconnection",
+        "Idaho solar PV license required"
+      ],
+      "notes": "Idaho requires NABCEP or similar licensing plus Idaho solar PV license for contractors.",
+      "source_url": "https://www.cityofboise.org",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "albuquerque_nm",
+      "name": "Albuquerque",
+      "state": "NM",
+      "type": "city",
+      "population": 564559,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.cabq.gov/planning/building-safety-permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 125,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 225
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Safety & Permits",
+        "phone": "505-924-3320",
+        "url": "https://www.cabq.gov"
+      },
+      "special_requirements": [
+        "PNM interconnection"
+      ],
+      "notes": "Standard NM permitting. Strong solar resource.",
+      "source_url": "https://www.cabq.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "omaha_ne",
+      "name": "Omaha",
+      "state": "NE",
+      "type": "city",
+      "population": 486051,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.douglascounty-ne.gov/departments/planning/building-permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 100,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 200
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Planning Dept",
+        "phone": "402-444-5150",
+        "url": "https://www.douglascounty-ne.gov"
+      },
+      "special_requirements": [
+        "OPPD interconnection"
+      ],
+      "notes": "Standard NE permitting. Building permits required per county codes.",
+      "source_url": "https://www.douglascounty-ne.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "providence_ri",
+      "name": "Providence",
+      "state": "RI",
+      "type": "city",
+      "population": 190934,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.providenceri.gov/inspections-standards/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 75,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 150
+      },
+      "typical_timeline_days": 7,
+      "fire_code_requirements": "Standard setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Inspections & Standards",
+        "phone": "401-680-5440",
+        "url": "https://www.providenceri.gov"
+      },
+      "special_requirements": [
+        "RI standardized statewide permit application",
+        "Rhode Island Energy interconnection",
+        "Single-line electrical diagram required"
+      ],
+      "notes": "RI standardized statewide solar permit application effective 2025. Requires single-line electrical diagram with panel config, voltage, kW output.",
+      "source_url": "https://www.providenceri.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "wilmington_de",
+      "name": "Wilmington",
+      "state": "DE",
+      "type": "city",
+      "population": 70898,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.wilmingtonde.gov/government/city-departments/licenses-inspections",
+      "submission_method": "in_person",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 100,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 200
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "Standard setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Licenses & Inspections",
+        "phone": "302-576-3030",
+        "url": "https://www.wilmingtonde.gov"
+      },
+      "special_requirements": [
+        "NABCEP preferred for rebate eligibility",
+        "Delmarva Power interconnection"
+      ],
+      "notes": "NABCEP license preferred for rebate eligibility. Standard DE permitting.",
+      "source_url": "https://www.wilmingtonde.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "portland_me",
+      "name": "Portland",
+      "state": "ME",
+      "type": "city",
+      "population": 68408,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.portlandmaine.gov/285/Inspections",
+      "submission_method": "in_person",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 100,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 200
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Inspections Dept",
+        "phone": "207-874-8703",
+        "url": "https://www.portlandmaine.gov"
+      },
+      "special_requirements": [
+        "Licensed electrician required for installation",
+        "CMP interconnection"
+      ],
+      "notes": "Maine requires licensed electricians to install solar panels.",
+      "source_url": "https://www.portlandmaine.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "burlington_vt",
+      "name": "Burlington",
+      "state": "VT",
+      "type": "city",
+      "population": 44743,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.burlingtonvt.gov/DPI",
+      "submission_method": "in_person",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 75,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 150
+      },
+      "typical_timeline_days": 7,
+      "fire_code_requirements": "Standard setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Dept of Permitting & Inspections",
+        "phone": "802-865-7188",
+        "url": "https://www.burlingtonvt.gov"
+      },
+      "special_requirements": [
+        "Burlington has own inspectors (not state)",
+        "CPG from VT PUC required",
+        "Burlington Electric Dept interconnection"
+      ],
+      "notes": "Burlington has own inspectors (most VT jurisdictions use state-level). Certificate of Public Good from VT PUC required.",
+      "source_url": "https://www.burlingtonvt.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "manchester_nh",
+      "name": "Manchester",
+      "state": "NH",
+      "type": "city",
+      "population": 115644,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.manchesternh.gov/Departments/Building",
+      "submission_method": "in_person",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 100,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 200
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Dept",
+        "phone": "603-624-6444",
+        "url": "https://www.manchesternh.gov"
+      },
+      "special_requirements": [
+        "Eversource interconnection"
+      ],
+      "notes": "Standard NH permitting.",
+      "source_url": "https://www.manchesternh.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "charleston_wv",
+      "name": "Charleston",
+      "state": "WV",
+      "type": "city",
+      "population": 48006,
+      "solarapp_enabled": false,
+      "permit_portal_url": null,
+      "submission_method": "in_person",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 15,
+      "fees": {
+        "base_fee": 75,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 150
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "Standard setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Inspection",
+        "phone": "304-348-8097",
+        "url": "https://www.cityofcharleston.org"
+      },
+      "special_requirements": [
+        "Licensed electrical contractor required",
+        "Appalachian Power interconnection"
+      ],
+      "notes": "Very low solar adoption. Licensed electrical contractor required.",
+      "source_url": "https://www.cityofcharleston.org",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "cheyenne_wy",
+      "name": "Cheyenne",
+      "state": "WY",
+      "type": "city",
+      "population": 65132,
+      "solarapp_enabled": false,
+      "permit_portal_url": null,
+      "submission_method": "in_person",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 75,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 150
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "High wind requirements.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Division",
+        "phone": "307-637-6282",
+        "url": "https://www.cheyennecity.org"
+      },
+      "special_requirements": [
+        "Very high wind area - enhanced mounting",
+        "Black Hills Energy interconnection"
+      ],
+      "notes": "Very high wind area requires enhanced panel mounting. Very low solar adoption.",
+      "source_url": "https://www.cheyennecity.org",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "billings_mt",
+      "name": "Billings",
+      "state": "MT",
+      "type": "city",
+      "population": 119510,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://ci.billings.mt.us/175/Building-Division",
+      "submission_method": "in_person",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 75,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 150
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Division",
+        "phone": "406-657-8262",
+        "url": "https://ci.billings.mt.us"
+      },
+      "special_requirements": [
+        "NorthWestern Energy interconnection"
+      ],
+      "notes": "Standard MT permitting. Growing solar interest.",
+      "source_url": "https://ci.billings.mt.us",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "fargo_nd",
+      "name": "Fargo",
+      "state": "ND",
+      "type": "city",
+      "population": 125990,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://fargond.gov/city-government/departments/inspections",
+      "submission_method": "in_person",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 75,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 150
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard setbacks. High wind area.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Inspections Dept",
+        "phone": "701-241-1561",
+        "url": "https://fargond.gov"
+      },
+      "special_requirements": [
+        "ND State Electrical Board permit",
+        "Xcel Energy interconnection"
+      ],
+      "notes": "Electrical and building permits required. ND State Electrical Board manages electrical permits.",
+      "source_url": "https://fargond.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "sioux_falls_sd",
+      "name": "Sioux Falls",
+      "state": "SD",
+      "type": "city",
+      "population": 192517,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.siouxfalls.org/building-services",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 75,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 150
+      },
+      "typical_timeline_days": 7,
+      "fire_code_requirements": "Standard setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Services",
+        "phone": "605-367-8651",
+        "url": "https://www.siouxfalls.org"
+      },
+      "special_requirements": [
+        "Xcel Energy or MidAmerican Energy interconnection"
+      ],
+      "notes": "Building and electrical permits required. No special solar contractor license but electrical license required.",
+      "source_url": "https://www.siouxfalls.org",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "anchorage_ak",
+      "name": "Anchorage",
+      "state": "AK",
+      "type": "city",
+      "population": 291247,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.muni.org/departments/prior_departments/prior_cedd/prior_building_safety/pages/permits.aspx",
+      "submission_method": "in_person",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "structural_calcs",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "Standard setbacks. Snow load requirements.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Safety",
+        "phone": "907-343-8301",
+        "url": "https://www.muni.org"
+      },
+      "special_requirements": [
+        "Extreme snow load requirements",
+        "Seismic requirements",
+        "Chugach Electric interconnection"
+      ],
+      "notes": "Extreme snow loads and seismic requirements. Limited solar resource in winter but excellent summer production.",
+      "source_url": "https://www.muni.org",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

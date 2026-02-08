@@ -8,7 +8,9 @@
     "typical_fee_range": "$100-$400",
     "typical_timeline_days": "7-21",
     "inspection_required": true,
-    "inspection_stages": ["final"],
+    "inspection_stages": [
+      "final"
+    ],
     "statewide_permit_program": false,
     "statewide_program_name": null
   },
@@ -30,5 +32,45 @@
     "license_type": "No dedicated state solar license. Licensed electrician required for electrical work. General contractor license required in many municipalities.",
     "nabcep_required": false
   },
-  "notes": "Indiana's solar market was negatively impacted by the end of net metering in 2022. The EDG rate replacement provides less compensation than retail net metering. No state solar tax credit. Property tax exemption available for solar equipment for residential systems. The state's relatively low electricity rates reduce the payback period advantage. Rural electric cooperatives may have different interconnection rules than IOUs."
+  "notes": "Indiana's solar market was negatively impacted by the end of net metering in 2022. The EDG rate replacement provides less compensation than retail net metering. No state solar tax credit. Property tax exemption available for solar equipment for residential systems. The state's relatively low electricity rates reduce the payback period advantage. Rural electric cooperatives may have different interconnection rules than IOUs.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "indianapolis_in",
+      "name": "Indianapolis",
+      "state": "IN",
+      "type": "city",
+      "population": 887642,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.indy.gov/agency/department-of-business-and-neighborhood-services",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 15,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Business & Neighborhood Services",
+        "phone": "317-327-8700",
+        "url": "https://www.indy.gov"
+      },
+      "special_requirements": [
+        "IURC interconnection approval required",
+        "AES Indiana or Duke Energy Indiana interconnection"
+      ],
+      "notes": "IURC approval required for grid interconnection. Standard IN permitting.",
+      "source_url": "https://www.indy.gov",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 1
 }

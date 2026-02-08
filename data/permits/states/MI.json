@@ -8,7 +8,9 @@
     "typical_fee_range": "$150-$500",
     "typical_timeline_days": "10-30",
     "inspection_required": true,
-    "inspection_stages": ["final"],
+    "inspection_stages": [
+      "final"
+    ],
     "statewide_permit_program": false,
     "statewide_program_name": null
   },
@@ -30,5 +32,83 @@
     "license_type": "Licensed electrical contractor required. Residential Builder license may be needed for structural work. No dedicated solar contractor license.",
     "nabcep_required": false
   },
-  "notes": "Michigan's solar market has been impacted by the transition from net metering to DG tariffs and capacity caps. DTE Energy's DG program has waiting lists in some areas. High snow loads are a significant design consideration, especially in the Upper Peninsula and lake effect zones. The state has no specific state solar tax credit. Property tax exemption available in some jurisdictions. Consumers Energy and DTE have both invested in utility-scale solar."
+  "notes": "Michigan's solar market has been impacted by the transition from net metering to DG tariffs and capacity caps. DTE Energy's DG program has waiting lists in some areas. High snow loads are a significant design consideration, especially in the Upper Peninsula and lake effect zones. The state has no specific state solar tax credit. Property tax exemption available in some jurisdictions. Consumers Energy and DTE have both invested in utility-scale solar.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "detroit_mi",
+      "name": "Detroit",
+      "state": "MI",
+      "type": "city",
+      "population": 639111,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://detroitmi.gov/departments/buildings-safety-engineering-and-environmental-department",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 100,
+        "per_kw": 2,
+        "inspection_fee": 50,
+        "estimated_total_residential": 200
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Buildings, Safety & Environment",
+        "phone": "313-224-2733",
+        "url": "https://detroitmi.gov"
+      },
+      "special_requirements": [
+        "Online solar permitting",
+        "DTE Energy interconnection",
+        "MI fee: $2/panel"
+      ],
+      "notes": "Online solar permitting available. MI state fee $2/panel for systems <5,000 kW inverter capacity. Median permitting time ~53 days in MI.",
+      "source_url": "https://detroitmi.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "grand_rapids_mi",
+      "name": "Grand Rapids",
+      "state": "MI",
+      "type": "city",
+      "population": 198917,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.grandrapidsmi.gov/Services/Apply-for-a-Solar-Permit",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 75,
+        "per_kw": 2,
+        "inspection_fee": 50,
+        "estimated_total_residential": 175
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Community Development",
+        "phone": "616-456-3674",
+        "url": "https://www.grandrapidsmi.gov"
+      },
+      "special_requirements": [
+        "Online solar permit application",
+        "Consumers Energy interconnection"
+      ],
+      "notes": "Dedicated online solar permit application. Standard MI process.",
+      "source_url": "https://www.grandrapidsmi.gov/Services/Apply-for-a-Solar-Permit",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 2
 }

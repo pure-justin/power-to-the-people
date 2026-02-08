@@ -8,7 +8,9 @@
     "typical_fee_range": "$100-$500",
     "typical_timeline_days": "5-14",
     "inspection_required": true,
-    "inspection_stages": ["final"],
+    "inspection_stages": [
+      "final"
+    ],
     "statewide_permit_program": false,
     "statewide_program_name": null
   },
@@ -30,5 +32,47 @@
     "license_type": "No dedicated state solar license. Electrical contractor license required for PV work. Chicago has specific licensing requirements including licensed electricians.",
     "nabcep_required": false
   },
-  "notes": "Illinois is a top solar market driven by the Adjustable Block Program under CEJA, which provides substantial incentives. Illinois Solar for All program targets low-income communities. Strong net metering with retail rate credits. SREC/REC market provides additional revenue. ComEd territory covers the Chicago metro area. Relatively fast permitting (median 30 days total). The state has both property and sales tax exemptions for solar equipment."
+  "notes": "Illinois is a top solar market driven by the Adjustable Block Program under CEJA, which provides substantial incentives. Illinois Solar for All program targets low-income communities. Strong net metering with retail rate credits. SREC/REC market provides additional revenue. ComEd territory covers the Chicago metro area. Relatively fast permitting (median 30 days total). The state has both property and sales tax exemptions for solar equipment.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "chicago_il",
+      "name": "Chicago",
+      "state": "IL",
+      "type": "city",
+      "population": 2746388,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.chicago.gov/city/en/sites/guide-to-building-permits/home/instructions/EPP/SOLAR.html",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 275,
+        "per_kw": null,
+        "inspection_fee": 0,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 1,
+      "fire_code_requirements": "Chicago fire code setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Dept of Buildings",
+        "phone": "312-744-3449",
+        "url": "https://www.chicago.gov"
+      },
+      "special_requirements": [
+        "Express Permit Program: same-day at $275",
+        "Licensed electrical contractor + ICC DG Installer cert required",
+        "ComEd interconnection",
+        "IL Shines SREC program"
+      ],
+      "notes": "Express Permit Program offers same-day approval at $275 (reduced from $375). Requires licensed electrical contractor and ICC DG Installer certification.",
+      "source_url": "https://www.chicago.gov/city/en/sites/guide-to-building-permits/home/instructions/EPP/SOLAR.html",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 1
 }

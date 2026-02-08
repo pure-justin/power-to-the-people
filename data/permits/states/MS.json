@@ -8,7 +8,9 @@
     "typical_fee_range": "$100-$400",
     "typical_timeline_days": "7-21",
     "inspection_required": true,
-    "inspection_stages": ["final"],
+    "inspection_stages": [
+      "final"
+    ],
     "statewide_permit_program": false,
     "statewide_program_name": null
   },
@@ -30,5 +32,45 @@
     "license_type": "General contractor license required for projects over $50,000. Licensed electrician required for electrical work. No dedicated solar contractor license.",
     "nabcep_required": false
   },
-  "notes": "Mississippi is one of the least solar-friendly states with no meaningful net metering, no state solar incentives, no solar access laws, and no RPS. The solar market is very small and primarily commercial/utility-scale. Gulf Coast hurricane requirements add complexity and cost to coastal installations. TVA territory in northern Mississippi has different rules. The state has relatively low electricity rates which reduces the economic case for solar."
+  "notes": "Mississippi is one of the least solar-friendly states with no meaningful net metering, no state solar incentives, no solar access laws, and no RPS. The solar market is very small and primarily commercial/utility-scale. Gulf Coast hurricane requirements add complexity and cost to coastal installations. TVA territory in northern Mississippi has different rules. The state has relatively low electricity rates which reduces the economic case for solar.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "jackson_ms",
+      "name": "Jackson",
+      "state": "MS",
+      "type": "city",
+      "population": 153701,
+      "solarapp_enabled": false,
+      "permit_portal_url": null,
+      "submission_method": "in_person",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 75,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 150
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "Local codes (no statewide NEC).",
+      "rapid_shutdown_required": false,
+      "contacts": {
+        "department": "Planning & Development",
+        "phone": "601-960-1993",
+        "url": "https://www.jacksonms.gov"
+      },
+      "special_requirements": [
+        "No statewide NEC (check local code)",
+        "Entergy Mississippi interconnection"
+      ],
+      "notes": "MS is one of 4 states without statewide NEC adoption. Local codes vary. Generally user-friendly permitting.",
+      "source_url": "https://www.jacksonms.gov",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 1
 }

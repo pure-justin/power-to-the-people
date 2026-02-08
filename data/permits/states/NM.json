@@ -8,7 +8,9 @@
     "typical_fee_range": "$100-$400",
     "typical_timeline_days": "7-21",
     "inspection_required": true,
-    "inspection_stages": ["final"],
+    "inspection_stages": [
+      "final"
+    ],
     "statewide_permit_program": false,
     "statewide_program_name": null
   },
@@ -30,5 +32,44 @@
     "license_type": "NM Construction Industries Division license required. EE-98 (Electrical) or GB-98 (General Building) license. Solar specialty endorsement available.",
     "nabcep_required": false
   },
-  "notes": "New Mexico has excellent solar resources and a growing market. The state offers a 10% solar tax credit (up to $6,000 for residential). 100% clean energy mandate by 2045. PNM dominates the Albuquerque/Santa Fe market. Santa Fe's unique adobe architecture requirements create special considerations for solar installations. Property tax exemption available. The state's Energy Transition Act is driving utility-scale solar. High altitude sites have excellent production potential."
+  "notes": "New Mexico has excellent solar resources and a growing market. The state offers a 10% solar tax credit (up to $6,000 for residential). 100% clean energy mandate by 2045. PNM dominates the Albuquerque/Santa Fe market. Santa Fe's unique adobe architecture requirements create special considerations for solar installations. Property tax exemption available. The state's Energy Transition Act is driving utility-scale solar. High altitude sites have excellent production potential.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "albuquerque_nm",
+      "name": "Albuquerque",
+      "state": "NM",
+      "type": "city",
+      "population": 564559,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.cabq.gov/planning/building-safety-permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 125,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 225
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Safety & Permits",
+        "phone": "505-924-3320",
+        "url": "https://www.cabq.gov"
+      },
+      "special_requirements": [
+        "PNM interconnection"
+      ],
+      "notes": "Standard NM permitting. Strong solar resource.",
+      "source_url": "https://www.cabq.gov",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 1
 }

@@ -32,5 +32,45 @@
     "license_type": "Oklahoma electrical contractor license required.",
     "nabcep_required": false
   },
-  "notes": "Modest but growing solar market. OG&E and PSO offer net metering. Counties recently clarified authority over solar siting."
+  "notes": "Modest but growing solar market. OG&E and PSO offer net metering. Counties recently clarified authority over solar siting.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "oklahoma_city_ok",
+      "name": "Oklahoma City",
+      "state": "OK",
+      "type": "city",
+      "population": 681054,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.okc.gov/departments/development-services/building-permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 100,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 200
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Enhanced wind loads for tornado area.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Development Services",
+        "phone": "405-297-2525",
+        "url": "https://www.okc.gov"
+      },
+      "special_requirements": [
+        "OG&E interconnection",
+        "Enhanced wind load for tornado zone"
+      ],
+      "notes": "Oklahoma Solar Rights Act prevents HOA prohibition. Enhanced wind loads for tornado area.",
+      "source_url": "https://www.okc.gov",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 1
 }

@@ -32,5 +32,83 @@
     "license_type": "Oregon Construction Contractors Board license. Electrical permits through Oregon BCD.",
     "nabcep_required": false
   },
-  "notes": "Strong solar market with good incentives. Portland has streamlined Solar Prescriptive Path. NEC 2020 rapid shutdown requirements enforced. Clackamas County requires structural engineering for older homes."
+  "notes": "Strong solar market with good incentives. Portland has streamlined Solar Prescriptive Path. NEC 2020 rapid shutdown requirements enforced. Clackamas County requires structural engineering for older homes.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "portland_or",
+      "name": "Portland",
+      "state": "OR",
+      "type": "city",
+      "population": 652503,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.portland.gov/ppd/solar-development/solar-permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 300,
+        "per_kw": null,
+        "inspection_fee": 100,
+        "estimated_total_residential": 450
+      },
+      "typical_timeline_days": 7,
+      "fire_code_requirements": "Standard IFC setbacks. Historic district installations require additional review.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Bureau of Development Services",
+        "phone": "503-823-7300",
+        "url": "https://www.portland.gov/ppd"
+      },
+      "special_requirements": [
+        "Solar Prescriptive Path for simple roofs",
+        "DevHub online application",
+        "Historic district delays possible",
+        "PGE interconnection"
+      ],
+      "notes": "Solar Prescriptive Path streamlines simple roof installations. Historic districts may add weeks. Fees $300-$600. Clackamas County requires structural engineering for older homes.",
+      "source_url": "https://www.portland.gov/ppd/solar-development/solar-permits",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "salem_or",
+      "name": "Salem",
+      "state": "OR",
+      "type": "city",
+      "population": 175535,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.cityofsalem.net/community/permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 250,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 375
+      },
+      "typical_timeline_days": 7,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building & Safety Division",
+        "phone": "503-588-6256",
+        "url": "https://www.cityofsalem.net"
+      },
+      "special_requirements": [
+        "PGE or Pacific Power interconnection"
+      ],
+      "notes": "Standard OR permitting.",
+      "source_url": "https://www.cityofsalem.net",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 2
 }

@@ -8,7 +8,9 @@
     "typical_fee_range": "$200-$500",
     "typical_timeline_days": "5-14",
     "inspection_required": true,
-    "inspection_stages": ["final"],
+    "inspection_stages": [
+      "final"
+    ],
     "statewide_permit_program": true,
     "statewide_program_name": "ARS 11-323 Standardized Solar Construction Permits - requires counties to adopt standardized permitting for residential systems under 10 kW"
   },
@@ -30,5 +32,263 @@
     "license_type": "ROC (Registrar of Contractors) license required; CR-11 Electrical or KB-2 General Residential Contractor with solar-specific experience",
     "nabcep_required": false
   },
-  "notes": "Arizona has streamlined solar permitting through ARS 11-323, which requires standardized permit processes for residential solar. The state pioneered distributed solar but has seen controversy over rate changes reducing export compensation. SRP's demand-based rates have been particularly contentious. Many jurisdictions participate in SolSmart or SolarAPP+ for expedited permitting. Strong solar resource makes Arizona one of the best states for solar generation despite policy headwinds."
+  "notes": "Arizona has streamlined solar permitting through ARS 11-323, which requires standardized permit processes for residential solar. The state pioneered distributed solar but has seen controversy over rate changes reducing export compensation. SRP's demand-based rates have been particularly contentious. Many jurisdictions participate in SolSmart or SolarAPP+ for expedited permitting. Strong solar resource makes Arizona one of the best states for solar generation despite policy headwinds.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "phoenix_az",
+      "name": "Phoenix",
+      "state": "AZ",
+      "type": "city",
+      "population": 1608139,
+      "solarapp_enabled": true,
+      "permit_portal_url": "https://www.phoenix.gov/pdd",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 300,
+        "per_kw": null,
+        "inspection_fee": 0,
+        "estimated_total_residential": 300
+      },
+      "typical_timeline_days": 1,
+      "fire_code_requirements": "Phoenix Fire Dept requires separate permit for PV and battery storage systems. Standard setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Planning & Development Dept",
+        "phone": "602-262-7811",
+        "url": "https://www.phoenix.gov/pdd"
+      },
+      "special_requirements": [
+        "SolarAPP+ accepted",
+        "Separate Phoenix Fire Dept permit required",
+        "APS or SRP interconnection"
+      ],
+      "notes": "SolarAPP+ approved designs accepted. $300 roof-mounted permit includes all plan reviews and inspection. Separate fire department permit required.",
+      "source_url": "https://www.phoenix.gov/pdd/residential-building/resident-plan-reviews/solarapp-photovoltaic.html",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "tucson_az",
+      "name": "Tucson",
+      "state": "AZ",
+      "type": "city",
+      "population": 542629,
+      "solarapp_enabled": true,
+      "permit_portal_url": "https://www.tucsonaz.gov/Departments/Planning-Development-Services/Permits/Residential-Solar-Permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 250,
+        "per_kw": null,
+        "inspection_fee": 0,
+        "estimated_total_residential": 250
+      },
+      "typical_timeline_days": 1,
+      "fire_code_requirements": "Standard fire setbacks. Pima County may have additional requirements.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Planning & Development Services",
+        "phone": "520-791-5550",
+        "url": "https://www.tucsonaz.gov"
+      },
+      "special_requirements": [
+        "SolarAPP+ accepted",
+        "TEP interconnection"
+      ],
+      "notes": "SolarAPP accepted for residential PV. Tucson Electric Power handles interconnection.",
+      "source_url": "https://www.tucsonaz.gov/Departments/Planning-Development-Services/Permits/Residential-Solar-Permits",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "mesa_az",
+      "name": "Mesa",
+      "state": "AZ",
+      "type": "city",
+      "population": 504258,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.mesaaz.gov/business/development-services",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 275,
+        "per_kw": null,
+        "inspection_fee": 0,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 5,
+      "fire_code_requirements": "Standard fire setbacks per IFC.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Development Services",
+        "phone": "480-644-2211",
+        "url": "https://www.mesaaz.gov"
+      },
+      "special_requirements": [
+        "APS or SRP interconnection depending on location"
+      ],
+      "notes": "Standard Arizona permitting. Split between APS and SRP service territories.",
+      "source_url": "https://www.mesaaz.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "chandler_az",
+      "name": "Chandler",
+      "state": "AZ",
+      "type": "city",
+      "population": 275987,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.chandleraz.gov/government/departments/development-services",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 250,
+        "per_kw": null,
+        "inspection_fee": 0,
+        "estimated_total_residential": 250
+      },
+      "typical_timeline_days": 5,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Development Services",
+        "phone": "480-782-3000",
+        "url": "https://www.chandleraz.gov"
+      },
+      "special_requirements": [
+        "SRP interconnection"
+      ],
+      "notes": "Standard Arizona permitting process. SRP service territory.",
+      "source_url": "https://www.chandleraz.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "scottsdale_az",
+      "name": "Scottsdale",
+      "state": "AZ",
+      "type": "city",
+      "population": 241361,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.scottsdaleaz.gov/planning-development/permit-services",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 275,
+        "per_kw": null,
+        "inspection_fee": 0,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 5,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Planning & Development",
+        "phone": "480-312-2500",
+        "url": "https://www.scottsdaleaz.gov"
+      },
+      "special_requirements": [
+        "SRP or APS interconnection"
+      ],
+      "notes": "Standard Arizona permitting process.",
+      "source_url": "https://www.scottsdaleaz.gov/planning-development/permit-services",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "gilbert_az",
+      "name": "Gilbert",
+      "state": "AZ",
+      "type": "city",
+      "population": 267918,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.gilbertaz.gov/departments/development-services",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 250,
+        "per_kw": null,
+        "inspection_fee": 0,
+        "estimated_total_residential": 250
+      },
+      "typical_timeline_days": 5,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Development Services",
+        "phone": "480-503-6700",
+        "url": "https://www.gilbertaz.gov"
+      },
+      "special_requirements": [
+        "SRP interconnection"
+      ],
+      "notes": "Standard Arizona permitting. SRP service territory.",
+      "source_url": "https://www.gilbertaz.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "glendale_az",
+      "name": "Glendale",
+      "state": "AZ",
+      "type": "city",
+      "population": 248325,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.glendaleaz.com/government/departments/building-safety",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 250,
+        "per_kw": null,
+        "inspection_fee": 0,
+        "estimated_total_residential": 250
+      },
+      "typical_timeline_days": 5,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Safety",
+        "phone": "623-930-2580",
+        "url": "https://www.glendaleaz.com"
+      },
+      "special_requirements": [
+        "APS interconnection"
+      ],
+      "notes": "Standard Arizona permitting. APS service territory.",
+      "source_url": "https://www.glendaleaz.com",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 7
 }

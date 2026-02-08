@@ -32,5 +32,84 @@
     "license_type": "Licensed and bonded through TN Dept of Commerce and Insurance. Registered with Metropolitan Codes and Building Safety Administration for Nashville.",
     "nabcep_required": false
   },
-  "notes": "TVA territory limits net metering options. Nashville electrical PV permits start at $75. Contractors need state license for jobs over $25,000."
+  "notes": "TVA territory limits net metering options. Nashville electrical PV permits start at $75. Contractors need state license for jobs over $25,000.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "nashville_tn",
+      "name": "Nashville",
+      "state": "TN",
+      "type": "city",
+      "population": 689447,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.nashville.gov/departments/codes/construction-and-permits/trades-permits/solar-panel-photovoltaic-permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 15,
+      "fees": {
+        "base_fee": 75,
+        "per_kw": null,
+        "inspection_fee": 0,
+        "estimated_total_residential": 100
+      },
+      "typical_timeline_days": 7,
+      "fire_code_requirements": "Nashville fire code setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Metropolitan Codes",
+        "phone": "615-862-6590",
+        "url": "https://www.nashville.gov"
+      },
+      "special_requirements": [
+        "Licensed and experienced electrical installer required",
+        "Registered with Metropolitan Codes",
+        "NES (Nashville Electric Service) interconnection",
+        "No traditional net metering (TVA territory)"
+      ],
+      "notes": "Electrical PV permits start at $75. May increase based on fixtures/equipment. TVA territory - no traditional net metering.",
+      "source_url": "https://www.nashville.gov/departments/codes/construction-and-permits/trades-permits/solar-panel-photovoltaic-permits",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "memphis_tn",
+      "name": "Memphis",
+      "state": "TN",
+      "type": "city",
+      "population": 633104,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.memphistn.gov/government/construction-code-enforcement/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 15,
+      "fees": {
+        "base_fee": 100,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 175
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Construction Code Enforcement",
+        "phone": "901-576-6619",
+        "url": "https://www.memphistn.gov"
+      },
+      "special_requirements": [
+        "MLGW interconnection",
+        "TVA territory"
+      ],
+      "notes": "TVA territory. MLGW (Memphis Light Gas & Water) handles interconnection.",
+      "source_url": "https://www.memphistn.gov",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 2
 }

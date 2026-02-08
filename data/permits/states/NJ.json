@@ -8,7 +8,10 @@
     "typical_fee_range": "$200-$800",
     "typical_timeline_days": "10-30",
     "inspection_required": true,
-    "inspection_stages": ["rough-in", "final"],
+    "inspection_stages": [
+      "rough-in",
+      "final"
+    ],
     "statewide_permit_program": true,
     "statewide_program_name": "New Jersey passed automated solar permitting legislation in 2025 (unanimously). Developing state automated permitting platform. UCC (Uniform Construction Code) applies statewide."
   },
@@ -30,5 +33,83 @@
     "license_type": "Home Improvement Contractor (HIC) registration required. Licensed electrician for electrical work. No specific solar contractor license but solar-specific knowledge expected.",
     "nabcep_required": false
   },
-  "notes": "New Jersey is one of the strongest solar markets in the nation despite limited sunlight compared to southern/western states. Excellent incentives through SuSI program (TRECs for smaller systems, ADI for larger). Strong net metering. The state passed automated permitting legislation in 2025. Property tax exemption for solar. Sales tax exemption. High electricity rates support strong economics. 50% RPS by 2030. Community solar program active. One of the most mature residential solar markets in the US."
+  "notes": "New Jersey is one of the strongest solar markets in the nation despite limited sunlight compared to southern/western states. Excellent incentives through SuSI program (TRECs for smaller systems, ADI for larger). Strong net metering. The state passed automated permitting legislation in 2025. Property tax exemption for solar. Sales tax exemption. High electricity rates support strong economics. 50% RPS by 2030. Community solar program active. One of the most mature residential solar markets in the US.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "newark_nj",
+      "name": "Newark",
+      "state": "NJ",
+      "type": "city",
+      "population": 311549,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.newarknj.gov/departments/engineering/office-of-construction-codes-enforcement",
+      "submission_method": "in_person",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 65,
+        "per_kw": null,
+        "inspection_fee": 0,
+        "estimated_total_residential": 65
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "NJ fire code setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Construction Codes",
+        "phone": "973-733-3860",
+        "url": "https://www.newarknj.gov"
+      },
+      "special_requirements": [
+        "NJ PV fee: $65 for 1-50 kW",
+        "PSE&G interconnection",
+        "Strong SREC-II market"
+      ],
+      "notes": "NJ PV permit fees are kW-based: 1-50 kW=$65, 51-100 kW=$129, >100 kW=$640. Strong SREC-II incentive market.",
+      "source_url": "https://www.newarknj.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "jersey_city_nj",
+      "name": "Jersey City",
+      "state": "NJ",
+      "type": "city",
+      "population": 292449,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.jerseycitynj.gov/community/constructioncode",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 65,
+        "per_kw": null,
+        "inspection_fee": 0,
+        "estimated_total_residential": 65
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "NJ fire code setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Construction Code",
+        "phone": "201-547-5074",
+        "url": "https://www.jerseycitynj.gov"
+      },
+      "special_requirements": [
+        "NJ PV fee schedule",
+        "PSE&G interconnection"
+      ],
+      "notes": "NJ standardized PV fee schedule. $65 for systems up to 50 kW.",
+      "source_url": "https://www.jerseycitynj.gov",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 2
 }

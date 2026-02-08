@@ -8,7 +8,9 @@
     "typical_fee_range": "$200-$500",
     "typical_timeline_days": "7-21",
     "inspection_required": true,
-    "inspection_stages": ["final"],
+    "inspection_stages": [
+      "final"
+    ],
     "statewide_permit_program": false,
     "statewide_program_name": null
   },
@@ -30,5 +32,83 @@
     "license_type": "Home Improvement Contractor (HIC) license plus PV-1 or E-1 license required. Installers need E-2 electrician license or PV-2 license and must work under licensed electrical contractor.",
     "nabcep_required": false
   },
-  "notes": "Connecticut has a robust solar market supported by the Residential Solar Investment Program (RSIP) and strong net metering. The state offers property tax exemptions for solar and sales tax exemptions. Eversource territory covers most of the state. Green Bank (CT Green Bank) provides financing options. Permitting handled at the municipal level with 169 towns having individual requirements."
+  "notes": "Connecticut has a robust solar market supported by the Residential Solar Investment Program (RSIP) and strong net metering. The state offers property tax exemptions for solar and sales tax exemptions. Eversource territory covers most of the state. Green Bank (CT Green Bank) provides financing options. Permitting handled at the municipal level with 169 towns having individual requirements.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "hartford_ct",
+      "name": "Hartford",
+      "state": "CT",
+      "type": "city",
+      "population": 121054,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.hartfordct.gov/Government/Departments/DDS/DDS-Divisions/Licenses-Inspections",
+      "submission_method": "in_person",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "CT fire code setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Licenses & Inspections",
+        "phone": "860-757-9780",
+        "url": "https://www.hartfordct.gov"
+      },
+      "special_requirements": [
+        "CT standardized solar PV permit supplement",
+        "Eversource interconnection",
+        "ZREC/LREC incentives"
+      ],
+      "notes": "CT standardized solar PV permit application supplement available. Strong ZREC/LREC incentive programs.",
+      "source_url": "https://www.hartfordct.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "stamford_ct",
+      "name": "Stamford",
+      "state": "CT",
+      "type": "city",
+      "population": 135470,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.stamfordct.gov/building-department",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "CT fire code setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Dept",
+        "phone": "203-977-4180",
+        "url": "https://www.stamfordct.gov"
+      },
+      "special_requirements": [
+        "CT standardized permit supplement",
+        "Eversource interconnection"
+      ],
+      "notes": "Standard CT permitting with standardized permit supplement.",
+      "source_url": "https://www.stamfordct.gov",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 2
 }

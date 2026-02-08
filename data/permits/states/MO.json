@@ -8,7 +8,9 @@
     "typical_fee_range": "$100-$500",
     "typical_timeline_days": "7-21",
     "inspection_required": true,
-    "inspection_stages": ["final"],
+    "inspection_stages": [
+      "final"
+    ],
     "statewide_permit_program": false,
     "statewide_program_name": null
   },
@@ -30,5 +32,80 @@
     "license_type": "No state-specific solar license requirement. Licensed electrician required. Some municipalities (Frontenac, Clarkson Valley) require NABCEP certification. City/county contractor licensing varies.",
     "nabcep_required": false
   },
-  "notes": "Missouri has a moderate solar market supported by net metering at retail rate and the state's 15% RPS. No state solar tax credit. Property tax exemption available for solar. Ameren Missouri has offered solar rebate programs. Missouri's competitive electricity market in some areas provides options. Some affluent municipalities require NABCEP certification, which is unusual."
+  "notes": "Missouri has a moderate solar market supported by net metering at retail rate and the state's 15% RPS. No state solar tax credit. Property tax exemption available for solar. Ameren Missouri has offered solar rebate programs. Missouri's competitive electricity market in some areas provides options. Some affluent municipalities require NABCEP certification, which is unusual.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "kansas_city_mo",
+      "name": "Kansas City",
+      "state": "MO",
+      "type": "city",
+      "population": 508090,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.kcmo.gov/city-hall/departments/city-planning-development/permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 15,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": false,
+      "contacts": {
+        "department": "City Planning & Development",
+        "phone": "816-513-1500",
+        "url": "https://www.kcmo.gov"
+      },
+      "special_requirements": [
+        "Evergy or KCP&L interconnection"
+      ],
+      "notes": "Missouri is one of 4 states without statewide NEC adoption (exists in some cities). Check local code.",
+      "source_url": "https://www.kcmo.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "st_louis_mo",
+      "name": "St. Louis",
+      "state": "MO",
+      "type": "city",
+      "population": 301578,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.stlouis-mo.gov/government/departments/public-safety/building/permits/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 15,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "Standard setbacks.",
+      "rapid_shutdown_required": false,
+      "contacts": {
+        "department": "Building Division",
+        "phone": "314-622-3313",
+        "url": "https://www.stlouis-mo.gov"
+      },
+      "special_requirements": [
+        "Ameren Missouri interconnection"
+      ],
+      "notes": "Standard MO permitting. No statewide NEC.",
+      "source_url": "https://www.stlouis-mo.gov",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 2
 }

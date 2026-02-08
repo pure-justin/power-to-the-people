@@ -8,7 +8,10 @@
     "typical_fee_range": "$200-$600",
     "typical_timeline_days": "5-14",
     "inspection_required": true,
-    "inspection_stages": ["rough-in", "final"],
+    "inspection_stages": [
+      "rough-in",
+      "final"
+    ],
     "statewide_permit_program": true,
     "statewide_program_name": "Florida streamlined permitting for Tier 1 solar systems (up to 10 kW on single-family residential). No insurance requirement and no application fee for Tier 1 grid connection."
   },
@@ -30,5 +33,279 @@
     "license_type": "Florida Solar Contractor license (CVC56875) or licensed Electrical Contractor (EC). Florida-specific solar contractor license is unique in the nation.",
     "nabcep_required": false
   },
-  "notes": "Florida is the second-largest solar market in the US after California. The state has strong net metering and solar access laws but no state income tax credit (residential ITC expired federally Jan 2026). Property tax exemption for solar equipment value. Sales tax exemption on solar equipment. Hurricane wind load compliance is the most critical permitting consideration - installations must withstand extreme wind speeds. FPL is the largest utility and has streamlined interconnection. The state blocked anti-solar ballot measure in 2016."
+  "notes": "Florida is the second-largest solar market in the US after California. The state has strong net metering and solar access laws but no state income tax credit (residential ITC expired federally Jan 2026). Property tax exemption for solar equipment value. Sales tax exemption on solar equipment. Hurricane wind load compliance is the most critical permitting consideration - installations must withstand extreme wind speeds. FPL is the largest utility and has streamlined interconnection. The state blocked anti-solar ballot measure in 2016.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "jacksonville_fl",
+      "name": "Jacksonville",
+      "state": "FL",
+      "type": "city",
+      "population": 949611,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.coj.net/departments/building-inspection",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "structural_calcs",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 125,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 225
+      },
+      "typical_timeline_days": 5,
+      "fire_code_requirements": "Florida Building Code fire setbacks. Standard access pathways.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Inspection Division",
+        "phone": "904-255-7800",
+        "url": "https://www.coj.net"
+      },
+      "special_requirements": [
+        "HB 683: 5-day review mandate",
+        "Wind load calculations required",
+        "JEA interconnection"
+      ],
+      "notes": "HB 683 mandates 5 business day review with auto-approval if missed. Permit fees $125-$275 range. Wind load calcs required.",
+      "source_url": "https://www.coj.net",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "miami_fl",
+      "name": "Miami",
+      "state": "FL",
+      "type": "city",
+      "population": 442241,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.miami.gov/Permits-Construction/Permit-Catalog/Get-a-Permit-to-Install-Solar-Panels",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "structural_calcs",
+        "equipment_specs",
+        "wind_load_calcs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 100,
+        "estimated_total_residential": 400
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "High-Velocity Hurricane Zone (HVHZ) requirements. Enhanced wind load standards for all solar installations.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Dept",
+        "phone": "305-416-1100",
+        "url": "https://www.miami.gov"
+      },
+      "special_requirements": [
+        "HVHZ enhanced wind load standards mandatory",
+        "PE-stamped wind load calculations required",
+        "Miami-Dade product approvals may be required",
+        "FPL interconnection"
+      ],
+      "notes": "Strictest solar permitting in Florida due to HVHZ designation. All installations must meet enhanced wind load standards. PE stamp required for virtually all systems.",
+      "source_url": "https://www.miami.gov/Permits-Construction/Permit-Catalog/Get-a-Permit-to-Install-Solar-Panels",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "tampa_fl",
+      "name": "Tampa",
+      "state": "FL",
+      "type": "city",
+      "population": 384959,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.tampa.gov/construction-services",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "structural_calcs",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 100,
+        "estimated_total_residential": 375
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Florida Building Code fire setbacks. Wind load requirements for coastal location.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Construction Services",
+        "phone": "813-274-3100",
+        "url": "https://www.tampa.gov"
+      },
+      "special_requirements": [
+        "HB 683: 5-day review mandate",
+        "Wind load calculations",
+        "TECO interconnection"
+      ],
+      "notes": "HB 683 5-day review mandate with auto-approval. Residential permits $200-$500 based on system size. Private inspection providers now allowed.",
+      "source_url": "https://www.tampa.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "orlando_fl",
+      "name": "Orlando",
+      "state": "FL",
+      "type": "city",
+      "population": 307573,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.orlando.gov/Building-Development",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 100,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 225
+      },
+      "typical_timeline_days": 5,
+      "fire_code_requirements": "Florida Building Code setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Permitting Services",
+        "phone": "407-246-2271",
+        "url": "https://www.orlando.gov"
+      },
+      "special_requirements": [
+        "OUC interconnection",
+        "Expedited solar permit program",
+        "HB 683 5-day mandate"
+      ],
+      "notes": "Orange County expedited solar permit program. Fees $100-$300. Most residential reviewed within 3-5 business days.",
+      "source_url": "https://www.orlando.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "st_petersburg_fl",
+      "name": "St. Petersburg",
+      "state": "FL",
+      "type": "city",
+      "population": 258308,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.stpete.org/building_and_permitting/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 5,
+      "fire_code_requirements": "Florida Building Code setbacks. Coastal wind load requirements.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building & Permitting",
+        "phone": "727-893-7373",
+        "url": "https://www.stpete.org"
+      },
+      "special_requirements": [
+        "Duke Energy Florida interconnection",
+        "HB 683 5-day mandate"
+      ],
+      "notes": "HB 683 5-day review mandate. Duke Energy Florida serves most of the area.",
+      "source_url": "https://www.stpete.org",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "hialeah_fl",
+      "name": "Hialeah",
+      "state": "FL",
+      "type": "city",
+      "population": 223109,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.hialeahfl.gov/161/Building",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "structural_calcs",
+        "equipment_specs",
+        "wind_load_calcs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 100,
+        "estimated_total_residential": 400
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "HVHZ requirements same as Miami-Dade County.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Dept",
+        "phone": "305-883-8075",
+        "url": "https://www.hialeahfl.gov"
+      },
+      "special_requirements": [
+        "HVHZ enhanced wind load standards",
+        "Miami-Dade product approvals",
+        "FPL interconnection"
+      ],
+      "notes": "In Miami-Dade County HVHZ zone. Same strict wind load requirements as Miami.",
+      "source_url": "https://www.hialeahfl.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "port_st_lucie_fl",
+      "name": "Port St. Lucie",
+      "state": "FL",
+      "type": "city",
+      "population": 217223,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.cityofpsl.com/government/departments/building",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 5,
+      "fire_code_requirements": "Florida Building Code setbacks. Wind load requirements.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Dept",
+        "phone": "772-871-5132",
+        "url": "https://www.cityofpsl.com"
+      },
+      "special_requirements": [
+        "HB 683 5-day mandate",
+        "FPL interconnection"
+      ],
+      "notes": "Standard Florida permitting with HB 683 5-day mandate.",
+      "source_url": "https://www.cityofpsl.com",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 7
 }

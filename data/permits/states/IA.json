@@ -8,7 +8,9 @@
     "typical_fee_range": "$100-$300",
     "typical_timeline_days": "5-14",
     "inspection_required": true,
-    "inspection_stages": ["final"],
+    "inspection_stages": [
+      "final"
+    ],
     "statewide_permit_program": false,
     "statewide_program_name": null
   },
@@ -30,5 +32,44 @@
     "license_type": "No dedicated state solar license. Licensed electrician required for electrical work. Some jurisdictions adopted SolarAPP+ for automated permitting.",
     "nabcep_required": false
   },
-  "notes": "Iowa has a strong wind energy sector but growing solar market. The state offers property tax exemption for solar equipment (5 years) and sales tax exemption. Net metering at avoided cost rate is less favorable than retail rate states. MidAmerican Energy is the largest utility and is a Berkshire Hathaway company. Some Iowa jurisdictions have adopted SolarAPP+ for automated permitting. Rural areas may have less stringent permitting requirements."
+  "notes": "Iowa has a strong wind energy sector but growing solar market. The state offers property tax exemption for solar equipment (5 years) and sales tax exemption. Net metering at avoided cost rate is less favorable than retail rate states. MidAmerican Energy is the largest utility and is a Berkshire Hathaway company. Some Iowa jurisdictions have adopted SolarAPP+ for automated permitting. Rural areas may have less stringent permitting requirements.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "des_moines_ia",
+      "name": "Des Moines",
+      "state": "IA",
+      "type": "city",
+      "population": 214133,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.dsm.city/departments/development_services/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 100,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 200
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Development Services",
+        "phone": "515-283-4200",
+        "url": "https://www.dsm.city"
+      },
+      "special_requirements": [
+        "MidAmerican Energy interconnection"
+      ],
+      "notes": "Standard IA permitting. Some SolarAPP+ adoption in Iowa.",
+      "source_url": "https://www.dsm.city",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 1
 }

@@ -8,7 +8,10 @@
     "typical_fee_range": "$100-$500",
     "typical_timeline_days": "7-21",
     "inspection_required": true,
-    "inspection_stages": ["rough-in", "final"],
+    "inspection_stages": [
+      "rough-in",
+      "final"
+    ],
     "statewide_permit_program": true,
     "statewide_program_name": "Colorado DORA + SolarAPP+ partnership - automates electrical plan review for residential solar in 200+ jurisdictions statewide. Permit fees capped at $500 for residential solar."
   },
@@ -30,5 +33,120 @@
     "license_type": "No state-specific solar certification; electrical contractor license required with journeyman or residential wireman. Some counties require additional solar-specific training.",
     "nabcep_required": false
   },
-  "notes": "Colorado is a solar-friendly state with strong net metering, solar access laws, and the first statewide SolarAPP+ electrical permitting deployment (2025). The DORA partnership covers 200+ jurisdictions for automated electrical plan review. Xcel Energy territory dominates the Front Range market. Mountain communities have unique challenges with snow loads and accessibility. The state has property tax exemption for solar equipment and sales tax exemption in many jurisdictions."
+  "notes": "Colorado is a solar-friendly state with strong net metering, solar access laws, and the first statewide SolarAPP+ electrical permitting deployment (2025). The DORA partnership covers 200+ jurisdictions for automated electrical plan review. Xcel Energy territory dominates the Front Range market. Mountain communities have unique challenges with snow loads and accessibility. The state has property tax exemption for solar equipment and sales tax exemption in many jurisdictions.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "denver_co",
+      "name": "Denver",
+      "state": "CO",
+      "type": "city",
+      "population": 715522,
+      "solarapp_enabled": true,
+      "permit_portal_url": "https://www.denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Community-Planning-and-Development",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 15,
+      "fees": {
+        "base_fee": 300,
+        "per_kw": null,
+        "inspection_fee": 0,
+        "estimated_total_residential": 350
+      },
+      "typical_timeline_days": 3,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Community Planning & Development",
+        "phone": "720-865-2700",
+        "url": "https://www.denvergov.org"
+      },
+      "special_requirements": [
+        "SolarAPP+ adopted",
+        "CO law caps permit fees at $500",
+        "Xcel Energy interconnection"
+      ],
+      "notes": "SolarAPP+ adopted. Colorado HB21-1284 caps residential solar permit fees at $500 through Dec 2029.",
+      "source_url": "https://www.denvergov.org",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "colorado_springs_co",
+      "name": "Colorado Springs",
+      "state": "CO",
+      "type": "city",
+      "population": 478961,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://coloradosprings.gov/pces",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 15,
+      "fees": {
+        "base_fee": 275,
+        "per_kw": null,
+        "inspection_fee": 0,
+        "estimated_total_residential": 325
+      },
+      "typical_timeline_days": 7,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Planning & Community Development",
+        "phone": "719-385-5905",
+        "url": "https://coloradosprings.gov"
+      },
+      "special_requirements": [
+        "CO fee cap $500",
+        "Colorado Springs Utilities interconnection"
+      ],
+      "notes": "Home-rule city handles building and electrical permits locally. CO fee cap applies.",
+      "source_url": "https://coloradosprings.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "aurora_co",
+      "name": "Aurora",
+      "state": "CO",
+      "type": "city",
+      "population": 386261,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.auroragov.org/business_services/permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 15,
+      "fees": {
+        "base_fee": 250,
+        "per_kw": null,
+        "inspection_fee": 0,
+        "estimated_total_residential": 300
+      },
+      "typical_timeline_days": 7,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Permits",
+        "phone": "303-739-7420",
+        "url": "https://www.auroragov.org"
+      },
+      "special_requirements": [
+        "CO fee cap $500",
+        "Xcel Energy interconnection"
+      ],
+      "notes": "Standard CO permitting with $500 fee cap.",
+      "source_url": "https://www.auroragov.org",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 3
 }

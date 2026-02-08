@@ -8,7 +8,10 @@
     "typical_fee_range": "$200-$500",
     "typical_timeline_days": "7-21",
     "inspection_required": true,
-    "inspection_stages": ["rough-in", "final"],
+    "inspection_stages": [
+      "rough-in",
+      "final"
+    ],
     "statewide_permit_program": false,
     "statewide_program_name": null
   },
@@ -30,5 +33,85 @@
     "license_type": "Licensed electrician (journeyman or master) required for solar PV installations. Construction Supervisor License for structural work. Home Improvement Contractor registration required.",
     "nabcep_required": false
   },
-  "notes": "Massachusetts is one of the strongest solar markets in the Northeast with excellent incentives. The SMART program provides declining block incentive payments above net metering credits. Net metering size limit increased to 25 kW AC in 2025. SREC-II program previously provided additional revenue. Property tax exemption (20 years) and sales tax exemption available. Many municipalities participate in SolSmart. The state has high electricity rates supporting strong solar economics."
+  "notes": "Massachusetts is one of the strongest solar markets in the Northeast with excellent incentives. The SMART program provides declining block incentive payments above net metering credits. Net metering size limit increased to 25 kW AC in 2025. SREC-II program previously provided additional revenue. Property tax exemption (20 years) and sales tax exemption available. Many municipalities participate in SolSmart. The state has high electricity rates supporting strong solar economics.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "boston_ma",
+      "name": "Boston",
+      "state": "MA",
+      "type": "city",
+      "population": 675647,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.boston.gov/departments/inspectional-services",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "structural_calcs",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 15,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 100,
+        "estimated_total_residential": 350
+      },
+      "typical_timeline_days": 7,
+      "fire_code_requirements": "Massachusetts fire code setbacks. Historical district review may apply.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Inspectional Services Dept",
+        "phone": "617-635-5300",
+        "url": "https://www.boston.gov"
+      },
+      "special_requirements": [
+        "Same-day in-person permitting available",
+        "Online permitting available",
+        "Eversource or National Grid interconnection",
+        "SMART program incentives"
+      ],
+      "notes": "Same-day in-person and online permitting available. Structural reviews required for most systems. SMART solar incentive program.",
+      "source_url": "https://www.boston.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "worcester_ma",
+      "name": "Worcester",
+      "state": "MA",
+      "type": "city",
+      "population": 206518,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.worcesterma.gov/inspectional-services",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 15,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "MA fire code setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Inspectional Services",
+        "phone": "508-799-1127",
+        "url": "https://www.worcesterma.gov"
+      },
+      "special_requirements": [
+        "Online permitting",
+        "National Grid interconnection"
+      ],
+      "notes": "Online permitting available. Standard MA process.",
+      "source_url": "https://www.worcesterma.gov",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 2
 }

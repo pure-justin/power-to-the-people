@@ -8,7 +8,9 @@
     "typical_fee_range": "$100-$400",
     "typical_timeline_days": "7-21",
     "inspection_required": true,
-    "inspection_stages": ["final"],
+    "inspection_stages": [
+      "final"
+    ],
     "statewide_permit_program": false,
     "statewide_program_name": null
   },
@@ -30,5 +32,44 @@
     "license_type": "Commercial or residential contractor license required plus electrician license; must be or work under a master electrician",
     "nabcep_required": false
   },
-  "notes": "Arkansas has seen growing solar adoption with favorable net metering policies, though the 2-to-1 ratio for larger systems reduces the benefit. Entergy Arkansas is the dominant utility. The state has no state solar tax credit. Permitting is handled at the municipal/county level with varying requirements. Rural areas may have less stringent permitting."
+  "notes": "Arkansas has seen growing solar adoption with favorable net metering policies, though the 2-to-1 ratio for larger systems reduces the benefit. Entergy Arkansas is the dominant utility. The state has no state solar tax credit. Permitting is handled at the municipal/county level with varying requirements. Rural areas may have less stringent permitting.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "little_rock_ar",
+      "name": "Little Rock",
+      "state": "AR",
+      "type": "city",
+      "population": 202591,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.littlerock.gov/for-businesses/permits-licensing/",
+      "submission_method": "in_person",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 100,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 200
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Planning & Development",
+        "phone": "501-371-4790",
+        "url": "https://www.littlerock.gov"
+      },
+      "special_requirements": [
+        "Entergy Arkansas interconnection"
+      ],
+      "notes": "Residential Building Contractor + Electrical license required in AR.",
+      "source_url": "https://www.littlerock.gov",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 1
 }

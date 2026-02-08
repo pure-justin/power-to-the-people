@@ -32,5 +32,44 @@
     "license_type": "Electrical contractor license required for all electrical work.",
     "nabcep_required": false
   },
-  "notes": "Very low solar adoption. Limited state-level incentives. Growing interest in solar with new installations increasing."
+  "notes": "Very low solar adoption. Limited state-level incentives. Growing interest in solar with new installations increasing.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "sioux_falls_sd",
+      "name": "Sioux Falls",
+      "state": "SD",
+      "type": "city",
+      "population": 192517,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.siouxfalls.org/building-services",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 75,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 150
+      },
+      "typical_timeline_days": 7,
+      "fire_code_requirements": "Standard setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Services",
+        "phone": "605-367-8651",
+        "url": "https://www.siouxfalls.org"
+      },
+      "special_requirements": [
+        "Xcel Energy or MidAmerican Energy interconnection"
+      ],
+      "notes": "Building and electrical permits required. No special solar contractor license but electrical license required.",
+      "source_url": "https://www.siouxfalls.org",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 1
 }

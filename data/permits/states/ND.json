@@ -32,5 +32,45 @@
     "license_type": "State Electrical Contractor license required for all electrical work.",
     "nabcep_required": false
   },
-  "notes": "Very low solar adoption. Cold climate and limited incentives. Electrical permits managed by ND State Electrical Board."
+  "notes": "Very low solar adoption. Cold climate and limited incentives. Electrical permits managed by ND State Electrical Board.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "fargo_nd",
+      "name": "Fargo",
+      "state": "ND",
+      "type": "city",
+      "population": 125990,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://fargond.gov/city-government/departments/inspections",
+      "submission_method": "in_person",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 75,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 150
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard setbacks. High wind area.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Inspections Dept",
+        "phone": "701-241-1561",
+        "url": "https://fargond.gov"
+      },
+      "special_requirements": [
+        "ND State Electrical Board permit",
+        "Xcel Energy interconnection"
+      ],
+      "notes": "Electrical and building permits required. ND State Electrical Board manages electrical permits.",
+      "source_url": "https://fargond.gov",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 1
 }

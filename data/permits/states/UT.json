@@ -32,5 +32,45 @@
     "license_type": "Utah DOPL licensed contractor required. Electrical contractor license for electrical work.",
     "nabcep_required": false
   },
-  "notes": "Growing solar market. PE stamps typically required for systems >12 kW in Salt Lake City metro. Model Solar Permit toolkit available for municipalities."
+  "notes": "Growing solar market. PE stamps typically required for systems >12 kW in Salt Lake City metro. Model Solar Permit toolkit available for municipalities.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "salt_lake_city_ut",
+      "name": "Salt Lake City",
+      "state": "UT",
+      "type": "city",
+      "population": 199723,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.slc.gov/buildingservices/solar-pv/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 12,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 7,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Services",
+        "phone": "801-535-6000",
+        "url": "https://www.slc.gov/buildingservices"
+      },
+      "special_requirements": [
+        "Online solar permitting",
+        "Rocky Mountain Power interconnection"
+      ],
+      "notes": "Online solar permitting available. PE stamps typically required >12 kW. Rocky Mountain Power handles interconnection.",
+      "source_url": "https://www.slc.gov/buildingservices/solar-pv/",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 1
 }

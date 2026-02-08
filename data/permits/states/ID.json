@@ -8,7 +8,9 @@
     "typical_fee_range": "$100-$400",
     "typical_timeline_days": "7-21",
     "inspection_required": true,
-    "inspection_stages": ["final"],
+    "inspection_stages": [
+      "final"
+    ],
     "statewide_permit_program": false,
     "statewide_program_name": null
   },
@@ -30,5 +32,45 @@
     "license_type": "Idaho solar photovoltaic license or NABCEP certification plus electrical contractor license required.",
     "nabcep_required": true
   },
-  "notes": "Idaho's solar market is growing but still relatively small. Idaho Power has been adjusting net metering rates and policies. The state has no state solar tax credit. Property tax exemption available for solar equipment. NABCEP certification is valued for licensing. Snow loads are a significant consideration in many parts of the state. Relatively low electricity rates compared to western neighbors reduce the economic case for solar."
+  "notes": "Idaho's solar market is growing but still relatively small. Idaho Power has been adjusting net metering rates and policies. The state has no state solar tax credit. Property tax exemption available for solar equipment. NABCEP certification is valued for licensing. Snow loads are a significant consideration in many parts of the state. Relatively low electricity rates compared to western neighbors reduce the economic case for solar.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "boise_id",
+      "name": "Boise",
+      "state": "ID",
+      "type": "city",
+      "population": 235684,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.cityofboise.org/departments/planning-and-development-services/permits/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 100,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 200
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Planning & Development Services",
+        "phone": "208-384-3830",
+        "url": "https://www.cityofboise.org"
+      },
+      "special_requirements": [
+        "Idaho Power interconnection",
+        "Idaho solar PV license required"
+      ],
+      "notes": "Idaho requires NABCEP or similar licensing plus Idaho solar PV license for contractors.",
+      "source_url": "https://www.cityofboise.org",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 1
 }

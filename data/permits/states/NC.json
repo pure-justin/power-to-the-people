@@ -33,5 +33,153 @@
     "license_type": "NC General Contractors License or Electrical Contractor license. NCLBGC licensing required.",
     "nabcep_required": false
   },
-  "notes": "North Carolina is a major solar state ranking #4 nationally in installed capacity. Raleigh offers same-day online permitting for standard residential rooftop systems. Fragmented municipal requirements can extend timelines."
+  "notes": "North Carolina is a major solar state ranking #4 nationally in installed capacity. Raleigh offers same-day online permitting for standard residential rooftop systems. Fragmented municipal requirements can extend timelines.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "charlotte_nc",
+      "name": "Charlotte",
+      "state": "NC",
+      "type": "city",
+      "population": 874579,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.charlottenc.gov/Growth-and-Development/Getting-a-Permit",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 20,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Code Enforcement",
+        "phone": "704-336-2431",
+        "url": "https://www.charlottenc.gov"
+      },
+      "special_requirements": [
+        "Duke Energy Carolinas interconnection"
+      ],
+      "notes": "Standard NC permitting. Duke Energy Carolinas handles interconnection.",
+      "source_url": "https://www.charlottenc.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "raleigh_nc",
+      "name": "Raleigh",
+      "state": "NC",
+      "type": "city",
+      "population": 467665,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://raleighnc.gov/permits/services/residential-solar-photovoltaic-pv-system",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 20,
+      "fees": {
+        "base_fee": 100,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 200
+      },
+      "typical_timeline_days": 1,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Development Services",
+        "phone": "919-996-2499",
+        "url": "https://raleighnc.gov"
+      },
+      "special_requirements": [
+        "Same-day online permitting via Permit Portal",
+        "Duke Energy Progress interconnection"
+      ],
+      "notes": "Most residential rooftop solar eligible for same-day online permitting. Work must begin within 6 months.",
+      "source_url": "https://raleighnc.gov/permits/services/residential-solar-photovoltaic-pv-system",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "greensboro_nc",
+      "name": "Greensboro",
+      "state": "NC",
+      "type": "city",
+      "population": 299035,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.greensboro-nc.gov/departments/field-operations/inspections-permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 20,
+      "fees": {
+        "base_fee": 125,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 225
+      },
+      "typical_timeline_days": 7,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Inspections & Permits",
+        "phone": "336-373-2464",
+        "url": "https://www.greensboro-nc.gov"
+      },
+      "special_requirements": [
+        "Duke Energy interconnection"
+      ],
+      "notes": "Standard NC permitting process.",
+      "source_url": "https://www.greensboro-nc.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "durham_nc",
+      "name": "Durham",
+      "state": "NC",
+      "type": "city",
+      "population": 283506,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.durhamnc.gov/293/Building-Permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 20,
+      "fees": {
+        "base_fee": 125,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 225
+      },
+      "typical_timeline_days": 7,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Inspections Dept",
+        "phone": "919-560-4144",
+        "url": "https://www.durhamnc.gov"
+      },
+      "special_requirements": [
+        "Duke Energy Progress interconnection"
+      ],
+      "notes": "Standard NC permitting.",
+      "source_url": "https://www.durhamnc.gov",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 4
 }

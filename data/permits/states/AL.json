@@ -8,7 +8,9 @@
     "typical_fee_range": "$100-$500",
     "typical_timeline_days": "7-21",
     "inspection_required": true,
-    "inspection_stages": ["final"],
+    "inspection_stages": [
+      "final"
+    ],
     "statewide_permit_program": false,
     "statewide_program_name": null
   },
@@ -30,5 +32,44 @@
     "license_type": "Electrical Contractor license or unlimited Home Builder license for projects over $10,000",
     "nabcep_required": false
   },
-  "notes": "Alabama is one of the least solar-friendly states with no net metering mandate, no state solar tax credit (residential ITC expired federally Jan 2026), and no solar access laws. Permits are handled at the county/municipal level with varying requirements. TVA territory covers parts of northern Alabama with different rules than Alabama Power territory."
+  "notes": "Alabama is one of the least solar-friendly states with no net metering mandate, no state solar tax credit (residential ITC expired federally Jan 2026), and no solar access laws. Permits are handled at the county/municipal level with varying requirements. TVA territory covers parts of northern Alabama with different rules than Alabama Power territory.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "birmingham_al",
+      "name": "Birmingham",
+      "state": "AL",
+      "type": "city",
+      "population": 200733,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.birminghamal.gov/permits",
+      "submission_method": "in_person",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 100,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 200
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Inspections Dept",
+        "phone": "205-254-2481",
+        "url": "https://www.birminghamal.gov"
+      },
+      "special_requirements": [
+        "Alabama Power interconnection"
+      ],
+      "notes": "Standard AL permitting. Alabama Power handles interconnection.",
+      "source_url": "https://www.birminghamal.gov",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 1
 }

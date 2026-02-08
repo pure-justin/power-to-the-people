@@ -8,7 +8,9 @@
     "typical_fee_range": "$100-$400",
     "typical_timeline_days": "7-21",
     "inspection_required": true,
-    "inspection_stages": ["final"],
+    "inspection_stages": [
+      "final"
+    ],
     "statewide_permit_program": false,
     "statewide_program_name": null
   },
@@ -30,5 +32,44 @@
     "license_type": "Licensed electrician required. General contractor license required for structural work. No dedicated solar contractor license.",
     "nabcep_required": false
   },
-  "notes": "Montana has a small but growing solar market. The state offers a property tax exemption for solar and an alternative energy investment tax credit. Net metering at retail rate supports residential solar economics. NorthWestern Energy territory covers most of the state. High snow loads and extreme winter weather are significant design considerations. The state's large geographic area and rural character mean permitting practices vary significantly between jurisdictions."
+  "notes": "Montana has a small but growing solar market. The state offers a property tax exemption for solar and an alternative energy investment tax credit. Net metering at retail rate supports residential solar economics. NorthWestern Energy territory covers most of the state. High snow loads and extreme winter weather are significant design considerations. The state's large geographic area and rural character mean permitting practices vary significantly between jurisdictions.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "billings_mt",
+      "name": "Billings",
+      "state": "MT",
+      "type": "city",
+      "population": 119510,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://ci.billings.mt.us/175/Building-Division",
+      "submission_method": "in_person",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 75,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 150
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Division",
+        "phone": "406-657-8262",
+        "url": "https://ci.billings.mt.us"
+      },
+      "special_requirements": [
+        "NorthWestern Energy interconnection"
+      ],
+      "notes": "Standard MT permitting. Growing solar interest.",
+      "source_url": "https://ci.billings.mt.us",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 1
 }

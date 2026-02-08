@@ -32,5 +32,46 @@
     "license_type": "Rhode Island Contractors Registration Board license required.",
     "nabcep_required": false
   },
-  "notes": "Standardized statewide permitting effective 2025. Applications require single-line electrical diagram with panel configuration, voltage specs, kW output, main panel capacity, and overcurrent protection."
+  "notes": "Standardized statewide permitting effective 2025. Applications require single-line electrical diagram with panel configuration, voltage specs, kW output, main panel capacity, and overcurrent protection.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "providence_ri",
+      "name": "Providence",
+      "state": "RI",
+      "type": "city",
+      "population": 190934,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.providenceri.gov/inspections-standards/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 75,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 150
+      },
+      "typical_timeline_days": 7,
+      "fire_code_requirements": "Standard setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Inspections & Standards",
+        "phone": "401-680-5440",
+        "url": "https://www.providenceri.gov"
+      },
+      "special_requirements": [
+        "RI standardized statewide permit application",
+        "Rhode Island Energy interconnection",
+        "Single-line electrical diagram required"
+      ],
+      "notes": "RI standardized statewide solar permit application effective 2025. Requires single-line electrical diagram with panel config, voltage, kW output.",
+      "source_url": "https://www.providenceri.gov",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 1
 }

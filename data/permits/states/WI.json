@@ -32,5 +32,83 @@
     "license_type": "Wisconsin DSPS licensed electrician or contractor required.",
     "nabcep_required": false
   },
-  "notes": "State statute strongly protects solar rights. Some SolarAPP+ adoption. Milwaukee has streamlined process. Focus on Energy rebates available."
+  "notes": "State statute strongly protects solar rights. Some SolarAPP+ adoption. Milwaukee has streamlined process. Focus on Energy rebates available.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "milwaukee_wi",
+      "name": "Milwaukee",
+      "state": "WI",
+      "type": "city",
+      "population": 577222,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://city.milwaukee.gov/DNS/permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 175,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 300
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Dept of Neighborhood Services",
+        "phone": "414-286-2268",
+        "url": "https://city.milwaukee.gov"
+      },
+      "special_requirements": [
+        "WI Stat 66.0401 protects solar rights",
+        "We Energies interconnection",
+        "Focus on Energy rebates"
+      ],
+      "notes": "Milwaukee amended ordinances to comply with WI solar access statute. Focus on Energy rebates available.",
+      "source_url": "https://city.milwaukee.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "madison_wi",
+      "name": "Madison",
+      "state": "WI",
+      "type": "city",
+      "population": 269840,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.cityofmadison.com/dpced/bi/permits/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 7,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Inspection",
+        "phone": "608-266-4551",
+        "url": "https://www.cityofmadison.com"
+      },
+      "special_requirements": [
+        "MGE interconnection",
+        "Focus on Energy rebates"
+      ],
+      "notes": "Standard WI permitting. Madison Gas & Electric serves the area.",
+      "source_url": "https://www.cityofmadison.com",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 2
 }

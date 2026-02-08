@@ -8,7 +8,9 @@
     "typical_fee_range": "$100-$400",
     "typical_timeline_days": "7-21",
     "inspection_required": true,
-    "inspection_stages": ["final"],
+    "inspection_stages": [
+      "final"
+    ],
     "statewide_permit_program": true,
     "statewide_program_name": "Minnesota offers SolarAPP+ permitting incentive program through Dept of Commerce. Provides financial incentives and technical assistance to jurisdictions adopting SolarAPP+ automated permitting."
   },
@@ -30,5 +32,82 @@
     "license_type": "Licensed electrician required for PV installations. Type A Master Electrician or Journeyman Electrician under master's supervision. Building contractor license for structural work.",
     "nabcep_required": false
   },
-  "notes": "Minnesota is a strong solar market with favorable net metering, community solar programs (one of the largest in the nation), and SolarAPP+ adoption incentives. Xcel Energy's Solar*Rewards program provides additional production-based incentives. The Made in Minnesota Solar Incentive Program promoted domestic manufacturing. Property tax exemption available. Snow loads are a critical engineering consideration requiring structural certification. The state has a 1.5% solar energy standard within its 25% RPS."
+  "notes": "Minnesota is a strong solar market with favorable net metering, community solar programs (one of the largest in the nation), and SolarAPP+ adoption incentives. Xcel Energy's Solar*Rewards program provides additional production-based incentives. The Made in Minnesota Solar Incentive Program promoted domestic manufacturing. Property tax exemption available. Snow loads are a critical engineering consideration requiring structural certification. The state has a 1.5% solar energy standard within its 25% RPS.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "minneapolis_mn",
+      "name": "Minneapolis",
+      "state": "MN",
+      "type": "city",
+      "population": 429954,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.minneapolismn.gov/business/licenses-permits/building-permits/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 325
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "MN building code. PV arrays limited to 150 ft in any direction.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Community Planning & Economic Development",
+        "phone": "612-673-3000",
+        "url": "https://www.minneapolismn.gov"
+      },
+      "special_requirements": [
+        "MN SolarAPP+ permitting incentive",
+        "Xcel Energy interconnection",
+        "PV arrays max 150 ft in any direction"
+      ],
+      "notes": "Minnesota offers SolarAPP+ permitting incentive program. Xcel Energy serves Minneapolis.",
+      "source_url": "https://www.minneapolismn.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "st_paul_mn",
+      "name": "St. Paul",
+      "state": "MN",
+      "type": "city",
+      "population": 311527,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.stpaul.gov/departments/safety-inspections/permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 175,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 300
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "MN building code setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Safety & Inspections",
+        "phone": "651-266-9090",
+        "url": "https://www.stpaul.gov"
+      },
+      "special_requirements": [
+        "Xcel Energy interconnection"
+      ],
+      "notes": "Standard MN permitting. Xcel Energy serves the area.",
+      "source_url": "https://www.stpaul.gov",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 2
 }

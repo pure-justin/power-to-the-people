@@ -8,7 +8,9 @@
     "typical_fee_range": "$100-$400",
     "typical_timeline_days": "7-21",
     "inspection_required": true,
-    "inspection_stages": ["final"],
+    "inspection_stages": [
+      "final"
+    ],
     "statewide_permit_program": false,
     "statewide_program_name": null
   },
@@ -30,5 +32,45 @@
     "license_type": "Electrician license required for PV work. NABCEP certification required to qualify for state rebates.",
     "nabcep_required": true
   },
-  "notes": "Delaware offers SREC (Solar Renewable Energy Certificate) programs through the Delaware SREC market. The state has a Renewable Portfolio Standard requiring 25% renewable energy by 2025-2026. Delmarva Power is the primary utility. The Green Energy Program provides grants for solar installations. NABCEP certification is uniquely tied to rebate eligibility. Small state with relatively straightforward permitting once proper credentials are established."
+  "notes": "Delaware offers SREC (Solar Renewable Energy Certificate) programs through the Delaware SREC market. The state has a Renewable Portfolio Standard requiring 25% renewable energy by 2025-2026. Delmarva Power is the primary utility. The Green Energy Program provides grants for solar installations. NABCEP certification is uniquely tied to rebate eligibility. Small state with relatively straightforward permitting once proper credentials are established.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "wilmington_de",
+      "name": "Wilmington",
+      "state": "DE",
+      "type": "city",
+      "population": 70898,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.wilmingtonde.gov/government/city-departments/licenses-inspections",
+      "submission_method": "in_person",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 100,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 200
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "Standard setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Licenses & Inspections",
+        "phone": "302-576-3030",
+        "url": "https://www.wilmingtonde.gov"
+      },
+      "special_requirements": [
+        "NABCEP preferred for rebate eligibility",
+        "Delmarva Power interconnection"
+      ],
+      "notes": "NABCEP license preferred for rebate eligibility. Standard DE permitting.",
+      "source_url": "https://www.wilmingtonde.gov",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 1
 }

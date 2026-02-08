@@ -32,5 +32,122 @@
     "license_type": "Ohio Construction Industry Licensing Board electrical contractor license required.",
     "nabcep_required": false
   },
-  "notes": "Growing solar market. Cincinnati reviews residential permits within 5 business days. Cleveland requires zoning review. Columbus requires Ohio-registered design professional sealed plans."
+  "notes": "Growing solar market. Cincinnati reviews residential permits within 5 business days. Cleveland requires zoning review. Columbus requires Ohio-registered design professional sealed plans.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "columbus_oh",
+      "name": "Columbus",
+      "state": "OH",
+      "type": "city",
+      "population": 905748,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.columbus.gov/building-and-zoning/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "structural_calcs",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 100,
+        "estimated_total_residential": 350
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building & Zoning Services",
+        "phone": "614-645-7433",
+        "url": "https://www.columbus.gov"
+      },
+      "special_requirements": [
+        "Plans sealed by Ohio-registered design professional required",
+        "Approved special inspector required",
+        "AEP Ohio interconnection"
+      ],
+      "notes": "Requires Ohio-registered design professional sealed plans and approved special inspector for PV inspections.",
+      "source_url": "https://www.columbus.gov/files/sharedassets/city/v/1/building-and-zoning/document-library/rooftop-solar-installations.pdf",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "cleveland_oh",
+      "name": "Cleveland",
+      "state": "OH",
+      "type": "city",
+      "population": 372624,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.clevelandohio.gov/city-hall/departments/building-housing/divisions/permits/solar-panel-permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 300
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building & Housing",
+        "phone": "216-664-2282",
+        "url": "https://www.clevelandohio.gov"
+      },
+      "special_requirements": [
+        "Zoning review required",
+        "Valuation-based permit fees",
+        "FirstEnergy/CEI interconnection"
+      ],
+      "notes": "Solar defined as exterior alteration requiring building permit. Zoning review required. Fees are valuation-based.",
+      "source_url": "https://www.clevelandohio.gov/city-hall/departments/building-housing/divisions/permits/solar-panel-permits",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "cincinnati_oh",
+      "name": "Cincinnati",
+      "state": "OH",
+      "type": "city",
+      "population": 309317,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.cincinnati-oh.gov/buildings/building-permit-forms-applications/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 5,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building & Inspections",
+        "phone": "513-352-3276",
+        "url": "https://www.cincinnati-oh.gov"
+      },
+      "special_requirements": [
+        "Residential reviewed within 5 business days",
+        "Duke Energy Ohio interconnection"
+      ],
+      "notes": "Best efforts to review residential within 5 business days, commercial within 10 business days.",
+      "source_url": "https://www.cincinnati-oh.gov/buildings/building-permit-forms-applications/",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 3
 }

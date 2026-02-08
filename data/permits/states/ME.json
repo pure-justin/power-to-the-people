@@ -8,7 +8,9 @@
     "typical_fee_range": "$100-$300",
     "typical_timeline_days": "7-21",
     "inspection_required": true,
-    "inspection_stages": ["final"],
+    "inspection_stages": [
+      "final"
+    ],
     "statewide_permit_program": false,
     "statewide_program_name": null
   },
@@ -30,5 +32,45 @@
     "license_type": "Licensed electrician required for solar PV installations. Master or journeyman electrician license.",
     "nabcep_required": false
   },
-  "notes": "Maine has a growing solar market supported by favorable net energy billing and community solar programs. The state has no sales tax (no exemption needed) and offers property tax exemption for solar. Snow loads are a significant engineering consideration. Maine was one of the first states to establish community solar enabling legislation. CMP territory covers most of the population. Relatively high electricity rates support solar economics."
+  "notes": "Maine has a growing solar market supported by favorable net energy billing and community solar programs. The state has no sales tax (no exemption needed) and offers property tax exemption for solar. Snow loads are a significant engineering consideration. Maine was one of the first states to establish community solar enabling legislation. CMP territory covers most of the population. Relatively high electricity rates support solar economics.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "portland_me",
+      "name": "Portland",
+      "state": "ME",
+      "type": "city",
+      "population": 68408,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.portlandmaine.gov/285/Inspections",
+      "submission_method": "in_person",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 100,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 200
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Inspections Dept",
+        "phone": "207-874-8703",
+        "url": "https://www.portlandmaine.gov"
+      },
+      "special_requirements": [
+        "Licensed electrician required for installation",
+        "CMP interconnection"
+      ],
+      "notes": "Maine requires licensed electricians to install solar panels.",
+      "source_url": "https://www.portlandmaine.gov",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 1
 }

@@ -8,7 +8,9 @@
     "typical_fee_range": "$400-$1000",
     "typical_timeline_days": "3-14",
     "inspection_required": true,
-    "inspection_stages": ["final"],
+    "inspection_stages": [
+      "final"
+    ],
     "statewide_permit_program": true,
     "statewide_program_name": "AB 2188 Solar Permitting Efficiency Act - requires streamlined, expedited online permitting for rooftop solar under 10 kW. SB 379 mandates automated online permitting platforms for residential solar and storage. Fee cap: $450 + $15/kW above 15 kW."
   },
@@ -30,5 +32,269 @@
     "license_type": "CSLB C-46 (Solar) or C-10 (Electrical) contractor license required. A-General Engineering or B-General Building may also install solar with appropriate scope.",
     "nabcep_required": false
   },
-  "notes": "California is the largest solar market in the US with the most mature permitting infrastructure. The state mandates solar on new residential construction (2020 Title 24). NEM 3.0 significantly changed the economics, pushing the market toward solar+storage. SolarAPP+ adopted by many jurisdictions for instant permit approval. Permit fee caps keep costs controlled. The state has the most comprehensive consumer protections and standardized permitting requirements in the nation."
+  "notes": "California is the largest solar market in the US with the most mature permitting infrastructure. The state mandates solar on new residential construction (2020 Title 24). NEM 3.0 significantly changed the economics, pushing the market toward solar+storage. SolarAPP+ adopted by many jurisdictions for instant permit approval. Permit fee caps keep costs controlled. The state has the most comprehensive consumer protections and standardized permitting requirements in the nation.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "los_angeles_ca",
+      "name": "Los Angeles",
+      "state": "CA",
+      "type": "city",
+      "population": 3898747,
+      "solarapp_enabled": true,
+      "permit_portal_url": "https://www.ladbs.org/services/online-services/online-permitting",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "structural_calcs",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 10,
+      "fees": {
+        "base_fee": 400,
+        "per_kw": 15,
+        "inspection_fee": 0,
+        "estimated_total_residential": 450
+      },
+      "typical_timeline_days": 3,
+      "fire_code_requirements": "LAFD requires 3-ft setback from ridge and edges. Pathways for firefighter access required per CFC 605.11.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "LA Dept of Building and Safety",
+        "phone": "213-482-0000",
+        "url": "https://www.ladbs.org"
+      },
+      "special_requirements": [
+        "AB 2188 streamlined permitting",
+        "Title 24 compliance",
+        "LADWP interconnection required"
+      ],
+      "notes": "AB 2188 mandates streamlined online permitting for rooftop solar <10 kW. Fee cap $450 + $15/kW above 15 kW.",
+      "source_url": "https://www.ladbs.org",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "san_diego_ca",
+      "name": "San Diego",
+      "state": "CA",
+      "type": "city",
+      "population": 1386932,
+      "solarapp_enabled": true,
+      "permit_portal_url": "https://www.sandiego.gov/development-services/permits/solar-photovoltaic-permit",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 38,
+      "fees": {
+        "base_fee": 0,
+        "per_kw": 0,
+        "inspection_fee": 0,
+        "estimated_total_residential": 0
+      },
+      "typical_timeline_days": 1,
+      "fire_code_requirements": "Standard CFC setbacks. Pathways required for rooftop access.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Development Services Dept",
+        "phone": "619-446-5000",
+        "url": "https://www.sandiego.gov/development-services"
+      },
+      "special_requirements": [
+        "Self-issued permits up to 38.4 kW AC with no plan review",
+        "SDG&E $132 interconnection fee"
+      ],
+      "notes": "Residential rooftop PV up to 38.4 kW AC self-issued with no plan review or structural review. Zero permit fee.",
+      "source_url": "https://www.sandiego.gov/development-services/permits/solar-photovoltaic-permit",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "san_jose_ca",
+      "name": "San Jose",
+      "state": "CA",
+      "type": "city",
+      "population": 1013240,
+      "solarapp_enabled": true,
+      "permit_portal_url": "https://www.sanjoseca.gov/your-government/departments-offices/planning-building-code-enforcement",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 10,
+      "fees": {
+        "base_fee": 250,
+        "per_kw": 15,
+        "inspection_fee": 0,
+        "estimated_total_residential": 300
+      },
+      "typical_timeline_days": 1,
+      "fire_code_requirements": "Standard CFC setbacks and pathways.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Planning Building & Code Enforcement",
+        "phone": "408-535-3555",
+        "url": "https://www.sanjoseca.gov"
+      },
+      "special_requirements": [
+        "Instant online permitting for standard systems",
+        "Battery storage requires traditional review"
+      ],
+      "notes": "Instant online permitting for standard residential systems. Traditional review mandatory for battery storage or older homes.",
+      "source_url": "https://www.sanjoseca.gov/your-government/departments-offices/energy",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "san_francisco_ca",
+      "name": "San Francisco",
+      "state": "CA",
+      "type": "city",
+      "population": 873965,
+      "solarapp_enabled": true,
+      "permit_portal_url": "https://www.sf.gov/step-by-step--get-permit-solar-photovoltaic-system",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 10,
+      "fees": {
+        "base_fee": 0,
+        "per_kw": 0,
+        "inspection_fee": 0,
+        "estimated_total_residential": 0
+      },
+      "typical_timeline_days": 3,
+      "fire_code_requirements": "SFFD setback requirements. Historic district installations may have additional fire access requirements.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "SF Dept of Building Inspection",
+        "phone": "415-558-6088",
+        "url": "https://www.sf.gov"
+      },
+      "special_requirements": [
+        "Free permits",
+        "Historic district delays possible",
+        "100% renewable electricity goal by 2025"
+      ],
+      "notes": "Free solar permits. Historic districts may add several weeks to timeline. City targeting 100% renewable electricity.",
+      "source_url": "https://www.sf.gov/step-by-step--get-permit-solar-photovoltaic-system",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "sacramento_ca",
+      "name": "Sacramento",
+      "state": "CA",
+      "type": "city",
+      "population": 524943,
+      "solarapp_enabled": true,
+      "permit_portal_url": "https://building.saccounty.gov",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 10,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": 10,
+        "inspection_fee": 0,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 3,
+      "fire_code_requirements": "Standard CFC setbacks and pathways.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Community Development Dept",
+        "phone": "916-808-5357",
+        "url": "https://www.cityofsacramento.gov"
+      },
+      "special_requirements": [
+        "Expedited review for systems under 10 kW",
+        "SMUD interconnection required"
+      ],
+      "notes": "Expedited review for systems under 10 kW. Fees determined by kW based on pre-determined fee schedule.",
+      "source_url": "https://building.saccounty.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "fresno_ca",
+      "name": "Fresno",
+      "state": "CA",
+      "type": "city",
+      "population": 542107,
+      "solarapp_enabled": true,
+      "permit_portal_url": "https://www.fresno.gov/planning/get-an-instantly-approved-solar-permit-through-solar-app/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 10,
+      "fees": {
+        "base_fee": 250,
+        "per_kw": 15,
+        "inspection_fee": 0,
+        "estimated_total_residential": 325
+      },
+      "typical_timeline_days": 1,
+      "fire_code_requirements": "Standard CFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Planning and Development",
+        "phone": "559-621-8277",
+        "url": "https://www.fresno.gov/planning"
+      },
+      "special_requirements": [
+        "SolarAPP+ instant approval for single-family and duplex"
+      ],
+      "notes": "SolarAPP+ adopted for instant permits on single-family and duplex projects.",
+      "source_url": "https://www.fresno.gov/planning/get-an-instantly-approved-solar-permit-through-solar-app/",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "long_beach_ca",
+      "name": "Long Beach",
+      "state": "CA",
+      "type": "city",
+      "population": 466742,
+      "solarapp_enabled": true,
+      "permit_portal_url": "https://www.longbeach.gov/lbcd/building/permit-center/solar-permit/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 10,
+      "fees": {
+        "base_fee": 250,
+        "per_kw": 15,
+        "inspection_fee": 0,
+        "estimated_total_residential": 325
+      },
+      "typical_timeline_days": 1,
+      "fire_code_requirements": "Standard CFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Development Services",
+        "phone": "562-570-7648",
+        "url": "https://www.longbeach.gov/lbcd"
+      },
+      "special_requirements": [
+        "One-step process: submit, pay, receive inspection card same visit",
+        "Permits sent immediately upon payment"
+      ],
+      "notes": "Streamlined one-step permit process. Submit application, pay fees, receive job inspection card all at once.",
+      "source_url": "https://www.longbeach.gov/lbcd/building/permit-center/solar-permit/",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 7
 }

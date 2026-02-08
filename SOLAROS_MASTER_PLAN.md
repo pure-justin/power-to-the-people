@@ -259,7 +259,53 @@
   - Compass/inclinometer integration (device sensors)
   - Real-time photo AI feedback ("panel photo looks good" / "retake — can't read breaker labels")
 
-### 2C. Survey AI Review
+### 2C. EagleView Integration — Automated Roof Data
+- **Why**: $15-40/report vs $150-300 for human site visit. Automates survey + CAD.
+- **EagleView Connect API** provides:
+  - Precise roof measurements (pitch, azimuth, area per facet)
+  - 3D roof model with obstruction mapping
+  - TSRF shade analysis (bankable quality)
+  - Roof condition assessment
+  - Setback calculations
+- **Collection**: `eagleview_reports`
+- **Schema**:
+  ```
+  {
+    id: string,
+    projectId: string,
+    surveyId: string,
+    orderId: string,                 // EagleView order reference
+    status: "ordered" | "processing" | "delivered" | "failed",
+    reportType: "SunSite" | "PremiumSunSite" | "InForm",
+    address: string,
+    cost: number,
+    data: {
+      roof_facets: [{                // Per roof facet
+        id, area_sqft, pitch_deg, azimuth_deg,
+        usable_area_sqft, tsrf, annual_solar_access,
+        shade_profile: { monthly: number[] }  // 12 months
+      }],
+      total_roof_area: number,
+      total_usable_area: number,
+      obstructions: [{ type, location, dimensions }],
+      three_d_model_url: string,
+      shade_report_url: string,      // Bankable shade report PDF
+      measurement_report_url: string
+    },
+    ordered_at: timestamp,
+    delivered_at: timestamp,
+    created_at: timestamp,
+    updated_at: timestamp
+  }
+  ```
+- **Integration flow**:
+  1. Customer enters address → check if NREL/Google Solar API has data
+  2. If solar API data insufficient (low confidence, missing facets) → auto-order EagleView
+  3. EagleView delivers → auto-populate survey fields + feed into CAD engine
+  4. For PPA bankability: always use EagleView for shade report (finance companies require it)
+- **Cost optimization**: Only order EagleView when needed (solar API fallback didn't work OR PPA requires bankable report)
+
+### 2D. Survey AI Review
 - When survey submitted → creates AI task (type: "survey_process")
 - AI checks:
   - Are all required photos present and clear?
@@ -597,7 +643,88 @@ Permit Approved
   }
   ```
 
-### 7B. Funding Flow
+### 7B. PPA/Lease Bankability Package
+- **Why**: TPO (Third-Party Ownership) is now dominant post-ITC for residential. Every PPA/lease deal needs a bankable package that finance companies will fund against.
+- **Collection**: `bankability_packages`
+- **Schema**:
+  ```
+  {
+    id: string,
+    projectId: string,
+    fundingPackageId: string,
+    status: "generating" | "review" | "certified" | "submitted_to_funder",
+
+    // Production estimate (bankable quality)
+    production: {
+      source: "pvwatts" | "sam" | "helioscope" | "eagleview",
+      annual_kwh: number,
+      monthly_kwh: number[],        // 12 months
+      degradation_rate: number,     // Annual panel degradation (typically 0.5%)
+      twenty_five_year_kwh: number[], // 25-year production forecast
+      p50_estimate: number,         // 50th percentile production
+      p90_estimate: number,         // 90th percentile (conservative, what banks use)
+      weather_data_source: string,
+      confidence_interval: number
+    },
+
+    // Shade analysis (MUST be bankable)
+    shading: {
+      source: "eagleview" | "aurora" | "manual",
+      tsrf: number,                 // Total Solar Resource Fraction
+      tof: number,                  // Tilt and Orientation Factor
+      solar_access: number,         // Annual solar access %
+      monthly_shade_loss: number[], // 12 months
+      shade_report_url: string,     // PDF report (required by funders)
+      methodology: string           // "fisheye" | "lidar" | "3d_model"
+    },
+
+    // Financial model
+    financials: {
+      system_cost: number,
+      ppa_rate_per_kwh: number,     // $/kWh customer pays
+      escalator: number,            // Annual rate increase (typically 1-2.9%)
+      term_years: number,           // 20 or 25
+      customer_year1_savings: number,
+      customer_lifetime_savings: number,
+      irr: number,                  // Internal rate of return for investor
+      payback_period_years: number,
+      lcoe: number                  // Levelized cost of energy
+    },
+
+    // Compliance for funding
+    compliance: {
+      equipment_warranty_valid: boolean,
+      installer_certified: boolean,
+      permit_approved: boolean,
+      interconnection_approved: boolean,
+      insurance_verified: boolean,
+      itc_eligible: boolean,
+      domestic_content_bonus: boolean,
+      energy_community_bonus: boolean
+    },
+
+    // Document package
+    documents: {
+      shade_report: string,         // EagleView or equivalent
+      production_estimate: string,  // P50/P90 report
+      site_survey_report: string,
+      equipment_spec_sheets: string[],
+      permit_approval: string,
+      install_photos_package: string,
+      financial_model: string,
+      customer_agreement: string
+    },
+
+    created_at, updated_at
+  }
+  ```
+- **Bankability requirements by funder type**:
+  - **Lease/PPA (Sunrun, Sunnova)**: Shade report, P90 production, equipment specs, permit
+  - **Loan (Mosaic, GoodLeap, Sunlight)**: Credit check, system cost, production estimate
+  - **PACE (Ygrene, Renovate America)**: Property value, improvement value, energy savings
+  - All require: signed agreement, permit, install completion photos, interconnection
+
+### 7C. Funding Flow
 ```
 Install Complete + Photos Approved
   → AI Task: "funding_submit"

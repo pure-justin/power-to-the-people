@@ -136,3 +136,16 @@ export {
   retryAiTask,
   getTaskStats,
 } from "./aiTaskEngine";
+
+// Export AHJ Database & Permit Knowledge Base functions
+export {
+  createAhj,
+  getAhj,
+  searchAhj,
+  findAhjForAddress,
+  updateAhjRequirements,
+  createPermitSop,
+  getPermitSop,
+  verifyAhj,
+  getAhjStats,
+} from "./ahjDatabase";

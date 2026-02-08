@@ -8,7 +8,9 @@
     "typical_fee_range": "$150-$500",
     "typical_timeline_days": "7-21",
     "inspection_required": true,
-    "inspection_stages": ["final"],
+    "inspection_stages": [
+      "final"
+    ],
     "statewide_permit_program": false,
     "statewide_program_name": null
   },
@@ -30,5 +32,119 @@
     "license_type": "No dedicated solar license. General contractor and/or electrical contractor license required. Licensed electrician must perform electrical work.",
     "nabcep_required": false
   },
-  "notes": "Georgia has a growing solar market driven primarily by utility-scale installations and Georgia Power's commercial programs. Residential solar is limited by low buyback rates and no net metering mandate. The state offers a property tax exemption for solar. Many jurisdictions participate in SolSmart program. Median permit timeline is approximately 45 days including interconnection. EMC territories may offer better terms for distributed solar than Georgia Power."
+  "notes": "Georgia has a growing solar market driven primarily by utility-scale installations and Georgia Power's commercial programs. Residential solar is limited by low buyback rates and no net metering mandate. The state offers a property tax exemption for solar. Many jurisdictions participate in SolSmart program. Median permit timeline is approximately 45 days including interconnection. EMC territories may offer better terms for distributed solar than Georgia Power.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "atlanta_ga",
+      "name": "Atlanta",
+      "state": "GA",
+      "type": "city",
+      "population": 498715,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.atlantaga.gov/government/departments/city-planning/office-of-buildings/permits-licenses",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 15,
+      "fees": {
+        "base_fee": 300,
+        "per_kw": null,
+        "inspection_fee": 100,
+        "estimated_total_residential": 445
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Office of Buildings",
+        "phone": "404-330-6140",
+        "url": "https://www.atlantaga.gov"
+      },
+      "special_requirements": [
+        "Online permit application",
+        "Georgia Power interconnection",
+        "Higher volume may extend timeline"
+      ],
+      "notes": "Online solar permit applications. DeKalb County permit fee approximately $445. Urban area may have longer processing due to volume.",
+      "source_url": "https://www.atlantaga.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "augusta_ga",
+      "name": "Augusta",
+      "state": "GA",
+      "type": "city",
+      "population": 202081,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.augustaga.gov/586/Building-Permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 15,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 325
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Planning & Development",
+        "phone": "706-821-1796",
+        "url": "https://www.augustaga.gov"
+      },
+      "special_requirements": [
+        "Georgia Power interconnection"
+      ],
+      "notes": "Online permit applications available. Standard GA process.",
+      "source_url": "https://www.augustaga.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "savannah_ga",
+      "name": "Savannah",
+      "state": "GA",
+      "type": "city",
+      "population": 147780,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.savannahga.gov/2052/Building-Permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 15,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 325
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard IFC setbacks. Historic district restrictions.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Development Services",
+        "phone": "912-651-6520",
+        "url": "https://www.savannahga.gov"
+      },
+      "special_requirements": [
+        "Historic district review may be required",
+        "Georgia Power interconnection"
+      ],
+      "notes": "Historic district (one of largest in US) may require additional review for solar installations.",
+      "source_url": "https://www.savannahga.gov",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 3
 }

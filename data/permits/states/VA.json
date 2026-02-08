@@ -32,5 +32,81 @@
     "license_type": "Virginia DPOR Class A or B contractor license required depending on project value.",
     "nabcep_required": false
   },
-  "notes": "Rapidly growing solar market. Virginia Clean Economy Act driving solar deployment. Local permitting varies significantly by jurisdiction. Solar Permit Map available at solarpermitmap.coopercenter.org."
+  "notes": "Rapidly growing solar market. Virginia Clean Economy Act driving solar deployment. Local permitting varies significantly by jurisdiction. Solar Permit Map available at solarpermitmap.coopercenter.org.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "virginia_beach_va",
+      "name": "Virginia Beach",
+      "state": "VA",
+      "type": "city",
+      "population": 459470,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.vbgov.com/government/departments/planning/permits/Pages/default.aspx",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 12,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Coastal wind load requirements. Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Planning & Community Development",
+        "phone": "757-385-4621",
+        "url": "https://www.vbgov.com"
+      },
+      "special_requirements": [
+        "Dominion Energy interconnection",
+        "Coastal wind load calcs may be required"
+      ],
+      "notes": "Standard VA permitting. Coastal location may require wind load calculations.",
+      "source_url": "https://www.vbgov.com",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "richmond_va",
+      "name": "Richmond",
+      "state": "VA",
+      "type": "city",
+      "population": 226610,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.rva.gov/building-inspections/permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 12,
+      "fees": {
+        "base_fee": 125,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 250
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Inspections",
+        "phone": "804-646-6430",
+        "url": "https://www.rva.gov"
+      },
+      "special_requirements": [
+        "Dominion Energy interconnection"
+      ],
+      "notes": "Standard VA permitting. Dominion Energy serves the area.",
+      "source_url": "https://www.rva.gov",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 2
 }

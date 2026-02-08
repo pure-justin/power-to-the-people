@@ -32,5 +32,45 @@
     "license_type": "Licensed electrical contractor required. No specific solar license.",
     "nabcep_required": false
   },
-  "notes": "Very low solar adoption. Limited incentives. Net metering available but export rates are low. Coal-dominant energy market transitioning slowly."
+  "notes": "Very low solar adoption. Limited incentives. Net metering available but export rates are low. Coal-dominant energy market transitioning slowly.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "charleston_wv",
+      "name": "Charleston",
+      "state": "WV",
+      "type": "city",
+      "population": 48006,
+      "solarapp_enabled": false,
+      "permit_portal_url": null,
+      "submission_method": "in_person",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 15,
+      "fees": {
+        "base_fee": 75,
+        "per_kw": null,
+        "inspection_fee": 50,
+        "estimated_total_residential": 150
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "Standard setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Inspection",
+        "phone": "304-348-8097",
+        "url": "https://www.cityofcharleston.org"
+      },
+      "special_requirements": [
+        "Licensed electrical contractor required",
+        "Appalachian Power interconnection"
+      ],
+      "notes": "Very low solar adoption. Licensed electrical contractor required.",
+      "source_url": "https://www.cityofcharleston.org",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 1
 }

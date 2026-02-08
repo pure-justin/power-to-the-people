@@ -32,5 +32,84 @@
     "license_type": "Pennsylvania Home Improvement Contractor registration. Electrical work requires licensed electrician.",
     "nabcep_required": false
   },
-  "notes": "Fragmented permitting across 1,000+ municipalities. DVRPC standardization effort underway for Greater Philadelphia. SREC market provides additional incentive."
+  "notes": "Fragmented permitting across 1,000+ municipalities. DVRPC standardization effort underway for Greater Philadelphia. SREC market provides additional incentive.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "philadelphia_pa",
+      "name": "Philadelphia",
+      "state": "PA",
+      "type": "city",
+      "population": 1603797,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.phila.gov/services/permits-violations-licenses/apply-for-a-permit/building-and-repair-permits/get-a-permit-to-install-solar-panels/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "structural_calcs",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 15,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 100,
+        "estimated_total_residential": 375
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "Philadelphia fire code setbacks. Historic district rules.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Dept of Licenses & Inspections",
+        "phone": "215-686-2463",
+        "url": "https://www.phila.gov"
+      },
+      "special_requirements": [
+        "DVRPC standardization effort",
+        "PECO interconnection",
+        "SREC market"
+      ],
+      "notes": "DVRPC working to standardize solar PV permit processes across Greater Philadelphia. SREC market provides additional revenue.",
+      "source_url": "https://www.phila.gov/services/permits-violations-licenses/apply-for-a-permit/building-and-repair-permits/get-a-permit-to-install-solar-panels/",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "pittsburgh_pa",
+      "name": "Pittsburgh",
+      "state": "PA",
+      "type": "city",
+      "population": 302971,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://pittsburghpa.gov/pli/permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 15,
+      "fees": {
+        "base_fee": 175,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 300
+      },
+      "typical_timeline_days": 14,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Permits, Licenses & Inspections",
+        "phone": "412-255-2175",
+        "url": "https://pittsburghpa.gov"
+      },
+      "special_requirements": [
+        "Duquesne Light interconnection",
+        "SREC market"
+      ],
+      "notes": "Part of Western PA Rooftop Solar Challenge. Standard PA permitting.",
+      "source_url": "https://pittsburghpa.gov",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 2
 }

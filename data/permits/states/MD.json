@@ -8,7 +8,10 @@
     "typical_fee_range": "$200-$500",
     "typical_timeline_days": "7-21",
     "inspection_required": true,
-    "inspection_stages": ["rough-in", "final"],
+    "inspection_stages": [
+      "rough-in",
+      "final"
+    ],
     "statewide_permit_program": true,
     "statewide_program_name": "Maryland mandates automated solar permitting adoption by jurisdictions. Incentivizes SolarAPP+ through grants. State requires expedited permitting for residential solar."
   },
@@ -30,5 +33,46 @@
     "license_type": "No mandatory solar contractor license. Licensed master electrician required for electrical work. MHIC (Maryland Home Improvement Contractor) license required.",
     "nabcep_required": false
   },
-  "notes": "Maryland is one of the strongest solar states on the East Coast with excellent net metering, SREC market, and streamlined permitting. The state was an early SolarAPP+ adopter and mandates automated permitting. Maryland offers property tax exemption for solar and sales tax exemption. The SREC market provides significant additional revenue. Community solar is active with virtual net metering. The Climate Solutions Now Act sets aggressive clean energy targets."
+  "notes": "Maryland is one of the strongest solar states on the East Coast with excellent net metering, SREC market, and streamlined permitting. The state was an early SolarAPP+ adopter and mandates automated permitting. Maryland offers property tax exemption for solar and sales tax exemption. The SREC market provides significant additional revenue. Community solar is active with virtual net metering. The Climate Solutions Now Act sets aggressive clean energy targets.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "baltimore_md",
+      "name": "Baltimore",
+      "state": "MD",
+      "type": "city",
+      "population": 585708,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.baltimorecity.gov/housing/permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 15,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 100,
+        "estimated_total_residential": 350
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Baltimore fire code setbacks. Row house considerations.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Housing & Community Development",
+        "phone": "410-396-4673",
+        "url": "https://www.baltimorecity.gov"
+      },
+      "special_requirements": [
+        "BGE interconnection",
+        "SREC market",
+        "Row house structural considerations"
+      ],
+      "notes": "Row house roofs may require additional structural review. Maryland SREC market provides incentives.",
+      "source_url": "https://www.baltimorecity.gov",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 1
 }

@@ -8,7 +8,9 @@
     "typical_fee_range": "$200-$600",
     "typical_timeline_days": "7-21",
     "inspection_required": true,
-    "inspection_stages": ["final"],
+    "inspection_stages": [
+      "final"
+    ],
     "statewide_permit_program": false,
     "statewide_program_name": null
   },
@@ -30,5 +32,46 @@
     "license_type": "C-60 Solar Energy Contractor license or licensed General Contractor (automatically includes solar). Electrical work requires licensed electrician.",
     "nabcep_required": false
   },
-  "notes": "Hawaii has the highest electricity rates in the nation ($0.35-0.45/kWh), making solar extremely attractive even without net metering. The state has the highest per-capita solar adoption rate. Grid saturation on some islands has caused interconnection delays and curtailment. Battery storage is increasingly required for new installations to manage grid impacts. 100% renewable energy mandate by 2045. Unique island grid challenges not found in mainland states."
+  "notes": "Hawaii has the highest electricity rates in the nation ($0.35-0.45/kWh), making solar extremely attractive even without net metering. The state has the highest per-capita solar adoption rate. Grid saturation on some islands has caused interconnection delays and curtailment. Battery storage is increasingly required for new installations to manage grid impacts. 100% renewable energy mandate by 2045. Unique island grid challenges not found in mainland states.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "honolulu_hi",
+      "name": "Honolulu",
+      "state": "HI",
+      "type": "city",
+      "population": 350964,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.honolulu.gov/dpp/solar-permit/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 20,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 100,
+        "estimated_total_residential": 350
+      },
+      "typical_timeline_days": 7,
+      "fire_code_requirements": "Hawaii fire code setbacks. Wind load requirements for Pacific storm exposure.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Dept of Planning & Permitting",
+        "phone": "808-768-8000",
+        "url": "https://www.honolulu.gov/dpp"
+      },
+      "special_requirements": [
+        "Expedited permitting for systems up to 20 kW",
+        "HECO interconnection",
+        "High solar penetration area - interconnection study may be needed"
+      ],
+      "notes": "Expedited permitting for qualifying PV systems up to 20 kW. Hawaii has highest solar penetration in US - interconnection studies sometimes required.",
+      "source_url": "https://www.honolulu.gov/dpp/solar-permit/",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 1
 }

@@ -32,5 +32,118 @@
     "license_type": "Washington State L&I electrical contractor license required.",
     "nabcep_required": false
   },
-  "notes": "Seattle same-day permits for <7.7 kW systems. Larger systems require plan review with fees based on system size. Strong net metering policy."
+  "notes": "Seattle same-day permits for <7.7 kW systems. Larger systems require plan review with fees based on system size. Strong net metering policy.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "seattle_wa",
+      "name": "Seattle",
+      "state": "WA",
+      "type": "city",
+      "population": 737015,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.seattle.gov/sdci/permits/permits-we-issue",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 1,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Seattle Dept of Construction & Inspections",
+        "phone": "206-684-8850",
+        "url": "https://www.seattle.gov/sdci"
+      },
+      "special_requirements": [
+        "Same-day online issuance for systems <7.7 kW",
+        "No plan review needed for small systems",
+        "Seattle City Light interconnection"
+      ],
+      "notes": "Systems under 7.7 kW can apply online with same-day issuance and no plan review. Larger systems require plan review with tiered fees.",
+      "source_url": "https://www.seattle.gov/DPD/publications/CAM/cam420.pdf",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "spokane_wa",
+      "name": "Spokane",
+      "state": "WA",
+      "type": "city",
+      "population": 228989,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://my.spokanecity.org/permits/",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 7,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Permits",
+        "phone": "509-625-6300",
+        "url": "https://my.spokanecity.org"
+      },
+      "special_requirements": [
+        "Avista Utilities interconnection"
+      ],
+      "notes": "Standard WA permitting process.",
+      "source_url": "https://my.spokanecity.org",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "tacoma_wa",
+      "name": "Tacoma",
+      "state": "WA",
+      "type": "city",
+      "population": 219346,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.cityoftacoma.org/government/city_departments/planning_and_development_services",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 7,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Planning & Development Services",
+        "phone": "253-591-5030",
+        "url": "https://www.cityoftacoma.org"
+      },
+      "special_requirements": [
+        "Tacoma Power interconnection"
+      ],
+      "notes": "Standard WA permitting. Tacoma Power provides interconnection.",
+      "source_url": "https://www.cityoftacoma.org",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 3
 }

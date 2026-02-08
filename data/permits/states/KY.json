@@ -8,7 +8,9 @@
     "typical_fee_range": "$100-$300",
     "typical_timeline_days": "7-21",
     "inspection_required": true,
-    "inspection_stages": ["final"],
+    "inspection_stages": [
+      "final"
+    ],
     "statewide_permit_program": false,
     "statewide_program_name": null
   },
@@ -30,5 +32,44 @@
     "license_type": "No mandatory solar contractor license. Licensed electrician required for electrical work. Some municipalities require general contractor license.",
     "nabcep_required": false
   },
-  "notes": "Kentucky is a challenging state for solar due to relatively low electricity rates (coal-dependent), no net metering at retail rate, and no state solar incentives. The transition away from net metering reduced the economic case. TVA territory in western Kentucky has different rules. Property tax treatment of solar varies by county. The state has seen more utility-scale solar development than residential."
+  "notes": "Kentucky is a challenging state for solar due to relatively low electricity rates (coal-dependent), no net metering at retail rate, and no state solar incentives. The transition away from net metering reduced the economic case. TVA territory in western Kentucky has different rules. Property tax treatment of solar varies by county. The state has seen more utility-scale solar development than residential.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "louisville_ky",
+      "name": "Louisville",
+      "state": "KY",
+      "type": "city",
+      "population": 633045,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://louisvilleky.gov/government/develop-louisville/building-permits",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": 15,
+      "fees": {
+        "base_fee": 150,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 275
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard IFC setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Develop Louisville",
+        "phone": "502-574-3321",
+        "url": "https://louisvilleky.gov"
+      },
+      "special_requirements": [
+        "LG&E interconnection"
+      ],
+      "notes": "Standard KY permitting. LG&E serves Louisville area.",
+      "source_url": "https://louisvilleky.gov",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 1
 }

@@ -8,7 +8,9 @@
     "typical_fee_range": "$200-$500",
     "typical_timeline_days": "3-10",
     "inspection_required": true,
-    "inspection_stages": ["final"],
+    "inspection_stages": [
+      "final"
+    ],
     "statewide_permit_program": false,
     "statewide_program_name": null
   },
@@ -30,5 +32,156 @@
     "license_type": "Nevada State Contractor's Board license required. C-2D (Photovoltaic) specialty license or appropriate electrical license. General engineering or general building may also install.",
     "nabcep_required": false
   },
-  "notes": "Nevada has one of the fastest permitting timelines in the nation (median 27 days total). The state restored net metering after a controversial decision to gut it in 2015, which nearly destroyed the residential solar market. NV Energy's service territory covers most of the population. Las Vegas and Clark County have streamlined permitting for solar. Excellent solar resource (second only to Arizona in some metrics). Property and sales tax exemptions available. The state has a 50% RPS by 2030."
+  "notes": "Nevada has one of the fastest permitting timelines in the nation (median 27 days total). The state restored net metering after a controversial decision to gut it in 2015, which nearly destroyed the residential solar market. NV Energy's service territory covers most of the population. Las Vegas and Clark County have streamlined permitting for solar. Excellent solar resource (second only to Arizona in some metrics). Property and sales tax exemptions available. The state has a 50% RPS by 2030.",
+  "jurisdictions": [
+    {
+      "jurisdiction_id": "las_vegas_nv",
+      "name": "Las Vegas",
+      "state": "NV",
+      "type": "city",
+      "population": 641903,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.lasvegasnevada.gov/Business/Permits-Licenses",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 325
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Panels must not extend beyond highest roofline point. Standard setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building & Safety",
+        "phone": "702-229-6251",
+        "url": "https://www.lasvegasnevada.gov"
+      },
+      "special_requirements": [
+        "Electrical sub-permit required",
+        "NV Energy $35 submittal fee",
+        "Panels must not exceed roofline"
+      ],
+      "notes": "Residential permit fees $200-$400. NV Energy charges $35 non-refundable submittal fee. Rooftop panels cannot extend beyond highest roofline.",
+      "source_url": "https://files.lasvegasnevada.gov/building-safety/Residential-Photovoltaic-Solar-Permits.pdf",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "henderson_nv",
+      "name": "Henderson",
+      "state": "NV",
+      "type": "city",
+      "population": 320189,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.cityofhenderson.com/government/departments/community-development",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 325
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard Clark County setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Community Development",
+        "phone": "702-267-1500",
+        "url": "https://www.cityofhenderson.com"
+      },
+      "special_requirements": [
+        "Clark County electrical permit",
+        "NV Energy interconnection"
+      ],
+      "notes": "Clark County permit process. Standard Nevada requirements.",
+      "source_url": "https://www.cityofhenderson.com",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "reno_nv",
+      "name": "Reno",
+      "state": "NV",
+      "type": "city",
+      "population": 264165,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.reno.gov/government/departments/community-development/building-safety",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 325
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard setbacks. Not within 30 ft of public right-of-way.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Building Safety",
+        "phone": "775-334-2090",
+        "url": "https://www.reno.gov"
+      },
+      "special_requirements": [
+        "NV Energy interconnection",
+        "Panels not within 30 ft of street curb"
+      ],
+      "notes": "Standard Nevada permitting. Timeline 30-120 days total including all phases.",
+      "source_url": "https://www.reno.gov",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "jurisdiction_id": "north_las_vegas_nv",
+      "name": "North Las Vegas",
+      "state": "NV",
+      "type": "city",
+      "population": 262527,
+      "solarapp_enabled": false,
+      "permit_portal_url": "https://www.cityofnorthlasvegas.com/government/departments/community-development",
+      "submission_method": "online",
+      "documents_required": [
+        "site_plan",
+        "electrical_diagram",
+        "equipment_specs"
+      ],
+      "pe_stamp_threshold_kw": null,
+      "fees": {
+        "base_fee": 200,
+        "per_kw": null,
+        "inspection_fee": 75,
+        "estimated_total_residential": 325
+      },
+      "typical_timeline_days": 10,
+      "fire_code_requirements": "Standard Clark County setbacks.",
+      "rapid_shutdown_required": true,
+      "contacts": {
+        "department": "Community Development",
+        "phone": "702-633-1200",
+        "url": "https://www.cityofnorthlasvegas.com"
+      },
+      "special_requirements": [
+        "NV Energy interconnection"
+      ],
+      "notes": "Standard Nevada permitting in Clark County.",
+      "source_url": "https://www.cityofnorthlasvegas.com",
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "jurisdiction_count": 4
 }
