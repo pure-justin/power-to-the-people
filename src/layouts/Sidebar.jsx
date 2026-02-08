@@ -28,6 +28,7 @@ import {
   Sun,
   X,
   Store,
+  Brain,
 } from "lucide-react";
 
 const NAV_ITEMS = {
