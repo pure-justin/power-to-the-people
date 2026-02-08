@@ -48,6 +48,7 @@ const NAV_ITEMS = {
     { to: "/admin/ava", label: "Ava", icon: Bot },
     { to: "/admin/campaigns", label: "Campaigns", icon: Megaphone },
     { to: "/admin/analytics", label: "Analytics", icon: BarChart3 },
+    { to: "/admin/tasks", label: "AI Tasks", icon: Brain },
     { to: "/dashboard/marketplace", label: "Marketplace", icon: Store },
   ],
   installer: [
@@ -61,6 +62,7 @@ const NAV_ITEMS = {
     { to: "/dashboard/billing", label: "Billing", icon: CreditCard },
     { to: "/dashboard/referrals", label: "Referrals", icon: Gift },
     { to: "/dashboard/equipment", label: "Equipment", icon: Package },
+    { to: "/dashboard/tasks", label: "Tasks", icon: ClipboardList },
     { to: "/dashboard/marketplace", label: "Marketplace", icon: Store },
   ],
   sales: [
