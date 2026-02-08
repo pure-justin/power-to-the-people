@@ -62,9 +62,13 @@
 - **URL**: https://www.masscec.com/program/empower-massachusetts
 
 ### 10. New Energy Nexus Climate Fintech Accelerator
-- **Deadline**: Rolling programs
+- **Deadline**: Rolling programs (email Luna Zhang or Austin Lu for cohort timing)
 - **Fit**: EXCELLENT — emphasize tax equity/TPO/solar finance automation
 - **URL**: https://www.newenergynexus.com/
+- **Application draft**: `data/research/new-energy-nexus-application-draft.md`
+- **Contacts**: Luna Zhang (Climate Fintech Associate), Austin Lu (austin.lu@newenergynexus.com)
+- **Status**: COMPREHENSIVE DRAFT COMPLETE — needs Justin's personal info + outreach email
+- **Also covers**: CalSEED ($150K-$700K, requires CA address) — see draft for details
 
 ### 11. MIT Climate & Energy Prize — $100K Grand Prize
 - **Deadline**: Finals April 16-17, 2026

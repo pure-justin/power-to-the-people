@@ -226,14 +226,15 @@ Hi [Name],
 
 The 2026 solar reset killed the residential ITC, shifted the market to TPO, and hit panels with up to 3,400% tariffs. Installers are drowning in compliance complexity across 20,000+ jurisdictions with no unified system.
 
-SolarOS is the operational platform for this new reality. We've built a national permit and compliance database with a live API, equipment compliance tracking (domestic content, FEOC, tariff status), and automated jurisdiction-specific requirements. Working platform, real customers.
+I'm the CEO of Pure Energy, one of Texas's largest residential solar companies ($100M peak revenue, statewide coverage). After years of watching my teams spend more time on permitting paperwork than installations, I built SolarOS -- a national permit and compliance platform with a live API covering 106 jurisdictions across all 50 states.
 
-I noticed Energize backed Aurora Solar for design and GreenLite for municipal permitting -- SolarOS is the missing layer: installer-side compliance and permit automation that connects to both.
+I noticed Energize backed Aurora Solar for design and GreenLite for municipal permitting -- SolarOS is the missing installer-side layer: compliance engine, permit automation, and equipment verification that connects design to installation.
 
 Would you have 15 minutes this month to discuss?
 
 Justin Griffith
-Founder, SolarOS
+CEO, Pure Energy & Founder, SolarOS
+justin@agntc.tech
 
 ---
 
@@ -246,14 +247,15 @@ Hi Ernst,
 
 The 2026 solar market reset (ITC expiration, 3,400% panel tariffs, net billing transition) created a compliance nightmare across 20,000+ jurisdictions. No unified data layer exists for installers navigating this.
 
-SolarOS is an AI-powered national permit and compliance platform -- live API, equipment compliance engine (domestic content, FEOC, tariff tracking), and jurisdiction-specific automation. Working platform, national database built, API serving customers.
+I'm the CEO of Pure Energy ($100M peak revenue, statewide Texas solar), and I built SolarOS to solve the compliance nightmare I live every day. It's an AI-powered national permit and compliance platform -- live API, equipment compliance engine (domestic content, FEOC, tariff tracking), 106 jurisdictions across 50 states.
 
-Given your solar project finance background and Blue Bear's investments in Raptor Maps and Transect, I think SolarOS fits your thesis of machine intelligence for energy verticals.
+Given your solar project finance background and Blue Bear's investments in Raptor Maps and Transect, I think SolarOS fits your thesis of machine intelligence for energy verticals. Same pattern -- AI applied to a fragmented, paper-driven industry.
 
 15 minutes to walk through the platform?
 
 Justin Griffith
-Founder, SolarOS
+CEO, Pure Energy & Founder, SolarOS
+justin@agntc.tech
 
 ---
 
@@ -266,14 +268,15 @@ Hi [Name],
 
 Solar soft costs now exceed 60% of residential system price. The 2026 ITC expiration, massive panel tariffs, and 20,000+ unique jurisdictional requirements have made compliance the biggest drag on the energy transition.
 
-SolarOS automates this. We've built a national permit and compliance database with a live API -- equipment compliance tracking, jurisdiction-specific requirements, and automated document generation. Working platform, real traction.
+I run Pure Energy, a $100M/yr Texas solar company, and I built SolarOS to solve this. National permit and compliance database with a live API -- 106 jurisdictions, 50 states, equipment compliance tracking, and automated document generation. Not theory -- built from thousands of real installations.
 
 I see Congruent led GridStrong's seed for utility-scale compliance. SolarOS is the residential/commercial complement -- same compliance pain, different customer. Together they'd cover the full market.
 
 Would 15 minutes work to discuss?
 
 Justin Griffith
-Founder, SolarOS
+CEO, Pure Energy & Founder, SolarOS
+justin@agntc.tech
 
 ---
 
@@ -286,14 +289,15 @@ Hi [Name],
 
 The 2026 solar reset (ITC expiration, tariff chaos, net billing transition) is reshaping the residential solar market. Installers face 20,000+ jurisdictions with no standardized compliance data, creating bottlenecks that slow interconnection queues and DER deployment.
 
-SolarOS is a national permit and compliance platform with a live API -- the structured data layer for solar installations across every jurisdiction. Equipment compliance, permit requirements, and automated workflows. Working platform, national coverage.
+I'm the CEO of Pure Energy ($100M/yr, statewide Texas solar) and built SolarOS -- a national permit and compliance platform with a live API. 106 jurisdictions, 50 states, equipment compliance, automated workflows. The structured data layer for solar installations across every jurisdiction.
 
 For National Grid, this means better visibility into the residential solar pipeline and faster DER integration. Similar to how AutoGrid gave you the VPP layer, SolarOS provides the installer data layer.
 
 15 minutes to discuss the strategic fit?
 
 Justin Griffith
-Founder, SolarOS
+CEO, Pure Energy & Founder, SolarOS
+justin@agntc.tech
 
 ---
 
