@@ -472,7 +472,7 @@ Owner and CEO of Pure Energy, one of Texas's largest residential solar installat
 **AI-Augmented Development**
 SolarOS is built using an AI-augmented development approach with Claude Code (Anthropic) and a custom AI agent system (Ava), enabling a solo founder to build and maintain a platform with the output of a much larger team. This isn't just our development methodology — it's our product philosophy: AI handles the systematic work, humans provide judgment and domain expertise. The same approach powers our compliance engine.
 
-**Advisory Network**: [Justin to add any advisors, industry contacts, or planned hires]
+**Advisory Network**: Pure Energy's statewide Texas operations provide direct access to installer feedback, municipal permitting relationships, and real-world validation data from thousands of completed projects. Established connections with permitting offices across Texas from years of high-volume installations.
 
 **Hiring Plan (Post-Funding):**
 1. Solar industry BD/partnerships lead (Q2 2026)
@@ -629,7 +629,7 @@ Quick overview:
 - Working platform deployed with Stripe billing, API management, and national data coverage (106 jurisdictions, 50 states, 190+ incentive programs)
 - RESTful API with 6 endpoints for equipment compliance, permits, incentives, and solar estimates
 - Positioned as infrastructure for tax credit marketplace transactions under IRA Section 6418
-- Pre-seed stage, bootstrapped, based in [CITY, STATE]
+- Pre-seed stage, bootstrapped, based in San Antonio, TX
 
 The 2026 ITC expiration created an overnight shift to Third-Party Ownership, meaning every residential solar deal now requires commercial tax credit compliance — a process that's currently 100% manual. SolarOS automates this.
 
@@ -656,7 +656,7 @@ Questions:
 2. Our platform is deployed and functional — would this be considered beyond TRL 4? Could we frame specific AI compliance engine components at TRL 3-4?
 3. When is the next application window expected to open?
 
-I'm based in [CITY, STATE] [note: mention CA connection if applicable].
+I'm based in San Antonio, TX [note: mention CA connection if applicable].
 
 Thank you,
 Justin Griffith
