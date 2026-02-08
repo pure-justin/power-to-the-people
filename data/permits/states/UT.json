@@ -1,0 +1,36 @@
+{
+  "state": "UT",
+  "state_name": "Utah",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "both",
+    "typical_fee_range": "$100-$400",
+    "typical_timeline_days": "5-14",
+    "inspection_required": true,
+    "inspection_stages": [
+      "final"
+    ],
+    "statewide_permit_program": false,
+    "statewide_program_name": "Building and electrical permits required. Utah Clean Energy provides Model Solar Permit for municipalities. Salt Lake City offers online solar permitting."
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": true,
+    "net_metering_details": "Rocky Mountain Power net metering with export credit rate. Rate has been declining over recent years.",
+    "typical_timeline_days": "14-30",
+    "fees": "Rocky Mountain Power interconnection fee varies"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "Utah Code 57-13a-102 protects solar access rights.",
+    "historic_districts": "Local review required in historic districts.",
+    "wind_load_requirements": "Standard IBC wind loads. Design wind speeds 85-100 mph.",
+    "snow_load_requirements": "Significant snow loads in mountain areas. Wasatch Front 30-60 psf."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "Utah DOPL licensed contractor required. Electrical contractor license for electrical work.",
+    "nabcep_required": false
+  },
+  "notes": "Growing solar market. PE stamps typically required for systems >12 kW in Salt Lake City metro. Model Solar Permit toolkit available for municipalities."
+}

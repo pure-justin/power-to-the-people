@@ -1,0 +1,34 @@
+{
+  "state": "KY",
+  "state_name": "Kentucky",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "electrical",
+    "typical_fee_range": "$100-$300",
+    "typical_timeline_days": "7-21",
+    "inspection_required": true,
+    "inspection_stages": ["final"],
+    "statewide_permit_program": false,
+    "statewide_program_name": null
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": false,
+    "net_metering_details": "Kentucky transitioned from net metering to net billing. New solar customers receive compensation at the utility's avoided cost rate rather than retail rate. LG&E/KU (Louisville Gas & Electric/Kentucky Utilities), Duke Energy Kentucky, and Kentucky Power are the major IOUs. Rural co-ops have varying policies.",
+    "typical_timeline_days": "15-30",
+    "fees": "Varies by utility; LG&E/KU has application fees for interconnection"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "No comprehensive solar access law. HOAs may restrict solar installations. Solar easement statute exists.",
+    "historic_districts": "Kentucky has numerous historic districts, especially in Louisville, Lexington, and small towns. Local historic preservation boards review solar installations in designated districts.",
+    "wind_load_requirements": "Standard IBC wind load requirements. Design wind speeds typically 90-105 mph.",
+    "snow_load_requirements": "Moderate snow loads (10-25 psf ground snow load). Eastern mountain areas may have higher requirements."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "No mandatory solar contractor license. Licensed electrician required for electrical work. Some municipalities require general contractor license.",
+    "nabcep_required": false
+  },
+  "notes": "Kentucky is a challenging state for solar due to relatively low electricity rates (coal-dependent), no net metering at retail rate, and no state solar incentives. The transition away from net metering reduced the economic case. TVA territory in western Kentucky has different rules. Property tax treatment of solar varies by county. The state has seen more utility-scale solar development than residential."
+}

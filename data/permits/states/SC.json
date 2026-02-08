@@ -1,0 +1,37 @@
+{
+  "state": "SC",
+  "state_name": "South Carolina",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "both",
+    "typical_fee_range": "$200-$500",
+    "typical_timeline_days": "7-21",
+    "inspection_required": true,
+    "inspection_stages": [
+      "rough_electrical",
+      "final"
+    ],
+    "statewide_permit_program": false,
+    "statewide_program_name": "Building and electrical permits required. Residential builder specialty registration with electrical classification required. Roof-mounted requires roofing classification. Systems limited to 20 kW AC per SC Code 58-39-20."
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": true,
+    "net_metering_details": "Net metering available with Duke Energy Carolinas and Dominion Energy SC. 2% cap on net metering participation.",
+    "typical_timeline_days": "30-60",
+    "fees": "Varies by utility"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "SC Code 27-1-60 limits HOA restrictions on solar. Cannot increase cost >$1,000.",
+    "historic_districts": "Charleston historic district has strict additional requirements.",
+    "wind_load_requirements": "Coastal areas have hurricane wind requirements. Design wind speeds 100-150 mph on coast.",
+    "snow_load_requirements": "Minimal snow load requirements."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "Residential builder specialty registration with electrical classification. Roof-mounted also needs roofing classification.",
+    "nabcep_required": false
+  },
+  "notes": "Growing solar market. Systems limited to 20 kW AC for residential net metering. Greenville County requires sealed structural review. Charleston requires certified engineer plans for historic areas."
+}

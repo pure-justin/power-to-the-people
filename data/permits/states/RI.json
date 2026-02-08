@@ -1,0 +1,36 @@
+{
+  "state": "RI",
+  "state_name": "Rhode Island",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "both",
+    "typical_fee_range": "$50-$200",
+    "typical_timeline_days": "5-14",
+    "inspection_required": true,
+    "inspection_stages": [
+      "final"
+    ],
+    "statewide_permit_program": true,
+    "statewide_program_name": "Standardized statewide solar permit application process. All municipalities must use consistent procedures. Residential Solar Energy Disclosure and Homeowners Bill of Rights Act effective March 2025."
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": true,
+    "net_metering_details": "Net metering with Rhode Island Energy (formerly National Grid). Renewable Energy Growth Program provides additional incentives.",
+    "typical_timeline_days": "14-30",
+    "fees": "Rhode Island Energy: minimal interconnection fee"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "RI Gen. Laws 34-40 protects solar access.",
+    "historic_districts": "Historic review may be required in designated areas.",
+    "wind_load_requirements": "Coastal areas enhanced requirements. Design wind speeds 110-130 mph.",
+    "snow_load_requirements": "Snow loads 25-35 psf typical."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "Rhode Island Contractors Registration Board license required.",
+    "nabcep_required": false
+  },
+  "notes": "Standardized statewide permitting effective 2025. Applications require single-line electrical diagram with panel configuration, voltage specs, kW output, main panel capacity, and overcurrent protection."
+}

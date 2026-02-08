@@ -1,0 +1,34 @@
+{
+  "state": "MD",
+  "state_name": "Maryland",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "both",
+    "typical_fee_range": "$200-$500",
+    "typical_timeline_days": "7-21",
+    "inspection_required": true,
+    "inspection_stages": ["rough-in", "final"],
+    "statewide_permit_program": true,
+    "statewide_program_name": "Maryland mandates automated solar permitting adoption by jurisdictions. Incentivizes SolarAPP+ through grants. State requires expedited permitting for residential solar."
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": true,
+    "net_metering_details": "Maryland has net metering for systems up to 2 MW. Credits at retail rate including all charges. Monthly rollover, annual true-up at generation rate. BGE, Pepco, Delmarva Power, and Potomac Edison are major utilities. Virtual net metering available for community solar.",
+    "typical_timeline_days": "10-30",
+    "fees": "Minimal for residential systems under 25 kW"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "Strong solar access law. HOAs cannot prohibit solar installations. May impose only reasonable restrictions on placement that do not increase cost by more than $1,000.",
+    "historic_districts": "Annapolis, Frederick, and Baltimore have active historic preservation commissions. Maryland Historical Trust reviews solar on properties in National Register districts.",
+    "wind_load_requirements": "Coastal areas along Chesapeake Bay and Atlantic coast have enhanced wind requirements. Design wind speeds 110-130 mph in coastal zones.",
+    "snow_load_requirements": "Moderate snow loads (15-30 psf ground snow load). Western Maryland mountain areas have higher requirements (30-50 psf)."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "No mandatory solar contractor license. Licensed master electrician required for electrical work. MHIC (Maryland Home Improvement Contractor) license required.",
+    "nabcep_required": false
+  },
+  "notes": "Maryland is one of the strongest solar states on the East Coast with excellent net metering, SREC market, and streamlined permitting. The state was an early SolarAPP+ adopter and mandates automated permitting. Maryland offers property tax exemption for solar and sales tax exemption. The SREC market provides significant additional revenue. Community solar is active with virtual net metering. The Climate Solutions Now Act sets aggressive clean energy targets."
+}

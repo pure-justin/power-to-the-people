@@ -1,0 +1,37 @@
+{
+  "state": "NC",
+  "state_name": "North Carolina",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "both",
+    "typical_fee_range": "$100-$400",
+    "typical_timeline_days": "5-21",
+    "inspection_required": true,
+    "inspection_stages": [
+      "rough_electrical",
+      "final"
+    ],
+    "statewide_permit_program": false,
+    "statewide_program_name": "Building permit required for projects $20,000+. Electrical contractor license required for all PV. Limited license for installations under $60,000."
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": true,
+    "net_metering_details": "Net metering available for systems up to 1 MW. Duke Energy and Dominion Energy are primary utilities. Avoided cost rate for excess generation.",
+    "typical_timeline_days": "30-60",
+    "fees": "Varies by utility; Duke Energy typically $0 for residential interconnection"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "NC Gen. Stat. 22B-20 prohibits HOA covenants that prevent solar installation.",
+    "historic_districts": "Additional review required in historic districts.",
+    "wind_load_requirements": "Coastal areas have enhanced wind requirements. Design wind speeds 100-150 mph on coast.",
+    "snow_load_requirements": "Mountain areas may have snow load requirements up to 30 psf."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "NC General Contractors License or Electrical Contractor license. NCLBGC licensing required.",
+    "nabcep_required": false
+  },
+  "notes": "North Carolina is a major solar state ranking #4 nationally in installed capacity. Raleigh offers same-day online permitting for standard residential rooftop systems. Fragmented municipal requirements can extend timelines."
+}

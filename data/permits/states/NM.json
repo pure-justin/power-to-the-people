@@ -1,0 +1,34 @@
+{
+  "state": "NM",
+  "state_name": "New Mexico",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "both",
+    "typical_fee_range": "$100-$400",
+    "typical_timeline_days": "7-21",
+    "inspection_required": true,
+    "inspection_stages": ["final"],
+    "statewide_permit_program": false,
+    "statewide_program_name": null
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": true,
+    "net_metering_details": "New Mexico has net metering for IOUs. Systems up to 10 kW residential. Credits at retail rate. PNM (Public Service Company of New Mexico), El Paso Electric, and Xcel Energy serve the state. Monthly rollover, annual true-up. Rural co-ops have varying policies.",
+    "typical_timeline_days": "15-30",
+    "fees": "Minimal for residential systems; PNM has standard application process"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "New Mexico has a solar rights law (New Mexico Solar Rights Act). HOAs cannot unreasonably restrict solar installations. Solar easements protected.",
+    "historic_districts": "Santa Fe and Taos have strict architectural review including for solar. Adobe architectural standards may limit visible solar placement. NM Historic Preservation Division reviews National Register properties.",
+    "wind_load_requirements": "High wind areas in eastern plains and mountain passes. Design wind speeds 90-120 mph.",
+    "snow_load_requirements": "Mountain areas (Santa Fe, Taos, Ski communities) have significant snow loads (25-60 psf ground snow load). Southern desert areas minimal. Albuquerque moderate."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "NM Construction Industries Division license required. EE-98 (Electrical) or GB-98 (General Building) license. Solar specialty endorsement available.",
+    "nabcep_required": false
+  },
+  "notes": "New Mexico has excellent solar resources and a growing market. The state offers a 10% solar tax credit (up to $6,000 for residential). 100% clean energy mandate by 2045. PNM dominates the Albuquerque/Santa Fe market. Santa Fe's unique adobe architecture requirements create special considerations for solar installations. Property tax exemption available. The state's Energy Transition Act is driving utility-scale solar. High altitude sites have excellent production potential."
+}

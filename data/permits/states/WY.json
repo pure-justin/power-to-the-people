@@ -1,0 +1,36 @@
+{
+  "state": "WY",
+  "state_name": "Wyoming",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "electrical",
+    "typical_fee_range": "$50-$200",
+    "typical_timeline_days": "7-14",
+    "inspection_required": true,
+    "inspection_stages": [
+      "final"
+    ],
+    "statewide_permit_program": false,
+    "statewide_program_name": "Electrical permits required. Local building permits may be required. Minimal solar deployment or insufficient data for detailed requirements."
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": true,
+    "net_metering_details": "Net metering available for systems up to 25 kW. Rocky Mountain Power and Black Hills Energy primary utilities.",
+    "typical_timeline_days": "30-45",
+    "fees": "Varies by utility"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "No statewide solar access law.",
+    "historic_districts": "Local review required.",
+    "wind_load_requirements": "Very high wind area. Design wind speeds 100-130 mph.",
+    "snow_load_requirements": "Significant snow loads 30-60 psf."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "Wyoming licensed electrician required.",
+    "nabcep_required": false
+  },
+  "notes": "Very low solar adoption. High winds can be a challenge for installations. Limited state-level incentives. Wind energy dominates renewable energy in the state."
+}

@@ -1,0 +1,34 @@
+{
+  "state": "MN",
+  "state_name": "Minnesota",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "both",
+    "typical_fee_range": "$100-$400",
+    "typical_timeline_days": "7-21",
+    "inspection_required": true,
+    "inspection_stages": ["final"],
+    "statewide_permit_program": true,
+    "statewide_program_name": "Minnesota offers SolarAPP+ permitting incentive program through Dept of Commerce. Provides financial incentives and technical assistance to jurisdictions adopting SolarAPP+ automated permitting."
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": true,
+    "net_metering_details": "Minnesota has net metering for systems up to 1 MW. Credits at retail rate for systems up to 40 kW residential. Xcel Energy (Northern States Power) is the largest utility and offers Solar*Rewards and community solar programs. Monthly rollover, annual true-up.",
+    "typical_timeline_days": "15-30",
+    "fees": "Xcel Energy: minimal for residential; application fee varies for commercial"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "Minnesota has a solar access law (Minn. Stat. 500.30). Solar easements protected. HOAs cannot unreasonably restrict solar installations.",
+    "historic_districts": "Historic districts in Minneapolis, St. Paul, and other cities. Minnesota SHPO reviews solar in National Register districts.",
+    "wind_load_requirements": "Standard IBC wind load requirements. Open prairie areas may have enhanced wind considerations. Design wind speeds typically 90-110 mph.",
+    "snow_load_requirements": "Significant snow loads throughout the state (30-70 psf ground snow load). Northern Minnesota has the highest requirements. Structural engineer certification required for structural system support including snow-drift loads and firefighter live loads."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "Licensed electrician required for PV installations. Type A Master Electrician or Journeyman Electrician under master's supervision. Building contractor license for structural work.",
+    "nabcep_required": false
+  },
+  "notes": "Minnesota is a strong solar market with favorable net metering, community solar programs (one of the largest in the nation), and SolarAPP+ adoption incentives. Xcel Energy's Solar*Rewards program provides additional production-based incentives. The Made in Minnesota Solar Incentive Program promoted domestic manufacturing. Property tax exemption available. Snow loads are a critical engineering consideration requiring structural certification. The state has a 1.5% solar energy standard within its 25% RPS."
+}

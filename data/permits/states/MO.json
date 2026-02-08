@@ -1,0 +1,34 @@
+{
+  "state": "MO",
+  "state_name": "Missouri",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "both",
+    "typical_fee_range": "$100-$500",
+    "typical_timeline_days": "7-21",
+    "inspection_required": true,
+    "inspection_stages": ["final"],
+    "statewide_permit_program": false,
+    "statewide_program_name": null
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": true,
+    "net_metering_details": "Missouri has net metering for systems up to 100 kW residential. Credits at retail rate. Monthly rollover, annual true-up at avoided cost. Ameren Missouri and Evergy Missouri are the major IOUs. Co-ops and munis have varying policies.",
+    "typical_timeline_days": "15-30",
+    "fees": "Minimal for residential systems; varies by utility"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "Missouri has a solar access law (RSMo 442.012). Solar easements available. HOAs cannot unreasonably restrict solar installations.",
+    "historic_districts": "Historic districts in St. Louis, Kansas City, and other cities. Missouri SHPO reviews solar in National Register districts.",
+    "wind_load_requirements": "Tornado-prone state. Standard IBC wind load requirements. Design wind speeds 90-115 mph. Enhanced mounting recommended in high-risk tornado areas.",
+    "snow_load_requirements": "Moderate snow loads (10-25 psf ground snow load). Northern Missouri has higher requirements."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "No state-specific solar license requirement. Licensed electrician required. Some municipalities (Frontenac, Clarkson Valley) require NABCEP certification. City/county contractor licensing varies.",
+    "nabcep_required": false
+  },
+  "notes": "Missouri has a moderate solar market supported by net metering at retail rate and the state's 15% RPS. No state solar tax credit. Property tax exemption available for solar. Ameren Missouri has offered solar rebate programs. Missouri's competitive electricity market in some areas provides options. Some affluent municipalities require NABCEP certification, which is unusual."
+}

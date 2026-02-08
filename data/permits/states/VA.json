@@ -1,0 +1,36 @@
+{
+  "state": "VA",
+  "state_name": "Virginia",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "both",
+    "typical_fee_range": "$100-$400",
+    "typical_timeline_days": "7-21",
+    "inspection_required": true,
+    "inspection_stages": [
+      "final"
+    ],
+    "statewide_permit_program": false,
+    "statewide_program_name": "Building and electrical permits required. DEQ PBR program does not regulate residential solar. Contact local government planning and zoning. PE stamps typically required for systems >12 kW."
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": true,
+    "net_metering_details": "Net metering available for systems up to 25 kW residential. Dominion Energy Virginia and Appalachian Power primary utilities.",
+    "typical_timeline_days": "30-60",
+    "fees": "Varies by utility"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "Virginia Code 67-701 limits HOA restrictions on solar. Cannot increase cost >5% or reduce efficiency >10%.",
+    "historic_districts": "Virginia historic districts may require additional review.",
+    "wind_load_requirements": "Coastal areas have enhanced wind requirements. Design wind speeds 100-130 mph.",
+    "snow_load_requirements": "Mountain areas may have snow loads 20-40 psf."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "Virginia DPOR Class A or B contractor license required depending on project value.",
+    "nabcep_required": false
+  },
+  "notes": "Rapidly growing solar market. Virginia Clean Economy Act driving solar deployment. Local permitting varies significantly by jurisdiction. Solar Permit Map available at solarpermitmap.coopercenter.org."
+}

@@ -1,0 +1,36 @@
+{
+  "state": "ND",
+  "state_name": "North Dakota",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "electrical",
+    "typical_fee_range": "$50-$200",
+    "typical_timeline_days": "7-21",
+    "inspection_required": true,
+    "inspection_stages": [
+      "final"
+    ],
+    "statewide_permit_program": false,
+    "statewide_program_name": "Electrical permits required through ND State Electrical Board. Building permits required in cities like Fargo, Bismarck, Grand Forks."
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": true,
+    "net_metering_details": "Net metering available for systems up to 100 kW. Xcel Energy, Montana-Dakota Utilities primary providers.",
+    "typical_timeline_days": "30-45",
+    "fees": "Minimal interconnection fees"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "No statewide solar access law.",
+    "historic_districts": "Local review required.",
+    "wind_load_requirements": "High wind area. Design wind speeds 100-115 mph.",
+    "snow_load_requirements": "Significant snow loads 30-50 psf ground snow load."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "State Electrical Contractor license required for all electrical work.",
+    "nabcep_required": false
+  },
+  "notes": "Very low solar adoption. Cold climate and limited incentives. Electrical permits managed by ND State Electrical Board."
+}

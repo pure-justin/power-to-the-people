@@ -1,0 +1,34 @@
+{
+  "state": "MA",
+  "state_name": "Massachusetts",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "both",
+    "typical_fee_range": "$200-$500",
+    "typical_timeline_days": "7-21",
+    "inspection_required": true,
+    "inspection_stages": ["rough-in", "final"],
+    "statewide_permit_program": false,
+    "statewide_program_name": null
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": true,
+    "net_metering_details": "Massachusetts has net metering for systems up to 25 kW AC (increased from 10 kW in Feb 2025). Credits at retail rate for residential. SMART (Solar Massachusetts Renewable Target) program provides additional incentive payments. National Grid, Eversource, and Unitil are major utilities.",
+    "typical_timeline_days": "15-30",
+    "fees": "Minimal for residential systems; SMART program has registration fees"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "Strong solar access law (MGL Chapter 184 Section 23C). Solar easements protected. HOAs cannot prohibit solar installations. Certificate of appropriateness cannot be denied solely because of solar energy system installation.",
+    "historic_districts": "Massachusetts has numerous historic districts, especially in Boston, Cambridge, Salem, and Cape Cod. Massachusetts Historical Commission reviews solar in National Register districts. Some communities have specific historic district solar guidelines.",
+    "wind_load_requirements": "Cape Cod and Islands (Nantucket, Martha's Vineyard) have enhanced wind requirements. Design wind speeds 110-130 mph in coastal areas.",
+    "snow_load_requirements": "Moderate to significant snow loads (25-60 psf ground snow load). Western Massachusetts and Berkshires have higher requirements. Cape Cod lower."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "Licensed electrician (journeyman or master) required for solar PV installations. Construction Supervisor License for structural work. Home Improvement Contractor registration required.",
+    "nabcep_required": false
+  },
+  "notes": "Massachusetts is one of the strongest solar markets in the Northeast with excellent incentives. The SMART program provides declining block incentive payments above net metering credits. Net metering size limit increased to 25 kW AC in 2025. SREC-II program previously provided additional revenue. Property tax exemption (20 years) and sales tax exemption available. Many municipalities participate in SolSmart. The state has high electricity rates supporting strong solar economics."
+}

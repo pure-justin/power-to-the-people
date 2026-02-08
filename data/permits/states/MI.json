@@ -1,0 +1,34 @@
+{
+  "state": "MI",
+  "state_name": "Michigan",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "both",
+    "typical_fee_range": "$150-$500",
+    "typical_timeline_days": "10-30",
+    "inspection_required": true,
+    "inspection_stages": ["final"],
+    "statewide_permit_program": false,
+    "statewide_program_name": null
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": false,
+    "net_metering_details": "Michigan transitioned from net metering to a distributed generation (DG) tariff. New customers receive outflow credits at a rate set by the MPSC, typically less than retail. DTE Energy and Consumers Energy are the major utilities. Inflow charges remain at retail rate. DG program capacity caps have been contentious.",
+    "typical_timeline_days": "15-45",
+    "fees": "DTE and Consumers Energy charge interconnection application fees; varies by system size"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "Michigan has a solar easement statute but no comprehensive solar access law preventing HOA restrictions.",
+    "historic_districts": "Historic districts in Detroit, Ann Arbor, Grand Rapids, and other cities. State Historic Preservation Office reviews solar in National Register districts.",
+    "wind_load_requirements": "Standard IBC wind load requirements. Great Lakes coastal areas may have enhanced requirements.",
+    "snow_load_requirements": "Significant snow loads, especially in Upper Peninsula and western Michigan lake effect zones (30-80 psf ground snow load). Lower Peninsula typically 20-40 psf. Structural engineering review commonly required."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "Licensed electrical contractor required. Residential Builder license may be needed for structural work. No dedicated solar contractor license.",
+    "nabcep_required": false
+  },
+  "notes": "Michigan's solar market has been impacted by the transition from net metering to DG tariffs and capacity caps. DTE Energy's DG program has waiting lists in some areas. High snow loads are a significant design consideration, especially in the Upper Peninsula and lake effect zones. The state has no specific state solar tax credit. Property tax exemption available in some jurisdictions. Consumers Energy and DTE have both invested in utility-scale solar."
+}

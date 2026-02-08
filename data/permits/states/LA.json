@@ -1,0 +1,34 @@
+{
+  "state": "LA",
+  "state_name": "Louisiana",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "both",
+    "typical_fee_range": "$150-$500",
+    "typical_timeline_days": "7-21",
+    "inspection_required": true,
+    "inspection_stages": ["rough-in", "final"],
+    "statewide_permit_program": false,
+    "statewide_program_name": null
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": false,
+    "net_metering_details": "Louisiana ended net metering for new customers. Replaced with net billing at avoided cost rate. Entergy Louisiana and SWEPCO are major utilities. Cleco Power also serves parts of the state. Export compensation significantly below retail rate.",
+    "typical_timeline_days": "15-45",
+    "fees": "Varies by utility; Entergy charges interconnection fees"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "Louisiana has a solar rights law that limits HOA restrictions. HOAs cannot prohibit solar but may impose reasonable aesthetic requirements.",
+    "historic_districts": "New Orleans French Quarter and Garden District have strict historic preservation requirements. Louisiana SHPO reviews solar in National Register districts. New Orleans adopted specific guidelines for solar panels in historic districts in 2021.",
+    "wind_load_requirements": "Critical requirement. Hurricane zone covering the entire Gulf Coast. Design wind speeds 120-160 mph along the coast. Louisiana Building Code requires compliance with hurricane provisions. Inland areas 100-120 mph.",
+    "snow_load_requirements": "Not applicable"
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "State Licensing Board for Contractors license required. Electrical work requires licensed electrician.",
+    "nabcep_required": false
+  },
+  "notes": "Louisiana's solar market has been impacted by the end of net metering and expiration of the state solar tax credit (which was 50% of cost, one of the best in the nation, but expired in 2017). Hurricane resilience is a major consideration for installations along the Gulf Coast. New Orleans has specific historic district guidelines that are unique in the state. Property tax exemption available for solar. The state has relatively high electricity rates for the South, which helps the solar economics despite policy headwinds."
+}

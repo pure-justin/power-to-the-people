@@ -1,0 +1,36 @@
+{
+  "state": "TN",
+  "state_name": "Tennessee",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "both",
+    "typical_fee_range": "$75-$300",
+    "typical_timeline_days": "5-14",
+    "inspection_required": true,
+    "inspection_stages": [
+      "final"
+    ],
+    "statewide_permit_program": false,
+    "statewide_program_name": "Building and electrical permits required. Licensed electrical installer required. Contractors must be licensed through TN Dept of Commerce and Insurance."
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": false,
+    "net_metering_details": "TVA region - no traditional net metering. TVA Green Connect or local utility buyback programs may be available.",
+    "typical_timeline_days": "30-60",
+    "fees": "Varies by local utility/TVA distributor"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "TN Code 66-35-103 protects solar access. HOAs cannot prohibit solar.",
+    "historic_districts": "Nashville historic overlay districts require additional review.",
+    "wind_load_requirements": "Standard IBC wind loads. Design wind speeds 90-100 mph.",
+    "snow_load_requirements": "Minimal to moderate. Mountain areas 15-25 psf."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "Licensed and bonded through TN Dept of Commerce and Insurance. Registered with Metropolitan Codes and Building Safety Administration for Nashville.",
+    "nabcep_required": false
+  },
+  "notes": "TVA territory limits net metering options. Nashville electrical PV permits start at $75. Contractors need state license for jobs over $25,000."
+}

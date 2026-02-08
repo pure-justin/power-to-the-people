@@ -1,0 +1,34 @@
+{
+  "state": "NY",
+  "state_name": "New York",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "both",
+    "typical_fee_range": "$200-$800",
+    "typical_timeline_days": "5-14",
+    "inspection_required": true,
+    "inspection_stages": ["final"],
+    "statewide_permit_program": true,
+    "statewide_program_name": "New York State Unified Solar Permit (NYS-USP). Standardizes permit application across municipalities. Permit determinations issued within 14 calendar days. Municipalities provide feedback within 7 days for incomplete applications."
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": true,
+    "net_metering_details": "New York has net metering through the Value of Distributed Energy Resources (VDER) tariff for new commercial systems, while residential systems still receive net metering at retail rate. ConEdison, National Grid, NYSEG, RG&E, Central Hudson, PSEG-LI are major utilities. NY-Sun program provides incentives.",
+    "typical_timeline_days": "10-25",
+    "fees": "Varies by utility; ConEdison charges interconnection fees; LIPA/PSEG-LI has separate process"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "Strong solar access law (Real Property Law Section 335-b). HOAs and condo boards cannot unreasonably restrict solar installations. NYC has additional tenant protections.",
+    "historic_districts": "NYC Landmarks Preservation Commission has strict requirements for solar in designated landmarks and historic districts. Upstate historic districts reviewed by local boards. NY SHPO consulted for National Register properties. NYC requires special permits for solar on landmarked buildings.",
+    "wind_load_requirements": "NYC has enhanced wind load requirements for high-rise installations. Long Island coastal areas have hurricane zone requirements. Design wind speeds 100-130 mph in coastal areas.",
+    "snow_load_requirements": "Significant variation across the state. Upstate/Adirondacks: 50-100+ psf ground snow load. NYC/Long Island: 20-30 psf. Lake effect zones in western NY: 40-80 psf."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "NYC requires licensed Master Electrician for electrical work and General Contractor for construction permits. Outside NYC, licensed electrician required. NABCEP certification or IBEW-NECA training valued but not mandatory statewide.",
+    "nabcep_required": false
+  },
+  "notes": "New York has the fastest solar permitting timeline in the nation (median 25 days) thanks to the NYS-USP framework. NY-Sun program administered by NYSERDA provides declining block incentives. Strong net metering for residential. VDER/Value Stack for commercial provides compensation based on multiple value components. Community solar program is one of the largest in the nation. NYC has unique requirements including fire code setbacks and electrical licensing. Property tax exemption (15 years) and sales tax exemption available. 70% renewable by 2030 mandate."
+}

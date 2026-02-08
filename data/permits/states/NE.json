@@ -1,0 +1,34 @@
+{
+  "state": "NE",
+  "state_name": "Nebraska",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "electrical",
+    "typical_fee_range": "$100-$300",
+    "typical_timeline_days": "7-21",
+    "inspection_required": true,
+    "inspection_stages": ["final"],
+    "statewide_permit_program": false,
+    "statewide_program_name": null
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": true,
+    "net_metering_details": "Nebraska has net metering through LB 436 for systems up to 25 kW. All publicly owned utilities (Nebraska has no IOUs - all public power) must offer net metering. Credits at retail rate. NPPD, OPPD, and LES are major utilities.",
+    "typical_timeline_days": "15-30",
+    "fees": "Varies by utility; typically minimal for residential"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "No solar access law. HOAs may restrict solar installations without limitation.",
+    "historic_districts": "Historic districts handled by local preservation commissions. Nebraska SHPO reviews solar in National Register districts.",
+    "wind_load_requirements": "High wind areas, especially in western Nebraska. Design wind speeds 90-120 mph. Tornado-prone areas require attention to mounting design.",
+    "snow_load_requirements": "Moderate snow loads (15-30 psf ground snow load). Western Nebraska and panhandle may have higher requirements."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "Licensed electrician required. No dedicated solar contractor license. Local contractor licensing varies.",
+    "nabcep_required": false
+  },
+  "notes": "Nebraska is unique as the only state with 100% public power (no investor-owned utilities). This means all net metering decisions are made by public power districts. The state has a small but growing solar market. No state solar tax credit. Limited incentives beyond net metering. The public power structure means each district sets its own interconnection rules. Property tax treatment varies by local jurisdiction."
+}

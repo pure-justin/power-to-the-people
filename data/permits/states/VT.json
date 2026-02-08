@@ -1,0 +1,36 @@
+{
+  "state": "VT",
+  "state_name": "Vermont",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "electrical",
+    "typical_fee_range": "$50-$200",
+    "typical_timeline_days": "5-14",
+    "inspection_required": true,
+    "inspection_stages": [
+      "final"
+    ],
+    "statewide_permit_program": true,
+    "statewide_program_name": "State-level permitting through Division of Fire Safety electrical board. Some cities like Burlington have own inspectors. Certificate of Public Good (CPG) required from Public Utility Commission."
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": true,
+    "net_metering_details": "Net metering available for systems up to 500 kW. Green Mountain Power primary utility.",
+    "typical_timeline_days": "14-30",
+    "fees": "GMP: minimal interconnection fee"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "Vermont supports solar access through CPG process.",
+    "historic_districts": "Local historic review may apply.",
+    "wind_load_requirements": "Standard IBC wind loads. Design wind speeds 85-100 mph.",
+    "snow_load_requirements": "Significant snow loads 40-80 psf typical."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "Vermont licensed electrician required. Burlington has own inspection requirements.",
+    "nabcep_required": false
+  },
+  "notes": "Strong renewable energy support. State-level permitting simplifies process. CPG required from Public Utility Commission. Burlington has separate local inspectors."
+}

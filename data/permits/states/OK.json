@@ -1,0 +1,36 @@
+{
+  "state": "OK",
+  "state_name": "Oklahoma",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "electrical",
+    "typical_fee_range": "$50-$300",
+    "typical_timeline_days": "7-21",
+    "inspection_required": true,
+    "inspection_stages": [
+      "final"
+    ],
+    "statewide_permit_program": false,
+    "statewide_program_name": "Electrical permits required. Building permits may be required depending on municipality. Counties have authority to zone and permit solar installations."
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": true,
+    "net_metering_details": "Net metering available for OG&E and PSO customers. Systems up to 100 kW for residential.",
+    "typical_timeline_days": "30-60",
+    "fees": "Varies by utility"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "Oklahoma Solar Rights Act (2014) prevents HOAs from prohibiting solar.",
+    "historic_districts": "Local review required.",
+    "wind_load_requirements": "Tornado Alley location. Enhanced wind loads. Design wind speeds 90-115 mph.",
+    "snow_load_requirements": "Minimal snow load requirements 10-20 psf."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "Oklahoma electrical contractor license required.",
+    "nabcep_required": false
+  },
+  "notes": "Modest but growing solar market. OG&E and PSO offer net metering. Counties recently clarified authority over solar siting."
+}

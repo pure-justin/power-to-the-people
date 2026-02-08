@@ -1,0 +1,34 @@
+{
+  "state": "ME",
+  "state_name": "Maine",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "electrical",
+    "typical_fee_range": "$100-$300",
+    "typical_timeline_days": "7-21",
+    "inspection_required": true,
+    "inspection_stages": ["final"],
+    "statewide_permit_program": false,
+    "statewide_program_name": null
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": true,
+    "net_metering_details": "Maine has net energy billing for distributed generation. Credits at retail rate for residential systems. Central Maine Power (CMP) and Versant Power are the major utilities. Maine offers kilowatt-hour credits that can offset supply and delivery charges.",
+    "typical_timeline_days": "15-30",
+    "fees": "Minimal for residential systems"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "Maine has a solar access law. HOAs cannot unreasonably restrict solar installations.",
+    "historic_districts": "Historic districts in Portland, Bath, and other communities may require additional review. Maine Historic Preservation Commission consulted for National Register properties.",
+    "wind_load_requirements": "Coastal areas have enhanced wind requirements. Design wind speeds 100-120 mph along the coast. Inland areas lower.",
+    "snow_load_requirements": "Significant snow loads throughout the state (40-100+ psf ground snow load). Northern Maine and mountain areas have the highest requirements. Structural engineering review commonly required."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "Licensed electrician required for solar PV installations. Master or journeyman electrician license.",
+    "nabcep_required": false
+  },
+  "notes": "Maine has a growing solar market supported by favorable net energy billing and community solar programs. The state has no sales tax (no exemption needed) and offers property tax exemption for solar. Snow loads are a significant engineering consideration. Maine was one of the first states to establish community solar enabling legislation. CMP territory covers most of the population. Relatively high electricity rates support solar economics."
+}

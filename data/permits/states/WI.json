@@ -1,0 +1,36 @@
+{
+  "state": "WI",
+  "state_name": "Wisconsin",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "both",
+    "typical_fee_range": "$100-$400",
+    "typical_timeline_days": "7-21",
+    "inspection_required": true,
+    "inspection_stages": [
+      "final"
+    ],
+    "statewide_permit_program": false,
+    "statewide_program_name": "Building and electrical permits required. Wis. Stat. 66.0401 voids restrictions that prevent solar energy systems. Milwaukee amended ordinances to comply."
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": true,
+    "net_metering_details": "Net metering available with We Energies, Madison Gas & Electric, and other utilities.",
+    "typical_timeline_days": "30-45",
+    "fees": "Varies by utility"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "Wis. Stat. 66.0401 prohibits restrictions preventing solar installations.",
+    "historic_districts": "Local review may be required.",
+    "wind_load_requirements": "Standard IBC wind loads. Design wind speeds 90-100 mph.",
+    "snow_load_requirements": "Significant snow loads 30-50 psf typical."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "Wisconsin DSPS licensed electrician or contractor required.",
+    "nabcep_required": false
+  },
+  "notes": "State statute strongly protects solar rights. Some SolarAPP+ adoption. Milwaukee has streamlined process. Focus on Energy rebates available."
+}

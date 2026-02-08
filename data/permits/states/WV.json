@@ -1,0 +1,36 @@
+{
+  "state": "WV",
+  "state_name": "West Virginia",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "electrical",
+    "typical_fee_range": "$50-$200",
+    "typical_timeline_days": "7-21",
+    "inspection_required": true,
+    "inspection_stages": [
+      "final"
+    ],
+    "statewide_permit_program": false,
+    "statewide_program_name": "Electrical permits required. No specific solar license. All work must be done by licensed electrical contractors. PE stamps for systems >12-15 kW."
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": true,
+    "net_metering_details": "Net metering available for systems up to 50 kW. Appalachian Power and Mon Power primary utilities.",
+    "typical_timeline_days": "30-60",
+    "fees": "Varies by utility"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "No statewide solar access law.",
+    "historic_districts": "Historic districts may require additional review.",
+    "wind_load_requirements": "Standard IBC wind loads. Design wind speeds 85-100 mph.",
+    "snow_load_requirements": "Mountain areas snow loads 30-50 psf."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "Licensed electrical contractor required. No specific solar license.",
+    "nabcep_required": false
+  },
+  "notes": "Very low solar adoption. Limited incentives. Net metering available but export rates are low. Coal-dominant energy market transitioning slowly."
+}

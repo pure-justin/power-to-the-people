@@ -1,0 +1,34 @@
+{
+  "state": "NV",
+  "state_name": "Nevada",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "both",
+    "typical_fee_range": "$200-$500",
+    "typical_timeline_days": "3-10",
+    "inspection_required": true,
+    "inspection_stages": ["final"],
+    "statewide_permit_program": false,
+    "statewide_program_name": null
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": true,
+    "net_metering_details": "Nevada restored net metering after the 2015-2017 controversy. Credits at approximately 75% of retail rate under NEM rate. NV Energy (Sierra Pacific Power in the north, Nevada Power in the south) is the primary utility. Tiered export rates based on time of use.",
+    "typical_timeline_days": "10-20",
+    "fees": "NV Energy: $75 interconnection fee typical for residential"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "Strong solar access law (NRS 278.0208). HOAs cannot prohibit solar installations. May impose only reasonable restrictions that do not impair functioning or adversely affect cost/efficiency.",
+    "historic_districts": "Historic districts in Las Vegas (Fremont Street), Virginia City, and other areas. Nevada SHPO reviews solar in National Register districts.",
+    "wind_load_requirements": "High desert wind areas, especially in southern Nevada and Las Vegas Valley. Design wind speeds 90-115 mph.",
+    "snow_load_requirements": "Most of Nevada has minimal snow loads. Reno/Lake Tahoe/Sierra area has significant snow loads (30-100+ psf ground snow load). Design varies significantly between northern mountains and southern desert."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "Nevada State Contractor's Board license required. C-2D (Photovoltaic) specialty license or appropriate electrical license. General engineering or general building may also install.",
+    "nabcep_required": false
+  },
+  "notes": "Nevada has one of the fastest permitting timelines in the nation (median 27 days total). The state restored net metering after a controversial decision to gut it in 2015, which nearly destroyed the residential solar market. NV Energy's service territory covers most of the population. Las Vegas and Clark County have streamlined permitting for solar. Excellent solar resource (second only to Arizona in some metrics). Property and sales tax exemptions available. The state has a 50% RPS by 2030."
+}

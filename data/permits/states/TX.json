@@ -1,0 +1,37 @@
+{
+  "state": "TX",
+  "state_name": "Texas",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "both",
+    "typical_fee_range": "$200-$600",
+    "typical_timeline_days": "7-28",
+    "inspection_required": true,
+    "inspection_stages": [
+      "rough_electrical",
+      "final"
+    ],
+    "statewide_permit_program": false,
+    "statewide_program_name": "No statewide framework. Requirements vary by AHJ. Most cities require building and electrical permits. PE stamps typically required for systems over 10 kW. New consumer protection laws SB 1036/SB 1697 effective September 2025."
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": false,
+    "net_metering_details": "No statewide net metering. Some retail electric providers offer buyback programs. CenterPoint Energy handles interconnection for Houston area. Oncor for DFW area.",
+    "typical_timeline_days": "14-45",
+    "fees": "CenterPoint: application fee varies; Oncor: varies by system size"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "Texas Property Code 202.010 protects solar. HOAs cannot prohibit solar but can set aesthetic guidelines.",
+    "historic_districts": "Local historic district rules apply. El Paso historic districts require plan review.",
+    "wind_load_requirements": "Coastal areas have hurricane wind requirements. Design wind speeds vary 90-150 mph.",
+    "snow_load_requirements": "Generally minimal. Panhandle/West Texas may have 10-15 psf."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "Master Electrician license required. San Antonio requires city-registered master electrician. TDLR registration for solar retailers effective September 2025.",
+    "nabcep_required": false
+  },
+  "notes": "Largest deregulated electricity market. Houston implemented SolarAPP+ July 2024. Dallas requires two separate online portals. Austin has streamlined green energy permits. San Antonio requires CPS Energy approval. PE stamp >10 kW in most metros. New consumer protection laws (SB 1036/SB 1697) require retailer registration."
+}

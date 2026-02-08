@@ -1,0 +1,36 @@
+{
+  "state": "OH",
+  "state_name": "Ohio",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "both",
+    "typical_fee_range": "$150-$500",
+    "typical_timeline_days": "5-15",
+    "inspection_required": true,
+    "inspection_stages": [
+      "final"
+    ],
+    "statewide_permit_program": false,
+    "statewide_program_name": "Building and electrical permits required. Requirements vary by municipality. Columbus requires plans sealed by Ohio-registered design professional."
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": true,
+    "net_metering_details": "Net metering available for systems up to 25 kW residential. AEP Ohio, Duke Energy Ohio, FirstEnergy primary utilities.",
+    "typical_timeline_days": "30-60",
+    "fees": "Varies by utility"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "Ohio Rev. Code 5301.012 protects solar access rights.",
+    "historic_districts": "Additional review in historic districts.",
+    "wind_load_requirements": "Standard IBC wind loads. Design wind speeds 90-100 mph.",
+    "snow_load_requirements": "Snow loads 20-30 psf typical."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "Ohio Construction Industry Licensing Board electrical contractor license required.",
+    "nabcep_required": false
+  },
+  "notes": "Growing solar market. Cincinnati reviews residential permits within 5 business days. Cleveland requires zoning review. Columbus requires Ohio-registered design professional sealed plans."
+}

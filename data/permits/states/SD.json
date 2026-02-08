@@ -1,0 +1,36 @@
+{
+  "state": "SD",
+  "state_name": "South Dakota",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "electrical",
+    "typical_fee_range": "$50-$200",
+    "typical_timeline_days": "7-14",
+    "inspection_required": true,
+    "inspection_stages": [
+      "final"
+    ],
+    "statewide_permit_program": false,
+    "statewide_program_name": "Electrical permits required. Building permits required in cities like Sioux Falls and Rapid City. No special solar contractor license but electrical contractor license required."
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": true,
+    "net_metering_details": "Net metering available through rural electric cooperatives and municipal utilities.",
+    "typical_timeline_days": "30-45",
+    "fees": "Minimal fees"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "No statewide solar access law.",
+    "historic_districts": "Local review required.",
+    "wind_load_requirements": "High wind area. Design wind speeds 100-115 mph.",
+    "snow_load_requirements": "Snow loads 30-40 psf typical."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "Electrical contractor license required for all electrical work.",
+    "nabcep_required": false
+  },
+  "notes": "Very low solar adoption. Limited state-level incentives. Growing interest in solar with new installations increasing."
+}

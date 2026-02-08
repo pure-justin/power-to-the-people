@@ -1,0 +1,34 @@
+{
+  "state": "MS",
+  "state_name": "Mississippi",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "both",
+    "typical_fee_range": "$100-$400",
+    "typical_timeline_days": "7-21",
+    "inspection_required": true,
+    "inspection_stages": ["final"],
+    "statewide_permit_program": false,
+    "statewide_program_name": null
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": false,
+    "net_metering_details": "Mississippi has no state-mandated net metering at retail rate. The Mississippi Public Service Commission approved net metering rules in 2015 but at avoided cost rate, not retail. Entergy Mississippi and Mississippi Power are major utilities. TVA distributors serve parts of the state with separate rules.",
+    "typical_timeline_days": "15-45",
+    "fees": "Varies by utility"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "No solar access law. HOAs may restrict or prohibit solar installations without limitation.",
+    "historic_districts": "Historic districts in Natchez, Vicksburg, and other cities. Mississippi Department of Archives and History reviews solar in National Register districts.",
+    "wind_load_requirements": "Gulf Coast areas (Gulfport, Biloxi, Pascagoula) have hurricane zone wind load requirements. Design wind speeds 130-150 mph along the coast. Inland areas standard IBC requirements.",
+    "snow_load_requirements": "Not applicable for most of the state. Minimal snow loads in northern areas."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "General contractor license required for projects over $50,000. Licensed electrician required for electrical work. No dedicated solar contractor license.",
+    "nabcep_required": false
+  },
+  "notes": "Mississippi is one of the least solar-friendly states with no meaningful net metering, no state solar incentives, no solar access laws, and no RPS. The solar market is very small and primarily commercial/utility-scale. Gulf Coast hurricane requirements add complexity and cost to coastal installations. TVA territory in northern Mississippi has different rules. The state has relatively low electricity rates which reduces the economic case for solar."
+}

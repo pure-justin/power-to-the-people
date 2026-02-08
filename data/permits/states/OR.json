@@ -1,0 +1,36 @@
+{
+  "state": "OR",
+  "state_name": "Oregon",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "both",
+    "typical_fee_range": "$300-$600",
+    "typical_timeline_days": "3-14",
+    "inspection_required": true,
+    "inspection_stages": [
+      "final"
+    ],
+    "statewide_permit_program": false,
+    "statewide_program_name": "Building and electrical permits required. Portland has Solar Prescriptive Path for simple roofs. Oregon requires registered design professional for certain systems."
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": true,
+    "net_metering_details": "Net metering available for systems up to 25 kW residential. PGE and Pacific Power primary utilities.",
+    "typical_timeline_days": "14-30",
+    "fees": "PGE: $0 interconnection fee for residential"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "ORS 105.880 protects solar access. HOAs cannot prohibit solar.",
+    "historic_districts": "Portland historic districts require additional review and may extend timeline several weeks.",
+    "wind_load_requirements": "Coastal areas have enhanced wind requirements. Design wind speeds 85-110 mph.",
+    "snow_load_requirements": "Mountain areas may have significant snow loads. Cascades 50-200+ psf."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "Oregon Construction Contractors Board license. Electrical permits through Oregon BCD.",
+    "nabcep_required": false
+  },
+  "notes": "Strong solar market with good incentives. Portland has streamlined Solar Prescriptive Path. NEC 2020 rapid shutdown requirements enforced. Clackamas County requires structural engineering for older homes."
+}

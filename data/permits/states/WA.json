@@ -1,0 +1,36 @@
+{
+  "state": "WA",
+  "state_name": "Washington",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "both",
+    "typical_fee_range": "$100-$500",
+    "typical_timeline_days": "1-14",
+    "inspection_required": true,
+    "inspection_stages": [
+      "final"
+    ],
+    "statewide_permit_program": false,
+    "statewide_program_name": "Building and electrical permits required. Seattle offers same-day online issuance for systems under 7.7 kW without plan review. PE stamps required for commercial installations."
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": true,
+    "net_metering_details": "Net metering available for systems up to 100 kW. Puget Sound Energy, Seattle City Light primary utilities.",
+    "typical_timeline_days": "14-30",
+    "fees": "PSE: minimal interconnection fee; Seattle City Light: $0"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "RCW 64.38.055 limits HOA restrictions on solar installations.",
+    "historic_districts": "Seattle historic districts require additional review.",
+    "wind_load_requirements": "Standard IBC wind loads. Design wind speeds 85-100 mph.",
+    "snow_load_requirements": "Cascade areas significant snow loads 50-200+ psf."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "Washington State L&I electrical contractor license required.",
+    "nabcep_required": false
+  },
+  "notes": "Seattle same-day permits for <7.7 kW systems. Larger systems require plan review with fees based on system size. Strong net metering policy."
+}
