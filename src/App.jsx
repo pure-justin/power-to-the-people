@@ -162,6 +162,7 @@ function App() {
             <Route path="/admin/ava" element={<AdminAva />} />
             <Route path="/admin/campaigns" element={<AdminCampaigns />} />
             <Route path="/admin/analytics" element={<AdminAnalytics />} />
+            <Route path="/admin/tasks" element={<AdminTasks />} />
           </Route>
 
           {/* Legacy redirect */}
