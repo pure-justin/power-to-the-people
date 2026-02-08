@@ -1,0 +1,680 @@
+# SolarOS Master Build Plan
+
+> **Vision**: Fully automated solar installation pipeline — Survey → CAD → Permit → Schedule → Install → Fund
+> **Core Pattern**: AI tries first → asks human when stuck → learns from human action
+> **Human Flywheel**: Every human action inside the platform = training data for future automation
+
+---
+
+## Phase 0: AI Task Engine (Foundation — Build First)
+**Why first**: Every other system uses this pattern. Build it once, use it everywhere.
+
+### 0A. `aiTaskEngine` — Cloud Function + Firestore
+- **Collection**: `ai_tasks`
+- **Schema**:
+  ```
+  {
+    id: string,
+    type: "permit_submit" | "permit_check" | "cad_generate" | "photo_analyze" | "funding_submit" | "schedule_match" | "survey_process",
+    projectId: string,
+    status: "pending" | "ai_processing" | "ai_completed" | "ai_failed" | "human_needed" | "human_processing" | "human_completed" | "learning",
+    aiAttempt: { startedAt, completedAt, result, confidence, error },
+    humanFallback: { assignedTo, assignedAt, completedAt, action, notes },
+    learningData: { aiInput, humanOutput, delta, trainable: boolean },
+    retryCount: number,
+    maxRetries: number,
+    priority: 1-5,
+    createdAt, updatedAt
+  }
+  ```
+- **Functions**:
+  - `createAiTask(type, projectId, input)` — Create task, AI attempts immediately
+  - `processAiTask(taskId)` — AI execution engine (dispatches to type-specific handler)
+  - `escalateToHuman(taskId, reason)` — Route to human queue with context
+  - `completeHumanTask(taskId, result)` — Human completes, capture learning data
+  - `getTaskQueue(filters)` — Query tasks by status/type/priority
+  - `retryAiTask(taskId)` — Re-attempt with updated knowledge
+
+### 0B. `humanQueue` — Human Task Dashboard
+- **Frontend page**: `/dashboard/tasks` (installer), `/admin/tasks` (admin)
+- **Features**:
+  - Shows tasks AI couldn't handle, sorted by priority
+  - Each task shows: what AI tried, why it failed, what's needed
+  - Human completes task inside the platform (actions captured)
+  - "Teach AI" button — mark solution as reusable pattern
+  - Real-time notifications when new tasks arrive
+
+### 0C. `learningService` — Capture & Apply Human Knowledge
+- **Collection**: `ai_learnings`
+- **Schema**:
+  ```
+  {
+    id: string,
+    taskType: string,
+    context: { jurisdiction?, equipmentType?, projectType? },
+    humanAction: string,        // What the human did
+    humanInput: object,         // The actual data/decisions
+    confidence: number,         // Starts at 0.5, increases with repeated patterns
+    usageCount: number,         // How many times AI used this learning
+    successCount: number,       // How many times it worked
+    createdBy: string,
+    createdAt, lastUsedAt
+  }
+  ```
+- **Functions**:
+  - `recordLearning(taskType, context, humanAction, input)` — Save pattern
+  - `findRelevantLearnings(taskType, context)` — Query matching patterns
+  - `updateLearningOutcome(learningId, success)` — Feedback loop
+  - Before AI attempts any task, it queries learnings for matching patterns
+
+---
+
+## Phase 1: AHJ Database & Permit Knowledge Base
+**Why second**: Permits are the #1 bottleneck. Build the knowledge base first.
+
+### 1A. `ahjDatabase` — Authority Having Jurisdiction Registry
+- **Collection**: `ahj_registry`
+- **Schema**:
+  ```
+  {
+    id: string,
+    name: string,                    // "City of Austin Building Department"
+    jurisdiction_type: "city" | "county" | "state",
+    state: string,
+    county: string,
+    city: string,
+    zip_codes: string[],             // All ZIP codes this AHJ covers
+    contact: { phone, email, website, address },
+    portal: {
+      url: string,                   // Online submission portal
+      type: "web_form" | "email" | "in_person" | "proprietary_software",
+      automatable: boolean,          // Can we bot this?
+      automation_script: string,     // Reference to Python script if automatable
+      automation_confidence: number  // 0-1, how reliable is the bot
+    },
+    requirements: {
+      structural_engineering: boolean,
+      electrical_diagrams: boolean,
+      site_plan: boolean,
+      single_line_diagram: boolean,
+      load_calculations: boolean,
+      equipment_specs: boolean,
+      hoa_approval: boolean,
+      utility_approval: boolean,
+      fire_department_review: boolean,
+      custom_requirements: string[]
+    },
+    fees: {
+      residential_solar_permit: number,
+      commercial_solar_permit: number,
+      electrical_permit: number,
+      fee_calculation_method: string  // "flat" | "per_kw" | "valuation_based"
+    },
+    turnaround: {
+      typical_days: number,
+      expedited_available: boolean,
+      expedited_fee: number,
+      expedited_days: number
+    },
+    notes: string,
+    last_verified: timestamp,
+    verified_by: string,             // "ai" | userId
+    data_source: string              // Where this data came from
+  }
+  ```
+- **Data Population Strategy**:
+  1. Seed from SolarAPP+ participating jurisdictions (free API)
+  2. Scrape state/county building department websites (Apify actors)
+  3. Cross-reference with NREL/OpenEI data
+  4. Human verification fills gaps (learning system captures corrections)
+
+### 1B. `permitSOP` — Standard Operating Procedures per AHJ
+- **Collection**: `permit_sops`
+- **Schema**:
+  ```
+  {
+    id: string,
+    ahjId: string,
+    step_number: number,
+    action: string,                  // "Navigate to portal" | "Fill form field" | "Upload document"
+    details: string,                 // Human-readable instructions
+    automation: {
+      script_type: "puppeteer" | "api" | "email" | "manual",
+      script_path: string,          // Path to automation script
+      selector: string,             // CSS selector if web form
+      field_mapping: object,        // Maps our data fields to their form fields
+      wait_conditions: string[]     // What to wait for before next step
+    },
+    screenshots: string[],          // Reference screenshots for this step
+    common_errors: [{ error, resolution }],
+    last_successful_run: timestamp,
+    success_rate: number
+  }
+  ```
+
+### 1C. Permit Bot Framework
+- **Python scripts** in `scripts/permit-bots/`
+- **Base class**: `PermitBot` with common methods:
+  - `login(portal_url, credentials)`
+  - `fill_form(field_mapping, project_data)`
+  - `upload_documents(documents[])`
+  - `submit_and_capture_confirmation()`
+  - `check_status(permit_number)`
+  - `handle_error(error, escalate_to_human)`
+- **Per-AHJ scripts** extend base class with jurisdiction-specific logic
+- **SolarAPP+ integration** for participating jurisdictions (instant permits)
+
+---
+
+## Phase 2: Site Survey System
+**Why third**: This is the entry point. Everything downstream depends on good survey data.
+
+### 2A. `surveyService` — Survey Data Collection
+- **Collection**: `site_surveys`
+- **Schema**:
+  ```
+  {
+    id: string,
+    projectId: string,
+    customerId: string,
+    status: "draft" | "in_progress" | "submitted" | "ai_review" | "approved" | "revision_needed",
+    property: {
+      address: string,
+      lat: number, lng: number,
+      roof_type: "composite_shingle" | "tile" | "metal" | "flat" | "other",
+      roof_age_years: number,
+      roof_condition: "excellent" | "good" | "fair" | "poor",
+      stories: number,
+      square_footage: number,
+      year_built: number
+    },
+    roof_measurements: {
+      total_area_sqft: number,
+      usable_area_sqft: number,     // After setbacks, obstructions
+      pitch: number,                // Degrees
+      azimuth: number,              // Compass direction
+      planes: [{                    // Multiple roof planes
+        id, area, pitch, azimuth, shading_factor
+      }]
+    },
+    electrical: {
+      panel_type: string,
+      panel_amps: number,           // 100A, 200A, 400A
+      main_breaker_amps: number,
+      available_spaces: number,
+      bus_bar_rating: number,
+      panel_location: string,
+      meter_type: string,           // "analog" | "digital" | "smart"
+      service_voltage: number       // 120/240V typical
+    },
+    shading: {
+      obstructions: [{              // Trees, chimneys, neighboring buildings
+        type, direction, distance_ft, height_ft, seasonal_impact
+      }],
+      tsrf: number,                 // Total Solar Resource Fraction (0-1)
+      annual_shading_loss: number   // Percentage
+    },
+    photos: [{
+      id: string,
+      type: "roof_overview" | "electrical_panel" | "meter" | "obstruction" | "attic" | "mounting_area",
+      url: string,
+      ai_analysis: {
+        status: "pending" | "analyzed" | "flagged",
+        findings: string[],
+        measurements: object,
+        confidence: number
+      },
+      uploaded_at: timestamp
+    }],
+    utility: {
+      provider: string,
+      account_number: string,
+      avg_monthly_kwh: number,
+      annual_kwh: number,
+      avg_monthly_bill: number,
+      rate_schedule: string,
+      net_metering_eligible: boolean
+    },
+    ai_review: {
+      design_ready: boolean,
+      issues: string[],
+      recommendations: string[],
+      confidence: number,
+      reviewed_at: timestamp
+    },
+    created_at, updated_at, submitted_at
+  }
+  ```
+
+### 2B. Survey Frontend — Mobile-First Components
+- **Customer self-service**: `/portal/survey` — guided step-by-step
+  - Step 1: Address verification + satellite view
+  - Step 2: Roof details (type, age, condition) with photo upload
+  - Step 3: Electrical panel photos + details
+  - Step 4: Shading assessment (photo-guided)
+  - Step 5: Utility bill upload or manual entry
+  - Step 6: Review & submit
+- **Installer survey tool**: `/dashboard/survey/:projectId` — professional version
+  - All customer fields + professional measurements
+  - Compass/inclinometer integration (device sensors)
+  - Real-time photo AI feedback ("panel photo looks good" / "retake — can't read breaker labels")
+
+### 2C. Survey AI Review
+- When survey submitted → creates AI task (type: "survey_process")
+- AI checks:
+  - Are all required photos present and clear?
+  - Do measurements make sense? (roof area vs satellite imagery)
+  - Is electrical panel adequate for solar? (NEC 120% rule)
+  - Any red flags? (old roof, small panel, heavy shading)
+- If confidence > 0.85 → auto-approve, trigger CAD generation
+- If confidence < 0.85 → human review queue
+
+---
+
+## Phase 3: CAD Auto-Generation
+**Why fourth**: Directly consumes survey data, produces permit documents.
+
+### 3A. `cadService` — Design Generation Engine
+- **Collection**: `cad_designs`
+- **Schema**:
+  ```
+  {
+    id: string,
+    projectId: string,
+    surveyId: string,
+    status: "generating" | "ai_complete" | "human_review" | "approved" | "revision",
+    system_design: {
+      total_kw: number,
+      panel_count: number,
+      panel_model: string,          // From equipment database
+      inverter_model: string,
+      battery_model: string,        // Optional
+      mounting_type: "roof" | "ground" | "carport",
+      panel_layout: [{              // Per roof plane
+        plane_id, rows, columns, tilt, orientation, x_offset, y_offset
+      }],
+      string_configuration: [{      // Electrical stringing
+        string_id, panel_count, voltage, current
+      }],
+      estimated_annual_kwh: number,
+      offset_percentage: number     // % of customer usage covered
+    },
+    documents: {
+      site_plan_url: string,
+      single_line_diagram_url: string,
+      structural_plan_url: string,
+      equipment_spec_sheets: string[],
+      load_calculations_url: string
+    },
+    compliance: {
+      nec_compliant: boolean,
+      setback_compliant: boolean,
+      fire_code_compliant: boolean,
+      structural_adequate: boolean,
+      issues: string[]
+    },
+    ai_generation: {
+      started_at, completed_at,
+      model_version: string,
+      confidence: number
+    },
+    human_review: {
+      reviewer_id: string,
+      reviewed_at: timestamp,
+      changes_made: string[],
+      approved: boolean
+    },
+    created_at, updated_at
+  }
+  ```
+
+### 3B. Design Algorithm
+- **Input**: Survey data + equipment database + AHJ requirements
+- **Process**:
+  1. Calculate optimal system size from usage data + roof area
+  2. Select equipment (panels, inverter) based on compliance + performance
+  3. Layout panels on roof planes (maximize production, respect setbacks)
+  4. Calculate string configuration (voltage/current windows)
+  5. Generate NEC-compliant electrical design
+  6. Run structural load calculations
+  7. Generate document package (SVG/PDF)
+- **Output**: Permit-ready document package
+
+### 3C. Design Review UI
+- `/dashboard/designs/:projectId` — visual editor
+- Shows panel layout on satellite image
+- Drag-and-drop panel repositioning
+- Real-time electrical calculations update
+- "Approve" sends to permit submission
+- All changes captured as learning data
+
+---
+
+## Phase 4: Permit Automation Pipeline
+**Why fifth**: Most complex system, requires AHJ database + CAD documents.
+
+### 4A. `permitService` — Permit Lifecycle Management
+- **Collection**: `permits`
+- **Schema**:
+  ```
+  {
+    id: string,
+    projectId: string,
+    ahjId: string,
+    type: "solar" | "electrical" | "building" | "hoa",
+    status: "preparing" | "submitting" | "submitted" | "under_review" | "corrections_needed" | "approved" | "denied" | "expired",
+    submission: {
+      method: "solarapp" | "web_portal" | "email" | "in_person" | "mail",
+      submitted_at: timestamp,
+      submitted_by: "ai" | userId,
+      confirmation_number: string,
+      portal_reference: string,
+      documents_submitted: string[]
+    },
+    review: {
+      reviewer_name: string,
+      comments: string[],
+      corrections_requested: [{
+        item: string,
+        description: string,
+        resolved: boolean,
+        resolved_by: "ai" | userId,
+        resolved_at: timestamp
+      }]
+    },
+    approval: {
+      approved_at: timestamp,
+      permit_number: string,
+      valid_until: timestamp,
+      conditions: string[],
+      inspection_required: boolean
+    },
+    fees: {
+      amount: number,
+      paid: boolean,
+      paid_at: timestamp,
+      payment_method: string,
+      receipt_url: string
+    },
+    timeline: [{
+      status: string,
+      timestamp: timestamp,
+      actor: "ai" | "human" | "ahj",
+      notes: string
+    }],
+    ai_attempts: [{
+      attempted_at: timestamp,
+      action: string,
+      result: "success" | "failure",
+      error: string,
+      screenshot_url: string
+    }],
+    created_at, updated_at
+  }
+  ```
+
+### 4B. Permit Submission Flow
+```
+CAD Approved
+  → AI Task: "permit_submit"
+  → Check AHJ database for submission method
+  → If SolarAPP+ jurisdiction: use API (instant)
+  → If web portal + automatable: run Puppeteer bot
+  → If web portal + not automatable: human queue (capture SOP)
+  → If email/in-person: generate package + human queue
+  → Track confirmation number
+  → Schedule status checks
+```
+
+### 4C. Permit Status Monitor
+- **Scheduled function**: `checkPermitStatuses` (runs every 4 hours)
+- For each "submitted" or "under_review" permit:
+  - If web portal: bot checks status page
+  - If SolarAPP+: check API
+  - Else: relies on human updates
+- On status change → notify project team + update pipeline
+- On "corrections_needed" → create AI task to resolve (or human fallback)
+
+---
+
+## Phase 5: Scheduling & Install Coordination
+
+### 5A. `schedulingService` — Availability & Matching
+- **Collection**: `schedule_slots`
+- **Schema**:
+  ```
+  {
+    id: string,
+    installerId: string,
+    date: string,                    // "2026-03-15"
+    time_slots: [{
+      start: "08:00", end: "12:00",
+      status: "available" | "booked" | "blocked",
+      projectId: string             // If booked
+    }],
+    crew_size: number,
+    service_area_miles: number,
+    equipment_available: string[]    // What they can install
+  }
+  ```
+- **Collection**: `install_schedules`
+- **Schema**:
+  ```
+  {
+    id: string,
+    projectId: string,
+    permitId: string,
+    installerId: string,
+    date: string,
+    time_window: { start, end },
+    status: "proposed" | "customer_confirmed" | "installer_confirmed" | "both_confirmed" | "in_progress" | "completed" | "rescheduled" | "cancelled",
+    crew: [{ name, role, phone }],
+    equipment_checklist: [{ item, quantity, loaded: boolean }],
+    customer_notifications: [{
+      type: "confirmation" | "reminder" | "day_of" | "crew_en_route",
+      sent_at: timestamp,
+      channel: "sms" | "email" | "push"
+    }],
+    created_at, updated_at
+  }
+  ```
+
+### 5B. Scheduling Flow
+```
+Permit Approved
+  → AI Task: "schedule_match"
+  → Find available installers (from marketplace bids or assigned)
+  → Cross-reference customer availability preferences
+  → Propose top 3 time slots to customer
+  → Customer confirms via app/SMS
+  → Installer confirms
+  → Schedule locked → notifications begin
+  → Day-of: crew tracking + customer updates
+```
+
+### 5C. Scheduling Frontend
+- **Customer**: `/portal/schedule` — pick from proposed slots
+- **Installer**: `/dashboard/schedule` — manage availability, view upcoming installs
+- **Admin**: `/admin/schedule` — overview, conflict resolution
+- Calendar view with drag-and-drop rescheduling
+
+---
+
+## Phase 6: Install QC — Real-Time Photo Analysis
+
+### 6A. `photoAnalysisService` — AI Photo Processing
+- **Collection**: `install_photos`
+- **Schema**:
+  ```
+  {
+    id: string,
+    projectId: string,
+    scheduleId: string,
+    phase: "pre_install" | "mounting" | "wiring" | "panels" | "inverter" | "battery" | "final" | "inspection",
+    photos: [{
+      id: string,
+      url: string,
+      taken_at: timestamp,
+      taken_by: string,
+      gps: { lat, lng },
+      ai_analysis: {
+        status: "analyzing" | "pass" | "flag" | "fail",
+        checks: [{
+          check_type: "panel_alignment" | "wire_management" | "grounding" | "label_visible" | "torque_marking" | "flashing_seal",
+          result: "pass" | "warning" | "fail",
+          confidence: number,
+          details: string,
+          annotated_image_url: string    // AI-annotated version
+        }],
+        overall_score: number,           // 0-100
+        blocking_issues: string[],       // Must fix before proceeding
+        recommendations: string[],       // Suggestions, not blocking
+        analyzed_at: timestamp
+      }
+    }],
+    phase_status: "in_progress" | "passed" | "needs_rework" | "rework_complete",
+    sign_off: {
+      installer_signed: boolean,
+      reviewer_signed: boolean,         // Remote QC reviewer
+      customer_signed: boolean,
+      signed_at: timestamp
+    }
+  }
+  ```
+
+### 6B. Photo Analysis Checks (by phase)
+- **Mounting**: Rail alignment, lag bolt spacing, flashing seals
+- **Wiring**: Wire management, conduit runs, junction boxes, labeling
+- **Panels**: Alignment, spacing, clamp torque marks, no damage
+- **Inverter**: Mounting height, clearance, disconnect visible, labels
+- **Battery**: Indoor/outdoor compliance, clearance, ventilation
+- **Final**: System labels, rapid shutdown, placards, meter
+
+### 6C. Installer Mobile Experience
+- `/dashboard/install/:projectId` — mobile-optimized
+- Phase-by-phase checklist with photo requirements
+- Camera opens with overlay guide ("Take photo of electrical panel from this angle")
+- Real-time feedback: green check (pass), yellow warning, red fail
+- Can't proceed to next phase until current phase passes
+- "Request Review" button for edge cases → human queue
+
+---
+
+## Phase 7: Funding Automation
+
+### 7A. `fundingService` — Documentation & Submission
+- **Collection**: `funding_packages`
+- **Schema**:
+  ```
+  {
+    id: string,
+    projectId: string,
+    type: "lease" | "ppa" | "loan" | "cash" | "pace",
+    provider: string,                  // "Sunrun", "Mosaic", "GoodLeap", etc.
+    status: "preparing" | "documents_ready" | "submitted" | "under_review" | "approved" | "funded" | "rejected",
+    documents: {
+      contract_signed: boolean,
+      permit_approved: boolean,
+      install_photos_approved: boolean,
+      inspection_passed: boolean,
+      interconnection_approved: boolean,
+      utility_pto: boolean            // Permission to Operate
+    },
+    submission: {
+      method: "api" | "portal" | "email",
+      submitted_at: timestamp,
+      submitted_by: "ai" | userId,
+      reference_number: string
+    },
+    funding_amount: number,
+    milestone_payments: [{
+      milestone: "contract" | "permit" | "install_complete" | "pto",
+      amount: number,
+      status: "pending" | "requested" | "paid",
+      paid_at: timestamp
+    }],
+    created_at, updated_at
+  }
+  ```
+
+### 7B. Funding Flow
+```
+Install Complete + Photos Approved
+  → AI Task: "funding_submit"
+  → Compile document package (permit, photos, inspection, interconnection)
+  → Match against funder's requirements checklist
+  → If all documents ready: submit via funder's preferred method
+  → If documents missing: create tasks to obtain missing items
+  → Track funding status
+  → On approval: trigger milestone payment release
+```
+
+---
+
+## Phase 8: Interconnection & PTO
+
+### 8A. `interconnectionService` — Utility Connection
+- **Collection**: `interconnections`
+- Submit interconnection applications to utilities
+- Track Net Energy Metering (NEM) / Net Billing approval
+- Monitor PTO (Permission to Operate) status
+- Many utilities have online portals → bot opportunity
+
+---
+
+## Build Order & Dependencies
+
+```
+Phase 0: AI Task Engine ──────────────────┐
+  ├── 0A: Task Engine (backend)           │ FOUNDATION
+  ├── 0B: Human Queue (frontend)          │ (build first)
+  └── 0C: Learning Service                │
+                                          │
+Phase 1: AHJ Database ───────────────────┤
+  ├── 1A: AHJ Registry + data population  │ KNOWLEDGE
+  ├── 1B: Permit SOPs                     │ BASE
+  └── 1C: Permit Bot Framework            │
+                                          │
+Phase 2: Site Survey ─────────────────────┤
+  ├── 2A: Survey Service (backend)        │ PIPELINE
+  ├── 2B: Survey Frontend (mobile-first)  │ ENTRY
+  └── 2C: Survey AI Review                │ POINT
+                                          │
+Phase 3: CAD Generation ──────────────────┤
+  ├── 3A: Design Engine                   │ DESIGN
+  ├── 3B: Design Algorithm                │
+  └── 3C: Design Review UI               │
+                                          │
+Phase 4: Permit Automation ───────────────┤
+  ├── 4A: Permit Lifecycle                │ PERMITS
+  ├── 4B: Submission Flow                 │ (biggest
+  └── 4C: Status Monitor                  │  bottleneck)
+                                          │
+Phase 5: Scheduling ──────────────────────┤
+  ├── 5A: Availability Matching           │ INSTALL
+  ├── 5B: Scheduling Flow                 │ COORD
+  └── 5C: Scheduling Frontend             │
+                                          │
+Phase 6: Install QC ──────────────────────┤
+  ├── 6A: Photo Analysis Service          │ QUALITY
+  ├── 6B: Analysis Checks                 │
+  └── 6C: Installer Mobile UX            │
+                                          │
+Phase 7: Funding ─────────────────────────┤
+  ├── 7A: Funding Service                 │ MONEY
+  └── 7B: Funding Flow                    │
+                                          │
+Phase 8: Interconnection ─────────────────┘
+  └── 8A: Utility PTO                       FINAL
+```
+
+## Code Standards for This Build
+
+1. **Every function gets JSDoc comments** explaining what it does, its inputs, and outputs
+2. **Every Firestore write includes `created_at` and `updated_at`** timestamps
+3. **Every AI task follows the pattern**: attempt → succeed/fail → escalate if needed → learn
+4. **Every service exports a clear API** with typed parameters
+5. **Every frontend component has prop documentation**
+6. **Error handling always includes**: what failed, why, and what to do about it
+7. **No magic numbers** — constants defined and named
+8. **Audit trail on everything** — who did what, when, why
