@@ -1,0 +1,70 @@
+{
+  "state": "NJ",
+  "state_name": "New Jersey",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 4,
+  "incentives": [
+    {
+      "id": "NJ_srec_ii",
+      "state": "NJ",
+      "incentive_type": "srec",
+      "name": "New Jersey SREC-II (Successor Solar Incentive)",
+      "description": "$85/MWh for 15 years for net-metered rooftop and carport systems. Ground-mount rates vary. NJBPU plans to review pricing March 2026.",
+      "value": "$85/SREC-II (1 MWh) for 15 years",
+      "value_type": "per_kwh",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "New Jersey Board of Public Utilities",
+      "source_url": "https://www.solarreviews.com/solar-incentives/new-jersey",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "NJ_sales_tax_exempt",
+      "state": "NJ",
+      "incentive_type": "sales_tax_exempt",
+      "name": "New Jersey Sales Tax Exemption for Solar",
+      "description": "Solar energy equipment exempt from state sales tax",
+      "value": "6.625% sales tax exemption",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "New Jersey Division of Taxation",
+      "source_url": "https://www.solarreviews.com/solar-incentives/new-jersey",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "NJ_property_tax_exempt",
+      "state": "NJ",
+      "incentive_type": "property_tax_exempt",
+      "name": "New Jersey Property Tax Exemption for Solar",
+      "description": "Solar energy systems exempt from local property tax assessment",
+      "value": "100% of added solar value exempt",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Local tax assessors",
+      "source_url": "https://www.solarreviews.com/solar-incentives/new-jersey",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "NJ_net_metering",
+      "state": "NJ",
+      "incentive_type": "net_metering",
+      "name": "New Jersey Net Metering",
+      "description": "NJBPU requires all investor-owned utilities to provide net metering at full retail rate. No system size cap.",
+      "value": "Full retail rate credit, no size cap",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "New Jersey BPU",
+      "source_url": "https://www.solarreviews.com/solar-incentives/new-jersey",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

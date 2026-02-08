@@ -1,0 +1,55 @@
+{
+  "state": "NH",
+  "state_name": "New Hampshire",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 3,
+  "incentives": [
+    {
+      "id": "NH_property_tax_exempt",
+      "state": "NH",
+      "incentive_type": "property_tax_exempt",
+      "name": "New Hampshire Property Tax Exemption for Solar",
+      "description": "Solar energy systems exempt from property tax. Municipalities may opt in or out.",
+      "value": "100% of added solar value exempt (where adopted)",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Local municipalities",
+      "source_url": "https://worldpopulationreview.com/state-rankings/solar-incentives-by-state",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "NH_sales_tax_exempt",
+      "state": "NH",
+      "incentive_type": "sales_tax_exempt",
+      "name": "New Hampshire - No State Sales Tax",
+      "description": "New Hampshire has no state sales tax",
+      "value": "No state sales tax (0%)",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "N/A - no state sales tax",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "NH_net_metering",
+      "state": "NH",
+      "incentive_type": "net_metering",
+      "name": "New Hampshire Net Metering",
+      "description": "New Hampshire requires net metering for systems up to 1 MW",
+      "value": "Full retail rate credit",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "New Hampshire PUC",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

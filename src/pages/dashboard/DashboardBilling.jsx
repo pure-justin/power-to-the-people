@@ -20,6 +20,9 @@ import {
   ExternalLink,
   Check,
   Star,
+  Search,
+  Sun,
+  Store,
 } from "lucide-react";
 
 const TIERS = [
@@ -27,11 +30,19 @@ const TIERS = [
     name: "Starter",
     price: 79,
     priceId: "price_1SyMrCQhgZdyZ7qRyWDGrr9U",
-    limits: { leads: 50, apiCalls: 1000, compliance: 25 },
+    limits: {
+      leads: 50,
+      apiCalls: 1000,
+      compliance: 25,
+      equipmentLookups: 100,
+      solarEstimates: 10,
+      marketplaceListings: 10,
+    },
     features: [
       "50 leads/month",
       "1,000 API calls",
       "25 compliance checks",
+      "100 equipment lookups",
       "Email support",
     ],
   },
@@ -39,11 +50,19 @@ const TIERS = [
     name: "Professional",
     price: 149,
     priceId: "price_1SyMrEQhgZdyZ7qRYLfqv0Ds",
-    limits: { leads: 200, apiCalls: 10000, compliance: 200 },
+    limits: {
+      leads: 200,
+      apiCalls: 10000,
+      compliance: 200,
+      equipmentLookups: 999999,
+      solarEstimates: 100,
+      marketplaceListings: 999999,
+    },
     features: [
       "200 leads/month",
       "10,000 API calls",
       "200 compliance checks",
+      "Unlimited equipment lookups",
       "Priority support",
       "Referral program",
     ],
@@ -53,11 +72,19 @@ const TIERS = [
     name: "Enterprise",
     price: 299,
     priceId: "price_1SyMrFQhgZdyZ7qRcQk9fAqh",
-    limits: { leads: 999999, apiCalls: 100000, compliance: 999999 },
+    limits: {
+      leads: 999999,
+      apiCalls: 100000,
+      compliance: 999999,
+      equipmentLookups: 999999,
+      solarEstimates: 999999,
+      marketplaceListings: 999999,
+    },
     features: [
       "Unlimited leads",
       "100,000 API calls",
       "Unlimited compliance",
+      "Unlimited equipment & estimates",
       "Dedicated support",
       "Custom integrations",
       "SLA guarantee",
@@ -105,7 +132,14 @@ function UsageGauge({ label, current, max, icon: Icon, color = "emerald" }) {
 export default function DashboardBilling() {
   const { user } = useAuth();
   const [subscription, setSubscription] = useState(null);
-  const [usage, setUsage] = useState({ leads: 0, apiCalls: 0, compliance: 0 });
+  const [usage, setUsage] = useState({
+    leads: 0,
+    apiCalls: 0,
+    compliance: 0,
+    equipmentLookups: 0,
+    solarEstimates: 0,
+    marketplaceListings: 0,
+  });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -141,6 +175,9 @@ export default function DashboardBilling() {
             leads: u.lead_count || 0,
             apiCalls: u.api_call_count || 0,
             compliance: u.compliance_check_count || 0,
+            equipmentLookups: u.equipment_lookup_count || 0,
+            solarEstimates: u.solar_estimate_count || 0,
+            marketplaceListings: u.marketplace_listing_count || 0,
           });
         }
       } catch (err) {
@@ -237,27 +274,58 @@ export default function DashboardBilling() {
         <h2 className="mb-4 text-lg font-semibold text-gray-900">
           Monthly Usage
         </h2>
+
+        <h3 className="mb-3 text-sm font-medium uppercase tracking-wide text-gray-500">
+          Data & Analysis
+        </h3>
+        <div className="mb-6 space-y-5">
+          <UsageGauge
+            label="Equipment Lookups"
+            current={usage.equipmentLookups}
+            max={currentTier?.limits.equipmentLookups || 10}
+            icon={Search}
+            color="blue"
+          />
+          <UsageGauge
+            label="Compliance Checks"
+            current={usage.compliance}
+            max={currentTier?.limits.compliance || 3}
+            icon={ShieldCheck}
+            color="amber"
+          />
+          <UsageGauge
+            label="Solar Estimates"
+            current={usage.solarEstimates}
+            max={currentTier?.limits.solarEstimates || 1}
+            icon={Sun}
+            color="orange"
+          />
+        </div>
+
+        <h3 className="mb-3 text-sm font-medium uppercase tracking-wide text-gray-500">
+          Operations
+        </h3>
         <div className="space-y-5">
           <UsageGauge
             label="Leads"
             current={usage.leads}
-            max={currentTier?.limits.leads || 50}
+            max={currentTier?.limits.leads || 5}
             icon={Users}
             color="emerald"
           />
           <UsageGauge
             label="API Calls"
             current={usage.apiCalls}
-            max={currentTier?.limits.apiCalls || 1000}
+            max={currentTier?.limits.apiCalls || 50}
             icon={Activity}
             color="blue"
           />
           <UsageGauge
-            label="Compliance Checks"
-            current={usage.compliance}
-            max={currentTier?.limits.compliance || 25}
-            icon={ShieldCheck}
-            color="amber"
+            label="Marketplace Listings"
+            current={usage.marketplaceListings}
+            max={currentTier?.limits.marketplaceListings || 1}
+            icon={Store}
+            color="purple"
           />
         </div>
       </div>

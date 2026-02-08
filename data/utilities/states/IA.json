@@ -1,0 +1,86 @@
+{
+  "state": "IA",
+  "utility_count": 4,
+  "avg_residential_rate": 0.1212,
+  "eia_state_avg_rate": 0.1397,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "NEM",
+    "export_rate": null
+  },
+  "utilities": [
+    {
+      "utility_id": "12341",
+      "utility_name": "MidAmerican Energy Co (Illinois)",
+      "state": "IA",
+      "states_served": [
+        "IA"
+      ],
+      "type": "IOU",
+      "customer_count": 780000,
+      "residential_avg_rate": 0.093,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "1463029650647624777",
+      "utility_name": "Alliant Energy",
+      "state": "IA",
+      "states_served": [
+        "IA"
+      ],
+      "type": "IOU",
+      "customer_count": 500000,
+      "residential_avg_rate": 0.1397,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "9417",
+      "utility_name": "Interstate Power and Light Co",
+      "state": "IA",
+      "states_served": [
+        "IA"
+      ],
+      "type": "IOU",
+      "customer_count": 230000,
+      "residential_avg_rate": 0.1251,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "4110",
+      "utility_name": "Commonwealth Edison Co",
+      "state": "IA",
+      "states_served": [
+        "IA"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1271,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:11:08.957562"
+}

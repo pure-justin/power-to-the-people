@@ -1,0 +1,249 @@
+{
+  "state": "FL",
+  "utility_count": 13,
+  "avg_residential_rate": 0.1301,
+  "eia_state_avg_rate": 0.1398,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "NEM",
+    "export_rate": null,
+    "notes": "Full retail net metering maintained. Legislature attempted repeal in 2022 (vetoed). Policy under ongoing review."
+  },
+  "utilities": [
+    {
+      "utility_id": "6452",
+      "utility_name": "Florida Power & Light Co.",
+      "state": "FL",
+      "states_served": [
+        "FL"
+      ],
+      "type": "IOU",
+      "customer_count": 5600000,
+      "residential_avg_rate": 0.131,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "-6200325298644889580",
+      "utility_name": "Duke Energy Florida LLC",
+      "state": "FL",
+      "states_served": [
+        "FL"
+      ],
+      "type": "IOU",
+      "customer_count": 1900000,
+      "residential_avg_rate": 0.1398,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "18454",
+      "utility_name": "Tampa Electric Co",
+      "state": "FL",
+      "states_served": [
+        "FL"
+      ],
+      "type": "IOU",
+      "customer_count": 800000,
+      "residential_avg_rate": 0.1464,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "-6897327069848406443",
+      "utility_name": "JEA",
+      "state": "FL",
+      "states_served": [
+        "FL"
+      ],
+      "type": "IOU",
+      "customer_count": 490000,
+      "residential_avg_rate": 0.1398,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "7801",
+      "utility_name": "Gulf Power Co",
+      "state": "FL",
+      "states_served": [
+        "FL"
+      ],
+      "type": "IOU",
+      "customer_count": 480000,
+      "residential_avg_rate": 0.1254,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "10857",
+      "utility_name": "Lee County Electric Coop, Inc",
+      "state": "FL",
+      "states_served": [
+        "FL"
+      ],
+      "type": "coop",
+      "customer_count": 0,
+      "residential_avg_rate": 0.0928,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "14610",
+      "utility_name": "Orlando Utilities Comm",
+      "state": "FL",
+      "states_served": [
+        "FL"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.119,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "6455",
+      "utility_name": "Progress Energy Florida Inc",
+      "state": "FL",
+      "states_served": [
+        "FL"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1768,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "18304",
+      "utility_name": "Sumter Electric Coop, Inc",
+      "state": "FL",
+      "states_served": [
+        "FL"
+      ],
+      "type": "coop",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1206,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "10623",
+      "utility_name": "City of Lakeland, Florida (Utility Company)",
+      "state": "FL",
+      "states_served": [
+        "FL"
+      ],
+      "type": "muni",
+      "customer_count": 0,
+      "residential_avg_rate": 0.0985,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "7140",
+      "utility_name": "Georgia Power Co",
+      "state": "FL",
+      "states_served": [
+        "FL"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1763,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "9617",
+      "utility_name": "Jacksonville Electric Authority",
+      "state": "FL",
+      "states_served": [
+        "FL"
+      ],
+      "type": "muni",
+      "customer_count": 0,
+      "residential_avg_rate": 0.108,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "6909",
+      "utility_name": "Gainesville Regional Utilities",
+      "state": "FL",
+      "states_served": [
+        "FL"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1166,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:10:51.925593"
+}

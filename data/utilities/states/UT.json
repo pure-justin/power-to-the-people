@@ -1,0 +1,123 @@
+{
+  "state": "UT",
+  "utility_count": 6,
+  "avg_residential_rate": 0.1288,
+  "eia_state_avg_rate": 0.1076,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "net_billing",
+    "export_rate": null,
+    "notes": "Rocky Mountain Power export credit rate set annually by PSC. Currently ~$0.05-0.06/kWh. Declining trajectory."
+  },
+  "utilities": [
+    {
+      "utility_id": "1695066723657325793",
+      "utility_name": "Rocky Mountain Power",
+      "state": "UT",
+      "states_served": [
+        "UT"
+      ],
+      "type": "IOU",
+      "customer_count": 950000,
+      "residential_avg_rate": 0.1076,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "-6539715114040471130",
+      "utility_name": "City of St George",
+      "state": "UT",
+      "states_served": [
+        "UT"
+      ],
+      "type": "muni",
+      "customer_count": 35000,
+      "residential_avg_rate": 0.1076,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "15444",
+      "utility_name": "Provo City Corp (Utility Company)",
+      "state": "UT",
+      "states_served": [
+        "UT"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.0987,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "14354",
+      "utility_name": "PacifiCorp (Utah)",
+      "state": "UT",
+      "states_served": [
+        "UT"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1241,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "803",
+      "utility_name": "Arizona Public Service Co",
+      "state": "UT",
+      "states_served": [
+        "UT"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2184,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "13407",
+      "utility_name": "Nevada Power Co",
+      "state": "UT",
+      "states_served": [
+        "UT"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1165,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:14:15.757753"
+}

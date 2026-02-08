@@ -117,7 +117,7 @@ async function apiPost(endpoint, body) {
 /**
  * Query the solar equipment database
  * @param {Object} [params] - Query parameters
- * @param {string} [params.type] - Equipment type: "panel", "inverter", "battery"
+ * @param {string} [params.type] - Equipment type: "panel", "inverter", "battery", "optimizer", "racking", "rapid_shutdown", "electrical_bos", "monitoring", "ev_charger"
  * @param {string} [params.manufacturer] - Manufacturer name filter
  * @param {boolean} [params.feoc_compliant] - Filter by FEOC compliance
  * @param {boolean} [params.domestic_content_compliant] - Filter by domestic content
@@ -125,6 +125,52 @@ async function apiPost(endpoint, body) {
  * @returns {Promise<Object>} Equipment list
  */
 export async function getEquipment(params = {}) {
+  return apiGet("/solarEquipment", params);
+}
+
+/**
+ * Search equipment with text search and optional filters
+ * @param {string} searchTerm - Text to search for in equipment names, manufacturers, models
+ * @param {Object} [filters] - Additional filters
+ * @param {string} [filters.type] - Equipment category
+ * @param {string} [filters.manufacturer] - Manufacturer name
+ * @param {boolean} [filters.feoc_compliant] - FEOC compliance filter
+ * @param {boolean} [filters.domestic_content_compliant] - Domestic content filter
+ * @param {boolean} [filters.tariff_safe] - Tariff safety filter
+ * @param {number} [filters.limit] - Max results
+ * @param {number} [filters.offset] - Pagination offset
+ * @returns {Promise<Object>} Search results
+ */
+export async function searchEquipment(searchTerm, filters = {}) {
+  return apiGet("/solarEquipment", { search: searchTerm, ...filters });
+}
+
+/**
+ * Get all equipment items of a specific category
+ * @param {string} category - Equipment type: "panel", "inverter", "battery", "optimizer", "racking", "rapid_shutdown", "electrical_bos", "monitoring", "ev_charger"
+ * @returns {Promise<Object>} Equipment list for that category
+ */
+export async function getEquipmentByCategory(category) {
+  return apiGet("/solarEquipment", { type: category });
+}
+
+/**
+ * Get a single equipment item by ID
+ * @param {string} id - Equipment document ID
+ * @returns {Promise<Object>} Equipment details
+ */
+export async function getEquipmentById(id) {
+  return apiGet("/solarEquipment", { id });
+}
+
+/**
+ * Get unique manufacturers for a given equipment category
+ * @param {string} [category] - Equipment type (omit for all categories)
+ * @returns {Promise<Object>} List of manufacturer names
+ */
+export async function getManufacturers(category) {
+  const params = { fields: "manufacturer" };
+  if (category) params.type = category;
   return apiGet("/solarEquipment", params);
 }
 
@@ -192,4 +238,124 @@ export async function runComplianceCheck(data) {
  */
 export async function getSolarEstimate(data) {
   return apiPost("/solarEstimate", data);
+}
+
+// ─── Direct Firestore Lookups (no API key required) ──────────────────────────
+
+import {
+  getFirestore,
+  collection,
+  query,
+  where,
+  getDocs,
+  doc,
+  getDoc,
+} from "firebase/firestore";
+
+/**
+ * Get solar resource data for a state directly from Firestore
+ * @param {string} state - Two-letter state code
+ * @returns {Promise<Object|null>} NREL solar resource data for the state
+ */
+export async function getSolarResource(state) {
+  const db = getFirestore();
+  const docRef = doc(db, "solar_resource_data", state.toUpperCase());
+  const snap = await getDoc(docRef);
+  return snap.exists() ? { id: snap.id, ...snap.data() } : null;
+}
+
+/**
+ * Get energy community info for a state directly from Firestore
+ * @param {string} state - Two-letter state code
+ * @returns {Promise<Object[]>} Energy community documents for the state
+ */
+export async function getEnergyCommunityData(state) {
+  const db = getFirestore();
+  const q = query(
+    collection(db, "energy_communities"),
+    where("state", "==", state.toUpperCase()),
+  );
+  const snap = await getDocs(q);
+  return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+}
+
+/**
+ * Get all incentives for a state directly from Firestore
+ * @param {string} state - Two-letter state code
+ * @returns {Promise<Object[]>} Incentive programs for the state
+ */
+export async function getStateIncentives(state) {
+  const db = getFirestore();
+  const q = query(
+    collection(db, "solar_incentives"),
+    where("state", "==", state.toUpperCase()),
+  );
+  const snap = await getDocs(q);
+  return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+}
+
+/**
+ * Get permit requirements for a state directly from Firestore
+ * @param {string} state - Two-letter state code
+ * @returns {Promise<Object|null>} Permit requirements for the state
+ */
+export async function getStatePermits(state) {
+  const db = getFirestore();
+  const docRef = doc(db, "solar_permits", state.toUpperCase());
+  const snap = await getDoc(docRef);
+  return snap.exists() ? { id: snap.id, ...snap.data() } : null;
+}
+
+/**
+ * Get utility rates for a state directly from Firestore
+ * @param {string} state - Two-letter state code
+ * @returns {Promise<Object[]>} Utility rate data for the state
+ */
+export async function getStateUtilities(state) {
+  const db = getFirestore();
+  const q = query(
+    collection(db, "solar_utility_rates"),
+    where("state", "==", state.toUpperCase()),
+  );
+  const snap = await getDocs(q);
+  return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+}
+
+/**
+ * Comprehensive address intelligence - combines all data sources
+ * @param {Object} params
+ * @param {string} params.state - Two-letter state code
+ * @param {string} [params.county] - County name
+ * @param {string} [params.zip] - ZIP code
+ * @returns {Promise<Object>} Combined solar intelligence for the address
+ */
+export async function getAddressIntelligence({ state, county, zip }) {
+  const [solarResource, energyCommunity, incentives, permits, utilities] =
+    await Promise.all([
+      getSolarResource(state).catch(() => null),
+      getEnergyCommunityData(state).catch(() => []),
+      getStateIncentives(state).catch(() => []),
+      getStatePermits(state).catch(() => null),
+      getStateUtilities(state).catch(() => []),
+    ]);
+
+  // Find matching utility by zip if possible
+  const matchingUtility = zip
+    ? utilities.find((u) => u.zip_codes?.includes(zip))
+    : null;
+
+  return {
+    state,
+    county,
+    zip,
+    solar_resource: solarResource,
+    energy_community: energyCommunity,
+    incentives,
+    permits,
+    utilities: matchingUtility ? [matchingUtility] : utilities.slice(0, 5),
+    total_incentives: incentives.length,
+    has_energy_community_bonus: energyCommunity.some(
+      (ec) => ec.category === "statistical_area",
+    ),
+  };
 }

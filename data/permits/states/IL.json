@@ -1,0 +1,34 @@
+{
+  "state": "IL",
+  "state_name": "Illinois",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "both",
+    "typical_fee_range": "$100-$500",
+    "typical_timeline_days": "5-14",
+    "inspection_required": true,
+    "inspection_stages": ["final"],
+    "statewide_permit_program": false,
+    "statewide_program_name": null
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": true,
+    "net_metering_details": "Illinois has net metering for systems up to 2 MW. Credits at full retail rate including supply and delivery charges. Monthly rollover. Illinois is transitioning under the Climate and Equitable Jobs Act (CEJA) toward a new distributed generation compensation structure. ComEd and Ameren Illinois are the major utilities.",
+    "typical_timeline_days": "10-30",
+    "fees": "ComEd: no interconnection fee for systems under 25 kW; Ameren: varies"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "Strong solar access law (Homeowners' Energy Policy Statement Act, 2021). HOAs cannot prohibit solar installations. May impose only reasonable restrictions that do not significantly increase cost or decrease efficiency.",
+    "historic_districts": "Chicago and other cities have historic preservation commissions. Landmarks and historic districts require additional review. Chicago has specific guidelines for solar on historic properties.",
+    "wind_load_requirements": "Standard IBC wind load requirements. Design wind speeds typically 90-105 mph.",
+    "snow_load_requirements": "Moderate snow loads throughout the state (15-30 psf ground snow load). Northern Illinois has higher requirements."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "No dedicated state solar license. Electrical contractor license required for PV work. Chicago has specific licensing requirements including licensed electricians.",
+    "nabcep_required": false
+  },
+  "notes": "Illinois is a top solar market driven by the Adjustable Block Program under CEJA, which provides substantial incentives. Illinois Solar for All program targets low-income communities. Strong net metering with retail rate credits. SREC/REC market provides additional revenue. ComEd territory covers the Chicago metro area. Relatively fast permitting (median 30 days total). The state has both property and sales tax exemptions for solar equipment."
+}

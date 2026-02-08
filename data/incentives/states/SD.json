@@ -1,0 +1,25 @@
+{
+  "state": "SD",
+  "state_name": "South Dakota",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 1,
+  "incentives": [
+    {
+      "id": "SD_sales_tax_exempt",
+      "state": "SD",
+      "incentive_type": "sales_tax_exempt",
+      "name": "South Dakota Sales Tax Exemption for Renewable Energy",
+      "description": "South Dakota exempts renewable energy systems from sales tax",
+      "value": "Sales tax exemption",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "South Dakota DOR",
+      "source_url": "https://www.solarreviews.com/solar-incentives",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

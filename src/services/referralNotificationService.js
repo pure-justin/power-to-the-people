@@ -287,7 +287,12 @@ export const generateSocialContent = (referralCode, platform) => {
     twitter: {
       text: "🔋 Just got approved for a FREE home battery backup through @PowerToThePeople! Earn passive income by selling power back to the grid + backup during outages. Check it out:",
       url: link,
-      hashtags: ["CleanEnergy", "VPP", "SolarPower", "BatteryStorage"],
+      hashtags: [
+        "CleanEnergy",
+        "EnergyCommunity",
+        "SolarPower",
+        "BatteryStorage",
+      ],
     },
     facebook: {
       text: `I just got approved for a completely FREE home battery system! 🎉\n\nNo catch - they're building a virtual power plant and paying homeowners to participate. Benefits:\n\n✅ Free installation & equipment\n✅ Backup power during outages  \n✅ Earn money selling power back\n✅ Lower energy bills\n\nSee if you qualify:`,

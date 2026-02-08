@@ -1,30 +1,18 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import {
-  db,
-  collection,
-  query,
-  where,
-  getDocs,
-  addDoc,
-  serverTimestamp,
-  doc,
-  updateDoc,
-  limit,
-} from "../../services/firebase";
+  createApiKey,
+  revokeApiKey,
+  rotateApiKey,
+  listApiKeys,
+} from "../../services/apiKeyService";
 import {
   Key,
   Plus,
   Copy,
   Check,
   X,
-  Shield,
-  Clock,
-  Eye,
-  EyeOff,
   AlertTriangle,
-  Trash2,
-  ToggleLeft,
   ToggleRight,
 } from "lucide-react";
 
@@ -49,7 +37,7 @@ const AVAILABLE_SCOPES = [
 function CreateKeyModal({ onClose, onCreate }) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [environment, setEnvironment] = useState("dev");
+  const [environment, setEnvironment] = useState("development");
   const [scopes, setScopes] = useState([
     "read_leads",
     "read_solar",
@@ -128,9 +116,9 @@ function CreateKeyModal({ onClose, onCreate }) {
               </label>
               <div className="flex gap-3">
                 <button
-                  onClick={() => setEnvironment("dev")}
+                  onClick={() => setEnvironment("development")}
                   className={`flex-1 rounded-lg border-2 px-4 py-2 text-sm font-medium transition-colors ${
-                    environment === "dev"
+                    environment === "development"
                       ? "border-amber-500 bg-amber-50 text-amber-700"
                       : "border-gray-200 text-gray-600 hover:border-gray-300"
                   }`}
@@ -138,9 +126,9 @@ function CreateKeyModal({ onClose, onCreate }) {
                   Development
                 </button>
                 <button
-                  onClick={() => setEnvironment("prod")}
+                  onClick={() => setEnvironment("production")}
                   className={`flex-1 rounded-lg border-2 px-4 py-2 text-sm font-medium transition-colors ${
-                    environment === "prod"
+                    environment === "production"
                       ? "border-emerald-500 bg-emerald-50 text-emerald-700"
                       : "border-gray-200 text-gray-600 hover:border-gray-300"
                   }`}
@@ -256,34 +244,24 @@ export default function DashboardApiKeys() {
   const [showCreate, setShowCreate] = useState(false);
   const [newKey, setNewKey] = useState(null);
 
+  const loadKeys = async () => {
+    try {
+      const result = await listApiKeys();
+      if (result.success) {
+        setKeys(result.data.keys);
+      } else {
+        console.error("Failed to load API keys:", result.error);
+      }
+    } catch (err) {
+      console.error("Failed to load API keys:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (!user) return;
-    const load = async () => {
-      try {
-        const q = query(
-          collection(db, "apiKeys"),
-          where("userId", "==", user.uid),
-          limit(100),
-        );
-        const snap = await getDocs(q);
-        const data = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
-        data.sort((a, b) => {
-          const aTime = a.createdAt?.toDate
-            ? a.createdAt.toDate()
-            : new Date(a.createdAt || 0);
-          const bTime = b.createdAt?.toDate
-            ? b.createdAt.toDate()
-            : new Date(b.createdAt || 0);
-          return bTime - aTime;
-        });
-        setKeys(data);
-      } catch (err) {
-        console.error("Failed to load API keys:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    load();
+    loadKeys();
   }, [user]);
 
   const handleCreateKey = async ({
@@ -292,46 +270,70 @@ export default function DashboardApiKeys() {
     environment,
     scopes,
   }) => {
-    // Generate a key prefix for display (the real key comes from Cloud Function)
-    const prefix = environment === "prod" ? "pk_live_" : "pk_test_";
-    const randomHex = Array.from(crypto.getRandomValues(new Uint8Array(24)))
-      .map((b) => b.toString(16).padStart(2, "0"))
-      .join("");
-    const fullKey = prefix + randomHex;
-
-    const keyDoc = {
-      userId: user.uid,
-      name,
-      description,
-      environment,
-      scopes,
-      keyPrefix: fullKey.slice(0, 12) + "...",
-      status: "active",
-      createdAt: serverTimestamp(),
-      lastUsed: null,
-      usageStats: { total: 0, month: 0 },
-    };
-
     try {
-      const docRef = await addDoc(collection(db, "apiKeys"), keyDoc);
-      const newKeyData = { id: docRef.id, ...keyDoc, createdAt: new Date() };
-      setKeys((prev) => [newKeyData, ...prev]);
-      setNewKey(fullKey);
-      setShowCreate(false);
+      const result = await createApiKey({
+        name,
+        description,
+        scopes,
+        environment,
+      });
+      if (result.success) {
+        // Backend returns { apiKeyId, apiKey, keyPrefix, message }
+        setNewKey(result.data.apiKey);
+        setShowCreate(false);
+        // Reload keys from Firestore to get the server-created record
+        await loadKeys();
+      } else {
+        console.error("Failed to create API key:", result.error);
+        alert("Failed to create API key: " + result.error);
+      }
     } catch (err) {
       console.error("Failed to create API key:", err);
+      alert("Failed to create API key: " + err.message);
     }
   };
 
-  const toggleKeyStatus = async (key) => {
-    const newStatus = key.status === "active" ? "revoked" : "active";
+  const handleRevoke = async (key) => {
+    if (!confirm(`Revoke API key "${key.name}"? This action is permanent.`))
+      return;
     try {
-      await updateDoc(doc(db, "apiKeys", key.id), { status: newStatus });
-      setKeys((prev) =>
-        prev.map((k) => (k.id === key.id ? { ...k, status: newStatus } : k)),
-      );
+      const result = await revokeApiKey(key.id);
+      if (result.success) {
+        setKeys((prev) =>
+          prev.map((k) => (k.id === key.id ? { ...k, status: "revoked" } : k)),
+        );
+      } else {
+        console.error("Failed to revoke key:", result.error);
+      }
     } catch (err) {
-      console.error("Failed to update key:", err);
+      console.error("Failed to revoke key:", err);
+    }
+  };
+
+  const handleRotate = async (key) => {
+    if (
+      !confirm(
+        `Rotate API key "${key.name}"? The old key will stop working immediately.`,
+      )
+    )
+      return;
+    try {
+      const result = await rotateApiKey(key.id);
+      if (result.success) {
+        // Show the new key in the one-time display
+        setNewKey(result.data.apiKey);
+        // Update the prefix in the local list
+        setKeys((prev) =>
+          prev.map((k) =>
+            k.id === key.id ? { ...k, keyPrefix: result.data.keyPrefix } : k,
+          ),
+        );
+      } else {
+        console.error("Failed to rotate key:", result.error);
+        alert("Failed to rotate key: " + result.error);
+      }
+    } catch (err) {
+      console.error("Failed to rotate key:", err);
     }
   };
 
@@ -406,12 +408,12 @@ export default function DashboardApiKeys() {
                     {key.environment && (
                       <span
                         className={`ml-2 rounded-full px-2 py-0.5 text-xs ${
-                          key.environment === "prod"
+                          key.environment === "production"
                             ? "bg-emerald-100 text-emerald-700"
                             : "bg-amber-100 text-amber-700"
                         }`}
                       >
-                        {key.environment}
+                        {key.environment === "production" ? "prod" : "dev"}
                       </span>
                     )}
                   </td>
@@ -458,31 +460,31 @@ export default function DashboardApiKeys() {
                         : "N/A"}
                   </td>
                   <td className="px-4 py-3">
-                    <button
-                      onClick={() => toggleKeyStatus(key)}
-                      className={`inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-medium ${
-                        key.status === "active"
-                          ? "text-red-600 hover:bg-red-50"
-                          : "text-green-600 hover:bg-green-50"
-                      }`}
-                      title={
-                        key.status === "active"
-                          ? "Revoke key"
-                          : "Reactivate key"
-                      }
-                    >
-                      {key.status === "active" ? (
+                    <div className="flex items-center gap-1">
+                      {key.status === "active" && (
                         <>
-                          <ToggleRight className="h-3.5 w-3.5" />
-                          Revoke
-                        </>
-                      ) : (
-                        <>
-                          <ToggleLeft className="h-3.5 w-3.5" />
-                          Activate
+                          <button
+                            onClick={() => handleRotate(key)}
+                            className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-medium text-blue-600 hover:bg-blue-50"
+                            title="Rotate key (generate new value)"
+                          >
+                            <Key className="h-3.5 w-3.5" />
+                            Rotate
+                          </button>
+                          <button
+                            onClick={() => handleRevoke(key)}
+                            className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50"
+                            title="Revoke key permanently"
+                          >
+                            <ToggleRight className="h-3.5 w-3.5" />
+                            Revoke
+                          </button>
                         </>
                       )}
-                    </button>
+                      {key.status === "revoked" && (
+                        <span className="text-xs text-gray-400">Revoked</span>
+                      )}
+                    </div>
                   </td>
                 </tr>
               ))}

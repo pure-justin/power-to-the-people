@@ -1,0 +1,25 @@
+{
+  "state": "AR",
+  "state_name": "Arkansas",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 1,
+  "incentives": [
+    {
+      "id": "AR_net_metering",
+      "state": "AR",
+      "incentive_type": "net_metering",
+      "name": "Arkansas Net Metering",
+      "description": "Arkansas requires investor-owned utilities to offer net metering at 1:1 retail rate for systems up to 25 kW residential.",
+      "value": "Full retail rate credit",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Arkansas Public Service Commission",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

@@ -1,0 +1,285 @@
+{
+  "state": "NY",
+  "utility_count": 15,
+  "avg_residential_rate": 0.2389,
+  "eia_state_avg_rate": 0.2226,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "net_billing",
+    "export_rate": null,
+    "notes": "Transitioning to Value of Distributed Energy Resources (VDER). New solar customers get VDER credits, not full retail. ConEd territory most affected."
+  },
+  "utilities": [
+    {
+      "utility_id": "4226",
+      "utility_name": "Consolidated Edison Co-NY Inc",
+      "state": "NY",
+      "states_served": [
+        "NY"
+      ],
+      "type": "IOU",
+      "customer_count": 3400000,
+      "residential_avg_rate": 0.3516,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "5034899566419933911",
+      "utility_name": "National Grid",
+      "state": "NY",
+      "states_served": [
+        "NY"
+      ],
+      "type": "IOU",
+      "customer_count": 1700000,
+      "residential_avg_rate": 0.2226,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "11171",
+      "utility_name": "Long Island Power Authority",
+      "state": "NY",
+      "states_served": [
+        "NY"
+      ],
+      "type": "muni",
+      "customer_count": 1100000,
+      "residential_avg_rate": 0.2759,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "13511",
+      "utility_name": "New York State Elec & Gas Corp",
+      "state": "NY",
+      "states_served": [
+        "NY"
+      ],
+      "type": "coop",
+      "customer_count": 900000,
+      "residential_avg_rate": 0.1747,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "16183",
+      "utility_name": "Rochester Gas & Electric Corp",
+      "state": "NY",
+      "states_served": [
+        "NY"
+      ],
+      "type": "IOU",
+      "customer_count": 380000,
+      "residential_avg_rate": 0.1745,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "3249",
+      "utility_name": "Central Hudson Gas & Elec Corp",
+      "state": "NY",
+      "states_served": [
+        "NY"
+      ],
+      "type": "coop",
+      "customer_count": 310000,
+      "residential_avg_rate": 0.333,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "15477",
+      "utility_name": "Public Service Elec & Gas Co",
+      "state": "NY",
+      "states_served": [
+        "NY"
+      ],
+      "type": "coop",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2508,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "4176",
+      "utility_name": "Connecticut Light & Power Co",
+      "state": "NY",
+      "states_served": [
+        "NY"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2921,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "9726",
+      "utility_name": "Jersey Central Power & Lt Co (New Jersey)",
+      "state": "NY",
+      "states_served": [
+        "NY"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2049,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "13573",
+      "utility_name": "Niagara Mohawk Power Corp.",
+      "state": "NY",
+      "states_served": [
+        "NY"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1712,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "7601",
+      "utility_name": "Green Mountain Power Corp",
+      "state": "NY",
+      "states_served": [
+        "NY"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2257,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "19791",
+      "utility_name": "Vermont Electric Cooperative, Inc.",
+      "state": "NY",
+      "states_served": [
+        "NY"
+      ],
+      "type": "coop",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1457,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "15472",
+      "utility_name": "Public Service Co of NH",
+      "state": "NY",
+      "states_served": [
+        "NY"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2239,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "11804",
+      "utility_name": "Massachusetts Electric Co",
+      "state": "NY",
+      "states_served": [
+        "NY"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.4335,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "14711",
+      "utility_name": "Pennsylvania Electric Co (New York)",
+      "state": "NY",
+      "states_served": [
+        "NY"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1029,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:13:17.682745"
+}

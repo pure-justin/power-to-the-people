@@ -1,0 +1,424 @@
+{
+  "metadata": {
+    "created": "2026-02-08",
+    "purpose": "Property enrichment API implementation priorities for SolarOS CRM",
+    "total_apis_researched": 20,
+    "recommended_apis": 11
+  },
+  "phases": {
+    "phase_1_free": {
+      "description": "Free APIs - implement immediately",
+      "monthly_cost": "$0",
+      "capacity": "~10,000 property lookups/month",
+      "apis": [
+        {
+          "name": "Google Solar API - Building Insights",
+          "provider": "Google Maps Platform",
+          "priority": 1,
+          "cost_per_call": 0,
+          "free_tier": "10,000 calls/month",
+          "data_provided": [
+            "roof_area_sqft",
+            "roof_pitch_degrees",
+            "roof_azimuth_degrees",
+            "roof_segment_count",
+            "solar_panel_count_optimal",
+            "annual_sunshine_hours",
+            "shade_analysis_monthly",
+            "carbon_offset_kg",
+            "financial_analysis",
+            "imagery_quality",
+            "imagery_date",
+            "building_center_coordinates",
+            "postal_code"
+          ],
+          "auth_method": "api_key",
+          "documentation_url": "https://developers.google.com/maps/documentation/solar",
+          "rate_limit": "600/minute",
+          "coverage": "national_us_99pct",
+          "integration_complexity": "easy",
+          "implementation_notes": "Already have Google Maps API key. Enable Solar API in Cloud Console. Single REST call returns comprehensive roof and solar data."
+        },
+        {
+          "name": "Google Solar API - Data Layers",
+          "provider": "Google Maps Platform",
+          "priority": 2,
+          "cost_per_call": 0,
+          "free_tier": "1,000 calls/month",
+          "data_provided": [
+            "roof_rgb_imagery",
+            "digital_surface_model",
+            "annual_flux_map",
+            "monthly_flux_maps",
+            "hourly_shade_data",
+            "mask_imagery"
+          ],
+          "auth_method": "api_key",
+          "documentation_url": "https://developers.google.com/maps/documentation/solar/data-layers",
+          "rate_limit": "600/minute",
+          "coverage": "national_us",
+          "integration_complexity": "medium",
+          "implementation_notes": "Returns GeoTIFF imagery data. More complex to process than Building Insights. Use for premium features like roof visualization."
+        },
+        {
+          "name": "NREL PVWatts V8",
+          "provider": "National Renewable Energy Laboratory",
+          "priority": 1,
+          "cost_per_call": 0,
+          "free_tier": "unlimited (with API key)",
+          "data_provided": [
+            "annual_energy_production_kwh",
+            "monthly_energy_production_kwh",
+            "solar_radiation_kwh_m2_day",
+            "ac_energy_monthly",
+            "dc_energy_monthly",
+            "capacity_factor"
+          ],
+          "auth_method": "api_key",
+          "documentation_url": "https://developer.nrel.gov/docs/solar/pvwatts/v8/",
+          "rate_limit": "1000/hour",
+          "coverage": "national_us_territories",
+          "integration_complexity": "easy",
+          "implementation_notes": "Already integrated via NREL MCP server. Uses TMY 2020 weather data. Essential for production estimates."
+        },
+        {
+          "name": "Census Bureau Geocoder",
+          "provider": "US Census Bureau",
+          "priority": 1,
+          "cost_per_call": 0,
+          "free_tier": "unlimited",
+          "data_provided": [
+            "latitude_longitude",
+            "census_tract",
+            "census_block",
+            "census_block_group",
+            "county_fips",
+            "state_fips",
+            "congressional_district",
+            "state_legislative_districts",
+            "msa_csa",
+            "urban_area"
+          ],
+          "auth_method": "none",
+          "documentation_url": "https://geocoding.geo.census.gov/geocoder/Geocoding_Services_API.html",
+          "rate_limit": "reasonable_use",
+          "coverage": "national_us_territories",
+          "integration_complexity": "easy",
+          "implementation_notes": "No API key needed. Census tract is CRITICAL for energy community tax credit eligibility. Batch mode supports 10,000 addresses. Consider Geocodio as alternative (includes census data + more)."
+        },
+        {
+          "name": "Geocodio",
+          "provider": "Dotsquare LLC",
+          "priority": 1,
+          "cost_per_call": 0,
+          "free_tier": "2,500 lookups/day",
+          "data_provided": [
+            "validated_address",
+            "latitude_longitude",
+            "census_tract_2020",
+            "census_block_group",
+            "congressional_district",
+            "state_legislative_districts",
+            "school_districts",
+            "timezone",
+            "acs_demographics",
+            "median_household_income"
+          ],
+          "auth_method": "api_key",
+          "documentation_url": "https://www.geocod.io/",
+          "rate_limit": "2500/day free",
+          "coverage": "us_canada",
+          "integration_complexity": "easy",
+          "implementation_notes": "PREFERRED over Census geocoder. Combines geocoding + census tract + demographics in ONE call. Free tier of 2,500/day is very generous. Paid tier is only $1/1,000 lookups."
+        },
+        {
+          "name": "OpenEI Utility Rate Database",
+          "provider": "NREL / DOE",
+          "priority": 1,
+          "cost_per_call": 0,
+          "free_tier": "unlimited",
+          "data_provided": [
+            "utility_name",
+            "utility_id",
+            "residential_rate_kwh",
+            "commercial_rate_kwh",
+            "industrial_rate_kwh",
+            "rate_structure_details",
+            "tou_periods",
+            "demand_charges",
+            "net_metering_available"
+          ],
+          "auth_method": "none_or_nrel_key",
+          "documentation_url": "https://developer.nrel.gov/docs/electricity/openei-utility-rates/",
+          "rate_limit": "reasonable_use",
+          "coverage": "national_us_3700_utilities",
+          "integration_complexity": "easy",
+          "implementation_notes": "Already being used for utility data collection. No API key strictly required for OpenEI web services."
+        },
+        {
+          "name": "FEMA NFHL Flood Zone",
+          "provider": "FEMA",
+          "priority": 2,
+          "cost_per_call": 0,
+          "free_tier": "unlimited",
+          "data_provided": [
+            "flood_zone_designation",
+            "base_flood_elevation",
+            "firm_panel_id",
+            "community_id",
+            "lomr_data"
+          ],
+          "auth_method": "none",
+          "documentation_url": "https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer",
+          "rate_limit": "reasonable_use",
+          "coverage": "national_us_98pct",
+          "integration_complexity": "medium",
+          "implementation_notes": "Uses ArcGIS REST services - requires spatial query with coordinates (geocode first). Adds value for property risk assessment but not critical for solar calculations."
+        },
+        {
+          "name": "EIA Electric Service Territories",
+          "provider": "US Energy Information Administration",
+          "priority": 2,
+          "cost_per_call": 0,
+          "free_tier": "unlimited",
+          "data_provided": [
+            "utility_service_territory_boundary",
+            "utility_name_id",
+            "utility_type",
+            "average_consumption_by_utility",
+            "customer_counts",
+            "revenue_data"
+          ],
+          "auth_method": "api_key_free",
+          "documentation_url": "https://www.eia.gov/developer/",
+          "rate_limit": "reasonable_use",
+          "coverage": "national_us",
+          "integration_complexity": "medium",
+          "implementation_notes": "GIS-based territory data + aggregate utility stats. Good supplement to OpenEI for utility identification. Does NOT provide per-address consumption."
+        }
+      ]
+    },
+    "phase_2_affordable": {
+      "description": "Affordable paid APIs - implement when scaling",
+      "monthly_cost": "$50-200",
+      "capacity": "5,000-50,000 property lookups/month",
+      "apis": [
+        {
+          "name": "RentCast Property Data",
+          "provider": "RentCast",
+          "priority": 2,
+          "cost_per_call": "varies_by_plan",
+          "free_tier": "50 calls/month",
+          "data_provided": [
+            "bedrooms",
+            "bathrooms",
+            "living_area_sqft",
+            "lot_size_sqft",
+            "year_built",
+            "stories",
+            "architecture_type",
+            "construction_materials",
+            "roof_type",
+            "heating_type",
+            "cooling_type",
+            "parking",
+            "pool",
+            "hoa_fees",
+            "owner_name",
+            "owner_type",
+            "owner_mailing_address",
+            "owner_occupied",
+            "last_sold_date",
+            "last_sold_price",
+            "sale_history",
+            "home_value_estimate",
+            "rent_estimate",
+            "price_per_sqft"
+          ],
+          "auth_method": "api_key",
+          "documentation_url": "https://developers.rentcast.io/",
+          "rate_limit": "plan_dependent",
+          "coverage": "national_us_140m_properties",
+          "integration_complexity": "easy",
+          "implementation_notes": "Best value for property data at our stage. 140M records. Owner info, HOA, valuations at fraction of ATTOM cost. 50 free calls to prototype. No contracts."
+        },
+        {
+          "name": "Geocodio (Paid Tier)",
+          "provider": "Dotsquare LLC",
+          "priority": 2,
+          "cost_per_call": 0.001,
+          "free_tier": "2,500/day included",
+          "data_provided": [
+            "same_as_free_tier_plus_higher_volume"
+          ],
+          "auth_method": "api_key",
+          "documentation_url": "https://www.geocod.io/pricing/",
+          "rate_limit": "plan_dependent",
+          "coverage": "us_canada",
+          "integration_complexity": "easy",
+          "implementation_notes": "$1/1,000 lookups (as of Feb 2026). Only needed if exceeding 2,500/day free tier."
+        }
+      ]
+    },
+    "phase_3_enterprise": {
+      "description": "Enterprise APIs - implement after product-market fit",
+      "monthly_cost": "$500-5000+",
+      "capacity": "unlimited",
+      "apis": [
+        {
+          "name": "ATTOM Property Data",
+          "provider": "ATTOM Data Solutions",
+          "priority": 3,
+          "cost_per_call": "contract_based",
+          "free_tier": "none",
+          "data_provided": [
+            "everything_rentcast_provides_plus",
+            "building_permits",
+            "tax_delinquency",
+            "foreclosure_status",
+            "hazard_risk_scores",
+            "40yr_deed_history",
+            "mortgage_details",
+            "school_ratings",
+            "neighborhood_stats"
+          ],
+          "auth_method": "api_key",
+          "documentation_url": "https://api.developer.attomdata.com/docs",
+          "rate_limit": "contract_based",
+          "coverage": "national_us_155m_properties",
+          "integration_complexity": "medium",
+          "implementation_notes": "Most comprehensive property data. ~$500+/month starting. Implement when per-lead economics justify cost. Adds building permits, hazard risks, foreclosure data."
+        },
+        {
+          "name": "Aurora Solar",
+          "provider": "Aurora Solar",
+          "priority": 3,
+          "cost_per_call": "credit_based",
+          "free_tier": "none",
+          "data_provided": [
+            "ai_roof_measurement",
+            "3d_roof_model",
+            "lidar_shade_analysis",
+            "optimal_panel_placement",
+            "performance_simulation",
+            "fire_pathway_compliance",
+            "proposal_generation"
+          ],
+          "auth_method": "api_key",
+          "documentation_url": "https://docs.aurorasolar.com/",
+          "rate_limit": "credit_based",
+          "coverage": "national_us",
+          "integration_complexity": "medium",
+          "implementation_notes": "Professional-grade solar design. Requires Aurora subscription ($200-500+/mo). Consider for premium tier or when Google Solar API is insufficient."
+        },
+        {
+          "name": "Nearmap Aerial Intelligence",
+          "provider": "Nearmap",
+          "priority": 3,
+          "cost_per_call": "subscription_based",
+          "free_tier": "none",
+          "data_provided": [
+            "high_res_aerial_imagery",
+            "ai_roof_measurements",
+            "roof_material_detection",
+            "roof_condition_assessment",
+            "existing_solar_detection",
+            "tree_coverage_analysis",
+            "building_footprints",
+            "change_detection"
+          ],
+          "auth_method": "api_key",
+          "documentation_url": "https://www.nearmap.com/products/integrations-apis",
+          "rate_limit": "subscription_based",
+          "coverage": "90pct_us_urban",
+          "integration_complexity": "medium",
+          "implementation_notes": "Premium imagery + AI analysis. Best for detecting existing solar and roof condition. ~$5,000+/year. Implement for premium features."
+        }
+      ]
+    }
+  },
+  "not_recommended": [
+    {
+      "name": "CoreLogic",
+      "reason": "Enterprise-only pricing ($1,000+/mo), complex OAuth, similar data available from ATTOM/RentCast at lower cost"
+    },
+    {
+      "name": "Zillow / Bridge Interactive",
+      "reason": "Requires MLS authorization, lengthy approval process designed for brokerages, data use restrictions"
+    },
+    {
+      "name": "LightBox",
+      "reason": "Enterprise pricing, zoning limited to top 50 MSAs, Regrid is better alternative"
+    },
+    {
+      "name": "Precisely",
+      "reason": "Enterprise-only, expensive, covered by other providers"
+    },
+    {
+      "name": "Melissa Data",
+      "reason": "Geocodio covers address validation at lower cost, Melissa adds little unique value for solar CRM"
+    }
+  ],
+  "recommended_call_sequence": [
+    {
+      "order": 1,
+      "api": "Geocodio",
+      "purpose": "Geocode address + get census tract + demographics",
+      "phase": 1,
+      "cost": "free"
+    },
+    {
+      "order": 2,
+      "api": "Google Solar API - Building Insights",
+      "purpose": "Roof analysis + solar potential + shade data",
+      "phase": 1,
+      "cost": "free"
+    },
+    {
+      "order": 3,
+      "api": "OpenEI Utility Rates",
+      "purpose": "Identify utility + get electricity rate",
+      "phase": 1,
+      "cost": "free"
+    },
+    {
+      "order": 4,
+      "api": "NREL PVWatts V8",
+      "purpose": "Calculate energy production estimate",
+      "phase": 1,
+      "cost": "free"
+    },
+    {
+      "order": 5,
+      "api": "FEMA NFHL",
+      "purpose": "Flood zone determination",
+      "phase": 1,
+      "cost": "free"
+    },
+    {
+      "order": 6,
+      "api": "RentCast",
+      "purpose": "Property details + owner info + HOA + valuation",
+      "phase": 2,
+      "cost": "paid"
+    },
+    {
+      "order": 7,
+      "api": "Google Solar API - Data Layers",
+      "purpose": "Roof imagery + flux maps (premium feature)",
+      "phase": 1,
+      "cost": "free (limited)"
+    }
+  ],
+  "key_insights": {
+    "total_free_apis": 7,
+    "total_paid_apis": 4,
+    "phase_1_monthly_cost": 0,
+    "phase_1_lookups_per_month": 10000,
+    "best_value_property_api": "RentCast",
+    "best_free_geocoder": "Geocodio",
+    "best_solar_api": "Google Solar API",
+    "critical_for_energy_community": "Census tract from Geocodio or Census Bureau",
+    "biggest_gap_in_free_tier": "property_ownership_and_building_details"
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "metadata": {
+    "description": "Complete solar equipment catalog for the Solar CRM — panels, inverters, and batteries with 2026 market data, compliance status, and pricing.",
+    "version": "1.0.0",
+    "last_updated": "2026-02-08",
+    "sources": [
+      "Manufacturer datasheets and spec sheets",
+      "ENF Solar Panel Directory",
+      "EnergySage equipment database and reviews",
+      "US Solar Supplier wholesale pricing",
+      "Solar Electric Supply wholesale pricing",
+      "A1 SolarStore retail pricing",
+      "SolarReviews cost analysis 2026",
+      "EcoWatch battery reviews 2026",
+      "HomeGuide cost guides 2026",
+      "US DOC AD/CVD final determinations (2024-2025)",
+      "Norton Rose Fulbright Solar Import Tariff Summary (April 2025)",
+      "SEIA Solar Market Insight Q3/Q4 2025",
+      "Treasury FEOC Final Rule (May 2024)",
+      "DOE FEOC Guidance (December 2023)"
+    ],
+    "total_products": 38,
+    "total_panels": 20,
+    "total_inverters": 10,
+    "total_batteries": 8,
+    "compliance_summary": {
+      "domestic_content_panels": 8,
+      "feoc_compliant_panels": 12,
+      "tariff_safe_panels": 12,
+      "domestic_content_inverters": 6,
+      "feoc_compliant_inverters": 10,
+      "domestic_content_batteries": 4,
+      "feoc_compliant_batteries": 6
+    },
+    "market_context_2026": {
+      "residential_itc_expired": true,
+      "residential_itc_note": "Residential 25D ITC ended December 31, 2025. Lease/PPA (TPO) can still claim commercial 48E ITC at 30% + bonus adders.",
+      "domestic_content_bonus": "10% bonus ITC adder for projects meeting domestic content requirements (40% manufactured product threshold in 2026)",
+      "energy_community_bonus": "10% bonus ITC adder for projects in designated energy communities",
+      "section_201_expiring": "Section 201 safeguard tariff (14%) scheduled to expire February 6, 2026",
+      "module_shortage": "US experiencing module supply constraints through H1 2026 due to tariff uncertainty and demand surge",
+      "price_trend": "Domestic modules $0.35-0.45/W wholesale (rising); Import modules $0.18-0.25/W FOB (flat globally, but effective US price much higher with tariffs)"
+    },
+    "files": {
+      "panels": "panels.json",
+      "inverters": "inverters.json",
+      "batteries": "batteries.json"
+    }
+  },
+  "panels": [
+    { "$ref": "panels.json#/panels/0", "id": "qcells_qpeak_duo_ml_g11s_490", "manufacturer": "QCells", "model": "Q.PEAK DUO ML-G11S+ 490W", "wattage": 490, "efficiency_pct": 21.04, "technology": "Mono PERC", "domestic_content": true, "feoc_compliant": true, "origin": "USA", "price_wholesale_per_w": 0.38 },
+    { "$ref": "panels.json#/panels/1", "id": "qcells_qtron_blk_mg2_430", "manufacturer": "QCells", "model": "Q.TRON BLK M-G2+ 430W", "wattage": 430, "efficiency_pct": 22.0, "technology": "N-type TOPCon", "domestic_content": true, "feoc_compliant": true, "origin": "USA", "price_wholesale_per_w": 0.42 },
+    { "$ref": "panels.json#/panels/2", "id": "first_solar_series7_tr1_525", "manufacturer": "First Solar", "model": "Series 7 TR1 525W", "wattage": 525, "efficiency_pct": 18.8, "technology": "CdTe thin film", "domestic_content": true, "feoc_compliant": true, "origin": "USA", "price_wholesale_per_w": 0.40 },
+    { "$ref": "panels.json#/panels/3", "id": "silfab_sil410_bg", "manufacturer": "Silfab Solar", "model": "SIL-410 BG 410W", "wattage": 410, "efficiency_pct": 21.4, "technology": "Mono PERC", "domestic_content": true, "feoc_compliant": true, "origin": "USA/Canada", "price_wholesale_per_w": 0.36 },
+    { "$ref": "panels.json#/panels/4", "id": "rec_alpha_pure_r_430", "manufacturer": "REC Group", "model": "Alpha Pure-R 430W", "wattage": 430, "efficiency_pct": 22.3, "technology": "HJT", "domestic_content": false, "feoc_compliant": true, "origin": "Singapore", "price_wholesale_per_w": 0.45 },
+    { "$ref": "panels.json#/panels/5", "id": "mission_solar_mse420sx6w", "manufacturer": "Mission Solar", "model": "MSE PERC 72 420W", "wattage": 420, "efficiency_pct": 20.5, "technology": "Mono PERC", "domestic_content": true, "feoc_compliant": true, "origin": "USA", "price_wholesale_per_w": 0.34 },
+    { "$ref": "panels.json#/panels/6", "id": "heliene_144hc_m10_580", "manufacturer": "Heliene", "model": "144HC M10 NTYP Bifacial 580W", "wattage": 580, "efficiency_pct": 22.5, "technology": "N-type TOPCon", "domestic_content": true, "feoc_compliant": true, "origin": "USA/Canada", "price_wholesale_per_w": 0.38 },
+    { "$ref": "panels.json#/panels/7", "id": "maxeon_6_440", "manufacturer": "Maxeon (SunPower)", "model": "Maxeon 6 440W", "wattage": 440, "efficiency_pct": 22.8, "technology": "IBC", "domestic_content": false, "feoc_compliant": true, "origin": "Malaysia/Mexico", "price_wholesale_per_w": 0.65 },
+    { "$ref": "panels.json#/panels/8", "id": "aptos_dna144_mf26_440", "manufacturer": "Aptos Solar", "model": "DNA-144-MF26-440W", "wattage": 440, "efficiency_pct": 22.8, "technology": "N-type", "domestic_content": false, "feoc_compliant": true, "origin": "USA/Vietnam", "price_wholesale_per_w": 0.32 },
+    { "$ref": "panels.json#/panels/9", "id": "meyer_burger_white_400", "manufacturer": "Meyer Burger", "model": "White 400W HJT", "wattage": 400, "efficiency_pct": 21.7, "technology": "HJT", "domestic_content": false, "feoc_compliant": true, "origin": "Germany", "price_wholesale_per_w": null, "availability": "discontinued" },
+    { "$ref": "panels.json#/panels/10", "id": "longi_himo7_580", "manufacturer": "LONGi", "model": "Hi-MO 7 580W", "wattage": 580, "efficiency_pct": 22.5, "technology": "N-type HPDC", "domestic_content": false, "feoc_compliant": false, "origin": "China", "price_wholesale_per_w": 0.18 },
+    { "$ref": "panels.json#/panels/11", "id": "jinko_tiger_neo_580", "manufacturer": "Jinko Solar", "model": "Tiger Neo 580W", "wattage": 580, "efficiency_pct": 22.45, "technology": "N-type TOPCon", "domestic_content": false, "feoc_compliant": false, "origin": "China", "price_wholesale_per_w": 0.20 },
+    { "$ref": "panels.json#/panels/12", "id": "trina_vertex_s_plus_445", "manufacturer": "Trina Solar", "model": "Vertex S+ 445W", "wattage": 445, "efficiency_pct": 22.3, "technology": "N-type TOPCon", "domestic_content": false, "feoc_compliant": false, "origin": "China", "price_wholesale_per_w": 0.22 },
+    { "$ref": "panels.json#/panels/13", "id": "canadian_solar_tophiku6_440", "manufacturer": "Canadian Solar", "model": "TOPHiKu6 440W", "wattage": 440, "efficiency_pct": 22.5, "technology": "N-type TOPCon", "domestic_content": false, "feoc_compliant": false, "origin": "China/Canada", "price_wholesale_per_w": 0.24 },
+    { "$ref": "panels.json#/panels/14", "id": "ja_solar_deepblue_4_445", "manufacturer": "JA Solar", "model": "DeepBlue 4.0 445W", "wattage": 445, "efficiency_pct": 22.4, "technology": "N-type TOPCon", "domestic_content": false, "feoc_compliant": false, "origin": "China", "price_wholesale_per_w": 0.20 },
+    { "$ref": "panels.json#/panels/15", "id": "risen_titan_s_445", "manufacturer": "Risen Energy", "model": "Titan S 445W", "wattage": 445, "efficiency_pct": 22.2, "technology": "N-type HJT", "domestic_content": false, "feoc_compliant": false, "origin": "China", "price_wholesale_per_w": 0.18 },
+    { "$ref": "panels.json#/panels/16", "id": "astronergy_astro_n7_pro_580", "manufacturer": "Astronergy", "model": "ASTRO N7 Pro 580W", "wattage": 580, "efficiency_pct": 22.8, "technology": "N-type TOPCon", "domestic_content": false, "feoc_compliant": false, "origin": "China", "price_wholesale_per_w": 0.19 },
+    { "$ref": "panels.json#/panels/17", "id": "longi_himo6_explorer_440", "manufacturer": "LONGi", "model": "Hi-MO 6 Explorer 440W", "wattage": 440, "efficiency_pct": 22.3, "technology": "P-type HPBC", "domestic_content": false, "feoc_compliant": false, "origin": "China", "price_wholesale_per_w": 0.16 },
+    { "$ref": "panels.json#/panels/18", "id": "jinko_tiger_neo_445_res", "manufacturer": "Jinko Solar", "model": "Tiger Neo 445W Residential", "wattage": 445, "efficiency_pct": 22.53, "technology": "N-type TOPCon", "domestic_content": false, "feoc_compliant": false, "origin": "China/USA", "price_wholesale_per_w": 0.22 },
+    { "$ref": "panels.json#/panels/19", "id": "heliene_144hc_m6_450_mono", "manufacturer": "Heliene", "model": "144HC M6 Monofacial 450W", "wattage": 450, "efficiency_pct": 22.0, "technology": "Mono PERC", "domestic_content": true, "feoc_compliant": true, "origin": "USA/Canada", "price_wholesale_per_w": 0.35 }
+  ],
+  "inverters": [
+    { "$ref": "inverters.json#/inverters/0", "id": "enphase_iq8plus", "manufacturer": "Enphase", "model": "IQ8+ 300VA", "type_detail": "microinverter", "power_w": 300, "domestic_content": true, "feoc_compliant": true, "price_wholesale": 135 },
+    { "$ref": "inverters.json#/inverters/1", "id": "enphase_iq8m", "manufacturer": "Enphase", "model": "IQ8M 330VA", "type_detail": "microinverter", "power_w": 330, "domestic_content": true, "feoc_compliant": true, "price_wholesale": 145 },
+    { "$ref": "inverters.json#/inverters/2", "id": "enphase_iq8a", "manufacturer": "Enphase", "model": "IQ8A 366VA", "type_detail": "microinverter", "power_w": 366, "domestic_content": true, "feoc_compliant": true, "price_wholesale": 155 },
+    { "$ref": "inverters.json#/inverters/3", "id": "enphase_iq8h", "manufacturer": "Enphase", "model": "IQ8H 384VA", "type_detail": "microinverter", "power_w": 384, "domestic_content": true, "feoc_compliant": true, "price_wholesale": 165 },
+    { "$ref": "inverters.json#/inverters/4", "id": "solaredge_se7600h", "manufacturer": "SolarEdge", "model": "SE7600H-US", "type_detail": "string_with_optimizers", "power_w": 7600, "domestic_content": false, "feoc_compliant": true, "price_wholesale": 1600 },
+    { "$ref": "inverters.json#/inverters/5", "id": "solaredge_se10000h", "manufacturer": "SolarEdge", "model": "SE10000H-US", "type_detail": "string_with_optimizers", "power_w": 10000, "domestic_content": false, "feoc_compliant": true, "price_wholesale": 2100 },
+    { "$ref": "inverters.json#/inverters/6", "id": "sma_sunny_boy_smart_energy_77", "manufacturer": "SMA", "model": "Sunny Boy SE 7.7", "type_detail": "hybrid", "power_w": 7650, "domestic_content": false, "feoc_compliant": true, "price_wholesale": 2800 },
+    { "$ref": "inverters.json#/inverters/7", "id": "fronius_primo_gen24_10", "manufacturer": "Fronius", "model": "Primo GEN24 10.0", "type_detail": "hybrid", "power_w": 10000, "domestic_content": false, "feoc_compliant": true, "price_wholesale": 2500 },
+    { "$ref": "inverters.json#/inverters/8", "id": "generac_pwrcell_inverter_76", "manufacturer": "Generac", "model": "PWRcell 7.6kW", "type_detail": "hybrid", "power_w": 7600, "domestic_content": true, "feoc_compliant": true, "price_wholesale": 2800 },
+    { "$ref": "inverters.json#/inverters/9", "id": "tesla_inverter_pw3", "manufacturer": "Tesla", "model": "Powerwall 3 Integrated", "type_detail": "integrated_hybrid", "power_w": 11500, "domestic_content": true, "feoc_compliant": true, "price_wholesale": null }
+  ],
+  "batteries": [
+    { "$ref": "batteries.json#/batteries/0", "id": "tesla_powerwall_3", "manufacturer": "Tesla", "model": "Powerwall 3", "capacity_kwh": 13.5, "power_kw": 11.5, "chemistry": "LFP", "domestic_content": true, "feoc_compliant": true, "price_installed": 15400 },
+    { "$ref": "batteries.json#/batteries/1", "id": "enphase_iq_battery_5p", "manufacturer": "Enphase", "model": "IQ Battery 5P", "capacity_kwh": 5.0, "power_kw": 3.84, "chemistry": "LFP", "domestic_content": true, "feoc_compliant": true, "price_installed": 7750 },
+    { "$ref": "batteries.json#/batteries/2", "id": "franklinwh_apower", "manufacturer": "FranklinWH", "model": "aPower 13.6 kWh", "capacity_kwh": 13.6, "power_kw": 5.0, "chemistry": "LFP", "domestic_content": false, "feoc_compliant": false, "price_installed": 12600 },
+    { "$ref": "batteries.json#/batteries/3", "id": "generac_pwrcell_battery", "manufacturer": "Generac", "model": "PWRcell M6 18 kWh", "capacity_kwh": 18, "power_kw": 9, "chemistry": "NMC", "domestic_content": true, "feoc_compliant": true, "price_installed": 19000 },
+    { "$ref": "batteries.json#/batteries/4", "id": "solaredge_home_battery_400v", "manufacturer": "SolarEdge", "model": "Home Battery 9.7 kWh", "capacity_kwh": 9.7, "power_kw": 5.0, "chemistry": "NMC", "domestic_content": false, "feoc_compliant": true, "price_installed": 10500 },
+    { "$ref": "batteries.json#/batteries/5", "id": "panasonic_evervolt_2_l6", "manufacturer": "Panasonic", "model": "EverVolt 2.0 17.1 kWh", "capacity_kwh": 17.1, "power_kw": 9.6, "chemistry": "LFP", "domestic_content": false, "feoc_compliant": true, "price_installed": 24000 },
+    { "$ref": "batteries.json#/batteries/6", "id": "sonnen_ecolinx_20", "manufacturer": "sonnen", "model": "ecoLinx 20 kWh", "capacity_kwh": 20, "power_kw": 8, "chemistry": "LFP", "domestic_content": true, "feoc_compliant": true, "price_installed": 42000 },
+    { "$ref": "batteries.json#/batteries/7", "id": "byd_battery_box_hvs", "manufacturer": "BYD", "model": "Battery-Box HVS 12.8 kWh", "capacity_kwh": 12.8, "power_kw": 12.8, "chemistry": "LFP", "domestic_content": false, "feoc_compliant": false, "price_installed": 9500 }
+  ]
+}

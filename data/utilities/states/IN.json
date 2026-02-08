@@ -1,0 +1,213 @@
+{
+  "state": "IN",
+  "utility_count": 11,
+  "avg_residential_rate": 0.146,
+  "eia_state_avg_rate": 0.1362,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "net_billing",
+    "export_rate": null,
+    "notes": "SEA 309 phased out retail NEM by July 2022. New systems get excess distributed generation (EDG) credits at wholesale + 25%."
+  },
+  "utilities": [
+    {
+      "utility_id": "-7472800055483893186",
+      "utility_name": "Duke Energy Indiana LLC",
+      "state": "IN",
+      "states_served": [
+        "IN"
+      ],
+      "type": "IOU",
+      "customer_count": 850000,
+      "residential_avg_rate": 0.1362,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "9273",
+      "utility_name": "Indianapolis Power & Light Co",
+      "state": "IN",
+      "states_served": [
+        "IN"
+      ],
+      "type": "IOU",
+      "customer_count": 500000,
+      "residential_avg_rate": 0.1439,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "9324",
+      "utility_name": "Indiana Michigan Power Co (Indiana)",
+      "state": "IN",
+      "states_served": [
+        "IN"
+      ],
+      "type": "IOU",
+      "customer_count": 470000,
+      "residential_avg_rate": 0.1394,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "7475853646988207295",
+      "utility_name": "Indiana & Michigan Electric",
+      "state": "IN",
+      "states_served": [
+        "IN"
+      ],
+      "type": "IOU",
+      "customer_count": 200000,
+      "residential_avg_rate": 0.1362,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "15470",
+      "utility_name": "Duke Energy Indiana Inc",
+      "state": "IN",
+      "states_served": [
+        "IN"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1301,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "14006",
+      "utility_name": "Ohio Power Co",
+      "state": "IN",
+      "states_served": [
+        "IN"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1185,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "4922",
+      "utility_name": "Dayton Power & Light Co",
+      "state": "IN",
+      "states_served": [
+        "IN"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1509,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "13756",
+      "utility_name": "Northern Indiana Pub Serv Co",
+      "state": "IN",
+      "states_served": [
+        "IN"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1618,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "9964",
+      "utility_name": "Kenergy Corp",
+      "state": "IN",
+      "states_served": [
+        "IN"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1284,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "17633",
+      "utility_name": "Southern Indiana Gas & Elec Co",
+      "state": "IN",
+      "states_served": [
+        "IN"
+      ],
+      "type": "coop",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1434,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "10171",
+      "utility_name": "Kentucky Utilities Co",
+      "state": "IN",
+      "states_served": [
+        "IN"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2177,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:11:26.563320"
+}

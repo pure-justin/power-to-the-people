@@ -1,0 +1,40 @@
+{
+  "state": "LA",
+  "state_name": "Louisiana",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 2,
+  "incentives": [
+    {
+      "id": "LA_property_tax_exempt",
+      "state": "LA",
+      "incentive_type": "property_tax_exempt",
+      "name": "Louisiana Property Tax Exemption for Solar",
+      "description": "Solar energy systems exempt from property tax assessment",
+      "value": "100% property tax exemption",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Louisiana Tax Commission",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "LA_net_metering",
+      "state": "LA",
+      "incentive_type": "net_metering",
+      "name": "Louisiana Net Metering",
+      "description": "Louisiana requires net metering for investor-owned utilities and electric cooperatives",
+      "value": "Full retail rate credit",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Louisiana Public Service Commission",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

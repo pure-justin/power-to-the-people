@@ -1,0 +1,34 @@
+{
+  "state": "GA",
+  "state_name": "Georgia",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "both",
+    "typical_fee_range": "$150-$500",
+    "typical_timeline_days": "7-21",
+    "inspection_required": true,
+    "inspection_stages": ["final"],
+    "statewide_permit_program": false,
+    "statewide_program_name": null
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": false,
+    "net_metering_details": "Georgia has no state-mandated net metering. Georgia Power offers a solar buyback program with rates significantly below retail. EMCs (Electric Membership Cooperatives) may offer limited net metering voluntarily. Georgia Power's solar export rate is approximately 2-4 cents/kWh.",
+    "typical_timeline_days": "15-45",
+    "fees": "Georgia Power charges interconnection fees; varies by system size"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "Georgia has a solar easement statute but no comprehensive solar access law preventing HOA restrictions. HOAs may impose restrictions on solar installations.",
+    "historic_districts": "Savannah, Atlanta, and other cities have active historic preservation commissions. Properties in designated historic districts require additional review.",
+    "wind_load_requirements": "Coastal areas (Savannah, Brunswick) have enhanced wind requirements. Design wind speeds 120-150 mph along the coast.",
+    "snow_load_requirements": "Northern mountain areas have minimal snow loads (5-15 psf). Most of the state has negligible snow load requirements."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "No dedicated solar license. General contractor and/or electrical contractor license required. Licensed electrician must perform electrical work.",
+    "nabcep_required": false
+  },
+  "notes": "Georgia has a growing solar market driven primarily by utility-scale installations and Georgia Power's commercial programs. Residential solar is limited by low buyback rates and no net metering mandate. The state offers a property tax exemption for solar. Many jurisdictions participate in SolSmart program. Median permit timeline is approximately 45 days including interconnection. EMC territories may offer better terms for distributed solar than Georgia Power."
+}

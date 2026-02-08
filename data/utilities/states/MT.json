@@ -1,0 +1,122 @@
+{
+  "state": "MT",
+  "utility_count": 6,
+  "avg_residential_rate": 0.1312,
+  "eia_state_avg_rate": 0.1194,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "NEM",
+    "export_rate": null
+  },
+  "utilities": [
+    {
+      "utility_id": "12825",
+      "utility_name": "NorthWestern Corporation",
+      "state": "MT",
+      "states_served": [
+        "MT"
+      ],
+      "type": "IOU",
+      "customer_count": 380000,
+      "residential_avg_rate": 0.1165,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "-5521404259720006391",
+      "utility_name": "Flathead Electric Coop",
+      "state": "MT",
+      "states_served": [
+        "MT"
+      ],
+      "type": "coop",
+      "customer_count": 60000,
+      "residential_avg_rate": 0.1194,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "14354",
+      "utility_name": "PacifiCorp (Utah)",
+      "state": "MT",
+      "states_served": [
+        "MT"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1241,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "12199",
+      "utility_name": "Montana-Dakota Utilities Co",
+      "state": "MT",
+      "states_served": [
+        "MT"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.118,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "9191",
+      "utility_name": "Idaho Power Co",
+      "state": "MT",
+      "states_served": [
+        "MT"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1767,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "20169",
+      "utility_name": "Avista Corp",
+      "state": "MT",
+      "states_served": [
+        "MT"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1324,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:12:31.208919"
+}

@@ -1,0 +1,140 @@
+{
+  "state": "MO",
+  "utility_count": 7,
+  "avg_residential_rate": 0.1132,
+  "eia_state_avg_rate": 0.1262,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "NEM",
+    "export_rate": null
+  },
+  "utilities": [
+    {
+      "utility_id": "19436",
+      "utility_name": "Ameren Missouri",
+      "state": "MO",
+      "states_served": [
+        "MO"
+      ],
+      "type": "IOU",
+      "customer_count": 1200000,
+      "residential_avg_rate": 0.1009,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "12698",
+      "utility_name": "Evergy Missouri West",
+      "state": "MO",
+      "states_served": [
+        "MO"
+      ],
+      "type": "IOU",
+      "customer_count": 300000,
+      "residential_avg_rate": 0.144,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "5860",
+      "utility_name": "Empire District Electric Co (Missouri)",
+      "state": "MO",
+      "states_served": [
+        "MO"
+      ],
+      "type": "muni",
+      "customer_count": 170000,
+      "residential_avg_rate": 0.1201,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "10000",
+      "utility_name": "Kansas City Power & Light Co",
+      "state": "MO",
+      "states_served": [
+        "MO"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1211,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "22500",
+      "utility_name": "Westar Energy Inc",
+      "state": "MO",
+      "states_served": [
+        "MO"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1123,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "9996",
+      "utility_name": "City of Kansas City, Kansas (Utility Company)",
+      "state": "MO",
+      "states_served": [
+        "MO"
+      ],
+      "type": "muni",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1081,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "17833",
+      "utility_name": "City Utilities of Springfield",
+      "state": "MO",
+      "states_served": [
+        "MO"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.086,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:12:21.456314"
+}

@@ -1,0 +1,122 @@
+{
+  "metadata": {
+    "description": "Energy Community bonus credit categories qualifying for 10% ITC adder under IRA Section 48(e). Projects located in qualifying energy communities receive an additional 10 percentage points on their Investment Tax Credit.",
+    "last_updated": "2026-02-08",
+    "sources": [
+      "IRS Notice 2024-30 (Energy Community Bonus Credit Amounts)",
+      "IRS Notice 2023-47 (Initial Guidance on Energy Communities)",
+      "DOE / Interagency Working Group on Energy Communities",
+      "Treasury Final Rule on Energy Community Bonus (2024)",
+      "energycommunities.gov (Interagency mapping tool)"
+    ],
+    "itc_bonus": "10% for projects meeting prevailing wage and apprenticeship (PWA) requirements; 2% for projects under 1 MW AC that do not meet PWA",
+    "applies_to": ["48E ITC (clean electricity)", "48(e) ITC (energy)", "45Y PTC (clean electricity production)"],
+    "verification_tool": "https://energycommunities.gov/energy-community-tax-credit-bonus/"
+  },
+  "categories": [
+    {
+      "type": "brownfield",
+      "description": "Sites with real or perceived environmental contamination, as defined under CERCLA (Superfund) or similar state programs. Building solar on contaminated or previously contaminated land.",
+      "qualification": "Must be a brownfield site as defined in CERCLA Section 101(39) — real property where expansion, redevelopment, or reuse may be complicated by the presence or potential presence of a hazardous substance, pollutant, or contaminant. Includes EPA Brownfield sites, state-designated brownfield sites, Superfund sites, and certain landfills.",
+      "itc_bonus": "10%",
+      "ptc_bonus": "10%",
+      "verification": "Environmental site assessment (Phase I or Phase II ESA), EPA Brownfield listing, state environmental agency designation, or inclusion in CERCLA/Superfund inventory.",
+      "key_characteristics": [
+        "Site must be directly on or contain the brownfield",
+        "No minimum acreage requirement",
+        "Includes former industrial sites, gas stations, landfills, mines",
+        "Can overlap with coal closure or fossil fuel employment categories (but bonus only claimed once)"
+      ],
+      "sample_areas": [
+        {"state": "NJ", "description": "New Jersey has 20,000+ known contaminated sites — highest density in US. Many ideal for solar."},
+        {"state": "PA", "county": "Allegheny", "description": "Former steel mill sites along Monongahela River"},
+        {"state": "IL", "city": "Chicago", "description": "Former industrial sites on South Side and along Chicago River"},
+        {"state": "OH", "city": "Cleveland", "description": "Former manufacturing sites along Cuyahoga River flats"},
+        {"state": "MI", "city": "Detroit", "description": "Extensive brownfield inventory from auto manufacturing decline"}
+      ]
+    },
+    {
+      "type": "coal_closure",
+      "description": "Census tracts that have had a coal mine close after December 31, 1999, or a coal-fired electric generating unit retire after December 31, 2009, PLUS any census tract that is directly adjoining such a tract.",
+      "qualification": "Census tract contains (or is directly adjacent to a tract containing) a coal mine that closed after 1999 OR a coal-fired power plant unit that retired after 2009. Adjacency means sharing a border (including corner adjacency). Uses Mine Safety and Health Administration (MSHA) data for coal mines and EIA-860 data for power plants.",
+      "itc_bonus": "10%",
+      "ptc_bonus": "10%",
+      "verification": "DOE/IRS Energy Community mapping tool at energycommunities.gov. Census tract lookup confirms eligibility. No site-specific environmental assessment needed — geographic qualification only.",
+      "key_characteristics": [
+        "Based on census tract geography, not specific site",
+        "Adjacent tracts also qualify (significant coverage expansion)",
+        "Uses MSHA mine closure data and EIA power plant retirement data",
+        "Status updated annually based on new closures/retirements",
+        "Many tracts qualify in Appalachia, Midwest, Mountain West"
+      ],
+      "sample_areas": [
+        {"state": "WV", "county": "Boone", "description": "Multiple coal mine closures since 2000. Heart of southern WV coal country."},
+        {"state": "WV", "county": "Mingo", "description": "Coal mine closures along Tug Fork river valley"},
+        {"state": "PA", "county": "Greene", "description": "Multiple coal-fired power plant retirements including Hatfield's Ferry (2013)"},
+        {"state": "PA", "county": "Indiana", "description": "Homer City Generating Station (closed units since 2012)"},
+        {"state": "WY", "county": "Campbell", "description": "Powder River Basin — world's largest coal mining region. Multiple mines closed/reduced operations."},
+        {"state": "OH", "county": "Jefferson", "description": "W.H. Sammis power plant retirement. Ohio River valley coal country."},
+        {"state": "KY", "county": "Pike", "description": "Appalachian coal mine closures. Pike County lost hundreds of mining jobs since 2010."},
+        {"state": "AL", "county": "Walker", "description": "Alabama coal mine closures. Gorgas Steam Plant retired units."},
+        {"state": "IN", "county": "Vigo", "description": "Multiple coal plant retirements in Terre Haute area."},
+        {"state": "CO", "county": "Routt", "description": "Hayden Station coal plant scheduled retirement. Northwest Colorado coal transition."}
+      ]
+    },
+    {
+      "type": "fossil_fuel_employment",
+      "description": "Metropolitan Statistical Areas (MSAs) or non-metropolitan statistical areas (non-MSAs) that have significant fossil fuel employment or tax revenue AND have an unemployment rate at or above the national average.",
+      "qualification": "Two criteria BOTH must be met: (1) The MSA or non-MSA county has 0.17% or more direct fossil fuel employment as a percentage of total employment, OR 25% or more of local tax revenue derived from fossil fuel extraction/processing/transport; AND (2) The area has an unemployment rate at or above the national average unemployment rate for the prior year. Status is re-evaluated annually based on BLS and Census data.",
+      "itc_bonus": "10%",
+      "ptc_bonus": "10%",
+      "verification": "DOE/IRS Energy Community mapping tool at energycommunities.gov. MSA/non-MSA lookup. Updated annually — an area can gain or lose eligibility year to year based on unemployment rate changes.",
+      "key_characteristics": [
+        "Applies to entire MSA or non-MSA county — broad geographic coverage",
+        "Both employment/revenue AND unemployment thresholds must be met simultaneously",
+        "Eligibility can change annually as unemployment rates fluctuate",
+        "Fossil fuel employment includes extraction, processing, transport of oil, gas, and coal",
+        "Some areas cycle in and out of eligibility based on unemployment rate",
+        "NAICS codes 211, 2121, 213111, 213112, 213113 define qualifying employment"
+      ],
+      "sample_areas": [
+        {"state": "TX", "area": "Midland-Odessa MSA", "description": "Permian Basin oil & gas hub. 15%+ of employment in fossil fuels. Eligibility depends on annual unemployment rate comparison."},
+        {"state": "TX", "area": "Odessa-Midland non-MSA counties", "description": "Surrounding Permian Basin counties with high fossil fuel employment ratios."},
+        {"state": "ND", "area": "Williston MSA", "description": "Bakken formation shale oil center. Very high fossil fuel employment percentage."},
+        {"state": "WV", "area": "Multiple non-MSA counties", "description": "Coal-dependent counties with above-average unemployment. Many qualify under both coal closure AND fossil fuel employment categories."},
+        {"state": "OK", "area": "Oklahoma City MSA", "description": "Oil & gas sector headquarters and operations. May qualify depending on annual unemployment comparison."},
+        {"state": "WY", "area": "Casper MSA", "description": "Oil, gas, and coal employment center. Wyoming's energy economy makes many areas eligible."},
+        {"state": "NM", "area": "Farmington MSA (San Juan County)", "description": "Oil, gas, and coal operations in Four Corners region. San Juan Generating Station retirement."},
+        {"state": "LA", "area": "Houma-Thibodaux MSA", "description": "Offshore oil & gas support industry hub. High fossil fuel employment ratio."},
+        {"state": "PA", "area": "Williamsport MSA (Lycoming County)", "description": "Marcellus Shale gas extraction center."},
+        {"state": "AK", "area": "North Slope Borough", "description": "Prudhoe Bay oil production. Extremely high fossil fuel employment percentage."},
+        {"state": "CO", "area": "Greeley MSA (Weld County)", "description": "DJ Basin oil and gas operations. Significant fossil fuel employment."}
+      ]
+    }
+  ],
+  "stacking_rules": {
+    "description": "The energy community bonus can be combined with other ITC adders.",
+    "stackable_with": [
+      {
+        "adder": "Domestic Content Bonus",
+        "additional_itc": "10%",
+        "requirement": "50%+ US-manufactured content by cost"
+      },
+      {
+        "adder": "Low-Income Community Bonus (Section 48(e))",
+        "additional_itc": "10% or 20%",
+        "requirement": "Located in low-income community (10%) or Indian land/qualified low-income residential building/qualified low-income economic benefit project (20%)"
+      }
+    ],
+    "maximum_itc_example": {
+      "base_itc": "30% (with PWA)",
+      "energy_community": "+10%",
+      "domestic_content": "+10%",
+      "total_possible": "50% ITC",
+      "notes": "A commercial solar project in an energy community using domestic-content equipment with PWA compliance can achieve up to 50% ITC. Low-income adder can push to 60-70% in specific cases."
+    }
+  },
+  "data_update_schedule": {
+    "coal_closure": "Updated as new closures/retirements are reported. MSHA and EIA databases updated quarterly.",
+    "fossil_fuel_employment": "Re-evaluated annually. BLS unemployment data typically finalized by April for prior year. MSA qualification list published each spring/summer.",
+    "brownfield": "No fixed schedule — site-specific determination based on environmental records."
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "state": "PA",
+  "state_name": "Pennsylvania",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 2,
+  "incentives": [
+    {
+      "id": "PA_srec",
+      "state": "PA",
+      "incentive_type": "srec",
+      "name": "Pennsylvania SREC Market",
+      "description": "Active SREC market with current prices around $22.95/MWh",
+      "value": "~$22.95/SREC (1 MWh)",
+      "value_type": "per_kwh",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Pennsylvania PUC",
+      "source_url": "https://worldpopulationreview.com/state-rankings/srec-prices-by-state",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "PA_net_metering",
+      "state": "PA",
+      "incentive_type": "net_metering",
+      "name": "Pennsylvania Net Metering",
+      "description": "Pennsylvania requires net metering for all electric distribution companies",
+      "value": "Full retail rate credit",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Pennsylvania PUC",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

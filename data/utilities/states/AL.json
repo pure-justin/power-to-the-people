@@ -1,0 +1,105 @@
+{
+  "state": "AL",
+  "utility_count": 5,
+  "avg_residential_rate": 0.1156,
+  "eia_state_avg_rate": 0.1398,
+  "net_metering": {
+    "has_net_metering": false,
+    "net_metering_type": "avoided_cost",
+    "export_rate": null,
+    "notes": "Alabama Power offers Renewable Generation Tariff at avoided cost. No true net metering."
+  },
+  "utilities": [
+    {
+      "utility_id": "195",
+      "utility_name": "Alabama Power Co",
+      "state": "AL",
+      "states_served": [
+        "AL"
+      ],
+      "type": "IOU",
+      "customer_count": 1500000,
+      "residential_avg_rate": 0.1429,
+      "rate_structure": "tou",
+      "has_net_metering": false,
+      "net_metering_type": "avoided_cost",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "18642",
+      "utility_name": "Tennessee Valley Authority (Mississippi)",
+      "state": "AL",
+      "states_served": [
+        "AL"
+      ],
+      "type": "muni",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1036,
+      "rate_structure": "tiered",
+      "has_net_metering": false,
+      "net_metering_type": "avoided_cost",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "12686",
+      "utility_name": "Mississippi Power Co",
+      "state": "AL",
+      "states_served": [
+        "AL"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1004,
+      "rate_structure": "tou",
+      "has_net_metering": false,
+      "net_metering_type": "avoided_cost",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "7801",
+      "utility_name": "Gulf Power Co",
+      "state": "AL",
+      "states_served": [
+        "AL"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1144,
+      "rate_structure": "flat",
+      "has_net_metering": false,
+      "net_metering_type": "avoided_cost",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "9094",
+      "utility_name": "City of Huntsville, Alabama (Utility Company)",
+      "state": "AL",
+      "states_served": [
+        "AL"
+      ],
+      "type": "muni",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1165,
+      "rate_structure": "tiered",
+      "has_net_metering": false,
+      "net_metering_type": "avoided_cost",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:10:09.732119"
+}

@@ -1,0 +1,55 @@
+{
+  "state": "WA",
+  "state_name": "Washington",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 3,
+  "incentives": [
+    {
+      "id": "WA_sales_tax_exempt",
+      "state": "WA",
+      "incentive_type": "sales_tax_exempt",
+      "name": "Washington Sales Tax Exemption for Solar",
+      "description": "Solar PV equipment and installation labor exempt from state sales tax",
+      "value": "Sales tax exemption on equipment and labor",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Washington Department of Revenue",
+      "source_url": "https://www.solarreviews.com/solar-incentives",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "WA_rebate",
+      "state": "WA",
+      "incentive_type": "rebate",
+      "name": "Washington Renewable Energy System Incentive Program",
+      "description": "Production incentive averaging $720/year. Rate: $0.08-$0.12/kWh depending on system and equipment origin.",
+      "value": "$0.08-$0.12/kWh, avg $720/year",
+      "value_type": "per_kwh",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Washington State University Energy Program",
+      "source_url": "https://worldpopulationreview.com/state-rankings/solar-incentives-by-state",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "WA_net_metering",
+      "state": "WA",
+      "incentive_type": "net_metering",
+      "name": "Washington Net Metering",
+      "description": "Washington UTC requires net metering for all investor-owned utilities and many public utilities",
+      "value": "Full retail rate credit",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Washington UTC",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

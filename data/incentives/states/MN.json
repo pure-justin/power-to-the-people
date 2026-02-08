@@ -1,0 +1,70 @@
+{
+  "state": "MN",
+  "state_name": "Minnesota",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 4,
+  "incentives": [
+    {
+      "id": "MN_property_tax_exempt",
+      "state": "MN",
+      "incentive_type": "property_tax_exempt",
+      "name": "Minnesota Solar Energy Property Tax Exemption",
+      "description": "Solar energy systems exempt from property tax assessment",
+      "value": "100% of added solar value exempt",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Minnesota Department of Revenue",
+      "source_url": "https://www.solarreviews.com/solar-incentives",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "MN_sales_tax_exempt",
+      "state": "MN",
+      "incentive_type": "sales_tax_exempt",
+      "name": "Minnesota Sales Tax Exemption for Solar",
+      "description": "Solar energy equipment exempt from state sales tax",
+      "value": "6.875% sales tax exemption",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Minnesota Department of Revenue",
+      "source_url": "https://www.solarreviews.com/solar-incentives",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "MN_net_metering",
+      "state": "MN",
+      "incentive_type": "net_metering",
+      "name": "Minnesota Net Metering",
+      "description": "Minnesota requires net metering for all utilities",
+      "value": "Full retail rate credit",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Minnesota PUC",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "MN_community_solar",
+      "state": "MN",
+      "incentive_type": "community_solar",
+      "name": "Minnesota Community Solar Garden Program",
+      "description": "Robust community solar program, one of the largest in the nation. Xcel Energy community solar garden program.",
+      "value": "Bill credits for community solar subscribers",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Minnesota PUC / Xcel Energy",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

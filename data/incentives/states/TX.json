@@ -1,0 +1,70 @@
+{
+  "state": "TX",
+  "state_name": "Texas",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 4,
+  "incentives": [
+    {
+      "id": "TX_property_tax_exempt",
+      "state": "TX",
+      "incentive_type": "property_tax_exempt",
+      "name": "Texas Property Tax Exemption for Solar",
+      "description": "Solar system value is not considered when determining assessed property value. Prevents property tax increase from solar installation. Average 4%+ home value increase is tax-free.",
+      "value": "100% of solar added value exempt",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Texas Comptroller",
+      "source_url": "https://www.solarreviews.com/solar-incentives/texas",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "TX_sales_tax_exempt",
+      "state": "TX",
+      "incentive_type": "sales_tax_exempt",
+      "name": "Texas Sales Tax Exemption for Solar",
+      "description": "Solar energy equipment exempt from state sales tax",
+      "value": "Sales tax exemption",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Texas Comptroller",
+      "source_url": "https://www.solarreviews.com/solar-incentives",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "TX_rebate",
+      "state": "TX",
+      "incentive_type": "rebate",
+      "name": "Texas Utility Solar Rebates",
+      "description": "AEP Texas: up to $2,500 per residential solar system. Oncor: solar+storage rebate. Other utilities vary.",
+      "value": "Up to $2,500 (AEP), varies (others)",
+      "value_type": "fixed",
+      "eligibility": "residential",
+      "status": "varies_by_utility",
+      "expiration_date": null,
+      "administering_body": "AEP Texas, Oncor, other utilities",
+      "source_url": "https://www.solarreviews.com/solar-incentives/texas",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "TX_net_metering",
+      "state": "TX",
+      "incentive_type": "net_metering",
+      "name": "Texas Net Metering (No Statewide Mandate)",
+      "description": "No statewide net metering requirement. Some utilities (TXU Energy, others) voluntarily offer net metering or buy-back programs.",
+      "value": "Varies by utility - no statewide mandate",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "varies_by_utility",
+      "expiration_date": null,
+      "administering_body": "Individual utilities",
+      "source_url": "https://www.solarreviews.com/solar-incentives/texas",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

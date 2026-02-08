@@ -1,0 +1,86 @@
+{
+  "state": "ND",
+  "utility_count": 4,
+  "avg_residential_rate": 0.1252,
+  "eia_state_avg_rate": 0.1142,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "NEM",
+    "export_rate": null
+  },
+  "utilities": [
+    {
+      "utility_id": "12199",
+      "utility_name": "Montana-Dakota Utilities Co",
+      "state": "ND",
+      "states_served": [
+        "ND"
+      ],
+      "type": "IOU",
+      "customer_count": 70000,
+      "residential_avg_rate": 0.118,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "-3314533986483127099",
+      "utility_name": "Xcel Energy",
+      "state": "ND",
+      "states_served": [
+        "ND"
+      ],
+      "type": "IOU",
+      "customer_count": 40000,
+      "residential_avg_rate": 0.1142,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "14232",
+      "utility_name": "Otter Tail Power Co",
+      "state": "ND",
+      "states_served": [
+        "ND"
+      ],
+      "type": "IOU",
+      "customer_count": 35000,
+      "residential_avg_rate": 0.1034,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "13781",
+      "utility_name": "Northern States Power Co - Minnesota",
+      "state": "ND",
+      "states_served": [
+        "ND"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1651,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:12:43.806448"
+}

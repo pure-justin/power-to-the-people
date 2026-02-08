@@ -1,0 +1,87 @@
+{
+  "state": "AZ",
+  "utility_count": 4,
+  "avg_residential_rate": 0.1488,
+  "eia_state_avg_rate": 0.1305,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "net_billing",
+    "export_rate": null,
+    "notes": "APS and TEP use Resource Comparison Proxy (RCP) rates for export credit. ~$0.03-0.05/kWh. SRP uses Customer Generation Plan."
+  },
+  "utilities": [
+    {
+      "utility_id": "803",
+      "utility_name": "Arizona Public Service Co",
+      "state": "AZ",
+      "states_served": [
+        "AZ"
+      ],
+      "type": "IOU",
+      "customer_count": 1300000,
+      "residential_avg_rate": 0.2184,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "16572",
+      "utility_name": "Salt River Project",
+      "state": "AZ",
+      "states_served": [
+        "AZ"
+      ],
+      "type": "IOU",
+      "customer_count": 1100000,
+      "residential_avg_rate": 0.13,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "24211",
+      "utility_name": "Tucson Electric Power Co",
+      "state": "AZ",
+      "states_served": [
+        "AZ"
+      ],
+      "type": "IOU",
+      "customer_count": 430000,
+      "residential_avg_rate": 0.1422,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "30518",
+      "utility_name": "Electrical Dist No3 Pinal Cnty",
+      "state": "AZ",
+      "states_served": [
+        "AZ"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1045,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:10:19.386057"
+}

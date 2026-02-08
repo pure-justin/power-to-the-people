@@ -39,8 +39,8 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.twilioStatusCallback = exports.getSmsStats = exports.sendPaymentReminders = exports.sendBulkSMS = exports.sendCustomSMS = exports.onReferralReward = exports.onProjectStatusUpdate = exports.smsOnProjectCreated = exports.triggerDataRefresh = exports.refreshSolarData = exports.getSubscriptionStatus = exports.createBillingPortalSession = exports.createCheckoutSession = exports.stripeWebhook = exports.cancelSubscription = exports.updateSubscription = exports.createSubscription = exports.solarEstimate = exports.solarComplianceCheck = exports.solarPermits = exports.solarIncentives = exports.solarUtilities = exports.solarEquipment = exports.referralStatsWebhook = exports.referralBulkUpdateWebhook = exports.referralStatusWebhook = exports.processWeeklyPayouts = exports.getReferralStats = exports.updateReferralStatusHttp = exports.onProjectUpdated = exports.onProjectCreated = exports.secureLeadQuery = exports.secureSolarWebhook = exports.secureLeadWebhook = exports.validateApiKeyFromRequest = exports.cleanupApiKeys = exports.getApiKeyUsage = exports.updateApiKey = exports.rotateApiKey = exports.revokeApiKey = exports.validateApiKey = exports.createApiKey = exports.leadWebhook = exports.recalculateLeadScores = exports.assignLead = exports.addLeadNote = exports.updateLead = exports.createLead = exports.smtWebhook = exports.fetchSmtUsage = void 0;
-exports.syncInvoiceStatus = exports.cancelMercuryInvoice = exports.listMercuryInvoices = exports.getMercuryInvoice = exports.createMercuryInvoice = exports.createMercuryCustomer = void 0;
+exports.getSmsStats = exports.sendPaymentReminders = exports.sendBulkSMS = exports.sendCustomSMS = exports.onReferralReward = exports.onProjectStatusUpdate = exports.smsOnProjectCreated = exports.triggerDataRefresh = exports.refreshSolarData = exports.getSubscriptionStatus = exports.createBillingPortalSession = exports.createCheckoutSession = exports.stripeWebhook = exports.cancelSubscription = exports.updateSubscription = exports.createSubscription = exports.solarEstimate = exports.solarComplianceQuickCheck = exports.solarComplianceCheck = exports.solarPermits = exports.solarIncentives = exports.solarUtilities = exports.solarEquipment = exports.referralStatsWebhook = exports.referralBulkUpdateWebhook = exports.referralStatusWebhook = exports.processWeeklyPayouts = exports.getReferralStats = exports.updateReferralStatusHttp = exports.onProjectUpdated = exports.onProjectCreated = exports.secureLeadQuery = exports.secureSolarWebhook = exports.secureLeadWebhook = exports.validateApiKeyFromRequest = exports.cleanupApiKeys = exports.getApiKeyUsage = exports.updateApiKey = exports.rotateApiKey = exports.revokeApiKey = exports.validateApiKey = exports.createApiKey = exports.leadWebhook = exports.recalculateLeadScores = exports.assignLead = exports.addLeadNote = exports.updateLead = exports.createLead = exports.smtWebhook = exports.fetchSmtUsage = void 0;
+exports.getMarketplaceListings = exports.searchWorkers = exports.registerWorker = exports.rateWorker = exports.completeMarketplaceJob = exports.acceptBid = exports.submitBid = exports.createMarketplaceListing = exports.getProjectTimeline = exports.completeProjectTask = exports.assignProjectTask = exports.createProjectTask = exports.advanceProjectStage = exports.syncInvoiceStatus = exports.cancelMercuryInvoice = exports.listMercuryInvoices = exports.getMercuryInvoice = exports.createMercuryInvoice = exports.createMercuryCustomer = exports.twilioStatusCallback = void 0;
 const admin = __importStar(require("firebase-admin"));
 // Initialize Firebase Admin SDK
 admin.initializeApp();
@@ -90,6 +90,7 @@ Object.defineProperty(exports, "solarUtilities", { enumerable: true, get: functi
 Object.defineProperty(exports, "solarIncentives", { enumerable: true, get: function () { return solarDataApi_1.solarIncentives; } });
 Object.defineProperty(exports, "solarPermits", { enumerable: true, get: function () { return solarDataApi_1.solarPermits; } });
 Object.defineProperty(exports, "solarComplianceCheck", { enumerable: true, get: function () { return solarDataApi_1.solarComplianceCheck; } });
+Object.defineProperty(exports, "solarComplianceQuickCheck", { enumerable: true, get: function () { return solarDataApi_1.solarComplianceQuickCheck; } });
 Object.defineProperty(exports, "solarEstimate", { enumerable: true, get: function () { return solarDataApi_1.solarEstimate; } });
 // Export Payment functions
 var payments_1 = require("./payments");
@@ -122,4 +123,21 @@ Object.defineProperty(exports, "getMercuryInvoice", { enumerable: true, get: fun
 Object.defineProperty(exports, "listMercuryInvoices", { enumerable: true, get: function () { return mercuryInvoice_1.listMercuryInvoices; } });
 Object.defineProperty(exports, "cancelMercuryInvoice", { enumerable: true, get: function () { return mercuryInvoice_1.cancelMercuryInvoice; } });
 Object.defineProperty(exports, "syncInvoiceStatus", { enumerable: true, get: function () { return mercuryInvoice_1.syncInvoiceStatus; } });
+// Export Project Pipeline functions
+var projectPipeline_1 = require("./projectPipeline");
+Object.defineProperty(exports, "advanceProjectStage", { enumerable: true, get: function () { return projectPipeline_1.advanceProjectStage; } });
+Object.defineProperty(exports, "createProjectTask", { enumerable: true, get: function () { return projectPipeline_1.createProjectTask; } });
+Object.defineProperty(exports, "assignProjectTask", { enumerable: true, get: function () { return projectPipeline_1.assignProjectTask; } });
+Object.defineProperty(exports, "completeProjectTask", { enumerable: true, get: function () { return projectPipeline_1.completeProjectTask; } });
+Object.defineProperty(exports, "getProjectTimeline", { enumerable: true, get: function () { return projectPipeline_1.getProjectTimeline; } });
+// Export Marketplace functions
+var marketplace_1 = require("./marketplace");
+Object.defineProperty(exports, "createMarketplaceListing", { enumerable: true, get: function () { return marketplace_1.createMarketplaceListing; } });
+Object.defineProperty(exports, "submitBid", { enumerable: true, get: function () { return marketplace_1.submitBid; } });
+Object.defineProperty(exports, "acceptBid", { enumerable: true, get: function () { return marketplace_1.acceptBid; } });
+Object.defineProperty(exports, "completeMarketplaceJob", { enumerable: true, get: function () { return marketplace_1.completeMarketplaceJob; } });
+Object.defineProperty(exports, "rateWorker", { enumerable: true, get: function () { return marketplace_1.rateWorker; } });
+Object.defineProperty(exports, "registerWorker", { enumerable: true, get: function () { return marketplace_1.registerWorker; } });
+Object.defineProperty(exports, "searchWorkers", { enumerable: true, get: function () { return marketplace_1.searchWorkers; } });
+Object.defineProperty(exports, "getMarketplaceListings", { enumerable: true, get: function () { return marketplace_1.getMarketplaceListings; } });
 //# sourceMappingURL=index.js.map

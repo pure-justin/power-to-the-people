@@ -1,0 +1,34 @@
+{
+  "state": "AR",
+  "state_name": "Arkansas",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "both",
+    "typical_fee_range": "$100-$400",
+    "typical_timeline_days": "7-21",
+    "inspection_required": true,
+    "inspection_stages": ["final"],
+    "statewide_permit_program": false,
+    "statewide_program_name": null
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": true,
+    "net_metering_details": "Arkansas has net metering for systems up to 25 kW residential and 300 kW commercial. 2-to-1 net metering ratio applies (2 kWh generated offsets 1 kWh consumed for systems over certain thresholds). Credits roll over monthly, reconciled annually.",
+    "typical_timeline_days": "15-30",
+    "fees": "Varies by utility; typically minimal for residential systems"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "Arkansas has a solar access law (Act 464 of 2019) that limits HOA restrictions on solar installations. HOAs cannot prohibit solar but may impose reasonable aesthetic requirements.",
+    "historic_districts": "Historic district review handled locally; some cities like Little Rock and Eureka Springs have active preservation commissions.",
+    "wind_load_requirements": "Standard IBC wind load requirements. Design wind speeds typically 90-115 mph.",
+    "snow_load_requirements": "Moderate snow loads in northern and western mountain areas (10-25 psf ground snow load). Standard structural review applies."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "Commercial or residential contractor license required plus electrician license; must be or work under a master electrician",
+    "nabcep_required": false
+  },
+  "notes": "Arkansas has seen growing solar adoption with favorable net metering policies, though the 2-to-1 ratio for larger systems reduces the benefit. Entergy Arkansas is the dominant utility. The state has no state solar tax credit. Permitting is handled at the municipal/county level with varying requirements. Rural areas may have less stringent permitting."
+}

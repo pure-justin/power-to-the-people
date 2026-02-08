@@ -1,0 +1,34 @@
+{
+  "state": "ID",
+  "state_name": "Idaho",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "both",
+    "typical_fee_range": "$100-$400",
+    "typical_timeline_days": "7-21",
+    "inspection_required": true,
+    "inspection_stages": ["final"],
+    "statewide_permit_program": false,
+    "statewide_program_name": null
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": true,
+    "net_metering_details": "Idaho has net metering through utility-specific programs. Idaho Power offers net metering for systems up to 100 kW. Rocky Mountain Power is requesting approval to increase non-residential system size limit to 2 MW. Credits at avoided cost rate, not full retail.",
+    "typical_timeline_days": "15-30",
+    "fees": "Idaho Power: minimal application fee for residential; varies for commercial"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "Idaho has a solar easement statute but no comprehensive solar access law preventing HOA restrictions on solar installations.",
+    "historic_districts": "Historic districts in Boise and other cities handled by local preservation commissions. State Historic Preservation Office consulted for National Register properties.",
+    "wind_load_requirements": "Standard IBC wind load requirements. Some areas in southern Idaho have higher wind zones.",
+    "snow_load_requirements": "Significant snow loads in mountain areas and northern Idaho (30-100+ psf ground snow load). Boise area typically 20-30 psf. Structural engineering review commonly required."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "Idaho solar photovoltaic license or NABCEP certification plus electrical contractor license required.",
+    "nabcep_required": true
+  },
+  "notes": "Idaho's solar market is growing but still relatively small. Idaho Power has been adjusting net metering rates and policies. The state has no state solar tax credit. Property tax exemption available for solar equipment. NABCEP certification is valued for licensing. Snow loads are a significant consideration in many parts of the state. Relatively low electricity rates compared to western neighbors reduce the economic case for solar."
+}

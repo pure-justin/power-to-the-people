@@ -1,0 +1,86 @@
+{
+  "state": "NE",
+  "utility_count": 4,
+  "avg_residential_rate": 0.089,
+  "eia_state_avg_rate": 0.1171,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "NEM",
+    "export_rate": null
+  },
+  "utilities": [
+    {
+      "utility_id": "14127",
+      "utility_name": "Omaha Public Power District",
+      "state": "NE",
+      "states_served": [
+        "NE"
+      ],
+      "type": "muni",
+      "customer_count": 390000,
+      "residential_avg_rate": 0.0998,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "13337",
+      "utility_name": "Nebraska Public Power District",
+      "state": "NE",
+      "states_served": [
+        "NE"
+      ],
+      "type": "muni",
+      "customer_count": 250000,
+      "residential_avg_rate": 0.1011,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "11018",
+      "utility_name": "Lincoln Electric System",
+      "state": "NE",
+      "states_served": [
+        "NE"
+      ],
+      "type": "IOU",
+      "customer_count": 140000,
+      "residential_avg_rate": 0.0622,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "12341",
+      "utility_name": "MidAmerican Energy Co (Illinois)",
+      "state": "NE",
+      "states_served": [
+        "NE"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.093,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:12:47.266862"
+}

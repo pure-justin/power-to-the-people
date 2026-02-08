@@ -1,0 +1,70 @@
+{
+  "state": "CO",
+  "state_name": "Colorado",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 4,
+  "incentives": [
+    {
+      "id": "CO_property_tax_exempt",
+      "state": "CO",
+      "incentive_type": "property_tax_exempt",
+      "name": "Colorado Residential Renewable Energy Property Tax Exemption",
+      "description": "Solar energy systems are exempt from property tax assessment",
+      "value": "100% of added solar value exempt",
+      "value_type": "percentage",
+      "eligibility": "residential",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Colorado Department of Revenue",
+      "source_url": "https://www.solarreviews.com/solar-incentives/colorado",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "CO_sales_tax_exempt",
+      "state": "CO",
+      "incentive_type": "sales_tax_exempt",
+      "name": "Colorado Sales Tax Exemption for Solar",
+      "description": "Solar energy equipment is exempt from state sales tax",
+      "value": "State sales tax exemption",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Colorado Department of Revenue",
+      "source_url": "https://www.solarreviews.com/solar-incentives",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "CO_net_metering",
+      "state": "CO",
+      "incentive_type": "net_metering",
+      "name": "Colorado Net Metering",
+      "description": "Required for all utilities and electric cooperatives (except small municipals). 1:1 kWh credit. Annual true-up with reimbursement option or rollover.",
+      "value": "Full retail rate 1:1 kWh credit",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Colorado Public Utilities Commission",
+      "source_url": "https://www.solarreviews.com/solar-incentives/colorado",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "CO_rebate",
+      "state": "CO",
+      "incentive_type": "rebate",
+      "name": "Colorado Solar Performance Payments",
+      "description": "Some utilities offer performance-based payments ranging from $0.005-$0.0375/kWh for solar production",
+      "value": "$0.005-$0.0375/kWh",
+      "value_type": "per_kwh",
+      "eligibility": "both",
+      "status": "varies_by_utility",
+      "expiration_date": null,
+      "administering_body": "Various Colorado utilities",
+      "source_url": "https://worldpopulationreview.com/state-rankings/solar-incentives-by-state",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

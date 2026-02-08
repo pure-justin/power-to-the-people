@@ -51,7 +51,7 @@ service cloud.firestore {
                                    'qualifiedAt', 'closedAt', 'score', 'scoreBreakdown']);
     }
 
-    // PROJECTS COLLECTION (Legacy - keep for backward compatibility)
+    // PROJECTS COLLECTION
     match /projects/{projectId} {
       // Anyone authenticated can create
       allow create: if isSignedIn();
@@ -61,6 +61,14 @@ service cloud.firestore {
 
       // Admins can read/write all
       allow read, write: if isAdmin();
+
+      // Tasks subcollection
+      match /tasks/{taskId} {
+        allow read: if isSignedIn();
+        allow create: if isAdminOrInstaller();
+        allow update: if isAdminOrInstaller();
+        allow delete: if isAdmin();
+      }
     }
 
     // ADDRESS CACHE COLLECTION
@@ -291,6 +299,44 @@ service cloud.firestore {
                     resource.data.customerEmail == request.auth.token.email;
 
       // No direct client writes - Cloud Functions only
+    }
+
+    // MARKETPLACE LISTINGS
+    match /marketplace_listings/{listingId} {
+      allow read: if isSignedIn();
+      allow create: if isAdminOrInstaller();
+      allow update: if isAdminOrInstaller();
+      allow delete: if isAdmin();
+    }
+
+    // MARKETPLACE BIDS
+    match /marketplace_bids/{bidId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn();
+      allow update: if isSignedIn() && (resource.data.bidder.userId == request.auth.uid || isAdmin());
+      allow delete: if isAdmin();
+    }
+
+    // WORKERS (marketplace profiles)
+    match /workers/{workerId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn();
+      allow update: if isSignedIn() && (resource.data.user_id == request.auth.uid || isAdmin());
+      allow delete: if isAdmin();
+    }
+
+    // MARKETPLACE SERVICES (service type catalog)
+    match /marketplace_services/{serviceId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // MARKETPLACE RATINGS
+    match /marketplace_ratings/{ratingId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn();
+      allow update: if false;
+      allow delete: if isAdmin();
     }
 
     // Default deny all other collections

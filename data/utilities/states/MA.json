@@ -1,0 +1,212 @@
+{
+  "state": "MA",
+  "utility_count": 11,
+  "avg_residential_rate": 0.248,
+  "eia_state_avg_rate": 0.2837,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "NEM",
+    "export_rate": null
+  },
+  "utilities": [
+    {
+      "utility_id": "-7767094133756347982",
+      "utility_name": "Eversource Energy",
+      "state": "MA",
+      "states_served": [
+        "MA"
+      ],
+      "type": "IOU",
+      "customer_count": 1500000,
+      "residential_avg_rate": 0.2837,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "5034899566419933911",
+      "utility_name": "National Grid",
+      "state": "MA",
+      "states_served": [
+        "MA"
+      ],
+      "type": "IOU",
+      "customer_count": 1300000,
+      "residential_avg_rate": 0.2837,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "24590",
+      "utility_name": "Unitil Energy Systems",
+      "state": "MA",
+      "states_served": [
+        "MA"
+      ],
+      "type": "IOU",
+      "customer_count": 110000,
+      "residential_avg_rate": 0.1305,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "11804",
+      "utility_name": "Massachusetts Electric Co",
+      "state": "MA",
+      "states_served": [
+        "MA"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.4335,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "54913",
+      "utility_name": "NSTAR Electric Company",
+      "state": "MA",
+      "states_served": [
+        "MA"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2522,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "4176",
+      "utility_name": "Connecticut Light & Power Co",
+      "state": "MA",
+      "states_served": [
+        "MA"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2921,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "15472",
+      "utility_name": "Public Service Co of NH",
+      "state": "MA",
+      "states_served": [
+        "MA"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2239,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "13214",
+      "utility_name": "The Narragansett Electric Co",
+      "state": "MA",
+      "states_served": [
+        "MA"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2414,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "7601",
+      "utility_name": "Green Mountain Power Corp",
+      "state": "MA",
+      "states_served": [
+        "MA"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2257,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "19791",
+      "utility_name": "Vermont Electric Cooperative, Inc.",
+      "state": "MA",
+      "states_served": [
+        "MA"
+      ],
+      "type": "coop",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1457,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "19497",
+      "utility_name": "United Illuminating Co",
+      "state": "MA",
+      "states_served": [
+        "MA"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2155,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:11:52.667242"
+}

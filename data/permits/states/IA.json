@@ -1,0 +1,34 @@
+{
+  "state": "IA",
+  "state_name": "Iowa",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "electrical",
+    "typical_fee_range": "$100-$300",
+    "typical_timeline_days": "5-14",
+    "inspection_required": true,
+    "inspection_stages": ["final"],
+    "statewide_permit_program": false,
+    "statewide_program_name": null
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": true,
+    "net_metering_details": "Iowa requires net metering from investor-owned utilities for systems up to 500 kW. Credits at avoided cost rate for excess generation. MidAmerican Energy and Alliant Energy (Interstate Power and Light) are the major utilities. Municipal utilities and co-ops have varying policies.",
+    "typical_timeline_days": "15-30",
+    "fees": "Minimal for residential systems; varies by utility"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "Iowa has a solar easement statute. No comprehensive HOA restriction law, but solar easements provide some protection.",
+    "historic_districts": "Historic districts handled by local preservation commissions. State Historical Society of Iowa consulted for National Register properties.",
+    "wind_load_requirements": "Standard IBC wind load requirements. Western Iowa and open prairie areas may have enhanced wind considerations. Design wind speeds typically 90-115 mph.",
+    "snow_load_requirements": "Moderate to significant snow loads (20-40 psf ground snow load). Northern Iowa has higher requirements."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "No dedicated state solar license. Licensed electrician required for electrical work. Some jurisdictions adopted SolarAPP+ for automated permitting.",
+    "nabcep_required": false
+  },
+  "notes": "Iowa has a strong wind energy sector but growing solar market. The state offers property tax exemption for solar equipment (5 years) and sales tax exemption. Net metering at avoided cost rate is less favorable than retail rate states. MidAmerican Energy is the largest utility and is a Berkshire Hathaway company. Some Iowa jurisdictions have adopted SolarAPP+ for automated permitting. Rural areas may have less stringent permitting requirements."
+}

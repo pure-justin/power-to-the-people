@@ -1,0 +1,622 @@
+{
+  "metadata": {
+    "title": "National Energy Community Database",
+    "description": "Energy Community designations across the US qualifying for 10% ITC bonus under the Inflation Reduction Act",
+    "source_documents": [
+      "IRS Notice 2025-31 (June 23, 2025)",
+      "IRS Notice 2024-48",
+      "IRS Notice 2023-29 Appendix C",
+      "IRS Notice 2023-47 Appendix 3",
+      "Treasury Energy Communities Data Page"
+    ],
+    "effective_date": "2025-06-23",
+    "next_update_expected": "2026-05",
+    "bonus_percentage": 10,
+    "applies_to": "ITC (Section 48/48E) and PTC (Section 45/45Y) for commercial/TPO projects",
+    "note": "Residential ITC ended 2025-12-31. Energy community bonus only applies to commercial/TPO installations.",
+    "data_compiled": "2026-02-08",
+    "categories": {
+      "statistical_area": "MSA/non-MSA with >= 0.17% fossil fuel employment AND unemployment >= national average",
+      "coal_closure": "Census tracts with coal mine closure (post-1999) or coal plant retirement (post-2009), plus adjacent tracts",
+      "brownfield": "Sites on or adjacent to EPA brownfield sites (determined on project-by-project basis)"
+    },
+    "vintage_system": "Notice 2025-31 uses two vintages: Vintage 1 (2010 Census) and Vintage 2 (2020 Census). A county qualifies if either vintage meets criteria."
+  },
+  "statistical_area_communities": [
+    {
+      "state": "AL",
+      "state_name": "Alabama",
+      "counties": [
+        {"county": "Bibb County", "msa_name": "Birmingham-Hoover, AL MSA", "category": "statistical_area", "qualifying_criteria": "Fossil fuel employment >= 0.17% and unemployment >= national average", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Walker County", "msa_name": "Birmingham-Hoover, AL MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Tuscaloosa County", "msa_name": "Tuscaloosa, AL MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining and processing employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Fayette County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment above threshold", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Jefferson County", "msa_name": "Birmingham-Hoover, AL MSA", "category": "statistical_area", "qualifying_criteria": "Fossil fuel processing and transport", "source": "IRS Notice 2025-31 Appendix 3"}
+      ]
+    },
+    {
+      "state": "AK",
+      "state_name": "Alaska",
+      "counties": [
+        {"county": "North Slope Borough", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Oil and gas extraction employment significantly above threshold", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Kenai Peninsula Borough", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Oil and gas extraction and processing", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Matanuska-Susitna Borough", "msa_name": "Anchorage, AK MSA", "category": "statistical_area", "qualifying_criteria": "Oil and gas support services", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Fairbanks North Star Borough", "msa_name": "Fairbanks, AK MSA", "category": "statistical_area", "qualifying_criteria": "Oil pipeline transport employment", "source": "IRS Notice 2025-31 Appendix 3"}
+      ]
+    },
+    {
+      "state": "AR",
+      "state_name": "Arkansas",
+      "counties": [
+        {"county": "Columbia County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Oil and gas extraction employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Union County", "msa_name": "El Dorado, AR MSA", "category": "statistical_area", "qualifying_criteria": "Oil refining and extraction employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Sebastian County", "msa_name": "Fort Smith, AR-OK MSA", "category": "statistical_area", "qualifying_criteria": "Natural gas extraction", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Logan County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Natural gas and coal employment", "source": "IRS Notice 2025-31 Appendix 3"}
+      ]
+    },
+    {
+      "state": "CA",
+      "state_name": "California",
+      "counties": [
+        {"county": "Kern County", "msa_name": "Bakersfield, CA MSA", "category": "statistical_area", "qualifying_criteria": "Major oil extraction region, employment well above 0.17% threshold", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Kings County", "msa_name": "Hanford-Corcoran, CA MSA", "category": "statistical_area", "qualifying_criteria": "Oil extraction employment", "source": "IRS Notice 2025-31 Appendix 3"}
+      ]
+    },
+    {
+      "state": "CO",
+      "state_name": "Colorado",
+      "counties": [
+        {"county": "Weld County", "msa_name": "Greeley, CO MSA", "category": "statistical_area", "qualifying_criteria": "Major oil and gas extraction - DJ Basin", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Garfield County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Natural gas extraction employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Rio Blanco County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Oil and gas extraction", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Mesa County", "msa_name": "Grand Junction, CO MSA", "category": "statistical_area", "qualifying_criteria": "Natural gas and oil extraction", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "La Plata County", "msa_name": "Durango, CO MSA", "category": "statistical_area", "qualifying_criteria": "Natural gas extraction", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Moffat County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"}
+      ]
+    },
+    {
+      "state": "IL",
+      "state_name": "Illinois",
+      "counties": [
+        {"county": "Franklin County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Williamson County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Saline County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Perry County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Gallatin County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"}
+      ]
+    },
+    {
+      "state": "IN",
+      "state_name": "Indiana",
+      "counties": [
+        {"county": "Gibson County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Pike County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Sullivan County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Warrick County", "msa_name": "Evansville, IN-KY MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining and processing", "source": "IRS Notice 2025-31 Appendix 3"}
+      ]
+    },
+    {
+      "state": "KS",
+      "state_name": "Kansas",
+      "counties": [
+        {"county": "Barton County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Oil extraction employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Ellis County", "msa_name": "Hays, KS MSA", "category": "statistical_area", "qualifying_criteria": "Oil and gas extraction", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Russell County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Oil extraction employment", "source": "IRS Notice 2025-31 Appendix 3"}
+      ]
+    },
+    {
+      "state": "KY",
+      "state_name": "Kentucky",
+      "counties": [
+        {"county": "Pike County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment - major Appalachian coal region", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Perry County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Harlan County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Floyd County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Knott County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Letcher County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Martin County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Leslie County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Hopkins County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining - western KY coalfield", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Muhlenberg County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Webster County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Union County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"}
+      ]
+    },
+    {
+      "state": "LA",
+      "state_name": "Louisiana",
+      "counties": [
+        {"county": "Lafourche Parish", "msa_name": "Houma-Thibodaux, LA MSA", "category": "statistical_area", "qualifying_criteria": "Oil and gas extraction and offshore support", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Terrebonne Parish", "msa_name": "Houma-Thibodaux, LA MSA", "category": "statistical_area", "qualifying_criteria": "Oil and gas extraction and offshore support", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Iberia Parish", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Oil and gas extraction", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Lafayette Parish", "msa_name": "Lafayette, LA MSA", "category": "statistical_area", "qualifying_criteria": "Oil and gas services employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Vermilion Parish", "msa_name": "Lafayette, LA MSA", "category": "statistical_area", "qualifying_criteria": "Oil and gas extraction", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Calcasieu Parish", "msa_name": "Lake Charles, LA MSA", "category": "statistical_area", "qualifying_criteria": "Oil refining and petrochemical", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "St. Mary Parish", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Offshore oil and gas services", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Plaquemines Parish", "msa_name": "New Orleans-Metairie, LA MSA", "category": "statistical_area", "qualifying_criteria": "Oil and gas extraction and transport", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Caddo Parish", "msa_name": "Shreveport-Bossier City, LA MSA", "category": "statistical_area", "qualifying_criteria": "Natural gas extraction - Haynesville Shale", "source": "IRS Notice 2025-31 Appendix 3"}
+      ]
+    },
+    {
+      "state": "MT",
+      "state_name": "Montana",
+      "counties": [
+        {"county": "Richland County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Oil extraction - Bakken formation", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Fallon County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Oil extraction - Bakken formation", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Rosebud County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Big Horn County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"}
+      ]
+    },
+    {
+      "state": "ND",
+      "state_name": "North Dakota",
+      "counties": [
+        {"county": "Williams County", "msa_name": "Williston, ND MSA", "category": "statistical_area", "qualifying_criteria": "Oil extraction - Bakken formation, major producing county", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "McKenzie County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Oil extraction - Bakken formation, highest producing county in state", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Mountrail County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Oil extraction - Bakken formation", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Dunn County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Oil extraction - Bakken formation", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Stark County", "msa_name": "Dickinson, ND MSA", "category": "statistical_area", "qualifying_criteria": "Oil and gas support services", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Mercer County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining - lignite production", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "McLean County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining - lignite production", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Oliver County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"}
+      ]
+    },
+    {
+      "state": "NM",
+      "state_name": "New Mexico",
+      "counties": [
+        {"county": "Lea County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Oil and gas extraction - Permian Basin", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Eddy County", "msa_name": "Carlsbad-Artesia, NM MSA", "category": "statistical_area", "qualifying_criteria": "Oil and gas extraction - Permian Basin", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "San Juan County", "msa_name": "Farmington, NM MSA", "category": "statistical_area", "qualifying_criteria": "Oil, gas, and coal extraction - San Juan Basin", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Rio Arriba County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Natural gas extraction", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Chaves County", "msa_name": "Roswell, NM MSA", "category": "statistical_area", "qualifying_criteria": "Oil extraction support", "source": "IRS Notice 2025-31 Appendix 3"}
+      ]
+    },
+    {
+      "state": "OH",
+      "state_name": "Ohio",
+      "counties": [
+        {"county": "Belmont County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining and natural gas extraction", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Harrison County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining and natural gas - Utica Shale", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Monroe County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Natural gas extraction - Utica Shale", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Noble County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Oil and gas extraction", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Guernsey County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining and natural gas", "source": "IRS Notice 2025-31 Appendix 3"}
+      ]
+    },
+    {
+      "state": "OK",
+      "state_name": "Oklahoma",
+      "counties": [
+        {"county": "Canadian County", "msa_name": "Oklahoma City, OK MSA", "category": "statistical_area", "qualifying_criteria": "Oil and gas extraction - SCOOP/STACK plays", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Garvin County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Oil and gas extraction", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Grady County", "msa_name": "Oklahoma City, OK MSA", "category": "statistical_area", "qualifying_criteria": "Oil and gas extraction - SCOOP play", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Stephens County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Oil refining and extraction", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Carter County", "msa_name": "Ardmore, OK MSA", "category": "statistical_area", "qualifying_criteria": "Oil refining and extraction", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Pittsburg County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Le Flore County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Woodward County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Natural gas extraction", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Major County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Oil and gas extraction", "source": "IRS Notice 2025-31 Appendix 3"}
+      ]
+    },
+    {
+      "state": "PA",
+      "state_name": "Pennsylvania",
+      "counties": [
+        {"county": "Washington County", "msa_name": "Pittsburgh, PA MSA", "category": "statistical_area", "qualifying_criteria": "Natural gas extraction - Marcellus Shale and coal mining", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Greene County", "msa_name": "Pittsburgh, PA MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining and natural gas extraction", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Tioga County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Natural gas extraction - Marcellus Shale", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Bradford County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Natural gas extraction - Marcellus Shale", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Susquehanna County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Natural gas extraction - Marcellus Shale", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Lycoming County", "msa_name": "Williamsport, PA MSA", "category": "statistical_area", "qualifying_criteria": "Natural gas extraction - Marcellus Shale", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Cambria County", "msa_name": "Johnstown, PA MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Somerset County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"}
+      ]
+    },
+    {
+      "state": "TX",
+      "state_name": "Texas",
+      "counties": [
+        {"county": "Midland County", "msa_name": "Midland, TX MSA", "category": "statistical_area", "qualifying_criteria": "Major oil and gas extraction - Permian Basin", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Ector County", "msa_name": "Odessa, TX MSA", "category": "statistical_area", "qualifying_criteria": "Oil and gas extraction - Permian Basin", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Martin County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Oil extraction - Permian Basin", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Howard County", "msa_name": "Big Spring, TX MSA", "category": "statistical_area", "qualifying_criteria": "Oil extraction - Permian Basin", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Reeves County", "msa_name": "Pecos, TX MSA", "category": "statistical_area", "qualifying_criteria": "Oil extraction - Delaware Basin/Permian", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Loving County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Oil and gas extraction - Permian Basin", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Andrews County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Oil extraction - Permian Basin", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Upton County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Oil extraction - Permian Basin", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Reagan County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Oil extraction - Permian Basin", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Webb County", "msa_name": "Laredo, TX MSA", "category": "statistical_area", "qualifying_criteria": "Oil and gas extraction - Eagle Ford Shale", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Karnes County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Oil extraction - Eagle Ford Shale", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "DeWitt County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Oil extraction - Eagle Ford Shale", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "La Salle County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Oil and gas extraction - Eagle Ford", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Panola County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Natural gas extraction - Haynesville Shale", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Jefferson County", "msa_name": "Beaumont-Port Arthur, TX MSA", "category": "statistical_area", "qualifying_criteria": "Oil refining and petrochemical", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Orange County", "msa_name": "Beaumont-Port Arthur, TX MSA", "category": "statistical_area", "qualifying_criteria": "Oil refining and petrochemical", "source": "IRS Notice 2025-31 Appendix 3"}
+      ]
+    },
+    {
+      "state": "UT",
+      "state_name": "Utah",
+      "counties": [
+        {"county": "Duchesne County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Oil and gas extraction - Uintah Basin", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Uintah County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Oil and gas extraction - Uintah Basin", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Carbon County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Emery County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"}
+      ]
+    },
+    {
+      "state": "VA",
+      "state_name": "Virginia",
+      "counties": [
+        {"county": "Buchanan County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment - Appalachian region", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Dickenson County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Wise County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Lee County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Russell County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining and natural gas", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Tazewell County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"}
+      ]
+    },
+    {
+      "state": "WV",
+      "state_name": "West Virginia",
+      "counties": [
+        {"county": "Boone County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment - major producing county", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Logan County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Mingo County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "McDowell County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Wyoming County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Raleigh County", "msa_name": "Beckley, WV MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Fayette County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Nicholas County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Kanawha County", "msa_name": "Charleston, WV MSA", "category": "statistical_area", "qualifying_criteria": "Coal and natural gas, chemical manufacturing", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Marion County", "msa_name": "Fairmont, WV MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining and natural gas", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Monongalia County", "msa_name": "Morgantown, WV MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining employment", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Marshall County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Natural gas extraction - Marcellus Shale", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Wetzel County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Natural gas extraction", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Doddridge County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Natural gas extraction - Marcellus Shale", "source": "IRS Notice 2025-31 Appendix 3"}
+      ]
+    },
+    {
+      "state": "WY",
+      "state_name": "Wyoming",
+      "counties": [
+        {"county": "Campbell County", "msa_name": "Gillette, WY MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining - Powder River Basin, largest US coal producing county", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Converse County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Oil and gas extraction and coal mining", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Natrona County", "msa_name": "Casper, WY MSA", "category": "statistical_area", "qualifying_criteria": "Oil and gas extraction and refining", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Sweetwater County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining and natural gas extraction", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Sublette County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Natural gas extraction", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Lincoln County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Coal mining and natural gas", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Fremont County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Oil and gas extraction", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Park County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Oil and gas extraction", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Uinta County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Oil and gas extraction", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Hot Springs County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Oil extraction", "source": "IRS Notice 2025-31 Appendix 3"}
+      ]
+    },
+    {
+      "state": "MS",
+      "state_name": "Mississippi",
+      "counties": [
+        {"county": "Adams County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Oil and gas extraction", "source": "IRS Notice 2025-31 Appendix 3"},
+        {"county": "Jones County", "msa_name": "Laurel, MS MSA", "category": "statistical_area", "qualifying_criteria": "Oil and gas extraction", "source": "IRS Notice 2025-31 Appendix 3"}
+      ]
+    },
+    {
+      "state": "NE",
+      "state_name": "Nebraska",
+      "counties": [
+        {"county": "Kimball County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Oil extraction", "source": "IRS Notice 2025-31 Appendix 3"}
+      ]
+    },
+    {
+      "state": "SD",
+      "state_name": "South Dakota",
+      "counties": [
+        {"county": "Harding County", "msa_name": "Non-MSA", "category": "statistical_area", "qualifying_criteria": "Oil extraction", "source": "IRS Notice 2025-31 Appendix 3"}
+      ]
+    }
+  ],
+  "coal_closure_communities": {
+    "description": "Census tracts with coal mine closures (post-1999) or coal plant retirements (post-2009), plus directly adjacent tracts. Coal closure communities exist in 45 states and DC - everywhere except AK, ID, ME, NH, and VT.",
+    "source_documents": [
+      "IRS Notice 2023-29 Appendix C (original list)",
+      "IRS Notice 2023-47 Appendix 3 (updates)",
+      "IRS Notice 2024-48 Appendix 2 (updates)",
+      "IRS Notice 2025-31 Appendix 4 (newly identified tracts)",
+      "IRS Notice 2025-31 Appendix 5 (location corrections, retroactive to 2023)"
+    ],
+    "states_with_coal_closure_communities": [
+      {
+        "state": "AL", "state_name": "Alabama",
+        "description": "Coal mine closures in Walker, Jefferson, Tuscaloosa, Fayette, and Bibb counties. Coal plant retirements including multiple Alabama Power facilities.",
+        "estimated_tracts": 150
+      },
+      {
+        "state": "AZ", "state_name": "Arizona",
+        "description": "Navajo Generating Station closure (2019) in Coconino County. Cholla Power Plant units retired in Navajo County.",
+        "estimated_tracts": 25
+      },
+      {
+        "state": "AR", "state_name": "Arkansas",
+        "description": "Coal plant retirements by Entergy and SWEPCO. Mine closures in Sebastian and Johnson counties.",
+        "estimated_tracts": 30
+      },
+      {
+        "state": "CA", "state_name": "California",
+        "description": "Limited coal closure tracts. Some power plant conversions from coal.",
+        "estimated_tracts": 10
+      },
+      {
+        "state": "CO", "state_name": "Colorado",
+        "description": "Multiple coal mine closures in Routt, Gunnison, and Delta counties. Coal plant retirements including Comanche Station units.",
+        "estimated_tracts": 80
+      },
+      {
+        "state": "CT", "state_name": "Connecticut",
+        "description": "Coal plant retirements - Bridgeport Harbor Station.",
+        "estimated_tracts": 15
+      },
+      {
+        "state": "DE", "state_name": "Delaware",
+        "description": "Indian River Power Plant coal unit retirements.",
+        "estimated_tracts": 10
+      },
+      {
+        "state": "FL", "state_name": "Florida",
+        "description": "Multiple coal plant retirements including Crystal River, Cedar Bay, Indiantown.",
+        "estimated_tracts": 40
+      },
+      {
+        "state": "GA", "state_name": "Georgia",
+        "description": "Multiple Georgia Power coal plant retirements including Plant Branch, Hammond, Yates, and Wansley.",
+        "estimated_tracts": 60
+      },
+      {
+        "state": "HI", "state_name": "Hawaii",
+        "description": "AES Hawaii coal plant closure in Campbell Industrial Park, Oahu.",
+        "estimated_tracts": 5
+      },
+      {
+        "state": "IL", "state_name": "Illinois",
+        "description": "Extensive coal mine closures across southern Illinois. Multiple coal plant retirements. Major producing state.",
+        "estimated_tracts": 200
+      },
+      {
+        "state": "IN", "state_name": "Indiana",
+        "description": "Coal mine closures in southwest Indiana. Multiple coal plant retirements by Duke Energy, AES, and IPL.",
+        "estimated_tracts": 120
+      },
+      {
+        "state": "IA", "state_name": "Iowa",
+        "description": "Coal plant retirements by MidAmerican Energy and Alliant Energy.",
+        "estimated_tracts": 40
+      },
+      {
+        "state": "KS", "state_name": "Kansas",
+        "description": "Coal plant retirements including Tecumseh Energy Center and Lawrence Energy Center.",
+        "estimated_tracts": 25
+      },
+      {
+        "state": "KY", "state_name": "Kentucky",
+        "description": "Extensive coal mine closures across eastern and western Kentucky - major coal state. Multiple coal plant retirements. 24% of state population in coal closure communities.",
+        "estimated_tracts": 300
+      },
+      {
+        "state": "LA", "state_name": "Louisiana",
+        "description": "Coal plant retirements including Dolet Hills and Big Cajun II units.",
+        "estimated_tracts": 20
+      },
+      {
+        "state": "MD", "state_name": "Maryland",
+        "description": "Coal mine closures in Allegany and Garrett counties. Coal plant retirements at C.P. Crane and other facilities.",
+        "estimated_tracts": 40
+      },
+      {
+        "state": "MA", "state_name": "Massachusetts",
+        "description": "Coal plant retirements including Brayton Point and Salem Harbor.",
+        "estimated_tracts": 30
+      },
+      {
+        "state": "MI", "state_name": "Michigan",
+        "description": "Multiple coal plant retirements by DTE Energy and Consumers Energy.",
+        "estimated_tracts": 50
+      },
+      {
+        "state": "MN", "state_name": "Minnesota",
+        "description": "Coal plant retirements by Xcel Energy and Minnesota Power.",
+        "estimated_tracts": 35
+      },
+      {
+        "state": "MS", "state_name": "Mississippi",
+        "description": "Coal mine closures. Over 50% of population in energy communities.",
+        "estimated_tracts": 80
+      },
+      {
+        "state": "MO", "state_name": "Missouri",
+        "description": "Coal plant retirements by Ameren Missouri and Empire District Electric.",
+        "estimated_tracts": 45
+      },
+      {
+        "state": "MT", "state_name": "Montana",
+        "description": "Coal mine closures in Rosebud and Big Horn counties. Colstrip Power Plant partial retirement.",
+        "estimated_tracts": 40
+      },
+      {
+        "state": "NE", "state_name": "Nebraska",
+        "description": "Coal plant retirements by OPPD and NPPD.",
+        "estimated_tracts": 20
+      },
+      {
+        "state": "NV", "state_name": "Nevada",
+        "description": "Reid Gardner Generating Station retirement. North Valmy units.",
+        "estimated_tracts": 15
+      },
+      {
+        "state": "NJ", "state_name": "New Jersey",
+        "description": "Coal plant retirements including B.L. England and other facilities.",
+        "estimated_tracts": 20
+      },
+      {
+        "state": "NM", "state_name": "New Mexico",
+        "description": "San Juan Generating Station closure (2022). Coal mine closures in San Juan and McKinley counties.",
+        "estimated_tracts": 35
+      },
+      {
+        "state": "NY", "state_name": "New York",
+        "description": "Coal plant retirements including multiple upstate facilities. Dunkirk, Somerset, Cayuga.",
+        "estimated_tracts": 40
+      },
+      {
+        "state": "NC", "state_name": "North Carolina",
+        "description": "Duke Energy coal plant retirements including Riverbend, Dan River, and Buck facilities.",
+        "estimated_tracts": 50
+      },
+      {
+        "state": "ND", "state_name": "North Dakota",
+        "description": "Coal mine closures in lignite region. Some plant retirements.",
+        "estimated_tracts": 30
+      },
+      {
+        "state": "OH", "state_name": "Ohio",
+        "description": "Extensive coal mine closures in southeast Ohio. Multiple coal plant retirements by AEP, FirstEnergy, Duke.",
+        "estimated_tracts": 150
+      },
+      {
+        "state": "OK", "state_name": "Oklahoma",
+        "description": "Coal mine closures in Le Flore and Pittsburg counties. Coal plant retirements.",
+        "estimated_tracts": 25
+      },
+      {
+        "state": "OR", "state_name": "Oregon",
+        "description": "Boardman Coal Plant closure (2020).",
+        "estimated_tracts": 10
+      },
+      {
+        "state": "PA", "state_name": "Pennsylvania",
+        "description": "Extensive coal mine closures across anthracite and bituminous regions. Multiple coal plant retirements. Largest population (2.3M) in coal closure communities. 18% of state population.",
+        "estimated_tracts": 350
+      },
+      {
+        "state": "RI", "state_name": "Rhode Island",
+        "description": "Limited coal closure tracts from historical coal use.",
+        "estimated_tracts": 5
+      },
+      {
+        "state": "SC", "state_name": "South Carolina",
+        "description": "Coal plant retirements by Duke Energy and Santee Cooper.",
+        "estimated_tracts": 30
+      },
+      {
+        "state": "SD", "state_name": "South Dakota",
+        "description": "Limited coal closure tracts.",
+        "estimated_tracts": 5
+      },
+      {
+        "state": "TN", "state_name": "Tennessee",
+        "description": "TVA coal plant retirements including Bull Run, Paradise, and John Sevier. Coal mine closures in Campbell and Claiborne counties.",
+        "estimated_tracts": 70
+      },
+      {
+        "state": "TX", "state_name": "Texas",
+        "description": "Multiple coal plant retirements including Big Brown, Sandow, Monticello. Lignite mine closures.",
+        "estimated_tracts": 60
+      },
+      {
+        "state": "UT", "state_name": "Utah",
+        "description": "Coal mine closures in Carbon and Emery counties. Carbon Power Plant retirement.",
+        "estimated_tracts": 30
+      },
+      {
+        "state": "VA", "state_name": "Virginia",
+        "description": "Coal mine closures in southwest Virginia Appalachian region. Dominion Energy coal plant retirements.",
+        "estimated_tracts": 100
+      },
+      {
+        "state": "WA", "state_name": "Washington",
+        "description": "Centralia Coal Plant (TransAlta) scheduled phaseout. Centralia mine closure.",
+        "estimated_tracts": 15
+      },
+      {
+        "state": "DC", "state_name": "District of Columbia",
+        "description": "Adjacent to coal closure tracts in Maryland/Virginia.",
+        "estimated_tracts": 5
+      },
+      {
+        "state": "WI", "state_name": "Wisconsin",
+        "description": "Coal plant retirements by We Energies and WPS. Pleasant Prairie retirement.",
+        "estimated_tracts": 35
+      },
+      {
+        "state": "WV", "state_name": "West Virginia",
+        "description": "Extensive coal mine closures statewide - highest share of population (59%, 1.1M) in coal closure communities. Multiple coal plant retirements.",
+        "estimated_tracts": 400
+      },
+      {
+        "state": "WY", "state_name": "Wyoming",
+        "description": "Coal mine closures in Powder River Basin. Coal plant retirements. 30% of state population in energy communities.",
+        "estimated_tracts": 50
+      }
+    ],
+    "states_without_coal_closure": ["AK", "ID", "ME", "NH", "VT"]
+  },
+  "brownfield_communities": {
+    "description": "Brownfield energy communities are determined on a project-by-project basis. A facility qualifies if it is located on a brownfield site as defined in certain subparagraphs of the Comprehensive Environmental Response, Compensation, and Liability Act (CERCLA). This includes sites that have been assessed through various EPA brownfield programs.",
+    "determination_method": "project_specific",
+    "note": "Unlike statistical area and coal closure categories, brownfield qualification is not pre-determined by county or census tract. Projects must demonstrate they are located on qualifying brownfield sites.",
+    "epa_resource": "https://www.epa.gov/brownfields",
+    "states_with_significant_brownfield_sites": "All 50 states and territories have EPA brownfield sites"
+  },
+  "summary_statistics": {
+    "total_states_with_statistical_area": 24,
+    "total_states_with_coal_closure": 45,
+    "total_states_with_brownfield": 50,
+    "states_with_most_coverage": [
+      {"state": "WV", "description": "59% of population in energy communities - highest in nation"},
+      {"state": "WY", "description": "30% of population in energy communities"},
+      {"state": "KY", "description": "24% of population in energy communities"},
+      {"state": "PA", "description": "18% of population, largest absolute number (2.3M) in coal closure communities"},
+      {"state": "MS", "description": "Over 50% of population in energy communities"},
+      {"state": "LA", "description": "Over 50% of population in energy communities"},
+      {"state": "AK", "description": "Over 50% of population in energy communities"}
+    ],
+    "key_fossil_fuel_regions": [
+      {"region": "Permian Basin", "states": ["TX", "NM"], "fuel_type": "oil_and_gas"},
+      {"region": "Bakken Formation", "states": ["ND", "MT"], "fuel_type": "oil"},
+      {"region": "Marcellus/Utica Shale", "states": ["PA", "WV", "OH"], "fuel_type": "natural_gas"},
+      {"region": "Appalachian Coal", "states": ["WV", "KY", "VA", "PA", "OH"], "fuel_type": "coal"},
+      {"region": "Powder River Basin", "states": ["WY", "MT"], "fuel_type": "coal"},
+      {"region": "Illinois Basin", "states": ["IL", "IN", "KY"], "fuel_type": "coal"},
+      {"region": "Gulf Coast", "states": ["TX", "LA"], "fuel_type": "oil_and_gas"},
+      {"region": "Eagle Ford Shale", "states": ["TX"], "fuel_type": "oil_and_gas"},
+      {"region": "DJ Basin", "states": ["CO"], "fuel_type": "oil_and_gas"},
+      {"region": "Haynesville Shale", "states": ["LA", "TX"], "fuel_type": "natural_gas"},
+      {"region": "SCOOP/STACK", "states": ["OK"], "fuel_type": "oil_and_gas"},
+      {"region": "San Juan Basin", "states": ["NM", "CO"], "fuel_type": "natural_gas_and_coal"},
+      {"region": "Uintah Basin", "states": ["UT"], "fuel_type": "oil_and_gas"}
+    ]
+  },
+  "how_to_verify": {
+    "official_tools": [
+      {
+        "name": "Energy Communities Interagency Map",
+        "url": "https://energycommunities.gov",
+        "description": "Official interactive map tool for determining energy community status by address"
+      },
+      {
+        "name": "IRS Notice 2025-31",
+        "url": "https://www.irs.gov/pub/irs-drop/n-25-31.pdf",
+        "description": "Official IRS notice with complete appendices listing all qualifying areas"
+      },
+      {
+        "name": "Treasury Energy Communities Data",
+        "url": "https://home.treasury.gov/policy-issues/inflation-reduction-act/energy-communities-data",
+        "description": "Treasury data page with downloadable datasets"
+      },
+      {
+        "name": "NETL ArcGIS Portal",
+        "url": "https://arcgis.netl.doe.gov",
+        "description": "DOE National Energy Technology Laboratory GIS data layers"
+      }
+    ],
+    "process": "For any specific project address, use the energycommunities.gov mapping tool to verify status. For programmatic verification, check the county against IRS Notice 2025-31 Appendix 3 (statistical area) and combine Appendices C/3/2/4/5 from Notices 2023-29/2023-47/2024-48/2025-31 for coal closure census tract lookup."
+  }
+}

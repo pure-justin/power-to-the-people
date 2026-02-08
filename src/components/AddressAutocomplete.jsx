@@ -32,10 +32,10 @@ function AddressAutocomplete({
     }
 
     try {
-      // Texas bounding box to bias results
-      const texasBounds = new window.google.maps.LatLngBounds(
-        new window.google.maps.LatLng(25.8371, -106.6456), // SW corner
-        new window.google.maps.LatLng(36.5007, -93.5083), // NE corner
+      // Continental US bounding box
+      const usBounds = new window.google.maps.LatLngBounds(
+        new window.google.maps.LatLng(24.396, -125.0), // SW corner
+        new window.google.maps.LatLng(49.384, -66.934), // NE corner
       );
 
       const options = {
@@ -47,8 +47,8 @@ function AddressAutocomplete({
           "place_id",
         ],
         types: ["address"],
-        bounds: texasBounds,
-        strictBounds: false, // Bias towards TX but don't hard restrict
+        bounds: usBounds,
+        strictBounds: false,
       };
 
       autocompleteRef.current = new window.google.maps.places.Autocomplete(

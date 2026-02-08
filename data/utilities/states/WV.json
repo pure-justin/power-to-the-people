@@ -1,0 +1,176 @@
+{
+  "state": "WV",
+  "utility_count": 9,
+  "avg_residential_rate": 0.1306,
+  "eia_state_avg_rate": 0.1243,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "NEM",
+    "export_rate": null
+  },
+  "utilities": [
+    {
+      "utility_id": "733",
+      "utility_name": "Appalachian Power Co (West Virginia)",
+      "state": "WV",
+      "states_served": [
+        "WV"
+      ],
+      "type": "IOU",
+      "customer_count": 490000,
+      "residential_avg_rate": 0.1411,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "12796",
+      "utility_name": "Monongahela Power Co (West Virginia)",
+      "state": "WV",
+      "states_served": [
+        "WV"
+      ],
+      "type": "IOU",
+      "customer_count": 390000,
+      "residential_avg_rate": 0.1314,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "15263",
+      "utility_name": "The Potomac Edison Co (Maryland)",
+      "state": "WV",
+      "states_served": [
+        "WV"
+      ],
+      "type": "IOU",
+      "customer_count": 125000,
+      "residential_avg_rate": 0.1069,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "22053",
+      "utility_name": "Kentucky Power Co",
+      "state": "WV",
+      "states_served": [
+        "WV"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1316,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "14006",
+      "utility_name": "Ohio Power Co",
+      "state": "WV",
+      "states_served": [
+        "WV"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1185,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "18642",
+      "utility_name": "Tennessee Valley Authority (Mississippi)",
+      "state": "WV",
+      "states_served": [
+        "WV"
+      ],
+      "type": "muni",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1036,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "14711",
+      "utility_name": "Pennsylvania Electric Co (New York)",
+      "state": "WV",
+      "states_served": [
+        "WV"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1029,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "20387",
+      "utility_name": "West Penn Power Co",
+      "state": "WV",
+      "states_served": [
+        "WV"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1151,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "5487",
+      "utility_name": "Duquesne Light Co",
+      "state": "WV",
+      "states_served": [
+        "WV"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2243,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:14:43.020456"
+}

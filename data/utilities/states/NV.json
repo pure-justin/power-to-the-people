@@ -1,0 +1,159 @@
+{
+  "state": "NV",
+  "utility_count": 8,
+  "avg_residential_rate": 0.189,
+  "eia_state_avg_rate": 0.1285,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "net_billing",
+    "export_rate": null,
+    "notes": "Net billing at 75% of retail rate, declining annually. NV Energy serves most of state."
+  },
+  "utilities": [
+    {
+      "utility_id": "5781118374812267904",
+      "utility_name": "NV Energy (Nevada Power)",
+      "state": "NV",
+      "states_served": [
+        "NV"
+      ],
+      "type": "IOU",
+      "customer_count": 1000000,
+      "residential_avg_rate": 0.1285,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "-3951058951141414609",
+      "utility_name": "NV Energy (Sierra Pacific)",
+      "state": "NV",
+      "states_served": [
+        "NV"
+      ],
+      "type": "IOU",
+      "customer_count": 400000,
+      "residential_avg_rate": 0.1285,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "14354",
+      "utility_name": "PacifiCorp (Utah)",
+      "state": "NV",
+      "states_served": [
+        "NV"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1241,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "17609",
+      "utility_name": "Southern California Edison Co",
+      "state": "NV",
+      "states_served": [
+        "NV"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2558,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "13407",
+      "utility_name": "Nevada Power Co",
+      "state": "NV",
+      "states_served": [
+        "NV"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1165,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "14328",
+      "utility_name": "Pacific Gas & Electric Co",
+      "state": "NV",
+      "states_served": [
+        "NV"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.4695,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "16534",
+      "utility_name": "Sacramento Municipal Utility District",
+      "state": "NV",
+      "states_served": [
+        "NV"
+      ],
+      "type": "muni",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1828,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "17166",
+      "utility_name": "Sierra Pacific Power Co (Nevada)",
+      "state": "NV",
+      "states_served": [
+        "NV"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1062,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:13:11.345344"
+}

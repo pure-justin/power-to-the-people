@@ -1,0 +1,158 @@
+{
+  "state": "VA",
+  "utility_count": 8,
+  "avg_residential_rate": 0.1305,
+  "eia_state_avg_rate": 0.1297,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "NEM",
+    "export_rate": null
+  },
+  "utilities": [
+    {
+      "utility_id": "-723417130931893338",
+      "utility_name": "Dominion Energy Virginia",
+      "state": "VA",
+      "states_served": [
+        "VA"
+      ],
+      "type": "IOU",
+      "customer_count": 2700000,
+      "residential_avg_rate": 0.1297,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "733",
+      "utility_name": "Appalachian Power Co (West Virginia)",
+      "state": "VA",
+      "states_served": [
+        "VA"
+      ],
+      "type": "IOU",
+      "customer_count": 530000,
+      "residential_avg_rate": 0.1411,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "40228",
+      "utility_name": "Rappahannock Electric Coop",
+      "state": "VA",
+      "states_served": [
+        "VA"
+      ],
+      "type": "coop",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1561,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "19876",
+      "utility_name": "Virginia Electric & Power Co",
+      "state": "VA",
+      "states_served": [
+        "VA"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1289,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "16101",
+      "utility_name": "Roanoke Electric Member Corp",
+      "state": "VA",
+      "states_served": [
+        "VA"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1486,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "5416",
+      "utility_name": "Progress Energy Carolinas Inc (South Carolina)",
+      "state": "VA",
+      "states_served": [
+        "VA"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1331,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "12796",
+      "utility_name": "Monongahela Power Co (West Virginia)",
+      "state": "VA",
+      "states_served": [
+        "VA"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1314,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "21632",
+      "utility_name": "EnergyUnited Elec Member Corp",
+      "state": "VA",
+      "states_served": [
+        "VA"
+      ],
+      "type": "coop",
+      "customer_count": 0,
+      "residential_avg_rate": 0.0748,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:14:21.094278"
+}

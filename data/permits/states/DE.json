@@ -1,0 +1,34 @@
+{
+  "state": "DE",
+  "state_name": "Delaware",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "both",
+    "typical_fee_range": "$100-$400",
+    "typical_timeline_days": "7-21",
+    "inspection_required": true,
+    "inspection_stages": ["final"],
+    "statewide_permit_program": false,
+    "statewide_program_name": null
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": true,
+    "net_metering_details": "Delaware has net metering for systems up to 25 kW residential and 2 MW commercial. Credits at retail rate. Excess credits roll over monthly and are reconciled annually at avoided cost.",
+    "typical_timeline_days": "15-30",
+    "fees": "Minimal for residential systems; Delmarva Power handles most interconnections"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "Delaware has a solar access law. HOAs cannot prohibit solar installations but may require reasonable aesthetic modifications.",
+    "historic_districts": "Historic districts in Wilmington, New Castle, and Dover may require additional review. State Historic Preservation Office consulted for National Register properties.",
+    "wind_load_requirements": "Coastal areas along Delaware Bay and Atlantic Ocean have enhanced wind requirements. Design wind speeds 110-140 mph in coastal zones.",
+    "snow_load_requirements": "Moderate snow loads (15-25 psf ground snow load). Standard structural review applies."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "Electrician license required for PV work. NABCEP certification required to qualify for state rebates.",
+    "nabcep_required": true
+  },
+  "notes": "Delaware offers SREC (Solar Renewable Energy Certificate) programs through the Delaware SREC market. The state has a Renewable Portfolio Standard requiring 25% renewable energy by 2025-2026. Delmarva Power is the primary utility. The Green Energy Program provides grants for solar installations. NABCEP certification is uniquely tied to rebate eligibility. Small state with relatively straightforward permitting once proper credentials are established."
+}

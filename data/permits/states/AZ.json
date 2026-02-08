@@ -1,0 +1,34 @@
+{
+  "state": "AZ",
+  "state_name": "Arizona",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "both",
+    "typical_fee_range": "$200-$500",
+    "typical_timeline_days": "5-14",
+    "inspection_required": true,
+    "inspection_stages": ["final"],
+    "statewide_permit_program": true,
+    "statewide_program_name": "ARS 11-323 Standardized Solar Construction Permits - requires counties to adopt standardized permitting for residential systems under 10 kW"
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": false,
+    "net_metering_details": "Arizona transitioned from net metering to net billing (export rate) in 2017. APS and TEP use Resource Comparison Proxy (RCP) rates for solar exports, significantly below retail rates. SRP uses demand-based rate plans for solar customers.",
+    "typical_timeline_days": "10-30",
+    "fees": "APS: $150 interconnection fee typical; SRP: varies by plan"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "Strong solar access law (ARS 33-1816). HOAs cannot prohibit solar installations but may adopt reasonable rules regarding placement that do not prevent installation, impair functioning, or adversely affect cost/efficiency.",
+    "historic_districts": "Local historic preservation commissions may review solar installations in designated historic districts; varies by municipality.",
+    "wind_load_requirements": "Standard IBC wind load requirements apply. Design wind speeds typically 90-115 mph.",
+    "snow_load_requirements": "Flagstaff and northern mountain areas have significant snow loads (30-60 psf ground snow load). Most of the state has minimal snow load requirements."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "ROC (Registrar of Contractors) license required; CR-11 Electrical or KB-2 General Residential Contractor with solar-specific experience",
+    "nabcep_required": false
+  },
+  "notes": "Arizona has streamlined solar permitting through ARS 11-323, which requires standardized permit processes for residential solar. The state pioneered distributed solar but has seen controversy over rate changes reducing export compensation. SRP's demand-based rates have been particularly contentious. Many jurisdictions participate in SolSmart or SolarAPP+ for expedited permitting. Strong solar resource makes Arizona one of the best states for solar generation despite policy headwinds."
+}

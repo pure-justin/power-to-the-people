@@ -1,0 +1,140 @@
+{
+  "state": "DE",
+  "utility_count": 7,
+  "avg_residential_rate": 0.1962,
+  "eia_state_avg_rate": 0.1432,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "NEM",
+    "export_rate": null
+  },
+  "utilities": [
+    {
+      "utility_id": "5027",
+      "utility_name": "Delmarva Power",
+      "state": "DE",
+      "states_served": [
+        "DE"
+      ],
+      "type": "IOU",
+      "customer_count": 310000,
+      "residential_avg_rate": 0.1485,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "15477",
+      "utility_name": "Public Service Elec & Gas Co",
+      "state": "DE",
+      "states_served": [
+        "DE"
+      ],
+      "type": "coop",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2508,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "1167",
+      "utility_name": "Baltimore Gas & Electric Co",
+      "state": "DE",
+      "states_served": [
+        "DE"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1341,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "12390",
+      "utility_name": "Metropolitan Edison Co (Pennsylvania)",
+      "state": "DE",
+      "states_served": [
+        "DE"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1552,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "14940",
+      "utility_name": "PECO Energy Co",
+      "state": "DE",
+      "states_served": [
+        "DE"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2396,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "963",
+      "utility_name": "Atlantic City Electric Co",
+      "state": "DE",
+      "states_served": [
+        "DE"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2873,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "14715",
+      "utility_name": "PPL Electric Utilities Corp",
+      "state": "DE",
+      "states_served": [
+        "DE"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1576,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:10:42.896513"
+}

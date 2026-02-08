@@ -203,7 +203,7 @@ export default function Pricing() {
               </h3>
               <p className="mt-2 text-sm text-gray-500">
                 Post-ITC savings calculations, lease/PPA comparisons, battery
-                ROI with VPP revenue — accurate for today's market.
+                ROI with grid services revenue — accurate for today's market.
               </p>
             </div>
           </div>

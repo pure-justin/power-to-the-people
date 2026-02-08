@@ -45,7 +45,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 var _a, _b;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getSubscriptionStatus = exports.createBillingPortalSession = exports.createCheckoutSession = exports.stripeWebhook = exports.cancelSubscription = exports.updateSubscription = exports.createSubscription = exports.SOLAR_TIERS = exports.STRIPE_PAYGO_PRICE_IDS = void 0;
+exports.getSubscriptionStatus = exports.createBillingPortalSession = exports.createCheckoutSession = exports.stripeWebhook = exports.cancelSubscription = exports.updateSubscription = exports.createSubscription = exports.SOLAR_TIERS = exports.FREE_TIER_LIMITS = exports.STRIPE_PAYGO_PRICE_IDS = void 0;
 exports.recordUsage = recordUsage;
 exports.checkUsageLimit = checkUsageLimit;
 exports.recordAndCheckUsage = recordAndCheckUsage;
@@ -71,6 +71,15 @@ exports.STRIPE_PAYGO_PRICE_IDS = {
     api_call_pack: "price_1SyMrHQhgZdyZ7qRfeQQUUI6", // $25/1000 calls
     compliance_check: "price_1SyMrIQhgZdyZ7qRZKDhbgKL", // $2/check
 };
+/** @const FREE_TIER_LIMITS - Usage limits for users without a paid subscription */
+exports.FREE_TIER_LIMITS = {
+    leads_per_month: 5,
+    api_calls_per_month: 50,
+    compliance_checks_per_month: 3,
+    equipment_lookups_per_month: 10,
+    solar_estimates_per_month: 1,
+    marketplace_listings_per_month: 1,
+};
 /** @const SOLAR_TIERS - Subscription tier definitions with pricing, features, and usage limits */
 exports.SOLAR_TIERS = {
     starter: {
@@ -81,6 +90,9 @@ exports.SOLAR_TIERS = {
             leads_per_month: 50,
             api_calls_per_month: 1000,
             compliance_checks_per_month: 25,
+            equipment_lookups_per_month: 100,
+            solar_estimates_per_month: 10,
+            marketplace_listings_per_month: 10,
         },
     },
     professional: {
@@ -96,6 +108,9 @@ exports.SOLAR_TIERS = {
             leads_per_month: 200,
             api_calls_per_month: 10000,
             compliance_checks_per_month: 200,
+            equipment_lookups_per_month: -1, // unlimited
+            solar_estimates_per_month: 100,
+            marketplace_listings_per_month: -1, // unlimited
         },
     },
     enterprise: {
@@ -112,6 +127,9 @@ exports.SOLAR_TIERS = {
             leads_per_month: -1, // unlimited
             api_calls_per_month: 100000,
             compliance_checks_per_month: -1, // unlimited
+            equipment_lookups_per_month: -1, // unlimited
+            solar_estimates_per_month: -1, // unlimited
+            marketplace_listings_per_month: -1, // unlimited
         },
     },
 };
@@ -375,7 +393,7 @@ exports.cancelSubscription = functions
  * @function recordUsage
  * @type helper
  * @auth none
- * @input {{ userId: string, usageType: "api_call" | "lead" | "compliance_check", quantity?: number }}
+ * @input {{ userId: string, usageType: "api_call" | "lead" | "compliance_check" | "equipment_lookup" | "solar_estimate" | "marketplace_listing", quantity?: number }}
  * @output void
  * @errors none
  * @billing none
@@ -395,21 +413,16 @@ async function recordUsage(userId, usageType, quantity = 1) {
         lastUpdated: admin.firestore.Timestamp.now(),
     }, { merge: true });
 }
-/**
- * Check if a user is within their subscription usage limits for a given metric
- *
- * @function checkUsageLimit
- * @type helper
- * @auth none
- * @input {{ userId: string, usageType: "leads_per_month" | "api_calls_per_month" | "compliance_checks_per_month" }}
- * @output {{ allowed: boolean, current: number, limit: number }}
- * @errors none
- * @billing none
- * @rateLimit none
- * @firestore subscriptions, usage_records
- */
+const USAGE_TYPE_TO_COUNT_KEY = {
+    leads_per_month: "lead_count",
+    api_calls_per_month: "api_call_count",
+    compliance_checks_per_month: "compliance_check_count",
+    equipment_lookups_per_month: "equipment_lookup_count",
+    solar_estimates_per_month: "solar_estimate_count",
+    marketplace_listings_per_month: "marketplace_listing_count",
+};
 async function checkUsageLimit(userId, usageType) {
-    var _a, _b, _c;
+    var _a, _b, _c, _d;
     const db = admin.firestore();
     // Get subscription
     const subSnapshot = await db
@@ -418,11 +431,14 @@ async function checkUsageLimit(userId, usageType) {
         .where("status", "in", ["active", "trialing"])
         .limit(1)
         .get();
+    let limit;
     if (subSnapshot.empty) {
-        return { allowed: false, current: 0, limit: 0 };
+        limit = (_a = exports.FREE_TIER_LIMITS[usageType]) !== null && _a !== void 0 ? _a : 0;
     }
-    const subData = subSnapshot.docs[0].data();
-    const limit = (_b = (_a = subData.limits) === null || _a === void 0 ? void 0 : _a[usageType]) !== null && _b !== void 0 ? _b : 0;
+    else {
+        const subData = subSnapshot.docs[0].data();
+        limit = (_c = (_b = subData.limits) === null || _b === void 0 ? void 0 : _b[usageType]) !== null && _c !== void 0 ? _c : 0;
+    }
     // Unlimited
     if (limit === -1) {
         return { allowed: true, current: 0, limit: -1 };
@@ -430,16 +446,12 @@ async function checkUsageLimit(userId, usageType) {
     // Get current usage
     const now = new Date();
     const monthKey = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
-    const usageTypeKey = usageType === "leads_per_month"
-        ? "lead_count"
-        : usageType === "api_calls_per_month"
-            ? "api_call_count"
-            : "compliance_check_count";
+    const usageTypeKey = USAGE_TYPE_TO_COUNT_KEY[usageType];
     const usageDoc = await db
         .collection("usage_records")
         .doc(`${userId}_${monthKey}`)
         .get();
-    const current = usageDoc.exists ? ((_c = usageDoc.data()) === null || _c === void 0 ? void 0 : _c[usageTypeKey]) || 0 : 0;
+    const current = usageDoc.exists ? ((_d = usageDoc.data()) === null || _d === void 0 ? void 0 : _d[usageTypeKey]) || 0 : 0;
     return {
         allowed: current < limit,
         current,
@@ -773,6 +785,9 @@ exports.getSubscriptionStatus = functions
             api_call_count: 0,
             lead_count: 0,
             compliance_check_count: 0,
+            equipment_lookup_count: 0,
+            solar_estimate_count: 0,
+            marketplace_listing_count: 0,
         };
     return {
         hasSubscription: true,
@@ -790,30 +805,23 @@ exports.getSubscriptionStatus = functions
             api_calls: usage.api_call_count || 0,
             leads: usage.lead_count || 0,
             compliance_checks: usage.compliance_check_count || 0,
+            equipment_lookups: usage.equipment_lookup_count || 0,
+            solar_estimates: usage.solar_estimate_count || 0,
+            marketplace_listings: usage.marketplace_listing_count || 0,
         },
         limits: subData.limits || null,
     };
 });
-// ─── Usage-Aware API Key Billing ─────────────────────────────────────────────
-/**
- * Record billable API usage and check subscription limits in a single atomic call
- *
- * @function recordAndCheckUsage
- * @type helper
- * @auth none
- * @input {{ userId: string, usageType: "api_call" | "lead" | "compliance_check", quantity?: number }}
- * @output {{ allowed: boolean, current: number, limit: number }}
- * @errors none
- * @billing api_call | lead | compliance_check
- * @rateLimit none
- * @firestore subscriptions, usage_records
- */
+const USAGE_TO_LIMIT_TYPE = {
+    api_call: "api_calls_per_month",
+    lead: "leads_per_month",
+    compliance_check: "compliance_checks_per_month",
+    equipment_lookup: "equipment_lookups_per_month",
+    solar_estimate: "solar_estimates_per_month",
+    marketplace_listing: "marketplace_listings_per_month",
+};
 async function recordAndCheckUsage(userId, usageType, quantity = 1) {
-    const limitType = usageType === "api_call"
-        ? "api_calls_per_month"
-        : usageType === "lead"
-            ? "leads_per_month"
-            : "compliance_checks_per_month";
+    const limitType = USAGE_TO_LIMIT_TYPE[usageType];
     const check = await checkUsageLimit(userId, limitType);
     if (!check.allowed) {
         return check;

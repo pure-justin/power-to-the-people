@@ -1,0 +1,25 @@
+{
+  "state": "NV",
+  "state_name": "Nevada",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 1,
+  "incentives": [
+    {
+      "id": "NV_net_metering",
+      "state": "NV",
+      "incentive_type": "net_metering",
+      "name": "Nevada Net Metering",
+      "description": "Nevada offers net metering with export credit rates that vary by utility and rate schedule. NV Energy provides time-of-use export credits.",
+      "value": "Export credits at ~75% of retail rate",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Nevada PUC",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

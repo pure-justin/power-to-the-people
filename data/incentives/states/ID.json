@@ -1,0 +1,40 @@
+{
+  "state": "ID",
+  "state_name": "Idaho",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 2,
+  "incentives": [
+    {
+      "id": "ID_tax_deduction",
+      "state": "ID",
+      "incentive_type": "tax_credit",
+      "name": "Idaho Residential Alternative Energy Tax Deduction",
+      "description": "40% deduction in year 1 (max $5,000), then 20% in each of years 2-4 (max $5,000/year). Total max $20,000.",
+      "value": "40% year 1, 20% years 2-4, max $5,000/year ($20,000 total)",
+      "value_type": "percentage",
+      "eligibility": "residential",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Idaho State Tax Commission",
+      "source_url": "https://www.solarreviews.com/solar-incentives",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "ID_net_metering",
+      "state": "ID",
+      "incentive_type": "net_metering",
+      "name": "Idaho Net Metering",
+      "description": "Idaho utilities voluntarily offer net metering programs. Idaho Power provides net metering for systems up to 100 kW.",
+      "value": "Varies by utility",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "varies_by_utility",
+      "expiration_date": null,
+      "administering_body": "Idaho Public Utilities Commission",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

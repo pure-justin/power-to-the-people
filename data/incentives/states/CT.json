@@ -1,0 +1,70 @@
+{
+  "state": "CT",
+  "state_name": "Connecticut",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 4,
+  "incentives": [
+    {
+      "id": "CT_sales_tax_exempt",
+      "state": "CT",
+      "incentive_type": "sales_tax_exempt",
+      "name": "Connecticut Sales Tax Exemption for Solar",
+      "description": "100% sales tax exemption for solar installations, saving the 6.35% state sales tax",
+      "value": "6.35% sales tax exemption",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Connecticut Department of Revenue Services",
+      "source_url": "https://www.solarreviews.com/solar-incentives/connecticut",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "CT_property_tax_exempt",
+      "state": "CT",
+      "incentive_type": "property_tax_exempt",
+      "name": "Connecticut Property Tax Exemption for Solar",
+      "description": "Solar energy systems exempt from local property tax assessment",
+      "value": "100% property tax exemption",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Local municipalities",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "CT_net_metering",
+      "state": "CT",
+      "incentive_type": "net_metering",
+      "name": "Connecticut Net Metering / Netting Tariff",
+      "description": "Connecticut offers net metering with full retail rate credits. All solar energy valued at full retail price.",
+      "value": "Full retail rate credit",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Connecticut PURA",
+      "source_url": "https://www.solarreviews.com/solar-incentives/connecticut",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "CT_rebate",
+      "state": "CT",
+      "incentive_type": "rebate",
+      "name": "Connecticut Residential Solar Investment Program",
+      "description": "Rebates for residential solar PV systems up to 10 kW",
+      "value": "Varies by utility and block",
+      "value_type": "varies",
+      "eligibility": "residential",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Connecticut Green Bank",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

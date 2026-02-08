@@ -1,0 +1,105 @@
+{
+  "state": "ME",
+  "utility_count": 5,
+  "avg_residential_rate": 0.2615,
+  "eia_state_avg_rate": 0.2245,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "net_billing",
+    "export_rate": null,
+    "notes": "Kilowatt credit for distributed generation. Net billing since 2024 reform."
+  },
+  "utilities": [
+    {
+      "utility_id": "3266",
+      "utility_name": "Central Maine Power Co",
+      "state": "ME",
+      "states_served": [
+        "ME"
+      ],
+      "type": "IOU",
+      "customer_count": 640000,
+      "residential_avg_rate": 0.1605,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "-6010549463473447900",
+      "utility_name": "Versant Power",
+      "state": "ME",
+      "states_served": [
+        "ME"
+      ],
+      "type": "IOU",
+      "customer_count": 160000,
+      "residential_avg_rate": 0.2245,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "15472",
+      "utility_name": "Public Service Co of NH",
+      "state": "ME",
+      "states_served": [
+        "ME"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2239,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "11804",
+      "utility_name": "Massachusetts Electric Co",
+      "state": "ME",
+      "states_served": [
+        "ME"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.4335,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "1179",
+      "utility_name": "Bangor Hydro-Electric Co",
+      "state": "ME",
+      "states_served": [
+        "ME"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2651,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:12:03.997213"
+}

@@ -1,0 +1,70 @@
+{
+  "state": "IL",
+  "state_name": "Illinois",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 4,
+  "incentives": [
+    {
+      "id": "IL_property_tax_exempt",
+      "state": "IL",
+      "incentive_type": "property_tax_exempt",
+      "name": "Illinois Special Assessment for Solar",
+      "description": "Solar energy systems are valued at no more than the conventional system they replace for property tax purposes",
+      "value": "Assessed at conventional system value only",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Local assessors",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "IL_shines",
+      "state": "IL",
+      "incentive_type": "srec",
+      "name": "Illinois Shines (Adjustable Block Program)",
+      "description": "Performance-based incentive providing upfront payment based on projected 15-year solar production. Functions like an SREC program with block pricing that adjusts over time.",
+      "value": "Upfront REC payment based on 15-year projected production",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Illinois Power Agency",
+      "source_url": "https://worldpopulationreview.com/state-rankings/solar-incentives-by-state",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "IL_net_metering",
+      "state": "IL",
+      "incentive_type": "net_metering",
+      "name": "Illinois Net Metering",
+      "description": "Illinois requires net metering from all utilities. Full retail rate credit for excess generation.",
+      "value": "Full retail rate credit",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Illinois Commerce Commission",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "IL_community_solar",
+      "state": "IL",
+      "incentive_type": "community_solar",
+      "name": "Illinois Community Solar Program",
+      "description": "Illinois has a robust community solar market under the Climate and Equitable Jobs Act",
+      "value": "Varies by program",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Illinois Power Agency",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

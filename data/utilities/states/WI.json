@@ -1,0 +1,122 @@
+{
+  "state": "WI",
+  "utility_count": 6,
+  "avg_residential_rate": 0.1539,
+  "eia_state_avg_rate": 0.1574,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "NEM",
+    "export_rate": null
+  },
+  "utilities": [
+    {
+      "utility_id": "20847",
+      "utility_name": "Wisconsin Electric Power Co",
+      "state": "WI",
+      "states_served": [
+        "WI"
+      ],
+      "type": "IOU",
+      "customer_count": 1100000,
+      "residential_avg_rate": 0.1959,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "1463029650647624777",
+      "utility_name": "Alliant Energy",
+      "state": "WI",
+      "states_served": [
+        "WI"
+      ],
+      "type": "IOU",
+      "customer_count": 480000,
+      "residential_avg_rate": 0.1574,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "20860",
+      "utility_name": "Wisconsin Public Service Corp",
+      "state": "WI",
+      "states_served": [
+        "WI"
+      ],
+      "type": "IOU",
+      "customer_count": 460000,
+      "residential_avg_rate": 0.1431,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "11479",
+      "utility_name": "Madison Gas & Electric Co",
+      "state": "WI",
+      "states_served": [
+        "WI"
+      ],
+      "type": "IOU",
+      "customer_count": 160000,
+      "residential_avg_rate": 0.1357,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "4110",
+      "utility_name": "Commonwealth Edison Co",
+      "state": "WI",
+      "states_served": [
+        "WI"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1271,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "20856",
+      "utility_name": "Wisconsin Power & Light Co",
+      "state": "WI",
+      "states_served": [
+        "WI"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1643,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:14:38.671732"
+}

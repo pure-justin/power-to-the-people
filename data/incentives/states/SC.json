@@ -1,0 +1,55 @@
+{
+  "state": "SC",
+  "state_name": "South Carolina",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 3,
+  "incentives": [
+    {
+      "id": "SC_tax_credit",
+      "state": "SC",
+      "incentive_type": "tax_credit",
+      "name": "South Carolina Solar Energy Tax Credit",
+      "description": "25% of system costs as state income tax credit. Maximum 50% of annual tax liability with 10-year carryover.",
+      "value": "25% of costs, max 50% of annual liability, 10-year carryover",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "South Carolina Department of Revenue",
+      "source_url": "https://www.solarreviews.com/solar-incentives",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "SC_sales_tax_exempt",
+      "state": "SC",
+      "incentive_type": "sales_tax_exempt",
+      "name": "South Carolina Sales Tax Exemption for Solar",
+      "description": "Solar energy equipment exempt from state sales tax",
+      "value": "Sales tax exemption",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "South Carolina DOR",
+      "source_url": "https://www.solarreviews.com/solar-incentives",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "SC_net_metering",
+      "state": "SC",
+      "incentive_type": "net_metering",
+      "name": "South Carolina Net Metering",
+      "description": "Utilities credit consumers for every kWh of solar energy returned to the grid. Credits applied to following months' bills.",
+      "value": "Full retail rate credit with monthly rollover",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "South Carolina PSC",
+      "source_url": "https://solar.sc.gov/financing-system/tax-credits-incentives-and-net-metering",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

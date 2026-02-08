@@ -117,7 +117,6 @@ export async function listApiKeys() {
     const q = query(
       collection(db, "apiKeys"),
       where("userId", "==", user.uid),
-      where("status", "==", "active"),
       orderBy("createdAt", "desc"),
     );
 

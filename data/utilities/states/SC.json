@@ -1,0 +1,123 @@
+{
+  "state": "SC",
+  "utility_count": 6,
+  "avg_residential_rate": 0.1381,
+  "eia_state_avg_rate": 0.1315,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "net_billing",
+    "export_rate": null,
+    "notes": "Dominion Energy SC and Duke Energy transition to net billing. Avoided cost rates for export."
+  },
+  "utilities": [
+    {
+      "utility_id": "5477462868394962542",
+      "utility_name": "Duke Energy Carolinas LLC",
+      "state": "SC",
+      "states_served": [
+        "SC"
+      ],
+      "type": "IOU",
+      "customer_count": 800000,
+      "residential_avg_rate": 0.1315,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "7188805547986613898",
+      "utility_name": "South Carolina Electric & Gas",
+      "state": "SC",
+      "states_served": [
+        "SC"
+      ],
+      "type": "IOU",
+      "customer_count": 730000,
+      "residential_avg_rate": 0.1315,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "1077846497873506313",
+      "utility_name": "Duke Energy Progress LLC",
+      "state": "SC",
+      "states_served": [
+        "SC"
+      ],
+      "type": "IOU",
+      "customer_count": 500000,
+      "residential_avg_rate": 0.1315,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "17539",
+      "utility_name": "South Carolina Electric&Gas Co",
+      "state": "SC",
+      "states_served": [
+        "SC"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1786,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "1613",
+      "utility_name": "Berkeley Electric Coop Inc",
+      "state": "SC",
+      "states_served": [
+        "SC"
+      ],
+      "type": "coop",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1222,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "5416",
+      "utility_name": "Progress Energy Carolinas Inc (South Carolina)",
+      "state": "SC",
+      "states_served": [
+        "SC"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1331,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:13:46.559306"
+}

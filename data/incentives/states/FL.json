@@ -1,0 +1,70 @@
+{
+  "state": "FL",
+  "state_name": "Florida",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 4,
+  "incentives": [
+    {
+      "id": "FL_property_tax_exempt",
+      "state": "FL",
+      "incentive_type": "property_tax_exempt",
+      "name": "Florida Solar Property Tax Exemption",
+      "description": "100% of solar system value is exempt from property tax assessment. Saves average of $5,500+ over system lifetime.",
+      "value": "100% of added solar value exempt",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Florida Department of Revenue",
+      "source_url": "https://www.solarreviews.com/solar-incentives/florida",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "FL_sales_tax_exempt",
+      "state": "FL",
+      "incentive_type": "sales_tax_exempt",
+      "name": "Florida Sales Tax Exemption for Solar",
+      "description": "All solar PV equipment, including panels, inverters, batteries, EV chargers, racking, and installation costs are exempt from sales tax. Average savings ~$2,097.",
+      "value": "6% sales tax exemption on all solar equipment and installation",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Florida Department of Revenue",
+      "source_url": "https://www.solarreviews.com/solar-incentives/florida",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "FL_net_metering",
+      "state": "FL",
+      "incentive_type": "net_metering",
+      "name": "Florida Net Metering",
+      "description": "Required for FPL, Duke Energy, FPU, and TECO. Full retail rate credit. Monthly rollover, annual true-up at 3-5 cents/kWh.",
+      "value": "Full retail rate, annual excess at ~3-5 cents/kWh",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Florida Public Service Commission",
+      "source_url": "https://www.solarreviews.com/solar-incentives/florida",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "FL_pace",
+      "state": "FL",
+      "incentive_type": "pace",
+      "name": "Florida PACE Financing",
+      "description": "PACE financing available statewide for solar and energy improvements",
+      "value": "Financing through property tax assessment",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Various PACE providers",
+      "source_url": "https://www.solarreviews.com/solar-incentives/florida",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

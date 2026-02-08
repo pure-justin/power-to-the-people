@@ -1,0 +1,69 @@
+{
+  "state": "HI",
+  "utility_count": 3,
+  "avg_residential_rate": 0.3369,
+  "eia_state_avg_rate": 0.3878,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "net_billing",
+    "export_rate": null,
+    "notes": "Customer Grid-Supply (CGS) and Smart Export programs. No traditional NEM since 2015. Battery storage strongly incentivized."
+  },
+  "utilities": [
+    {
+      "utility_id": "19547",
+      "utility_name": "Hawaiian Electric Co Inc",
+      "state": "HI",
+      "states_served": [
+        "HI"
+      ],
+      "type": "IOU",
+      "customer_count": 470000,
+      "residential_avg_rate": 0.3872,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "8287",
+      "utility_name": "Hawaii Electric Light Co Inc",
+      "state": "HI",
+      "states_served": [
+        "HI"
+      ],
+      "type": "IOU",
+      "customer_count": 85000,
+      "residential_avg_rate": 0.343,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "11843",
+      "utility_name": "Maui Electric Co Ltd",
+      "state": "HI",
+      "states_served": [
+        "HI"
+      ],
+      "type": "IOU",
+      "customer_count": 75000,
+      "residential_avg_rate": 0.2804,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:11:03.751005"
+}

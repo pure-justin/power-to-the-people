@@ -1,0 +1,40 @@
+{
+  "state": "TN",
+  "state_name": "Tennessee",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 2,
+  "incentives": [
+    {
+      "id": "TN_sales_tax_exempt",
+      "state": "TN",
+      "incentive_type": "sales_tax_exempt",
+      "name": "Tennessee Sales Tax Exemption for Solar (Limited)",
+      "description": "Tennessee provides limited sales tax exemptions for solar energy equipment",
+      "value": "Sales tax exemption",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Tennessee DOR",
+      "source_url": "https://www.solarreviews.com/solar-incentives",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "TN_tva",
+      "state": "TN",
+      "incentive_type": "rebate",
+      "name": "Tennessee Valley Authority Programs",
+      "description": "TVA distributors may offer solar programs. TVA $1,000 post-installation payment available in some areas.",
+      "value": "$1,000 post-installation (TVA areas)",
+      "value_type": "fixed",
+      "eligibility": "residential",
+      "status": "varies_by_utility",
+      "expiration_date": null,
+      "administering_body": "TVA and local distributors",
+      "source_url": "https://worldpopulationreview.com/state-rankings/solar-incentives-by-state",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

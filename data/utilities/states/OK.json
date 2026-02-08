@@ -1,0 +1,68 @@
+{
+  "state": "OK",
+  "utility_count": 3,
+  "avg_residential_rate": 0.0822,
+  "eia_state_avg_rate": 0.1153,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "NEM",
+    "export_rate": null
+  },
+  "utilities": [
+    {
+      "utility_id": "14063",
+      "utility_name": "Oklahoma Gas & Electric Co",
+      "state": "OK",
+      "states_served": [
+        "OK"
+      ],
+      "type": "IOU",
+      "customer_count": 880000,
+      "residential_avg_rate": 0.0991,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "15474",
+      "utility_name": "Public Service Co of Oklahoma",
+      "state": "OK",
+      "states_served": [
+        "OK"
+      ],
+      "type": "IOU",
+      "customer_count": 560000,
+      "residential_avg_rate": 0.0821,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "5860",
+      "utility_name": "Empire District Electric Co",
+      "state": "OK",
+      "states_served": [
+        "OK"
+      ],
+      "type": "muni",
+      "customer_count": 40000,
+      "residential_avg_rate": 0.0655,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:13:26.868310"
+}

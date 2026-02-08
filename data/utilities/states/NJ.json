@@ -1,0 +1,248 @@
+{
+  "state": "NJ",
+  "utility_count": 13,
+  "avg_residential_rate": 0.2346,
+  "eia_state_avg_rate": 0.1792,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "NEM",
+    "export_rate": null
+  },
+  "utilities": [
+    {
+      "utility_id": "15477",
+      "utility_name": "Public Service Elec & Gas Co",
+      "state": "NJ",
+      "states_served": [
+        "NJ"
+      ],
+      "type": "coop",
+      "customer_count": 2300000,
+      "residential_avg_rate": 0.2508,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "9002448968425670968",
+      "utility_name": "Jersey Central Power & Light",
+      "state": "NJ",
+      "states_served": [
+        "NJ"
+      ],
+      "type": "IOU",
+      "customer_count": 1100000,
+      "residential_avg_rate": 0.1792,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "963",
+      "utility_name": "Atlantic City Electric Co",
+      "state": "NJ",
+      "states_served": [
+        "NJ"
+      ],
+      "type": "IOU",
+      "customer_count": 560000,
+      "residential_avg_rate": 0.2873,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "4176",
+      "utility_name": "Connecticut Light & Power Co",
+      "state": "NJ",
+      "states_served": [
+        "NJ"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2921,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "9726",
+      "utility_name": "Jersey Central Power & Lt Co (New Jersey)",
+      "state": "NJ",
+      "states_served": [
+        "NJ"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2049,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "4226",
+      "utility_name": "Consolidated Edison Co-NY Inc",
+      "state": "NJ",
+      "states_served": [
+        "NJ"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.3516,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "13511",
+      "utility_name": "New York State Elec & Gas Corp",
+      "state": "NJ",
+      "states_served": [
+        "NJ"
+      ],
+      "type": "coop",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1747,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "11171",
+      "utility_name": "Long Island Power Authority",
+      "state": "NJ",
+      "states_served": [
+        "NJ"
+      ],
+      "type": "muni",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2759,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "3249",
+      "utility_name": "Central Hudson Gas & Elec Corp",
+      "state": "NJ",
+      "states_served": [
+        "NJ"
+      ],
+      "type": "coop",
+      "customer_count": 0,
+      "residential_avg_rate": 0.333,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "12390",
+      "utility_name": "Metropolitan Edison Co (Pennsylvania)",
+      "state": "NJ",
+      "states_served": [
+        "NJ"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1552,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "14940",
+      "utility_name": "PECO Energy Co",
+      "state": "NJ",
+      "states_served": [
+        "NJ"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2396,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "14715",
+      "utility_name": "PPL Electric Utilities Corp",
+      "state": "NJ",
+      "states_served": [
+        "NJ"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1576,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "5027",
+      "utility_name": "Delmarva Power",
+      "state": "NJ",
+      "states_served": [
+        "NJ"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1485,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:12:58.795868"
+}

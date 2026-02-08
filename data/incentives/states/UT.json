@@ -1,0 +1,25 @@
+{
+  "state": "UT",
+  "state_name": "Utah",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 1,
+  "incentives": [
+    {
+      "id": "UT_net_metering",
+      "state": "UT",
+      "incentive_type": "net_metering",
+      "name": "Utah Net Metering / Export Credit",
+      "description": "Utah offers net metering with transitioning rates. Rocky Mountain Power provides export credits.",
+      "value": "Export credit rate (transitioning)",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Utah PSC",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

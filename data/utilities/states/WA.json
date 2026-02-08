@@ -1,0 +1,212 @@
+{
+  "state": "WA",
+  "utility_count": 11,
+  "avg_residential_rate": 0.1028,
+  "eia_state_avg_rate": 0.1047,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "NEM",
+    "export_rate": null
+  },
+  "utilities": [
+    {
+      "utility_id": "15500",
+      "utility_name": "Puget Sound Energy Inc",
+      "state": "WA",
+      "states_served": [
+        "WA"
+      ],
+      "type": "IOU",
+      "customer_count": 1200000,
+      "residential_avg_rate": 0.0987,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "-4539018284150169791",
+      "utility_name": "Seattle City Light",
+      "state": "WA",
+      "states_served": [
+        "WA"
+      ],
+      "type": "muni",
+      "customer_count": 450000,
+      "residential_avg_rate": 0.1047,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "17470",
+      "utility_name": "Snohomish County PUD No 1",
+      "state": "WA",
+      "states_served": [
+        "WA"
+      ],
+      "type": "muni",
+      "customer_count": 350000,
+      "residential_avg_rate": 0.1026,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "20169",
+      "utility_name": "Avista Corp",
+      "state": "WA",
+      "states_served": [
+        "WA"
+      ],
+      "type": "IOU",
+      "customer_count": 260000,
+      "residential_avg_rate": 0.1324,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "1506439501101086075",
+      "utility_name": "Tacoma Power",
+      "state": "WA",
+      "states_served": [
+        "WA"
+      ],
+      "type": "IOU",
+      "customer_count": 190000,
+      "residential_avg_rate": 0.1047,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "16868",
+      "utility_name": "City of Seattle, Washington (Utility Company)",
+      "state": "WA",
+      "states_served": [
+        "WA"
+      ],
+      "type": "muni",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1375,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "18429",
+      "utility_name": "City of Tacoma, Washington (Utility Company)",
+      "state": "WA",
+      "states_served": [
+        "WA"
+      ],
+      "type": "muni",
+      "customer_count": 0,
+      "residential_avg_rate": 0.0836,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "14668",
+      "utility_name": "Peninsula Light Company",
+      "state": "WA",
+      "states_served": [
+        "WA"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.081,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "14624",
+      "utility_name": "PUD No 2 of Grant County",
+      "state": "WA",
+      "states_served": [
+        "WA"
+      ],
+      "type": "muni",
+      "customer_count": 0,
+      "residential_avg_rate": 0.0445,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "14354",
+      "utility_name": "PacifiCorp (Utah)",
+      "state": "WA",
+      "states_served": [
+        "WA"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1241,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "12825",
+      "utility_name": "NorthWestern Corporation",
+      "state": "WA",
+      "states_served": [
+        "WA"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1165,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:14:32.534139"
+}

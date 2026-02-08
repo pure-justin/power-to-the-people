@@ -1,0 +1,34 @@
+{
+  "state": "HI",
+  "state_name": "Hawaii",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "both",
+    "typical_fee_range": "$200-$600",
+    "typical_timeline_days": "7-21",
+    "inspection_required": true,
+    "inspection_stages": ["final"],
+    "statewide_permit_program": false,
+    "statewide_program_name": null
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": false,
+    "net_metering_details": "Hawaii ended traditional net metering in 2015. Replaced with Customer Grid-Supply (CGS) and Customer Self-Supply (CSS) programs. Smart Export program pays time-varying export rates (approx 10-15 cents/kWh). Battery storage strongly incentivized for self-consumption. HECO, MECO, and HELCO handle interconnection.",
+    "typical_timeline_days": "15-60",
+    "fees": "Interconnection application fee varies; $50-$250 typical for residential"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "Strong solar access law (HRS 196-7). Prohibits preventing solar installation on single-family dwellings or townhouses. One of the earliest solar access laws in the nation.",
+    "historic_districts": "Historic districts in Honolulu (Chinatown, Capitol District) and other areas may require additional review. State Historic Preservation Division consulted.",
+    "wind_load_requirements": "Hurricane zone requirements apply statewide. Design wind speeds 105-130 mph depending on island and exposure category. Compliance with IBC hurricane provisions required.",
+    "snow_load_requirements": "Not applicable for most areas. Mauna Kea summit area has snow but no residential installations."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "C-60 Solar Energy Contractor license or licensed General Contractor (automatically includes solar). Electrical work requires licensed electrician.",
+    "nabcep_required": false
+  },
+  "notes": "Hawaii has the highest electricity rates in the nation ($0.35-0.45/kWh), making solar extremely attractive even without net metering. The state has the highest per-capita solar adoption rate. Grid saturation on some islands has caused interconnection delays and curtailment. Battery storage is increasingly required for new installations to manage grid impacts. 100% renewable energy mandate by 2045. Unique island grid challenges not found in mainland states."
+}

@@ -1,0 +1,230 @@
+{
+  "state": "CT",
+  "utility_count": 12,
+  "avg_residential_rate": 0.2647,
+  "eia_state_avg_rate": 0.2663,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "NEM",
+    "export_rate": null
+  },
+  "utilities": [
+    {
+      "utility_id": "-7767094133756347982",
+      "utility_name": "Eversource Energy",
+      "state": "CT",
+      "states_served": [
+        "CT"
+      ],
+      "type": "IOU",
+      "customer_count": 1300000,
+      "residential_avg_rate": 0.2663,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "19497",
+      "utility_name": "United Illuminating Co",
+      "state": "CT",
+      "states_served": [
+        "CT"
+      ],
+      "type": "IOU",
+      "customer_count": 340000,
+      "residential_avg_rate": 0.2155,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "4176",
+      "utility_name": "Connecticut Light & Power Co",
+      "state": "CT",
+      "states_served": [
+        "CT"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2921,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "11804",
+      "utility_name": "Massachusetts Electric Co",
+      "state": "CT",
+      "states_served": [
+        "CT"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.4335,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "13214",
+      "utility_name": "The Narragansett Electric Co",
+      "state": "CT",
+      "states_served": [
+        "CT"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2414,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "13511",
+      "utility_name": "New York State Elec & Gas Corp",
+      "state": "CT",
+      "states_served": [
+        "CT"
+      ],
+      "type": "coop",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1747,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "11171",
+      "utility_name": "Long Island Power Authority",
+      "state": "CT",
+      "states_served": [
+        "CT"
+      ],
+      "type": "muni",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2759,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "3249",
+      "utility_name": "Central Hudson Gas & Elec Corp",
+      "state": "CT",
+      "states_served": [
+        "CT"
+      ],
+      "type": "coop",
+      "customer_count": 0,
+      "residential_avg_rate": 0.333,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "7716",
+      "utility_name": "Groton Dept of Utilities",
+      "state": "CT",
+      "states_served": [
+        "CT"
+      ],
+      "type": "muni",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1365,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "4226",
+      "utility_name": "Consolidated Edison Co-NY Inc",
+      "state": "CT",
+      "states_served": [
+        "CT"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.3516,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "15477",
+      "utility_name": "Public Service Elec & Gas Co",
+      "state": "CT",
+      "states_served": [
+        "CT"
+      ],
+      "type": "coop",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2508,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "9726",
+      "utility_name": "Jersey Central Power & Lt Co (New Jersey)",
+      "state": "CT",
+      "states_served": [
+        "CT"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2049,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:10:39.751930"
+}

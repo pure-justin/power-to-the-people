@@ -52,7 +52,7 @@ const STEPS = [
   { id: 1, label: "Location", icon: Zap },
   { id: 2, label: "Homeowner", icon: Home },
   { id: 3, label: "Credit", icon: CreditCard },
-  { id: 4, label: "Smart Meter", icon: BarChart3 },
+  { id: 4, label: "Usage Data", icon: BarChart3 },
   { id: 5, label: "Name", icon: User },
   { id: 6, label: "Contact", icon: UserPlus },
 ];
@@ -76,28 +76,40 @@ export default function Qualify() {
   const [approvalRate, setApprovalRate] = useState(11.2);
   const [liveFeed, setLiveFeed] = useState(null);
 
-  // Texas cities and common first names for realistic feed
-  const texasCities = [
+  // US cities for realistic feed
+  const usCities = [
     "Houston",
     "Austin",
     "Dallas",
     "San Antonio",
+    "Phoenix",
+    "Los Angeles",
+    "San Diego",
+    "Denver",
+    "Miami",
+    "Tampa",
+    "Orlando",
+    "Atlanta",
+    "Charlotte",
+    "Raleigh",
+    "Nashville",
+    "Las Vegas",
+    "Sacramento",
+    "Portland",
+    "Seattle",
+    "Chicago",
+    "Columbus",
+    "Jacksonville",
+    "San Jose",
     "Fort Worth",
-    "El Paso",
-    "Arlington",
-    "Plano",
-    "Corpus Christi",
-    "Lubbock",
-    "Garland",
-    "Irving",
-    "Frisco",
-    "McKinney",
-    "Amarillo",
-    "Grand Prairie",
-    "Brownsville",
-    "Killeen",
-    "Pasadena",
-    "Mesquite",
+    "Indianapolis",
+    "Tucson",
+    "Albuquerque",
+    "Boise",
+    "Salt Lake City",
+    "Reno",
+    "Charleston",
+    "Richmond",
   ];
   const firstNames = [
     "James",
@@ -144,7 +156,7 @@ export default function Qualify() {
     const lastInitial = String.fromCharCode(
       65 + Math.floor(Math.random() * 26),
     );
-    const city = texasCities[Math.floor(Math.random() * texasCities.length)];
+    const city = usCities[Math.floor(Math.random() * usCities.length)];
     // ~10% qualified rate (9 bad, 1 good)
     const qualified = Math.random() < 0.1;
     const reason = qualified
@@ -346,7 +358,7 @@ export default function Qualify() {
     // Address
     street: "",
     city: "",
-    state: "TX",
+    state: "",
     postalCode: "",
     county: "",
     latitude: null,
@@ -384,7 +396,7 @@ export default function Qualify() {
         ...prev,
         street: "",
         city: "",
-        state: "TX",
+        state: "",
         postalCode: "",
         county: "",
         latitude: null,
@@ -395,9 +407,9 @@ export default function Qualify() {
       return;
     }
 
-    // Reject non-Texas addresses
-    if (addressData.state && addressData.state !== "TX") {
-      setError("This program is only available for Texas addresses");
+    // Reject non-US addresses
+    if (addressData.country && addressData.country !== "US") {
+      setError("This program is only available for US addresses");
       return;
     }
 
@@ -407,7 +419,7 @@ export default function Qualify() {
       ...prev,
       street: addressData.streetAddress || "",
       city: addressData.city || "",
-      state: addressData.state || "TX",
+      state: addressData.state || "",
       postalCode: addressData.zipCode || "",
       county: addressData.county || "",
       latitude: addressData.lat || null,
@@ -1559,13 +1571,13 @@ export default function Qualify() {
         }
       }
 
-      // Get annual usage from bill data, or use Texas average if only meter data
-      // Texas average home uses ~14,000 kWh/year
-      const TEXAS_AVERAGE_KWH = 14000;
+      // Get annual usage from bill data, or use US average if only meter data
+      // US average home uses ~10,500 kWh/year; southern states ~14,000 kWh/year
+      const US_AVERAGE_KWH = 10500;
       const annualUsageKwh =
         billData?.calculatedAnnualKwh ||
         (billData?.currentUsageKwh ? billData.currentUsageKwh * 12 : null) ||
-        (meterData ? TEXAS_AVERAGE_KWH : 12000);
+        (meterData ? US_AVERAGE_KWH : US_AVERAGE_KWH);
 
       console.log("Using annual usage for design:", annualUsageKwh, "kWh");
 
@@ -1646,7 +1658,7 @@ export default function Qualify() {
                 esiid: meterData.esiid,
                 tduName: meterData.tduName,
                 meterNumber: meterData.meterNumber,
-                annualUsageKwh: annualUsageKwh, // Texas average
+                annualUsageKwh: annualUsageKwh,
                 source: "meter_qr",
               }
             : null,
@@ -1981,9 +1993,9 @@ export default function Qualify() {
       badge: "Limited Availability",
       title: "2026 Enrollment ",
       highlight: "Now Open",
-      subtitle: "Enter your Texas address",
-      sell: "Texas gets 234 sunny days per year. Your roof is literally a money printer.",
-      sellAuthor: "— Texas Solar Facts",
+      subtitle: "Enter your address",
+      sell: "The average US home can save $20,000-$96,000 over the life of a solar system. Your roof is literally a money printer.",
+      sellAuthor: "— Department of Energy",
     },
     2: {
       bg: "/graffiti-family-silhouette.jpg",
@@ -1991,8 +2003,8 @@ export default function Qualify() {
       title: "Property ",
       highlight: "Ownership",
       subtitle: "Do you own this home?",
-      sell: "Winter Storm Uri: 246 Texans died. Most froze in their own homes waiting for the grid.",
-      sellAuthor: "— Texas Tribune, 2021",
+      sell: "Grid outages cost US homeowners $150 billion annually. Solar + battery means you never lose power.",
+      sellAuthor: "— DOE Grid Resilience Report",
     },
     3: {
       bg: "/graffiti-scales-justice.jpg",
@@ -2006,11 +2018,11 @@ export default function Qualify() {
     4: {
       bg: "/graffiti-meter-money.jpg",
       badge: "Step 4 of 6",
-      title: "Smart Meter ",
-      highlight: "Connection",
+      title: "Usage ",
+      highlight: "Data",
       subtitle: "Let's size your system",
-      sell: "August 2023: Texas paid $5/kWh during peak hours. That's 50x normal. Battery owners cashed in.",
-      sellAuthor: "— ERCOT Market Data",
+      sell: "During peak demand, electricity prices can spike 50x normal. Battery owners cash in while the grid struggles.",
+      sellAuthor: "— US Energy Market Data",
     },
     5: {
       bg: "/graffiti-liberty-torch.jpg",
@@ -3317,7 +3329,7 @@ export default function Qualify() {
               <AddressAutocomplete
                 onAddressSelect={handleAddressSelect}
                 className="q-input"
-                placeholder="Enter your Texas address..."
+                placeholder="Enter your address..."
               />
 
               {/* Loading state while checking eligibility */}
@@ -3464,18 +3476,20 @@ export default function Qualify() {
 
               {!billData && !scanMode && (
                 <div className="q-options">
-                  <button
-                    className="q-option"
-                    onClick={() => setScanMode("smtlogin")}
-                  >
-                    <div className="q-option-icon">
-                      <Zap size={24} />
-                    </div>
-                    <div className="q-option-content">
-                      <h3>Smart Meter Texas Login</h3>
-                      <p>Instant access to your usage data</p>
-                    </div>
-                  </button>
+                  {formData.state === "TX" && (
+                    <button
+                      className="q-option"
+                      onClick={() => setScanMode("smtlogin")}
+                    >
+                      <div className="q-option-icon">
+                        <Zap size={24} />
+                      </div>
+                      <div className="q-option-content">
+                        <h3>Smart Meter Texas Login</h3>
+                        <p>Instant access to your usage data</p>
+                      </div>
+                    </button>
+                  )}
 
                   <button
                     className="q-option"

@@ -1,0 +1,104 @@
+{
+  "state": "WY",
+  "utility_count": 5,
+  "avg_residential_rate": 0.1296,
+  "eia_state_avg_rate": 0.1109,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "NEM",
+    "export_rate": null
+  },
+  "utilities": [
+    {
+      "utility_id": "1695066723657325793",
+      "utility_name": "Rocky Mountain Power",
+      "state": "WY",
+      "states_served": [
+        "WY"
+      ],
+      "type": "IOU",
+      "customer_count": 135000,
+      "residential_avg_rate": 0.1109,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "3461",
+      "utility_name": "Cheyenne Light Fuel & Power Co",
+      "state": "WY",
+      "states_served": [
+        "WY"
+      ],
+      "type": "IOU",
+      "customer_count": 42000,
+      "residential_avg_rate": 0.1331,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "19545",
+      "utility_name": "Black Hills Power Inc",
+      "state": "WY",
+      "states_served": [
+        "WY"
+      ],
+      "type": "IOU",
+      "customer_count": 25000,
+      "residential_avg_rate": 0.1351,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "14354",
+      "utility_name": "PacifiCorp (Utah)",
+      "state": "WY",
+      "states_served": [
+        "WY"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1241,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "15466",
+      "utility_name": "Public Service Co of Colorado",
+      "state": "WY",
+      "states_served": [
+        "WY"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1446,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:14:50.969869"
+}

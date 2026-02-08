@@ -1,0 +1,213 @@
+{
+  "state": "GA",
+  "utility_count": 11,
+  "avg_residential_rate": 0.1128,
+  "eia_state_avg_rate": 0.1323,
+  "net_metering": {
+    "has_net_metering": false,
+    "net_metering_type": "none",
+    "export_rate": null,
+    "notes": "Georgia Power has no residential solar buyback. Some EMCs offer limited programs."
+  },
+  "utilities": [
+    {
+      "utility_id": "7140",
+      "utility_name": "Georgia Power Co",
+      "state": "GA",
+      "states_served": [
+        "GA"
+      ],
+      "type": "IOU",
+      "customer_count": 2700000,
+      "residential_avg_rate": 0.1763,
+      "rate_structure": "tou",
+      "has_net_metering": false,
+      "net_metering_type": "none",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "-3166281220694233596",
+      "utility_name": "Jackson EMC",
+      "state": "GA",
+      "states_served": [
+        "GA"
+      ],
+      "type": "coop",
+      "customer_count": 230000,
+      "residential_avg_rate": 0.1323,
+      "rate_structure": "tiered",
+      "has_net_metering": false,
+      "net_metering_type": "none",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "3916",
+      "utility_name": "Cobb EMC",
+      "state": "GA",
+      "states_served": [
+        "GA"
+      ],
+      "type": "coop",
+      "customer_count": 200000,
+      "residential_avg_rate": 0.0925,
+      "rate_structure": "tou",
+      "has_net_metering": false,
+      "net_metering_type": "none",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "9601",
+      "utility_name": "Jackson Electric Member Corp",
+      "state": "GA",
+      "states_served": [
+        "GA"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.0943,
+      "rate_structure": "tou",
+      "has_net_metering": false,
+      "net_metering_type": "none",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "16865",
+      "utility_name": "Sawnee Electric Membership Corporation",
+      "state": "GA",
+      "states_served": [
+        "GA"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.0734,
+      "rate_structure": "tou",
+      "has_net_metering": false,
+      "net_metering_type": "none",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "7090",
+      "utility_name": "GreyStone Power Corporation",
+      "state": "GA",
+      "states_served": [
+        "GA"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.0809,
+      "rate_structure": "tou",
+      "has_net_metering": false,
+      "net_metering_type": "none",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "20065",
+      "utility_name": "Walton Electric Member Corp",
+      "state": "GA",
+      "states_served": [
+        "GA"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.0692,
+      "rate_structure": "tou",
+      "has_net_metering": false,
+      "net_metering_type": "none",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "4432",
+      "utility_name": "Coweta-Fayette El Member Corp",
+      "state": "GA",
+      "states_served": [
+        "GA"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.0875,
+      "rate_structure": "tou",
+      "has_net_metering": false,
+      "net_metering_type": "none",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "17539",
+      "utility_name": "South Carolina Electric&Gas Co",
+      "state": "GA",
+      "states_served": [
+        "GA"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1786,
+      "rate_structure": "tou",
+      "has_net_metering": false,
+      "net_metering_type": "none",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "1613",
+      "utility_name": "Berkeley Electric Coop Inc",
+      "state": "GA",
+      "states_served": [
+        "GA"
+      ],
+      "type": "coop",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1222,
+      "rate_structure": "tou",
+      "has_net_metering": false,
+      "net_metering_type": "none",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "5416",
+      "utility_name": "Progress Energy Carolinas Inc (South Carolina)",
+      "state": "GA",
+      "states_served": [
+        "GA"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1331,
+      "rate_structure": "tou",
+      "has_net_metering": false,
+      "net_metering_type": "none",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:10:58.414394"
+}

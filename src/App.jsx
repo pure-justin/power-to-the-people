@@ -35,6 +35,9 @@ import DashboardApiKeys from "./pages/dashboard/DashboardApiKeys";
 import DashboardBilling from "./pages/dashboard/DashboardBilling";
 import DashboardReferrals from "./pages/dashboard/DashboardReferrals";
 import DashboardEquipment from "./pages/dashboard/DashboardEquipment";
+import DashboardProjectDetail from "./pages/dashboard/DashboardProjectDetail";
+import DashboardMarketplace from "./pages/dashboard/DashboardMarketplace";
+import DashboardWorkerProfile from "./pages/dashboard/DashboardWorkerProfile";
 
 // Sales
 import SalesHome from "./pages/sales/SalesHome";
@@ -97,6 +100,10 @@ function App() {
             <Route path="/dashboard/leads" element={<DashboardLeads />} />
             <Route path="/dashboard/projects" element={<DashboardProjects />} />
             <Route
+              path="/dashboard/projects/:projectId"
+              element={<DashboardProjectDetail />}
+            />
+            <Route
               path="/dashboard/compliance"
               element={<DashboardCompliance />}
             />
@@ -114,6 +121,14 @@ function App() {
             <Route
               path="/dashboard/equipment"
               element={<DashboardEquipment />}
+            />
+            <Route
+              path="/dashboard/marketplace"
+              element={<DashboardMarketplace />}
+            />
+            <Route
+              path="/dashboard/workers/:workerId"
+              element={<DashboardWorkerProfile />}
             />
           </Route>
 

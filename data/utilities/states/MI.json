@@ -1,0 +1,159 @@
+{
+  "state": "MI",
+  "utility_count": 8,
+  "avg_residential_rate": 0.1786,
+  "eia_state_avg_rate": 0.1783,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "net_billing",
+    "export_rate": null,
+    "notes": "DTE and Consumers Energy use distributed generation tariff. Inflow/outflow billing model."
+  },
+  "utilities": [
+    {
+      "utility_id": "5109",
+      "utility_name": "DTE Electric",
+      "state": "MI",
+      "states_served": [
+        "MI"
+      ],
+      "type": "IOU",
+      "customer_count": 2200000,
+      "residential_avg_rate": 0.1832,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "4254",
+      "utility_name": "Consumers Energy Co",
+      "state": "MI",
+      "states_served": [
+        "MI"
+      ],
+      "type": "IOU",
+      "customer_count": 1800000,
+      "residential_avg_rate": 0.2478,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "9324",
+      "utility_name": "Indiana Michigan Power Co (Indiana)",
+      "state": "MI",
+      "states_served": [
+        "MI"
+      ],
+      "type": "IOU",
+      "customer_count": 80000,
+      "residential_avg_rate": 0.1394,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "18997",
+      "utility_name": "The Toledo Edison Co",
+      "state": "MI",
+      "states_served": [
+        "MI"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1729,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "13998",
+      "utility_name": "Ohio Edison Co",
+      "state": "MI",
+      "states_served": [
+        "MI"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2525,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "13756",
+      "utility_name": "Northern Indiana Pub Serv Co",
+      "state": "MI",
+      "states_served": [
+        "MI"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1618,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "10704",
+      "utility_name": "City of Lansing, Michigan (Utility Company)",
+      "state": "MI",
+      "states_served": [
+        "MI"
+      ],
+      "type": "muni",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1279,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "20860",
+      "utility_name": "Wisconsin Public Service Corp",
+      "state": "MI",
+      "states_served": [
+        "MI"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1431,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:12:08.610856"
+}

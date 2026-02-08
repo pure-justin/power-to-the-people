@@ -1,0 +1,34 @@
+{
+  "state": "CO",
+  "state_name": "Colorado",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "both",
+    "typical_fee_range": "$100-$500",
+    "typical_timeline_days": "7-21",
+    "inspection_required": true,
+    "inspection_stages": ["rough-in", "final"],
+    "statewide_permit_program": true,
+    "statewide_program_name": "Colorado DORA + SolarAPP+ partnership - automates electrical plan review for residential solar in 200+ jurisdictions statewide. Permit fees capped at $500 for residential solar."
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": true,
+    "net_metering_details": "Colorado mandates net metering for IOUs and co-ops. Systems up to 120% of annual consumption. Credits at retail rate, rolling monthly, reconciled annually. Xcel Energy is the largest utility and offers solar*rewards community solar program.",
+    "typical_timeline_days": "15-45",
+    "fees": "Xcel Energy: no interconnection fee for systems under 25 kW; other utilities vary"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "Solar access law (CRS 38-30-168). HOAs cannot prohibit solar devices. May impose reasonable restrictions on placement that do not impair functioning or increase cost by more than 10%.",
+    "historic_districts": "Historic districts in Denver, Boulder, and other cities may require additional design review. Certificate of appropriateness may be needed.",
+    "wind_load_requirements": "High wind zones along the Front Range and eastern plains. Design wind speeds 100-130 mph in some areas.",
+    "snow_load_requirements": "Mountain areas have significant snow loads (40-200+ psf ground snow load). Front Range and plains areas typically 25-35 psf. Structural engineering review commonly required."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "No state-specific solar certification; electrical contractor license required with journeyman or residential wireman. Some counties require additional solar-specific training.",
+    "nabcep_required": false
+  },
+  "notes": "Colorado is a solar-friendly state with strong net metering, solar access laws, and the first statewide SolarAPP+ electrical permitting deployment (2025). The DORA partnership covers 200+ jurisdictions for automated electrical plan review. Xcel Energy territory dominates the Front Range market. Mountain communities have unique challenges with snow loads and accessibility. The state has property tax exemption for solar equipment and sales tax exemption in many jurisdictions."
+}

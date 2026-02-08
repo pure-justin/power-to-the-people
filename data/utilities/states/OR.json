@@ -1,0 +1,140 @@
+{
+  "state": "OR",
+  "utility_count": 7,
+  "avg_residential_rate": 0.1281,
+  "eia_state_avg_rate": 0.1199,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "NEM",
+    "export_rate": null
+  },
+  "utilities": [
+    {
+      "utility_id": "15248",
+      "utility_name": "Portland General Electric Co",
+      "state": "OR",
+      "states_served": [
+        "OR"
+      ],
+      "type": "IOU",
+      "customer_count": 900000,
+      "residential_avg_rate": 0.1871,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "14354",
+      "utility_name": "PacifiCorp (Utah)",
+      "state": "OR",
+      "states_served": [
+        "OR"
+      ],
+      "type": "IOU",
+      "customer_count": 600000,
+      "residential_avg_rate": 0.1241,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "9191",
+      "utility_name": "Idaho Power Co",
+      "state": "OR",
+      "states_served": [
+        "OR"
+      ],
+      "type": "IOU",
+      "customer_count": 30000,
+      "residential_avg_rate": 0.198,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "3660",
+      "utility_name": "PUD No 1 of Clark County",
+      "state": "OR",
+      "states_served": [
+        "OR"
+      ],
+      "type": "muni",
+      "customer_count": 0,
+      "residential_avg_rate": 0.0816,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "15500",
+      "utility_name": "Puget Sound Energy Inc",
+      "state": "OR",
+      "states_served": [
+        "OR"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.0987,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "4442",
+      "utility_name": "PUD No 1 of Cowlitz County",
+      "state": "OR",
+      "states_served": [
+        "OR"
+      ],
+      "type": "muni",
+      "customer_count": 0,
+      "residential_avg_rate": 0.0748,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "20169",
+      "utility_name": "Avista Corp",
+      "state": "OR",
+      "states_served": [
+        "OR"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1324,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:13:32.345356"
+}

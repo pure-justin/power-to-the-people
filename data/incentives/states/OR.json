@@ -1,0 +1,70 @@
+{
+  "state": "OR",
+  "state_name": "Oregon",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 4,
+  "incentives": [
+    {
+      "id": "OR_rebate",
+      "state": "OR",
+      "incentive_type": "rebate",
+      "name": "Oregon Utility Solar Rebates",
+      "description": "Portland General Electric: $1,200 rebate. Pacific Power: $900 rebate for residential solar.",
+      "value": "$1,200 (PGE), $900 (Pacific Power)",
+      "value_type": "fixed",
+      "eligibility": "residential",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "PGE / Pacific Power",
+      "source_url": "https://worldpopulationreview.com/state-rankings/solar-incentives-by-state",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "OR_property_tax_exempt",
+      "state": "OR",
+      "incentive_type": "property_tax_exempt",
+      "name": "Oregon Property Tax Exemption for Solar",
+      "description": "Solar energy system value excluded from property tax assessment",
+      "value": "100% of solar system value exempt",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Oregon Department of Revenue",
+      "source_url": "https://worldpopulationreview.com/state-rankings/solar-incentives-by-state",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "OR_sales_tax_exempt",
+      "state": "OR",
+      "incentive_type": "sales_tax_exempt",
+      "name": "Oregon - No State Sales Tax",
+      "description": "Oregon has no state sales tax",
+      "value": "No state sales tax (0%)",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "N/A - no state sales tax",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "OR_net_metering",
+      "state": "OR",
+      "incentive_type": "net_metering",
+      "name": "Oregon Net Metering",
+      "description": "Oregon requires net metering at full retail rate for systems up to 25 kW residential",
+      "value": "Full retail rate credit",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Oregon PUC",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

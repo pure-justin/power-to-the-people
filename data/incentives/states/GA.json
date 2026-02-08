@@ -1,0 +1,40 @@
+{
+  "state": "GA",
+  "state_name": "Georgia",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 2,
+  "incentives": [
+    {
+      "id": "GA_rebate",
+      "state": "GA",
+      "incentive_type": "rebate",
+      "name": "Georgia Utility Solar Rebates",
+      "description": "Some Georgia utilities offer solar rebate programs. Georgia Power has had intermittent solar programs.",
+      "value": "Varies by utility and program availability",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "varies_by_utility",
+      "expiration_date": null,
+      "administering_body": "Georgia Power and other utilities",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "GA_net_metering",
+      "state": "GA",
+      "incentive_type": "net_metering",
+      "name": "Georgia Net Metering (Limited)",
+      "description": "No statewide mandatory net metering. Georgia Power offers limited solar buy-back program.",
+      "value": "Varies - avoided cost rate typical",
+      "value_type": "varies",
+      "eligibility": "residential",
+      "status": "varies_by_utility",
+      "expiration_date": null,
+      "administering_body": "Georgia Public Service Commission",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

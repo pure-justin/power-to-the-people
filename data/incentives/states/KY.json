@@ -1,0 +1,25 @@
+{
+  "state": "KY",
+  "state_name": "Kentucky",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 1,
+  "incentives": [
+    {
+      "id": "KY_net_metering",
+      "state": "KY",
+      "incentive_type": "net_metering",
+      "name": "Kentucky Net Metering",
+      "description": "Kentucky requires net metering for systems up to 45 kW. Excess compensated at avoided cost rate.",
+      "value": "Net metering with avoided cost for excess",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Kentucky Public Service Commission",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

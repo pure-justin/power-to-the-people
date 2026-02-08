@@ -1,0 +1,25 @@
+{
+  "state": "AK",
+  "state_name": "Alaska",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 1,
+  "incentives": [
+    {
+      "id": "AK_net_metering",
+      "state": "AK",
+      "incentive_type": "net_metering",
+      "name": "Alaska Net Metering",
+      "description": "Alaska requires utilities to offer net metering. Credits carry over indefinitely.",
+      "value": "Full retail rate credit, indefinite rollover",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Regulatory Commission of Alaska",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

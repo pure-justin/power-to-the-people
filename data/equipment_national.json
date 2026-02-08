@@ -958,6 +958,1023 @@
       "availability_notes": "DISCONTINUED as of April 2025. Remaining distributor inventory may be available but no new production. Panasonic committed to long-term warranty support. Available in 9, 13.5, and 18 kWh configurations. Do NOT specify for new installations."
     }
   ],
+  "optimizers": [
+    {
+      "id": "solaredge-p505",
+      "type": "optimizer",
+      "manufacturer": "SolarEdge",
+      "model": "P505",
+      "description": "Module-level power optimizer for residential and commercial PV systems. Pairs with SolarEdge string inverters for MLPE (module-level power electronics) compliance.",
+      "specs": {
+        "max_input_power_w": 505,
+        "max_output_voltage_v": 60,
+        "max_output_current_a": 12.5,
+        "peak_efficiency_pct": 99.5,
+        "cec_weighted_efficiency_pct": 99.0,
+        "input_voltage_range_v": "8-96 VDC",
+        "operating_temp_range_c": "-40 to 85",
+        "dimensions_mm": "190 x 150 x 31",
+        "weight_kg": 0.68,
+        "compatibility": "SolarEdge Home Hub and commercial inverters",
+        "rapid_shutdown_compliant": true,
+        "nec_2020_compliant": true
+      },
+      "supply_chain": {
+        "assembly_location": "China / Israel",
+        "component_origin": "Mixed (China, Israel, global)",
+        "pfe_percentage": 0,
+        "us_content_percentage": 0,
+        "uflpa_status": "compliant"
+      },
+      "pricing": {
+        "wholesale_per_unit": 38,
+        "unit": "each",
+        "price_updated": "2026-02",
+        "distributor_availability": "Widely available through CED Greentech, BayWa r.e., Soligent"
+      },
+      "feoc_compliant": true,
+      "domestic_content_eligible": false,
+      "tariff_safe": true,
+      "search_text": "solaredge p505 optimizer 505w 60v mlpe module-level power electronics residential commercial",
+      "tags": ["optimizer", "mlpe", "solaredge", "residential", "commercial", "rapid_shutdown"]
+    },
+    {
+      "id": "solaredge-p960",
+      "type": "optimizer",
+      "manufacturer": "SolarEdge",
+      "model": "P960",
+      "description": "2-in-1 commercial power optimizer handling two modules per unit. Reduces installation time and cost for commercial rooftop and ground-mount systems.",
+      "specs": {
+        "max_input_power_w": 960,
+        "max_output_voltage_v": 125,
+        "max_output_current_a": 15,
+        "peak_efficiency_pct": 99.5,
+        "cec_weighted_efficiency_pct": 99.0,
+        "input_voltage_range_v": "12.5-125 VDC (per input)",
+        "operating_temp_range_c": "-40 to 85",
+        "dimensions_mm": "240 x 178 x 31",
+        "weight_kg": 1.05,
+        "compatibility": "SolarEdge commercial three-phase inverters",
+        "inputs_per_unit": 2,
+        "rapid_shutdown_compliant": true,
+        "nec_2020_compliant": true
+      },
+      "supply_chain": {
+        "assembly_location": "China / Israel",
+        "component_origin": "Mixed (China, Israel, global)",
+        "pfe_percentage": 0,
+        "us_content_percentage": 0,
+        "uflpa_status": "compliant"
+      },
+      "pricing": {
+        "wholesale_per_unit": 55,
+        "unit": "each",
+        "price_updated": "2026-02",
+        "distributor_availability": "Available through commercial solar distributors"
+      },
+      "feoc_compliant": true,
+      "domestic_content_eligible": false,
+      "tariff_safe": true,
+      "search_text": "solaredge p960 2-in-1 commercial optimizer 960w dual input",
+      "tags": ["optimizer", "mlpe", "solaredge", "commercial", "2-in-1", "dual"]
+    },
+    {
+      "id": "tigo-ts4-a-2f",
+      "type": "optimizer",
+      "manufacturer": "Tigo Energy",
+      "model": "TS4-A-2F",
+      "description": "Flex MLPE module-level power electronics unit providing optimization, monitoring, and NEC 2020 rapid shutdown compliance. Compatible with any string inverter brand.",
+      "specs": {
+        "max_input_power_w": 700,
+        "max_output_voltage_v": 60,
+        "max_output_current_a": 15,
+        "peak_efficiency_pct": 99.5,
+        "cec_weighted_efficiency_pct": 99.0,
+        "input_voltage_range_v": "16-80 VDC",
+        "operating_temp_range_c": "-40 to 85",
+        "dimensions_mm": "153 x 148 x 26",
+        "weight_kg": 0.40,
+        "compatibility": "Universal — works with any string inverter (SMA, Fronius, Sol-Ark, etc.)",
+        "rapid_shutdown_compliant": true,
+        "nec_2020_compliant": true,
+        "features": ["optimization", "monitoring", "rapid_shutdown", "safety"]
+      },
+      "supply_chain": {
+        "assembly_location": "China",
+        "component_origin": "China",
+        "pfe_percentage": 0,
+        "us_content_percentage": 0,
+        "uflpa_status": "compliant"
+      },
+      "pricing": {
+        "wholesale_per_unit": 32,
+        "unit": "each",
+        "price_updated": "2026-02",
+        "distributor_availability": "Available through major solar distributors"
+      },
+      "feoc_compliant": true,
+      "domestic_content_eligible": false,
+      "tariff_safe": true,
+      "search_text": "tigo ts4-a-2f flex mlpe optimizer 700w universal rapid shutdown nec 2020",
+      "tags": ["optimizer", "mlpe", "tigo", "universal", "flex", "rapid_shutdown"]
+    },
+    {
+      "id": "tigo-ts4-a-o",
+      "type": "optimizer",
+      "manufacturer": "Tigo Energy",
+      "model": "TS4-A-O",
+      "description": "Optimization-only MLPE unit providing per-module maximum power point tracking. Pairs with Tigo CCA or TAP for monitoring. Compatible with any string inverter.",
+      "specs": {
+        "max_input_power_w": 700,
+        "max_output_voltage_v": 60,
+        "max_output_current_a": 15,
+        "peak_efficiency_pct": 99.5,
+        "cec_weighted_efficiency_pct": 99.0,
+        "input_voltage_range_v": "16-80 VDC",
+        "operating_temp_range_c": "-40 to 85",
+        "dimensions_mm": "153 x 148 x 26",
+        "weight_kg": 0.40,
+        "compatibility": "Universal — works with any string inverter",
+        "rapid_shutdown_compliant": false,
+        "features": ["optimization"]
+      },
+      "supply_chain": {
+        "assembly_location": "China",
+        "component_origin": "China",
+        "pfe_percentage": 0,
+        "us_content_percentage": 0,
+        "uflpa_status": "compliant"
+      },
+      "pricing": {
+        "wholesale_per_unit": 25,
+        "unit": "each",
+        "price_updated": "2026-02",
+        "distributor_availability": "Available through major solar distributors"
+      },
+      "feoc_compliant": true,
+      "domestic_content_eligible": false,
+      "tariff_safe": true,
+      "search_text": "tigo ts4-a-o optimization only mlpe 700w universal string inverter",
+      "tags": ["optimizer", "mlpe", "tigo", "universal", "optimization_only"]
+    }
+  ],
+  "racking": [
+    {
+      "id": "ironridge-xr100",
+      "type": "racking",
+      "manufacturer": "IronRidge",
+      "model": "XR100",
+      "description": "Standard-duty residential roof rail for flush-mount solar installations. Most popular residential racking rail in the US market.",
+      "specs": {
+        "rail_type": "standard",
+        "material": "6005-T5 Anodized Aluminum",
+        "max_load_psf": 45,
+        "span_ft": "Up to 6 ft between attachments",
+        "rail_height_in": 1.75,
+        "rail_width_in": 1.75,
+        "lengths_available_ft": [11, 14, 17],
+        "finish": "Clear anodized",
+        "compatible_roof_types": ["composition shingle", "tile", "metal"],
+        "ul_listed": true,
+        "wind_speed_rating_mph": 150,
+        "snow_load_psf": 45
+      },
+      "supply_chain": {
+        "assembly_location": "USA (Hayward, CA — designed; extrusion varies)",
+        "component_origin": "Aluminum extruded in USA and Canada",
+        "pfe_percentage": 0,
+        "us_content_percentage": 85,
+        "uflpa_status": "compliant"
+      },
+      "pricing": {
+        "wholesale_per_unit": 2.10,
+        "unit": "foot",
+        "price_updated": "2026-02",
+        "distributor_availability": "Widely available — CED, BayWa, Soligent, City Electric Supply"
+      },
+      "feoc_compliant": true,
+      "domestic_content_eligible": true,
+      "tariff_safe": true,
+      "search_text": "ironridge xr100 standard rail racking residential flush mount aluminum 45psf",
+      "tags": ["racking", "rail", "ironridge", "residential", "roof_mount", "aluminum"]
+    },
+    {
+      "id": "ironridge-xr1000",
+      "type": "racking",
+      "manufacturer": "IronRidge",
+      "model": "XR1000",
+      "description": "Heavy-duty rail for high-load installations including commercial rooftops and areas with extreme snow/wind. Designed for the largest residential and commercial panels.",
+      "specs": {
+        "rail_type": "heavy_duty",
+        "material": "6005-T5 Anodized Aluminum",
+        "max_load_psf": 60,
+        "span_ft": "Up to 6 ft between attachments",
+        "rail_height_in": 2.25,
+        "rail_width_in": 2.0,
+        "lengths_available_ft": [11, 14, 17],
+        "finish": "Clear anodized",
+        "compatible_roof_types": ["composition shingle", "tile", "metal", "flat_roof"],
+        "ul_listed": true,
+        "wind_speed_rating_mph": 180,
+        "snow_load_psf": 60
+      },
+      "supply_chain": {
+        "assembly_location": "USA (Hayward, CA — designed; extrusion varies)",
+        "component_origin": "Aluminum extruded in USA and Canada",
+        "pfe_percentage": 0,
+        "us_content_percentage": 85,
+        "uflpa_status": "compliant"
+      },
+      "pricing": {
+        "wholesale_per_unit": 3.20,
+        "unit": "foot",
+        "price_updated": "2026-02",
+        "distributor_availability": "Available through commercial solar distributors"
+      },
+      "feoc_compliant": true,
+      "domestic_content_eligible": true,
+      "tariff_safe": true,
+      "search_text": "ironridge xr1000 heavy duty rail racking commercial 60psf high wind snow load",
+      "tags": ["racking", "rail", "ironridge", "commercial", "heavy_duty", "high_load"]
+    },
+    {
+      "id": "unirac-solarmount",
+      "type": "racking",
+      "manufacturer": "Unirac",
+      "model": "SolarMount",
+      "description": "Flush-mount racking system for pitched roofs. Universal module compatibility. ARRA-compliant US-manufactured product.",
+      "specs": {
+        "rail_type": "flush_mount",
+        "material": "6063-T6 Anodized Aluminum",
+        "max_load_psf": 50,
+        "span_ft": "Up to 6 ft between attachments",
+        "rail_height_in": 2.0,
+        "lengths_available_ft": [10, 14, 18],
+        "finish": "Clear anodized",
+        "compatible_roof_types": ["composition shingle", "tile", "metal"],
+        "ul_listed": true,
+        "arra_compliant": true,
+        "wind_speed_rating_mph": 160,
+        "snow_load_psf": 50
+      },
+      "supply_chain": {
+        "assembly_location": "Albuquerque, NM, USA",
+        "component_origin": "US-manufactured aluminum extrusions",
+        "pfe_percentage": 0,
+        "us_content_percentage": 90,
+        "uflpa_status": "compliant"
+      },
+      "pricing": {
+        "wholesale_per_unit": 2.30,
+        "unit": "foot",
+        "price_updated": "2026-02",
+        "distributor_availability": "Available through major solar distributors. Strong in Southwest and Texas markets."
+      },
+      "feoc_compliant": true,
+      "domestic_content_eligible": true,
+      "tariff_safe": true,
+      "search_text": "unirac solarmount flush mount racking 50psf albuquerque nm us manufactured arra",
+      "tags": ["racking", "rail", "unirac", "residential", "flush_mount", "arra_compliant", "us_made"]
+    },
+    {
+      "id": "snapnrack-series-100",
+      "type": "racking",
+      "manufacturer": "SnapNrack",
+      "model": "Series 100",
+      "description": "Residential racking system with tool-free snap-in module mounting. Integrated wire management and grounding. Designed for fastest residential installation times.",
+      "specs": {
+        "rail_type": "snap_mount",
+        "material": "Anodized Aluminum",
+        "max_load_psf": 45,
+        "span_ft": "Up to 5.5 ft between attachments",
+        "rail_height_in": 1.75,
+        "lengths_available_ft": [9.33, 13, 16.33],
+        "finish": "Black or clear anodized",
+        "compatible_roof_types": ["composition shingle", "tile"],
+        "ul_listed": true,
+        "integrated_grounding": true,
+        "integrated_wire_management": true,
+        "tool_free_module_attachment": true
+      },
+      "supply_chain": {
+        "assembly_location": "USA",
+        "component_origin": "USA and imported aluminum",
+        "pfe_percentage": 0,
+        "us_content_percentage": 70,
+        "uflpa_status": "compliant"
+      },
+      "pricing": {
+        "wholesale_per_unit": 2.50,
+        "unit": "foot",
+        "price_updated": "2026-02",
+        "distributor_availability": "Available through residential solar distributors"
+      },
+      "feoc_compliant": true,
+      "domestic_content_eligible": true,
+      "tariff_safe": true,
+      "search_text": "snapnrack series 100 residential racking snap mount tool free integrated grounding wire management",
+      "tags": ["racking", "rail", "snapnrack", "residential", "snap_mount", "tool_free"]
+    },
+    {
+      "id": "quick-mount-pv-qbase",
+      "type": "racking",
+      "manufacturer": "Quick Mount PV (Quickbase Solar)",
+      "model": "QBase Comp",
+      "description": "Composition shingle roof attachment with patented flashing for waterproof solar mounting. Industry-leading waterproofing system. Mounts directly to rafters under shingles.",
+      "specs": {
+        "mount_type": "roof_attachment",
+        "material": "Aluminum base with stainless steel hardware",
+        "compatible_roof_types": ["composition_shingle"],
+        "waterproofing": "Patented Elevated Water Seal (EWS) technology",
+        "load_capacity_lbs": 500,
+        "compatible_rails": ["IronRidge XR100/XR1000", "Unirac SolarMount", "SnapNrack"],
+        "ul_listed": true,
+        "icc_approved": true,
+        "lag_bolt_size": "5/16 x 4 stainless steel",
+        "flashing_material": "Aluminum"
+      },
+      "supply_chain": {
+        "assembly_location": "Walnut Creek, CA, USA",
+        "component_origin": "USA",
+        "pfe_percentage": 0,
+        "us_content_percentage": 95,
+        "uflpa_status": "compliant"
+      },
+      "pricing": {
+        "wholesale_per_unit": 12.50,
+        "unit": "each",
+        "price_updated": "2026-02",
+        "distributor_availability": "Widely available. Standard component in most residential installations."
+      },
+      "feoc_compliant": true,
+      "domestic_content_eligible": true,
+      "tariff_safe": true,
+      "search_text": "quick mount pv qbase comp composition shingle roof attachment flashing waterproof ews",
+      "tags": ["racking", "roof_attachment", "quick_mount", "residential", "waterproof", "flashing", "us_made"]
+    }
+  ],
+  "rapid_shutdown": [
+    {
+      "id": "tigo-ts4-r-f",
+      "type": "rapid_shutdown",
+      "manufacturer": "Tigo Energy",
+      "model": "TS4-R-F",
+      "description": "Module-level rapid shutdown device providing NEC 2020 compliant shutdown to less than 80V within 30 seconds. Compatible with any string inverter. No optimization — shutdown and monitoring only.",
+      "specs": {
+        "max_input_power_w": 700,
+        "max_input_voltage_v": 80,
+        "max_input_current_a": 15,
+        "shutdown_voltage_v": "Less than 1V per module within 30 seconds",
+        "nec_2017_compliant": true,
+        "nec_2020_compliant": true,
+        "communication": "Wireless (PLC) to Tigo TAP or CCA",
+        "compatibility": "Universal — works with any string inverter",
+        "operating_temp_range_c": "-40 to 85",
+        "dimensions_mm": "153 x 148 x 26",
+        "weight_kg": 0.40,
+        "ip_rating": "IP68",
+        "features": ["rapid_shutdown", "monitoring"]
+      },
+      "supply_chain": {
+        "assembly_location": "China",
+        "component_origin": "China",
+        "pfe_percentage": 0,
+        "us_content_percentage": 0,
+        "uflpa_status": "compliant"
+      },
+      "pricing": {
+        "wholesale_per_unit": 22,
+        "unit": "each",
+        "price_updated": "2026-02",
+        "distributor_availability": "Widely available through solar distributors"
+      },
+      "feoc_compliant": true,
+      "domestic_content_eligible": false,
+      "tariff_safe": true,
+      "search_text": "tigo ts4-r-f rapid shutdown nec 2020 module level universal string inverter",
+      "tags": ["rapid_shutdown", "tigo", "nec_2020", "universal", "module_level"]
+    },
+    {
+      "id": "apsmart-rsd-s-20",
+      "type": "rapid_shutdown",
+      "manufacturer": "APsmart (Tigo subsidiary)",
+      "model": "RSD-S-20",
+      "description": "Module-level rapid shutdown device. NEC 2020 compliant. Budget-friendly option for retrofitting string inverter systems with rapid shutdown compliance.",
+      "specs": {
+        "max_input_power_w": 500,
+        "max_input_voltage_v": 65,
+        "max_input_current_a": 20,
+        "shutdown_voltage_v": "Less than 1V per module within 30 seconds",
+        "nec_2017_compliant": true,
+        "nec_2020_compliant": true,
+        "communication": "PLC to transmitter",
+        "compatibility": "Universal — any string inverter",
+        "operating_temp_range_c": "-40 to 85",
+        "dimensions_mm": "126 x 95 x 20",
+        "weight_kg": 0.24,
+        "ip_rating": "IP67"
+      },
+      "supply_chain": {
+        "assembly_location": "China",
+        "component_origin": "China",
+        "pfe_percentage": 0,
+        "us_content_percentage": 0,
+        "uflpa_status": "compliant"
+      },
+      "pricing": {
+        "wholesale_per_unit": 15,
+        "unit": "each",
+        "price_updated": "2026-02",
+        "distributor_availability": "Available through solar distributors. Budget option."
+      },
+      "feoc_compliant": true,
+      "domestic_content_eligible": false,
+      "tariff_safe": true,
+      "search_text": "apsmart rsd-s-20 rapid shutdown nec 2020 module level budget retrofit",
+      "tags": ["rapid_shutdown", "apsmart", "nec_2020", "budget", "retrofit", "module_level"]
+    },
+    {
+      "id": "solaredge-integrated-rsd",
+      "type": "rapid_shutdown",
+      "manufacturer": "SolarEdge",
+      "model": "Integrated (via P-series Optimizers)",
+      "description": "SolarEdge power optimizers (P505, P960, etc.) provide built-in NEC 2020 rapid shutdown compliance. No separate rapid shutdown device needed when using SolarEdge system.",
+      "specs": {
+        "shutdown_voltage_v": "1V per optimizer within 30 seconds",
+        "nec_2017_compliant": true,
+        "nec_2020_compliant": true,
+        "communication": "SafeDC built into optimizer",
+        "compatibility": "SolarEdge inverters only",
+        "notes": "Not a standalone product — rapid shutdown is integrated into every SolarEdge optimizer. Listed here for reference."
+      },
+      "supply_chain": {
+        "assembly_location": "China / Israel",
+        "component_origin": "Mixed",
+        "pfe_percentage": 0,
+        "us_content_percentage": 0,
+        "uflpa_status": "compliant"
+      },
+      "pricing": {
+        "wholesale_per_unit": 0,
+        "unit": "each",
+        "price_updated": "2026-02",
+        "distributor_availability": "Included with SolarEdge optimizer purchase. No additional cost."
+      },
+      "feoc_compliant": true,
+      "domestic_content_eligible": false,
+      "tariff_safe": true,
+      "search_text": "solaredge integrated rapid shutdown safedc optimizer built-in nec 2020",
+      "tags": ["rapid_shutdown", "solaredge", "integrated", "safedc", "nec_2020"]
+    }
+  ],
+  "electrical_bos": [
+    {
+      "id": "eaton-ch42b200k",
+      "type": "electrical_bos",
+      "manufacturer": "Eaton",
+      "model": "CH42B200K",
+      "description": "200A main breaker load center, 42 spaces / 42 circuits. Standard residential main panel for solar + battery installations. CH series is most common in residential construction.",
+      "specs": {
+        "amperage_a": 200,
+        "spaces": 42,
+        "circuits": 42,
+        "voltage": "120/240 VAC",
+        "phase": "Single-phase",
+        "bus_material": "Copper",
+        "enclosure_type": "Indoor flush/surface mount",
+        "main_breaker_included": true,
+        "compatible_breakers": "Eaton CH series (full-size and tandem)",
+        "ul_listed": true,
+        "dimensions_in": "35.75 x 15.56 x 4.0",
+        "solar_ready": true
+      },
+      "supply_chain": {
+        "assembly_location": "USA (multiple Eaton manufacturing sites)",
+        "component_origin": "USA and Mexico",
+        "pfe_percentage": 0,
+        "us_content_percentage": 75,
+        "uflpa_status": "compliant"
+      },
+      "pricing": {
+        "wholesale_per_unit": 165,
+        "unit": "each",
+        "price_updated": "2026-02",
+        "distributor_availability": "Widely available — Home Depot, Lowe's, electrical supply houses"
+      },
+      "feoc_compliant": true,
+      "domestic_content_eligible": true,
+      "tariff_safe": true,
+      "search_text": "eaton ch42b200k 200a main breaker load center 42 space residential panel solar ready",
+      "tags": ["electrical_bos", "load_center", "eaton", "200a", "residential", "main_panel"]
+    },
+    {
+      "id": "midnite-solar-mnpv6",
+      "type": "electrical_bos",
+      "manufacturer": "Midnite Solar",
+      "model": "MNPV6",
+      "description": "6-circuit PV combiner box for combining multiple solar string inputs. NEMA 3R rated for outdoor installation. Uses standard fuses for overcurrent protection.",
+      "specs": {
+        "circuits": 6,
+        "max_voltage_vdc": 600,
+        "max_current_per_string_a": 15,
+        "max_total_current_a": 90,
+        "fuse_type": "Midnite Solar MNTS series (15A, 20A, 30A)",
+        "enclosure_rating": "NEMA 3R (outdoor rated)",
+        "material": "Powder-coated aluminum",
+        "ground_bus_included": true,
+        "ul_listed": true,
+        "compatible_with": "All string inverters"
+      },
+      "supply_chain": {
+        "assembly_location": "Arlington, WA, USA",
+        "component_origin": "USA",
+        "pfe_percentage": 0,
+        "us_content_percentage": 90,
+        "uflpa_status": "compliant"
+      },
+      "pricing": {
+        "wholesale_per_unit": 110,
+        "unit": "each",
+        "price_updated": "2026-02",
+        "distributor_availability": "Available through solar distributors and online retailers"
+      },
+      "feoc_compliant": true,
+      "domestic_content_eligible": true,
+      "tariff_safe": true,
+      "search_text": "midnite solar mnpv6 pv combiner box 6 circuit 600v outdoor nema 3r string",
+      "tags": ["electrical_bos", "combiner_box", "midnite_solar", "pv_combiner", "us_made"]
+    },
+    {
+      "id": "midnite-solar-mndisco",
+      "type": "electrical_bos",
+      "manufacturer": "Midnite Solar",
+      "model": "MNDISCO",
+      "description": "AC disconnect switch for solar installations. Required by most utilities between inverter and utility meter. NEMA 3R outdoor rated.",
+      "specs": {
+        "type": "AC disconnect",
+        "rated_voltage_v": "240 VAC",
+        "rated_current_a": 60,
+        "poles": 2,
+        "enclosure_rating": "NEMA 3R",
+        "operation": "Non-fused disconnect",
+        "lockable": true,
+        "ul_listed": true,
+        "utility_visible": true
+      },
+      "supply_chain": {
+        "assembly_location": "Arlington, WA, USA",
+        "component_origin": "USA",
+        "pfe_percentage": 0,
+        "us_content_percentage": 90,
+        "uflpa_status": "compliant"
+      },
+      "pricing": {
+        "wholesale_per_unit": 55,
+        "unit": "each",
+        "price_updated": "2026-02",
+        "distributor_availability": "Widely available through solar and electrical distributors"
+      },
+      "feoc_compliant": true,
+      "domestic_content_eligible": true,
+      "tariff_safe": true,
+      "search_text": "midnite solar mndisco ac disconnect switch 60a 240v nema 3r utility lockable",
+      "tags": ["electrical_bos", "ac_disconnect", "midnite_solar", "utility", "safety", "us_made"]
+    },
+    {
+      "id": "burndy-lay-in-lug",
+      "type": "electrical_bos",
+      "manufacturer": "Burndy (Hubbell)",
+      "model": "KA4/0CL",
+      "description": "Lay-in grounding lug for solar system grounding connections. UL-listed for direct burial and outdoor use. Industry standard for equipment grounding conductor (EGC) connections.",
+      "specs": {
+        "type": "grounding_lug",
+        "conductor_range_awg": "#14 - 4/0",
+        "material": "Tin-plated copper alloy",
+        "bolt_size": "3/8 inch",
+        "ul_listed": true,
+        "suitable_for": "Equipment grounding, panel frame grounding, racking grounding",
+        "direct_burial_rated": true
+      },
+      "supply_chain": {
+        "assembly_location": "USA (Hubbell facilities)",
+        "component_origin": "USA",
+        "pfe_percentage": 0,
+        "us_content_percentage": 95,
+        "uflpa_status": "compliant"
+      },
+      "pricing": {
+        "wholesale_per_unit": 4.50,
+        "unit": "each",
+        "price_updated": "2026-02",
+        "distributor_availability": "Widely available through electrical supply houses"
+      },
+      "feoc_compliant": true,
+      "domestic_content_eligible": true,
+      "tariff_safe": true,
+      "search_text": "burndy hubbell ka4/0cl lay-in grounding lug copper solar equipment ground egc",
+      "tags": ["electrical_bos", "grounding", "burndy", "lug", "copper", "us_made"]
+    },
+    {
+      "id": "square-d-qo130l200pg",
+      "type": "electrical_bos",
+      "manufacturer": "Square D (Schneider Electric)",
+      "model": "QO130L200PG",
+      "description": "200A main lug load center, 30 spaces / 30 circuits. QO series is the industry standard for residential panels. Generator-ready with built-in interlock provisions.",
+      "specs": {
+        "amperage_a": 200,
+        "spaces": 30,
+        "circuits": 30,
+        "voltage": "120/240 VAC",
+        "phase": "Single-phase",
+        "bus_material": "Copper",
+        "enclosure_type": "Indoor flush/surface mount",
+        "main_lug_only": true,
+        "compatible_breakers": "Square D QO series",
+        "ul_listed": true,
+        "generator_ready": true,
+        "dimensions_in": "29.75 x 15.44 x 3.75"
+      },
+      "supply_chain": {
+        "assembly_location": "USA (Schneider Electric, multiple US plants)",
+        "component_origin": "USA and Mexico",
+        "pfe_percentage": 0,
+        "us_content_percentage": 70,
+        "uflpa_status": "compliant"
+      },
+      "pricing": {
+        "wholesale_per_unit": 135,
+        "unit": "each",
+        "price_updated": "2026-02",
+        "distributor_availability": "Widely available — Home Depot, Lowe's, electrical supply houses"
+      },
+      "feoc_compliant": true,
+      "domestic_content_eligible": true,
+      "tariff_safe": true,
+      "search_text": "square d qo130l200pg 200a main lug load center 30 space qo residential generator ready",
+      "tags": ["electrical_bos", "load_center", "square_d", "200a", "residential", "generator_ready"]
+    }
+  ],
+  "monitoring": [
+    {
+      "id": "enphase-envoy-s",
+      "type": "monitoring",
+      "manufacturer": "Enphase Energy",
+      "model": "IQ Gateway (Envoy-S Metered)",
+      "description": "System communication gateway for Enphase microinverter and battery systems. Provides module-level monitoring, production/consumption metering, and Enphase App connectivity. Required component for all Enphase systems.",
+      "specs": {
+        "communication": "WiFi, Ethernet, Cellular (optional)",
+        "monitoring_level": "Module-level (per-microinverter)",
+        "metering": "Production and consumption CT metering built-in",
+        "ct_sensors_included": 2,
+        "max_microinverters": 800,
+        "display": "LED status indicators",
+        "app": "Enphase Enlighten (iOS/Android/Web)",
+        "data_logging_interval_min": 5,
+        "dimensions_in": "10.06 x 6.25 x 1.22",
+        "weight_lbs": 1.3,
+        "operating_temp_f": "-40 to 140",
+        "power_consumption_w": 7
+      },
+      "supply_chain": {
+        "assembly_location": "USA (contract manufacturing)",
+        "component_origin": "Mixed",
+        "pfe_percentage": 0,
+        "us_content_percentage": 50,
+        "uflpa_status": "compliant"
+      },
+      "pricing": {
+        "wholesale_per_unit": 350,
+        "unit": "each",
+        "price_updated": "2026-02",
+        "distributor_availability": "Included in Enphase system pricing or available separately. Required for all Enphase installations."
+      },
+      "feoc_compliant": true,
+      "domestic_content_eligible": true,
+      "tariff_safe": true,
+      "search_text": "enphase envoy-s iq gateway monitoring module level consumption production metering enlighten app",
+      "tags": ["monitoring", "enphase", "gateway", "module_level", "metering", "app"]
+    },
+    {
+      "id": "sense-solar",
+      "type": "monitoring",
+      "manufacturer": "Sense",
+      "model": "Sense Solar",
+      "description": "Whole-home energy monitor with solar production monitoring. Uses CT clamps on main panel to detect and identify individual appliance energy usage via machine learning. Adds solar monitoring to any system.",
+      "specs": {
+        "communication": "WiFi",
+        "monitoring_level": "Whole-home + solar production",
+        "metering": "Production and consumption via CTs",
+        "ct_sensors_included": 4,
+        "device_detection": "Machine learning appliance identification (up to 30+ devices)",
+        "app": "Sense (iOS/Android)",
+        "data_logging_interval_sec": 1,
+        "voltage_monitoring": true,
+        "compatible_panels": "Any 120/240V split-phase",
+        "dimensions_in": "3.2 x 5.0 x 1.0",
+        "weight_lbs": 0.5,
+        "power_consumption_w": 5,
+        "smart_home_integrations": ["Alexa", "Google Home", "Philips Hue", "TP-Link/Kasa"]
+      },
+      "supply_chain": {
+        "assembly_location": "China",
+        "component_origin": "China",
+        "pfe_percentage": 0,
+        "us_content_percentage": 0,
+        "uflpa_status": "compliant"
+      },
+      "pricing": {
+        "wholesale_per_unit": 249,
+        "unit": "each",
+        "price_updated": "2026-02",
+        "distributor_availability": "Available on Amazon, direct from Sense, Home Depot. Consumer product — not through solar distributors."
+      },
+      "feoc_compliant": true,
+      "domestic_content_eligible": false,
+      "tariff_safe": true,
+      "search_text": "sense solar whole home energy monitor ct clamp appliance detection machine learning wifi",
+      "tags": ["monitoring", "sense", "whole_home", "appliance_detection", "consumer", "ct_clamp"]
+    },
+    {
+      "id": "emporia-vue-gen2",
+      "type": "monitoring",
+      "manufacturer": "Emporia Energy",
+      "model": "Vue Gen 2 (16 Circuit)",
+      "description": "Circuit-level energy monitor tracking up to 16 individual circuits plus mains. Identifies energy usage by circuit (not appliance ML). Popular budget alternative for detailed energy monitoring.",
+      "specs": {
+        "communication": "WiFi",
+        "monitoring_level": "Circuit-level (16 circuits) + 2 mains",
+        "metering": "200A main CTs + 50A circuit CTs",
+        "ct_sensors_included": 18,
+        "max_circuits_monitored": 16,
+        "app": "Emporia Energy (iOS/Android)",
+        "data_logging_interval_sec": 1,
+        "solar_monitoring": true,
+        "utility_rate_tracking": true,
+        "dimensions_in": "4.52 x 2.95 x 0.83",
+        "weight_lbs": 0.3,
+        "power_consumption_w": 3,
+        "smart_home_integrations": ["Alexa", "Google Home"]
+      },
+      "supply_chain": {
+        "assembly_location": "China",
+        "component_origin": "China",
+        "pfe_percentage": 0,
+        "us_content_percentage": 0,
+        "uflpa_status": "compliant"
+      },
+      "pricing": {
+        "wholesale_per_unit": 120,
+        "unit": "each",
+        "price_updated": "2026-02",
+        "distributor_availability": "Available on Amazon, direct from Emporia. Consumer product. Also sold through Home Depot."
+      },
+      "feoc_compliant": true,
+      "domestic_content_eligible": false,
+      "tariff_safe": true,
+      "search_text": "emporia vue gen 2 circuit level energy monitor 16 circuit ct clamp budget solar",
+      "tags": ["monitoring", "emporia", "circuit_level", "budget", "consumer", "16_circuit"]
+    },
+    {
+      "id": "solaredge-setapp",
+      "type": "monitoring",
+      "manufacturer": "SolarEdge",
+      "model": "SetApp Monitoring (via Home Hub Inverter)",
+      "description": "Built-in monitoring platform in all SolarEdge inverters. Provides module-level monitoring (via optimizers), production/consumption data, and SolarEdge mySolarEdge app. No separate monitoring device needed.",
+      "specs": {
+        "communication": "WiFi, Ethernet, Cellular (optional add-on)",
+        "monitoring_level": "Module-level (via power optimizers)",
+        "metering": "Production built-in, consumption via optional CT meter",
+        "app": "mySolarEdge (iOS/Android/Web)",
+        "data_logging_interval_min": 15,
+        "commissioning": "SetApp smartphone-based commissioning",
+        "notes": "Not a standalone product — monitoring is integrated into SolarEdge inverter. Listed here for reference."
+      },
+      "supply_chain": {
+        "assembly_location": "Austin, TX, USA (inverter)",
+        "component_origin": "Mixed (Israel/China/USA)",
+        "pfe_percentage": 0,
+        "us_content_percentage": 50,
+        "uflpa_status": "compliant"
+      },
+      "pricing": {
+        "wholesale_per_unit": 0,
+        "unit": "each",
+        "price_updated": "2026-02",
+        "distributor_availability": "Included with SolarEdge inverter purchase. No additional cost."
+      },
+      "feoc_compliant": true,
+      "domestic_content_eligible": true,
+      "tariff_safe": true,
+      "search_text": "solaredge setapp monitoring mysolaredge app module level optimizer integrated",
+      "tags": ["monitoring", "solaredge", "integrated", "module_level", "setapp", "app"]
+    }
+  ],
+  "ev_chargers": [
+    {
+      "id": "wallbox-pulsar-plus-48a",
+      "type": "ev_charger",
+      "manufacturer": "Wallbox",
+      "model": "Pulsar Plus 48A",
+      "description": "Smart Level 2 EV charger with 48A output (11.5 kW). WiFi/Bluetooth connected with app scheduling, load management, and energy reporting. Compact design for residential garages.",
+      "specs": {
+        "max_amperage_a": 48,
+        "max_power_kw": 11.5,
+        "voltage": "240 VAC",
+        "connector_type": "SAE J1772 (NACS adapter available)",
+        "cable_length_ft": 25,
+        "communication": "WiFi, Bluetooth",
+        "app": "myWallbox (iOS/Android)",
+        "smart_features": ["Scheduling", "Load management", "Energy reporting", "OCPP compatible"],
+        "nema_rating": "NEMA 4 (indoor/outdoor)",
+        "dimensions_in": "7.87 x 7.87 x 3.35",
+        "weight_lbs": 12.6,
+        "energy_star_certified": true,
+        "ul_listed": true
+      },
+      "supply_chain": {
+        "assembly_location": "Arlington, TX, USA",
+        "component_origin": "Mixed (Spain/China/USA)",
+        "pfe_percentage": 0,
+        "us_content_percentage": 40,
+        "uflpa_status": "compliant"
+      },
+      "pricing": {
+        "wholesale_per_unit": 499,
+        "unit": "each",
+        "price_updated": "2026-02",
+        "distributor_availability": "Available direct, Amazon, Home Depot, electrical distributors"
+      },
+      "feoc_compliant": true,
+      "domestic_content_eligible": false,
+      "tariff_safe": true,
+      "search_text": "wallbox pulsar plus 48a 11.5kw smart ev charger level 2 wifi j1772 residential",
+      "tags": ["ev_charger", "wallbox", "level_2", "48a", "smart", "residential", "j1772"]
+    },
+    {
+      "id": "emporia-smart-evse-48a",
+      "type": "ev_charger",
+      "manufacturer": "Emporia Energy",
+      "model": "EV Charger (48A)",
+      "description": "Smart Level 2 EV charger with 48A output and WiFi connectivity. Integrates with Emporia Vue energy monitor for solar-aware EV charging. Budget-friendly smart charger.",
+      "specs": {
+        "max_amperage_a": 48,
+        "max_power_kw": 11.5,
+        "voltage": "240 VAC",
+        "connector_type": "SAE J1772",
+        "cable_length_ft": 24,
+        "communication": "WiFi",
+        "app": "Emporia Energy (iOS/Android)",
+        "smart_features": ["Scheduling", "Solar surplus charging (with Vue)", "Load management", "Utility rate awareness"],
+        "nema_rating": "NEMA 4 (indoor/outdoor)",
+        "dimensions_in": "6.5 x 6.5 x 3.1",
+        "weight_lbs": 9.8,
+        "energy_star_certified": true,
+        "ul_listed": true
+      },
+      "supply_chain": {
+        "assembly_location": "China",
+        "component_origin": "China",
+        "pfe_percentage": 0,
+        "us_content_percentage": 0,
+        "uflpa_status": "compliant"
+      },
+      "pricing": {
+        "wholesale_per_unit": 399,
+        "unit": "each",
+        "price_updated": "2026-02",
+        "distributor_availability": "Available direct, Amazon. Budget option."
+      },
+      "feoc_compliant": true,
+      "domestic_content_eligible": false,
+      "tariff_safe": true,
+      "search_text": "emporia smart evse 48a ev charger level 2 wifi solar surplus charging budget",
+      "tags": ["ev_charger", "emporia", "level_2", "48a", "smart", "budget", "solar_aware"]
+    },
+    {
+      "id": "chargepoint-home-flex",
+      "type": "ev_charger",
+      "manufacturer": "ChargePoint",
+      "model": "Home Flex",
+      "description": "Adjustable amperage Level 2 EV charger (16A-50A). WiFi connected with ChargePoint app. Works on 40A or 50A circuits. NEMA 14-50 plug or hardwired.",
+      "specs": {
+        "max_amperage_a": 50,
+        "adjustable_amperage": "16A, 24A, 32A, 40A, 50A",
+        "max_power_kw": 12,
+        "voltage": "240 VAC",
+        "connector_type": "SAE J1772",
+        "cable_length_ft": 23,
+        "communication": "WiFi",
+        "app": "ChargePoint (iOS/Android)",
+        "smart_features": ["Scheduling", "Reminders", "Usage tracking", "Alexa/Google integration"],
+        "installation_options": ["NEMA 14-50 plug", "Hardwired"],
+        "nema_rating": "NEMA 3R (indoor/outdoor)",
+        "dimensions_in": "14.5 x 8.5 x 5.5",
+        "weight_lbs": 18,
+        "energy_star_certified": true,
+        "ul_listed": true
+      },
+      "supply_chain": {
+        "assembly_location": "China (contract manufacturing)",
+        "component_origin": "China",
+        "pfe_percentage": 0,
+        "us_content_percentage": 0,
+        "uflpa_status": "compliant"
+      },
+      "pricing": {
+        "wholesale_per_unit": 599,
+        "unit": "each",
+        "price_updated": "2026-02",
+        "distributor_availability": "Available direct, Amazon, Home Depot, Best Buy, electrical distributors"
+      },
+      "feoc_compliant": true,
+      "domestic_content_eligible": false,
+      "tariff_safe": true,
+      "search_text": "chargepoint home flex 50a adjustable level 2 ev charger wifi nema 14-50 hardwired",
+      "tags": ["ev_charger", "chargepoint", "level_2", "50a", "adjustable", "smart", "residential"]
+    },
+    {
+      "id": "enphase-iq-ev-charger",
+      "type": "ev_charger",
+      "manufacturer": "Enphase Energy",
+      "model": "IQ EV Charger",
+      "description": "Smart Level 2 EV charger designed for integration with Enphase solar and battery systems. 40A output with solar-aware charging. Bi-directional ready for future V2H (vehicle-to-home) capability.",
+      "specs": {
+        "max_amperage_a": 40,
+        "max_power_kw": 9.6,
+        "voltage": "240 VAC",
+        "connector_type": "SAE J1772",
+        "cable_length_ft": 25,
+        "communication": "WiFi (via Enphase IQ Gateway)",
+        "app": "Enphase App (iOS/Android)",
+        "smart_features": ["Solar surplus charging", "Time-of-use optimization", "Load management", "Integration with IQ batteries"],
+        "bidirectional_ready": true,
+        "nema_rating": "NEMA 4 (indoor/outdoor)",
+        "dimensions_in": "10.4 x 10.4 x 4.7",
+        "weight_lbs": 15,
+        "ul_listed": true,
+        "enphase_ecosystem_integration": true
+      },
+      "supply_chain": {
+        "assembly_location": "USA (contract manufacturing)",
+        "component_origin": "Mixed",
+        "pfe_percentage": 0,
+        "us_content_percentage": 40,
+        "uflpa_status": "compliant"
+      },
+      "pricing": {
+        "wholesale_per_unit": 1199,
+        "unit": "each",
+        "price_updated": "2026-02",
+        "distributor_availability": "Available through Enphase-certified installers and solar distributors"
+      },
+      "feoc_compliant": true,
+      "domestic_content_eligible": false,
+      "tariff_safe": true,
+      "search_text": "enphase iq ev charger 40a level 2 solar surplus bidirectional v2h smart enphase ecosystem",
+      "tags": ["ev_charger", "enphase", "level_2", "40a", "smart", "solar_aware", "bidirectional", "v2h"]
+    },
+    {
+      "id": "tesla-wall-connector",
+      "type": "ev_charger",
+      "manufacturer": "Tesla",
+      "model": "Wall Connector",
+      "description": "Tesla's official Level 2 home charger. 48A output (11.5 kW). WiFi connected with Tesla app integration. Supports power sharing across multiple units. NACS connector standard.",
+      "specs": {
+        "max_amperage_a": 48,
+        "max_power_kw": 11.5,
+        "voltage": "240 VAC",
+        "connector_type": "NACS (Tesla North American Charging Standard)",
+        "cable_length_ft": 24,
+        "communication": "WiFi",
+        "app": "Tesla App (iOS/Android)",
+        "smart_features": ["Scheduling", "Power sharing (up to 6 units)", "Usage tracking", "Over-the-air updates"],
+        "installation_options": ["Hardwired only (no plug option)"],
+        "nema_rating": "NEMA 3R (indoor/outdoor)",
+        "dimensions_in": "5.0 x 5.0 x 14.5",
+        "weight_lbs": 12.5,
+        "ul_listed": true,
+        "j1772_compatible": "Requires NACS-to-J1772 adapter for non-Tesla EVs"
+      },
+      "supply_chain": {
+        "assembly_location": "USA",
+        "component_origin": "USA and imported components",
+        "pfe_percentage": 0,
+        "us_content_percentage": 60,
+        "uflpa_status": "compliant"
+      },
+      "pricing": {
+        "wholesale_per_unit": 475,
+        "unit": "each",
+        "price_updated": "2026-02",
+        "distributor_availability": "Available direct from Tesla (shop.tesla.com) and through Tesla Certified Installers. Also Home Depot, Amazon."
+      },
+      "feoc_compliant": true,
+      "domestic_content_eligible": true,
+      "tariff_safe": true,
+      "search_text": "tesla wall connector 48a 11.5kw level 2 ev charger nacs power sharing wifi smart",
+      "tags": ["ev_charger", "tesla", "level_2", "48a", "nacs", "smart", "power_sharing", "us_made"]
+    }
+  ],
   "compliance_summary": {
     "best_for_tpo_itc_2026": {
       "description": "Optimal equipment for Third-Party Owned (lease/PPA) installations claiming 48E ITC in 2026. Must be FEOC-compliant.",

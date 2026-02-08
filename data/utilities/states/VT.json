@@ -1,0 +1,104 @@
+{
+  "state": "VT",
+  "utility_count": 5,
+  "avg_residential_rate": 0.1882,
+  "eia_state_avg_rate": 0.2074,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "NEM",
+    "export_rate": null
+  },
+  "utilities": [
+    {
+      "utility_id": "7601",
+      "utility_name": "Green Mountain Power Corp",
+      "state": "VT",
+      "states_served": [
+        "VT"
+      ],
+      "type": "IOU",
+      "customer_count": 270000,
+      "residential_avg_rate": 0.2257,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "19791",
+      "utility_name": "Vermont Electric Cooperative, Inc.",
+      "state": "VT",
+      "states_served": [
+        "VT"
+      ],
+      "type": "coop",
+      "customer_count": 33000,
+      "residential_avg_rate": 0.1457,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "13573",
+      "utility_name": "Niagara Mohawk Power Corp.",
+      "state": "VT",
+      "states_served": [
+        "VT"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1712,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "13511",
+      "utility_name": "New York State Elec & Gas Corp",
+      "state": "VT",
+      "states_served": [
+        "VT"
+      ],
+      "type": "coop",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1747,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "15472",
+      "utility_name": "Public Service Co of NH",
+      "state": "VT",
+      "states_served": [
+        "VT"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2239,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:14:26.005978"
+}

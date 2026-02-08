@@ -1,0 +1,70 @@
+{
+  "state": "NC",
+  "state_name": "North Carolina",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 4,
+  "incentives": [
+    {
+      "id": "NC_rebate",
+      "state": "NC",
+      "incentive_type": "rebate",
+      "name": "North Carolina Duke Energy Solar + Storage Rebate",
+      "description": "Duke Energy Progress: $250/kW solar rebate. Duke Energy Carolinas solar+battery rebates up to $9,000. TVA: $1,000 post-installation.",
+      "value": "$250/kW (DEP), up to $9,000 (DEC solar+battery), $1,000 (TVA)",
+      "value_type": "per_kw",
+      "eligibility": "residential",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Duke Energy / TVA",
+      "source_url": "https://worldpopulationreview.com/state-rankings/solar-incentives-by-state",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "NC_property_tax_exempt",
+      "state": "NC",
+      "incentive_type": "property_tax_exempt",
+      "name": "North Carolina Property Tax Exemption for Solar",
+      "description": "80% of the appraised value of the solar energy system is exempt from property tax",
+      "value": "80% of solar system value exempt",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "North Carolina Department of Revenue",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "NC_sales_tax_exempt",
+      "state": "NC",
+      "incentive_type": "sales_tax_exempt",
+      "name": "North Carolina Sales Tax Exemption for Solar",
+      "description": "Solar energy equipment exempt from state sales tax",
+      "value": "Sales tax exemption",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "North Carolina DOR",
+      "source_url": "https://www.solarreviews.com/solar-incentives",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "NC_net_metering",
+      "state": "NC",
+      "incentive_type": "net_metering",
+      "name": "North Carolina Net Metering",
+      "description": "North Carolina requires net metering for investor-owned utilities for systems up to 1 MW",
+      "value": "Full retail rate credit",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "North Carolina Utilities Commission",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

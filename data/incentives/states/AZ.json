@@ -1,0 +1,70 @@
+{
+  "state": "AZ",
+  "state_name": "Arizona",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 4,
+  "incentives": [
+    {
+      "id": "AZ_tax_credit",
+      "state": "AZ",
+      "incentive_type": "tax_credit",
+      "name": "Arizona Residential Solar Energy Tax Credit",
+      "description": "25% of system costs, up to $1,000 state income tax credit for residential solar installations",
+      "value": "25% of costs, up to $1,000",
+      "value_type": "percentage",
+      "eligibility": "residential",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Arizona Department of Revenue",
+      "source_url": "https://www.solarreviews.com/solar-incentives",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "AZ_property_tax_exempt",
+      "state": "AZ",
+      "incentive_type": "property_tax_exempt",
+      "name": "Arizona Property Tax Exemption for Solar",
+      "description": "Solar energy equipment is exempt from property tax assessment",
+      "value": "100% of added solar value exempt",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Arizona Department of Revenue",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "AZ_sales_tax_exempt",
+      "state": "AZ",
+      "incentive_type": "sales_tax_exempt",
+      "name": "Arizona Sales Tax Exemption for Solar",
+      "description": "Solar energy devices are exempt from state and local transaction privilege tax",
+      "value": "100% sales tax exemption",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Arizona Department of Revenue",
+      "source_url": "https://www.solarreviews.com/solar-incentives",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "AZ_net_metering",
+      "state": "AZ",
+      "incentive_type": "net_metering",
+      "name": "Arizona Net Billing / Net Metering",
+      "description": "Arizona moved from net metering to net billing for most utilities. APS and TEP use export rate compensation rather than full retail credit. SRP has separate demand charge structure.",
+      "value": "Export rate varies by utility (below retail)",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Arizona Corporation Commission",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

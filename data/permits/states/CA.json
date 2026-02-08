@@ -1,0 +1,34 @@
+{
+  "state": "CA",
+  "state_name": "California",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "both",
+    "typical_fee_range": "$400-$1000",
+    "typical_timeline_days": "3-14",
+    "inspection_required": true,
+    "inspection_stages": ["final"],
+    "statewide_permit_program": true,
+    "statewide_program_name": "AB 2188 Solar Permitting Efficiency Act - requires streamlined, expedited online permitting for rooftop solar under 10 kW. SB 379 mandates automated online permitting platforms for residential solar and storage. Fee cap: $450 + $15/kW above 15 kW."
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": false,
+    "net_metering_details": "California transitioned from NEM 2.0 to Net Billing Tariff (NEM 3.0/NBT) in April 2023 for new solar customers. Export rates reduced ~75% from ~30 cents/kWh to ~8 cents/kWh average. Time-of-use export rates vary by hour. Battery storage strongly incentivized. Existing NEM 1.0/2.0 customers grandfathered for 20 years.",
+    "typical_timeline_days": "14-45",
+    "fees": "PG&E: $145 interconnection fee; SCE: $75; SDG&E: $132"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "Strong solar access law (Civil Code Section 714). HOAs cannot prohibit solar installations. Any restrictions that increase cost by more than $1,000 or decrease efficiency by more than 10% are void. Solar easements available.",
+    "historic_districts": "Additional review required in designated historic districts. Certificate of appropriateness may be needed. Some jurisdictions exempt solar from historic review if not visible from public right-of-way.",
+    "wind_load_requirements": "Standard IBC wind load requirements. Coastal areas may have enhanced requirements. Design wind speeds typically 85-110 mph.",
+    "snow_load_requirements": "Sierra Nevada mountain areas have significant snow loads (60-400+ psf ground snow load). CEC exempts buildings in high-snow-load areas from mandatory solar PV requirements where panels cannot comply with structural snow load requirements."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "CSLB C-46 (Solar) or C-10 (Electrical) contractor license required. A-General Engineering or B-General Building may also install solar with appropriate scope.",
+    "nabcep_required": false
+  },
+  "notes": "California is the largest solar market in the US with the most mature permitting infrastructure. The state mandates solar on new residential construction (2020 Title 24). NEM 3.0 significantly changed the economics, pushing the market toward solar+storage. SolarAPP+ adopted by many jurisdictions for instant permit approval. Permit fee caps keep costs controlled. The state has the most comprehensive consumer protections and standardized permitting requirements in the nation."
+}

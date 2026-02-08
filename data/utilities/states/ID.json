@@ -1,0 +1,105 @@
+{
+  "state": "ID",
+  "utility_count": 5,
+  "avg_residential_rate": 0.1311,
+  "eia_state_avg_rate": 0.106,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "net_billing",
+    "export_rate": null,
+    "notes": "Idaho Power uses on-peak/off-peak export crediting. Transition from full NEM."
+  },
+  "utilities": [
+    {
+      "utility_id": "9191",
+      "utility_name": "Idaho Power Co",
+      "state": "ID",
+      "states_served": [
+        "ID"
+      ],
+      "type": "IOU",
+      "customer_count": 600000,
+      "residential_avg_rate": 0.1767,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "1695066723657325793",
+      "utility_name": "Rocky Mountain Power",
+      "state": "ID",
+      "states_served": [
+        "ID"
+      ],
+      "type": "IOU",
+      "customer_count": 90000,
+      "residential_avg_rate": 0.106,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "20169",
+      "utility_name": "Avista Corp",
+      "state": "ID",
+      "states_served": [
+        "ID"
+      ],
+      "type": "IOU",
+      "customer_count": 50000,
+      "residential_avg_rate": 0.1324,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "14354",
+      "utility_name": "PacifiCorp (Utah)",
+      "state": "ID",
+      "states_served": [
+        "ID"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1241,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "12825",
+      "utility_name": "NorthWestern Corporation",
+      "state": "ID",
+      "states_served": [
+        "ID"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1165,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:11:14.639284"
+}

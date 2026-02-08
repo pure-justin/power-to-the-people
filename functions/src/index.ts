@@ -65,6 +65,7 @@ export {
   solarIncentives,
   solarPermits,
   solarComplianceCheck,
+  solarComplianceQuickCheck,
   solarEstimate,
 } from "./solarDataApi";
 
@@ -103,3 +104,24 @@ export {
   cancelMercuryInvoice,
   syncInvoiceStatus,
 } from "./mercuryInvoice";
+
+// Export Project Pipeline functions
+export {
+  advanceProjectStage,
+  createProjectTask,
+  assignProjectTask,
+  completeProjectTask,
+  getProjectTimeline,
+} from "./projectPipeline";
+
+// Export Marketplace functions
+export {
+  createMarketplaceListing,
+  submitBid,
+  acceptBid,
+  completeMarketplaceJob,
+  rateWorker,
+  registerWorker,
+  searchWorkers,
+  getMarketplaceListings,
+} from "./marketplace";

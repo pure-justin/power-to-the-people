@@ -1,0 +1,122 @@
+{
+  "state": "RI",
+  "utility_count": 6,
+  "avg_residential_rate": 0.2706,
+  "eia_state_avg_rate": 0.2678,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "NEM",
+    "export_rate": null
+  },
+  "utilities": [
+    {
+      "utility_id": "-7865824682442247174",
+      "utility_name": "Rhode Island Energy",
+      "state": "RI",
+      "states_served": [
+        "RI"
+      ],
+      "type": "IOU",
+      "customer_count": 500000,
+      "residential_avg_rate": 0.2678,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "4176",
+      "utility_name": "Connecticut Light & Power Co",
+      "state": "RI",
+      "states_served": [
+        "RI"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2921,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "11804",
+      "utility_name": "Massachusetts Electric Co",
+      "state": "RI",
+      "states_served": [
+        "RI"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.4335,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "13214",
+      "utility_name": "The Narragansett Electric Co",
+      "state": "RI",
+      "states_served": [
+        "RI"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2414,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "54913",
+      "utility_name": "NSTAR Electric Company",
+      "state": "RI",
+      "states_served": [
+        "RI"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2522,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "7716",
+      "utility_name": "Groton Dept of Utilities",
+      "state": "RI",
+      "states_served": [
+        "RI"
+      ],
+      "type": "muni",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1365,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:13:40.473998"
+}

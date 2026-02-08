@@ -1,0 +1,40 @@
+{
+  "state": "MI",
+  "state_name": "Michigan",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 2,
+  "incentives": [
+    {
+      "id": "MI_net_metering",
+      "state": "MI",
+      "incentive_type": "net_metering",
+      "name": "Michigan Net Metering / Distributed Generation",
+      "description": "Michigan requires distributed generation program for all utilities. Transitioning to new tariffs with lower export rates.",
+      "value": "Varies by utility, transitioning from retail",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Michigan Public Service Commission",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "MI_sales_tax_exempt",
+      "state": "MI",
+      "incentive_type": "sales_tax_exempt",
+      "name": "Michigan Sales Tax Exemption for Solar",
+      "description": "Solar energy equipment exempt from state sales tax",
+      "value": "6% sales tax exemption",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Michigan Department of Treasury",
+      "source_url": "https://www.solarreviews.com/solar-incentives",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

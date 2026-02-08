@@ -1,0 +1,55 @@
+{
+  "state": "DE",
+  "state_name": "Delaware",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 3,
+  "incentives": [
+    {
+      "id": "DE_rebate",
+      "state": "DE",
+      "incentive_type": "rebate",
+      "name": "Delaware Green Energy Program Rebate",
+      "description": "Rebate of up to $700/kW, maximum $6,000 for residential solar installations",
+      "value": "$700/kW up to $6,000",
+      "value_type": "per_kw",
+      "eligibility": "residential",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Energize Delaware",
+      "source_url": "https://worldpopulationreview.com/state-rankings/solar-incentives-by-state",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "DE_srec",
+      "state": "DE",
+      "incentive_type": "srec",
+      "name": "Delaware SREC Market",
+      "description": "Delaware has an active SREC market. Current SREC-I prices around $7/MWh.",
+      "value": "~$7/SREC (1 MWh)",
+      "value_type": "per_kwh",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Delaware Public Service Commission",
+      "source_url": "https://worldpopulationreview.com/state-rankings/srec-prices-by-state",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "DE_net_metering",
+      "state": "DE",
+      "incentive_type": "net_metering",
+      "name": "Delaware Net Metering",
+      "description": "Delaware requires net metering for systems up to 25 kW residential",
+      "value": "Full retail rate credit",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Delaware Public Service Commission",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

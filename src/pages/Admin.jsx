@@ -1162,7 +1162,7 @@ export default function Admin() {
                   </div>
                 </div>
                 <div className="stat-value">${stats.estimatedRevenue}</div>
-                <div className="stat-change">VPP program value</div>
+                <div className="stat-change">Program value</div>
               </div>
             </div>
           )}

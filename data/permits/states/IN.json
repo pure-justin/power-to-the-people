@@ -1,0 +1,34 @@
+{
+  "state": "IN",
+  "state_name": "Indiana",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "both",
+    "typical_fee_range": "$100-$400",
+    "typical_timeline_days": "7-21",
+    "inspection_required": true,
+    "inspection_stages": ["final"],
+    "statewide_permit_program": false,
+    "statewide_program_name": null
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": false,
+    "net_metering_details": "Indiana ended traditional net metering in 2022 for new customers. Replaced with excess distributed generation (EDG) rate that is less than retail. Existing net metering customers grandfathered until 2032. Indiana Michigan Power, Duke Energy Indiana, and Indianapolis Power & Light are major utilities. EDG compensation rates vary by utility but are typically 25-75% of retail.",
+    "typical_timeline_days": "15-30",
+    "fees": "Varies by utility; typically minimal for residential systems"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "Indiana has a solar easement statute but no comprehensive solar access law. HOAs may restrict solar installations.",
+    "historic_districts": "Historic districts in Indianapolis, Madison, and other cities require local review. Indiana Division of Historic Preservation & Archaeology consulted for National Register properties.",
+    "wind_load_requirements": "Standard IBC wind load requirements. Design wind speeds typically 90-105 mph.",
+    "snow_load_requirements": "Moderate snow loads (15-30 psf ground snow load). Northern Indiana (lake effect snow areas) may have higher requirements."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "No dedicated state solar license. Licensed electrician required for electrical work. General contractor license required in many municipalities.",
+    "nabcep_required": false
+  },
+  "notes": "Indiana's solar market was negatively impacted by the end of net metering in 2022. The EDG rate replacement provides less compensation than retail net metering. No state solar tax credit. Property tax exemption available for solar equipment for residential systems. The state's relatively low electricity rates reduce the payback period advantage. Rural electric cooperatives may have different interconnection rules than IOUs."
+}

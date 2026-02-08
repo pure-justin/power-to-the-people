@@ -1,0 +1,176 @@
+{
+  "state": "NC",
+  "utility_count": 9,
+  "avg_residential_rate": 0.1128,
+  "eia_state_avg_rate": 0.1218,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "NEM",
+    "export_rate": null
+  },
+  "utilities": [
+    {
+      "utility_id": "5477462868394962542",
+      "utility_name": "Duke Energy Carolinas LLC",
+      "state": "NC",
+      "states_served": [
+        "NC"
+      ],
+      "type": "IOU",
+      "customer_count": 2700000,
+      "residential_avg_rate": 0.1218,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "1077846497873506313",
+      "utility_name": "Duke Energy Progress LLC",
+      "state": "NC",
+      "states_served": [
+        "NC"
+      ],
+      "type": "IOU",
+      "customer_count": 1700000,
+      "residential_avg_rate": 0.1218,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "-3171281034868494429",
+      "utility_name": "Dominion Energy North Carolina",
+      "state": "NC",
+      "states_served": [
+        "NC"
+      ],
+      "type": "IOU",
+      "customer_count": 130000,
+      "residential_avg_rate": 0.1218,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "5416",
+      "utility_name": "Progress Energy Carolinas Inc (South Carolina)",
+      "state": "NC",
+      "states_served": [
+        "NC"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1331,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "21632",
+      "utility_name": "EnergyUnited Elec Member Corp",
+      "state": "NC",
+      "states_served": [
+        "NC"
+      ],
+      "type": "coop",
+      "customer_count": 0,
+      "residential_avg_rate": 0.0748,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "6235",
+      "utility_name": "City of Public Works Comm- Fayetteville, North Carolina (Utility Company)",
+      "state": "NC",
+      "states_served": [
+        "NC"
+      ],
+      "type": "muni",
+      "customer_count": 0,
+      "residential_avg_rate": 0.101,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "15671",
+      "utility_name": "Randolph Electric Member Corp",
+      "state": "NC",
+      "states_served": [
+        "NC"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.108,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "3250",
+      "utility_name": "Central Electric Membership Corporation",
+      "state": "NC",
+      "states_served": [
+        "NC"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1297,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "18642",
+      "utility_name": "Tennessee Valley Authority (Mississippi)",
+      "state": "NC",
+      "states_served": [
+        "NC"
+      ],
+      "type": "muni",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1036,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:12:39.359853"
+}

@@ -1003,11 +1003,12 @@ if (result.isEnergyCommunity) {
           />
 
           <div className="endpoint-section">
-            <h3>Supported Energy Communities (Texas)</h3>
+            <h3>Supported Energy Communities (National)</h3>
             <p>
-              70+ Texas counties qualify including Houston, Dallas-Fort Worth,
-              Austin, Midland, Odessa, Beaumont-Port Arthur, and more. See IRS
-              Notice 2025-31 Appendix 3 for full list.
+              147+ counties across 24 states qualify under the Statistical Area
+              category, plus 46 states have Coal Closure communities. Covers TX,
+              PA, WV, KY, WY, LA, OK, CO, and more. See IRS Notice 2025-31 and
+              energycommunities.gov for full list.
             </p>
           </div>
         </div>

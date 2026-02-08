@@ -1,0 +1,55 @@
+{
+  "state": "IA",
+  "state_name": "Iowa",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 3,
+  "incentives": [
+    {
+      "id": "IA_property_tax_exempt",
+      "state": "IA",
+      "incentive_type": "property_tax_exempt",
+      "name": "Iowa Property Tax Exemption for Solar",
+      "description": "Solar energy equipment exempt from property tax for 5 years",
+      "value": "100% exemption for 5 years",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Iowa Department of Revenue",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "IA_sales_tax_exempt",
+      "state": "IA",
+      "incentive_type": "sales_tax_exempt",
+      "name": "Iowa Sales Tax Exemption for Solar",
+      "description": "Solar energy equipment exempt from state sales tax",
+      "value": "6% sales tax exemption",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Iowa Department of Revenue",
+      "source_url": "https://www.solarreviews.com/solar-incentives",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "IA_net_metering",
+      "state": "IA",
+      "incentive_type": "net_metering",
+      "name": "Iowa Net Metering",
+      "description": "Iowa requires net metering for systems under 500 kW",
+      "value": "Full retail rate credit",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Iowa Utilities Board",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

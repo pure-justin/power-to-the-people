@@ -11,6 +11,11 @@
 import * as functions from "firebase-functions/v1";
 import * as admin from "firebase-admin";
 import { validateApiKeyFromRequest, ApiKeyScope } from "./apiKeys";
+import {
+  analyzeCompliance,
+  quickComplianceCheck,
+  ComplianceInput,
+} from "./complianceEngine";
 
 // ─── CORS Helper ───────────────────────────────────────────────────────────────
 
@@ -35,15 +40,15 @@ function handleOptions(
 // ─── Equipment Endpoint ────────────────────────────────────────────────────────
 
 /**
- * Queries the solar equipment database with optional compliance and manufacturer filters
+ * Queries the solar equipment database with search, filtering, sorting, and pagination
  *
  * @function solarEquipment
  * @type onRequest
  * @method GET
  * @auth api_key
  * @scope read_equipment
- * @input {{ type?: "panel" | "inverter" | "battery" | "optimizer", manufacturer?: string, feoc_compliant?: "true" | "false", domestic_content?: "true" | "false", tariff_safe?: "true" | "false", limit?: number }}
- * @output {{ success: boolean, count: number, data: object[] }}
+ * @input {{ type?: "panel" | "inverter" | "battery" | "optimizer" | "racking" | "rapid_shutdown" | "electrical_bos" | "monitoring" | "ev_charger", manufacturer?: string, feoc_compliant?: "true" | "false", domestic_content?: "true" | "false", tariff_safe?: "true" | "false", search?: string, limit?: number, offset?: number, startAfter?: string, sortBy?: "manufacturer" | "model" | "wattage" | "price", sortOrder?: "asc" | "desc", availability?: "in_stock" | "backorder", min_price?: number, max_price?: number, tags?: string }}
+ * @output {{ success: boolean, count: number, total: number, hasMore: boolean, data: object[] }}
  * @errors unauthenticated, permission-denied, resource-exhausted, internal
  * @billing api_call
  * @rateLimit api_key
@@ -64,12 +69,33 @@ export const solarEquipment = functions
       await validateApiKeyFromRequest(req, ApiKeyScope.READ_EQUIPMENT);
 
       const db = admin.firestore();
-      let query: admin.firestore.Query = db.collection("solar_equipment");
+      const collectionRef = db.collection("solar_equipment");
+      let query: admin.firestore.Query = collectionRef;
 
-      // Apply filters
+      // Validate type against all 9 categories
+      const validTypes = [
+        "panel",
+        "inverter",
+        "battery",
+        "optimizer",
+        "racking",
+        "rapid_shutdown",
+        "electrical_bos",
+        "monitoring",
+        "ev_charger",
+      ];
+
       if (req.query.type) {
-        query = query.where("type", "==", req.query.type);
+        const typeVal = req.query.type as string;
+        if (!validTypes.includes(typeVal)) {
+          res.status(400).json({
+            error: `Invalid type. Must be one of: ${validTypes.join(", ")}`,
+          });
+          return;
+        }
+        query = query.where("type", "==", typeVal);
       }
+
       if (req.query.manufacturer) {
         query = query.where(
           "manufacturer",
@@ -81,24 +107,111 @@ export const solarEquipment = functions
         query = query.where("feoc_compliant", "==", true);
       }
       if (req.query.domestic_content === "true") {
-        query = query.where("domestic_content_compliant", "==", true);
+        query = query.where("domestic_content_eligible", "==", true);
       }
       if (req.query.tariff_safe === "true") {
         query = query.where("tariff_safe", "==", true);
       }
 
+      // Availability filter
+      if (req.query.availability) {
+        query = query.where(
+          "pricing.distributor_availability",
+          "==",
+          req.query.availability as string,
+        );
+      }
+
+      // Tags filter (comma-separated, uses array-contains-any)
+      if (req.query.tags) {
+        const tags = (req.query.tags as string)
+          .split(",")
+          .map((t) => t.trim().toLowerCase())
+          .filter((t) => t.length > 0)
+          .slice(0, 10); // Firestore limit for array-contains-any
+        if (tags.length > 0) {
+          query = query.where("tags", "array-contains-any", tags);
+        }
+      }
+
+      // Sorting
+      const sortBy = (req.query.sortBy as string) || "manufacturer";
+      const sortOrder =
+        (req.query.sortOrder as string) === "desc" ? "desc" : "asc";
+      const sortFieldMap: Record<string, string> = {
+        manufacturer: "manufacturer",
+        model: "model",
+        wattage: "wattage_w",
+        price: "pricing.wholesale_per_unit",
+      };
+      const sortField = sortFieldMap[sortBy] || "manufacturer";
+      query = query.orderBy(sortField, sortOrder as "asc" | "desc");
+
+      // Pagination
       const limit = Math.min(parseInt(req.query.limit as string) || 50, 200);
-      query = query.limit(limit);
+      const offset = parseInt(req.query.offset as string) || 0;
+
+      // startAfter cursor-based pagination
+      if (req.query.startAfter) {
+        const cursorDoc = await collectionRef
+          .doc(req.query.startAfter as string)
+          .get();
+        if (cursorDoc.exists) {
+          query = query.startAfter(cursorDoc);
+        }
+      } else if (offset > 0) {
+        query = query.offset(offset);
+      }
+
+      query = query.limit(limit + 1); // Fetch one extra to determine hasMore
 
       const snapshot = await query.get();
-      const equipment = snapshot.docs.map((doc) => ({
+      const hasMore = snapshot.docs.length > limit;
+      const docs = hasMore ? snapshot.docs.slice(0, limit) : snapshot.docs;
+
+      let equipment = docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
 
+      // Text search: client-side filter on search_text field
+      if (req.query.search) {
+        const searchTerm = (req.query.search as string).toLowerCase();
+        equipment = equipment.filter((item: any) => {
+          const searchText = item.search_text || "";
+          return searchText.includes(searchTerm);
+        });
+      }
+
+      // Price range filters (client-side since Firestore limits inequality filters)
+      const minPrice = parseFloat(req.query.min_price as string);
+      const maxPrice = parseFloat(req.query.max_price as string);
+      if (!isNaN(minPrice)) {
+        equipment = equipment.filter((item: any) => {
+          const price = item.pricing?.wholesale_per_unit ?? 0;
+          return price >= minPrice;
+        });
+      }
+      if (!isNaN(maxPrice)) {
+        equipment = equipment.filter((item: any) => {
+          const price = item.pricing?.wholesale_per_unit ?? 0;
+          return price <= maxPrice;
+        });
+      }
+
+      // Get total count for the base query (without pagination)
+      // Use a count query if type filter is set for efficiency
+      let total = equipment.length + offset;
+      if (hasMore) {
+        // Estimate: there are more docs beyond what we fetched
+        total = offset + equipment.length + 1; // Minimum; exact count requires separate query
+      }
+
       res.status(200).json({
         success: true,
         count: equipment.length,
+        total,
+        hasMore,
         data: equipment,
       });
     } catch (error: any) {
@@ -388,37 +501,36 @@ export const solarComplianceCheck = functions
     try {
       await validateApiKeyFromRequest(req, ApiKeyScope.READ_COMPLIANCE);
 
-      const { equipment_ids, jurisdiction, state, project_type } = req.body;
+      const {
+        equipment_ids,
+        jurisdiction,
+        state,
+        project_type,
+        financing_type,
+        system_cost,
+        installation_date,
+      } = req.body;
 
       if (!equipment_ids || !Array.isArray(equipment_ids)) {
         res.status(400).json({ error: "equipment_ids array is required" });
         return;
       }
 
+      // Run the compliance engine analysis
+      const complianceInput: ComplianceInput = {
+        equipment_ids: equipment_ids.slice(0, 20),
+        project_type: project_type || "residential",
+        state: (state || "").toUpperCase(),
+        financing_type: financing_type || "cash",
+        system_cost: system_cost || 0,
+        installation_date,
+      };
+
+      const complianceResult = await analyzeCompliance(complianceInput);
+
       const db = admin.firestore();
 
-      // Fetch equipment compliance data
-      const equipmentResults = await Promise.all(
-        equipment_ids.slice(0, 20).map(async (id: string) => {
-          const doc = await db.collection("solar_equipment").doc(id).get();
-          if (!doc.exists) return { id, found: false };
-          const data = doc.data()!;
-          return {
-            id,
-            found: true,
-            name: data.name || data.model,
-            manufacturer: data.manufacturer,
-            type: data.type,
-            feoc_compliant: data.feoc_compliant || false,
-            domestic_content_compliant:
-              data.domestic_content_compliant || false,
-            tariff_safe: data.tariff_safe || false,
-            country_of_origin: data.country_of_origin,
-          };
-        }),
-      );
-
-      // Fetch permit requirements for jurisdiction
+      // Fetch permit requirements for jurisdiction (keep existing behavior)
       let permitRequirements = null;
       if (jurisdiction) {
         const permitSnapshot = await db
@@ -434,7 +546,7 @@ export const solarComplianceCheck = functions
         }
       }
 
-      // Fetch applicable incentives
+      // Fetch applicable incentives (keep existing behavior)
       let incentives: any[] = [];
       if (state) {
         const sector = project_type || "residential";
@@ -448,32 +560,9 @@ export const solarComplianceCheck = functions
           .filter((inc: any) => inc.sector === "both" || inc.sector === sector);
       }
 
-      // Overall compliance summary
-      const allEquipmentFound = equipmentResults.every((e: any) => e.found);
-      const allFeocCompliant = equipmentResults
-        .filter((e: any) => e.found)
-        .every((e: any) => e.feoc_compliant);
-      const allDomesticContent = equipmentResults
-        .filter((e: any) => e.found)
-        .every((e: any) => e.domestic_content_compliant);
-      const allTariffSafe = equipmentResults
-        .filter((e: any) => e.found)
-        .every((e: any) => e.tariff_safe);
-
       res.status(200).json({
         success: true,
-        compliance_summary: {
-          all_equipment_found: allEquipmentFound,
-          feoc_compliant: allFeocCompliant,
-          domestic_content_compliant: allDomesticContent,
-          tariff_safe: allTariffSafe,
-          eligible_for_itc:
-            project_type === "commercial" &&
-            allFeocCompliant &&
-            allDomesticContent,
-          incentives_available: incentives.length,
-        },
-        equipment: equipmentResults,
+        compliance: complianceResult,
         permit_requirements: permitRequirements,
         incentives,
       });
@@ -489,6 +578,67 @@ export const solarComplianceCheck = functions
               : 500;
       res.status(status).json({
         error: error.message || "Failed to run compliance check",
+      });
+    }
+  });
+
+// ─── Quick Compliance Check Endpoint ──────────────────────────────────────────
+
+/**
+ * Quick compliance check for a single equipment item
+ *
+ * @function solarComplianceQuickCheck
+ * @type onRequest
+ * @method GET
+ * @auth api_key
+ * @scope read_compliance
+ * @input {{ equipment_id: string }}
+ * @output {{ success: boolean, compliance: SingleEquipmentCompliance }}
+ * @errors unauthenticated, permission-denied, resource-exhausted, internal
+ * @billing api_call
+ * @rateLimit api_key
+ * @firestore solar_equipment
+ */
+export const solarComplianceQuickCheck = functions
+  .runWith({ timeoutSeconds: 30, memory: "256MB" })
+  .https.onRequest(async (req, res) => {
+    if (handleOptions(req, res)) return;
+    setCors(res);
+
+    if (req.method !== "GET") {
+      res.status(405).json({ error: "Method not allowed" });
+      return;
+    }
+
+    try {
+      await validateApiKeyFromRequest(req, ApiKeyScope.READ_COMPLIANCE);
+
+      const equipmentId = req.query.equipment_id as string;
+      if (!equipmentId) {
+        res
+          .status(400)
+          .json({ error: "equipment_id query parameter is required" });
+        return;
+      }
+
+      const result = await quickComplianceCheck(equipmentId);
+
+      res.status(200).json({
+        success: true,
+        compliance: result,
+      });
+    } catch (error: any) {
+      console.error("Quick compliance check error:", error);
+      const status =
+        error.code === "unauthenticated"
+          ? 401
+          : error.code === "permission-denied"
+            ? 403
+            : error.code === "resource-exhausted"
+              ? 429
+              : 500;
+      res.status(status).json({
+        error: error.message || "Failed to run quick compliance check",
       });
     }
   });
@@ -589,7 +739,7 @@ export const solarEstimate = functions
           (inc: any) => inc.sector === "both" || inc.sector === project_type,
         );
 
-      // 4. Find permit requirements
+      // 4. Find permit requirements (by jurisdiction or by state)
       let permitRequirements = null;
       if (jurisdiction) {
         const permitSnapshot = await db
@@ -603,6 +753,33 @@ export const solarEstimate = functions
             ...permitSnapshot.docs[0].data(),
           };
         }
+      } else if (state) {
+        const permitSnapshot = await db
+          .collection("solar_permits")
+          .doc(state.toUpperCase())
+          .get();
+        if (permitSnapshot.exists) {
+          permitRequirements = {
+            id: permitSnapshot.id,
+            ...permitSnapshot.data(),
+          };
+        }
+      }
+
+      // 4b. Check energy community status
+      let energyCommunity = null;
+      const ecSnapshot = await db
+        .collection("energy_communities")
+        .where("state", "==", state.toUpperCase())
+        .where("category", "==", "statistical_area")
+        .limit(1)
+        .get();
+      if (!ecSnapshot.empty) {
+        energyCommunity = {
+          id: ecSnapshot.docs[0].id,
+          ...ecSnapshot.docs[0].data(),
+          bonus_percentage: 10,
+        };
       }
 
       // 5. Find TPO/financing options
@@ -619,7 +796,29 @@ export const solarEstimate = functions
       // 6. Basic cost estimate
       const avgCostPerWatt = project_type === "residential" ? 3.0 : 2.5;
       const systemCost = system_size_kw * 1000 * avgCostPerWatt;
-      const annualProduction = system_size_kw * 1400; // ~1400 kWh/kW in TX
+      // Look up solar resource data for this state from NREL data
+      let kwhPerKw = 1400; // Default fallback
+      const nrelSnapshot = await db
+        .collection("solar_resource_data")
+        .doc(state.toUpperCase())
+        .get();
+      if (nrelSnapshot.exists) {
+        const nrelData = nrelSnapshot.data();
+        // Use first city's capacity factor to estimate state average
+        if (nrelData?.cities) {
+          const cities = Object.values(nrelData.cities) as any[];
+          if (cities.length > 0) {
+            const avgKwh =
+              cities.reduce(
+                (sum: number, c: any) => sum + (c.ac_annual_kwh || 0),
+                0,
+              ) / cities.length;
+            const systemKw = nrelData.system_capacity_kw || 8;
+            kwhPerKw = Math.round(avgKwh / systemKw);
+          }
+        }
+      }
+      const annualProduction = system_size_kw * kwhPerKw;
       const annualSavings = monthly_bill ? monthly_bill * 12 * 0.85 : 0;
       const simplePayback =
         annualSavings > 0
@@ -667,6 +866,7 @@ export const solarEstimate = functions
         recommended_equipment: recommendedPanels,
         incentives,
         permit_requirements: permitRequirements,
+        energy_community: energyCommunity,
         financing_options: financingOptions,
       });
     } catch (error: any) {

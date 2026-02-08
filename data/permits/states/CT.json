@@ -1,0 +1,34 @@
+{
+  "state": "CT",
+  "state_name": "Connecticut",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "both",
+    "typical_fee_range": "$200-$500",
+    "typical_timeline_days": "7-21",
+    "inspection_required": true,
+    "inspection_stages": ["final"],
+    "statewide_permit_program": false,
+    "statewide_program_name": null
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": true,
+    "net_metering_details": "Connecticut has net metering for residential systems. Eversource and UI are the main utilities. Credits at retail rate for systems up to 20 kW residential. Excess credits roll over monthly, reconciled annually at avoided cost rate.",
+    "typical_timeline_days": "15-30",
+    "fees": "Minimal for residential systems; application fees vary by utility"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "Solar access law protects homeowners. HOAs cannot unreasonably restrict solar installations.",
+    "historic_districts": "Connecticut has numerous historic districts. State Historic Preservation Office (SHPO) review may be required for properties on the National Register. Local historic district commissions review solar in designated districts.",
+    "wind_load_requirements": "Coastal areas (Long Island Sound) have enhanced wind requirements. Design wind speeds 110-130 mph along the coast.",
+    "snow_load_requirements": "Moderate snow loads throughout the state (25-50 psf ground snow load). Northwestern hills have higher requirements."
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "Home Improvement Contractor (HIC) license plus PV-1 or E-1 license required. Installers need E-2 electrician license or PV-2 license and must work under licensed electrical contractor.",
+    "nabcep_required": false
+  },
+  "notes": "Connecticut has a robust solar market supported by the Residential Solar Investment Program (RSIP) and strong net metering. The state offers property tax exemptions for solar and sales tax exemptions. Eversource territory covers most of the state. Green Bank (CT Green Bank) provides financing options. Permitting handled at the municipal level with 169 towns having individual requirements."
+}

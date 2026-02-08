@@ -1,0 +1,40 @@
+{
+  "state": "HI",
+  "state_name": "Hawaii",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 2,
+  "incentives": [
+    {
+      "id": "HI_tax_credit",
+      "state": "HI",
+      "incentive_type": "tax_credit",
+      "name": "Hawaii Renewable Energy Technologies Income Tax Credit",
+      "description": "35% of system cost as state income tax credit, capped at $5,000 for residential solar PV",
+      "value": "35% of costs, up to $5,000",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Hawaii Department of Taxation",
+      "source_url": "https://energy.hawaii.gov/state-of-hawaii-and-federal-incentives/",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "HI_net_metering",
+      "state": "HI",
+      "incentive_type": "net_metering",
+      "name": "Hawaii Net Energy Metering / Customer Grid Supply",
+      "description": "Hawaii has transitioned from traditional net metering to Customer Grid Supply and Smart Export programs with time-of-use export rates.",
+      "value": "Export credits at time-of-use rates (below retail)",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Hawaii Public Utilities Commission",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "state": "ND",
+  "state_name": "North Dakota",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 2,
+  "incentives": [
+    {
+      "id": "ND_net_metering",
+      "state": "ND",
+      "incentive_type": "net_metering",
+      "name": "North Dakota Net Metering",
+      "description": "North Dakota requires net metering at avoided cost rate (not full retail)",
+      "value": "Avoided cost rate (below retail)",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "North Dakota PSC",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "ND_sales_tax_exempt",
+      "state": "ND",
+      "incentive_type": "sales_tax_exempt",
+      "name": "North Dakota Sales Tax Exemption for Solar",
+      "description": "Solar energy equipment exempt from state sales tax",
+      "value": "Sales tax exemption",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "North Dakota Tax Commissioner",
+      "source_url": "https://www.solarreviews.com/solar-incentives",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

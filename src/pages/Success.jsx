@@ -69,7 +69,7 @@ export default function Success() {
   const panelWattage = systemDesign?.panelDimensions?.capacityWatts || 400;
   const productionPerPanel = systemDesign?.production?.annualKwh
     ? systemDesign.production.annualKwh / (systemDesign.panels?.count || 1)
-    : 1500; // ~1500 kWh per panel in Texas
+    : 1500; // ~1500 kWh per panel (US average)
   const adjustedAnnualProduction = Math.round(
     adjustedPanelCount * productionPerPanel,
   );
@@ -185,7 +185,7 @@ export default function Success() {
       "Nov",
       "Dec",
     ];
-    // Solar production factors by month (Texas)
+    // Solar production factors by month (US average, Sun Belt weighted)
     const productionFactors = [
       0.065, 0.07, 0.085, 0.095, 0.1, 0.105, 0.105, 0.1, 0.09, 0.08, 0.06,
       0.045,
@@ -502,7 +502,7 @@ export default function Success() {
           }
         }
 
-        /* Texas Grid Warning */
+        /* Grid Reliability Warning */
         .grid-warning {
           background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(185, 28, 28, 0.1));
           border: 1px solid rgba(239, 68, 68, 0.4);
@@ -1718,28 +1718,30 @@ export default function Success() {
             </div>
           </div>
 
-          {/* Texas Grid Warning */}
+          {/* Grid Reliability Warning */}
           <div className="grid-warning">
             <div className="warning-header">
               <AlertTriangle size={24} />
-              <h3>Texas Grid Reality</h3>
+              <h3>Grid Reliability Crisis</h3>
             </div>
             <div className="warning-stats">
               <div className="warning-stat">
                 <Snowflake size={32} />
                 <div className="warning-stat-content">
-                  <span className="warning-stat-value">Winter Storm Uri</span>
+                  <span className="warning-stat-value">
+                    Major Outages Rising
+                  </span>
                   <span className="warning-stat-desc">
-                    4.5 million homes lost power for up to 5 days
+                    Power outages have doubled in the US over the past 20 years
                   </span>
                 </div>
               </div>
               <div className="warning-stat">
                 <ThermometerSun size={32} />
                 <div className="warning-stat-content">
-                  <span className="warning-stat-value">Summer 2023</span>
+                  <span className="warning-stat-value">Extreme Weather</span>
                   <span className="warning-stat-desc">
-                    ERCOT issued emergency alerts for 30+ days
+                    83% of major outages are caused by severe weather events
                   </span>
                 </div>
               </div>
@@ -2197,7 +2199,7 @@ export default function Success() {
           {/* Why Solar + Battery Section */}
           <div className="why-section">
             <h2 className="why-title">
-              Why Solar + Battery is Essential for Texas Homes
+              Why Solar + Battery is Essential for Your Home
             </h2>
             <div className="why-grid">
               {/* Backup Card - Emphasized */}
@@ -2209,10 +2211,10 @@ export default function Success() {
                   <h4>Power Outage Protection</h4>
                 </div>
                 <p className="why-desc">
-                  Texas has the most power outages of any state. With 60 kWh of
-                  Duracell battery storage, your home stays powered when the
-                  grid fails. AC, refrigerator, medical equipment - everything
-                  keeps running.
+                  US power outages have doubled in the last 20 years. With 60
+                  kWh of Duracell battery storage, your home stays powered when
+                  the grid fails. AC, refrigerator, medical equipment -
+                  everything keeps running.
                 </p>
                 <ul className="why-benefits">
                   <li>
@@ -2250,7 +2252,7 @@ export default function Success() {
                     (Year 1)
                   </li>
                   <li>
-                    <CheckCircle size={14} /> Earn from VPP programs
+                    <CheckCircle size={14} /> Earn from grid services programs
                   </li>
                 </ul>
               </div>

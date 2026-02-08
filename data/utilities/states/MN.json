@@ -1,0 +1,122 @@
+{
+  "state": "MN",
+  "utility_count": 6,
+  "avg_residential_rate": 0.1181,
+  "eia_state_avg_rate": 0.1407,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "NEM",
+    "export_rate": null
+  },
+  "utilities": [
+    {
+      "utility_id": "13781",
+      "utility_name": "Northern States Power Co - Minnesota",
+      "state": "MN",
+      "states_served": [
+        "MN"
+      ],
+      "type": "IOU",
+      "customer_count": 1500000,
+      "residential_avg_rate": 0.1651,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "13780",
+      "utility_name": "Northern States Power Co - Wisconsin",
+      "state": "MN",
+      "states_served": [
+        "MN"
+      ],
+      "type": "IOU",
+      "customer_count": 1500000,
+      "residential_avg_rate": 0.0937,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "12647",
+      "utility_name": "Minnesota Power Inc",
+      "state": "MN",
+      "states_served": [
+        "MN"
+      ],
+      "type": "IOU",
+      "customer_count": 150000,
+      "residential_avg_rate": 0.1139,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "14232",
+      "utility_name": "Otter Tail Power Co",
+      "state": "MN",
+      "states_served": [
+        "MN"
+      ],
+      "type": "IOU",
+      "customer_count": 65000,
+      "residential_avg_rate": 0.1034,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "17868",
+      "utility_name": "St Croix Electric Coop",
+      "state": "MN",
+      "states_served": [
+        "MN"
+      ],
+      "type": "coop",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1075,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "9417",
+      "utility_name": "Interstate Power and Light Co",
+      "state": "MN",
+      "states_served": [
+        "MN"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1251,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:12:14.115795"
+}

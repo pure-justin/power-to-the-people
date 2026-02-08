@@ -1,0 +1,25 @@
+{
+  "state": "WV",
+  "state_name": "West Virginia",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 1,
+  "incentives": [
+    {
+      "id": "WV_net_metering",
+      "state": "WV",
+      "incentive_type": "net_metering",
+      "name": "West Virginia Net Metering (Limited)",
+      "description": "West Virginia has minimal solar incentives. Some net metering provisions exist but are limited.",
+      "value": "Limited - varies by utility",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "varies_by_utility",
+      "expiration_date": null,
+      "administering_body": "West Virginia PSC",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

@@ -1,0 +1,216 @@
+{
+  "metadata": {
+    "description": "Prohibited Foreign Entities under FEOC rules (IRA Section 30D/45X). Entities whose products disqualify projects from claiming 48E commercial ITC.",
+    "last_updated": "2026-02-08",
+    "sources": [
+      "DOE FEOC Guidance (December 2023)",
+      "Treasury Final Rule on FEOC (May 2024)",
+      "IRS Notice 2024-41",
+      "Federal Register 89 FR 96606"
+    ],
+    "feoc_definition": "A Foreign Entity of Concern (FEOC) is an entity owned by, controlled by, or subject to the jurisdiction of a government of a covered nation (China, Russia, North Korea, Iran). The 25% ownership/control threshold applies to any entity in the manufacturing supply chain.",
+    "thresholds": {
+      "2024": "FEOC-manufactured battery components disqualify from 30D clean vehicle credit",
+      "2025": "FEOC-sourced critical minerals disqualify from 30D",
+      "2026_products": "40% of manufactured products must not be from PFE (Prohibited Foreign Entity) — increases 5% annually to 60% by 2029",
+      "2026_batteries": "55% of manufactured battery products must not be from PFE — increases to 75% by 2029"
+    }
+  },
+  "entities": [
+    {
+      "name": "Contemporary Amperex Technology Co. Limited (CATL)",
+      "country": "China",
+      "sector": "batteries",
+      "parent_company": null,
+      "headquarters": "Ningde, Fujian, China",
+      "stock_exchange": "Shenzhen Stock Exchange (SZ:300750)",
+      "reason": "Chinese-headquartered company. Subject to jurisdiction of PRC government. Largest battery manufacturer globally.",
+      "subsidiaries": [
+        "CATL-GE (Germany)",
+        "CATL Hungary",
+        "CATL Kearney (proposed US plant)"
+      ],
+      "products_affected": ["battery_cells", "battery_packs", "battery_modules", "energy_storage_systems"],
+      "notable_customers_affected": ["Tesla Powerwall 3 (uses CATL LFP cells)", "Ford", "BMW", "Mercedes-Benz"],
+      "us_presence": "Proposed Ford joint venture plant in Marshall, MI (on hold). CATL licensing LFP technology to Ford. No confirmed operational US manufacturing as of Feb 2026."
+    },
+    {
+      "name": "BYD Company Limited",
+      "country": "China",
+      "sector": "batteries_and_solar",
+      "parent_company": null,
+      "headquarters": "Shenzhen, Guangdong, China",
+      "stock_exchange": "Shenzhen (SZ:002594), Hong Kong (HKSE:1211)",
+      "reason": "Chinese-headquartered company. Warren Buffett's Berkshire Hathaway owns ~7% but company is Chinese-controlled.",
+      "subsidiaries": [
+        "BYD Auto",
+        "BYD Electronics",
+        "BYD Semiconductor"
+      ],
+      "products_affected": ["battery_cells", "battery_packs", "blade_batteries", "solar_panels", "ev_chargers"],
+      "notable_customers_affected": ["BYD residential storage systems", "Toyota (EV batteries)"],
+      "us_presence": "BYD battery storage units sold in US market. Some residential battery products available. No US manufacturing."
+    },
+    {
+      "name": "LONGi Green Energy Technology Co., Ltd.",
+      "country": "China",
+      "sector": "solar",
+      "parent_company": null,
+      "headquarters": "Xi'an, Shaanxi, China",
+      "stock_exchange": "Shanghai Stock Exchange (SH:601012)",
+      "reason": "Chinese-headquartered and controlled. World's largest solar panel manufacturer by capacity. DOC found Vina Solar (LONGi subsidiary) circumventing US tariffs.",
+      "subsidiaries": [
+        "Vina Solar (Vietnam)",
+        "LONGi Solar Technology (various)"
+      ],
+      "products_affected": ["solar_panels", "solar_cells", "solar_wafers", "HPBC_cells"],
+      "notable_customers_affected": ["US utility-scale developers (prior to tariff findings)"],
+      "us_presence": "No US manufacturing. Vietnamese subsidiary Vina Solar found circumventing tariffs in 2024. Effectively blocked from US market."
+    },
+    {
+      "name": "JA Solar Technology Co., Ltd.",
+      "country": "China",
+      "sector": "solar",
+      "parent_company": null,
+      "headquarters": "Beijing, China",
+      "stock_exchange": "Shenzhen Stock Exchange (SZ:002459)",
+      "reason": "Chinese-headquartered and controlled. Major global solar cell and module manufacturer.",
+      "subsidiaries": [
+        "JA Solar Vietnam",
+        "JA Solar Malaysia"
+      ],
+      "products_affected": ["solar_panels", "solar_cells"],
+      "notable_customers_affected": ["US utility-scale projects (historical)"],
+      "us_presence": "No confirmed US manufacturing. SE Asian production subject to AD/CVD tariffs."
+    },
+    {
+      "name": "Trina Solar Co., Ltd.",
+      "country": "China",
+      "sector": "solar",
+      "parent_company": null,
+      "headquarters": "Changzhou, Jiangsu, China",
+      "stock_exchange": "Shanghai Star Market (SH:688599)",
+      "reason": "Chinese-headquartered and controlled. One of world's largest module shippers. Thailand production faces 375%+ AD/CVD tariff.",
+      "subsidiaries": [
+        "Trina Solar Thailand",
+        "Trina Solar Vietnam"
+      ],
+      "products_affected": ["solar_panels", "solar_cells", "trackers"],
+      "notable_customers_affected": ["US utility developers (historical)"],
+      "us_presence": "No US manufacturing. All production routes to US are heavily tariffed (Thailand 375%+, Vietnam 800%+, China Section 301)."
+    },
+    {
+      "name": "JinkoSolar Holding Co., Ltd.",
+      "country": "China",
+      "sector": "solar",
+      "parent_company": null,
+      "headquarters": "Shanghai, China",
+      "stock_exchange": "NYSE (JKS), Shanghai Star Market (SH:688223)",
+      "reason": "Chinese-headquartered and controlled. US operations raided by federal agents in 2023 for AD/CVD circumvention investigation.",
+      "subsidiaries": [
+        "JinkoSolar (U.S.) Inc. (Jacksonville, FL)",
+        "JinkoSolar Malaysia",
+        "JinkoSolar Vietnam"
+      ],
+      "products_affected": ["solar_panels", "solar_cells"],
+      "notable_customers_affected": ["US residential and commercial installers using Jacksonville-assembled modules"],
+      "us_presence": "Jacksonville, FL module assembly plant (400 MW capacity). However, cells sourced from Malaysia/SE Asia. Chinese parent company makes entire operation FEOC. Not suitable for 48E ITC projects."
+    },
+    {
+      "name": "Risen Energy Co., Ltd.",
+      "country": "China",
+      "sector": "solar",
+      "parent_company": null,
+      "headquarters": "Ningbo, Zhejiang, China",
+      "stock_exchange": "Shenzhen Stock Exchange (SZ:300118)",
+      "reason": "Chinese-headquartered and controlled. Solar panel and cell manufacturer.",
+      "subsidiaries": [
+        "Risen Energy Malaysia",
+        "Risen Energy Thailand"
+      ],
+      "products_affected": ["solar_panels", "solar_cells"],
+      "notable_customers_affected": ["Limited US presence"],
+      "us_presence": "No US manufacturing. Limited US market presence due to tariffs."
+    },
+    {
+      "name": "Canadian Solar Inc. / CSI Solar Co., Ltd.",
+      "country": "China",
+      "sector": "solar",
+      "parent_company": "Canadian Solar Inc. (Canadian holding, Chinese operations)",
+      "headquarters": "Guelph, Ontario, Canada (holding) / Suzhou, China (CSI Solar operations)",
+      "stock_exchange": "NASDAQ (CSIQ)",
+      "reason": "Despite Canadian holding company restructuring, manufacturing subsidiaries (CSI Solar) are Chinese-controlled entities. FEOC status problematic for 48E ITC. Ownership restructuring may help but untested under final Treasury rules.",
+      "subsidiaries": [
+        "CSI Solar Co., Ltd. (China)",
+        "Canadian Solar Thailand",
+        "Canadian Solar Vietnam"
+      ],
+      "products_affected": ["solar_panels", "solar_cells", "energy_storage"],
+      "notable_customers_affected": ["US utility-scale projects"],
+      "us_presence": "Mesquite, TX facility is distribution/warehouse only — not manufacturing. No confirmed US module manufacturing."
+    },
+    {
+      "name": "Tongwei Co., Ltd.",
+      "country": "China",
+      "sector": "solar",
+      "parent_company": null,
+      "headquarters": "Chengdu, Sichuan, China",
+      "stock_exchange": "Shenzhen Stock Exchange (SZ:600438)",
+      "reason": "Chinese-headquartered. World's largest solar cell manufacturer. Major polysilicon producer. Supplies cells to many module assemblers.",
+      "subsidiaries": [
+        "TW Solar",
+        "Tongwei Solar (various)"
+      ],
+      "products_affected": ["solar_cells", "polysilicon", "solar_wafers"],
+      "notable_customers_affected": ["Downstream module manufacturers that source Tongwei cells"],
+      "us_presence": "No US manufacturing. Cells from Tongwei used in modules assembled elsewhere may trigger FEOC concerns."
+    },
+    {
+      "name": "GCL Technology Holdings Limited",
+      "country": "China",
+      "sector": "solar",
+      "parent_company": "Golden Concord Group",
+      "headquarters": "Hong Kong / Suzhou, China",
+      "stock_exchange": "Hong Kong (HKSE:3800)",
+      "reason": "Chinese-controlled. Major polysilicon and wafer manufacturer. Granular polysilicon (FBR) technology.",
+      "subsidiaries": [
+        "GCL-Poly Energy Holdings",
+        "GCL System Integration"
+      ],
+      "products_affected": ["polysilicon", "solar_wafers", "solar_cells"],
+      "notable_customers_affected": ["Polysilicon customers downstream"],
+      "us_presence": "No US manufacturing."
+    },
+    {
+      "name": "Maxeon Solar Technologies (partial FEOC concern)",
+      "country": "Singapore",
+      "sector": "solar",
+      "parent_company": "TCL (36.5%), TotalEnergies (24.4%)",
+      "headquarters": "Singapore",
+      "stock_exchange": "NASDAQ (MAXN)",
+      "reason": "TCL (Chinese company) holds 36.5% ownership stake, which likely exceeds the 25% FEOC threshold. Despite Singapore incorporation and manufacturing in Mexico, the TCL ownership makes Maxeon potentially FEOC-controlled.",
+      "subsidiaries": [
+        "Maxeon Solar (Mexicali, Mexico factory)",
+        "SunPower brand (licensed)"
+      ],
+      "products_affected": ["solar_panels", "IBC_cells"],
+      "notable_customers_affected": ["SunPower legacy dealers"],
+      "us_presence": "No US manufacturing. Mexico production subject to 25% tariff. CBP UFLPA detentions ongoing."
+    },
+    {
+      "name": "APsystems (Altenergy Power System Inc.)",
+      "country": "China",
+      "sector": "inverters",
+      "parent_company": null,
+      "headquarters": "Jiaxing, Zhejiang, China",
+      "stock_exchange": "Euronext Paris (APSYS)",
+      "reason": "Chinese-headquartered and manufactured. Microinverter manufacturer.",
+      "subsidiaries": [
+        "APsystems USA (Seattle, WA — sales office only)"
+      ],
+      "products_affected": ["microinverters", "monitoring_systems"],
+      "notable_customers_affected": ["Budget-focused US installers"],
+      "us_presence": "Seattle sales office only. All manufacturing in Jiaxing, China."
+    }
+  ]
+}

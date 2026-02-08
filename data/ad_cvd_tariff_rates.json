@@ -1,0 +1,248 @@
+{
+  "metadata": {
+    "description": "Anti-Dumping (AD) and Countervailing Duty (CVD) tariff rates on crystalline silicon photovoltaic (CSPV) cells and modules imported into the United States",
+    "last_updated": "2026-02-08",
+    "sources": [
+      "US Department of Commerce — International Trade Administration",
+      "US International Trade Commission (ITC)",
+      "Federal Register notices",
+      "Commerce Department Preliminary and Final Determinations (2024-2025)",
+      "Presidential Proclamation on Section 201 Safeguard Tariff Extension"
+    ],
+    "notes": "Rates shown are combined AD+CVD where applicable. Actual rates may vary by specific exporter. These tariffs apply ON TOP OF Section 201 safeguard tariffs and any Section 301 tariffs. AD/CVD tariffs on SE Asian countries (Cambodia, Thailand, Vietnam, Malaysia) resulted from Commerce Department circumvention investigation initiated in 2022."
+  },
+  "countries": [
+    {
+      "country": "China (PRC)",
+      "country_code": "CN",
+      "products_covered": "Crystalline silicon PV cells and modules",
+      "ad_rate_range": "31.14% - 249.96%",
+      "cvd_rate_range": "14.78% - 15.85%",
+      "combined_range": "45.92% - 265.81%",
+      "effective_date": "2012-01-01",
+      "case_numbers": {
+        "ad": "A-570-979",
+        "cvd": "C-570-980"
+      },
+      "additional_tariffs": {
+        "section_301": "50% on cells and modules (increased from 25% to 50% effective 2024-09-27)",
+        "section_201": "14.25% safeguard tariff (see section_201 below)"
+      },
+      "notes": "Original AD/CVD orders from 2012. China also subject to Section 301 tariffs (trade war) and Section 201 safeguard tariffs. Effective combined tariff rate makes Chinese panels non-competitive in US market.",
+      "key_exporters": {
+        "Trina Solar": "31.14% AD + 15.85% CVD",
+        "Yingli Green Energy": "31.14% AD + 15.85% CVD",
+        "All Others": "249.96% AD + 14.78% CVD"
+      }
+    },
+    {
+      "country": "Taiwan",
+      "country_code": "TW",
+      "products_covered": "Crystalline silicon PV cells (not modules)",
+      "ad_rate_range": "11.45% - 27.55%",
+      "cvd_rate_range": null,
+      "combined_range": "11.45% - 27.55%",
+      "effective_date": "2015-02-18",
+      "case_numbers": {
+        "ad": "A-583-853"
+      },
+      "notes": "AD only (no CVD case). Applies to cells, not modules assembled in Taiwan. Taiwan cell manufacturing declining as production shifts.",
+      "key_exporters": {
+        "Motech Industries": "11.45%",
+        "Gintech Energy": "27.55%",
+        "All Others": "19.50%"
+      }
+    },
+    {
+      "country": "Cambodia",
+      "country_code": "KH",
+      "products_covered": "Crystalline silicon PV cells and modules",
+      "ad_rate_range": "117.12% - 292.61%",
+      "cvd_rate_range": "5.765%",
+      "combined_range": "122.89% - 298.38%",
+      "effective_date": "2024-12-01",
+      "case_numbers": {
+        "ad": "A-555-001 (circumvention)",
+        "cvd": "C-555-002 (circumvention)"
+      },
+      "notes": "Result of circumvention investigation. Commerce found Chinese companies routed production through Cambodia to avoid China AD/CVD orders. Some company-specific rates exceed 3,400% (New East Solar). Two-year moratorium on enforcement expired June 2024.",
+      "key_exporters": {
+        "BYD Hong Kong Co.": "117.12% AD",
+        "New East Solar": "Up to 3,403.96% AD (highest rate in case)",
+        "Canadian Solar subsidiary": "117.12% AD",
+        "All Others": "292.61% AD"
+      }
+    },
+    {
+      "country": "Vietnam",
+      "country_code": "VN",
+      "products_covered": "Crystalline silicon PV cells and modules",
+      "ad_rate_range": "56.51% - 271.28%",
+      "cvd_rate_range": "0.91% - 292.61%",
+      "combined_range": "57.42% - 563.89%",
+      "effective_date": "2024-12-01",
+      "case_numbers": {
+        "ad": "A-552-830 (circumvention)",
+        "cvd": "C-552-831 (circumvention)"
+      },
+      "notes": "Result of circumvention investigation. LONGi's Vina Solar subsidiary specifically found circumventing. Some rates effectively make Vietnamese panels cost-prohibitive. Combined with Section 201, effective tariff can exceed 800%.",
+      "key_exporters": {
+        "Vina Solar (LONGi)": "271.28% AD (circumvention finding)",
+        "Boviet Solar": "56.51% AD",
+        "All Others": "271.28% AD"
+      }
+    },
+    {
+      "country": "Thailand",
+      "country_code": "TH",
+      "products_covered": "Crystalline silicon PV cells and modules",
+      "ad_rate_range": "70.35% - 375.19%",
+      "cvd_rate_range": "1.78% - 86.40%",
+      "combined_range": "72.13% - 461.59%",
+      "effective_date": "2024-12-01",
+      "case_numbers": {
+        "ad": "A-549-846 (circumvention)",
+        "cvd": "C-549-847 (circumvention)"
+      },
+      "notes": "Result of circumvention investigation. Trina Solar Thailand faces highest rates. Canadian Solar Thailand also heavily impacted.",
+      "key_exporters": {
+        "Trina Solar Thailand": "375.19% AD + 86.40% CVD",
+        "Canadian Solar Thailand": "70.35% AD + 5.765% CVD",
+        "JA Solar Thailand": "70.35% AD + 5.765% CVD",
+        "All Others": "375.19% AD + 86.40% CVD"
+      }
+    },
+    {
+      "country": "Malaysia",
+      "country_code": "MY",
+      "products_covered": "Crystalline silicon PV cells and modules",
+      "ad_rate_range": "14.70% - 56.51%",
+      "cvd_rate_range": "2.85% - 5.86%",
+      "combined_range": "17.55% - 62.37%",
+      "effective_date": "2024-12-01",
+      "case_numbers": {
+        "ad": "A-557-820 (circumvention)",
+        "cvd": "C-557-821 (circumvention)"
+      },
+      "notes": "Lower rates than other SE Asian countries but still significant. JinkoSolar Malaysia has company-specific rate. Hanwha Q Cells Malaysia has lower rate due to South Korean parent company transparency.",
+      "key_exporters": {
+        "JinkoSolar Malaysia": "19.82% AD + 2.85% CVD",
+        "Hanwha Q Cells Malaysia": "14.70% AD + 2.85% CVD",
+        "All Others": "56.51% AD + 5.86% CVD"
+      }
+    },
+    {
+      "country": "India",
+      "country_code": "IN",
+      "products_covered": "Crystalline silicon PV cells and modules",
+      "ad_rate_range": "None currently",
+      "cvd_rate_range": "None currently",
+      "combined_range": "0%",
+      "effective_date": null,
+      "notes": "No AD/CVD orders on Indian solar products as of Feb 2026. India is a tariff-safe source for CSPV modules. Growing Indian manufacturing capacity (Adani, Tata, Vikram Solar, Premier Energies). Subject only to Section 201 safeguard tariff.",
+      "key_exporters": {}
+    },
+    {
+      "country": "South Korea",
+      "country_code": "KR",
+      "products_covered": "Crystalline silicon PV cells and modules",
+      "ad_rate_range": "None currently",
+      "cvd_rate_range": "None currently",
+      "combined_range": "0%",
+      "effective_date": null,
+      "notes": "No AD/CVD orders. Hanwha Q Cells (South Korean parent) is major beneficiary of clean tariff status. Korean-made cells imported for US module assembly at Dalton/Cartersville, GA. Subject only to Section 201.",
+      "key_exporters": {}
+    }
+  ],
+  "section_201": {
+    "description": "Safeguard tariff on ALL imported crystalline silicon PV cells and modules, regardless of country of origin. Originally imposed February 2018 under Section 201 of the Trade Act of 1974.",
+    "current_rate": "14.25%",
+    "cell_tariff_rate_quota": "5 GW of cells exempt from tariff annually (tariff-rate quota)",
+    "effective_date": "2022-02-07",
+    "effective_through": "2026-02-06",
+    "extension_status": "Extended by Presidential Proclamation 10790 (February 2024) for additional 4 years through February 2026. Further extension or modification expected.",
+    "rate_schedule": {
+      "year_1_2022": "14.75%",
+      "year_2_2023": "14.50%",
+      "year_3_2024": "14.25%",
+      "year_4_2025_2026": "14.25%"
+    },
+    "exemptions": [
+      "First 5 GW of imported cells annually (tariff-rate quota)",
+      "Thin-film panels (CdTe, CIGS) — not crystalline silicon",
+      "US-manufactured modules (domestic content)"
+    ],
+    "notes": "Section 201 applies to ALL crystalline silicon imports from ALL countries (including allies). This is ON TOP OF any AD/CVD tariffs. Thin-film (e.g., First Solar CdTe) is exempt. The 5 GW cell TRQ allows some duty-free cell imports for US module assembly."
+  },
+  "section_301": {
+    "description": "Section 301 tariffs on Chinese-origin goods, including solar cells and modules. Part of broader US-China trade dispute.",
+    "current_rate_cells_modules": "50%",
+    "effective_date": "2018-09-24",
+    "rate_history": {
+      "2018_original": "25% on solar cells and modules (List 3)",
+      "2024_increase": "50% on solar cells and modules (effective 2024-09-27 per USTR review)"
+    },
+    "notes": "Applies only to Chinese-origin goods. Does not apply to SE Asian countries (those are covered by AD/CVD). Combined with AD/CVD (45-265%) and Section 201 (14.25%), Chinese panels face effective tariffs of 100%+ making them non-competitive in US market."
+  },
+  "tariff_safe_summary": {
+    "safe_countries": [
+      {
+        "country": "USA",
+        "reason": "Domestic manufacturing — no import tariffs",
+        "key_manufacturers": ["QCells (Dalton/Cartersville, GA)", "First Solar (Ohio, Louisiana, Alabama)", "Silfab (Fort Mill, SC)", "Mission Solar (San Antonio, TX)", "Heliene (Rogers, MN)", "Meyer Burger (Goodyear, AZ)"]
+      },
+      {
+        "country": "South Korea",
+        "reason": "No AD/CVD orders. Section 201 only (14.25%)",
+        "key_manufacturers": ["Hanwha QCells (cells for US assembly)"]
+      },
+      {
+        "country": "Singapore",
+        "reason": "No AD/CVD orders. Section 201 only (14.25%)",
+        "key_manufacturers": ["REC Group"]
+      },
+      {
+        "country": "India",
+        "reason": "No AD/CVD orders. Section 201 only (14.25%)",
+        "key_manufacturers": ["Adani Solar", "Tata Power Solar", "Vikram Solar", "Premier Energies"]
+      },
+      {
+        "country": "Japan",
+        "reason": "No AD/CVD orders. Section 201 only (14.25%)",
+        "key_manufacturers": ["Panasonic (discontinued solar 2025)", "Sharp (limited)"]
+      },
+      {
+        "country": "Europe (Germany, Austria, Switzerland)",
+        "reason": "No AD/CVD orders. Section 201 only (14.25%)",
+        "key_manufacturers": ["SMA (Germany)", "Fronius (Austria)", "Meyer Burger (Switzerland/USA)"]
+      }
+    ],
+    "heavily_tariffed_countries": [
+      {
+        "country": "China",
+        "effective_range": "110% - 330%+",
+        "breakdown": "AD/CVD (45-265%) + Section 301 (50%) + Section 201 (14.25%)"
+      },
+      {
+        "country": "Cambodia",
+        "effective_range": "137% - 3,418%+",
+        "breakdown": "AD/CVD (122-298%+) + Section 201 (14.25%)"
+      },
+      {
+        "country": "Vietnam",
+        "effective_range": "72% - 578%+",
+        "breakdown": "AD/CVD (57-563%) + Section 201 (14.25%)"
+      },
+      {
+        "country": "Thailand",
+        "effective_range": "86% - 476%+",
+        "breakdown": "AD/CVD (72-461%) + Section 201 (14.25%)"
+      },
+      {
+        "country": "Malaysia",
+        "effective_range": "32% - 77%+",
+        "breakdown": "AD/CVD (17-62%) + Section 201 (14.25%)"
+      }
+    ]
+  }
+}

@@ -1,0 +1,158 @@
+{
+  "state": "KY",
+  "utility_count": 8,
+  "avg_residential_rate": 0.1229,
+  "eia_state_avg_rate": 0.1181,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "NEM",
+    "export_rate": null
+  },
+  "utilities": [
+    {
+      "utility_id": "10171",
+      "utility_name": "Kentucky Utilities Co",
+      "state": "KY",
+      "states_served": [
+        "KY"
+      ],
+      "type": "IOU",
+      "customer_count": 540000,
+      "residential_avg_rate": 0.2177,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "11249",
+      "utility_name": "Louisville Gas & Electric Co",
+      "state": "KY",
+      "states_served": [
+        "KY"
+      ],
+      "type": "IOU",
+      "customer_count": 410000,
+      "residential_avg_rate": 0.1038,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "22053",
+      "utility_name": "Kentucky Power Co",
+      "state": "KY",
+      "states_served": [
+        "KY"
+      ],
+      "type": "IOU",
+      "customer_count": 165000,
+      "residential_avg_rate": 0.1316,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "6284783282439079393",
+      "utility_name": "Duke Energy Kentucky",
+      "state": "KY",
+      "states_served": [
+        "KY"
+      ],
+      "type": "IOU",
+      "customer_count": 150000,
+      "residential_avg_rate": 0.1181,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "15470",
+      "utility_name": "Duke Energy Indiana Inc",
+      "state": "KY",
+      "states_served": [
+        "KY"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1301,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "14251",
+      "utility_name": "Owen Electric Coop Inc",
+      "state": "KY",
+      "states_served": [
+        "KY"
+      ],
+      "type": "coop",
+      "customer_count": 0,
+      "residential_avg_rate": 0.0836,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "4624",
+      "utility_name": "Cumberland Elec Member Corp",
+      "state": "KY",
+      "states_served": [
+        "KY"
+      ],
+      "type": "coop",
+      "customer_count": 0,
+      "residential_avg_rate": 0.0945,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "18642",
+      "utility_name": "Tennessee Valley Authority (Mississippi)",
+      "state": "KY",
+      "states_served": [
+        "KY"
+      ],
+      "type": "muni",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1036,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:11:40.336413"
+}

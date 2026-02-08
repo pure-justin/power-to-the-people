@@ -1,0 +1,158 @@
+{
+  "state": "IL",
+  "utility_count": 8,
+  "avg_residential_rate": 0.1453,
+  "eia_state_avg_rate": 0.1547,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "NEM",
+    "export_rate": null
+  },
+  "utilities": [
+    {
+      "utility_id": "4110",
+      "utility_name": "Commonwealth Edison Co",
+      "state": "IL",
+      "states_served": [
+        "IL"
+      ],
+      "type": "IOU",
+      "customer_count": 4000000,
+      "residential_avg_rate": 0.1271,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "-1194229522400153781",
+      "utility_name": "Ameren Illinois Co",
+      "state": "IL",
+      "states_served": [
+        "IL"
+      ],
+      "type": "IOU",
+      "customer_count": 1200000,
+      "residential_avg_rate": 0.1547,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "12341",
+      "utility_name": "MidAmerican Energy Co",
+      "state": "IL",
+      "states_served": [
+        "IL"
+      ],
+      "type": "IOU",
+      "customer_count": 150000,
+      "residential_avg_rate": 0.1103,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "20847",
+      "utility_name": "Wisconsin Electric Power Co",
+      "state": "IL",
+      "states_served": [
+        "IL"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1959,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "20856",
+      "utility_name": "Wisconsin Power & Light Co",
+      "state": "IL",
+      "states_served": [
+        "IL"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1643,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "9324",
+      "utility_name": "Indiana Michigan Power Co (Indiana)",
+      "state": "IL",
+      "states_served": [
+        "IL"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1394,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "13756",
+      "utility_name": "Northern Indiana Pub Serv Co",
+      "state": "IL",
+      "states_served": [
+        "IL"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1618,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "17828",
+      "utility_name": "City of Springfield, Illinois (Utility Company)",
+      "state": "IL",
+      "states_served": [
+        "IL"
+      ],
+      "type": "muni",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1089,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:11:20.952453"
+}

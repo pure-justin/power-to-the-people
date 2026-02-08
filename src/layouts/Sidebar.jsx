@@ -27,6 +27,7 @@ import {
   Zap,
   Sun,
   X,
+  Store,
 } from "lucide-react";
 
 const NAV_ITEMS = {
@@ -46,6 +47,7 @@ const NAV_ITEMS = {
     { to: "/admin/ava", label: "Ava", icon: Bot },
     { to: "/admin/campaigns", label: "Campaigns", icon: Megaphone },
     { to: "/admin/analytics", label: "Analytics", icon: BarChart3 },
+    { to: "/dashboard/marketplace", label: "Marketplace", icon: Store },
   ],
   installer: [
     { to: "/dashboard", label: "Overview", icon: LayoutDashboard },
@@ -58,6 +60,7 @@ const NAV_ITEMS = {
     { to: "/dashboard/billing", label: "Billing", icon: CreditCard },
     { to: "/dashboard/referrals", label: "Referrals", icon: Gift },
     { to: "/dashboard/equipment", label: "Equipment", icon: Package },
+    { to: "/dashboard/marketplace", label: "Marketplace", icon: Store },
   ],
   sales: [
     { to: "/sales", label: "Overview", icon: LayoutDashboard },

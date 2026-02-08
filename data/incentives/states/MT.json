@@ -1,0 +1,40 @@
+{
+  "state": "MT",
+  "state_name": "Montana",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 2,
+  "incentives": [
+    {
+      "id": "MT_net_metering",
+      "state": "MT",
+      "incentive_type": "net_metering",
+      "name": "Montana Net Metering",
+      "description": "Montana requires net metering for systems up to 50 kW",
+      "value": "Full retail rate credit",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Montana Public Service Commission",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "MT_sales_tax_exempt",
+      "state": "MT",
+      "incentive_type": "sales_tax_exempt",
+      "name": "Montana Sales Tax - No State Sales Tax",
+      "description": "Montana has no state sales tax, so solar equipment is naturally exempt",
+      "value": "No state sales tax (0%)",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "N/A - no state sales tax",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

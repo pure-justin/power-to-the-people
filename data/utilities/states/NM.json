@@ -1,0 +1,122 @@
+{
+  "state": "NM",
+  "utility_count": 6,
+  "avg_residential_rate": 0.1341,
+  "eia_state_avg_rate": 0.1382,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "NEM",
+    "export_rate": null
+  },
+  "utilities": [
+    {
+      "utility_id": "-7852181593002351050",
+      "utility_name": "Public Service Co of New Mexico",
+      "state": "NM",
+      "states_served": [
+        "NM"
+      ],
+      "type": "IOU",
+      "customer_count": 550000,
+      "residential_avg_rate": 0.1382,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "5701",
+      "utility_name": "El Paso Electric Co",
+      "state": "NM",
+      "states_served": [
+        "NM"
+      ],
+      "type": "IOU",
+      "customer_count": 110000,
+      "residential_avg_rate": 0.129,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "17718",
+      "utility_name": "Southwestern Public Service Co",
+      "state": "NM",
+      "states_served": [
+        "NM"
+      ],
+      "type": "IOU",
+      "customer_count": 60000,
+      "residential_avg_rate": 0.0943,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "15473",
+      "utility_name": "Public Service Co of NM",
+      "state": "NM",
+      "states_served": [
+        "NM"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1826,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "15466",
+      "utility_name": "Public Service Co of Colorado",
+      "state": "NM",
+      "states_served": [
+        "NM"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1446,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "10539",
+      "utility_name": "La Plata Electric Assn, Inc",
+      "state": "NM",
+      "states_served": [
+        "NM"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1156,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": true,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:13:05.401673"
+}

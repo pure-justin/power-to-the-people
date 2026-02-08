@@ -1,0 +1,266 @@
+{
+  "state": "MD",
+  "utility_count": 14,
+  "avg_residential_rate": 0.1436,
+  "eia_state_avg_rate": 0.1566,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "NEM",
+    "export_rate": null
+  },
+  "utilities": [
+    {
+      "utility_id": "1167",
+      "utility_name": "Baltimore Gas & Electric Co",
+      "state": "MD",
+      "states_served": [
+        "MD"
+      ],
+      "type": "IOU",
+      "customer_count": 1300000,
+      "residential_avg_rate": 0.1341,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "15270",
+      "utility_name": "Potomac Electric Power Co",
+      "state": "MD",
+      "states_served": [
+        "MD"
+      ],
+      "type": "IOU",
+      "customer_count": 600000,
+      "residential_avg_rate": 0.1326,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "5027",
+      "utility_name": "Delmarva Power",
+      "state": "MD",
+      "states_served": [
+        "MD"
+      ],
+      "type": "IOU",
+      "customer_count": 200000,
+      "residential_avg_rate": 0.1485,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "12390",
+      "utility_name": "Metropolitan Edison Co (Pennsylvania)",
+      "state": "MD",
+      "states_served": [
+        "MD"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1552,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "14940",
+      "utility_name": "PECO Energy Co",
+      "state": "MD",
+      "states_served": [
+        "MD"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2396,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "14715",
+      "utility_name": "PPL Electric Utilities Corp",
+      "state": "MD",
+      "states_served": [
+        "MD"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1576,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "19876",
+      "utility_name": "Virginia Electric & Power Co",
+      "state": "MD",
+      "states_served": [
+        "MD"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1289,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "15263",
+      "utility_name": "The Potomac Edison Co (Maryland)",
+      "state": "MD",
+      "states_served": [
+        "MD"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1069,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "13640",
+      "utility_name": "Northern Virginia Elec Coop",
+      "state": "MD",
+      "states_served": [
+        "MD"
+      ],
+      "type": "coop",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1028,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "17637",
+      "utility_name": "Southern Maryland Elec Coop Inc",
+      "state": "MD",
+      "states_served": [
+        "MD"
+      ],
+      "type": "coop",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1736,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "40228",
+      "utility_name": "Rappahannock Electric Coop",
+      "state": "MD",
+      "states_served": [
+        "MD"
+      ],
+      "type": "coop",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1561,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "20387",
+      "utility_name": "West Penn Power Co",
+      "state": "MD",
+      "states_served": [
+        "MD"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1151,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "12796",
+      "utility_name": "Monongahela Power Co (West Virginia)",
+      "state": "MD",
+      "states_served": [
+        "MD"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1314,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "17066",
+      "utility_name": "Shenandoah Valley Elec Coop",
+      "state": "MD",
+      "states_served": [
+        "MD"
+      ],
+      "type": "coop",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1275,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:11:59.094982"
+}

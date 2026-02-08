@@ -84,6 +84,111 @@ class BatchWriter {
   }
 }
 
+// --- Equipment Helpers ---
+
+/**
+ * Generate a search_text field from equipment data for text search.
+ * Combines manufacturer, model, type, and tags into a single lowercase string.
+ */
+function generateSearchText(item: any, type: string): string {
+  const parts: string[] = [];
+  if (item.manufacturer) parts.push(item.manufacturer);
+  if (item.model) parts.push(item.model);
+  parts.push(type);
+  if (item.tags && Array.isArray(item.tags)) {
+    parts.push(...item.tags);
+  }
+  if (item.cell_technology) parts.push(item.cell_technology);
+  if (item.manufacturing_location) parts.push(item.manufacturing_location);
+  return parts.join(" ").toLowerCase();
+}
+
+/**
+ * Extract supply_chain object from raw equipment data.
+ */
+function extractSupplyChain(item: any): Record<string, any> | null {
+  if (item.supply_chain) return item.supply_chain;
+  // Build from existing fields if supply_chain not present
+  const sc: Record<string, any> = {};
+  if (item.manufacturing_location)
+    sc.assembly_location = item.manufacturing_location;
+  if (item.feoc_compliant !== undefined)
+    sc.pfe_percentage = item.feoc_compliant ? 0 : null;
+  if (item.domestic_content_eligible !== undefined) {
+    sc.us_content_percentage = item.domestic_content_eligible ? 50 : 0;
+  }
+  if (item.feoc_notes) sc.uflpa_status = item.feoc_notes;
+  return Object.keys(sc).length > 0 ? sc : null;
+}
+
+/**
+ * Extract pricing object from raw equipment data.
+ */
+function extractPricing(item: any): Record<string, any> {
+  if (item.pricing) return item.pricing;
+  const pricing: Record<string, any> = {};
+  if (item.wholesale_price_per_watt_usd !== undefined) {
+    pricing.wholesale_per_unit = item.wholesale_price_per_watt_usd;
+    pricing.unit = "per_watt";
+  } else if (item.wholesale_price_per_unit_usd !== undefined) {
+    pricing.wholesale_per_unit = item.wholesale_price_per_unit_usd;
+    pricing.unit = "per_unit";
+  } else if (item.price_estimate_usd !== undefined) {
+    pricing.wholesale_per_unit = item.price_estimate_usd;
+    pricing.unit = "per_unit";
+  }
+  if (item.price_notes) pricing.price_notes = item.price_notes;
+  pricing.price_updated = new Date().toISOString().slice(0, 10);
+  // Map availability_status to distributor_availability
+  if (item.availability_status) {
+    const statusMap: Record<string, string> = {
+      widely_available: "in_stock",
+      available: "in_stock",
+      limited_residential: "in_stock",
+      available_with_caveats: "in_stock",
+      supply_disrupted: "backorder",
+      tariff_restricted: "backorder",
+      effectively_unavailable_us: "backorder",
+      discontinued: "discontinued",
+    };
+    pricing.distributor_availability =
+      statusMap[item.availability_status] || item.availability_status;
+  }
+  return pricing;
+}
+
+/**
+ * Process a single equipment item, adding enriched fields.
+ */
+function enrichEquipmentDoc(item: any, type: string): Record<string, any> {
+  const doc: Record<string, any> = { ...item };
+  doc.type = type;
+
+  // Generate search_text
+  doc.search_text = generateSearchText(item, type);
+
+  // Ensure tags array exists
+  if (!doc.tags) {
+    doc.tags = [type];
+    if (item.feoc_compliant) doc.tags.push("feoc_compliant");
+    if (item.domestic_content_eligible) doc.tags.push("domestic_content");
+    if (item.tariff_safe) doc.tags.push("tariff_safe");
+    if (item.cell_technology) doc.tags.push(item.cell_technology.toLowerCase());
+  }
+
+  // Extract/normalize supply_chain
+  const supplyChain = extractSupplyChain(item);
+  if (supplyChain) doc.supply_chain = supplyChain;
+
+  // Extract/normalize pricing
+  doc.pricing = extractPricing(item);
+
+  // Preserve specs as-is if present, or leave existing fields
+  // (type-specific specs remain at top level for backward compatibility)
+
+  return doc;
+}
+
 // --- Import Functions ---
 
 async function importEquipment() {
@@ -91,7 +196,6 @@ async function importEquipment() {
   const data = loadJson("equipment_national.json");
   const writer = new BatchWriter();
   const collection = db.collection("solar_equipment");
-  let count = 0;
 
   // Import metadata
   await writer.set(collection.doc("_metadata"), {
@@ -107,47 +211,40 @@ async function importEquipment() {
     });
   }
 
-  // Import panels
-  for (const panel of data.panels || []) {
-    const docId = panel.id || slugify(`${panel.manufacturer}-${panel.model}`);
-    await writer.set(collection.doc(docId), {
-      ...panel,
-      category: "panel",
-      importedAt: admin.firestore.FieldValue.serverTimestamp(),
-    });
-    count++;
-  }
-  console.log(`  Panels: ${count}`);
+  // All 9 equipment type mappings
+  const typeKeys: Array<{ key: string; type: string }> = [
+    { key: "panels", type: "panel" },
+    { key: "inverters", type: "inverter" },
+    { key: "batteries", type: "battery" },
+    { key: "optimizers", type: "optimizer" },
+    { key: "racking", type: "racking" },
+    { key: "rapid_shutdown", type: "rapid_shutdown" },
+    { key: "electrical_bos", type: "electrical_bos" },
+    { key: "monitoring", type: "monitoring" },
+    { key: "ev_chargers", type: "ev_charger" },
+  ];
 
-  // Import inverters
-  let invCount = 0;
-  for (const inverter of data.inverters || []) {
-    const docId =
-      inverter.id || slugify(`${inverter.manufacturer}-${inverter.model}`);
-    await writer.set(collection.doc(docId), {
-      ...inverter,
-      category: "inverter",
-      importedAt: admin.firestore.FieldValue.serverTimestamp(),
-    });
-    invCount++;
-  }
-  console.log(`  Inverters: ${invCount}`);
+  const counts: Record<string, number> = {};
 
-  // Import batteries
-  let batCount = 0;
-  for (const battery of data.batteries || []) {
-    const docId =
-      battery.id || slugify(`${battery.manufacturer}-${battery.model}`);
-    await writer.set(collection.doc(docId), {
-      ...battery,
-      category: "battery",
-      importedAt: admin.firestore.FieldValue.serverTimestamp(),
-    });
-    batCount++;
+  for (const { key, type } of typeKeys) {
+    const items = data[key] || [];
+    counts[type] = 0;
+    for (const item of items) {
+      const docId = item.id || slugify(`${item.manufacturer}-${item.model}`);
+      const enriched = enrichEquipmentDoc(item, type);
+      await writer.set(collection.doc(docId), {
+        ...enriched,
+        importedAt: admin.firestore.FieldValue.serverTimestamp(),
+      });
+      counts[type]++;
+    }
   }
-  console.log(`  Batteries: ${batCount}`);
 
   await writer.flush();
+
+  for (const [type, c] of Object.entries(counts)) {
+    if (c > 0) console.log(`  ${type}: ${c}`);
+  }
   console.log(`  Total equipment docs: ${writer.total}`);
 }
 

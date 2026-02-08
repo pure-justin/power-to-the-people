@@ -1,0 +1,195 @@
+{
+  "state": "CA",
+  "utility_count": 10,
+  "avg_residential_rate": 0.2607,
+  "eia_state_avg_rate": 0.2737,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "net_billing",
+    "export_rate": 0.08,
+    "notes": "NEM 3.0 (Net Billing Tariff) since Apr 2023. Export rates ~$0.08/kWh avg. PG&E/SCE/SDG&E. LADWP/SMUD have own programs."
+  },
+  "utilities": [
+    {
+      "utility_id": "14328",
+      "utility_name": "Pacific Gas & Electric Co",
+      "state": "CA",
+      "states_served": [
+        "CA"
+      ],
+      "type": "IOU",
+      "customer_count": 5500000,
+      "residential_avg_rate": 0.4695,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": 0.08,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "17609",
+      "utility_name": "Southern California Edison Co",
+      "state": "CA",
+      "states_served": [
+        "CA"
+      ],
+      "type": "IOU",
+      "customer_count": 5100000,
+      "residential_avg_rate": 0.2558,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": 0.08,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "16609",
+      "utility_name": "San Diego Gas & Electric Co",
+      "state": "CA",
+      "states_served": [
+        "CA"
+      ],
+      "type": "IOU",
+      "customer_count": 1500000,
+      "residential_avg_rate": 0.4596,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": 0.08,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "-7637984125044236720",
+      "utility_name": "Los Angeles Dept of Water & Power",
+      "state": "CA",
+      "states_served": [
+        "CA"
+      ],
+      "type": "muni",
+      "customer_count": 1500000,
+      "residential_avg_rate": 0.2737,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": 0.08,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "9075495282574784092",
+      "utility_name": "Sacramento Municipal Util Dist",
+      "state": "CA",
+      "states_served": [
+        "CA"
+      ],
+      "type": "muni",
+      "customer_count": 650000,
+      "residential_avg_rate": 0.2737,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": 0.08,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "11208",
+      "utility_name": "Los Angeles Department of Water & Power",
+      "state": "CA",
+      "states_served": [
+        "CA"
+      ],
+      "type": "muni",
+      "customer_count": 0,
+      "residential_avg_rate": 0.223,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": 0.08,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "16088",
+      "utility_name": "City of Riverside, California (Utility Company)",
+      "state": "CA",
+      "states_served": [
+        "CA"
+      ],
+      "type": "muni",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1516,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": 0.08,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "16612",
+      "utility_name": "City & County of San Francisco (Utility Company)",
+      "state": "CA",
+      "states_served": [
+        "CA"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2112,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": 0.08,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "16534",
+      "utility_name": "Sacramento Municipal Utility District",
+      "state": "CA",
+      "states_served": [
+        "CA"
+      ],
+      "type": "muni",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1828,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": 0.08,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "17166",
+      "utility_name": "Sierra Pacific Power Co (Nevada)",
+      "state": "CA",
+      "states_served": [
+        "CA"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1062,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "export_rate": 0.08,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:10:26.639904"
+}

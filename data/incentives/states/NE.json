@@ -1,0 +1,25 @@
+{
+  "state": "NE",
+  "state_name": "Nebraska",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 1,
+  "incentives": [
+    {
+      "id": "NE_net_metering",
+      "state": "NE",
+      "incentive_type": "net_metering",
+      "name": "Nebraska Net Metering",
+      "description": "Nebraska public power districts offer net metering. Voluntary programs vary by utility.",
+      "value": "Varies by utility district",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "varies_by_utility",
+      "expiration_date": null,
+      "administering_body": "Nebraska Power Review Board",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

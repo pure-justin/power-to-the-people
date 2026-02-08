@@ -1,0 +1,40 @@
+{
+  "state": "KS",
+  "state_name": "Kansas",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 2,
+  "incentives": [
+    {
+      "id": "KS_property_tax_exempt",
+      "state": "KS",
+      "incentive_type": "property_tax_exempt",
+      "name": "Kansas Property Tax Exemption for Solar",
+      "description": "Solar energy systems exempt from property tax assessment",
+      "value": "100% property tax exemption",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Kansas Department of Revenue",
+      "source_url": "https://worldpopulationreview.com/state-rankings/solar-incentives-by-state",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "KS_net_metering",
+      "state": "KS",
+      "incentive_type": "net_metering",
+      "name": "Kansas Net Metering",
+      "description": "Kansas requires net metering for investor-owned utilities for systems up to 200 kW",
+      "value": "Full retail rate credit",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Kansas Corporation Commission",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

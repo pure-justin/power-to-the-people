@@ -1,0 +1,122 @@
+{
+  "state": "KS",
+  "utility_count": 6,
+  "avg_residential_rate": 0.1085,
+  "eia_state_avg_rate": 0.139,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "NEM",
+    "export_rate": null
+  },
+  "utilities": [
+    {
+      "utility_id": "22500",
+      "utility_name": "Evergy Kansas Central",
+      "state": "KS",
+      "states_served": [
+        "KS"
+      ],
+      "type": "IOU",
+      "customer_count": 700000,
+      "residential_avg_rate": 0.1083,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "10000",
+      "utility_name": "Evergy Kansas Metro",
+      "state": "KS",
+      "states_served": [
+        "KS"
+      ],
+      "type": "IOU",
+      "customer_count": 330000,
+      "residential_avg_rate": 0.1472,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "5860",
+      "utility_name": "Empire District Electric Co",
+      "state": "KS",
+      "states_served": [
+        "KS"
+      ],
+      "type": "muni",
+      "customer_count": 50000,
+      "residential_avg_rate": 0.0655,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "12698",
+      "utility_name": "KCP&L Greater Missouri Operations",
+      "state": "KS",
+      "states_served": [
+        "KS"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1163,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "19436",
+      "utility_name": "Union Electric Co",
+      "state": "KS",
+      "states_served": [
+        "KS"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1056,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "9996",
+      "utility_name": "City of Kansas City, Kansas (Utility Company)",
+      "state": "KS",
+      "states_served": [
+        "KS"
+      ],
+      "type": "muni",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1081,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:11:34.375615"
+}

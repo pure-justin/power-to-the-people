@@ -1,0 +1,70 @@
+{
+  "state": "CA",
+  "state_name": "California",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 4,
+  "incentives": [
+    {
+      "id": "CA_property_tax_exempt",
+      "state": "CA",
+      "incentive_type": "property_tax_exempt",
+      "name": "California Active Solar Energy System Exclusion",
+      "description": "Solar energy systems are excluded from property tax assessment. Does not increase your property tax bill.",
+      "value": "100% exclusion from property tax assessment",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": "2027-01-01",
+      "administering_body": "California Board of Equalization",
+      "source_url": "https://www.solarreviews.com/solar-incentives/california",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "CA_net_billing",
+      "state": "CA",
+      "incentive_type": "net_metering",
+      "name": "California Net Billing Tariff (NEM 3.0)",
+      "description": "Replaced net metering April 2023. Excess solar credited at avoided cost rates varying by time of day, day of week, and season. Significantly lower than retail rates. Strong incentive for battery storage pairing.",
+      "value": "Avoided cost rate (varies, significantly below retail)",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "California Public Utilities Commission",
+      "source_url": "https://www.solarreviews.com/solar-incentives/california",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "CA_sgip",
+      "state": "CA",
+      "incentive_type": "rebate",
+      "name": "California Self-Generation Incentive Program (SGIP)",
+      "description": "$150/kWh rebate for residential battery storage. Higher incentives for equity and equity resiliency customers in disadvantaged communities and high-fire-risk areas.",
+      "value": "$150/kWh (general), up to $1,000/kWh (equity resiliency)",
+      "value_type": "per_kw",
+      "eligibility": "residential",
+      "status": "active",
+      "expiration_date": "2026-01-01",
+      "administering_body": "CPUC / PG&E, SCE, SDG&E",
+      "source_url": "https://www.solarreviews.com/solar-incentives/california",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "CA_pace",
+      "state": "CA",
+      "incentive_type": "pace",
+      "name": "California PACE Financing",
+      "description": "Property Assessed Clean Energy financing available statewide. Allows solar and storage financing through property tax assessment.",
+      "value": "Financing option, not a direct incentive",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Various PACE providers",
+      "source_url": "https://www.solarreviews.com/solar-incentives/california",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

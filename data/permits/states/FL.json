@@ -1,0 +1,34 @@
+{
+  "state": "FL",
+  "state_name": "Florida",
+  "data_compiled": "2026-02-08",
+  "general_requirements": {
+    "permit_required": true,
+    "permit_type": "both",
+    "typical_fee_range": "$200-$600",
+    "typical_timeline_days": "5-14",
+    "inspection_required": true,
+    "inspection_stages": ["rough-in", "final"],
+    "statewide_permit_program": true,
+    "statewide_program_name": "Florida streamlined permitting for Tier 1 solar systems (up to 10 kW on single-family residential). No insurance requirement and no application fee for Tier 1 grid connection."
+  },
+  "interconnection": {
+    "utility_approval_required": true,
+    "net_metering_available": true,
+    "net_metering_details": "Florida has net metering for systems up to 115% of customer's prior 12-month energy consumption. Credits at full retail rate. Excess credits roll over indefinitely at retail rate. No cap on statewide capacity. FPL, Duke Energy Florida, and TECO are major utilities.",
+    "typical_timeline_days": "10-30",
+    "fees": "No application fee for Tier 1 systems; varies for larger systems"
+  },
+  "special_considerations": {
+    "hoa_restrictions": "Strong solar access law (Florida Statute 163.04). Property owners cannot be denied permission to install solar collectors by any deed restriction, covenant, or HOA. One of the strongest solar rights laws in the nation.",
+    "historic_districts": "Historic districts in St. Augustine, Key West, and other cities have additional review requirements. Local historic preservation boards review installations.",
+    "wind_load_requirements": "Critical requirement. Florida Building Code has the most stringent wind ratings in the nation. Miami-Dade County: 175 mph design wind speed. Broward County: 170 mph. Most of peninsular Florida: 130-160 mph. All installations must meet FBC wind load requirements. Hurricane zone compliance is mandatory.",
+    "snow_load_requirements": "Not applicable"
+  },
+  "licensing": {
+    "contractor_license_required": true,
+    "license_type": "Florida Solar Contractor license (CVC56875) or licensed Electrical Contractor (EC). Florida-specific solar contractor license is unique in the nation.",
+    "nabcep_required": false
+  },
+  "notes": "Florida is the second-largest solar market in the US after California. The state has strong net metering and solar access laws but no state income tax credit (residential ITC expired federally Jan 2026). Property tax exemption for solar equipment value. Sales tax exemption on solar equipment. Hurricane wind load compliance is the most critical permitting consideration - installations must withstand extreme wind speeds. FPL is the largest utility and has streamlined interconnection. The state blocked anti-solar ballot measure in 2016."
+}

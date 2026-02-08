@@ -1,0 +1,25 @@
+{
+  "state": "ME",
+  "state_name": "Maine",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 1,
+  "incentives": [
+    {
+      "id": "ME_net_metering",
+      "state": "ME",
+      "incentive_type": "net_metering",
+      "name": "Maine Net Energy Billing",
+      "description": "Maine uses net energy billing with kilowatt-hour credits. Credits can be applied to other accounts in the same utility territory.",
+      "value": "Full retail rate credit with transferability",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Maine Public Utilities Commission",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

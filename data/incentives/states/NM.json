@@ -1,0 +1,55 @@
+{
+  "state": "NM",
+  "state_name": "New Mexico",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 3,
+  "incentives": [
+    {
+      "id": "NM_tax_credit",
+      "state": "NM",
+      "incentive_type": "tax_credit",
+      "name": "New Mexico Solar Market Development Tax Credit",
+      "description": "10% of system installation costs or $6,000, whichever is lower. State income tax credit.",
+      "value": "10% of costs, up to $6,000",
+      "value_type": "percentage",
+      "eligibility": "residential",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "New Mexico Energy, Minerals and Natural Resources Department",
+      "source_url": "https://www.emnrd.nm.gov/ecmd/tax-incentives/solar-market-development-tax-credit-smdtc/",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "NM_sales_tax_exempt",
+      "state": "NM",
+      "incentive_type": "sales_tax_exempt",
+      "name": "New Mexico Sales Tax Exemption for Solar",
+      "description": "Solar energy systems exempt from gross receipts tax",
+      "value": "Gross receipts tax exemption",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "New Mexico Taxation and Revenue",
+      "source_url": "https://www.solarreviews.com/solar-incentives",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "NM_net_metering",
+      "state": "NM",
+      "incentive_type": "net_metering",
+      "name": "New Mexico Net Metering",
+      "description": "New Mexico requires net metering for systems up to 80 MW",
+      "value": "Full retail rate credit",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "New Mexico PRC",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

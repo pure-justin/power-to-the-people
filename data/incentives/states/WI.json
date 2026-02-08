@@ -1,0 +1,55 @@
+{
+  "state": "WI",
+  "state_name": "Wisconsin",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 3,
+  "incentives": [
+    {
+      "id": "WI_property_tax_exempt",
+      "state": "WI",
+      "incentive_type": "property_tax_exempt",
+      "name": "Wisconsin Property Tax Exemption for Solar",
+      "description": "Solar energy systems exempt from property tax assessment",
+      "value": "100% of added solar value exempt",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Wisconsin Department of Revenue",
+      "source_url": "https://www.solarreviews.com/solar-incentives",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "WI_sales_tax_exempt",
+      "state": "WI",
+      "incentive_type": "sales_tax_exempt",
+      "name": "Wisconsin Sales Tax Exemption for Solar",
+      "description": "Solar energy equipment exempt from state sales tax",
+      "value": "Sales tax exemption",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Wisconsin DOR",
+      "source_url": "https://www.solarreviews.com/solar-incentives",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "WI_net_metering",
+      "state": "WI",
+      "incentive_type": "net_metering",
+      "name": "Wisconsin Net Metering",
+      "description": "Wisconsin requires net metering for systems up to 20 kW",
+      "value": "Full retail rate credit for systems up to 20 kW",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Wisconsin PSC",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

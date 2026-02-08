@@ -1,0 +1,55 @@
+{
+  "state": "IN",
+  "state_name": "Indiana",
+  "data_compiled": "2026-02-08",
+  "federal_residential_itc_available": false,
+  "tpo_commercial_itc_available": true,
+  "incentive_count": 3,
+  "incentives": [
+    {
+      "id": "IN_property_tax_exempt",
+      "state": "IN",
+      "incentive_type": "property_tax_exempt",
+      "name": "Indiana Property Tax Exemption for Solar",
+      "description": "Solar energy systems are exempt from personal property tax assessment",
+      "value": "100% property tax exemption",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Indiana Department of Local Government Finance",
+      "source_url": "https://www.solarreviews.com/solar-incentives",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "IN_sales_tax_exempt",
+      "state": "IN",
+      "incentive_type": "sales_tax_exempt",
+      "name": "Indiana Sales Tax Exemption for Solar",
+      "description": "Solar energy equipment exempt from state sales tax",
+      "value": "7% sales tax exemption",
+      "value_type": "percentage",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Indiana Department of Revenue",
+      "source_url": "https://www.solarreviews.com/solar-incentives",
+      "updated_at": "2026-02-08"
+    },
+    {
+      "id": "IN_net_metering",
+      "state": "IN",
+      "incentive_type": "net_metering",
+      "name": "Indiana Net Metering (Transitioning)",
+      "description": "Indiana transitioning from net metering to excess distributed generation rate. New interconnections may receive lower credit rate than full retail.",
+      "value": "Transitioning from retail to lower rate",
+      "value_type": "varies",
+      "eligibility": "both",
+      "status": "active",
+      "expiration_date": null,
+      "administering_body": "Indiana Utility Regulatory Commission",
+      "source_url": "https://www.dsireusa.org",
+      "updated_at": "2026-02-08"
+    }
+  ]
+}

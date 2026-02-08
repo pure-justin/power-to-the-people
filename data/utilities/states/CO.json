@@ -1,0 +1,176 @@
+{
+  "state": "CO",
+  "utility_count": 9,
+  "avg_residential_rate": 0.1409,
+  "eia_state_avg_rate": 0.1412,
+  "net_metering": {
+    "has_net_metering": true,
+    "net_metering_type": "NEM",
+    "export_rate": null
+  },
+  "utilities": [
+    {
+      "utility_id": "15466",
+      "utility_name": "Public Service Co of Colorado",
+      "state": "CO",
+      "states_served": [
+        "CO"
+      ],
+      "type": "IOU",
+      "customer_count": 1500000,
+      "residential_avg_rate": 0.1446,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "-6099349445180315488",
+      "utility_name": "Colorado Springs Utilities",
+      "state": "CO",
+      "states_served": [
+        "CO"
+      ],
+      "type": "IOU",
+      "customer_count": 240000,
+      "residential_avg_rate": 0.1412,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "5329000478127014",
+      "utility_name": "Black Hills Colorado Electric",
+      "state": "CO",
+      "states_served": [
+        "CO"
+      ],
+      "type": "IOU",
+      "customer_count": 100000,
+      "residential_avg_rate": 0.1412,
+      "rate_structure": "tiered",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "9336",
+      "utility_name": "Intermountain Rural Elec Assn",
+      "state": "CO",
+      "states_served": [
+        "CO"
+      ],
+      "type": "coop",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1231,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "3989",
+      "utility_name": "City of Colorado Springs, Colorado (Utility Company)",
+      "state": "CO",
+      "states_served": [
+        "CO"
+      ],
+      "type": "muni",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1778,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "19545",
+      "utility_name": "Black Hills Power Inc",
+      "state": "CO",
+      "states_served": [
+        "CO"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1351,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "14354",
+      "utility_name": "PacifiCorp (Utah)",
+      "state": "CO",
+      "states_served": [
+        "CO"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1241,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "7563",
+      "utility_name": "Grand Valley Rrl Pwr Line, Inc",
+      "state": "CO",
+      "states_served": [
+        "CO"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.101,
+      "rate_structure": "flat",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "16622",
+      "utility_name": "San Miguel Power Assn, Inc",
+      "state": "CO",
+      "states_served": [
+        "CO"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.18,
+      "rate_structure": "tou",
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:10:33.006180"
+}

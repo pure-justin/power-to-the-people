@@ -1,0 +1,285 @@
+{
+  "state": "TN",
+  "utility_count": 15,
+  "avg_residential_rate": 0.1118,
+  "eia_state_avg_rate": 0.1177,
+  "net_metering": {
+    "has_net_metering": false,
+    "net_metering_type": "avoided_cost",
+    "export_rate": null,
+    "notes": "TVA Green Connect program. Local power companies offer buyback at avoided cost (~$0.03/kWh)."
+  },
+  "utilities": [
+    {
+      "utility_id": "3325328338897872622",
+      "utility_name": "Memphis Light Gas & Water",
+      "state": "TN",
+      "states_served": [
+        "TN"
+      ],
+      "type": "IOU",
+      "customer_count": 450000,
+      "residential_avg_rate": 0.1177,
+      "rate_structure": "tiered",
+      "has_net_metering": false,
+      "net_metering_type": "avoided_cost",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "13216",
+      "utility_name": "Nashville Electric Service",
+      "state": "TN",
+      "states_served": [
+        "TN"
+      ],
+      "type": "muni",
+      "customer_count": 400000,
+      "residential_avg_rate": 0.1042,
+      "rate_structure": "tou",
+      "has_net_metering": false,
+      "net_metering_type": "avoided_cost",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "10421",
+      "utility_name": "Knoxville Utilities Board",
+      "state": "TN",
+      "states_served": [
+        "TN"
+      ],
+      "type": "muni",
+      "customer_count": 200000,
+      "residential_avg_rate": 0.0895,
+      "rate_structure": "tou",
+      "has_net_metering": false,
+      "net_metering_type": "avoided_cost",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "12470",
+      "utility_name": "Middle Tennessee E M C",
+      "state": "TN",
+      "states_served": [
+        "TN"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1115,
+      "rate_structure": "flat",
+      "has_net_metering": false,
+      "net_metering_type": "avoided_cost",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "4624",
+      "utility_name": "Cumberland Elec Member Corp",
+      "state": "TN",
+      "states_served": [
+        "TN"
+      ],
+      "type": "coop",
+      "customer_count": 0,
+      "residential_avg_rate": 0.0945,
+      "rate_structure": "flat",
+      "has_net_metering": false,
+      "net_metering_type": "avoided_cost",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "13119",
+      "utility_name": "City of Murfreesboro, Tennessee (Utility Company)",
+      "state": "TN",
+      "states_served": [
+        "TN"
+      ],
+      "type": "muni",
+      "customer_count": 0,
+      "residential_avg_rate": 0.0915,
+      "rate_structure": "tou",
+      "has_net_metering": false,
+      "net_metering_type": "avoided_cost",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "18642",
+      "utility_name": "Tennessee Valley Authority (Mississippi)",
+      "state": "TN",
+      "states_served": [
+        "TN"
+      ],
+      "type": "muni",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1036,
+      "rate_structure": "tiered",
+      "has_net_metering": false,
+      "net_metering_type": "avoided_cost",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "12685",
+      "utility_name": "Entergy Mississippi Inc",
+      "state": "TN",
+      "states_served": [
+        "TN"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1118,
+      "rate_structure": "tiered",
+      "has_net_metering": false,
+      "net_metering_type": "avoided_cost",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "814",
+      "utility_name": "Entergy Arkansas Inc (Arkansas)",
+      "state": "TN",
+      "states_served": [
+        "TN"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.0909,
+      "rate_structure": "tou",
+      "has_net_metering": false,
+      "net_metering_type": "avoided_cost",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "12293",
+      "utility_name": "City of Memphis, Tennessee (Utility Company)",
+      "state": "TN",
+      "states_served": [
+        "TN"
+      ],
+      "type": "muni",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1166,
+      "rate_structure": "tou",
+      "has_net_metering": false,
+      "net_metering_type": "avoided_cost",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "12681",
+      "utility_name": "Mississippi County Electric Coop",
+      "state": "TN",
+      "states_served": [
+        "TN"
+      ],
+      "type": "coop",
+      "customer_count": 0,
+      "residential_avg_rate": 0.0731,
+      "rate_structure": "tou",
+      "has_net_metering": false,
+      "net_metering_type": "avoided_cost",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "13735",
+      "utility_name": "Northcentral Mississippi E P A",
+      "state": "TN",
+      "states_served": [
+        "TN"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.122,
+      "rate_structure": "flat",
+      "has_net_metering": false,
+      "net_metering_type": "avoided_cost",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "5416",
+      "utility_name": "Progress Energy Carolinas Inc (South Carolina)",
+      "state": "TN",
+      "states_served": [
+        "TN"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1331,
+      "rate_structure": "tou",
+      "has_net_metering": false,
+      "net_metering_type": "avoided_cost",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "10171",
+      "utility_name": "Kentucky Utilities Co",
+      "state": "TN",
+      "states_served": [
+        "TN"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.2177,
+      "rate_structure": "flat",
+      "has_net_metering": false,
+      "net_metering_type": "avoided_cost",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "19898",
+      "utility_name": "Volunteer Electric Coop",
+      "state": "TN",
+      "states_served": [
+        "TN"
+      ],
+      "type": "coop",
+      "customer_count": 0,
+      "residential_avg_rate": 0.0997,
+      "rate_structure": "tou",
+      "has_net_metering": false,
+      "net_metering_type": "avoided_cost",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:13:57.769324"
+}

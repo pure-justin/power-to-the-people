@@ -1,0 +1,195 @@
+{
+  "state": "MS",
+  "utility_count": 10,
+  "avg_residential_rate": 0.1081,
+  "eia_state_avg_rate": 0.1267,
+  "net_metering": {
+    "has_net_metering": false,
+    "net_metering_type": "avoided_cost",
+    "export_rate": null,
+    "notes": "Entergy Mississippi offers avoided cost for excess. Mississippi Power has limited program."
+  },
+  "utilities": [
+    {
+      "utility_id": "-4455763145893908709",
+      "utility_name": "Entergy Mississippi LLC",
+      "state": "MS",
+      "states_served": [
+        "MS"
+      ],
+      "type": "IOU",
+      "customer_count": 460000,
+      "residential_avg_rate": 0.1267,
+      "rate_structure": "tiered",
+      "has_net_metering": false,
+      "net_metering_type": "avoided_cost",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "12686",
+      "utility_name": "Mississippi Power Co",
+      "state": "MS",
+      "states_served": [
+        "MS"
+      ],
+      "type": "IOU",
+      "customer_count": 190000,
+      "residential_avg_rate": 0.1004,
+      "rate_structure": "tou",
+      "has_net_metering": false,
+      "net_metering_type": "avoided_cost",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "12685",
+      "utility_name": "Entergy Mississippi Inc",
+      "state": "MS",
+      "states_served": [
+        "MS"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1118,
+      "rate_structure": "tiered",
+      "has_net_metering": false,
+      "net_metering_type": "avoided_cost",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "11241",
+      "utility_name": "Entergy Louisiana Inc",
+      "state": "MS",
+      "states_served": [
+        "MS"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.0667,
+      "rate_structure": "flat",
+      "has_net_metering": false,
+      "net_metering_type": "avoided_cost",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "17647",
+      "utility_name": "Southern Pine Elec Power Assn",
+      "state": "MS",
+      "states_served": [
+        "MS"
+      ],
+      "type": "coop",
+      "customer_count": 0,
+      "residential_avg_rate": 0.0976,
+      "rate_structure": "flat",
+      "has_net_metering": false,
+      "net_metering_type": "avoided_cost",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "18642",
+      "utility_name": "Tennessee Valley Authority (Mississippi)",
+      "state": "MS",
+      "states_served": [
+        "MS"
+      ],
+      "type": "muni",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1036,
+      "rate_structure": "tiered",
+      "has_net_metering": false,
+      "net_metering_type": "avoided_cost",
+      "export_rate": null,
+      "tou_available": false,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "21567",
+      "utility_name": "Washington-St Tammany E C, Inc",
+      "state": "MS",
+      "states_served": [
+        "MS"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.0851,
+      "rate_structure": "tou",
+      "has_net_metering": false,
+      "net_metering_type": "avoided_cost",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "3265",
+      "utility_name": "Cleco Power LLC",
+      "state": "MS",
+      "states_served": [
+        "MS"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1489,
+      "rate_structure": "tou",
+      "has_net_metering": false,
+      "net_metering_type": "avoided_cost",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "13478",
+      "utility_name": "Entergy New Orleans Inc",
+      "state": "MS",
+      "states_served": [
+        "MS"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.0977,
+      "rate_structure": "tou",
+      "has_net_metering": false,
+      "net_metering_type": "avoided_cost",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    },
+    {
+      "utility_id": "195",
+      "utility_name": "Alabama Power Co",
+      "state": "MS",
+      "states_served": [
+        "MS"
+      ],
+      "type": "IOU",
+      "customer_count": 0,
+      "residential_avg_rate": 0.1429,
+      "rate_structure": "tou",
+      "has_net_metering": false,
+      "net_metering_type": "avoided_cost",
+      "export_rate": null,
+      "tou_available": true,
+      "demand_charges": false,
+      "updated_at": "2026-02-08"
+    }
+  ],
+  "fetched_at": "2026-02-08T14:12:26.305526"
+}

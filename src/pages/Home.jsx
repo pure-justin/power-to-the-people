@@ -622,8 +622,8 @@ export default function Home() {
             <span className="highlight">Your Lights Stay On</span>
           </h1>
           <p className={`hero-subtitle ${showContent ? "visible" : ""}`}>
-            Free battery backup for Texas homeowners. Never lose power during
-            blackouts again.
+            Free battery backup for homeowners in qualifying Energy Communities.
+            Never lose power during blackouts again.
           </p>
           <Link to="/qualify" className="hero-cta">
             Protect Your Home
@@ -685,8 +685,8 @@ export default function Home() {
             </div>
             <h3 className="feature-title">Storm Protection</h3>
             <p className="feature-desc">
-              Texas weather is unpredictable. Hurricanes, ice storms, grid
-              failures - your family stays safe and comfortable.
+              Weather is unpredictable. Hurricanes, ice storms, grid failures -
+              your family stays safe and comfortable.
             </p>
           </div>
 
@@ -728,7 +728,8 @@ export default function Home() {
             <div className="process-number">1</div>
             <h3 className="process-title">Check Eligibility</h3>
             <p className="process-desc">
-              Enter your address to see if you qualify for the Texas VPP program
+              Enter your address to see if you qualify for the Energy Community
+              program
             </p>
           </div>
 
@@ -762,7 +763,7 @@ export default function Home() {
       <section className="final-cta">
         <h2 className="cta-title">Ready to Take Control?</h2>
         <p className="cta-subtitle">
-          Join thousands of Texas homeowners who never worry about blackouts
+          Join thousands of homeowners who never worry about blackouts
         </p>
         <Link
           to="/qualify"
@@ -789,7 +790,7 @@ export default function Home() {
             </Link>
           </div>
           <p className="footer-copy">
-            &copy; 2026 Power to the People. Texas Virtual Power Plant Program.
+            &copy; 2026 Power to the People. Energy Community Solar Program.
           </p>
         </div>
       </footer>
