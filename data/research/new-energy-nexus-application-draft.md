@@ -146,7 +146,7 @@ This is exactly what SolarOS solves. Our compliance automation directly addresse
 **Company Name**: SolarOS (by Agentic Labs LLC)
 **Website**: https://power-to-the-people-vpp.web.app
 **Founded**: 2025
-**Headquarters**: [Justin to confirm city/state]
+**Headquarters**: San Antonio, TX
 **Legal Entity**: Agentic Labs LLC
 **Stage**: Pre-seed (bootstrapped)
 **Funding Raised to Date**: $0
@@ -160,10 +160,9 @@ This is exactly what SolarOS solves. Our compliance automation directly addresse
 **Name**: Justin Griffith
 **Title**: CEO & Founder
 **Email**: justin@agntc.tech
-**LinkedIn**: [Justin to add]
+**LinkedIn**: https://www.linkedin.com/in/justin-griffith-86030013b/
 
-**Background**: [Justin to add 2-3 sentences. Suggested framing:]
-> Solar industry veteran and software engineer who saw firsthand how broken the compliance and financing workflows are in residential solar. After the 2026 ITC expiration transformed every residential deal into a commercial tax credit transaction, I built SolarOS to automate the compliance verification that's now required on every single solar installation in America.
+**Background**: CEO and Owner of Pure Energy, one of Texas's largest residential solar installation companies, covering most of the state with peak annual revenue of $100M. After years of managing thousands of installations across dozens of Texas jurisdictions and watching his teams spend more time on permitting paperwork than putting panels on roofs, Justin built SolarOS to solve the compliance and financing workflow crisis he lived every day. The 2026 ITC expiration transformed every residential deal into a commercial tax credit transaction — Justin built the automation platform the industry desperately needs.
 
 ---
 
@@ -468,7 +467,7 @@ The 10% energy community bonus credit (tracked for 147+ counties) and 10% domest
 ### Section 10: Team
 
 **Justin Griffith — Founder & CEO**
-[Justin to add: 2-3 sentences about background, solar industry experience, and technical capabilities]
+Owner and CEO of Pure Energy, one of Texas's largest residential solar installation companies, covering most of the state with peak annual revenue of $100M. Justin didn't read about the solar tax equity compliance problem in a report — he lived it at scale, managing thousands of installations across dozens of Texas jurisdictions. That direct experience with the compliance bottleneck is what drove him to build SolarOS: the platform he wished existed when his teams were spending more time fighting paperwork than installing panels.
 
 **AI-Augmented Development**
 SolarOS is built using an AI-augmented development approach with Claude Code (Anthropic) and a custom AI agent system (Ava), enabling a solo founder to build and maintain a platform with the output of a much larger team. This isn't just our development methodology — it's our product philosophy: AI handles the systematic work, humans provide judgment and domain expertise. The same approach powers our compliance engine.
