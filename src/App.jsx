@@ -38,6 +38,7 @@ import DashboardEquipment from "./pages/dashboard/DashboardEquipment";
 import DashboardProjectDetail from "./pages/dashboard/DashboardProjectDetail";
 import DashboardMarketplace from "./pages/dashboard/DashboardMarketplace";
 import DashboardWorkerProfile from "./pages/dashboard/DashboardWorkerProfile";
+import DashboardTasks from "./pages/dashboard/DashboardTasks";
 
 // Sales
 import SalesHome from "./pages/sales/SalesHome";
@@ -63,6 +64,7 @@ import AdminConfig from "./pages/admin/AdminConfig";
 import AdminAva from "./pages/admin/AdminAva";
 import AdminCampaigns from "./pages/admin/AdminCampaigns";
 import AdminAnalytics from "./pages/admin/AdminAnalytics";
+import AdminTasks from "./pages/admin/AdminTasks";
 
 function App() {
   return (
