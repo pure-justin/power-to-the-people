@@ -256,3 +256,17 @@ export {
   getCreditTransactions,
   getCreditMarketStats,
 } from "./taxCreditService";
+
+// Export Document Service functions (replaces PandaDoc — $0/month)
+// HTML→PDF generation, ESIGN Act compliant e-signatures, full audit trail
+export {
+  generateDocument,
+  getDocument,
+  getDocumentsByProject,
+  sendDocument,
+  viewDocument,
+  signDocument,
+  voidDocument,
+  saveDocumentTemplate,
+  getDocumentStats,
+} from "./documentService";

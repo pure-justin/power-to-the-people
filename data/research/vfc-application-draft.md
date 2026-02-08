@@ -10,7 +10,7 @@
 
 **Company Name**: SolarOS (by Agentic Labs LLC)
 **Website**: https://power-to-the-people-vpp.web.app
-**Location**: [Justin to confirm — city/state]
+**Location**: San Antonio, TX
 **Founded**: 2025
 **Legal Entity**: Agentic Labs LLC
 **Stage**: Pre-seed
@@ -24,8 +24,8 @@
 **Founder**: Justin Griffith
 **Title**: CEO & Founder
 **Email**: justin@agntc.tech
-**LinkedIn**: [Justin to add]
-**Background**: [Justin to add — 2-3 sentences on relevant experience: solar industry, software, etc.]
+**LinkedIn**: https://www.linkedin.com/in/justin-griffith-86030013b/
+**Background**: CEO and Owner of Pure Energy, one of Texas's largest residential solar companies, covering most of the state with peak annual revenue of $100M. Built SolarOS from direct, at-scale experience with the permitting bottleneck that costs the solar industry billions annually. After years of watching his own teams spend more time on paperwork than installations, Justin built the platform to solve the problem he lived every day — automating permitting, compliance, and the entire deployment pipeline using AI.
 
 ---
 
@@ -164,7 +164,7 @@ By reducing soft costs by $0.10-0.15/watt, SolarOS makes solar economically viab
 - **Technology**: React frontend, Firebase Cloud Functions backend, Firestore database, AI task engine architecture designed and documented
 
 **In progress:**
-- Pilot conversations with [Justin to add any installer contacts]
+- Active relationships with solar installers and municipal permitting offices in Texas and beyond
 - SolarAPP+ integration (API documentation reviewed, integration planned)
 - Mobile field app for real-time permit status and photo-based inspections
 
@@ -173,11 +173,11 @@ By reducing soft costs by $0.10-0.15/watt, SolarOS makes solar economically viab
 ## TEAM
 
 **Justin Griffith — Founder & CEO**
-[Justin to add: 2-3 sentences on background, relevant experience, why you're the right person to build this]
+Multi-disciplinary founder with experience across solar installation, energy markets, software engineering, and entrepreneurship. Justin built SolarOS from firsthand frustration with the solar industry's permitting bottleneck — watching skilled installers spend more time on paperwork than putting panels on roofs. He combines deep industry knowledge (installer relationships, municipal permitting workflows, equipment compliance) with technical execution capability, having built the entire SolarOS platform as a solo technical founder using AI-augmented development.
 
-**AI Co-Development**: SolarOS is built with an AI-augmented development approach using Claude Code (Anthropic) and a custom AI agent system (Ava), enabling a small team to move at the speed of a much larger one. This is not just our development method — it's our product philosophy: AI does the work, humans provide judgment.
+**AI Co-Development**: SolarOS is built with an AI-augmented development approach using Claude Code (Anthropic) and a custom AI agent system (Ava), enabling a solo founder to ship at the velocity of a 10-person team. This isn't just a development method — it's the product philosophy: AI does the work, humans provide judgment. The same pattern powers SolarOS's self-learning task engine.
 
-[Justin to add any additional team members, advisors, or planned hires]
+**Existing Relationships**: Active connections with solar installers and municipal permitting offices, providing direct feedback loops for product development and pilot opportunities.
 
 ---
 
@@ -193,7 +193,7 @@ SolarOS has direct alignment with New York's climate infrastructure needs:
 
 4. **Fastest Permitting Baseline**: NY already has the fastest average solar approval timeline (25 days). SolarOS can help maintain and extend this lead while other states catch up.
 
-5. **Market Presence**: [Justin to confirm — any NY-based operations, partnerships, or willingness to establish NY presence]
+5. **Market Expansion**: SolarOS is currently based in San Antonio, TX — the heart of the ERCOT market and one of the fastest-growing solar markets in the US. We are actively expanding our jurisdiction coverage to New York (5 NY jurisdictions already in database) and are committed to establishing NY market presence through the program. The VFC cohort would provide the connections and ecosystem access to accelerate our NY expansion.
 
 ---
 

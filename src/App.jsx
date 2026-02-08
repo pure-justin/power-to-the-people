@@ -94,6 +94,9 @@ const DashboardFunding = lazy(
 const DashboardCredits = lazy(
   () => import("./pages/dashboard/DashboardCredits"),
 );
+const DashboardDocuments = lazy(
+  () => import("./pages/dashboard/DashboardDocuments"),
+);
 
 // Sales — lazy loaded
 const SalesHome = lazy(() => import("./pages/sales/SalesHome"));
@@ -222,6 +225,10 @@ function App() {
               <Route path="/dashboard/install" element={<DashboardInstall />} />
               <Route path="/dashboard/funding" element={<DashboardFunding />} />
               <Route path="/dashboard/credits" element={<DashboardCredits />} />
+              <Route
+                path="/dashboard/documents"
+                element={<DashboardDocuments />}
+              />
               <Route
                 path="/dashboard/marketplace"
                 element={<DashboardMarketplace />}
