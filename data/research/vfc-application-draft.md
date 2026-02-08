@@ -156,16 +156,19 @@ By reducing soft costs by $0.10-0.15/watt, SolarOS makes solar economically viab
 
 ## TRACTION & EVIDENCE
 
+- **Founder operates $100M/yr solar company**: Pure Energy covers most of Texas — SolarOS is built from direct operational experience with thousands of installations
 - **Working platform**: Full-stack application deployed at https://power-to-the-people-vpp.web.app
 - **National data coverage**: 106 jurisdictions, 50 states, 190+ incentive programs, 485+ utility rate profiles, 72+ equipment products — all in production Firestore database
 - **API live**: 6 HTTP endpoints (equipment, utilities, incentives, permits, compliance, estimates) with API key management, rate limiting, and subscription billing
 - **SolarAPP+ alignment**: 11 jurisdictions in our database are SolarAPP+ enabled — ready for integration
 - **Revenue model validated**: Stripe-integrated subscription tiers with pay-as-you-go options
-- **Technology**: React frontend, Firebase Cloud Functions backend, Firestore database, AI task engine architecture designed and documented
+- **Existing installer network**: Pure Energy's statewide Texas operations provide immediate pilot partners and real-world validation data
+- **Municipal relationships**: Established connections with permitting offices across Texas from years of high-volume installations
 
 **In progress:**
-- Active relationships with solar installers and municipal permitting offices in Texas and beyond
+- Pilot deployment with Pure Energy's installation teams as first customer
 - SolarAPP+ integration (API documentation reviewed, integration planned)
+- National expansion beyond Texas — database already covers all 50 states
 - Mobile field app for real-time permit status and photo-based inspections
 
 ---
@@ -173,11 +176,13 @@ By reducing soft costs by $0.10-0.15/watt, SolarOS makes solar economically viab
 ## TEAM
 
 **Justin Griffith — Founder & CEO**
-Multi-disciplinary founder with experience across solar installation, energy markets, software engineering, and entrepreneurship. Justin built SolarOS from firsthand frustration with the solar industry's permitting bottleneck — watching skilled installers spend more time on paperwork than putting panels on roofs. He combines deep industry knowledge (installer relationships, municipal permitting workflows, equipment compliance) with technical execution capability, having built the entire SolarOS platform as a solo technical founder using AI-augmented development.
+Owner and CEO of Pure Energy, one of Texas's largest residential solar installation companies, covering most of the state with peak annual revenue of $100M. Justin didn't read about the solar permitting problem in a report — he lived it at scale, managing thousands of installations across dozens of Texas jurisdictions. That direct experience with the bottleneck is what drove him to build SolarOS: the platform he wished existed when his teams were spending more time fighting paperwork than installing panels.
 
-**AI Co-Development**: SolarOS is built with an AI-augmented development approach using Claude Code (Anthropic) and a custom AI agent system (Ava), enabling a solo founder to ship at the velocity of a 10-person team. This isn't just a development method — it's the product philosophy: AI does the work, humans provide judgment. The same pattern powers SolarOS's self-learning task engine.
+Justin combines rare dual expertise: deep operational knowledge of solar installation at scale (permitting workflows, municipal relationships, equipment compliance, installer economics) with technical execution capability. He built the entire SolarOS platform using AI-augmented development, proving the same AI-first philosophy that powers the product.
 
-**Existing Relationships**: Active connections with solar installers and municipal permitting offices, providing direct feedback loops for product development and pilot opportunities.
+**Pure Energy Network**: Through Pure Energy's statewide operations, SolarOS has direct access to installer feedback, municipal permitting relationships, and real-world validation data from thousands of completed projects. This isn't a founder building from theory — it's a $100M/year operator building the tool the industry needs.
+
+**AI Co-Development**: SolarOS is built with Claude Code (Anthropic) and a custom AI agent system (Ava), enabling a solo technical founder to ship at the velocity of a 10-person team. This is the same AI-first pattern that powers SolarOS's self-learning task engine: AI does the work, humans provide judgment.
 
 ---
 
@@ -226,15 +231,15 @@ The cohort's focus on New York is particularly valuable — NY is our #1 target 
 ## PITCH DECK OUTLINE (Create as PDF before submitting)
 
 1. **Cover**: SolarOS — Automating Solar Deployment from Permit to Power
-2. **Problem**: Solar's deployment speed crisis (soft costs > 50%, 30K jurisdictions, 2026 reset)
-3. **Impact**: Every month of delay = 338 kg CO2 per project; millions of tons at scale
-4. **Solution**: National permit intelligence + AI compliance + self-learning task engine
-5. **Demo**: Screenshots of platform — permit lookup, compliance check, solar estimate
-6. **Traction**: 106 jurisdictions, 50 states, working API, revenue model live
-7. **Market**: $4.2B TAM, $1.2B SAM, timing (2026 reset, SolarAPP+, TPO shift)
-8. **Business Model**: SaaS subscriptions + API marketplace + per-permit processing
-9. **Team**: Justin + AI-augmented development approach
-10. **Ask**: $50K for pilot program with 5 NY-based installers + SolarAPP+ integration
+2. **Credibility**: "I run a $100M/yr solar company. I built the tool I wish existed." — Justin Griffith, CEO Pure Energy
+3. **Problem**: Solar's deployment speed crisis (soft costs > 50%, 30K jurisdictions, 2026 reset)
+4. **Impact**: Every month of delay = 338 kg CO2 per project; millions of tons at scale
+5. **Solution**: National permit intelligence + AI compliance + self-learning task engine
+6. **Demo**: Screenshots of platform — permit lookup, compliance check, solar estimate
+7. **Traction**: $100M/yr operator as first customer, 106 jurisdictions, 50 states, working API
+8. **Market**: $4.2B TAM, $1.2B SAM, timing (2026 reset, SolarAPP+, TPO shift)
+9. **Business Model**: SaaS subscriptions + API marketplace + per-permit processing
+10. **Ask**: $50K for national pilot program expansion + SolarAPP+ integration + NY market entry
 
 ---
 
@@ -251,16 +256,15 @@ The cohort's focus on New York is particularly valuable — NY is our #1 target 
 
 ---
 
-## FIELDS JUSTIN NEEDS TO FILL IN
+## REMAINING ITEMS BEFORE SUBMISSION
 
-1. **Your city/state** (for company location)
-2. **Your background** (2-3 sentences: solar industry experience, software experience, what drives you)
-3. **LinkedIn URL**
-4. **Any NY connections** (operations, partnerships, willingness to relocate/establish presence)
-5. **Any installer contacts** for pilot conversations
-6. **Any additional team members or advisors**
-7. **A 2-minute video pitch** (if F6S requires it — film with your phone, be authentic)
-8. **Screenshots of the working platform** (for pitch deck)
+1. ~~City/state~~ — **San Antonio, TX** ✅
+2. ~~Background~~ — **CEO Pure Energy, $100M/yr, statewide TX operations** ✅
+3. ~~LinkedIn~~ — **https://www.linkedin.com/in/justin-griffith-86030013b/** ✅
+4. ~~Installer contacts~~ — **Pure Energy = built-in first customer + TX municipal relationships** ✅
+5. **Record a 2-minute video pitch** (if F6S requires it — film with your phone, be authentic. Lead with: "I run a $100M/year solar company covering most of Texas. I built SolarOS because I was tired of watching my teams spend more time on paperwork than installations.")
+6. **Screenshots of the working platform** (for pitch deck — take 4-5 screenshots of key pages)
+7. **Create F6S account** and submit at https://www.f6s.com/venture-for-climatetech-2026
 
 ---
 
