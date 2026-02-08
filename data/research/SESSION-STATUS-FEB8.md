@@ -49,7 +49,7 @@ All files at `data/research/`:
 - `founder-profile.md` — Comprehensive Justin Griffith profile/wiki page
 - `company-one-pager.md` — SolarOS one-page summary for investors/partners
 - `press-release-draft.md` — Press release: "$100M Solar CEO Launches AI Platform"
-- Social proof strategy included in founder profile
+- `social-proof-strategy.md` — 12-month credibility playbook (Wikipedia, Crunchbase, AngelList, Product Hunt, LinkedIn, 15+ conferences, 15+ awards, 20+ podcasts)
 
 ---
 
@@ -160,6 +160,7 @@ data/research/
 ├── government-funding-opportunities.md   # Government programs research
 ├── new-energy-nexus-application-draft.md # NEX Climate Fintech application
 ├── press-release-draft.md               # Press release draft
+├── social-proof-strategy.md             # 12-month credibility playbook
 ├── pro-solar-government-programs.md      # All government solar programs
 ├── solar-permit-companies.md             # 45+ permit companies cataloged
 ├── vc-outreach-materials.md              # 4 VC profiles + cold emails
