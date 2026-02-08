@@ -225,6 +225,16 @@ export {
   generateBankabilityPackage,
 } from "./fundingService";
 
+// Export Pipeline Orchestrator — auto-triggers between stages
+// Survey ✓ → CAD → Permit → Schedule → Install → Funding → Credit
+export {
+  onSurveyApproved,
+  onDesignApproved,
+  onPermitApproved,
+  onInstallComplete,
+  onFundingComplete,
+} from "./pipelineOrchestrator";
+
 // Export Tax Credit Marketplace functions
 export {
   auditProjectCredits,

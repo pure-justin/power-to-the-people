@@ -339,6 +339,124 @@ service cloud.firestore {
       allow delete: if isAdmin();
     }
 
+    // =====================================================
+    // SOLAROS PIPELINE COLLECTIONS (Phase 0-9)
+    // =====================================================
+
+    // AI TASK ENGINE — Core AI-first/human-fallback system
+    // Cloud Functions handle all writes via Admin SDK.
+    // Frontend reads for dashboard display.
+    match /ai_tasks/{taskId} {
+      allow read: if isSignedIn();
+      allow write: if false; // Cloud Functions only
+    }
+
+    // AI LEARNINGS — Patterns captured from human completions
+    match /ai_learnings/{learningId} {
+      allow read: if isSignedIn();
+      allow write: if false; // Cloud Functions only
+    }
+
+    // AHJ REGISTRY — Authority Having Jurisdiction database
+    match /ahj_registry/{ahjId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // PERMIT SOPS — Standard operating procedures per AHJ
+    match /permit_sops/{sopId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // SITE SURVEYS — Customer/installer site survey data
+    match /site_surveys/{surveyId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn();
+      allow update: if isSignedIn() && (
+        resource.data.customerId == request.auth.uid || isAdminOrInstaller()
+      );
+      allow delete: if isAdmin();
+    }
+
+    // EAGLEVIEW REPORTS — Automated roof measurement data
+    match /eagleview_reports/{reportId} {
+      allow read: if isSignedIn();
+      allow write: if false; // Cloud Functions only
+    }
+
+    // CAD DESIGNS — Auto-generated system designs
+    match /cad_designs/{designId} {
+      allow read: if isSignedIn();
+      allow write: if false; // Cloud Functions only (human edits go through onCall)
+    }
+
+    // PERMITS — Permit lifecycle tracking
+    match /permits/{permitId} {
+      allow read: if isSignedIn();
+      allow write: if false; // Cloud Functions only
+    }
+
+    // SCHEDULE SLOTS — Installer availability
+    match /schedule_slots/{slotId} {
+      allow read: if isSignedIn();
+      allow create: if isAdminOrInstaller();
+      allow update: if isAdminOrInstaller();
+      allow delete: if isAdmin();
+    }
+
+    // INSTALL SCHEDULES — Confirmed installation appointments
+    match /install_schedules/{scheduleId} {
+      allow read: if isSignedIn();
+      allow write: if false; // Cloud Functions only
+    }
+
+    // INSTALL PHOTOS — Phase-by-phase install QC photos
+    match /install_photos/{photoSetId} {
+      allow read: if isSignedIn();
+      allow write: if false; // Cloud Functions only (uploads go through onCall)
+    }
+
+    // FUNDING PACKAGES — Funding/financing lifecycle
+    match /funding_packages/{packageId} {
+      allow read: if isSignedIn();
+      allow write: if false; // Cloud Functions only
+    }
+
+    // BANKABILITY PACKAGES — PPA/lease bankable documentation
+    match /bankability_packages/{packageId} {
+      allow read: if isSignedIn();
+      allow write: if false; // Cloud Functions only
+    }
+
+    // TAX CREDIT AUDITS — Credit verification and certification
+    match /tax_credit_audits/{auditId} {
+      allow read: if isSignedIn();
+      allow write: if false; // Cloud Functions only
+    }
+
+    // TAX CREDIT INSURANCE — Risk assessment and coverage
+    match /tax_credit_insurance/{insuranceId} {
+      allow read: if isSignedIn();
+      allow write: if false; // Cloud Functions only
+    }
+
+    // TAX CREDIT LISTINGS — Marketplace listings (public read for search)
+    match /tax_credit_listings/{listingId} {
+      allow read: if true; // Public marketplace browsing
+      allow write: if false; // Cloud Functions only (offers go through onCall)
+    }
+
+    // TAX CREDIT TRANSACTIONS — Completed credit transfers
+    match /tax_credit_transactions/{transactionId} {
+      allow read: if isSignedIn() && (
+        resource.data.sellerId == request.auth.uid ||
+        resource.data.buyerId == request.auth.uid ||
+        isAdmin()
+      );
+      allow write: if false; // Cloud Functions only
+    }
+
     // Default deny all other collections
     match /{document=**} {
       allow read, write: if false;
