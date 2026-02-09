@@ -114,6 +114,9 @@ export {
   getProjectTimeline,
 } from "./projectPipeline";
 
+// Export Project API (HTTP endpoints, API-key protected)
+export { projectApi } from "./projectApi";
+
 // Export Marketplace functions
 export {
   createMarketplaceListing,
@@ -125,6 +128,9 @@ export {
   searchWorkers,
   getMarketplaceListings,
 } from "./marketplace";
+
+// Export Marketplace API (HTTP endpoints, API-key protected)
+export { marketplaceApi } from "./marketplaceApi";
 
 // Export AI Task Engine functions
 export {
@@ -257,6 +263,9 @@ export {
   getCreditMarketStats,
 } from "./taxCreditService";
 
+// Export Customer API (public-facing endpoints)
+export { customerApi } from "./customerApi";
+
 // Export Document Service functions (replaces PandaDoc — $0/month)
 // HTML→PDF generation, ESIGN Act compliant e-signatures, full audit trail
 export {
@@ -270,3 +279,6 @@ export {
   saveDocumentTemplate,
   getDocumentStats,
 } from "./documentService";
+
+// Export Webhook API functions (dynamic webhook registration & delivery)
+export { webhookApi, deliverWebhookEvent } from "./webhookApi";

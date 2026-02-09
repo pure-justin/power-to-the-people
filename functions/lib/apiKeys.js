@@ -70,6 +70,13 @@ var ApiKeyScope;
     ApiKeyScope["READ_INCENTIVES"] = "read_incentives";
     ApiKeyScope["READ_PERMITS"] = "read_permits";
     ApiKeyScope["READ_COMPLIANCE"] = "read_compliance";
+    ApiKeyScope["READ_PROJECTS"] = "read_projects";
+    ApiKeyScope["WRITE_PROJECTS"] = "write_projects";
+    ApiKeyScope["READ_MARKETPLACE"] = "read_marketplace";
+    ApiKeyScope["WRITE_MARKETPLACE"] = "write_marketplace";
+    ApiKeyScope["READ_WORKERS"] = "read_workers";
+    ApiKeyScope["WRITE_WORKERS"] = "write_workers";
+    ApiKeyScope["MANAGE_WEBHOOKS"] = "manage_webhooks";
     ApiKeyScope["ADMIN"] = "admin";
 })(ApiKeyScope || (exports.ApiKeyScope = ApiKeyScope = {}));
 /**
