@@ -23,12 +23,12 @@
 
 ### 1.1 Backend TODOs (Stubbed Code)
 - [ ] **EagleView API integration** — `functions/src/eagleviewService.ts:72,105` has `// TODO: Replace with actual EagleView API call` — currently returns mock data
-- [ ] **Document notification sending** — `functions/src/documentService.ts:813` has `// TODO: Trigger actual email/SMS notification here`
-- [ ] **Referral email notifications** — `src/services/referralNotificationService.js:160` has `// TODO: Implement actual email sending via Cloud Function`
+- [x] **Document notification sending** — ✅ DONE (SMS via Twilio + pendingNotifications Firestore fallback)
+- [x] **Referral email notifications** — ✅ DONE (Cloud Function call + pendingNotifications fallback)
 
 ### 1.2 UI Placeholder Sections
 - [x] **AdminInvoices revenue chart** — ~~line 132 placeholder~~ DONE: Real bar chart from invoice data
-- [ ] **SalesTerritory map** — `LeadMapPlaceholder` component at line 60 — needs real map (Google Maps MCP available)
+- [x] **SalesTerritory map** — ✅ DONE (real Google Maps with color-coded lead pins by status)
 
 ### 1.3 Deploy Google Solar Config
 - [x] **Deploy functions** — syncConfigStatus redeployed, full deploy in progress
@@ -45,7 +45,7 @@
 - [ ] **Empty state improvements** — many pages show generic "No data" — should guide users on what to do
 
 ### 2.2 Admin Section UX
-- [ ] **AdminOverview** — verify it shows real aggregate metrics, not stale data
+- [x] **AdminOverview** — ✅ DONE (all real Firestore data, fixed 3 hardcoded trend values)
 - [ ] **AdminLeads** — test search, filtering, sorting with real lead data
 - [x] **AdminProjects** — ✅ DONE (DataTable/FilterBar upgrade)
 - [x] **AdminUsers** — ✅ DONE (DataTable/FilterBar + role editor modal)
@@ -57,9 +57,9 @@
 - [ ] **AdminSolarData** — ✅ DONE (just rebuilt with filters + DataTable)
 - [ ] **AdminCompliance** — ✅ DONE (just rebuilt with DataTable + FilterBar)
 - [ ] **AdminConfig** — ✅ DONE (added Google Solar integration)
-- [ ] **AdminAva** — verify Ava conversation display and task queue
+- [x] **AdminAva** — ✅ DONE (Firestore conversations + live coordinator API tasks, proper error handling)
 - [x] **AdminCampaigns** — ✅ DONE (DataTable/FilterBar upgrade)
-- [ ] **AdminAnalytics** — verify analytics data is real, not hardcoded
+- [x] **AdminAnalytics** — ✅ DONE (all real data from leads + projects collections)
 - [ ] **AdminTasks** — verify AI task queue displays correctly
 - [x] **AdminCredits** — ✅ DONE (DataTable/FilterBar upgrade)
 - [ ] **AdminWebhooks** — verify webhook CRUD and test delivery
