@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { db, collection, query, where, getDocs } from "../../services/firebase";
 import {
@@ -8,6 +8,8 @@ import {
   Users,
   BarChart3,
 } from "lucide-react";
+import DataTable from "../../components/ui/DataTable";
+import FilterBar from "../../components/ui/FilterBar";
 
 export default function AdminBilling() {
   useAuth();
@@ -15,6 +17,7 @@ export default function AdminBilling() {
   const [subscriptions, setSubscriptions] = useState([]);
   const [mrr, setMrr] = useState(0);
   const [tierDistribution, setTierDistribution] = useState({});
+  const [filters, setFilters] = useState({});
 
   const tierPrices = { starter: 79, professional: 149, enterprise: 299 };
 
@@ -96,6 +99,84 @@ export default function AdminBilling() {
   }
 
   const activeSubs = subscriptions.filter((s) => s.status === "active").length;
+  const canceledSubs = subscriptions.filter(
+    (s) => s.status === "canceled" || s.status === "cancelled",
+  ).length;
+  const churnRate =
+    subscriptions.length > 0
+      ? Math.round((canceledSubs / subscriptions.length) * 100)
+      : 0;
+
+  const filterDefs = useMemo(() => {
+    const statuses = [
+      ...new Set(subscriptions.map((s) => s.status).filter(Boolean)),
+    ].sort();
+    const tiers = [
+      ...new Set(subscriptions.map((s) => s.tier).filter(Boolean)),
+    ].sort();
+    return [
+      { key: "status", label: "Status", options: statuses },
+      { key: "tier", label: "Tier", options: tiers },
+    ];
+  }, [subscriptions]);
+
+  const filtered = useMemo(() => {
+    let result = subscriptions;
+    if (filters.status)
+      result = result.filter((s) => s.status === filters.status);
+    if (filters.tier) result = result.filter((s) => s.tier === filters.tier);
+    return result;
+  }, [subscriptions, filters]);
+
+  const columns = useMemo(
+    () => [
+      {
+        key: "userId",
+        label: "User",
+        sortable: true,
+        render: (val, row) => (
+          <span className="font-semibold text-gray-900">
+            {row.email || val || row.id}
+          </span>
+        ),
+      },
+      {
+        key: "tier",
+        label: "Tier",
+        sortable: true,
+        render: (val) => (
+          <span
+            className={`px-2.5 py-1 rounded-md text-xs font-semibold capitalize ${tierBadge(val)}`}
+          >
+            {val || "N/A"}
+          </span>
+        ),
+      },
+      {
+        key: "status",
+        label: "Status",
+        sortable: true,
+        render: (val) => (
+          <span
+            className={`px-2.5 py-1 rounded-md text-xs font-semibold capitalize ${statusBadge(val)}`}
+          >
+            {val || "unknown"}
+          </span>
+        ),
+      },
+      {
+        key: "currentPeriodEnd",
+        label: "Next Billing",
+        sortable: true,
+        render: (val, row) => (
+          <span className="text-gray-400">
+            {formatDate(val || row.nextBilling)}
+          </span>
+        ),
+      },
+    ],
+    [],
+  );
 
   return (
     <div className="space-y-6">
@@ -142,9 +223,10 @@ export default function AdminBilling() {
               <TrendingDown size={20} />
             </div>
           </div>
-          <div className="h-8 bg-gray-50 rounded border-2 border-dashed border-gray-200 flex items-center justify-center">
-            <p className="text-xs text-gray-400">Calculating...</p>
-          </div>
+          <p className="text-3xl font-extrabold text-gray-900">{churnRate}%</p>
+          <p className="text-sm text-gray-500 mt-1">
+            {canceledSubs} canceled of {subscriptions.length}
+          </p>
         </div>
       </div>
 
@@ -178,63 +260,26 @@ export default function AdminBilling() {
 
       {/* Subscriptions Table */}
       <div className="bg-white rounded-xl border border-gray-200 p-6">
-        <h3 className="text-lg font-bold text-gray-900 mb-4">
-          All Subscriptions
-        </h3>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-bold text-gray-900">All Subscriptions</h3>
+          <span className="text-sm text-gray-400">
+            {filtered.length} results
+          </span>
+        </div>
 
-        {subscriptions.length === 0 ? (
-          <div className="text-center py-16">
-            <CreditCard size={40} className="mx-auto text-gray-300 mb-3" />
-            <p className="text-gray-500 font-medium">No subscriptions found</p>
-          </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="bg-gray-50 border-b border-gray-200">
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    User
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Tier
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Status
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Next Billing
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {subscriptions.map((s) => (
-                  <tr key={s.id} className="hover:bg-gray-50 transition-colors">
-                    <td className="px-4 py-3 text-sm font-semibold text-gray-900">
-                      {s.userId || s.email || s.id}
-                    </td>
-                    <td className="px-4 py-3">
-                      <span
-                        className={`px-2.5 py-1 rounded-md text-xs font-semibold capitalize ${tierBadge(s.tier)}`}
-                      >
-                        {s.tier || "N/A"}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3">
-                      <span
-                        className={`px-2.5 py-1 rounded-md text-xs font-semibold capitalize ${statusBadge(s.status)}`}
-                      >
-                        {s.status || "unknown"}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 text-sm text-gray-400">
-                      {formatDate(s.currentPeriodEnd || s.nextBilling)}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+        <FilterBar
+          filters={filterDefs}
+          activeFilters={filters}
+          onChange={setFilters}
+        />
+
+        <div className="mt-4">
+          <DataTable
+            columns={columns}
+            data={filtered}
+            emptyMessage="No subscriptions found. Subscriptions appear when users sign up via Stripe."
+          />
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import {
   db,
@@ -7,6 +7,8 @@ import {
   orderBy,
   getDocs,
 } from "../../services/firebase";
+import DataTable from "../../components/ui/DataTable";
+import FilterBar from "../../components/ui/FilterBar";
 import {
   Gift,
   DollarSign,
@@ -23,7 +25,7 @@ export default function AdminReferrals() {
   const [referrals, setReferrals] = useState([]);
   const [payouts, setPayouts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
+  const [filters, setFilters] = useState({});
   const [showSettings, setShowSettings] = useState(false);
   const [commissionSettings, setCommissionSettings] = useState({
     rate: 250,
@@ -132,18 +134,98 @@ export default function AdminReferrals() {
     return map[s] || "bg-gray-100 text-gray-600";
   };
 
-  const filtered = referrals.filter((r) => {
-    const term = searchTerm.toLowerCase();
-    const matchesSearch =
-      !term ||
-      (r.referrerId || "").toLowerCase().includes(term) ||
-      (r.referrerName || "").toLowerCase().includes(term) ||
-      (r.referredName || "").toLowerCase().includes(term) ||
-      (r.projectId || "").toLowerCase().includes(term);
-    const matchesStatus =
-      statusFilter === "all" || (r.status || "").toLowerCase() === statusFilter;
-    return matchesSearch && matchesStatus;
-  });
+  const filterDefs = useMemo(() => {
+    const statuses = [
+      ...new Set(referrals.map((r) => (r.status || "pending").toLowerCase())),
+    ].sort();
+    return [
+      {
+        key: "status",
+        label: "Status",
+        options: statuses.map((s) => ({
+          value: s,
+          label: s.charAt(0).toUpperCase() + s.slice(1),
+        })),
+      },
+    ];
+  }, [referrals]);
+
+  const filtered = useMemo(() => {
+    return referrals.filter((r) => {
+      const term = searchTerm.toLowerCase();
+      const matchesSearch =
+        !term ||
+        (r.referrerId || "").toLowerCase().includes(term) ||
+        (r.referrerName || "").toLowerCase().includes(term) ||
+        (r.referredName || "").toLowerCase().includes(term) ||
+        (r.projectId || "").toLowerCase().includes(term);
+      const matchesStatus =
+        !filters.status || (r.status || "").toLowerCase() === filters.status;
+      return matchesSearch && matchesStatus;
+    });
+  }, [referrals, searchTerm, filters]);
+
+  const columns = useMemo(
+    () => [
+      {
+        key: "referrerName",
+        label: "Referrer",
+        sortable: true,
+        render: (val, row) => (
+          <span className="font-semibold text-gray-900">
+            {val || row.referrerId || "N/A"}
+          </span>
+        ),
+      },
+      {
+        key: "referredName",
+        label: "Referred",
+        sortable: true,
+        render: (val) => <span className="text-gray-600">{val || "N/A"}</span>,
+      },
+      {
+        key: "projectId",
+        label: "Project",
+        sortable: true,
+        render: (val) => (
+          <span className="text-gray-600 font-mono">
+            {val ? val.slice(0, 8) + "..." : "N/A"}
+          </span>
+        ),
+      },
+      {
+        key: "commission",
+        label: "Commission",
+        sortable: true,
+        render: (val) => (
+          <span className="font-bold text-green-600">
+            {formatCurrency(val)}
+          </span>
+        ),
+      },
+      {
+        key: "status",
+        label: "Status",
+        sortable: true,
+        render: (val) => (
+          <span
+            className={`px-2.5 py-1 rounded-md text-xs font-semibold capitalize ${statusBadge(val)}`}
+          >
+            {val || "pending"}
+          </span>
+        ),
+      },
+      {
+        key: "createdAt",
+        label: "Created",
+        sortable: true,
+        render: (val) => (
+          <span className="text-gray-400">{formatDate(val)}</span>
+        ),
+      },
+    ],
+    [],
+  );
 
   const metricCards = [
     {
@@ -364,8 +446,8 @@ export default function AdminReferrals() {
       )}
 
       {/* Referral Table */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6">
-        <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
+      <div className="space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-3">
           <h3 className="text-lg font-bold text-gray-900">All Referrals</h3>
           <div className="flex items-center gap-3">
             <div className="relative">
@@ -381,86 +463,23 @@ export default function AdminReferrals() {
                 className="pl-9 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
             </div>
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
-            >
-              <option value="all">All Status</option>
-              <option value="pending">Pending</option>
-              <option value="approved">Approved</option>
-              <option value="completed">Completed</option>
-              <option value="paid">Paid</option>
-              <option value="rejected">Rejected</option>
-            </select>
+            <FilterBar
+              filters={filterDefs}
+              activeFilters={filters}
+              onChange={setFilters}
+            />
           </div>
         </div>
 
-        <p className="text-sm text-gray-500 mb-4">
+        <p className="text-sm text-gray-500">
           {filtered.length} referral{filtered.length !== 1 ? "s" : ""}
         </p>
 
-        {filtered.length === 0 ? (
-          <div className="text-center py-16">
-            <Gift size={40} className="mx-auto text-gray-300 mb-3" />
-            <p className="text-gray-500 font-medium">No referrals found</p>
-          </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="bg-gray-50 border-b border-gray-200">
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Referrer
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Referred
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Project
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Commission
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Status
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Created
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {filtered.map((r) => (
-                  <tr key={r.id} className="hover:bg-gray-50 transition-colors">
-                    <td className="px-4 py-3 text-sm font-semibold text-gray-900">
-                      {r.referrerName || r.referrerId || "N/A"}
-                    </td>
-                    <td className="px-4 py-3 text-sm text-gray-600">
-                      {r.referredName || "N/A"}
-                    </td>
-                    <td className="px-4 py-3 text-sm text-gray-600 font-mono">
-                      {r.projectId ? r.projectId.slice(0, 8) + "..." : "N/A"}
-                    </td>
-                    <td className="px-4 py-3 text-sm font-bold text-green-600">
-                      {formatCurrency(r.commission)}
-                    </td>
-                    <td className="px-4 py-3">
-                      <span
-                        className={`px-2.5 py-1 rounded-md text-xs font-semibold capitalize ${statusBadge(r.status)}`}
-                      >
-                        {r.status || "pending"}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 text-sm text-gray-400">
-                      {formatDate(r.createdAt)}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+        <DataTable
+          columns={columns}
+          data={filtered}
+          emptyMessage="No referrals found."
+        />
       </div>
     </div>
   );

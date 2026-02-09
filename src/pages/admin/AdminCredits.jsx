@@ -8,7 +8,7 @@
  *   - Platform revenue dashboard
  *   - Market analytics
  */
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import {
   getCreditMarketStats,
   getCreditTransactions,
@@ -38,6 +38,8 @@ import {
   Users,
   Loader2,
 } from "lucide-react";
+import DataTable from "../../components/ui/DataTable";
+import FilterBar from "../../components/ui/FilterBar";
 
 const VERIFICATION_LABELS = {
   1: { label: "Bronze", color: "text-amber-700 bg-amber-100" },
@@ -52,6 +54,8 @@ export default function AdminCredits() {
   const [marketStats, setMarketStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState("overview");
+  const [listingFilters, setListingFilters] = useState({});
+  const [txFilters, setTxFilters] = useState({});
 
   const loadData = useCallback(async () => {
     setLoading(true);
@@ -105,6 +109,283 @@ export default function AdminCredits() {
     (t) => t.transfer?.status === "disputed",
   );
 
+  // --- Listings: filter defs, filtered data, columns ---
+  const listingFilterDefs = useMemo(() => {
+    const statuses = [
+      ...new Set(listings.map((l) => l.status).filter(Boolean)),
+    ].sort();
+    const types = [
+      ...new Set(listings.map((l) => l.listing?.creditType).filter(Boolean)),
+    ].sort();
+    return [
+      { key: "status", label: "Status", options: statuses },
+      {
+        key: "creditType",
+        label: "Credit Type",
+        options: types.map((t) => ({ value: t, label: t.replace(/_/g, " ") })),
+      },
+    ];
+  }, [listings]);
+
+  const filteredListings = useMemo(() => {
+    let result = listings;
+    if (listingFilters.status)
+      result = result.filter((l) => l.status === listingFilters.status);
+    if (listingFilters.creditType)
+      result = result.filter(
+        (l) => l.listing?.creditType === listingFilters.creditType,
+      );
+    return result;
+  }, [listings, listingFilters]);
+
+  const listingColumns = useMemo(
+    () => [
+      {
+        key: "id",
+        label: "ID",
+        sortable: true,
+        render: (val) => (
+          <span className="font-mono text-xs text-gray-500">
+            {val?.slice(0, 8)}
+          </span>
+        ),
+      },
+      {
+        key: "creditType",
+        label: "Type",
+        sortable: true,
+        render: (_val, row) => (
+          <span className="rounded bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-700">
+            {row.listing?.creditType?.replace(/_/g, " ")}
+          </span>
+        ),
+      },
+      {
+        key: "creditAmount",
+        label: "Amount",
+        sortable: true,
+        render: (_val, row) => (
+          <span className="font-medium">
+            ${(row.listing?.creditAmount || 0).toLocaleString()}
+          </span>
+        ),
+      },
+      {
+        key: "askingPrice",
+        label: "Asking",
+        sortable: true,
+        render: (_val, row) => (
+          <span>${(row.listing?.askingPrice || 0).toLocaleString()}</span>
+        ),
+      },
+      {
+        key: "verificationLevel",
+        label: "Verification",
+        sortable: false,
+        render: (_val, row) => {
+          const verLevel = row.verificationLevel?.level || 1;
+          const verConfig =
+            VERIFICATION_LABELS[verLevel] || VERIFICATION_LABELS[1];
+          return (
+            <span
+              className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ${verConfig.color}`}
+            >
+              <Star className="h-3 w-3 fill-current" />
+              {verConfig.label}
+            </span>
+          );
+        },
+      },
+      {
+        key: "offers",
+        label: "Offers",
+        sortable: false,
+        render: (_val, row) => {
+          const offerCount = (row.offers || []).length;
+          return offerCount > 0 ? (
+            <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700">
+              {offerCount}
+            </span>
+          ) : (
+            <span className="text-gray-400">0</span>
+          );
+        },
+      },
+      {
+        key: "status",
+        label: "Status",
+        sortable: true,
+        render: (val) => (
+          <span
+            className={`rounded-full px-2 py-0.5 text-xs font-medium ${
+              val === "active"
+                ? "bg-green-100 text-green-700"
+                : val === "under_offer"
+                  ? "bg-blue-100 text-blue-700"
+                  : val === "sold"
+                    ? "bg-purple-100 text-purple-700"
+                    : "bg-gray-100 text-gray-600"
+            }`}
+          >
+            {val?.replace(/_/g, " ")}
+          </span>
+        ),
+      },
+    ],
+    [],
+  );
+
+  // --- Transactions: filter defs, filtered data, columns ---
+  const txFilterDefs = useMemo(() => {
+    const statuses = [
+      ...new Set(transactions.map((t) => t.transfer?.status).filter(Boolean)),
+    ].sort();
+    return [{ key: "status", label: "Status", options: statuses }];
+  }, [transactions]);
+
+  const filteredTransactions = useMemo(() => {
+    let result = transactions;
+    if (txFilters.status)
+      result = result.filter((t) => t.transfer?.status === txFilters.status);
+    return result;
+  }, [transactions, txFilters]);
+
+  const txColumns = useMemo(
+    () => [
+      {
+        key: "id",
+        label: "ID",
+        sortable: true,
+        render: (val) => (
+          <span className="font-mono text-xs text-gray-500">
+            {val?.slice(0, 8)}
+          </span>
+        ),
+      },
+      {
+        key: "creditAmount",
+        label: "Credit",
+        sortable: true,
+        render: (val) => (
+          <span className="font-medium">${(val || 0).toLocaleString()}</span>
+        ),
+      },
+      {
+        key: "salePrice",
+        label: "Sale Price",
+        sortable: true,
+        render: (val) => <span>${(val || 0).toLocaleString()}</span>,
+      },
+      {
+        key: "platformFee",
+        label: "Platform Fee",
+        sortable: true,
+        render: (val) => (
+          <span className="font-medium text-emerald-600">
+            ${(val || 0).toLocaleString()}
+          </span>
+        ),
+      },
+      {
+        key: "sellerNet",
+        label: "Seller Net",
+        sortable: false,
+        render: (_val, row) => (
+          <span>${(row.payment?.toSeller?.amount || 0).toLocaleString()}</span>
+        ),
+      },
+      {
+        key: "transferStatus",
+        label: "Status",
+        sortable: true,
+        render: (_val, row) => {
+          const status = row.transfer?.status;
+          return (
+            <span
+              className={`rounded-full px-2 py-0.5 text-xs font-medium ${
+                status === "completed"
+                  ? "bg-green-100 text-green-700"
+                  : status === "disputed"
+                    ? "bg-red-100 text-red-700"
+                    : status === "initiated"
+                      ? "bg-blue-100 text-blue-700"
+                      : "bg-gray-100 text-gray-600"
+              }`}
+            >
+              {status || "unknown"}
+            </span>
+          );
+        },
+      },
+    ],
+    [],
+  );
+
+  // --- Audit queue columns ---
+  const auditColumns = useMemo(
+    () => [
+      {
+        key: "creditType",
+        label: "Credit",
+        sortable: false,
+        render: (_val, row) => (
+          <span className="font-medium text-gray-900">
+            {row.listing?.creditType?.replace(/_/g, " ")} -- $
+            {(row.listing?.creditAmount || 0).toLocaleString()}
+          </span>
+        ),
+      },
+      {
+        key: "sellerId",
+        label: "Seller",
+        sortable: false,
+        render: (val) => (
+          <span className="text-xs text-gray-500">
+            {val?.slice(0, 8) || "unknown"}
+          </span>
+        ),
+      },
+      {
+        key: "state",
+        label: "State",
+        sortable: false,
+        render: (_val, row) => (
+          <span className="text-xs text-gray-500">
+            {row.projectSummary?.state || "?"}
+          </span>
+        ),
+      },
+      {
+        key: "verificationLevel",
+        label: "Level",
+        sortable: false,
+        render: () => (
+          <span
+            className={`rounded-full px-2 py-0.5 text-xs font-medium ${VERIFICATION_LABELS[1].color}`}
+          >
+            Bronze -- needs review
+          </span>
+        ),
+      },
+      {
+        key: "actions",
+        label: "Actions",
+        sortable: false,
+        render: (_val, _row) => (
+          <div className="flex items-center gap-2">
+            <button className="rounded-lg border border-gray-300 px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50">
+              Review Audit
+            </button>
+            <button className="rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-emerald-700">
+              Approve
+            </button>
+          </div>
+        ),
+      },
+    ],
+    [],
+  );
+
   if (loading) {
     return (
       <div className="animate-pulse space-y-6">
@@ -141,7 +422,7 @@ export default function AdminCredits() {
 
       {/* Stats */}
       <div className="grid gap-4 sm:grid-cols-4">
-        <div className="card-padded">
+        <div className="bg-white rounded-xl border border-gray-200 p-6">
           <div className="flex items-center gap-2 text-sm text-gray-500">
             <DollarSign className="h-4 w-4 text-green-500" />
             Platform Revenue
@@ -150,7 +431,7 @@ export default function AdminCredits() {
             ${platformRevenue.toLocaleString()}
           </p>
         </div>
-        <div className="card-padded">
+        <div className="bg-white rounded-xl border border-gray-200 p-6">
           <div className="flex items-center gap-2 text-sm text-gray-500">
             <BarChart3 className="h-4 w-4 text-blue-500" />
             Total Volume
@@ -159,7 +440,7 @@ export default function AdminCredits() {
             ${totalVolume.toLocaleString()}
           </p>
         </div>
-        <div className="card-padded">
+        <div className="bg-white rounded-xl border border-gray-200 p-6">
           <div className="flex items-center gap-2 text-sm text-gray-500">
             <Activity className="h-4 w-4 text-emerald-500" />
             Active Listings
@@ -168,7 +449,7 @@ export default function AdminCredits() {
             {activeListings.length}
           </p>
         </div>
-        <div className="card-padded">
+        <div className="bg-white rounded-xl border border-gray-200 p-6">
           <div className="flex items-center gap-2 text-sm text-gray-500">
             <AlertTriangle className="h-4 w-4 text-red-500" />
             Disputes
@@ -209,7 +490,7 @@ export default function AdminCredits() {
         <div className="space-y-6">
           {/* Market Stats from Cloud Function */}
           {marketStats && (
-            <div className="card">
+            <div className="bg-white rounded-xl border border-gray-200">
               <div className="border-b border-gray-200 px-6 py-4">
                 <h2 className="text-lg font-semibold text-gray-900">
                   Market Analytics
@@ -239,7 +520,7 @@ export default function AdminCredits() {
           )}
 
           {/* Recent Activity */}
-          <div className="card">
+          <div className="bg-white rounded-xl border border-gray-200">
             <div className="border-b border-gray-200 px-6 py-4">
               <h2 className="text-lg font-semibold text-gray-900">
                 Recent Activity
@@ -293,177 +574,56 @@ export default function AdminCredits() {
       )}
 
       {tab === "listings" && (
-        <div className="card">
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b bg-gray-50">
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">
-                    ID
-                  </th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">
-                    Type
-                  </th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">
-                    Amount
-                  </th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">
-                    Asking
-                  </th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">
-                    Verification
-                  </th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">
-                    Offers
-                  </th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">
-                    Status
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {listings.map((listing) => {
-                  const verLevel = listing.verificationLevel?.level || 1;
-                  const verConfig =
-                    VERIFICATION_LABELS[verLevel] || VERIFICATION_LABELS[1];
-                  const offerCount = (listing.offers || []).length;
-                  return (
-                    <tr key={listing.id} className="hover:bg-gray-50">
-                      <td className="px-4 py-3 font-mono text-xs text-gray-500">
-                        {listing.id.slice(0, 8)}
-                      </td>
-                      <td className="px-4 py-3">
-                        <span className="rounded bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-700">
-                          {listing.listing?.creditType?.replace(/_/g, " ")}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3 font-medium">
-                        ${(listing.listing?.creditAmount || 0).toLocaleString()}
-                      </td>
-                      <td className="px-4 py-3">
-                        ${(listing.listing?.askingPrice || 0).toLocaleString()}
-                      </td>
-                      <td className="px-4 py-3">
-                        <span
-                          className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ${verConfig.color}`}
-                        >
-                          <Star className="h-3 w-3 fill-current" />
-                          {verConfig.label}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3">
-                        {offerCount > 0 ? (
-                          <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700">
-                            {offerCount}
-                          </span>
-                        ) : (
-                          <span className="text-gray-400">0</span>
-                        )}
-                      </td>
-                      <td className="px-4 py-3">
-                        <span
-                          className={`rounded-full px-2 py-0.5 text-xs font-medium ${
-                            listing.status === "active"
-                              ? "bg-green-100 text-green-700"
-                              : listing.status === "under_offer"
-                                ? "bg-blue-100 text-blue-700"
-                                : listing.status === "sold"
-                                  ? "bg-purple-100 text-purple-700"
-                                  : "bg-gray-100 text-gray-600"
-                          }`}
-                        >
-                          {listing.status?.replace(/_/g, " ")}
-                        </span>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+        <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg font-bold text-gray-900">All Listings</h3>
+            <span className="text-sm text-gray-400">
+              {filteredListings.length} results
+            </span>
           </div>
-          {listings.length === 0 && (
-            <div className="p-8 text-center text-sm text-gray-500">
-              No listings found.
-            </div>
-          )}
+
+          <FilterBar
+            filters={listingFilterDefs}
+            activeFilters={listingFilters}
+            onChange={setListingFilters}
+          />
+
+          <DataTable
+            columns={listingColumns}
+            data={filteredListings}
+            emptyMessage="No listings found."
+          />
         </div>
       )}
 
       {tab === "transactions" && (
-        <div className="card">
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b bg-gray-50">
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">
-                    ID
-                  </th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">
-                    Credit
-                  </th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">
-                    Sale Price
-                  </th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">
-                    Platform Fee
-                  </th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">
-                    Seller Net
-                  </th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">
-                    Status
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {transactions.map((tx) => (
-                  <tr key={tx.id} className="hover:bg-gray-50">
-                    <td className="px-4 py-3 font-mono text-xs text-gray-500">
-                      {tx.id.slice(0, 8)}
-                    </td>
-                    <td className="px-4 py-3 font-medium">
-                      ${(tx.creditAmount || 0).toLocaleString()}
-                    </td>
-                    <td className="px-4 py-3">
-                      ${(tx.salePrice || 0).toLocaleString()}
-                    </td>
-                    <td className="px-4 py-3 text-emerald-600 font-medium">
-                      ${(tx.platformFee || 0).toLocaleString()}
-                    </td>
-                    <td className="px-4 py-3">
-                      ${(tx.payment?.toSeller?.amount || 0).toLocaleString()}
-                    </td>
-                    <td className="px-4 py-3">
-                      <span
-                        className={`rounded-full px-2 py-0.5 text-xs font-medium ${
-                          tx.transfer?.status === "completed"
-                            ? "bg-green-100 text-green-700"
-                            : tx.transfer?.status === "disputed"
-                              ? "bg-red-100 text-red-700"
-                              : tx.transfer?.status === "initiated"
-                                ? "bg-blue-100 text-blue-700"
-                                : "bg-gray-100 text-gray-600"
-                        }`}
-                      >
-                        {tx.transfer?.status || "unknown"}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg font-bold text-gray-900">
+              All Transactions
+            </h3>
+            <span className="text-sm text-gray-400">
+              {filteredTransactions.length} results
+            </span>
           </div>
-          {transactions.length === 0 && (
-            <div className="p-8 text-center text-sm text-gray-500">
-              No transactions found.
-            </div>
-          )}
+
+          <FilterBar
+            filters={txFilterDefs}
+            activeFilters={txFilters}
+            onChange={setTxFilters}
+          />
+
+          <DataTable
+            columns={txColumns}
+            data={filteredTransactions}
+            emptyMessage="No transactions found."
+          />
         </div>
       )}
 
       {tab === "audits" && (
-        <div className="card">
-          <div className="border-b border-gray-200 px-6 py-4">
+        <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-4">
+          <div>
             <h2 className="text-lg font-semibold text-gray-900">
               Audit Review Queue
             </h2>
@@ -479,40 +639,11 @@ export default function AdminCredits() {
               </p>
             </div>
           ) : (
-            <div className="divide-y">
-              {pendingAudits.map((listing) => (
-                <div
-                  key={listing.id}
-                  className="flex items-center justify-between px-6 py-4"
-                >
-                  <div>
-                    <p className="text-sm font-medium text-gray-900">
-                      {listing.listing?.creditType?.replace(/_/g, " ")} -- $
-                      {(listing.listing?.creditAmount || 0).toLocaleString()}
-                    </p>
-                    <div className="mt-0.5 flex items-center gap-3 text-xs text-gray-500">
-                      <span>
-                        Seller: {listing.sellerId?.slice(0, 8) || "unknown"}
-                      </span>
-                      <span>State: {listing.projectSummary?.state || "?"}</span>
-                      <span
-                        className={`rounded-full px-2 py-0.5 font-medium ${VERIFICATION_LABELS[1].color}`}
-                      >
-                        Bronze -- needs review
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <button className="rounded-lg border border-gray-300 px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50">
-                      Review Audit
-                    </button>
-                    <button className="rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-emerald-700">
-                      Approve
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <DataTable
+              columns={auditColumns}
+              data={pendingAudits}
+              emptyMessage="No pending audits."
+            />
           )}
         </div>
       )}

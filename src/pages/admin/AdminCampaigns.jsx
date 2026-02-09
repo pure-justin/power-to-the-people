@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import {
   db,
@@ -23,6 +23,8 @@ import {
   Target,
   ChevronDown,
 } from "lucide-react";
+import DataTable from "../../components/ui/DataTable";
+import FilterBar from "../../components/ui/FilterBar";
 
 export default function AdminCampaigns() {
   useAuth();
@@ -30,11 +32,11 @@ export default function AdminCampaigns() {
   const [campaigns, setCampaigns] = useState([]);
   const [commercialLeads, setCommercialLeads] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
+  const [campaignFilters, setCampaignFilters] = useState({});
   const [activeView, setActiveView] = useState("campaigns");
   const [expandedCampaign, setExpandedCampaign] = useState(null);
   const [leadSearchTerm, setLeadSearchTerm] = useState("");
-  const [leadStatusFilter, setLeadStatusFilter] = useState("all");
+  const [leadFilters, setLeadFilters] = useState({});
 
   useEffect(() => {
     loadData();
@@ -139,32 +141,259 @@ export default function AdminCampaigns() {
     .slice(0, 6);
   const maxStatusCount = topStatuses.length > 0 ? topStatuses[0][1] : 1;
 
-  // Filtered campaigns
-  const filteredCampaigns = campaigns.filter((c) => {
-    const term = searchTerm.toLowerCase();
-    const matchesSearch =
-      !term ||
-      (c.name || "").toLowerCase().includes(term) ||
-      (c.type || "").toLowerCase().includes(term);
-    const matchesStatus =
-      statusFilter === "all" || (c.status || "").toLowerCase() === statusFilter;
-    return matchesSearch && matchesStatus;
-  });
+  // --- Campaign filter definitions (dynamic from data) ---
+  const campaignFilterDefs = useMemo(() => {
+    const statuses = [
+      ...new Set(campaigns.map((c) => (c.status || "draft").toLowerCase())),
+    ].sort();
+    return [
+      {
+        key: "status",
+        label: "Status",
+        options: statuses.map((s) => ({
+          value: s,
+          label: s.charAt(0).toUpperCase() + s.slice(1),
+        })),
+      },
+    ];
+  }, [campaigns]);
 
-  // Filtered commercial leads
-  const filteredLeads = commercialLeads.filter((l) => {
-    const term = leadSearchTerm.toLowerCase();
-    const matchesSearch =
-      !term ||
-      (l.companyName || l.company || "").toLowerCase().includes(term) ||
-      (l.contactName || l.name || "").toLowerCase().includes(term) ||
-      (l.email || "").toLowerCase().includes(term) ||
-      (l.phone || "").includes(term);
-    const matchesStatus =
-      leadStatusFilter === "all" ||
-      (l.status || l.engagement || "").toLowerCase() === leadStatusFilter;
-    return matchesSearch && matchesStatus;
-  });
+  // --- Filtered campaigns (search + FilterBar) ---
+  const filteredCampaigns = useMemo(() => {
+    return campaigns.filter((c) => {
+      const term = searchTerm.toLowerCase();
+      const matchesSearch =
+        !term ||
+        (c.name || "").toLowerCase().includes(term) ||
+        (c.type || "").toLowerCase().includes(term);
+      const matchesStatus =
+        !campaignFilters.status ||
+        (c.status || "").toLowerCase() === campaignFilters.status;
+      return matchesSearch && matchesStatus;
+    });
+  }, [campaigns, searchTerm, campaignFilters]);
+
+  // --- Campaign columns ---
+  const campaignColumns = useMemo(
+    () => [
+      {
+        key: "name",
+        label: "Name",
+        sortable: true,
+        render: (val, row) => (
+          <span className="text-sm font-semibold text-gray-900">
+            {val || row.id}
+          </span>
+        ),
+      },
+      {
+        key: "type",
+        label: "Type",
+        sortable: true,
+        render: (val, row) => (
+          <span className="px-2 py-0.5 bg-blue-50 text-blue-700 rounded text-xs font-medium">
+            {val || row.channel || "email"}
+          </span>
+        ),
+      },
+      {
+        key: "status",
+        label: "Status",
+        sortable: true,
+        render: (val) => (
+          <span
+            className={`px-2.5 py-1 rounded-md text-xs font-semibold capitalize ${statusBadge(val)}`}
+          >
+            {val || "draft"}
+          </span>
+        ),
+      },
+      {
+        key: "sent",
+        label: "Sent",
+        sortable: true,
+        render: (val, row) => (
+          <span className="text-sm font-bold text-gray-900">
+            {(val || row.totalSent || 0).toLocaleString()}
+          </span>
+        ),
+      },
+      {
+        key: "responses",
+        label: "Responses",
+        sortable: true,
+        render: (val, row) => (
+          <span className="text-sm text-gray-600">
+            {(val || row.totalResponses || 0).toLocaleString()}
+          </span>
+        ),
+      },
+      {
+        key: "_engagement",
+        label: "Engagement",
+        sortable: false,
+        render: (_val, row) => {
+          const sent = row.sent || row.totalSent || 0;
+          const responses = row.responses || row.totalResponses || 0;
+          const rate = sent > 0 ? Math.round((responses / sent) * 100) : 0;
+          return (
+            <div className="flex items-center gap-2">
+              <div className="w-16 bg-gray-200 rounded-full h-2">
+                <div
+                  className={`h-full rounded-full ${
+                    rate >= 20
+                      ? "bg-green-500"
+                      : rate >= 10
+                        ? "bg-amber-500"
+                        : "bg-red-400"
+                  }`}
+                  style={{ width: `${Math.min(rate, 100)}%` }}
+                />
+              </div>
+              <span className="text-sm font-bold text-gray-900">{rate}%</span>
+            </div>
+          );
+        },
+      },
+      {
+        key: "createdAt",
+        label: "Created",
+        sortable: true,
+        render: (val) => (
+          <span className="text-sm text-gray-400">{formatDate(val)}</span>
+        ),
+      },
+      {
+        key: "_expand",
+        label: "Details",
+        sortable: false,
+        render: (_val, row) => (
+          <ChevronDown
+            size={16}
+            className={`text-gray-400 transition-transform ${
+              expandedCampaign === row.id ? "rotate-180" : ""
+            }`}
+          />
+        ),
+      },
+    ],
+    [expandedCampaign],
+  );
+
+  // --- Lead filter definitions (dynamic from data) ---
+  const leadFilterDefs = useMemo(() => {
+    const statuses = [
+      ...new Set(
+        commercialLeads.map((l) =>
+          (l.status || l.engagement || "new").toLowerCase(),
+        ),
+      ),
+    ].sort();
+    return [
+      {
+        key: "status",
+        label: "Status",
+        options: statuses.map((s) => ({
+          value: s,
+          label: s.charAt(0).toUpperCase() + s.slice(1),
+        })),
+      },
+    ];
+  }, [commercialLeads]);
+
+  // --- Filtered leads (search + FilterBar, no 100-row cap) ---
+  const filteredLeads = useMemo(() => {
+    return commercialLeads.filter((l) => {
+      const term = leadSearchTerm.toLowerCase();
+      const matchesSearch =
+        !term ||
+        (l.companyName || l.company || "").toLowerCase().includes(term) ||
+        (l.contactName || l.name || "").toLowerCase().includes(term) ||
+        (l.email || "").toLowerCase().includes(term) ||
+        (l.phone || "").includes(term);
+      const matchesStatus =
+        !leadFilters.status ||
+        (l.status || l.engagement || "").toLowerCase() === leadFilters.status;
+      return matchesSearch && matchesStatus;
+    });
+  }, [commercialLeads, leadSearchTerm, leadFilters]);
+
+  // --- Lead columns ---
+  const leadColumns = useMemo(
+    () => [
+      {
+        key: "companyName",
+        label: "Company",
+        sortable: true,
+        render: (val, row) => (
+          <span className="text-sm font-semibold text-gray-900">
+            {val || row.company || row.propertyManager || "N/A"}
+          </span>
+        ),
+      },
+      {
+        key: "contactName",
+        label: "Contact",
+        sortable: true,
+        render: (val, row) => (
+          <span className="text-sm text-gray-700">
+            {val || row.name || "N/A"}
+          </span>
+        ),
+      },
+      {
+        key: "email",
+        label: "Email",
+        sortable: true,
+        render: (val) =>
+          val ? (
+            <span className="flex items-center gap-1 text-sm text-gray-600">
+              <Mail size={12} className="text-gray-400" />
+              {val}
+            </span>
+          ) : (
+            <span className="text-sm text-gray-600">N/A</span>
+          ),
+      },
+      {
+        key: "phone",
+        label: "Phone",
+        sortable: true,
+        render: (val) =>
+          val ? (
+            <span className="flex items-center gap-1 text-sm text-gray-600">
+              <Phone size={12} className="text-gray-400" />
+              {val}
+            </span>
+          ) : (
+            <span className="text-sm text-gray-600">N/A</span>
+          ),
+      },
+      {
+        key: "status",
+        label: "Status",
+        sortable: true,
+        render: (val, row) => (
+          <span
+            className={`px-2.5 py-1 rounded-md text-xs font-semibold capitalize ${leadStatusBadge(val || row.engagement)}`}
+          >
+            {val || row.engagement || "new"}
+          </span>
+        ),
+      },
+      {
+        key: "notes",
+        label: "Notes",
+        sortable: false,
+        render: (val, row) => (
+          <span className="text-sm text-gray-500 max-w-xs truncate block">
+            {val || row.lastNote || "--"}
+          </span>
+        ),
+      },
+    ],
+    [],
+  );
 
   const metricCards = [
     {
@@ -323,17 +552,11 @@ export default function AdminCampaigns() {
                   className="pl-9 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 />
               </div>
-              <select
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
-              >
-                <option value="all">All Status</option>
-                <option value="active">Active</option>
-                <option value="draft">Draft</option>
-                <option value="paused">Paused</option>
-                <option value="completed">Completed</option>
-              </select>
+              <FilterBar
+                filters={campaignFilterDefs}
+                activeFilters={campaignFilters}
+                onChange={setCampaignFilters}
+              />
               <button
                 onClick={loadData}
                 className="flex items-center gap-1.5 px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-700 hover:bg-gray-50 transition-colors"
@@ -349,149 +572,41 @@ export default function AdminCampaigns() {
             {filteredCampaigns.length !== 1 ? "s" : ""}
           </p>
 
-          {filteredCampaigns.length === 0 ? (
-            <div className="text-center py-16">
-              <Megaphone size={40} className="mx-auto text-gray-300 mb-3" />
-              <p className="text-gray-500 font-medium">No campaigns found</p>
-              <p className="text-sm text-gray-400 mt-1">
-                Campaigns will appear here when created
-              </p>
-            </div>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="bg-gray-50 border-b border-gray-200">
-                    <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                      Name
-                    </th>
-                    <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                      Type
-                    </th>
-                    <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                      Status
-                    </th>
-                    <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                      Sent
-                    </th>
-                    <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                      Responses
-                    </th>
-                    <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                      Engagement
-                    </th>
-                    <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                      Created
-                    </th>
-                    <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                      Details
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-100">
-                  {filteredCampaigns.map((c) => {
-                    const sent = c.sent || c.totalSent || 0;
-                    const responses = c.responses || c.totalResponses || 0;
-                    const rate =
-                      sent > 0 ? Math.round((responses / sent) * 100) : 0;
-                    return (
-                      <tr
-                        key={c.id}
-                        className="hover:bg-gray-50 transition-colors cursor-pointer"
-                        onClick={() =>
-                          setExpandedCampaign(
-                            expandedCampaign === c.id ? null : c.id,
-                          )
-                        }
-                      >
-                        <td className="px-4 py-3 text-sm font-semibold text-gray-900">
-                          {c.name || c.id}
-                        </td>
-                        <td className="px-4 py-3">
-                          <span className="px-2 py-0.5 bg-blue-50 text-blue-700 rounded text-xs font-medium">
-                            {c.type || c.channel || "email"}
-                          </span>
-                        </td>
-                        <td className="px-4 py-3">
-                          <span
-                            className={`px-2.5 py-1 rounded-md text-xs font-semibold capitalize ${statusBadge(c.status)}`}
-                          >
-                            {c.status || "draft"}
-                          </span>
-                        </td>
-                        <td className="px-4 py-3 text-sm font-bold text-gray-900">
-                          {sent.toLocaleString()}
-                        </td>
-                        <td className="px-4 py-3 text-sm text-gray-600">
-                          {responses.toLocaleString()}
-                        </td>
-                        <td className="px-4 py-3">
-                          <div className="flex items-center gap-2">
-                            <div className="w-16 bg-gray-200 rounded-full h-2">
-                              <div
-                                className={`h-full rounded-full ${
-                                  rate >= 20
-                                    ? "bg-green-500"
-                                    : rate >= 10
-                                      ? "bg-amber-500"
-                                      : "bg-red-400"
-                                }`}
-                                style={{
-                                  width: `${Math.min(rate, 100)}%`,
-                                }}
-                              />
-                            </div>
-                            <span className="text-sm font-bold text-gray-900">
-                              {rate}%
-                            </span>
-                          </div>
-                        </td>
-                        <td className="px-4 py-3 text-sm text-gray-400">
-                          {formatDate(c.createdAt)}
-                        </td>
-                        <td className="px-4 py-3">
-                          <ChevronDown
-                            size={16}
-                            className={`text-gray-400 transition-transform ${
-                              expandedCampaign === c.id ? "rotate-180" : ""
-                            }`}
-                          />
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+          <DataTable
+            columns={campaignColumns}
+            data={filteredCampaigns}
+            onRowClick={(row) =>
+              setExpandedCampaign(expandedCampaign === row.id ? null : row.id)
+            }
+            emptyMessage="No campaigns found. Campaigns will appear here when created."
+          />
 
-              {/* Expanded Campaign Detail */}
-              {expandedCampaign && (
-                <div className="border-t border-gray-200 px-4 py-4 bg-gray-50">
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-                    {Object.entries(
-                      filteredCampaigns.find(
-                        (c) => c.id === expandedCampaign,
-                      ) || {},
-                    )
-                      .filter(([k]) => k !== "id")
-                      .map(([k, v]) => (
-                        <div key={k}>
-                          <span className="text-xs text-gray-500 font-medium">
-                            {k}
-                          </span>
-                          <p className="text-gray-900 font-medium truncate">
-                            {typeof v === "boolean"
-                              ? v
-                                ? "Yes"
-                                : "No"
-                              : typeof v === "object"
-                                ? JSON.stringify(v)
-                                : String(v ?? "N/A")}
-                          </p>
-                        </div>
-                      ))}
-                  </div>
-                </div>
-              )}
+          {/* Expanded Campaign Detail */}
+          {expandedCampaign && (
+            <div className="border-t border-gray-200 px-4 py-4 bg-gray-50 mt-0 rounded-b-xl">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+                {Object.entries(
+                  filteredCampaigns.find((c) => c.id === expandedCampaign) ||
+                    {},
+                )
+                  .filter(([k]) => k !== "id")
+                  .map(([k, v]) => (
+                    <div key={k}>
+                      <span className="text-xs text-gray-500 font-medium">
+                        {k}
+                      </span>
+                      <p className="text-gray-900 font-medium truncate">
+                        {typeof v === "boolean"
+                          ? v
+                            ? "Yes"
+                            : "No"
+                          : typeof v === "object"
+                            ? JSON.stringify(v)
+                            : String(v ?? "N/A")}
+                      </p>
+                    </div>
+                  ))}
+              </div>
             </div>
           )}
         </div>
@@ -518,19 +633,11 @@ export default function AdminCampaigns() {
                   className="pl-9 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 />
               </div>
-              <select
-                value={leadStatusFilter}
-                onChange={(e) => setLeadStatusFilter(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
-              >
-                <option value="all">All Status</option>
-                <option value="new">New</option>
-                <option value="contacted">Contacted</option>
-                <option value="interested">Interested</option>
-                <option value="converted">Converted</option>
-                <option value="declined">Declined</option>
-                <option value="unresponsive">Unresponsive</option>
-              </select>
+              <FilterBar
+                filters={leadFilterDefs}
+                activeFilters={leadFilters}
+                onChange={setLeadFilters}
+              />
               <button
                 onClick={loadData}
                 className="flex items-center gap-1.5 px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-700 hover:bg-gray-50 transition-colors"
@@ -545,98 +652,11 @@ export default function AdminCampaigns() {
             {filteredLeads.length} lead{filteredLeads.length !== 1 ? "s" : ""}
           </p>
 
-          {filteredLeads.length === 0 ? (
-            <div className="text-center py-16">
-              <Users size={40} className="mx-auto text-gray-300 mb-3" />
-              <p className="text-gray-500 font-medium">
-                No commercial leads found
-              </p>
-              <p className="text-sm text-gray-400 mt-1">
-                Leads will appear after campaigns are run
-              </p>
-            </div>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="bg-gray-50 border-b border-gray-200">
-                    <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                      Company
-                    </th>
-                    <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                      Contact
-                    </th>
-                    <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                      Email
-                    </th>
-                    <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                      Phone
-                    </th>
-                    <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                      Status
-                    </th>
-                    <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                      Notes
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-100">
-                  {filteredLeads.slice(0, 100).map((l) => (
-                    <tr
-                      key={l.id}
-                      className="hover:bg-gray-50 transition-colors"
-                    >
-                      <td className="px-4 py-3 text-sm font-semibold text-gray-900">
-                        {l.companyName ||
-                          l.company ||
-                          l.propertyManager ||
-                          "N/A"}
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-700">
-                        {l.contactName || l.name || "N/A"}
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-600">
-                        {l.email ? (
-                          <span className="flex items-center gap-1">
-                            <Mail size={12} className="text-gray-400" />
-                            {l.email}
-                          </span>
-                        ) : (
-                          "N/A"
-                        )}
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-600">
-                        {l.phone ? (
-                          <span className="flex items-center gap-1">
-                            <Phone size={12} className="text-gray-400" />
-                            {l.phone}
-                          </span>
-                        ) : (
-                          "N/A"
-                        )}
-                      </td>
-                      <td className="px-4 py-3">
-                        <span
-                          className={`px-2.5 py-1 rounded-md text-xs font-semibold capitalize ${leadStatusBadge(l.status || l.engagement)}`}
-                        >
-                          {l.status || l.engagement || "new"}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-500 max-w-xs truncate">
-                        {l.notes || l.lastNote || "--"}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-
-              {filteredLeads.length > 100 && (
-                <p className="text-center text-sm text-gray-400 mt-4">
-                  Showing first 100 of {filteredLeads.length} leads
-                </p>
-              )}
-            </div>
-          )}
+          <DataTable
+            columns={leadColumns}
+            data={filteredLeads}
+            emptyMessage="No commercial leads found. Leads will appear after campaigns are run."
+          />
         </div>
       )}
     </div>

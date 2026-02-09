@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import {
   db,
@@ -19,6 +19,8 @@ import {
   Search,
   RefreshCw,
 } from "lucide-react";
+import DataTable from "../../components/ui/DataTable";
+import FilterBar from "../../components/ui/FilterBar";
 
 const SMS_COST = 0.0075;
 
@@ -34,7 +36,7 @@ export default function AdminSms() {
     cost: 0,
   });
   const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
+  const [filters, setFilters] = useState({});
   const [bulkMode, setBulkMode] = useState(false);
   const [smsForm, setSmsForm] = useState({ to: "", message: "" });
   const [bulkRecipients, setBulkRecipients] = useState("");
@@ -104,16 +106,91 @@ export default function AdminSms() {
     return "bg-amber-100 text-amber-700";
   };
 
-  const filtered = logs.filter((l) => {
-    const term = searchTerm.toLowerCase();
-    const matchesSearch =
-      !term ||
-      (l.to || "").includes(term) ||
-      (l.message || "").toLowerCase().includes(term);
-    const matchesStatus =
-      statusFilter === "all" || (l.status || "").toLowerCase() === statusFilter;
-    return matchesSearch && matchesStatus;
-  });
+  const filterDefs = useMemo(() => {
+    const statuses = [
+      ...new Set(
+        logs.map((l) => (l.status || "").toLowerCase()).filter(Boolean),
+      ),
+    ];
+    return [
+      {
+        key: "status",
+        label: "Status",
+        options: statuses.map((s) => ({
+          value: s,
+          label: s.charAt(0).toUpperCase() + s.slice(1),
+        })),
+      },
+    ];
+  }, [logs]);
+
+  const filtered = useMemo(() => {
+    return logs.filter((l) => {
+      const term = searchTerm.toLowerCase();
+      const matchesSearch =
+        !term ||
+        (l.to || "").includes(term) ||
+        (l.message || "").toLowerCase().includes(term);
+      const matchesStatus =
+        !filters.status || (l.status || "").toLowerCase() === filters.status;
+      return matchesSearch && matchesStatus;
+    });
+  }, [logs, searchTerm, filters]);
+
+  const columns = useMemo(
+    () => [
+      {
+        key: "to",
+        label: "To",
+        sortable: true,
+        render: (val) => (
+          <span className="font-semibold text-gray-900">{val || "N/A"}</span>
+        ),
+      },
+      {
+        key: "message",
+        label: "Message",
+        sortable: false,
+        render: (val) => (
+          <span className="text-gray-600 max-w-xs truncate block">
+            {val || "N/A"}
+          </span>
+        ),
+      },
+      {
+        key: "status",
+        label: "Status",
+        sortable: true,
+        render: (val) => (
+          <span
+            className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold capitalize ${statusBadge(val)}`}
+          >
+            {statusIcon(val)}
+            {val || "unknown"}
+          </span>
+        ),
+      },
+      {
+        key: "sid",
+        label: "SID",
+        sortable: false,
+        render: (val) => (
+          <span className="text-xs text-gray-400 font-mono">
+            {val ? val.slice(-8) : "N/A"}
+          </span>
+        ),
+      },
+      {
+        key: "sentAt",
+        label: "Sent At",
+        sortable: true,
+        render: (val) => (
+          <span className="text-gray-400">{formatDate(val)}</span>
+        ),
+      },
+    ],
+    [],
+  );
 
   const metricCards = [
     {
@@ -281,8 +358,8 @@ export default function AdminSms() {
       </div>
 
       {/* Delivery Log */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6">
-        <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
+      <div className="space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-3">
           <h3 className="text-lg font-bold text-gray-900">Delivery Log</h3>
           <div className="flex items-center gap-3">
             <div className="relative">
@@ -298,18 +375,11 @@ export default function AdminSms() {
                 className="pl-9 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
             </div>
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
-            >
-              <option value="all">All Status</option>
-              <option value="delivered">Delivered</option>
-              <option value="sent">Sent</option>
-              <option value="queued">Queued</option>
-              <option value="failed">Failed</option>
-              <option value="undelivered">Undelivered</option>
-            </select>
+            <FilterBar
+              filters={filterDefs}
+              activeFilters={filters}
+              onChange={setFilters}
+            />
             <button
               onClick={loadData}
               className="flex items-center gap-1.5 px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-700 hover:bg-gray-50 transition-colors"
@@ -320,66 +390,15 @@ export default function AdminSms() {
           </div>
         </div>
 
-        <p className="text-sm text-gray-500 mb-4">
+        <p className="text-sm text-gray-500">
           {filtered.length} message{filtered.length !== 1 ? "s" : ""}
         </p>
 
-        {filtered.length === 0 ? (
-          <div className="text-center py-16">
-            <MessageSquare size={40} className="mx-auto text-gray-300 mb-3" />
-            <p className="text-gray-500 font-medium">No SMS logs found</p>
-          </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="bg-gray-50 border-b border-gray-200">
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    To
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Message
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Status
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    SID
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Sent At
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {filtered.map((l) => (
-                  <tr key={l.id} className="hover:bg-gray-50 transition-colors">
-                    <td className="px-4 py-3 text-sm font-semibold text-gray-900">
-                      {l.to || "N/A"}
-                    </td>
-                    <td className="px-4 py-3 text-sm text-gray-600 max-w-xs truncate">
-                      {l.message || "N/A"}
-                    </td>
-                    <td className="px-4 py-3">
-                      <span
-                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold capitalize ${statusBadge(l.status)}`}
-                      >
-                        {statusIcon(l.status)}
-                        {l.status || "unknown"}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 text-xs text-gray-400 font-mono">
-                      {l.sid ? l.sid.slice(-8) : "N/A"}
-                    </td>
-                    <td className="px-4 py-3 text-sm text-gray-400">
-                      {formatDate(l.sentAt)}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+        <DataTable
+          columns={columns}
+          data={filtered}
+          emptyMessage="No SMS logs found"
+        />
       </div>
     </div>
   );

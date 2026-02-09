@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import {
   createApiKey,
@@ -16,7 +16,6 @@ import {
 import {
   Key,
   Activity,
-  Shield,
   Search,
   CheckCircle,
   XCircle,
@@ -26,9 +25,10 @@ import {
   Check,
   X,
   AlertTriangle,
-  ToggleRight,
   RefreshCw,
 } from "lucide-react";
+import DataTable from "../../components/ui/DataTable";
+import FilterBar from "../../components/ui/FilterBar";
 
 const AVAILABLE_SCOPES = [
   { value: "read_leads", label: "Read Leads", group: "Leads" },
@@ -251,7 +251,7 @@ export default function AdminApiKeys() {
   const [apiKeys, setApiKeys] = useState([]);
   const [usageLogs, setUsageLogs] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
+  const [filters, setFilters] = useState({});
   const [showCreate, setShowCreate] = useState(false);
   const [newKey, setNewKey] = useState(null);
   const [stats, setStats] = useState({
@@ -382,18 +382,216 @@ export default function AdminApiKeys() {
     return "bg-amber-100 text-amber-700";
   };
 
-  const filtered = apiKeys.filter((k) => {
-    const term = searchTerm.toLowerCase();
-    const matchesSearch =
-      !term ||
-      (k.name || "").toLowerCase().includes(term) ||
-      (k.userId || "").toLowerCase().includes(term) ||
-      (k.email || "").toLowerCase().includes(term) ||
-      (k.id || "").toLowerCase().includes(term);
-    const matchesStatus =
-      statusFilter === "all" || (k.status || "").toLowerCase() === statusFilter;
-    return matchesSearch && matchesStatus;
-  });
+  const filterDefs = useMemo(() => {
+    const statuses = [
+      ...new Set(apiKeys.map((k) => (k.status || "active").toLowerCase())),
+    ].sort();
+    return [
+      {
+        key: "status",
+        label: "Status",
+        options: statuses.map((s) => ({
+          value: s,
+          label: s.charAt(0).toUpperCase() + s.slice(1),
+        })),
+      },
+    ];
+  }, [apiKeys]);
+
+  const filteredKeys = useMemo(() => {
+    return apiKeys.filter((k) => {
+      const term = searchTerm.toLowerCase();
+      const matchesSearch =
+        !term ||
+        (k.name || "").toLowerCase().includes(term) ||
+        (k.userId || "").toLowerCase().includes(term) ||
+        (k.email || "").toLowerCase().includes(term) ||
+        (k.id || "").toLowerCase().includes(term);
+      const matchesStatus =
+        !filters.status ||
+        (k.status || "active").toLowerCase() === filters.status;
+      return matchesSearch && matchesStatus;
+    });
+  }, [apiKeys, searchTerm, filters]);
+
+  const keyColumns = useMemo(
+    () => [
+      {
+        key: "name",
+        label: "Name",
+        sortable: true,
+        render: (val, row) => (
+          <div className="flex items-center gap-2">
+            <Key size={14} className="text-gray-400" />
+            <span className="text-sm font-semibold text-gray-900">
+              {val || row.id.slice(0, 12)}
+            </span>
+          </div>
+        ),
+      },
+      {
+        key: "email",
+        label: "User",
+        sortable: true,
+        render: (val, row) => (
+          <span className="text-sm text-gray-600">
+            {val || (row.userId ? row.userId.slice(0, 12) + "..." : "N/A")}
+          </span>
+        ),
+      },
+      {
+        key: "scopes",
+        label: "Scopes",
+        sortable: false,
+        render: (val) => (
+          <div className="flex flex-wrap gap-1">
+            {(val || []).slice(0, 3).map((s) => (
+              <span
+                key={s}
+                className="px-1.5 py-0.5 bg-blue-50 text-blue-700 rounded text-xs font-mono"
+              >
+                {s}
+              </span>
+            ))}
+            {(val || []).length > 3 && (
+              <span className="px-1.5 py-0.5 bg-gray-100 text-gray-500 rounded text-xs">
+                +{val.length - 3}
+              </span>
+            )}
+          </div>
+        ),
+      },
+      {
+        key: "usageStats",
+        label: "Calls",
+        sortable: true,
+        render: (val) => (
+          <span className="text-sm font-bold text-gray-900">
+            {((val && val.totalCalls) || 0).toLocaleString()}
+          </span>
+        ),
+      },
+      {
+        key: "rateLimit",
+        label: "Rate Limit",
+        sortable: true,
+        render: (val) => (
+          <span className="text-sm text-gray-600">{val || "60"}/min</span>
+        ),
+      },
+      {
+        key: "status",
+        label: "Status",
+        sortable: true,
+        render: (val) => (
+          <span
+            className={`px-2.5 py-1 rounded-md text-xs font-semibold capitalize ${statusBadge(val)}`}
+          >
+            {val || "active"}
+          </span>
+        ),
+      },
+      {
+        key: "createdAt",
+        label: "Created",
+        sortable: true,
+        render: (val) => (
+          <span className="text-sm text-gray-400">{formatDate(val)}</span>
+        ),
+      },
+      {
+        key: "actions",
+        label: "Actions",
+        sortable: false,
+        render: (_val, row) => (
+          <div className="flex items-center gap-1">
+            {(row.status || "active") === "active" && (
+              <>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleRotate(row);
+                  }}
+                  className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-medium text-blue-600 hover:bg-blue-50"
+                  title="Rotate key"
+                >
+                  <RefreshCw className="h-3.5 w-3.5" /> Rotate
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleRevoke(row);
+                  }}
+                  className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50"
+                  title="Revoke key"
+                >
+                  <XCircle className="h-3.5 w-3.5" /> Revoke
+                </button>
+              </>
+            )}
+            {(row.status || "") === "revoked" && (
+              <span className="text-xs text-gray-400">Revoked</span>
+            )}
+          </div>
+        ),
+      },
+    ],
+    [],
+  );
+
+  const usageColumns = useMemo(
+    () => [
+      {
+        key: "apiKeyId",
+        label: "Key",
+        sortable: true,
+        render: (val) => (
+          <span className="text-xs font-mono text-gray-600">
+            {val ? val.slice(0, 12) + "..." : "N/A"}
+          </span>
+        ),
+      },
+      {
+        key: "endpoint",
+        label: "Endpoint",
+        sortable: true,
+        render: (val) => (
+          <span className="text-sm text-gray-900">{val || "N/A"}</span>
+        ),
+      },
+      {
+        key: "method",
+        label: "Method",
+        sortable: true,
+        render: (val) => (
+          <span className="px-2 py-0.5 bg-blue-50 text-blue-700 rounded text-xs font-mono font-bold">
+            {val || "GET"}
+          </span>
+        ),
+      },
+      {
+        key: "statusCode",
+        label: "Status",
+        sortable: true,
+        render: (val) => (
+          <span
+            className={`text-sm font-bold ${(val || 200) < 400 ? "text-green-600" : "text-red-600"}`}
+          >
+            {val || 200}
+          </span>
+        ),
+      },
+      {
+        key: "timestamp",
+        label: "Time",
+        sortable: true,
+        render: (val) => (
+          <span className="text-sm text-gray-400">{formatDate(val)}</span>
+        ),
+      },
+    ],
+    [],
+  );
 
   // Scope usage breakdown
   const scopeCounts = {};
@@ -532,8 +730,8 @@ export default function AdminApiKeys() {
       )}
 
       {/* API Keys Table */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6">
-        <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
+      <div>
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
           <h3 className="text-lg font-bold text-gray-900">All API Keys</h3>
           <div className="flex items-center gap-3">
             <div className="relative">
@@ -549,203 +747,37 @@ export default function AdminApiKeys() {
                 className="pl-9 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
             </div>
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
-            >
-              <option value="all">All Status</option>
-              <option value="active">Active</option>
-              <option value="revoked">Revoked</option>
-              <option value="expired">Expired</option>
-            </select>
+            <FilterBar
+              filters={filterDefs}
+              activeFilters={filters}
+              onChange={setFilters}
+            />
           </div>
         </div>
 
         <p className="text-sm text-gray-500 mb-4">
-          {filtered.length} key{filtered.length !== 1 ? "s" : ""}
+          {filteredKeys.length} key{filteredKeys.length !== 1 ? "s" : ""}
         </p>
 
-        {filtered.length === 0 ? (
-          <div className="text-center py-16">
-            <Key size={40} className="mx-auto text-gray-300 mb-3" />
-            <p className="text-gray-500 font-medium">No API keys found</p>
-          </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="bg-gray-50 border-b border-gray-200">
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Name
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    User
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Scopes
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Calls
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Rate Limit
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Status
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Created
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {filtered.map((k) => (
-                  <tr key={k.id} className="hover:bg-gray-50 transition-colors">
-                    <td className="px-4 py-3">
-                      <div className="flex items-center gap-2">
-                        <Key size={14} className="text-gray-400" />
-                        <span className="text-sm font-semibold text-gray-900">
-                          {k.name || k.id.slice(0, 12)}
-                        </span>
-                      </div>
-                    </td>
-                    <td className="px-4 py-3 text-sm text-gray-600">
-                      {k.email ||
-                        (k.userId ? k.userId.slice(0, 12) + "..." : "N/A")}
-                    </td>
-                    <td className="px-4 py-3">
-                      <div className="flex flex-wrap gap-1">
-                        {(k.scopes || []).slice(0, 3).map((s) => (
-                          <span
-                            key={s}
-                            className="px-1.5 py-0.5 bg-blue-50 text-blue-700 rounded text-xs font-mono"
-                          >
-                            {s}
-                          </span>
-                        ))}
-                        {(k.scopes || []).length > 3 && (
-                          <span className="px-1.5 py-0.5 bg-gray-100 text-gray-500 rounded text-xs">
-                            +{k.scopes.length - 3}
-                          </span>
-                        )}
-                      </div>
-                    </td>
-                    <td className="px-4 py-3 text-sm font-bold text-gray-900">
-                      {(
-                        (k.usageStats && k.usageStats.totalCalls) ||
-                        0
-                      ).toLocaleString()}
-                    </td>
-                    <td className="px-4 py-3 text-sm text-gray-600">
-                      {k.rateLimit || "60"}/min
-                    </td>
-                    <td className="px-4 py-3">
-                      <span
-                        className={`px-2.5 py-1 rounded-md text-xs font-semibold capitalize ${statusBadge(k.status)}`}
-                      >
-                        {k.status || "active"}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 text-sm text-gray-400">
-                      {formatDate(k.createdAt)}
-                    </td>
-                    <td className="px-4 py-3">
-                      <div className="flex items-center gap-1">
-                        {(k.status || "active") === "active" && (
-                          <>
-                            <button
-                              onClick={() => handleRotate(k)}
-                              className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-medium text-blue-600 hover:bg-blue-50"
-                              title="Rotate key"
-                            >
-                              <RefreshCw className="h-3.5 w-3.5" /> Rotate
-                            </button>
-                            <button
-                              onClick={() => handleRevoke(k)}
-                              className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50"
-                              title="Revoke key"
-                            >
-                              <XCircle className="h-3.5 w-3.5" /> Revoke
-                            </button>
-                          </>
-                        )}
-                        {(k.status || "") === "revoked" && (
-                          <span className="text-xs text-gray-400">Revoked</span>
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+        <DataTable
+          columns={keyColumns}
+          data={filteredKeys}
+          emptyMessage="No API keys found."
+        />
       </div>
 
       {/* Recent Usage Logs */}
       {usageLogs.length > 0 && (
-        <div className="bg-white rounded-xl border border-gray-200 p-6">
+        <div>
           <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
             <Activity size={20} className="text-purple-500" />
             Recent API Usage
           </h3>
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="bg-gray-50 border-b border-gray-200">
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Key
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Endpoint
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Method
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Status
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Time
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {usageLogs.slice(0, 20).map((log) => (
-                  <tr
-                    key={log.id}
-                    className="hover:bg-gray-50 transition-colors"
-                  >
-                    <td className="px-4 py-3 text-xs font-mono text-gray-600">
-                      {log.apiKeyId ? log.apiKeyId.slice(0, 12) + "..." : "N/A"}
-                    </td>
-                    <td className="px-4 py-3 text-sm text-gray-900">
-                      {log.endpoint || "N/A"}
-                    </td>
-                    <td className="px-4 py-3">
-                      <span className="px-2 py-0.5 bg-blue-50 text-blue-700 rounded text-xs font-mono font-bold">
-                        {log.method || "GET"}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3">
-                      <span
-                        className={`text-sm font-bold ${(log.statusCode || 200) < 400 ? "text-green-600" : "text-red-600"}`}
-                      >
-                        {log.statusCode || 200}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 text-sm text-gray-400">
-                      {formatDate(log.timestamp)}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <DataTable
+            columns={usageColumns}
+            data={usageLogs}
+            emptyMessage="No usage logs found."
+          />
         </div>
       )}
 

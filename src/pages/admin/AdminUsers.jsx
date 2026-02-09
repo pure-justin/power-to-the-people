@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import {
   db,
@@ -8,7 +8,9 @@ import {
   updateDoc,
   serverTimestamp,
 } from "../../services/firebase";
-import { Users, Shield, UserPlus, X, ChevronDown } from "lucide-react";
+import { Users, Shield, UserPlus, X } from "lucide-react";
+import DataTable from "../../components/ui/DataTable";
+import FilterBar from "../../components/ui/FilterBar";
 
 const ROLES = ["admin", "installer", "sales", "customer"];
 
@@ -75,6 +77,86 @@ export default function AdminUsers() {
     return d.toLocaleDateString();
   };
 
+  const [filters, setFilters] = useState({});
+
+  const filterDefs = useMemo(() => {
+    const roles = [...new Set(users.map((u) => u.role).filter(Boolean))].sort();
+    return [{ key: "role", label: "Role", options: roles }];
+  }, [users]);
+
+  const filtered = useMemo(() => {
+    let result = users;
+    if (filters.role) result = result.filter((u) => u.role === filters.role);
+    return result;
+  }, [users, filters]);
+
+  const columns = useMemo(
+    () => [
+      {
+        key: "displayName",
+        label: "Name",
+        sortable: true,
+        render: (val, row) => (
+          <span className="font-semibold text-gray-900">
+            {val || row.name || "N/A"}
+          </span>
+        ),
+      },
+      {
+        key: "email",
+        label: "Email",
+        sortable: true,
+        render: (val) => <span className="text-gray-600">{val || "N/A"}</span>,
+      },
+      {
+        key: "role",
+        label: "Role",
+        sortable: true,
+        render: (val) => (
+          <span
+            className={`px-2.5 py-1 rounded-md text-xs font-semibold capitalize ${roleBadge(val)}`}
+          >
+            {val || "customer"}
+          </span>
+        ),
+      },
+      {
+        key: "status",
+        label: "Status",
+        sortable: true,
+        render: (val) => (
+          <span
+            className={`px-2.5 py-1 rounded-md text-xs font-semibold ${val === "inactive" ? "bg-gray-100 text-gray-500" : "bg-green-100 text-green-700"}`}
+          >
+            {val || "active"}
+          </span>
+        ),
+      },
+      {
+        key: "createdAt",
+        label: "Created",
+        sortable: true,
+        render: (val) => (
+          <span className="text-gray-400">{formatDate(val)}</span>
+        ),
+      },
+      {
+        key: "id",
+        label: "Actions",
+        render: (val, row) => (
+          <button
+            onClick={() => handleEditRole(row)}
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-md text-xs font-medium text-gray-700 hover:bg-gray-200 transition-colors"
+          >
+            <Shield size={12} />
+            Edit Role
+          </button>
+        ),
+      },
+    ],
+    [],
+  );
+
   if (loading) {
     return (
       <div className="bg-white rounded-xl border border-gray-200 p-6 animate-pulse">
@@ -98,85 +180,23 @@ export default function AdminUsers() {
             Manage user accounts and roles
           </p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2.5 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors">
-          <UserPlus size={16} />
-          Invite User
-        </button>
       </div>
 
       {/* Users Table */}
       <div className="bg-white rounded-xl border border-gray-200 p-6">
-        {users.length === 0 ? (
-          <div className="text-center py-16">
-            <Users size={40} className="mx-auto text-gray-300 mb-3" />
-            <p className="text-gray-500 font-medium">No users found</p>
-          </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="bg-gray-50 border-b border-gray-200">
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Name
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Email
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Role
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Status
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Created
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {users.map((u) => (
-                  <tr key={u.id} className="hover:bg-gray-50 transition-colors">
-                    <td className="px-4 py-3 text-sm font-semibold text-gray-900">
-                      {u.displayName || u.name || "N/A"}
-                    </td>
-                    <td className="px-4 py-3 text-sm text-gray-600">
-                      {u.email || "N/A"}
-                    </td>
-                    <td className="px-4 py-3">
-                      <span
-                        className={`px-2.5 py-1 rounded-md text-xs font-semibold capitalize ${roleBadge(u.role)}`}
-                      >
-                        {u.role || "customer"}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3">
-                      <span
-                        className={`px-2.5 py-1 rounded-md text-xs font-semibold ${u.status === "inactive" ? "bg-gray-100 text-gray-500" : "bg-green-100 text-green-700"}`}
-                      >
-                        {u.status || "active"}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 text-sm text-gray-400">
-                      {formatDate(u.createdAt)}
-                    </td>
-                    <td className="px-4 py-3">
-                      <button
-                        onClick={() => handleEditRole(u)}
-                        className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-md text-xs font-medium text-gray-700 hover:bg-gray-200 transition-colors"
-                      >
-                        <Shield size={12} />
-                        Edit Role
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+        <FilterBar
+          filters={filterDefs}
+          activeFilters={filters}
+          onChange={setFilters}
+        />
+
+        <div className="mt-4">
+          <DataTable
+            columns={columns}
+            data={filtered}
+            emptyMessage="No users found."
+          />
+        </div>
       </div>
 
       {/* Role Editor Modal */}

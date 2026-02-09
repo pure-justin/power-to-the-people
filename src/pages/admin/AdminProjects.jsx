@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import {
   db,
@@ -7,14 +7,16 @@ import {
   orderBy,
   getDocs,
 } from "../../services/firebase";
-import { FolderKanban, Search, PieChart } from "lucide-react";
+import { Search, PieChart } from "lucide-react";
+import DataTable from "../../components/ui/DataTable";
+import FilterBar from "../../components/ui/FilterBar";
 
 export default function AdminProjects() {
   useAuth();
   const [loading, setLoading] = useState(true);
   const [projects, setProjects] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
+  const [filters, setFilters] = useState({});
 
   useEffect(() => {
     loadProjects();
@@ -32,24 +34,6 @@ export default function AdminProjects() {
       setLoading(false);
     }
   };
-
-  const filtered = projects.filter((p) => {
-    const term = searchTerm.toLowerCase();
-    const matchesSearch =
-      !term ||
-      (p.customerName || "").toLowerCase().includes(term) ||
-      (p.installer || "").toLowerCase().includes(term) ||
-      p.id.toLowerCase().includes(term);
-    const matchesStatus = statusFilter === "all" || p.status === statusFilter;
-    return matchesSearch && matchesStatus;
-  });
-
-  // Status distribution
-  const statusCounts = {};
-  projects.forEach((p) => {
-    const s = p.status || "unknown";
-    statusCounts[s] = (statusCounts[s] || 0) + 1;
-  });
 
   const statusBadge = (status) => {
     const s = (status || "").toLowerCase();
@@ -70,6 +54,107 @@ export default function AdminProjects() {
     const d = ts.toDate ? ts.toDate() : new Date(ts);
     return d.toLocaleDateString();
   };
+
+  // Status distribution
+  const statusCounts = useMemo(() => {
+    const counts = {};
+    projects.forEach((p) => {
+      const s = p.status || "unknown";
+      counts[s] = (counts[s] || 0) + 1;
+    });
+    return counts;
+  }, [projects]);
+
+  const filterDefs = useMemo(() => {
+    const statuses = [
+      ...new Set(projects.map((p) => p.status || "unknown").filter(Boolean)),
+    ].sort();
+    const installers = [
+      ...new Set(projects.map((p) => p.installer).filter(Boolean)),
+    ].sort();
+    return [
+      { key: "status", label: "Status", options: statuses },
+      { key: "installer", label: "Installer", options: installers },
+    ];
+  }, [projects]);
+
+  const filtered = useMemo(() => {
+    let result = projects;
+    // Text search
+    const term = searchTerm.toLowerCase();
+    if (term) {
+      result = result.filter(
+        (p) =>
+          (p.customerName || "").toLowerCase().includes(term) ||
+          (p.installer || "").toLowerCase().includes(term) ||
+          p.id.toLowerCase().includes(term),
+      );
+    }
+    // FilterBar filters
+    if (filters.status) {
+      result = result.filter((p) => (p.status || "unknown") === filters.status);
+    }
+    if (filters.installer) {
+      result = result.filter((p) => p.installer === filters.installer);
+    }
+    return result;
+  }, [projects, searchTerm, filters]);
+
+  const columns = useMemo(
+    () => [
+      {
+        key: "id",
+        label: "Project",
+        sortable: true,
+        render: (val) => (
+          <span className="font-semibold text-gray-900">{val}</span>
+        ),
+      },
+      {
+        key: "customerName",
+        label: "Customer",
+        sortable: true,
+        render: (val) => <span className="text-gray-600">{val || "N/A"}</span>,
+      },
+      {
+        key: "installer",
+        label: "Installer",
+        sortable: true,
+        render: (val) => (
+          <span className="text-gray-600">{val || "Unassigned"}</span>
+        ),
+      },
+      {
+        key: "status",
+        label: "Status",
+        sortable: true,
+        render: (val) => (
+          <span
+            className={`px-2.5 py-1 rounded-md text-xs font-semibold capitalize ${statusBadge(val)}`}
+          >
+            {val || "unknown"}
+          </span>
+        ),
+      },
+      {
+        key: "systemSize",
+        label: "System Size",
+        sortable: true,
+        render: (val) => (
+          <span className="text-gray-700">{val ? `${val} kW` : "N/A"}</span>
+        ),
+      },
+      {
+        key: "createdAt",
+        label: "Created",
+        sortable: true,
+        render: (val) => (
+          <span className="text-gray-400">{formatDate(val)}</span>
+        ),
+      },
+    ],
+    [],
+  );
 
   if (loading) {
     return (
@@ -104,7 +189,11 @@ export default function AdminProjects() {
               key={status}
               className="text-center p-3 rounded-lg border border-gray-100 hover:border-gray-200 transition-colors cursor-pointer"
               onClick={() =>
-                setStatusFilter(statusFilter === status ? "all" : status)
+                setFilters((prev) =>
+                  prev.status === status
+                    ? { ...prev, status: undefined }
+                    : { ...prev, status },
+                )
               }
             >
               <span
@@ -134,88 +223,23 @@ export default function AdminProjects() {
               className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
             />
           </div>
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-2.5 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
-          >
-            <option value="all">All Status</option>
-            {Object.keys(statusCounts).map((s) => (
-              <option key={s} value={s}>
-                {s}
-              </option>
-            ))}
-          </select>
         </div>
 
-        <p className="text-sm text-gray-500 mb-4">
+        <FilterBar
+          filters={filterDefs}
+          activeFilters={filters}
+          onChange={setFilters}
+        />
+
+        <p className="text-sm text-gray-500 my-4">
           {filtered.length} project{filtered.length !== 1 ? "s" : ""}
         </p>
 
-        {filtered.length === 0 ? (
-          <div className="text-center py-16">
-            <FolderKanban size={40} className="mx-auto text-gray-300 mb-3" />
-            <p className="text-gray-500 font-medium">No projects found</p>
-            <p className="text-sm text-gray-400 mt-1">
-              Try adjusting your search or filters
-            </p>
-          </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="bg-gray-50 border-b border-gray-200">
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Project
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Customer
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Installer
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Status
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    System Size
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Created
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {filtered.map((p) => (
-                  <tr key={p.id} className="hover:bg-gray-50 transition-colors">
-                    <td className="px-4 py-3 text-sm font-semibold text-gray-900">
-                      {p.id}
-                    </td>
-                    <td className="px-4 py-3 text-sm text-gray-600">
-                      {p.customerName || "N/A"}
-                    </td>
-                    <td className="px-4 py-3 text-sm text-gray-600">
-                      {p.installer || "Unassigned"}
-                    </td>
-                    <td className="px-4 py-3">
-                      <span
-                        className={`px-2.5 py-1 rounded-md text-xs font-semibold capitalize ${statusBadge(p.status)}`}
-                      >
-                        {p.status || "unknown"}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 text-sm text-gray-700">
-                      {p.systemSize ? `${p.systemSize} kW` : "N/A"}
-                    </td>
-                    <td className="px-4 py-3 text-sm text-gray-400">
-                      {formatDate(p.createdAt)}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+        <DataTable
+          columns={columns}
+          data={filtered}
+          emptyMessage="No projects found. Try adjusting your search or filters."
+        />
       </div>
     </div>
   );
