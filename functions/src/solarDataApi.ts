@@ -232,7 +232,7 @@ export const solarUtilities = functions
   .runWith({ timeoutSeconds: 30, memory: "256MB" })
   .https.onRequest(async (req, res) => {
     if (handleOptions(req, res)) return;
-    setCors(res);
+    setCors(req, res);
 
     if (req.method !== "GET") {
       res.status(405).json({ error: "Method not allowed" });
@@ -313,7 +313,7 @@ export const solarIncentives = functions
   .runWith({ timeoutSeconds: 30, memory: "256MB" })
   .https.onRequest(async (req, res) => {
     if (handleOptions(req, res)) return;
-    setCors(res);
+    setCors(req, res);
 
     if (req.method !== "GET") {
       res.status(405).json({ error: "Method not allowed" });
@@ -394,7 +394,7 @@ export const solarPermits = functions
   .runWith({ timeoutSeconds: 30, memory: "256MB" })
   .https.onRequest(async (req, res) => {
     if (handleOptions(req, res)) return;
-    setCors(res);
+    setCors(req, res);
 
     if (req.method !== "GET") {
       res.status(405).json({ error: "Method not allowed" });
@@ -472,7 +472,7 @@ export const solarComplianceCheck = functions
   .runWith({ timeoutSeconds: 60, memory: "512MB" })
   .https.onRequest(async (req, res) => {
     if (handleOptions(req, res)) return;
-    setCors(res);
+    setCors(req, res);
 
     if (req.method !== "POST") {
       res.status(405).json({ error: "Method not allowed" });
@@ -584,7 +584,7 @@ export const solarComplianceQuickCheck = functions
   .runWith({ timeoutSeconds: 30, memory: "256MB" })
   .https.onRequest(async (req, res) => {
     if (handleOptions(req, res)) return;
-    setCors(res);
+    setCors(req, res);
 
     if (req.method !== "GET") {
       res.status(405).json({ error: "Method not allowed" });
@@ -645,7 +645,7 @@ export const solarEstimate = functions
   .runWith({ timeoutSeconds: 60, memory: "512MB" })
   .https.onRequest(async (req, res) => {
     if (handleOptions(req, res)) return;
-    setCors(res);
+    setCors(req, res);
 
     if (req.method !== "POST") {
       res.status(405).json({ error: "Method not allowed" });

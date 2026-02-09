@@ -152,8 +152,6 @@ const estimateConsumptionCallable = functions
  * Calls through Vercel serverless function to bypass GCP IAM restrictions.
  */
 export const scanBill = async (data) => {
-  console.log("scanBill: Calling Vercel API...");
-
   try {
     const response = await fetch(SCAN_BILL_API_URL, {
       method: "POST",
@@ -170,10 +168,6 @@ export const scanBill = async (data) => {
     }
 
     const result = await response.json();
-    console.log(
-      "scanBill: API returned:",
-      result.success ? "success" : "error",
-    );
 
     // Check for validation errors (not a bill, poor quality, etc.)
     if (!result.success && result.errorType) {
@@ -338,7 +332,6 @@ export const createAccount = async (email, password, displayName) => {
     role: "customer",
   });
 
-  console.log("Firebase: Created account for", email);
   return userCredential.user;
 };
 
@@ -353,7 +346,6 @@ export const signInWithEmail = async (email, password) => {
     email,
     password,
   );
-  console.log("Firebase: Signed in as", email);
   return userCredential.user;
 };
 
@@ -363,7 +355,6 @@ export const signInWithEmail = async (email, password) => {
 export const logout = async () => {
   if (!auth) throw new Error("Auth not initialized");
   await signOut(auth);
-  console.log("Firebase: Signed out");
 };
 
 /**
@@ -372,7 +363,6 @@ export const logout = async () => {
 export const resetPassword = async (email) => {
   if (!auth) throw new Error("Auth not initialized");
   await sendPasswordResetEmail(auth, email);
-  console.log("Firebase: Password reset email sent to", email);
 };
 
 /**
@@ -443,8 +433,6 @@ export const linkSmtAccount = async (uid, smtUsername, smtPassword, esiid) => {
 
   // Also update user profile with ESIID (public info)
   await updateUserProfile(uid, { esiid, smtLinked: true });
-
-  console.log("Firebase: Linked SMT account for user", uid);
 };
 
 /**
