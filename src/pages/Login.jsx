@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { linkGoogleToExistingAccount } from "../services/firebase";
 import { Sun } from "lucide-react";
 
 export default function Login() {
@@ -9,6 +10,8 @@ export default function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [resetSent, setResetSent] = useState(false);
+  const [linkingAccount, setLinkingAccount] = useState(false);
+  const [pendingCred, setPendingCred] = useState(null);
   const { login, loginWithGoogle, resetPassword, getRedirectPath } = useAuth();
   const navigate = useNavigate();
 
@@ -17,13 +20,23 @@ export default function Login() {
     setError("");
     setLoading(true);
     try {
-      await login(email, password);
+      if (linkingAccount && pendingCred) {
+        // User is providing password to link their Google account
+        await linkGoogleToExistingAccount(email, password, pendingCred);
+        setLinkingAccount(false);
+        setPendingCred(null);
+      } else {
+        await login(email, password);
+      }
       navigate(getRedirectPath());
     } catch (err) {
       setError(
-        err.message?.includes("auth/")
-          ? "Invalid email or password"
-          : err.message,
+        err.code === "auth/wrong-password" ||
+          err.code === "auth/invalid-credential"
+          ? "Invalid password. Please try again."
+          : err.message?.includes("auth/")
+            ? "Invalid email or password"
+            : err.message,
       );
     } finally {
       setLoading(false);
@@ -37,8 +50,16 @@ export default function Login() {
       await loginWithGoogle();
       navigate(getRedirectPath());
     } catch (err) {
-      if (err.code !== "auth/popup-closed-by-user") {
-        setError("Google sign-in failed. Please try again.");
+      if (err.code === "auth/popup-closed-by-user") {
+        // User closed the popup, no error needed
+      } else if (err.code === "auth/account-exists-with-different-credential") {
+        // Email already has a password account — prompt to link
+        setPendingCred(err.pendingCred);
+        setEmail(err.email || "");
+        setLinkingAccount(true);
+        setError("");
+      } else {
+        setError(err.message || "Google sign-in failed. Please try again.");
       }
     } finally {
       setLoading(false);
@@ -73,6 +94,12 @@ export default function Login() {
 
         {/* Form */}
         <div className="rounded-xl bg-white p-8 shadow-sm ring-1 ring-gray-200">
+          {linkingAccount && (
+            <div className="mb-4 rounded-lg bg-blue-50 px-4 py-3 text-sm text-blue-700">
+              An account with <strong>{email}</strong> already exists. Enter
+              your password to link your Google account.
+            </div>
+          )}
           {error && (
             <div className="mb-4 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">
               {error}
@@ -136,7 +163,11 @@ export default function Login() {
               disabled={loading}
               className="btn-primary w-full"
             >
-              {loading ? "Signing in..." : "Sign in"}
+              {loading
+                ? "Signing in..."
+                : linkingAccount
+                  ? "Link Google & Sign in"
+                  : "Sign in"}
             </button>
           </form>
 

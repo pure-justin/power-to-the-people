@@ -11,6 +11,8 @@ import {
   GoogleAuthProvider,
   onAuthStateChanged,
   signOut,
+  linkWithCredential,
+  EmailAuthProvider,
 } from "firebase/auth";
 import {
   getFirestore,
@@ -85,17 +87,68 @@ try {
 /**
  * Sign in with Google (required for Cloud Function access due to org policy)
  * Returns the Google identity token for calling functions
+ * Handles account linking when email already exists with password provider
  */
 export const signInWithGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, googleProvider);
-    // Get the Google credential
     googleCredential = GoogleAuthProvider.credentialFromResult(result);
+
+    // Ensure user doc exists in Firestore for Google sign-in users
+    const userRef = doc(db, "users", result.user.uid);
+    const userSnap = await getDoc(userRef);
+    if (!userSnap.exists()) {
+      await setDoc(
+        userRef,
+        {
+          email: result.user.email,
+          displayName: result.user.displayName || "",
+          role: "customer",
+          createdAt: serverTimestamp(),
+          authProvider: "google",
+        },
+        { merge: true },
+      );
+    }
+
     return result.user;
   } catch (error) {
-    console.error("Firebase: Google sign-in error:", error);
+    console.error("Firebase: Google sign-in error:", error.code, error.message);
+
+    // Account exists with different credential (e.g. email/password)
+    if (error.code === "auth/account-exists-with-different-credential") {
+      const pendingCred = GoogleAuthProvider.credentialFromError(error);
+      const email = error.customData?.email;
+      // Store pending credential so Login page can complete linking
+      throw Object.assign(error, { pendingCred, email });
+    }
+
     throw error;
   }
+};
+
+/**
+ * Link a Google credential to an existing email/password account
+ * Call after user provides their password to verify ownership
+ */
+export const linkGoogleToExistingAccount = async (
+  email,
+  password,
+  pendingCred,
+) => {
+  if (!auth) throw new Error("Auth not initialized");
+
+  // Sign in with existing email/password
+  const userCredential = await signInWithEmailAndPassword(
+    auth,
+    email,
+    password,
+  );
+
+  // Link the Google credential
+  await linkWithCredential(userCredential.user, pendingCred);
+
+  return userCredential.user;
 };
 
 /**
