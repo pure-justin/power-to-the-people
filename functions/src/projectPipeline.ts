@@ -7,6 +7,11 @@
 
 import * as functions from "firebase-functions/v1";
 import * as admin from "firebase-admin";
+import {
+  onPipelineTaskCompleted,
+  createPipelineTasks,
+  openNextTasks,
+} from "./pipelineAutoTasks";
 
 const db = admin.firestore();
 
@@ -156,6 +161,20 @@ export const advanceProjectStage = functions.https.onCall(
     };
 
     await projectRef.update(updateData);
+
+    // When project reaches "sold", create pipeline tasks and open the first ones
+    if (newStage === "sold") {
+      try {
+        const projectData = projectSnap.data()!;
+        await createPipelineTasks(projectId, projectData);
+        await openNextTasks(projectId);
+      } catch (err) {
+        console.warn(
+          `Failed to create pipeline tasks for project ${projectId}:`,
+          err,
+        );
+      }
+    }
 
     return {
       success: true,
@@ -342,6 +361,20 @@ export const completeProjectTask = functions.https.onCall(
     }
 
     await taskRef.update(updateData);
+
+    // Cascade pipeline: mark pipeline task completed and open downstream tasks
+    const taskData = taskSnap.data()!;
+    const taskType = taskData.type;
+    if (taskType) {
+      try {
+        await onPipelineTaskCompleted(projectId, taskType);
+      } catch (err) {
+        console.warn(
+          `Pipeline cascade failed for task ${taskType} on project ${projectId}:`,
+          err,
+        );
+      }
+    }
 
     return {
       success: true,
