@@ -550,27 +550,30 @@ function mergeDatasets(eiaData, urdbData) {
     if (!found && urdb.utility) {
       urdbOnlyCount++;
       const utilName = urdb.utility;
-      // Try to determine state from the rate data
+      // Try to determine state from utility name or rate name
+      // Check multiple patterns: "(State)", "(ST)", ", State", "- (ST)"
       let state = "";
-      if (urdb.name) {
-        // Some rate names contain state info
+      const textsToSearch = [utilName, urdb.name || ""];
+      for (const text of textsToSearch) {
+        if (state) break;
         for (const [code, name] of Object.entries(STATE_NAMES)) {
-          if (urdb.name.includes(name) || urdb.name.includes(`(${code})`)) {
+          if (
+            text.includes(`(${name})`) ||
+            text.includes(`(${code})`) ||
+            text.includes(`, ${name}`) ||
+            text.includes(`- (${code})`) ||
+            text.includes(`- ${name}`)
+          ) {
             state = code;
             break;
           }
         }
       }
-      // Fallback: try to get state from utility name
-      if (!state) {
-        for (const [code, name] of Object.entries(STATE_NAMES)) {
-          if (
-            utilName.includes(`(${name})`) ||
-            utilName.includes(`(${code})`)
-          ) {
-            state = code;
-            break;
-          }
+      // Fallback: check territory data
+      if (!state && territory[String(eid)]) {
+        const counties = territory[String(eid)].counties || [];
+        if (counties.length > 0 && counties[0].state) {
+          state = counties[0].state;
         }
       }
 

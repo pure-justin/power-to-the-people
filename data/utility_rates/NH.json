@@ -1,9 +1,9 @@
 {
   "state": "NH",
   "state_name": "New Hampshire",
-  "utility_count": 24,
+  "utility_count": 28,
   "total_residential_customers": 655759,
-  "avg_residential_rate": 0.1961,
+  "avg_residential_rate": 0.1838,
   "net_metering_policy": {
     "type": "NEM",
     "statewide": true
@@ -490,6 +490,86 @@
       "urdb_rate_name": null,
       "urdb_rate_per_kwh": null,
       "updated_at": "2026-02-09"
+    },
+    {
+      "utility_id": "906",
+      "utility_name": "Town of Ashland, New Hampshire (Utility Company)",
+      "state": "NH",
+      "ownership_type": "municipal",
+      "customer_count": 0,
+      "residential_rate_per_kwh": 0.1284,
+      "rate_data_source": "OpenEI_URDB",
+      "rate_structure": "tiered",
+      "tou_available": false,
+      "demand_charges": false,
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "net_metering_note": null,
+      "solar_installations": 0,
+      "solar_capacity_mw": 0,
+      "urdb_rate_name": "Uncontrolled Water Heating",
+      "urdb_rate_per_kwh": 0.1284,
+      "updated_at": "2026-02-09"
+    },
+    {
+      "utility_id": "11196",
+      "utility_name": "Town of Littleton, New Hampshire (Utility Company)",
+      "state": "NH",
+      "ownership_type": "municipal",
+      "customer_count": 0,
+      "residential_rate_per_kwh": 0.0844,
+      "rate_data_source": "OpenEI_URDB",
+      "rate_structure": "flat",
+      "tou_available": false,
+      "demand_charges": false,
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "net_metering_note": null,
+      "solar_installations": 0,
+      "solar_capacity_mw": 0,
+      "urdb_rate_name": "Residential",
+      "urdb_rate_per_kwh": 0.0844,
+      "updated_at": "2026-02-09"
+    },
+    {
+      "utility_id": "13286",
+      "utility_name": "New Hampton Village Precinct (Utility Company)",
+      "state": "NH",
+      "ownership_type": "IOU",
+      "customer_count": 0,
+      "residential_rate_per_kwh": 0.1,
+      "rate_data_source": "OpenEI_URDB",
+      "rate_structure": "flat",
+      "tou_available": false,
+      "demand_charges": false,
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "net_metering_note": null,
+      "solar_installations": 0,
+      "solar_capacity_mw": 0,
+      "urdb_rate_name": "Residential",
+      "urdb_rate_per_kwh": 0.1,
+      "updated_at": "2026-02-09"
+    },
+    {
+      "utility_id": "20913",
+      "utility_name": "Town of Wolfeboro, New Hampshire (Utility Company)",
+      "state": "NH",
+      "ownership_type": "municipal",
+      "customer_count": 0,
+      "residential_rate_per_kwh": 0.1261,
+      "rate_data_source": "OpenEI_URDB",
+      "rate_structure": "flat",
+      "tou_available": false,
+      "demand_charges": false,
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "net_metering_note": null,
+      "solar_installations": 0,
+      "solar_capacity_mw": 0,
+      "urdb_rate_name": "Domestic Service (Residential Schedule D.)",
+      "urdb_rate_per_kwh": 0.1261,
+      "updated_at": "2026-02-09"
     }
   ],
   "data_sources": [
@@ -497,5 +577,5 @@
     "OpenEI URDB",
     "DSIRE"
   ],
-  "generated_at": "2026-02-09T06:22:49.641Z"
+  "generated_at": "2026-02-09T06:23:38.880Z"
 }

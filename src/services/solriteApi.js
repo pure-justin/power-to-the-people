@@ -295,19 +295,13 @@ export async function getFinanceProducts(proposalId) {
  * This is the main function that handles the entire flow
  */
 export async function sendCustomerToSolRite(customerData, systemDesign = null) {
-  console.log("📤 Starting SolRite submission flow...");
-
   // Step 1: Create contact
-  console.log("Step 1: Creating contact...");
   const contact = await createContact(customerData);
   const contactId = contact.id;
-  console.log("✅ Contact created:", contactId);
 
   // Step 2: Create proposal
-  console.log("Step 2: Creating proposal...");
   const proposal = await createProposal(contactId, customerData);
   const proposalId = proposal.id;
-  console.log("✅ Proposal created:", proposalId);
 
   // Step 3: Get the proposal option ID (created automatically)
   // We need to fetch the proposal to get the option ID
@@ -328,30 +322,22 @@ export async function sendCustomerToSolRite(customerData, systemDesign = null) {
     console.warn("⚠️ No option ID found, skipping Solnova account creation");
   } else {
     // Step 4: Save utility
-    console.log("Step 3: Saving utility information...");
     await saveUtility(proposalId, optionId, {
       lseId: customerData.utilityId || 3010,
       utilityName:
         customerData.utilityName || "CenterPoint Energy Houston Electric, LLC",
     });
-    console.log("✅ Utility saved");
 
     // Step 5: Create Solnova account (sends to SolRite)
-    console.log("Step 4: Creating Solnova account (sending to SolRite)...");
-    const solnovaAccount = await createSolnovaAccount(proposalId, optionId, {
+    await createSolnovaAccount(proposalId, optionId, {
       lseId: customerData.utilityId || 3010,
       utilityName:
         customerData.utilityName || "CenterPoint Energy Houston Electric, LLC",
     });
-    console.log("✅ Solnova account created:", solnovaAccount);
   }
 
   // Step 6: Trigger Podio webhook
-  console.log("Step 5: Triggering Podio sync to SolRite...");
-  const podioResult = await sendPodioEvent(proposalId, "New");
-  console.log("✅ Podio event sent:", podioResult);
-
-  console.log("🎉 Customer successfully sent to SolRite!");
+  await sendPodioEvent(proposalId, "New");
 
   return {
     contactId,

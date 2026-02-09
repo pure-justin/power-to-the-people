@@ -1,9 +1,9 @@
 {
   "state": "NV",
   "state_name": "Nevada",
-  "utility_count": 16,
+  "utility_count": 20,
   "total_residential_customers": 1348117,
-  "avg_residential_rate": 0.1431,
+  "avg_residential_rate": 0.1309,
   "net_metering_policy": {
     "type": "net_billing",
     "statewide": true
@@ -330,6 +330,86 @@
       "urdb_rate_name": null,
       "urdb_rate_per_kwh": null,
       "updated_at": "2026-02-09"
+    },
+    {
+      "utility_id": "6172",
+      "utility_name": "City of Fallon, Nevada (Utility Company)",
+      "state": "NV",
+      "ownership_type": "municipal",
+      "customer_count": 0,
+      "residential_rate_per_kwh": 0.1252,
+      "rate_data_source": "OpenEI_URDB",
+      "rate_structure": "flat",
+      "tou_available": false,
+      "demand_charges": false,
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "net_metering_note": null,
+      "solar_installations": 0,
+      "solar_capacity_mw": 0,
+      "urdb_rate_name": "Residential",
+      "urdb_rate_per_kwh": 0.1252,
+      "updated_at": "2026-02-09"
+    },
+    {
+      "utility_id": "11021",
+      "utility_name": "Lincoln County Power Dist No 1",
+      "state": "NV",
+      "ownership_type": "IOU",
+      "customer_count": 0,
+      "residential_rate_per_kwh": 0.0742,
+      "rate_data_source": "OpenEI_URDB",
+      "rate_structure": "tiered",
+      "tou_available": false,
+      "demand_charges": false,
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "net_metering_note": null,
+      "solar_installations": 0,
+      "solar_capacity_mw": 0,
+      "urdb_rate_name": "RESIDENTIAL SERVICE - RURAL",
+      "urdb_rate_per_kwh": 0.0742,
+      "updated_at": "2026-02-09"
+    },
+    {
+      "utility_id": "11589",
+      "utility_name": "Harney Electric Coop, Inc",
+      "state": "NV",
+      "ownership_type": "cooperative",
+      "customer_count": 0,
+      "residential_rate_per_kwh": 0.0435,
+      "rate_data_source": "OpenEI_URDB",
+      "rate_structure": "tiered",
+      "tou_available": false,
+      "demand_charges": false,
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "net_metering_note": null,
+      "solar_installations": 0,
+      "solar_capacity_mw": 0,
+      "urdb_rate_name": "Schedule A- General Service, Town and Villages",
+      "urdb_rate_per_kwh": 0.0435,
+      "updated_at": "2026-02-09"
+    },
+    {
+      "utility_id": "15075",
+      "utility_name": "City of Pioche, Nevada (Utility Company)",
+      "state": "NV",
+      "ownership_type": "municipal",
+      "customer_count": 0,
+      "residential_rate_per_kwh": 0.086,
+      "rate_data_source": "OpenEI_URDB",
+      "rate_structure": "flat",
+      "tou_available": false,
+      "demand_charges": false,
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "net_metering_note": null,
+      "solar_installations": 0,
+      "solar_capacity_mw": 0,
+      "urdb_rate_name": "Residential Power",
+      "urdb_rate_per_kwh": 0.086,
+      "updated_at": "2026-02-09"
     }
   ],
   "data_sources": [
@@ -337,5 +417,5 @@
     "OpenEI URDB",
     "DSIRE"
   ],
-  "generated_at": "2026-02-09T06:22:49.638Z"
+  "generated_at": "2026-02-09T06:23:38.874Z"
 }

@@ -268,10 +268,8 @@ export default function Qualify() {
       const referrer = await validateReferralCode(code);
       if (referrer) {
         setReferralInfo(referrer);
-        console.log("Valid referral code from:", referrer.email);
       } else {
         setReferralInfo(null);
-        console.log("Invalid referral code:", code);
       }
     } catch (error) {
       console.error("Error validating referral code:", error);
@@ -288,7 +286,6 @@ export default function Qualify() {
       if (storedData) {
         try {
           const smtData = JSON.parse(storedData);
-          console.log("SMT data loaded from connector:", smtData);
 
           // Set the bill data
           setBillData({
@@ -388,8 +385,6 @@ export default function Qualify() {
 
   // Handle address selection from autocomplete - AUTO CHECK & ADVANCE
   const handleAddressSelect = async (addressData) => {
-    console.log("Address selected:", addressData);
-
     if (!addressData) {
       setFormData((prev) => ({
         ...prev,
@@ -411,8 +406,6 @@ export default function Qualify() {
       setError("This program is only available for US addresses");
       return;
     }
-
-    console.log("Setting coordinates:", addressData.lat, addressData.lng);
 
     setFormData((prev) => ({
       ...prev,
@@ -532,18 +525,11 @@ export default function Qualify() {
       }
       // PDFs are now supported directly by Gemini - no conversion needed
 
-      console.log("Scanning bill with AI...", {
-        fileType: file.type,
-        mediaType,
-      });
-
       // Call the Cloud Function
       const result = await scanBill({
         imageBase64: base64,
         mediaType: mediaType,
       });
-
-      console.log("Bill scan result:", result.data);
 
       if (result.data.success && result.data.billData) {
         // Validate that we got meaningful data
@@ -644,15 +630,11 @@ export default function Qualify() {
         mediaType = "image/jpeg";
       }
 
-      console.log("Scanning meter QR code with AI...");
-
       // Call the Cloud Function
       const result = await scanMeterQRCode({
         imageBase64: base64,
         mediaType: mediaType,
       });
-
-      console.log("Meter scan result:", result.data);
 
       if (result.data.success && result.data.esiid) {
         // Validate ESIID format (Texas ESIIDs are 17-22 digits)
@@ -949,15 +931,6 @@ export default function Qualify() {
             ? "good"
             : "fair";
 
-        console.log("SMT data parsed:", {
-          annualKwh,
-          daysCovered,
-          dataQuality,
-          months: usageData.monthlyUsage.length,
-          esiid: usageData.esiid,
-          validationType: validation.type,
-        });
-
         // Set bill data with Green Button/CSV source
         setBillData({
           utilityCompany: "Smart Meter Texas",
@@ -1072,13 +1045,6 @@ export default function Qualify() {
         const last12Months = monthlyUsage.slice(-12);
         const totalKwh = last12Months.reduce((sum, m) => sum + m.kWh, 0);
 
-        console.log("Green Button Monthly Data:", {
-          totalMonths: monthlyUsage.length,
-          last12MonthsKwh: totalKwh,
-          daysCovered,
-          esiid,
-        });
-
         return {
           monthlyUsage,
           totalKwh,
@@ -1116,12 +1082,6 @@ export default function Qualify() {
           const annualKwh = Math.round((periodKwh / periodDays) * 365);
 
           const startDate = new Date(startSec * 1000);
-
-          console.log("Green Button Summary (fallback):", {
-            periodKwh,
-            periodDays,
-            annualKwh,
-          });
 
           return {
             monthlyUsage: [
@@ -1243,18 +1203,6 @@ export default function Qualify() {
           ? Math.round((maxDate - minDate) / (1000 * 60 * 60 * 24)) + 1
           : 0;
 
-      console.log("SMT CSV parsed:", {
-        esiid,
-        rowCount,
-        totalKwh: Math.round(totalKwh),
-        daysCovered,
-        months: Object.keys(monthlyData).length,
-        dateRange:
-          minDate && maxDate
-            ? `${minDate.toLocaleDateString()} - ${maxDate.toLocaleDateString()}`
-            : "unknown",
-      });
-
       // Convert to sorted array
       const monthlyUsage = Object.entries(monthlyData)
         .sort(([a], [b]) => a.localeCompare(b))
@@ -1284,8 +1232,6 @@ export default function Qualify() {
     setSmtLoading(true);
 
     try {
-      console.log("Connecting to Smart Meter Texas...");
-
       const response = await fetch(`${SMT_API_URL}/api/smt/usage`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -1306,12 +1252,6 @@ export default function Qualify() {
       // Keep credentials in memory for linking on form submit if user opts in
       // They'll be cleared after form submission either way
       // Note: Credentials are NEVER persisted to localStorage/sessionStorage
-
-      console.log("SMT data received:", {
-        esiid: result.data.esiid,
-        annualKwh: result.data.annualKwh,
-        months: result.data.monthsOfData,
-      });
 
       // Set bill data with the fetched usage
       setBillData({
@@ -1378,8 +1318,6 @@ export default function Qualify() {
     setSmtRegLoading(true);
 
     try {
-      console.log("Registering Smart Meter Texas account...");
-
       const response = await fetch(`${SMT_API_URL}/api/smt/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -1395,7 +1333,6 @@ export default function Qualify() {
 
       // Success!
       setSmtRegSuccess(true);
-      console.log("SMT registration successful");
     } catch (err) {
       console.error("SMT registration error:", err);
       if (err.message.includes("Failed to fetch")) {
@@ -1555,12 +1492,10 @@ export default function Qualify() {
       let billUrl = null;
       if (formData.utilityBillFile) {
         try {
-          console.log("Uploading utility bill to Storage...");
           billUrl = await uploadBillToStorage(
             projectId,
             formData.utilityBillFile,
           );
-          console.log("Bill uploaded:", billUrl);
         } catch (uploadErr) {
           console.warn("Bill upload failed:", uploadErr);
           // Continue without uploaded bill - not critical
@@ -1575,16 +1510,9 @@ export default function Qualify() {
         (billData?.currentUsageKwh ? billData.currentUsageKwh * 12 : null) ||
         (meterData ? US_AVERAGE_KWH : US_AVERAGE_KWH);
 
-      console.log("Using annual usage for design:", annualUsageKwh, "kWh");
-
       // Design solar system using Google Solar API
       // Target 100% offset with actual usage from bill
       let systemDesign = null;
-      console.log(
-        "Designing solar system with coords:",
-        formData.latitude,
-        formData.longitude,
-      );
       try {
         if (formData.latitude && formData.longitude) {
           systemDesign = await designSolarSystem(
@@ -1593,7 +1521,6 @@ export default function Qualify() {
             annualUsageKwh, // Use actual usage from bill
             1.0, // Target 100% offset
           );
-          console.log("Solar system design:", systemDesign);
         } else {
           console.warn("No coordinates available for solar design");
         }
@@ -1666,12 +1593,9 @@ export default function Qualify() {
 
       // Save to Firestore
       try {
-        console.log("Saving project to Firestore...");
         // Add userId to project data
         projectData.userId = userId;
         await saveProject(projectData);
-        console.log("Project saved to Firestore:", projectId);
-
         // Cache the design for this address
         const addressKey = hashAddress(
           `${formData.street} ${formData.city} ${formData.state} ${formData.postalCode}`,
@@ -1682,7 +1606,6 @@ export default function Qualify() {
           latitude: formData.latitude,
           longitude: formData.longitude,
         });
-        console.log("Design cached for address:", addressKey);
       } catch (firestoreErr) {
         console.warn("Firestore save failed:", firestoreErr);
         // Continue with localStorage fallback
@@ -1723,15 +1646,7 @@ export default function Qualify() {
       }
       if (systemDesign) {
         const designStr = JSON.stringify(systemDesign);
-        console.log(
-          "Storing systemDesign to sessionStorage:",
-          designStr.substring(0, 100) + "...",
-        );
         sessionStorage.setItem("systemDesign", designStr);
-        console.log(
-          "Verifying sessionStorage:",
-          sessionStorage.getItem("systemDesign")?.substring(0, 50),
-        );
       } else {
         console.warn("No systemDesign to store!");
       }
@@ -1739,7 +1654,6 @@ export default function Qualify() {
       // Track referral if provided
       if (referralInfo && referralCode) {
         try {
-          console.log("Tracking referral for:", referralCode);
           await trackReferral(referralCode, {
             email: formData.email,
             name: `${formData.firstName} ${formData.lastName}`,
@@ -1753,7 +1667,6 @@ export default function Qualify() {
               annualUsageKwh: annualUsageKwh,
             },
           });
-          console.log("Referral tracked successfully");
           // Store referral code for success page
           sessionStorage.setItem("referralCode", referralCode);
         } catch (refError) {

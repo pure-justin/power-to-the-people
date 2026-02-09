@@ -1,9 +1,9 @@
 {
   "state": "ME",
   "state_name": "Maine",
-  "utility_count": 21,
+  "utility_count": 23,
   "total_residential_customers": 713444,
-  "avg_residential_rate": 0.1827,
+  "avg_residential_rate": 0.1739,
   "net_metering_policy": {
     "type": "net_billing",
     "statewide": true
@@ -430,6 +430,46 @@
       "urdb_rate_name": null,
       "urdb_rate_per_kwh": null,
       "updated_at": "2026-02-09"
+    },
+    {
+      "utility_id": "8780",
+      "utility_name": "Fox Islands Electric Coop, Inc",
+      "state": "ME",
+      "ownership_type": "cooperative",
+      "customer_count": 0,
+      "residential_rate_per_kwh": 0.0646,
+      "rate_data_source": "OpenEI_URDB",
+      "rate_structure": "tiered",
+      "tou_available": false,
+      "demand_charges": false,
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "net_metering_note": null,
+      "solar_installations": 0,
+      "solar_capacity_mw": 0,
+      "urdb_rate_name": "Residential Service",
+      "urdb_rate_per_kwh": 0.0646,
+      "updated_at": "2026-02-09"
+    },
+    {
+      "utility_id": "10144",
+      "utility_name": "Kennebunk Light & Power Dist",
+      "state": "ME",
+      "ownership_type": "IOU",
+      "customer_count": 0,
+      "residential_rate_per_kwh": 0.0998,
+      "rate_data_source": "OpenEI_URDB",
+      "rate_structure": "flat",
+      "tou_available": false,
+      "demand_charges": false,
+      "has_net_metering": true,
+      "net_metering_type": "net_billing",
+      "net_metering_note": null,
+      "solar_installations": 0,
+      "solar_capacity_mw": 0,
+      "urdb_rate_name": "General Service Residential",
+      "urdb_rate_per_kwh": 0.0998,
+      "updated_at": "2026-02-09"
     }
   ],
   "data_sources": [
@@ -437,5 +477,5 @@
     "OpenEI URDB",
     "DSIRE"
   ],
-  "generated_at": "2026-02-09T06:22:49.640Z"
+  "generated_at": "2026-02-09T06:23:38.876Z"
 }

@@ -1,9 +1,9 @@
 {
   "state": "WV",
   "state_name": "West Virginia",
-  "utility_count": 7,
+  "utility_count": 9,
   "total_residential_customers": 866456,
-  "avg_residential_rate": 0.1505,
+  "avg_residential_rate": 0.1377,
   "net_metering_policy": {
     "type": "NEM",
     "statewide": true
@@ -150,6 +150,46 @@
       "urdb_rate_name": "Residential Service Time Of Use Optional Rate (Schedule RSTOU-1-U)",
       "urdb_rate_per_kwh": 0.1288,
       "updated_at": "2026-02-09"
+    },
+    {
+      "utility_id": "13471",
+      "utility_name": "City of New Martinsville, West Virginia (Utility Company)",
+      "state": "WV",
+      "ownership_type": "municipal",
+      "customer_count": 0,
+      "residential_rate_per_kwh": 0.0996,
+      "rate_data_source": "OpenEI_URDB",
+      "rate_structure": "tiered",
+      "tou_available": false,
+      "demand_charges": false,
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "net_metering_note": null,
+      "solar_installations": 0,
+      "solar_capacity_mw": 0,
+      "urdb_rate_name": "Residential",
+      "urdb_rate_per_kwh": 0.0996,
+      "updated_at": "2026-02-09"
+    },
+    {
+      "utility_id": "14954",
+      "utility_name": "Philippi Municipal Electric",
+      "state": "WV",
+      "ownership_type": "municipal",
+      "customer_count": 0,
+      "residential_rate_per_kwh": 0.0858,
+      "rate_data_source": "OpenEI_URDB",
+      "rate_structure": "flat",
+      "tou_available": false,
+      "demand_charges": false,
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "net_metering_note": null,
+      "solar_installations": 0,
+      "solar_capacity_mw": 0,
+      "urdb_rate_name": "Residential",
+      "urdb_rate_per_kwh": 0.0858,
+      "updated_at": "2026-02-09"
     }
   ],
   "data_sources": [
@@ -157,5 +197,5 @@
     "OpenEI URDB",
     "DSIRE"
   ],
-  "generated_at": "2026-02-09T06:22:49.641Z"
+  "generated_at": "2026-02-09T06:23:38.878Z"
 }

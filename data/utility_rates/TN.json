@@ -1,9 +1,9 @@
 {
   "state": "TN",
   "state_name": "Tennessee",
-  "utility_count": 87,
+  "utility_count": 88,
   "total_residential_customers": 3166103,
-  "avg_residential_rate": 0.1235,
+  "avg_residential_rate": 0.1231,
   "net_metering_policy": {
     "type": "avoided_cost",
     "statewide": false,
@@ -1751,6 +1751,26 @@
       "urdb_rate_name": "Residential Energy Management Time-Of-Use (REMT) Three Phase",
       "urdb_rate_per_kwh": 0.1057,
       "updated_at": "2026-02-09"
+    },
+    {
+      "utility_id": "13119",
+      "utility_name": "City of Murfreesboro, Tennessee (Utility Company)",
+      "state": "TN",
+      "ownership_type": "municipal",
+      "customer_count": 0,
+      "residential_rate_per_kwh": 0.0915,
+      "rate_data_source": "OpenEI_URDB",
+      "rate_structure": "tou",
+      "tou_available": true,
+      "demand_charges": false,
+      "has_net_metering": false,
+      "net_metering_type": "avoided_cost",
+      "net_metering_note": "TVA territory, limited buyback",
+      "solar_installations": 0,
+      "solar_capacity_mw": 0,
+      "urdb_rate_name": "Residential",
+      "urdb_rate_per_kwh": 0.0915,
+      "updated_at": "2026-02-09"
     }
   ],
   "data_sources": [
@@ -1758,5 +1778,5 @@
     "OpenEI URDB",
     "DSIRE"
   ],
-  "generated_at": "2026-02-09T06:22:49.640Z"
+  "generated_at": "2026-02-09T06:23:38.877Z"
 }

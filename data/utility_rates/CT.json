@@ -1,9 +1,9 @@
 {
   "state": "CT",
   "state_name": "Connecticut",
-  "utility_count": 23,
+  "utility_count": 26,
   "total_residential_customers": 1593773,
-  "avg_residential_rate": 0.1754,
+  "avg_residential_rate": 0.1734,
   "net_metering_policy": {
     "type": "NEM",
     "statewide": true
@@ -470,6 +470,66 @@
       "urdb_rate_name": null,
       "urdb_rate_per_kwh": null,
       "updated_at": "2026-02-09"
+    },
+    {
+      "utility_id": "9734",
+      "utility_name": "City of Jewett City, Connecticut (Utility Company)",
+      "state": "CT",
+      "ownership_type": "municipal",
+      "customer_count": 0,
+      "residential_rate_per_kwh": 0.1367,
+      "rate_data_source": "OpenEI_URDB",
+      "rate_structure": "flat",
+      "tou_available": false,
+      "demand_charges": false,
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "net_metering_note": null,
+      "solar_installations": 0,
+      "solar_capacity_mw": 0,
+      "urdb_rate_name": "Rate No. 4 Residential Service",
+      "urdb_rate_per_kwh": 0.1367,
+      "updated_at": "2026-02-09"
+    },
+    {
+      "utility_id": "13825",
+      "utility_name": "Norwalk Third Taxing District",
+      "state": "CT",
+      "ownership_type": "municipal",
+      "customer_count": 0,
+      "residential_rate_per_kwh": 0.1719,
+      "rate_data_source": "OpenEI_URDB",
+      "rate_structure": "flat",
+      "tou_available": false,
+      "demand_charges": false,
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "net_metering_note": null,
+      "solar_installations": 0,
+      "solar_capacity_mw": 0,
+      "urdb_rate_name": "RESIDENCE",
+      "urdb_rate_per_kwh": 0.1719,
+      "updated_at": "2026-02-09"
+    },
+    {
+      "utility_id": "17569",
+      "utility_name": "City of South Norwalk, Connecticut (Utility Company)",
+      "state": "CT",
+      "ownership_type": "municipal",
+      "customer_count": 0,
+      "residential_rate_per_kwh": 0.1649,
+      "rate_data_source": "OpenEI_URDB",
+      "rate_structure": "tiered",
+      "tou_available": false,
+      "demand_charges": false,
+      "has_net_metering": true,
+      "net_metering_type": "NEM",
+      "net_metering_note": null,
+      "solar_installations": 0,
+      "solar_capacity_mw": 0,
+      "urdb_rate_name": "Rate 10 - Residential Electric Service Regular",
+      "urdb_rate_per_kwh": 0.1649,
+      "updated_at": "2026-02-09"
     }
   ],
   "data_sources": [
@@ -477,5 +537,5 @@
     "OpenEI URDB",
     "DSIRE"
   ],
-  "generated_at": "2026-02-09T06:22:49.637Z"
+  "generated_at": "2026-02-09T06:23:38.873Z"
 }

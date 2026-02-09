@@ -65,15 +65,8 @@ try {
   authReady = new Promise((resolve) => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log(
-          "Firebase: Auth ready, user:",
-          user.uid,
-          user.isAnonymous ? "(anonymous)" : "(google)",
-        );
         unsubscribe();
         resolve(user);
-      } else {
-        console.log("Firebase: No user signed in yet");
       }
     });
 
