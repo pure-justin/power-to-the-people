@@ -307,6 +307,8 @@ export default function PortalSurvey() {
       electrical,
       shading,
       utility,
+      roofMeasurements,
+      obstructionChecklist,
       surveyId,
       currentStep,
     };
@@ -325,6 +327,8 @@ export default function PortalSurvey() {
     electrical,
     shading,
     utility,
+    roofMeasurements,
+    obstructionChecklist,
     surveyId,
     currentStep,
     projectId,
@@ -1210,6 +1214,44 @@ export default function PortalSurvey() {
               around.
             </p>
 
+            {/* Obstruction checklist */}
+            <div>
+              <label className="mb-2 block text-sm font-medium text-gray-700">
+                Common Obstructions (check all that apply)
+              </label>
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                {[
+                  { key: "trees", label: "Trees" },
+                  { key: "vents", label: "Roof Vents" },
+                  { key: "chimneys", label: "Chimneys" },
+                  { key: "skylights", label: "Skylights" },
+                  { key: "satellite_dishes", label: "Satellite Dishes" },
+                ].map((item) => (
+                  <label
+                    key={item.key}
+                    className={`flex cursor-pointer items-center gap-2 rounded-lg border p-3 text-sm transition-colors ${
+                      obstructionChecklist[item.key]
+                        ? "border-amber-500 bg-amber-50 text-amber-800"
+                        : "border-gray-200 text-gray-700 hover:border-gray-300"
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={obstructionChecklist[item.key]}
+                      onChange={(e) =>
+                        setObstructionChecklist((prev) => ({
+                          ...prev,
+                          [item.key]: e.target.checked,
+                        }))
+                      }
+                      className="accent-amber-500"
+                    />
+                    {item.label}
+                  </label>
+                ))}
+              </div>
+            </div>
+
             <div>
               <label className="mb-1 block text-sm font-medium text-gray-700">
                 Describe any obstructions near your roof
@@ -1442,6 +1484,31 @@ export default function PortalSurvey() {
               ]}
             />
 
+            {/* Roof measurements summary */}
+            <ReviewSection
+              title="Roof Measurements"
+              icon={<Home className="h-4 w-4" />}
+              onEdit={() => setCurrentStep(1)}
+              items={[
+                {
+                  label: "Area",
+                  value: roofMeasurements.area_sqft
+                    ? `${roofMeasurements.area_sqft} sqft`
+                    : "",
+                },
+                {
+                  label: "Pitch",
+                  value: roofMeasurements.pitch_degrees
+                    ? `${roofMeasurements.pitch_degrees} degrees`
+                    : "",
+                },
+                {
+                  label: "Orientation",
+                  value: roofMeasurements.orientation || "",
+                },
+              ]}
+            />
+
             {/* Shading summary */}
             <ReviewSection
               title="Shading"
@@ -1449,7 +1516,18 @@ export default function PortalSurvey() {
               onEdit={() => setCurrentStep(3)}
               items={[
                 {
-                  label: "Obstructions",
+                  label: "Checklist",
+                  value: (() => {
+                    const checked = Object.entries(obstructionChecklist)
+                      .filter(([, v]) => v)
+                      .map(([k]) => k.replace(/_/g, " "));
+                    return checked.length > 0
+                      ? checked.join(", ")
+                      : "None checked";
+                  })(),
+                },
+                {
+                  label: "Details",
                   value: shading.obstructions
                     ? `${shading.obstructions.split("\n").filter(Boolean).length} noted`
                     : "None noted",

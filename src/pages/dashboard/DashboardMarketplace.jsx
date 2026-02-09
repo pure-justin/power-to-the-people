@@ -1202,6 +1202,75 @@ export default function DashboardMarketplace() {
       {/* Browse Jobs Tab */}
       {tab === "browse" && (
         <div className="space-y-3">
+          {/* Service Area Filter */}
+          <div className="rounded-lg border border-gray-200 bg-gray-50 p-3">
+            <h3 className="mb-2 flex items-center gap-1.5 text-xs font-semibold uppercase text-gray-500">
+              <Target className="h-3.5 w-3.5" />
+              Service Area
+            </h3>
+            <div className="flex flex-wrap items-end gap-3">
+              <div className="w-32">
+                <label className="mb-0.5 block text-xs text-gray-500">
+                  Zip Code
+                </label>
+                <input
+                  type="text"
+                  value={filterZip}
+                  onChange={(e) => setFilterZip(e.target.value)}
+                  placeholder="e.g., 78701"
+                  maxLength={5}
+                  className="input-field text-sm"
+                />
+              </div>
+              <div className="flex-1 min-w-[180px] max-w-xs">
+                <label className="mb-0.5 flex items-center justify-between text-xs text-gray-500">
+                  <span>Radius</span>
+                  <span className="font-medium text-gray-700">
+                    {filterRadius} miles
+                  </span>
+                </label>
+                <input
+                  type="range"
+                  min={10}
+                  max={100}
+                  step={5}
+                  value={filterRadius}
+                  onChange={(e) =>
+                    setFilterRadius(parseInt(e.target.value, 10))
+                  }
+                  className="w-full accent-emerald-600"
+                />
+                <div className="flex justify-between text-[10px] text-gray-400">
+                  <span>10 mi</span>
+                  <span>50 mi</span>
+                  <span>100 mi</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Status Tabs */}
+          <div className="flex gap-1 rounded-lg bg-gray-100 p-0.5">
+            {[
+              { value: "open", label: "Open" },
+              { value: "assigned", label: "Assigned" },
+              { value: "completed", label: "Completed" },
+            ].map((s) => (
+              <button
+                key={s.value}
+                onClick={() => setStatusFilter(s.value)}
+                className={`flex-1 rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${
+                  statusFilter === s.value
+                    ? "bg-white text-gray-900 shadow-sm"
+                    : "text-gray-500 hover:text-gray-700"
+                }`}
+              >
+                {s.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Search + Service Filter */}
           <div className="flex flex-wrap items-center gap-3">
             <div className="relative flex-1 sm:max-w-xs">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
@@ -1223,15 +1292,6 @@ export default function DashboardMarketplace() {
                   {label}
                 </option>
               ))}
-            </select>
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              className="input-field w-auto"
-            >
-              <option value="open">Open</option>
-              <option value="assigned">In Progress</option>
-              <option value="completed">Completed</option>
             </select>
           </div>
 
