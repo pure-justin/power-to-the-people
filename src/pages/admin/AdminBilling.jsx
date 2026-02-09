@@ -79,25 +79,6 @@ export default function AdminBilling() {
     return map[tier] || "bg-gray-100 text-gray-600";
   };
 
-  if (loading) {
-    return (
-      <div className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {[1, 2, 3].map((i) => (
-            <div
-              key={i}
-              className="bg-white rounded-xl border border-gray-200 p-6 animate-pulse"
-            >
-              <div className="h-4 bg-gray-200 rounded w-1/2 mb-4" />
-              <div className="h-8 bg-gray-200 rounded w-1/3" />
-            </div>
-          ))}
-        </div>
-        <div className="bg-white rounded-xl border border-gray-200 p-6 animate-pulse h-64" />
-      </div>
-    );
-  }
-
   const activeSubs = subscriptions.filter((s) => s.status === "active").length;
   const canceledSubs = subscriptions.filter(
     (s) => s.status === "canceled" || s.status === "cancelled",
@@ -177,6 +158,25 @@ export default function AdminBilling() {
     ],
     [],
   );
+
+  if (loading) {
+    return (
+      <div className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {[1, 2, 3].map((i) => (
+            <div
+              key={i}
+              className="bg-white rounded-xl border border-gray-200 p-6 animate-pulse"
+            >
+              <div className="h-4 bg-gray-200 rounded w-1/2 mb-4" />
+              <div className="h-8 bg-gray-200 rounded w-1/3" />
+            </div>
+          ))}
+        </div>
+        <div className="bg-white rounded-xl border border-gray-200 p-6 animate-pulse h-64" />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

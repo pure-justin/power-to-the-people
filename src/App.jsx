@@ -33,6 +33,7 @@ const CreditMarketplace = lazy(
 );
 const CreditDetail = lazy(() => import("./pages/marketplace/CreditDetail"));
 const About = lazy(() => import("./pages/About"));
+const Help = lazy(() => import("./pages/Help"));
 const Features = lazy(() => import("./pages/Features"));
 const Contact = lazy(() => import("./pages/Contact"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -175,6 +176,7 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/features" element={<Features />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/help" element={<Help />} />
               <Route
                 path="/marketplace/credits"
                 element={<CreditMarketplace />}

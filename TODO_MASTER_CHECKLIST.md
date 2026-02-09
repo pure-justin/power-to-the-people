@@ -27,7 +27,7 @@
 - [ ] **Referral email notifications** — `src/services/referralNotificationService.js:160` has `// TODO: Implement actual email sending via Cloud Function`
 
 ### 1.2 UI Placeholder Sections
-- [ ] **AdminInvoices revenue chart** — line 132 has `{/* Revenue by Month Placeholder */}` — needs real chart
+- [x] **AdminInvoices revenue chart** — ~~line 132 placeholder~~ DONE: Real bar chart from invoice data
 - [ ] **SalesTerritory map** — `LeadMapPlaceholder` component at line 60 — needs real map (Google Maps MCP available)
 
 ### 1.3 Deploy Google Solar Config
