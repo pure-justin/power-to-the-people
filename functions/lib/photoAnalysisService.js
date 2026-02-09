@@ -190,11 +190,11 @@ exports.uploadInstallPhoto = functions
             createdAt: admin.firestore.FieldValue.serverTimestamp(),
             updatedAt: admin.firestore.FieldValue.serverTimestamp(),
         });
-        console.log(`Photo uploaded: project=${projectId}, phase=${phase}, photoId=${photoId}`);
+        functions.logger.info(`Photo uploaded: project=${projectId}, phase=${phase}, photoId=${photoId}`);
         return { success: true, photoId, recordId };
     }
     catch (error) {
-        console.error("Upload install photo error:", error);
+        functions.logger.error("Upload install photo error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to upload photo");
@@ -237,7 +237,7 @@ exports.getPhotosByProject = functions
         return { success: true, phases };
     }
     catch (error) {
-        console.error("Get photos by project error:", error);
+        functions.logger.error("Get photos by project error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to get photos");
@@ -314,7 +314,7 @@ exports.getPhaseStatus = functions
         };
     }
     catch (error) {
-        console.error("Get phase status error:", error);
+        functions.logger.error("Get phase status error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to get phase status");
@@ -389,11 +389,11 @@ exports.requestPhotoReview = functions
             createdAt: admin.firestore.FieldValue.serverTimestamp(),
             updatedAt: admin.firestore.FieldValue.serverTimestamp(),
         });
-        console.log(`Photo review requested: project=${projectId}, photo=${photoId}, task=${taskRef.id}`);
+        functions.logger.info(`Photo review requested: project=${projectId}, photo=${photoId}, task=${taskRef.id}`);
         return { success: true, taskId: taskRef.id };
     }
     catch (error) {
-        console.error("Request photo review error:", error);
+        functions.logger.error("Request photo review error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to request review");
@@ -456,14 +456,14 @@ exports.signOffPhase = functions
             updateData.phase_status = "passed";
         }
         await recordRef.update(updateData);
-        console.log(`Phase signed off: project=${projectId}, phase=${phase}, role=${role}`);
+        functions.logger.info(`Phase signed off: project=${projectId}, phase=${phase}, role=${role}`);
         return {
             success: true,
             signOff: { ...updatedSignOff, [`${role}_signed`]: true },
         };
     }
     catch (error) {
-        console.error("Sign off phase error:", error);
+        functions.logger.error("Sign off phase error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to sign off phase");
@@ -557,7 +557,7 @@ exports.getInstallProgress = functions
         };
     }
     catch (error) {
-        console.error("Get install progress error:", error);
+        functions.logger.error("Get install progress error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to get install progress");

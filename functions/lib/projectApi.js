@@ -54,20 +54,8 @@ const functions = __importStar(require("firebase-functions/v1"));
 const admin = __importStar(require("firebase-admin"));
 const apiKeys_1 = require("./apiKeys");
 const pipelineAutoTasks_1 = require("./pipelineAutoTasks");
-// ─── CORS Helper ───────────────────────────────────────────────────────────────
-function setCors(res) {
-    res.set("Access-Control-Allow-Origin", "*");
-    res.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
-}
-function handleOptions(req, res) {
-    if (req.method === "OPTIONS") {
-        setCors(res);
-        res.status(204).send("");
-        return true;
-    }
-    return false;
-}
+const corsConfig_1 = require("./corsConfig");
+const constants_1 = require("./utils/constants");
 // ─── Error Helper ──────────────────────────────────────────────────────────────
 function errorStatus(error) {
     if (error.code === "unauthenticated")
@@ -80,43 +68,6 @@ function errorStatus(error) {
         return 404;
     return 500;
 }
-// ─── Valid Pipeline Stages (must match projectPipeline.ts) ─────────────────────
-const PIPELINE_STAGES = [
-    "lead",
-    "qualified",
-    "proposal",
-    "sold",
-    "survey",
-    "design",
-    "engineering",
-    "permit_submitted",
-    "permit_approved",
-    "scheduled",
-    "installing",
-    "inspection",
-    "pto_submitted",
-    "pto_approved",
-    "activated",
-    "monitoring",
-];
-const STAGE_TO_PHASE = {
-    lead: "acquisition",
-    qualified: "acquisition",
-    proposal: "sales",
-    sold: "sales",
-    survey: "pre_construction",
-    design: "pre_construction",
-    engineering: "pre_construction",
-    permit_submitted: "pre_construction",
-    permit_approved: "pre_construction",
-    scheduled: "construction",
-    installing: "construction",
-    inspection: "construction",
-    pto_submitted: "activation",
-    pto_approved: "activation",
-    activated: "activation",
-    monitoring: "activation",
-};
 // ─── Route Parser ──────────────────────────────────────────────────────────────
 /**
  * Parse the URL path into route segments.
@@ -194,15 +145,28 @@ async function handleListProjects(req, res, userId) {
     if (req.query.status) {
         query = query.where("status", "==", req.query.status);
     }
-    // Pagination
+    // Pagination: support cursor-based (startAfter) with offset fallback
     const limit = Math.min(parseInt(req.query.limit) || 50, 200);
+    const cursor = req.query.cursor;
     const offset = parseInt(req.query.offset) || 0;
-    if (offset > 0) {
+    // Need an orderBy for consistent cursor pagination
+    query = query.orderBy("createdAt", "desc");
+    if (cursor) {
+        // Cursor-based: fetch the document to start after
+        const cursorDoc = await db.collection("projects").doc(cursor).get();
+        if (cursorDoc.exists) {
+            query = query.startAfter(cursorDoc);
+        }
+    }
+    else if (offset > 0) {
+        // Legacy offset-based fallback
         query = query.offset(offset);
     }
-    query = query.limit(limit);
+    query = query.limit(limit + 1);
     const snapshot = await query.get();
-    const projects = snapshot.docs.map((doc) => ({
+    const hasMore = snapshot.docs.length > limit;
+    const docs = hasMore ? snapshot.docs.slice(0, limit) : snapshot.docs;
+    const projects = docs.map((doc) => ({
         id: doc.id,
         status: doc.data().status,
         address: doc.data().address,
@@ -212,10 +176,12 @@ async function handleListProjects(req, res, userId) {
         updatedAt: doc.data().updatedAt,
         pipeline: doc.data().pipeline,
     }));
+    const nextCursor = hasMore && docs.length > 0 ? docs[docs.length - 1].id : null;
     res.status(200).json({
         success: true,
         count: projects.length,
-        offset,
+        hasMore,
+        nextCursor,
         data: projects,
     });
 }
@@ -280,17 +246,17 @@ async function handleAdvanceStage(req, res, userId, projectId) {
         return;
     }
     const currentStatus = projectData.status || "lead";
-    const currentIndex = PIPELINE_STAGES.indexOf(currentStatus);
+    const currentIndex = constants_1.PIPELINE_STAGES.indexOf(currentStatus);
     // Validate target stage
     let targetStage;
     if (new_stage === "cancelled") {
         targetStage = "cancelled";
     }
     else {
-        const targetIndex = PIPELINE_STAGES.indexOf(new_stage);
+        const targetIndex = constants_1.PIPELINE_STAGES.indexOf(new_stage);
         if (targetIndex === -1) {
             res.status(400).json({
-                error: `Invalid stage: ${new_stage}. Valid stages: ${PIPELINE_STAGES.join(", ")}, cancelled`,
+                error: `Invalid stage: ${new_stage}. Valid stages: ${constants_1.PIPELINE_STAGES.join(", ")}, cancelled`,
             });
             return;
         }
@@ -302,7 +268,7 @@ async function handleAdvanceStage(req, res, userId, projectId) {
         }
         targetStage = new_stage;
     }
-    const phase = targetStage === "cancelled" ? "cancelled" : STAGE_TO_PHASE[targetStage];
+    const phase = targetStage === "cancelled" ? "cancelled" : constants_1.STAGE_TO_PHASE[targetStage];
     // Update the project
     const updateData = {
         status: targetStage,
@@ -689,9 +655,9 @@ async function handleSetEquipment(req, res, userId, projectId) {
 exports.projectApi = functions
     .runWith({ timeoutSeconds: 60, memory: "512MB" })
     .https.onRequest(async (req, res) => {
-    if (handleOptions(req, res))
+    if ((0, corsConfig_1.handleOptions)(req, res))
         return;
-    setCors(res);
+    (0, corsConfig_1.setCors)(req, res);
     try {
         const route = parsePath(req.path);
         // Determine required scope based on method
@@ -775,7 +741,7 @@ exports.projectApi = functions
         });
     }
     catch (error) {
-        console.error("Project API error:", error);
+        functions.logger.error("Project API error:", error);
         const status = errorStatus(error);
         res.status(status).json({
             error: error.message || "Internal server error",

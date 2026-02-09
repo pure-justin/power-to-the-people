@@ -85,7 +85,7 @@ exports.onSurveyApproved = functions
     if (before.status === after.status || after.status !== "approved") {
         return null;
     }
-    console.log(`[Pipeline] Survey ${surveyId} approved → triggering CAD generation`);
+    functions.logger.info(`[Pipeline] Survey ${surveyId} approved → triggering CAD generation`);
     try {
         // Create AI task to generate the CAD design
         await db.collection("ai_tasks").add({
@@ -122,7 +122,7 @@ exports.onSurveyApproved = functions
         const project = projectSnap.data();
         if ((project === null || project === void 0 ? void 0 : project.financingType) === "ppa" ||
             (project === null || project === void 0 ? void 0 : project.financingType) === "lease") {
-            console.log(`[Pipeline] PPA/Lease project — checking if EagleView needed`);
+            functions.logger.info(`[Pipeline] PPA/Lease project — checking if EagleView needed`);
             await db.collection("ai_tasks").add({
                 type: "survey_process", // Reuse survey_process type for EagleView decision
                 projectId: after.projectId,
@@ -148,7 +148,7 @@ exports.onSurveyApproved = functions
         return null;
     }
     catch (error) {
-        console.error(`[Pipeline] Error triggering CAD generation for survey ${surveyId}:`, error);
+        functions.logger.error(`[Pipeline] Error triggering CAD generation for survey ${surveyId}:`, error);
         return null;
     }
 });
@@ -172,7 +172,7 @@ exports.onDesignApproved = functions
     if (before.status === after.status || after.status !== "approved") {
         return null;
     }
-    console.log(`[Pipeline] Design ${designId} approved → triggering permit submission`);
+    functions.logger.info(`[Pipeline] Design ${designId} approved → triggering permit submission`);
     try {
         // Look up the project to get the address
         const projectSnap = await db
@@ -181,7 +181,7 @@ exports.onDesignApproved = functions
             .get();
         const project = projectSnap.data();
         if (!project) {
-            console.error(`[Pipeline] Project ${after.projectId} not found`);
+            functions.logger.error(`[Pipeline] Project ${after.projectId} not found`);
             return null;
         }
         // Find the AHJ for this address (by ZIP code)
@@ -248,7 +248,7 @@ exports.onDesignApproved = functions
         return null;
     }
     catch (error) {
-        console.error(`[Pipeline] Error creating permit for design ${designId}:`, error);
+        functions.logger.error(`[Pipeline] Error creating permit for design ${designId}:`, error);
         return null;
     }
 });
@@ -272,7 +272,7 @@ exports.onPermitApproved = functions
     if (before.status === after.status || after.status !== "approved") {
         return null;
     }
-    console.log(`[Pipeline] Permit ${permitId} approved → checking if all permits done`);
+    functions.logger.info(`[Pipeline] Permit ${permitId} approved → checking if all permits done`);
     try {
         // Check if ALL permits for this project are approved
         const allPermits = await db
@@ -281,10 +281,10 @@ exports.onPermitApproved = functions
             .get();
         const allApproved = allPermits.docs.every((doc) => doc.data().status === "approved");
         if (!allApproved) {
-            console.log(`[Pipeline] Not all permits approved yet for project ${after.projectId}`);
+            functions.logger.info(`[Pipeline] Not all permits approved yet for project ${after.projectId}`);
             return null;
         }
-        console.log(`[Pipeline] All permits approved → triggering scheduling`);
+        functions.logger.info(`[Pipeline] All permits approved → triggering scheduling`);
         // Create AI task to propose a schedule
         await db.collection("ai_tasks").add({
             type: "schedule_match",
@@ -314,7 +314,7 @@ exports.onPermitApproved = functions
         return null;
     }
     catch (error) {
-        console.error(`[Pipeline] Error triggering schedule for permit ${permitId}:`, error);
+        functions.logger.error(`[Pipeline] Error triggering schedule for permit ${permitId}:`, error);
         return null;
     }
 });
@@ -347,7 +347,7 @@ exports.onInstallComplete = functions
         return null;
     }
     const projectId = after.projectId;
-    console.log(`[Pipeline] Install complete for project ${projectId} → triggering funding + credit audit`);
+    functions.logger.info(`[Pipeline] Install complete for project ${projectId} → triggering funding + credit audit`);
     try {
         // Create funding submission task
         await db.collection("ai_tasks").add({
@@ -399,7 +399,7 @@ exports.onInstallComplete = functions
         return null;
     }
     catch (error) {
-        console.error(`[Pipeline] Error triggering post-install tasks for ${projectId}:`, error);
+        functions.logger.error(`[Pipeline] Error triggering post-install tasks for ${projectId}:`, error);
         return null;
     }
 });
@@ -424,7 +424,7 @@ exports.onFundingComplete = functions
         return null;
     }
     const projectId = after.projectId;
-    console.log(`[Pipeline] Funding complete for project ${projectId} → project DONE`);
+    functions.logger.info(`[Pipeline] Funding complete for project ${projectId} → project DONE`);
     try {
         // Mark project as complete
         await db.collection("projects").doc(projectId).update({
@@ -440,14 +440,14 @@ exports.onFundingComplete = functions
             .limit(1)
             .get();
         if (!auditQuery.empty) {
-            console.log(`[Pipeline] Credit audit certified — credit ready for marketplace listing`);
+            functions.logger.info(`[Pipeline] Credit audit certified — credit ready for marketplace listing`);
             // The seller can now list via the DashboardCredits UI
             // No auto-listing — that's a business decision for the seller
         }
         return null;
     }
     catch (error) {
-        console.error(`[Pipeline] Error completing project ${projectId}:`, error);
+        functions.logger.error(`[Pipeline] Error completing project ${projectId}:`, error);
         return null;
     }
 });

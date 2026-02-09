@@ -89,7 +89,7 @@ const SMS_TEMPLATES = {
  */
 async function sendSMS(to, message) {
     if (!twilioClient) {
-        console.error("Twilio client not initialized. Check environment variables.");
+        functions.logger.error("Twilio client not initialized. Check environment variables.");
         return false;
     }
     try {
@@ -102,7 +102,7 @@ async function sendSMS(to, message) {
             from: twilioPhoneNumber,
             to: formattedPhone,
         });
-        console.log(`SMS sent successfully to ${to}: ${result.sid}`);
+        functions.logger.info(`SMS sent successfully to ${to}: ${result.sid}`);
         // Log to Firestore for tracking
         await admin.firestore().collection("smsLog").add({
             to: formattedPhone,
@@ -114,7 +114,7 @@ async function sendSMS(to, message) {
         return true;
     }
     catch (error) {
-        console.error("Error sending SMS:", error);
+        functions.logger.error("Error sending SMS:", error);
         // Log error to Firestore
         await admin
             .firestore()
@@ -140,6 +140,9 @@ async function sendSMS(to, message) {
  * @billing sms
  * @rateLimit none
  * @firestore projects, smsLog
+ * @note Exported as "smsOnProjectCreated" in index.ts. A separate trigger in
+ *       referrals.ts is exported as "onProjectCreated" — both fire
+ *       independently on the same Firestore path and do not conflict.
  */
 exports.onProjectCreated = functions.firestore
     .document("projects/{projectId}")
@@ -376,7 +379,7 @@ exports.sendPaymentReminders = functions.pubsub
         }
     });
     await Promise.all(reminderPromises);
-    console.log(`Sent ${reminderPromises.length} payment reminders`);
+    functions.logger.info(`Sent ${reminderPromises.length} payment reminders`);
 });
 /**
  * Returns SMS usage statistics for the last 30 days including success/failure counts and estimated cost

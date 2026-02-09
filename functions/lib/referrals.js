@@ -53,16 +53,19 @@ const db = admin.firestore();
  * @billing none
  * @rateLimit none
  * @firestore projects, referralTracking, referrals
+ * @note Exported as "onProjectCreated" in index.ts. A separate trigger in
+ *       smsNotifications.ts is exported as "smsOnProjectCreated" — both fire
+ *       independently on the same Firestore path and do not conflict.
  */
 exports.onProjectCreated = functions.firestore
     .document("projects/{projectId}")
     .onCreate(async (snap, context) => {
     const projectData = snap.data();
     const projectId = context.params.projectId;
-    console.log(`Processing new project: ${projectId}`);
+    functions.logger.info(`Processing new project: ${projectId}`);
     // Check if this project has a referral code
     if (!projectData.referralCode) {
-        console.log("No referral code on project");
+        functions.logger.info("No referral code on project");
         return null;
     }
     try {
@@ -73,7 +76,7 @@ exports.onProjectCreated = functions.firestore
             .limit(1)
             .get();
         if (trackingQuery.empty) {
-            console.log("No tracking record found for project");
+            functions.logger.info("No tracking record found for project");
             return null;
         }
         const trackingDoc = trackingQuery.docs[0];
@@ -84,14 +87,14 @@ exports.onProjectCreated = functions.firestore
                 projectData.creditScore >= 650 &&
                 projectData.esiid);
         if (qualifies && trackingData.status === "signed_up") {
-            console.log(`Project ${projectId} qualifies - updating referral status`);
+            functions.logger.info(`Project ${projectId} qualifies - updating referral status`);
             // Update referral to "qualified" status
             await updateReferralStatus(trackingDoc.id, "qualified");
         }
         return null;
     }
     catch (error) {
-        console.error("Error processing project referral:", error);
+        functions.logger.error("Error processing project referral:", error);
         return null;
     }
 });
@@ -118,7 +121,7 @@ exports.onProjectUpdated = functions.firestore
     if (beforeData.status === afterData.status) {
         return null;
     }
-    console.log(`Project ${projectId} status changed: ${beforeData.status} -> ${afterData.status}`);
+    functions.logger.info(`Project ${projectId} status changed: ${beforeData.status} -> ${afterData.status}`);
     // Map project status to referral status
     const statusMap = {
         site_survey_scheduled: "site_survey",
@@ -137,7 +140,7 @@ exports.onProjectUpdated = functions.firestore
             .limit(1)
             .get();
         if (trackingQuery.empty) {
-            console.log("No referral tracking found");
+            functions.logger.info("No referral tracking found");
             return null;
         }
         const trackingDoc = trackingQuery.docs[0];
@@ -152,7 +155,7 @@ exports.onProjectUpdated = functions.firestore
         const currentIndex = statusOrder.indexOf(trackingData.status);
         const newIndex = statusOrder.indexOf(newReferralStatus);
         if (newIndex > currentIndex) {
-            console.log(`Updating referral status to: ${newReferralStatus}`);
+            functions.logger.info(`Updating referral status to: ${newReferralStatus}`);
             await updateReferralStatus(trackingDoc.id, newReferralStatus);
             // Send notification to referrer
             await sendReferralMilestoneNotification(trackingData.referrerId, newReferralStatus, trackingData);
@@ -160,7 +163,7 @@ exports.onProjectUpdated = functions.firestore
         return null;
     }
     catch (error) {
-        console.error("Error updating referral status:", error);
+        functions.logger.error("Error updating referral status:", error);
         return null;
     }
 });
@@ -197,7 +200,7 @@ exports.updateReferralStatusHttp = functions.https.onCall(async (data, context) 
         return { success: true, ...result };
     }
     catch (error) {
-        console.error("Error updating referral:", error);
+        functions.logger.error("Error updating referral:", error);
         throw new functions.https.HttpsError("internal", error.message);
     }
 });
@@ -263,7 +266,7 @@ exports.getReferralStats = functions.https.onCall(async (data, context) => {
         };
     }
     catch (error) {
-        console.error("Error getting referral stats:", error);
+        functions.logger.error("Error getting referral stats:", error);
         throw new functions.https.HttpsError("internal", error.message);
     }
 });
@@ -284,7 +287,7 @@ exports.processWeeklyPayouts = functions.pubsub
     .schedule("0 9 * * 1")
     .timeZone("America/Chicago")
     .onRun(async (context) => {
-    console.log("Running weekly payout processing...");
+    functions.logger.info("Running weekly payout processing...");
     try {
         // Find referrers with pending earnings >= $100 (minimum payout)
         const referralsSnapshot = await db
@@ -314,11 +317,11 @@ exports.processWeeklyPayouts = functions.pubsub
             // Send payout notification
             await sendPayoutNotification(userId, referralData.pendingEarnings);
         }
-        console.log(`Created ${payoutsCreated} payouts`);
+        functions.logger.info(`Created ${payoutsCreated} payouts`);
         return null;
     }
     catch (error) {
-        console.error("Error processing payouts:", error);
+        functions.logger.error("Error processing payouts:", error);
         return null;
     }
 });

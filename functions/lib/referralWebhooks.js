@@ -78,13 +78,13 @@ exports.referralStatusWebhook = functions.https.onRequest(async (req, res) => {
     const signature = req.headers["x-webhook-signature"];
     // Verify webhook secret is configured
     if (!WEBHOOK_SECRET) {
-        console.error("webhook.secret not configured");
+        functions.logger.error("webhook.secret not configured");
         res.status(500).json({ error: "Webhook secret not configured" });
         return;
     }
     // Verify HMAC signature
     if (!verifyWebhookSignature(req.body, signature)) {
-        console.error("Invalid webhook signature");
+        functions.logger.error("Invalid webhook signature");
         res.status(401).json({ error: "Invalid signature" });
         return;
     }
@@ -138,7 +138,7 @@ exports.referralStatusWebhook = functions.https.onRequest(async (req, res) => {
         });
     }
     catch (error) {
-        console.error("Webhook error:", error);
+        functions.logger.error("Webhook error:", error);
         // Log failed webhook
         await db.collection("webhookLogs").add({
             type: "referral_status",
@@ -175,7 +175,7 @@ exports.referralBulkUpdateWebhook = functions.https.onRequest(async (req, res) =
     const signature = req.headers["x-webhook-signature"];
     // Verify webhook secret is configured
     if (!WEBHOOK_SECRET) {
-        console.error("webhook.secret not configured");
+        functions.logger.error("webhook.secret not configured");
         res.status(500).json({ error: "Webhook secret not configured" });
         return;
     }
@@ -257,7 +257,7 @@ exports.referralStatsWebhook = functions.https.onRequest(async (req, res) => {
     const apiKey = req.query.apiKey;
     const expectedKey = (_a = functions.config().webhook) === null || _a === void 0 ? void 0 : _a.api_key;
     if (!expectedKey) {
-        console.error("webhook.api_key not configured");
+        functions.logger.error("webhook.api_key not configured");
         res.status(500).json({ error: "Webhook API key not configured" });
         return;
     }
@@ -304,7 +304,7 @@ exports.referralStatsWebhook = functions.https.onRequest(async (req, res) => {
         });
     }
     catch (error) {
-        console.error("Error fetching stats:", error);
+        functions.logger.error("Error fetching stats:", error);
         res.status(500).json({ error: error.message });
     }
 });

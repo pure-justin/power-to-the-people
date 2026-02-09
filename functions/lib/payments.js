@@ -237,7 +237,7 @@ exports.createSubscription = functions
         };
     }
     catch (error) {
-        console.error("Create subscription error:", error);
+        functions.logger.error("Create subscription error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to create subscription");
@@ -314,7 +314,7 @@ exports.updateSubscription = functions
         };
     }
     catch (error) {
-        console.error("Update subscription error:", error);
+        functions.logger.error("Update subscription error:", error);
         throw new functions.https.HttpsError("internal", error.message || "Failed to update subscription");
     }
 });
@@ -382,7 +382,7 @@ exports.cancelSubscription = functions
         };
     }
     catch (error) {
-        console.error("Cancel subscription error:", error);
+        functions.logger.error("Cancel subscription error:", error);
         throw new functions.https.HttpsError("internal", error.message || "Failed to cancel subscription");
     }
 });
@@ -495,7 +495,7 @@ exports.stripeWebhook = functions
         event = stripe.webhooks.constructEvent(req.rawBody, sig, STRIPE_WEBHOOK_SECRET);
     }
     catch (err) {
-        console.error("Webhook signature verification failed:", err.message);
+        functions.logger.error("Webhook signature verification failed:", err.message);
         res.status(400).json({ error: "Invalid signature" });
         return;
     }
@@ -549,7 +549,7 @@ exports.stripeWebhook = functions
                         updatedAt: admin.firestore.Timestamp.now(),
                     });
                 }
-                console.warn(`Payment failed for subscription ${invoice.subscription}`);
+                functions.logger.warn(`Payment failed for subscription ${invoice.subscription}`);
                 break;
             }
             case "checkout.session.completed": {
@@ -578,17 +578,17 @@ exports.stripeWebhook = functions
                         createdAt: admin.firestore.Timestamp.now(),
                         updatedAt: admin.firestore.Timestamp.now(),
                     }, { merge: true });
-                    console.log(`Checkout completed: subscription ${subId} for user ${session.metadata.firebase_uid}`);
+                    functions.logger.info(`Checkout completed: subscription ${subId} for user ${session.metadata.firebase_uid}`);
                 }
                 break;
             }
             default:
-                console.log(`Unhandled event type: ${event.type}`);
+                functions.logger.info(`Unhandled event type: ${event.type}`);
         }
         res.status(200).json({ received: true });
     }
     catch (error) {
-        console.error("Webhook handler error:", error);
+        functions.logger.error("Webhook handler error:", error);
         res.status(500).json({ error: "Webhook handler failed" });
     }
 });
@@ -680,7 +680,7 @@ exports.createCheckoutSession = functions
         };
     }
     catch (error) {
-        console.error("Create checkout session error:", error);
+        functions.logger.error("Create checkout session error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to create checkout session");
@@ -730,7 +730,7 @@ exports.createBillingPortalSession = functions
         return { url: session.url };
     }
     catch (error) {
-        console.error("Create billing portal session error:", error);
+        functions.logger.error("Create billing portal session error:", error);
         throw new functions.https.HttpsError("internal", error.message || "Failed to create billing portal session");
     }
 });

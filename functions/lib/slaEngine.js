@@ -60,6 +60,7 @@ exports.applyStrikePenalty = applyStrikePenalty;
 exports.calculateReliabilityScore = calculateReliabilityScore;
 exports.autoRequeue = autoRequeue;
 exports.getWorkerSlaStatus = getWorkerSlaStatus;
+const functions = __importStar(require("firebase-functions"));
 const admin = __importStar(require("firebase-admin"));
 const db = admin.firestore();
 // ─── SLA Time Limits (defaults, overridable via config/sla_rules) ───────────────
@@ -181,7 +182,7 @@ async function recordViolation(data) {
     const workerRef = db.collection("workers").doc(workerId);
     const workerSnap = await workerRef.get();
     if (!workerSnap.exists) {
-        console.error(`Worker ${workerId} not found when recording SLA violation`);
+        functions.logger.error(`Worker ${workerId} not found when recording SLA violation`);
         return violationRef.id;
     }
     const workerData = workerSnap.data() || {};
@@ -218,7 +219,7 @@ async function recordViolation(data) {
             : null,
         new_reliability_score: newScore,
     });
-    console.log(`SLA violation recorded for worker ${workerId}: ${type} (strike #${newStrikeCount}, ` +
+    functions.logger.info(`SLA violation recorded for worker ${workerId}: ${type} (strike #${newStrikeCount}, ` +
         `penalty: ${penalty.penalty}, reliability: ${newScore})`);
     return violationRef.id;
 }
@@ -358,7 +359,7 @@ async function autoRequeue(listingId, workerId, reason) {
     const listingRef = db.collection("marketplace_listings").doc(listingId);
     const listingSnap = await listingRef.get();
     if (!listingSnap.exists) {
-        console.error(`Marketplace listing ${listingId} not found for requeue`);
+        functions.logger.error(`Marketplace listing ${listingId} not found for requeue`);
         return;
     }
     const listingData = listingSnap.data() || {};
@@ -389,7 +390,7 @@ async function autoRequeue(listingId, workerId, reason) {
                 await workerRef.update({
                     blocked_customers: admin.firestore.FieldValue.arrayUnion(customerId),
                 });
-                console.log(`Blocked worker ${workerId} from customer ${customerId}'s future projects`);
+                functions.logger.info(`Blocked worker ${workerId} from customer ${customerId}'s future projects`);
             }
         }
         // Log the requeue in the project timeline
@@ -407,7 +408,7 @@ async function autoRequeue(listingId, workerId, reason) {
         });
     }
     // Log the requeue (SMS notification handled by smsNotifications module)
-    console.log(`Auto-requeued listing ${listingId}: removed worker ${workerId} ` +
+    functions.logger.info(`Auto-requeued listing ${listingId}: removed worker ${workerId} ` +
         `(reason: ${reason}). New 12h bid window until ${shortenedDeadline.toISOString()}`);
 }
 /**

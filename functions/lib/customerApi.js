@@ -45,20 +45,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.customerApi = void 0;
 const functions = __importStar(require("firebase-functions/v1"));
 const admin = __importStar(require("firebase-admin"));
-// ─── CORS Helper ───────────────────────────────────────────────────────────────
-function setCors(res) {
-    res.set("Access-Control-Allow-Origin", "*");
-    res.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
-}
-function handleOptions(req, res) {
-    if (req.method === "OPTIONS") {
-        setCors(res);
-        res.status(204).send("");
-        return true;
-    }
-    return false;
-}
+const corsConfig_1 = require("./corsConfig");
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 /**
  * Generate a 6-character alphanumeric uppercase tracking code
@@ -156,9 +143,9 @@ function getNextStep(stage) {
 exports.customerApi = functions
     .runWith({ timeoutSeconds: 60, memory: "256MB" })
     .https.onRequest(async (req, res) => {
-    if (handleOptions(req, res))
+    if ((0, corsConfig_1.handleOptions)(req, res))
         return;
-    setCors(res);
+    (0, corsConfig_1.setCors)(req, res);
     // Extract path from URL — strip leading slash
     const urlPath = req.path.replace(/^\//, "");
     try {
@@ -192,7 +179,7 @@ exports.customerApi = functions
         res.status(404).json({ error: "Endpoint not found" });
     }
     catch (error) {
-        console.error("Customer API error:", error);
+        functions.logger.error("Customer API error:", error);
         const status = error.code === "unauthenticated"
             ? 401
             : error.code === "permission-denied"
@@ -453,9 +440,7 @@ async function handleSchedule(req, res) {
     if (!preferred_dates ||
         !Array.isArray(preferred_dates) ||
         preferred_dates.length === 0) {
-        res
-            .status(400)
-            .json({
+        res.status(400).json({
             error: "preferred_dates array is required and must not be empty",
         });
         return;

@@ -43,45 +43,8 @@ exports.getProjectTimeline = exports.completeProjectTask = exports.assignProject
 const functions = __importStar(require("firebase-functions/v1"));
 const admin = __importStar(require("firebase-admin"));
 const pipelineAutoTasks_1 = require("./pipelineAutoTasks");
+const constants_1 = require("./utils/constants");
 const db = admin.firestore();
-// Valid pipeline stages in order
-const PIPELINE_STAGES = [
-    "lead",
-    "qualified",
-    "proposal",
-    "sold",
-    "survey",
-    "design",
-    "engineering",
-    "permit_submitted",
-    "permit_approved",
-    "scheduled",
-    "installing",
-    "inspection",
-    "pto_submitted",
-    "pto_approved",
-    "activated",
-    "monitoring",
-];
-// Map stages to phases
-const STAGE_TO_PHASE = {
-    lead: "acquisition",
-    qualified: "acquisition",
-    proposal: "sales",
-    sold: "sales",
-    survey: "pre_construction",
-    design: "pre_construction",
-    engineering: "pre_construction",
-    permit_submitted: "pre_construction",
-    permit_approved: "pre_construction",
-    scheduled: "construction",
-    installing: "construction",
-    inspection: "construction",
-    pto_submitted: "activation",
-    pto_approved: "activation",
-    activated: "activation",
-    monitoring: "activation",
-};
 // Valid task types
 const TASK_TYPES = [
     "site_survey",
@@ -115,14 +78,14 @@ exports.advanceProjectStage = functions.https.onCall(async (data, context) => {
     }
     const project = projectSnap.data();
     const currentStatus = project.status || "lead";
-    const currentIndex = PIPELINE_STAGES.indexOf(currentStatus);
+    const currentIndex = constants_1.PIPELINE_STAGES.indexOf(currentStatus);
     // Determine target
     let newStage;
     if (targetStage === "cancelled") {
         newStage = "cancelled";
     }
     else if (targetStage) {
-        const targetIndex = PIPELINE_STAGES.indexOf(targetStage);
+        const targetIndex = constants_1.PIPELINE_STAGES.indexOf(targetStage);
         if (targetIndex === -1) {
             throw new functions.https.HttpsError("invalid-argument", `Invalid stage: ${targetStage}`);
         }
@@ -133,12 +96,12 @@ exports.advanceProjectStage = functions.https.onCall(async (data, context) => {
     }
     else {
         // Default: advance to next stage
-        if (currentIndex === -1 || currentIndex >= PIPELINE_STAGES.length - 1) {
+        if (currentIndex === -1 || currentIndex >= constants_1.PIPELINE_STAGES.length - 1) {
             throw new functions.https.HttpsError("failed-precondition", `Cannot advance from "${currentStatus}"`);
         }
-        newStage = PIPELINE_STAGES[currentIndex + 1];
+        newStage = constants_1.PIPELINE_STAGES[currentIndex + 1];
     }
-    const phase = newStage === "cancelled" ? "cancelled" : STAGE_TO_PHASE[newStage];
+    const phase = newStage === "cancelled" ? "cancelled" : constants_1.STAGE_TO_PHASE[newStage];
     const timelineEntry = {
         from: currentStatus,
         to: newStage,
@@ -163,7 +126,7 @@ exports.advanceProjectStage = functions.https.onCall(async (data, context) => {
             await (0, pipelineAutoTasks_1.openNextTasks)(projectId);
         }
         catch (err) {
-            console.warn(`Failed to create pipeline tasks for project ${projectId}:`, err);
+            functions.logger.warn(`Failed to create pipeline tasks for project ${projectId}:`, err);
         }
     }
     return {
@@ -298,7 +261,7 @@ exports.completeProjectTask = functions.https.onCall(async (data, context) => {
             await (0, pipelineAutoTasks_1.onPipelineTaskCompleted)(projectId, taskType);
         }
         catch (err) {
-            console.warn(`Pipeline cascade failed for task ${taskType} on project ${projectId}:`, err);
+            functions.logger.warn(`Pipeline cascade failed for task ${taskType} on project ${projectId}:`, err);
         }
     }
     return {

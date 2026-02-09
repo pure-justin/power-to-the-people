@@ -104,7 +104,7 @@ async function placeEagleviewOrder(_address, _reportType) {
     // });
     const mockOrderId = `EV-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
     const estimatedDelivery = new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString(); // ~48 hours
-    console.log(`[STUB] EagleView order placed: ${mockOrderId} for ${_reportType}`);
+    functions.logger.info(`[STUB] EagleView order placed: ${mockOrderId} for ${_reportType}`);
     return { orderId: mockOrderId, estimatedDelivery };
 }
 /**
@@ -116,7 +116,7 @@ async function checkEagleviewOrderStatus(_orderId) {
     // const response = await fetch(`https://api.eagleview.com/v2/orders/${_orderId}`, {
     //   headers: { "Authorization": `Bearer ${token}` },
     // });
-    console.log(`[STUB] EagleView status check: ${_orderId}`);
+    functions.logger.info(`[STUB] EagleView status check: ${_orderId}`);
     return { status: "processing", percentComplete: 50 };
 }
 // ─── Cloud Function: orderEagleviewReport ───────────────────────────────────────
@@ -174,7 +174,7 @@ exports.orderEagleviewReport = functions
         const reportRef = await db
             .collection("eagleview_reports")
             .add(reportData);
-        console.log(`EagleView report ordered: ${reportRef.id} (order=${orderId}, type=${reportType}, address=${address})`);
+        functions.logger.info(`EagleView report ordered: ${reportRef.id} (order=${orderId}, type=${reportType}, address=${address})`);
         return {
             success: true,
             reportId: reportRef.id,
@@ -183,7 +183,7 @@ exports.orderEagleviewReport = functions
         };
     }
     catch (error) {
-        console.error("Order EagleView report error:", error);
+        functions.logger.error("Order EagleView report error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to order EagleView report");
@@ -237,7 +237,7 @@ exports.checkEagleviewStatus = functions
         };
     }
     catch (error) {
-        console.error(`Check EagleView status error (${orderId}):`, error);
+        functions.logger.error(`Check EagleView status error (${orderId}):`, error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to check EagleView status");
@@ -310,7 +310,7 @@ exports.processEagleviewDelivery = functions
                 surveyUpdated = true;
             }
         }
-        console.log(`EagleView report delivered for order ${orderId}. Survey updated: ${surveyUpdated}`);
+        functions.logger.info(`EagleView report delivered for order ${orderId}. Survey updated: ${surveyUpdated}`);
         return {
             success: true,
             reportId: snapshot.docs[0].id,
@@ -318,7 +318,7 @@ exports.processEagleviewDelivery = functions
         };
     }
     catch (error) {
-        console.error(`Process EagleView delivery error (${orderId}):`, error);
+        functions.logger.error(`Process EagleView delivery error (${orderId}):`, error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to process EagleView delivery");
@@ -452,7 +452,7 @@ exports.shouldOrderEagleview = functions
         };
     }
     catch (error) {
-        console.error(`shouldOrderEagleview error (${projectId}):`, error);
+        functions.logger.error(`shouldOrderEagleview error (${projectId}):`, error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to check EagleView need");

@@ -44,6 +44,7 @@ const functions = __importStar(require("firebase-functions"));
 const admin = __importStar(require("firebase-admin"));
 const apiKeys_1 = require("./apiKeys");
 const leads_1 = require("./leads");
+const corsConfig_1 = require("./corsConfig");
 /**
  * Creates a new lead via API key authentication with automatic rate limiting and usage tracking
  *
@@ -65,14 +66,9 @@ exports.secureLeadWebhook = functions
     memory: "512MB",
 })
     .https.onRequest(async (req, res) => {
-    // CORS
-    res.set("Access-Control-Allow-Origin", "*");
-    res.set("Access-Control-Allow-Methods", "POST, OPTIONS");
-    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
-    if (req.method === "OPTIONS") {
-        res.status(204).send("");
+    if ((0, corsConfig_1.handleOptions)(req, res))
         return;
-    }
+    (0, corsConfig_1.setCors)(req, res);
     if (req.method !== "POST") {
         res.status(405).json({ error: "Method not allowed" });
         return;
@@ -80,7 +76,7 @@ exports.secureLeadWebhook = functions
     try {
         // Validate API key and check for write_leads scope
         const apiKeyData = await (0, apiKeys_1.validateApiKeyFromRequest)(req, apiKeys_1.ApiKeyScope.WRITE_LEADS);
-        console.log(`Authenticated request from API key ${apiKeyData.id} (user: ${apiKeyData.userId})`);
+        functions.logger.info(`Authenticated request from API key ${apiKeyData.id} (user: ${apiKeyData.userId})`);
         const data = req.body;
         // Validate required fields
         if (!data.customerName ||
@@ -130,7 +126,7 @@ exports.secureLeadWebhook = functions
             newLead.score = calculateLeadScore(newLead);
         }
         await leadRef.set(newLead);
-        console.log(`API key ${apiKeyData.id} created lead ${leadRef.id} for ${data.customerName}`);
+        functions.logger.info(`API key ${apiKeyData.id} created lead ${leadRef.id} for ${data.customerName}`);
         res.json({
             success: true,
             leadId: leadRef.id,
@@ -145,7 +141,7 @@ exports.secureLeadWebhook = functions
         });
     }
     catch (error) {
-        console.error("Secure lead webhook error:", error);
+        functions.logger.error("Secure lead webhook error:", error);
         // Handle specific API key errors
         if (error.code === "unauthenticated") {
             res.status(401).json({
@@ -222,13 +218,10 @@ exports.secureSolarWebhook = functions
     memory: "1GB",
 })
     .https.onRequest(async (req, res) => {
-    res.set("Access-Control-Allow-Origin", "*");
-    res.set("Access-Control-Allow-Methods", "POST, OPTIONS");
-    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
-    if (req.method === "OPTIONS") {
-        res.status(204).send("");
+    var _a;
+    if ((0, corsConfig_1.handleOptions)(req, res))
         return;
-    }
+    (0, corsConfig_1.setCors)(req, res);
     if (req.method !== "POST") {
         res.status(405).json({ error: "Method not allowed" });
         return;
@@ -241,18 +234,49 @@ exports.secureSolarWebhook = functions
             res.status(400).json({ error: "Address is required" });
             return;
         }
-        // Here you would integrate with Google Solar API
-        // For this example, we'll just return a mock response
+        // Google Solar API integration required
+        // Configure GOOGLE_SOLAR_API_KEY in Firebase config to enable
+        const googleSolarApiKey = process.env.GOOGLE_SOLAR_API_KEY ||
+            ((_a = functions.config().google) === null || _a === void 0 ? void 0 : _a.solar_api_key);
+        if (!googleSolarApiKey) {
+            res.status(501).json({
+                success: false,
+                error: "Solar API integration not configured. Set google.solar_api_key in Firebase config.",
+            });
+            return;
+        }
+        // Call Google Solar API Building Insights
+        const encodedAddress = encodeURIComponent(address);
+        const solarApiUrl = `https://solar.googleapis.com/v1/buildingInsights:findClosest?location.address=${encodedAddress}&key=${googleSolarApiKey}`;
+        const apiResponse = await fetch(solarApiUrl);
+        if (!apiResponse.ok) {
+            const errorBody = await apiResponse.text();
+            functions.logger.error("Google Solar API error:", errorBody);
+            res.status(502).json({
+                success: false,
+                error: "Google Solar API request failed",
+            });
+            return;
+        }
+        const buildingInsights = await apiResponse.json();
+        const solarPotential = buildingInsights.solarPotential || {};
         const solarData = {
             address,
-            maxArrayPanels: 25,
-            maxArrayArea: 150,
-            maxSunshineHours: 1800,
-            carbonOffset: 5.2,
-            estimatedSystemSize: 8.5,
-            estimatedAnnualProduction: 12000,
+            maxArrayPanels: solarPotential.maxArrayPanelsCount || 0,
+            maxArrayArea: solarPotential.maxArrayAreaMeters2 || 0,
+            maxSunshineHours: solarPotential.maxSunshineHoursPerYear || 0,
+            carbonOffset: solarPotential.carbonOffsetFactorKgPerMwh || 0,
+            estimatedSystemSize: ((solarPotential.maxArrayPanelsCount || 0) * 0.4) / 1000 || 0,
+            estimatedAnnualProduction: 0,
+            rawBuildingInsights: buildingInsights,
         };
-        // If leadId provided, update the lead
+        // Estimate annual production from panel configs if available
+        const panelConfigs = solarPotential.solarPanelConfigs;
+        if (Array.isArray(panelConfigs) && panelConfigs.length > 0) {
+            const bestConfig = panelConfigs[panelConfigs.length - 1];
+            solarData.estimatedAnnualProduction = bestConfig.yearlyEnergyDcKwh || 0;
+        }
+        // If leadId provided, update the lead with real data
         if (leadId) {
             const db = admin.firestore();
             await db.collection("leads").doc(leadId).update({
@@ -271,7 +295,7 @@ exports.secureSolarWebhook = functions
         });
     }
     catch (error) {
-        console.error("Secure solar webhook error:", error);
+        functions.logger.error("Secure solar webhook error:", error);
         if (error.code === "unauthenticated") {
             res.status(401).json({ error: "Invalid or missing API key" });
         }
@@ -307,13 +331,9 @@ exports.secureLeadQuery = functions
     memory: "512MB",
 })
     .https.onRequest(async (req, res) => {
-    res.set("Access-Control-Allow-Origin", "*");
-    res.set("Access-Control-Allow-Methods", "GET, OPTIONS");
-    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
-    if (req.method === "OPTIONS") {
-        res.status(204).send("");
+    if ((0, corsConfig_1.handleOptions)(req, res))
         return;
-    }
+    (0, corsConfig_1.setCors)(req, res);
     if (req.method !== "GET") {
         res.status(405).json({ error: "Method not allowed" });
         return;
@@ -362,7 +382,7 @@ exports.secureLeadQuery = functions
         });
     }
     catch (error) {
-        console.error("Secure lead query error:", error);
+        functions.logger.error("Secure lead query error:", error);
         if (error.code === "unauthenticated") {
             res.status(401).json({ error: "Invalid or missing API key" });
         }

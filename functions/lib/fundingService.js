@@ -153,11 +153,11 @@ exports.createFundingPackage = functions
             updated_at: admin.firestore.FieldValue.serverTimestamp(),
         };
         const ref = await db.collection("funding_packages").add(packageData);
-        console.log(`Funding package created: ${ref.id} (type=${type}, provider=${provider}, project=${projectId})`);
+        functions.logger.info(`Funding package created: ${ref.id} (type=${type}, provider=${provider}, project=${projectId})`);
         return { success: true, packageId: ref.id };
     }
     catch (error) {
-        console.error("Create funding package error:", error);
+        functions.logger.error("Create funding package error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to create funding package");
@@ -209,7 +209,7 @@ exports.checkDocumentReadiness = functions
         return { success: true, ready, missing, completed };
     }
     catch (error) {
-        console.error("Check document readiness error:", error);
+        functions.logger.error("Check document readiness error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to check documents");
@@ -283,7 +283,7 @@ exports.submitFunding = functions
             createdAt: admin.firestore.FieldValue.serverTimestamp(),
             updatedAt: admin.firestore.FieldValue.serverTimestamp(),
         });
-        console.log(`Funding submitted: package=${packageId}, task=${taskRef.id}`);
+        functions.logger.info(`Funding submitted: package=${packageId}, task=${taskRef.id}`);
         return {
             success: true,
             status: "submitted",
@@ -291,7 +291,7 @@ exports.submitFunding = functions
         };
     }
     catch (error) {
-        console.error("Submit funding error:", error);
+        functions.logger.error("Submit funding error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to submit funding");
@@ -355,11 +355,11 @@ exports.updateFundingStatus = functions
             updateData["submission.reference_number"] = details.referenceNumber;
         }
         await packageRef.update(updateData);
-        console.log(`Funding status updated: package=${packageId}, status=${status}`);
+        functions.logger.info(`Funding status updated: package=${packageId}, status=${status}`);
         return { success: true, status };
     }
     catch (error) {
-        console.error("Update funding status error:", error);
+        functions.logger.error("Update funding status error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to update funding status");
@@ -411,11 +411,11 @@ exports.requestMilestonePayment = functions
             milestone_payments: milestones,
             updated_at: admin.firestore.FieldValue.serverTimestamp(),
         });
-        console.log(`Milestone payment requested: package=${packageId}, milestone=${milestone}`);
+        functions.logger.info(`Milestone payment requested: package=${packageId}, milestone=${milestone}`);
         return { success: true, milestone: milestones[milestoneIndex] };
     }
     catch (error) {
-        console.error("Request milestone payment error:", error);
+        functions.logger.error("Request milestone payment error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to request milestone payment");
@@ -456,7 +456,7 @@ exports.getFundingByProject = functions
         return { success: true, packages };
     }
     catch (error) {
-        console.error("Get funding by project error:", error);
+        functions.logger.error("Get funding by project error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to get funding packages");
@@ -589,11 +589,11 @@ exports.generateBankabilityPackage = functions
             status: "review",
             updated_at: admin.firestore.FieldValue.serverTimestamp(),
         });
-        console.log(`Bankability package generated: ${ref.id} for project ${projectId}`);
+        functions.logger.info(`Bankability package generated: ${ref.id} for project ${projectId}`);
         return { success: true, bankabilityId: ref.id };
     }
     catch (error) {
-        console.error("Generate bankability package error:", error);
+        functions.logger.error("Generate bankability package error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to generate bankability package");

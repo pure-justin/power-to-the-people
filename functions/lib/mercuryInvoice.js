@@ -81,7 +81,7 @@ async function mercuryFetch(endpoint, method, body) {
     const response = await fetch(`${MERCURY_API_BASE}${endpoint}`, options);
     if (!response.ok) {
         const errorText = await response.text();
-        console.error(`Mercury API error: ${response.status} ${errorText}`);
+        functions.logger.error(`Mercury API error: ${response.status} ${errorText}`);
         throw new functions.https.HttpsError("internal", `Mercury API error: ${response.status} - ${errorText}`);
     }
     return response.json();
@@ -147,14 +147,14 @@ exports.createMercuryCustomer = functions
             "mercury.customerId": result.id,
             updatedAt: admin.firestore.Timestamp.now(),
         });
-        console.log(`Created Mercury customer ${result.id} for lead ${leadId}`);
+        functions.logger.info(`Created Mercury customer ${result.id} for lead ${leadId}`);
         return {
             success: true,
             customerId: result.id,
         };
     }
     catch (error) {
-        console.error("Create Mercury customer error:", error);
+        functions.logger.error("Create Mercury customer error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to create Mercury customer");
@@ -237,7 +237,7 @@ exports.createMercuryInvoice = functions
             "mercury.paymentStatus": "unpaid",
             updatedAt: admin.firestore.Timestamp.now(),
         });
-        console.log(`Created Mercury invoice ${result.id} for lead ${leadId} - $${amount}`);
+        functions.logger.info(`Created Mercury invoice ${result.id} for lead ${leadId} - $${amount}`);
         return {
             success: true,
             invoiceId: invoiceRef.id,
@@ -246,7 +246,7 @@ exports.createMercuryInvoice = functions
         };
     }
     catch (error) {
-        console.error("Create Mercury invoice error:", error);
+        functions.logger.error("Create Mercury invoice error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to create Mercury invoice");
@@ -281,7 +281,7 @@ exports.getMercuryInvoice = functions
         };
     }
     catch (error) {
-        console.error("Get Mercury invoice error:", error);
+        functions.logger.error("Get Mercury invoice error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to get Mercury invoice");
@@ -319,7 +319,7 @@ exports.listMercuryInvoices = functions
         };
     }
     catch (error) {
-        console.error("List Mercury invoices error:", error);
+        functions.logger.error("List Mercury invoices error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to list Mercury invoices");
@@ -361,14 +361,14 @@ exports.cancelMercuryInvoice = functions
                 updatedAt: admin.firestore.Timestamp.now(),
             });
         }
-        console.log(`Canceled Mercury invoice ${mercuryInvoiceId}`);
+        functions.logger.info(`Canceled Mercury invoice ${mercuryInvoiceId}`);
         return {
             success: true,
             mercuryInvoiceId,
         };
     }
     catch (error) {
-        console.error("Cancel Mercury invoice error:", error);
+        functions.logger.error("Cancel Mercury invoice error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to cancel Mercury invoice");
@@ -398,7 +398,7 @@ exports.syncInvoiceStatus = functions.pubsub
         .where("status", "in", ["unpaid", "processing"])
         .get();
     if (invoicesSnapshot.empty) {
-        console.log("No invoices to sync");
+        functions.logger.info("No invoices to sync");
         return null;
     }
     let updated = 0;
@@ -445,11 +445,11 @@ exports.syncInvoiceStatus = functions.pubsub
             }
         }
         catch (error) {
-            console.error(`Error syncing invoice ${invoice.mercuryInvoiceId}:`, error);
+            functions.logger.error(`Error syncing invoice ${invoice.mercuryInvoiceId}:`, error);
             // Continue with other invoices
         }
     }
-    console.log(`Invoice sync complete: ${updated} updated, ${paid} newly paid out of ${invoicesSnapshot.size} checked`);
+    functions.logger.info(`Invoice sync complete: ${updated} updated, ${paid} newly paid out of ${invoicesSnapshot.size} checked`);
     return null;
 });
 //# sourceMappingURL=mercuryInvoice.js.map

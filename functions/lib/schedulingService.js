@@ -119,11 +119,11 @@ exports.setAvailability = functions
             });
             slotId = ref.id;
         }
-        console.log(`Availability set: installer=${installerId}, date=${date}, slots=${timeSlots.length}`);
+        functions.logger.info(`Availability set: installer=${installerId}, date=${date}, slots=${timeSlots.length}`);
         return { success: true, slotId };
     }
     catch (error) {
-        console.error("Set availability error:", error);
+        functions.logger.error("Set availability error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to set availability");
@@ -167,7 +167,7 @@ exports.getAvailability = functions
         return { success: true, slots };
     }
     catch (error) {
-        console.error("Get availability error:", error);
+        functions.logger.error("Get availability error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to get availability");
@@ -283,7 +283,7 @@ exports.proposeSchedule = functions
             createdAt: admin.firestore.FieldValue.serverTimestamp(),
             updatedAt: admin.firestore.FieldValue.serverTimestamp(),
         });
-        console.log(`Schedule proposed: ${scheduleRef.id} for project ${projectId}, ${proposedSlots.length} slots`);
+        functions.logger.info(`Schedule proposed: ${scheduleRef.id} for project ${projectId}, ${proposedSlots.length} slots`);
         return {
             success: true,
             scheduleId: scheduleRef.id,
@@ -291,7 +291,7 @@ exports.proposeSchedule = functions
         };
     }
     catch (error) {
-        console.error("Propose schedule error:", error);
+        functions.logger.error("Propose schedule error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to propose schedule");
@@ -385,11 +385,11 @@ exports.confirmSchedule = functions
             }
         }
         await scheduleRef.update(updateData);
-        console.log(`Schedule ${scheduleId} confirmed by ${confirmedBy}, new status: ${newStatus}`);
+        functions.logger.info(`Schedule ${scheduleId} confirmed by ${confirmedBy}, new status: ${newStatus}`);
         return { success: true, status: newStatus };
     }
     catch (error) {
-        console.error("Confirm schedule error:", error);
+        functions.logger.error("Confirm schedule error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to confirm schedule");
@@ -460,11 +460,11 @@ exports.reschedule = functions
             }),
             updated_at: admin.firestore.FieldValue.serverTimestamp(),
         });
-        console.log(`Schedule ${scheduleId} rescheduled to ${newDate}: ${reason}`);
+        functions.logger.info(`Schedule ${scheduleId} rescheduled to ${newDate}: ${reason}`);
         return { success: true, status: "proposed" };
     }
     catch (error) {
-        console.error("Reschedule error:", error);
+        functions.logger.error("Reschedule error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to reschedule");
@@ -506,7 +506,7 @@ exports.getInstallSchedule = functions
         };
     }
     catch (error) {
-        console.error("Get install schedule error:", error);
+        functions.logger.error("Get install schedule error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to get schedule");
@@ -558,7 +558,7 @@ exports.getUpcomingInstalls = functions
         return { success: true, installs };
     }
     catch (error) {
-        console.error("Get upcoming installs error:", error);
+        functions.logger.error("Get upcoming installs error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to get upcoming installs");
@@ -614,7 +614,7 @@ exports.getCustomerSchedule = functions
         return { success: true, schedules };
     }
     catch (error) {
-        console.error("Get customer schedule error:", error);
+        functions.logger.error("Get customer schedule error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to get customer schedule");

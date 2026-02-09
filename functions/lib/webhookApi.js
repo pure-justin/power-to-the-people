@@ -72,20 +72,7 @@ const WEBHOOK_EVENT_TYPES = [
     "referral.milestone_reached",
     "referral.payout_processed",
 ];
-// ─── CORS Helper ─────────────────────────────────────────────────────────────
-function setCors(res) {
-    res.set("Access-Control-Allow-Origin", "*");
-    res.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
-}
-function handleOptions(req, res) {
-    if (req.method === "OPTIONS") {
-        setCors(res);
-        res.status(204).send("");
-        return true;
-    }
-    return false;
-}
+const corsConfig_1 = require("./corsConfig");
 // ─── Error Handler Helper ────────────────────────────────────────────────────
 function mapErrorStatus(error) {
     if (error.code === "unauthenticated")
@@ -132,9 +119,9 @@ function getPathSegments(req) {
 exports.webhookApi = functions
     .runWith({ timeoutSeconds: 30, memory: "256MB" })
     .https.onRequest(async (req, res) => {
-    if (handleOptions(req, res))
+    if ((0, corsConfig_1.handleOptions)(req, res))
         return;
-    setCors(res);
+    (0, corsConfig_1.setCors)(req, res);
     try {
         const apiKey = await (0, apiKeys_1.validateApiKeyFromRequest)(req, apiKeys_1.ApiKeyScope.MANAGE_WEBHOOKS);
         const segments = getPathSegments(req);
@@ -169,7 +156,7 @@ exports.webhookApi = functions
         res.status(404).json({ error: "Not found" });
     }
     catch (error) {
-        console.error("Webhook API error:", error);
+        functions.logger.error("Webhook API error:", error);
         const status = mapErrorStatus(error);
         res.status(status).json({
             error: error.message || "Internal error",
@@ -251,7 +238,7 @@ async function handleCreateWebhook(req, res, apiKey) {
         updated_at: admin.firestore.Timestamp.now(),
     };
     await webhookRef.set(webhook);
-    console.log(`Created webhook ${webhookRef.id} for user ${apiKey.userId} -> ${url}`);
+    functions.logger.info(`Created webhook ${webhookRef.id} for user ${apiKey.userId} -> ${url}`);
     // Return the full webhook including secret (only shown at creation)
     res.status(201).json({
         success: true,
@@ -357,7 +344,7 @@ async function handleDeleteWebhook(_req, res, apiKey, webhookId) {
         return;
     }
     await webhookRef.delete();
-    console.log(`Deleted webhook ${webhookId} for user ${apiKey.userId}`);
+    functions.logger.info(`Deleted webhook ${webhookId} for user ${apiKey.userId}`);
     res.status(200).json({
         success: true,
         message: "Webhook deleted",

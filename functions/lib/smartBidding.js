@@ -65,6 +65,7 @@ exports.loadWeights = loadWeights;
 exports.scoreBid = scoreBid;
 exports.rankBids = rankBids;
 exports.autoAcceptBestBid = autoAcceptBestBid;
+const functions = __importStar(require("firebase-functions"));
 const admin = __importStar(require("firebase-admin"));
 const db = admin.firestore();
 // ─── Constants ──────────────────────────────────────────────────────────────────
@@ -144,7 +145,7 @@ async function loadWeights() {
         };
     }
     catch (err) {
-        console.warn("Failed to load bidding weights from Firestore, using defaults:", err);
+        functions.logger.warn("Failed to load bidding weights from Firestore, using defaults:", err);
         return getDefaultWeights();
     }
 }

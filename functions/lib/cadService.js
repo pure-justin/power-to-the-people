@@ -159,7 +159,7 @@ exports.generateDesign = functions
             createdAt: admin.firestore.FieldValue.serverTimestamp(),
             updatedAt: admin.firestore.FieldValue.serverTimestamp(),
         });
-        console.log(`Design created: ${designRef.id} for project ${projectId}, AI task: ${aiTaskRef.id}`);
+        functions.logger.info(`Design created: ${designRef.id} for project ${projectId}, AI task: ${aiTaskRef.id}`);
         return {
             success: true,
             designId: designRef.id,
@@ -167,7 +167,7 @@ exports.generateDesign = functions
         };
     }
     catch (error) {
-        console.error("Generate design error:", error);
+        functions.logger.error("Generate design error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to generate design");
@@ -299,11 +299,11 @@ exports.updateDesign = functions
             updateData.status = "human_review";
         }
         await designRef.update(updateData);
-        console.log(`Design ${designId} updated by ${context.auth.uid}: ${Object.keys(changes).join(", ")}`);
+        functions.logger.info(`Design ${designId} updated by ${context.auth.uid}: ${Object.keys(changes).join(", ")}`);
         return { success: true, designId };
     }
     catch (error) {
-        console.error(`Update design error (${designId}):`, error);
+        functions.logger.error(`Update design error (${designId}):`, error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to update design");
@@ -348,11 +348,11 @@ exports.approveDesign = functions
             "human_review.approved": true,
             updated_at: admin.firestore.FieldValue.serverTimestamp(),
         });
-        console.log(`Design ${designId} approved by ${context.auth.uid}`);
+        functions.logger.info(`Design ${designId} approved by ${context.auth.uid}`);
         return { success: true, designId };
     }
     catch (error) {
-        console.error(`Approve design error (${designId}):`, error);
+        functions.logger.error(`Approve design error (${designId}):`, error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to approve design");

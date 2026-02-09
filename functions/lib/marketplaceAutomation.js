@@ -89,7 +89,7 @@ exports.checkSlaDeadlines = functions.pubsub
         .where("status", "==", "assigned")
         .get();
     if (snapshot.empty) {
-        console.log("checkSlaDeadlines: no assigned listings found");
+        functions.logger.info("checkSlaDeadlines: no assigned listings found");
         return null;
     }
     let warned = 0;
@@ -135,7 +135,7 @@ exports.checkSlaDeadlines = functions.pubsub
                     `Complete it within 24h to avoid a strike. Check your dashboard for details.`);
             }
             warned++;
-            console.log(`SLA warning sent for listing ${listingId}, worker ${workerId} ` +
+            functions.logger.info(`SLA warning sent for listing ${listingId}, worker ${workerId} ` +
                 `(${slaResult.hoursOverdue}h overdue)`);
             continue;
         }
@@ -170,14 +170,14 @@ exports.checkSlaDeadlines = functions.pubsub
                 action: "auto_requeued",
             });
             violated++;
-            console.log(`SLA violation recorded for listing ${listingId}, worker ${workerId} ` +
+            functions.logger.info(`SLA violation recorded for listing ${listingId}, worker ${workerId} ` +
                 `(${slaResult.hoursOverdue}h overdue, requeued)`);
         }
         catch (err) {
-            console.error(`Error processing SLA violation for listing ${listingId}:`, err);
+            functions.logger.error(`Error processing SLA violation for listing ${listingId}:`, err);
         }
     }
-    console.log(`checkSlaDeadlines complete: ${snapshot.size} checked, ` +
+    functions.logger.info(`checkSlaDeadlines complete: ${snapshot.size} checked, ` +
         `${warned} warned, ${violated} violated, ${skipped} skipped`);
     return null;
 });
@@ -207,7 +207,7 @@ exports.closeBidWindows = functions.pubsub
         .where("bid_window_closes_at", "<=", now)
         .get();
     if (snapshot.empty) {
-        console.log("closeBidWindows: no expired bid windows found");
+        functions.logger.info("closeBidWindows: no expired bid windows found");
         return null;
     }
     let accepted = 0;
@@ -226,7 +226,7 @@ exports.closeBidWindows = functions.pubsub
                     auto_accepted: true,
                 });
                 accepted++;
-                console.log(`Bid window closed for listing ${listingId}: accepted bid ${result.bidId} ` +
+                functions.logger.info(`Bid window closed for listing ${listingId}: accepted bid ${result.bidId} ` +
                     `(score: ${result.score})`);
             }
             else {
@@ -250,16 +250,16 @@ exports.closeBidWindows = functions.pubsub
                     }
                 }
                 extended++;
-                console.log(`Bid window extended for listing ${listingId}: no bids, ` +
+                functions.logger.info(`Bid window extended for listing ${listingId}: no bids, ` +
                     `new deadline ${newDeadline.toISOString()}`);
             }
         }
         catch (err) {
             errors++;
-            console.error(`Error closing bid window for listing ${listingId}:`, err);
+            functions.logger.error(`Error closing bid window for listing ${listingId}:`, err);
         }
     }
-    console.log(`closeBidWindows complete: ${snapshot.size} processed, ` +
+    functions.logger.info(`closeBidWindows complete: ${snapshot.size} processed, ` +
         `${accepted} accepted, ${extended} extended, ${errors} errors`);
     return null;
 });
@@ -296,7 +296,7 @@ exports.notifyMatchingWorkers = functions.firestore
         budget_max: budgetMax,
     });
     if (!projectZip) {
-        console.warn(`notifyMatchingWorkers: listing ${listingId} has no zip code, skipping worker notifications`);
+        functions.logger.warn(`notifyMatchingWorkers: listing ${listingId} has no zip code, skipping worker notifications`);
         return;
     }
     // Find matching workers
@@ -305,11 +305,11 @@ exports.notifyMatchingWorkers = functions.firestore
         matches = await (0, locationMatching_1.findWorkersInRange)(projectZip, serviceType, radiusMiles);
     }
     catch (err) {
-        console.error(`notifyMatchingWorkers: error finding workers for listing ${listingId}:`, err);
+        functions.logger.error(`notifyMatchingWorkers: error finding workers for listing ${listingId}:`, err);
         return;
     }
     if (!matches || matches.length === 0) {
-        console.log(`notifyMatchingWorkers: no matching workers for listing ${listingId} ` +
+        functions.logger.info(`notifyMatchingWorkers: no matching workers for listing ${listingId} ` +
             `(${serviceType}, zip ${projectZip}, ${radiusMiles}mi)`);
         return;
     }
@@ -333,10 +333,10 @@ exports.notifyMatchingWorkers = functions.firestore
             notified++;
         }
         catch (err) {
-            console.error(`Failed to SMS worker ${match.workerId} for listing ${listingId}:`, err);
+            functions.logger.error(`Failed to SMS worker ${match.workerId} for listing ${listingId}:`, err);
         }
     }
-    console.log(`notifyMatchingWorkers: listing ${listingId} — ` +
+    functions.logger.info(`notifyMatchingWorkers: listing ${listingId} — ` +
         `${matches.length} matches found, ${notified} notified (top 10)`);
 });
 // ─── 4. notifyBidResult — Firestore onUpdate trigger ────────────────────────
@@ -418,7 +418,7 @@ exports.notifyBidResult = functions.firestore
             worker_id: workerId,
             price: after.price,
         });
-        console.log(`notifyBidResult: bid ${bidId} accepted, worker ${workerId} notified`);
+        functions.logger.info(`notifyBidResult: bid ${bidId} accepted, worker ${workerId} notified`);
     }
     else if (after.status === "rejected") {
         // Notify rejected bidder with encouragement
@@ -446,7 +446,7 @@ exports.notifyBidResult = functions.firestore
             listing_id: listingId,
             worker_id: workerId,
         });
-        console.log(`notifyBidResult: bid ${bidId} rejected, worker ${workerId} notified`);
+        functions.logger.info(`notifyBidResult: bid ${bidId} rejected, worker ${workerId} notified`);
     }
 });
 // ─── 5. notifyTaskReady — Firestore onUpdate trigger ──────────────────────────
@@ -495,7 +495,7 @@ exports.notifyTaskReady = functions.firestore
     // Get project data for location info
     const projectSnap = await db.collection("projects").doc(projectId).get();
     if (!projectSnap.exists) {
-        console.warn(`notifyTaskReady: project ${projectId} not found, skipping notifications`);
+        functions.logger.warn(`notifyTaskReady: project ${projectId} not found, skipping notifications`);
         return;
     }
     const projectData = projectSnap.data();
@@ -504,7 +504,7 @@ exports.notifyTaskReady = functions.firestore
         ((_a = projectData.address) === null || _a === void 0 ? void 0 : _a.zip) ||
         "";
     if (!projectZip) {
-        console.warn(`notifyTaskReady: project ${projectId} has no zip code, skipping worker notifications`);
+        functions.logger.warn(`notifyTaskReady: project ${projectId} has no zip code, skipping worker notifications`);
         return;
     }
     // Find matching workers within range
@@ -514,12 +514,12 @@ exports.notifyTaskReady = functions.firestore
         matches = await (0, locationMatching_1.findWorkersInRange)(projectZip, serviceType, radiusMiles);
     }
     catch (err) {
-        console.error(`notifyTaskReady: error finding workers for task ${taskId} ` +
+        functions.logger.error(`notifyTaskReady: error finding workers for task ${taskId} ` +
             `on project ${projectId}:`, err);
         return;
     }
     if (!matches || matches.length === 0) {
-        console.log(`notifyTaskReady: no matching workers for task ${taskType} ` +
+        functions.logger.info(`notifyTaskReady: no matching workers for task ${taskType} ` +
             `(${serviceType}, zip ${projectZip}, ${radiusMiles}mi)`);
         return;
     }
@@ -544,7 +544,7 @@ exports.notifyTaskReady = functions.firestore
             notified++;
         }
         catch (err) {
-            console.error(`Failed to SMS worker ${match.workerId} for task ${taskId} ` +
+            functions.logger.error(`Failed to SMS worker ${match.workerId} for task ${taskId} ` +
                 `on project ${projectId}:`, err);
         }
     }
@@ -556,7 +556,7 @@ exports.notifyTaskReady = functions.firestore
         service_type: serviceType,
         workers_notified: notified,
     });
-    console.log(`notifyTaskReady: task ${taskType} on project ${projectId} — ` +
+    functions.logger.info(`notifyTaskReady: task ${taskType} on project ${projectId} — ` +
         `${matches.length} matches found, ${notified} notified (top 10)`);
 });
 //# sourceMappingURL=marketplaceAutomation.js.map

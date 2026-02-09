@@ -62,6 +62,7 @@ exports.createPipelineTasks = createPipelineTasks;
 exports.openNextTasks = openNextTasks;
 exports.onPipelineTaskCompleted = onPipelineTaskCompleted;
 exports.getPipelineStatus = getPipelineStatus;
+const functions = __importStar(require("firebase-functions"));
 const admin = __importStar(require("firebase-admin"));
 const db = admin.firestore();
 // ─── Task Definitions ───────────────────────────────────────────────────────────
@@ -165,7 +166,7 @@ async function createPipelineTasks(projectId, projectData) {
     // Check if tasks already exist to prevent duplicates
     const existing = await tasksRef.limit(1).get();
     if (!existing.empty) {
-        console.warn(`Pipeline tasks already exist for project ${projectId}, skipping creation`);
+        functions.logger.warn(`Pipeline tasks already exist for project ${projectId}, skipping creation`);
         return;
     }
     const batch = db.batch();
@@ -205,7 +206,7 @@ async function createPipelineTasks(projectId, projectData) {
         pipeline_tasks_created_at: admin.firestore.FieldValue.serverTimestamp(),
     }, { merge: true });
     await batch.commit();
-    console.log(`Created ${hasBattery ? 10 : 9} pipeline tasks for project ${projectId}`);
+    functions.logger.info(`Created ${hasBattery ? 10 : 9} pipeline tasks for project ${projectId}`);
     // Auto-create marketplace listing for the initial ready task (site_survey)
     await createMarketplaceListingForTask(projectId, "site_survey");
 }
@@ -260,7 +261,7 @@ async function openNextTasks(projectId) {
         await createMarketplaceListingForTask(projectId, taskType);
     }
     if (openedTasks.length > 0) {
-        console.log(`Opened ${openedTasks.length} tasks for project ${projectId}: ${openedTasks.join(", ")}`);
+        functions.logger.info(`Opened ${openedTasks.length} tasks for project ${projectId}: ${openedTasks.join(", ")}`);
     }
     return openedTasks;
 }
@@ -280,12 +281,12 @@ async function onPipelineTaskCompleted(projectId, taskType) {
     const taskRef = db.doc(`projects/${projectId}/pipeline_tasks/${taskType}`);
     const taskSnap = await taskRef.get();
     if (!taskSnap.exists) {
-        console.error(`Pipeline task ${taskType} not found for project ${projectId}`);
+        functions.logger.error(`Pipeline task ${taskType} not found for project ${projectId}`);
         return;
     }
     const task = taskSnap.data();
     if (task.dependency_status === "completed") {
-        console.warn(`Task ${taskType} already completed for project ${projectId}, skipping`);
+        functions.logger.warn(`Task ${taskType} already completed for project ${projectId}, skipping`);
         return;
     }
     // Mark the task as completed
@@ -308,7 +309,7 @@ async function onPipelineTaskCompleted(projectId, taskType) {
                 pipeline_stage: task.phase,
                 updatedAt: admin.firestore.FieldValue.serverTimestamp(),
             });
-            console.log(`Advanced project ${projectId} from "${currentPhase}" to "${task.phase}"`);
+            functions.logger.info(`Advanced project ${projectId} from "${currentPhase}" to "${task.phase}"`);
         }
     }
     // Log completion in the project timeline
@@ -319,7 +320,7 @@ async function onPipelineTaskCompleted(projectId, taskType) {
         opened_tasks: openedTasks,
         timestamp: admin.firestore.FieldValue.serverTimestamp(),
     });
-    console.log(`Pipeline task "${taskType}" completed for project ${projectId}. ` +
+    functions.logger.info(`Pipeline task "${taskType}" completed for project ${projectId}. ` +
         `Opened ${openedTasks.length} downstream tasks.`);
 }
 /**
@@ -427,7 +428,7 @@ async function createMarketplaceListingForTask(projectId, taskType) {
         marketplace_listing_id: listingRef.id,
         dependency_status: "open",
     });
-    console.log(`Created marketplace listing ${listingRef.id} for task "${taskType}" on project ${projectId}`);
+    functions.logger.info(`Created marketplace listing ${listingRef.id} for task "${taskType}" on project ${projectId}`);
 }
 /**
  * Format a task type slug into a human-readable name.

@@ -58,20 +58,8 @@ const functions = __importStar(require("firebase-functions/v1"));
 const admin = __importStar(require("firebase-admin"));
 const apiKeys_1 = require("./apiKeys");
 const smartBidding_1 = require("./smartBidding");
-// ─── CORS Helper ───────────────────────────────────────────────────────────────
-function setCors(res) {
-    res.set("Access-Control-Allow-Origin", "*");
-    res.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
-}
-function handleOptions(req, res) {
-    if (req.method === "OPTIONS") {
-        setCors(res);
-        res.status(204).send("");
-        return true;
-    }
-    return false;
-}
+const corsConfig_1 = require("./corsConfig");
+const constants_1 = require("./utils/constants");
 // ─── Error Helper ──────────────────────────────────────────────────────────────
 function errorStatus(error) {
     if (error.code === "unauthenticated")
@@ -84,24 +72,6 @@ function errorStatus(error) {
         return 404;
     return 500;
 }
-// ─── Valid service types (mirrors marketplace.ts) ──────────────────────────────
-const SERVICE_TYPES = [
-    "cad_design",
-    "engineering_stamp",
-    "permit_submission",
-    "site_survey",
-    "hoa_approval",
-    "installation",
-    "inspection",
-    "electrical",
-    "roofing",
-    "trenching",
-    "battery_install",
-    "panel_upgrade",
-    "monitoring_setup",
-    "maintenance",
-    "other",
-];
 // ─── Route Helpers ─────────────────────────────────────────────────────────────
 /**
  * Parse path segments after the function name.
@@ -138,10 +108,10 @@ async function handleGetListings(req, res) {
     // Service type filter
     if (req.query.service_type) {
         const st = req.query.service_type;
-        if (!SERVICE_TYPES.includes(st)) {
+        if (!constants_1.SERVICE_TYPES.includes(st)) {
             res.status(400).json({
                 success: false,
-                error: `Invalid service_type. Must be one of: ${SERVICE_TYPES.join(", ")}`,
+                error: `Invalid service_type. Must be one of: ${constants_1.SERVICE_TYPES.join(", ")}`,
             });
             return;
         }
@@ -153,10 +123,23 @@ async function handleGetListings(req, res) {
     }
     // Order by posted_at descending
     query = query.orderBy("posted_at", "desc");
-    // Pagination
+    // Pagination: support cursor-based (startAfter) with offset fallback
     const limit = Math.min(parseInt(req.query.limit) || 20, 100);
+    const cursor = req.query.cursor;
     const offset = parseInt(req.query.offset) || 0;
-    if (offset > 0) {
+    if (cursor) {
+        // Cursor-based: fetch the document to start after
+        const cursorDoc = await admin
+            .firestore()
+            .collection("marketplace_listings")
+            .doc(cursor)
+            .get();
+        if (cursorDoc.exists) {
+            query = query.startAfter(cursorDoc);
+        }
+    }
+    else if (offset > 0) {
+        // Legacy offset-based fallback
         query = query.offset(offset);
     }
     query = query.limit(limit + 1);
@@ -178,10 +161,13 @@ async function handleGetListings(req, res) {
             return pZip === zip;
         });
     }
+    // Return nextCursor for cursor-based pagination
+    const nextCursor = hasMore && docs.length > 0 ? docs[docs.length - 1].id : null;
     res.status(200).json({
         success: true,
         count: listings.length,
         hasMore,
+        nextCursor,
         data: listings,
     });
 }
@@ -246,10 +232,10 @@ async function handleCreateListing(req, res, apiKeyData) {
         });
         return;
     }
-    if (!SERVICE_TYPES.includes(service_type)) {
+    if (!constants_1.SERVICE_TYPES.includes(service_type)) {
         res.status(400).json({
             success: false,
-            error: `Invalid service_type. Must be one of: ${SERVICE_TYPES.join(", ")}`,
+            error: `Invalid service_type. Must be one of: ${constants_1.SERVICE_TYPES.join(", ")}`,
         });
         return;
     }
@@ -553,9 +539,19 @@ async function handleGetWorkers(req, res) {
         query = query.where("ratings.overall", ">=", minRating);
     }
     const limit = Math.min(parseInt(req.query.limit) || 50, 100);
-    query = query.limit(limit);
+    const cursor = req.query.cursor;
+    // Cursor-based pagination
+    if (cursor) {
+        const cursorDoc = await db.collection("workers").doc(cursor).get();
+        if (cursorDoc.exists) {
+            query = query.startAfter(cursorDoc);
+        }
+    }
+    query = query.limit(limit + 1);
     const snapshot = await query.get();
-    let workers = snapshot.docs.map((doc) => ({
+    const hasMore = snapshot.docs.length > limit;
+    const docs = hasMore ? snapshot.docs.slice(0, limit) : snapshot.docs;
+    let workers = docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
     }));
@@ -574,9 +570,12 @@ async function handleGetWorkers(req, res) {
         const zip = req.query.zip;
         workers = workers.filter((w) => w.zip_code === zip);
     }
+    const nextCursor = hasMore && docs.length > 0 ? docs[docs.length - 1].id : null;
     res.status(200).json({
         success: true,
         count: workers.length,
+        hasMore,
+        nextCursor,
         data: workers,
     });
 }
@@ -850,9 +849,9 @@ async function handleMyActiveTasks(req, res, apiKeyData) {
  * @auth api_key
  */
 async function marketplaceApiHandler(req, res) {
-    if (handleOptions(req, res))
+    if ((0, corsConfig_1.handleOptions)(req, res))
         return;
-    setCors(res);
+    (0, corsConfig_1.setCors)(req, res);
     try {
         const segments = parseSegments(req);
         // Segments: ["marketplace", "listings", ...] or just ["listings", ...]
@@ -965,7 +964,7 @@ async function marketplaceApiHandler(req, res) {
         });
     }
     catch (error) {
-        console.error("Marketplace API error:", error);
+        functions.logger.error("Marketplace API error:", error);
         const status = errorStatus(error);
         res.status(status).json({
             success: false,

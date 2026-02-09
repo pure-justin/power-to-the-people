@@ -39,30 +39,13 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getListingsForWorker = exports.getMarketplaceListings = exports.searchWorkers = exports.registerWorker = exports.rateWorker = exports.completeMarketplaceJob = exports.acceptBid = exports.submitBid = exports.createMarketplaceListing = void 0;
+exports.getMarketplaceListings = exports.searchWorkers = exports.registerWorker = exports.rateWorker = exports.completeMarketplaceJob = exports.acceptBid = exports.submitBid = exports.createMarketplaceListing = void 0;
 const functions = __importStar(require("firebase-functions/v1"));
 const admin = __importStar(require("firebase-admin"));
 const smartBidding_1 = require("./smartBidding");
 const locationMatching_1 = require("./locationMatching");
+const constants_1 = require("./utils/constants");
 const db = admin.firestore();
-// Valid service types for marketplace listings
-const SERVICE_TYPES = [
-    "cad_design",
-    "engineering_stamp",
-    "permit_submission",
-    "site_survey",
-    "hoa_approval",
-    "installation",
-    "inspection",
-    "electrical",
-    "roofing",
-    "trenching",
-    "battery_install",
-    "panel_upgrade",
-    "monitoring_setup",
-    "maintenance",
-    "other",
-];
 /**
  * createMarketplaceListing - Create a new marketplace job listing
  */
@@ -74,7 +57,7 @@ exports.createMarketplaceListing = functions.https.onCall(async (data, context) 
     if (!service_type || !requirements) {
         throw new functions.https.HttpsError("invalid-argument", "service_type and requirements are required");
     }
-    if (!SERVICE_TYPES.includes(service_type)) {
+    if (!constants_1.SERVICE_TYPES.includes(service_type)) {
         throw new functions.https.HttpsError("invalid-argument", `Invalid service_type: ${service_type}`);
     }
     if (budget &&
@@ -221,7 +204,7 @@ exports.submitBid = functions.https.onCall(async (data, context) => {
         });
     }
     catch (err) {
-        console.warn("Failed to compute bid score, continuing without it:", err);
+        functions.logger.warn("Failed to compute bid score, continuing without it:", err);
     }
     // Increment bid count on listing
     await listingRef.update({
@@ -576,101 +559,6 @@ exports.getMarketplaceListings = functions.https.onCall(async (data, context) =>
         count: listings.length,
         hasMore: listings.length === resultsLimit,
         lastId: listings.length > 0 ? listings[listings.length - 1].id : null,
-    };
-});
-/**
- * getListingsForWorker - Get open listings matching a worker's skills within their service radius
- */
-exports.getListingsForWorker = functions.https.onCall(async (data, context) => {
-    if (!context.auth) {
-        throw new functions.https.HttpsError("unauthenticated", "Must be signed in");
-    }
-    const { worker_id } = data;
-    if (!worker_id) {
-        throw new functions.https.HttpsError("invalid-argument", "worker_id is required");
-    }
-    // Get the worker profile
-    const workerSnap = await db.collection("workers").doc(worker_id).get();
-    if (!workerSnap.exists) {
-        throw new functions.https.HttpsError("not-found", "Worker not found");
-    }
-    const worker = workerSnap.data();
-    const workerSkills = Array.isArray(worker.skills)
-        ? worker.skills
-        : [];
-    const workerRadiusMiles = typeof worker.service_radius_miles === "number"
-        ? worker.service_radius_miles
-        : 50;
-    // Determine worker coordinates
-    let workerLat;
-    let workerLng;
-    if (typeof worker.lat === "number" && typeof worker.lng === "number") {
-        workerLat = worker.lat;
-        workerLng = worker.lng;
-    }
-    else if (worker.zip_code && typeof worker.zip_code === "string") {
-        const coords = await (0, locationMatching_1.getZipCoordinates)(worker.zip_code);
-        if (coords) {
-            workerLat = coords.lat;
-            workerLng = coords.lng;
-        }
-    }
-    // Query open listings
-    const listingsSnap = await db
-        .collection("marketplace_listings")
-        .where("status", "==", "open")
-        .orderBy("posted_at", "desc")
-        .limit(200)
-        .get();
-    if (listingsSnap.empty) {
-        return { success: true, listings: [], count: 0 };
-    }
-    // Filter and score listings
-    const matchedListings = [];
-    for (const doc of listingsSnap.docs) {
-        const listing = doc.data();
-        // Check if listing matches any of worker's skills
-        const skillMatch = workerSkills.includes(listing.service_type);
-        // Calculate distance if both have coordinates
-        let distance = null;
-        if (workerLat !== undefined &&
-            workerLng !== undefined &&
-            typeof listing.project_lat === "number" &&
-            typeof listing.project_lng === "number") {
-            distance =
-                Math.round((0, locationMatching_1.haversineDistance)(workerLat, workerLng, listing.project_lat, listing.project_lng) * 100) / 100;
-            // Skip if outside worker's service radius
-            if (distance > workerRadiusMiles) {
-                continue;
-            }
-        }
-        matchedListings.push({
-            id: doc.id,
-            ...listing,
-            distance,
-            skill_match: skillMatch,
-        });
-    }
-    // Sort: skill matches first, then by distance (closest first)
-    matchedListings.sort((a, b) => {
-        // Skill matches come first
-        if (a.skill_match && !b.skill_match)
-            return -1;
-        if (!a.skill_match && b.skill_match)
-            return 1;
-        // Then by distance (null distance = at the end)
-        if (a.distance === null && b.distance === null)
-            return 0;
-        if (a.distance === null)
-            return 1;
-        if (b.distance === null)
-            return -1;
-        return a.distance - b.distance;
-    });
-    return {
-        success: true,
-        listings: matchedListings,
-        count: matchedListings.length,
     };
 });
 //# sourceMappingURL=marketplace.js.map

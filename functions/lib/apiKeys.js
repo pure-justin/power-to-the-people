@@ -248,7 +248,7 @@ exports.createApiKey = functions
         };
         // Save to Firestore
         await apiKeyRef.set(newApiKey);
-        console.log(`Created API key ${apiKeyRef.id} (${data.name}) for user ${context.auth.uid}`);
+        functions.logger.info(`Created API key ${apiKeyRef.id} (${data.name}) for user ${context.auth.uid}`);
         // Return the plain-text key (only time it's ever shown)
         return {
             success: true,
@@ -259,7 +259,7 @@ exports.createApiKey = functions
         };
     }
     catch (error) {
-        console.error("Create API key error:", error);
+        functions.logger.error("Create API key error:", error);
         throw new functions.https.HttpsError("internal", error.message || "Failed to create API key");
     }
 });
@@ -362,7 +362,7 @@ exports.validateApiKey = functions
             ipAddress: ((_a = context.rawRequest) === null || _a === void 0 ? void 0 : _a.ip) || "unknown",
             userAgent: (_b = context.rawRequest) === null || _b === void 0 ? void 0 : _b.headers["user-agent"],
             timestamp: admin.firestore.Timestamp.now(),
-        }).catch((err) => console.error("Failed to log usage:", err));
+        }).catch((err) => functions.logger.error("Failed to log usage:", err));
         return {
             valid: true,
             apiKeyId: apiKeyDoc.id,
@@ -373,7 +373,7 @@ exports.validateApiKey = functions
         };
     }
     catch (error) {
-        console.error("Validate API key error:", error);
+        functions.logger.error("Validate API key error:", error);
         throw error;
     }
 });
@@ -424,7 +424,7 @@ exports.revokeApiKey = functions
             revokedReason: reason || "Manual revocation",
             updatedAt: admin.firestore.Timestamp.now(),
         });
-        console.log(`Revoked API key ${apiKeyId} by user ${context.auth.uid}: ${reason}`);
+        functions.logger.info(`Revoked API key ${apiKeyId} by user ${context.auth.uid}: ${reason}`);
         return {
             success: true,
             apiKeyId,
@@ -432,7 +432,7 @@ exports.revokeApiKey = functions
         };
     }
     catch (error) {
-        console.error("Revoke API key error:", error);
+        functions.logger.error("Revoke API key error:", error);
         throw new functions.https.HttpsError("internal", error.message || "Failed to revoke API key");
     }
 });
@@ -485,7 +485,7 @@ exports.rotateApiKey = functions
             rotatedAt: admin.firestore.Timestamp.now(),
             updatedAt: admin.firestore.Timestamp.now(),
         });
-        console.log(`Rotated API key ${apiKeyId} for user ${context.auth.uid}`);
+        functions.logger.info(`Rotated API key ${apiKeyId} for user ${context.auth.uid}`);
         // Return the new plain-text key (only time it's shown)
         return {
             success: true,
@@ -496,7 +496,7 @@ exports.rotateApiKey = functions
         };
     }
     catch (error) {
-        console.error("Rotate API key error:", error);
+        functions.logger.error("Rotate API key error:", error);
         throw new functions.https.HttpsError("internal", error.message || "Failed to rotate API key");
     }
 });
@@ -565,14 +565,14 @@ exports.updateApiKey = functions
         if (updates.alertThreshold !== undefined)
             allowedUpdates.alertThreshold = updates.alertThreshold;
         await apiKeyRef.update(allowedUpdates);
-        console.log(`Updated API key ${apiKeyId} by user ${context.auth.uid}`);
+        functions.logger.info(`Updated API key ${apiKeyId} by user ${context.auth.uid}`);
         return {
             success: true,
             apiKeyId,
         };
     }
     catch (error) {
-        console.error("Update API key error:", error);
+        functions.logger.error("Update API key error:", error);
         throw new functions.https.HttpsError("internal", error.message || "Failed to update API key");
     }
 });
@@ -638,7 +638,7 @@ exports.getApiKeyUsage = functions
         };
     }
     catch (error) {
-        console.error("Get API key usage error:", error);
+        functions.logger.error("Get API key usage error:", error);
         throw new functions.https.HttpsError("internal", error.message || "Failed to get API key usage");
     }
 });
@@ -656,7 +656,7 @@ async function logApiKeyUsage(log) {
         });
     }
     catch (error) {
-        console.error("Log API key usage error:", error);
+        functions.logger.error("Log API key usage error:", error);
         // Don't throw - logging should never break the main flow
     }
 }
@@ -719,25 +719,34 @@ async function validateApiKeyFromRequest(req, requiredScope) {
             throw new functions.https.HttpsError("permission-denied", "IP address not allowed");
         }
     }
-    // Check rate limits
-    const resetStats = getResetUsageStats(apiKeyData.usageStats, apiKeyData.rateLimit);
-    const currentStats = { ...apiKeyData.usageStats, ...resetStats };
-    const rateLimitCheck = checkRateLimit(currentStats, apiKeyData.rateLimit);
-    if (!rateLimitCheck.allowed) {
-        throw new functions.https.HttpsError("resource-exhausted", rateLimitCheck.reason || "Rate limit exceeded");
-    }
-    // Update usage stats
-    await apiKeyDoc.ref.update({
-        "usageStats.totalRequests": admin.firestore.FieldValue.increment(1),
-        "usageStats.requestsThisMinute": admin.firestore.FieldValue.increment(1),
-        "usageStats.requestsThisHour": admin.firestore.FieldValue.increment(1),
-        "usageStats.requestsThisDay": admin.firestore.FieldValue.increment(1),
-        "usageStats.requestsThisMonth": admin.firestore.FieldValue.increment(1),
-        "usageStats.lastRequestAt": admin.firestore.Timestamp.now(),
-        lastUsedAt: admin.firestore.Timestamp.now(),
-        lastUsedIp: req.ip,
-        updatedAt: admin.firestore.Timestamp.now(),
-        ...resetStats,
+    // Atomic rate limit check + increment via Firestore transaction
+    // This prevents race conditions where concurrent requests read stale counters
+    await admin.firestore().runTransaction(async (transaction) => {
+        const freshDoc = await transaction.get(apiKeyDoc.ref);
+        if (!freshDoc.exists) {
+            throw new functions.https.HttpsError("unauthenticated", "API key not found");
+        }
+        const freshData = freshDoc.data();
+        const resetStats = getResetUsageStats(freshData.usageStats, freshData.rateLimit);
+        const currentStats = { ...freshData.usageStats, ...resetStats };
+        const rateLimitCheck = checkRateLimit(currentStats, freshData.rateLimit);
+        if (!rateLimitCheck.allowed) {
+            throw new functions.https.HttpsError("resource-exhausted", rateLimitCheck.reason || "Rate limit exceeded");
+        }
+        // Atomically increment counters within the same transaction
+        const now = admin.firestore.Timestamp.now();
+        transaction.update(apiKeyDoc.ref, {
+            "usageStats.totalRequests": admin.firestore.FieldValue.increment(1),
+            "usageStats.requestsThisMinute": admin.firestore.FieldValue.increment(1),
+            "usageStats.requestsThisHour": admin.firestore.FieldValue.increment(1),
+            "usageStats.requestsThisDay": admin.firestore.FieldValue.increment(1),
+            "usageStats.requestsThisMonth": admin.firestore.FieldValue.increment(1),
+            "usageStats.lastRequestAt": now,
+            lastUsedAt: now,
+            lastUsedIp: req.ip,
+            updatedAt: now,
+            ...resetStats,
+        });
     });
     // Log usage (async, don't wait)
     logApiKeyUsage({
@@ -751,7 +760,7 @@ async function validateApiKeyFromRequest(req, requiredScope) {
         ipAddress: req.ip,
         userAgent: req.headers["user-agent"],
         timestamp: admin.firestore.Timestamp.now(),
-    }).catch((err) => console.error("Failed to log usage:", err));
+    }).catch((err) => functions.logger.error("Failed to log usage:", err));
     return apiKeyData;
 }
 /**
@@ -793,7 +802,7 @@ exports.cleanupApiKeys = functions
         });
         if (expiredSnapshot.size > 0) {
             await expireBatch.commit();
-            console.log(`Marked ${expiredSnapshot.size} API keys as expired`);
+            functions.logger.info(`Marked ${expiredSnapshot.size} API keys as expired`);
         }
         // Delete logs older than 90 days
         const cutoffDate = new Date();
@@ -810,12 +819,12 @@ exports.cleanupApiKeys = functions
                 deleteBatch.delete(doc.ref);
             });
             await deleteBatch.commit();
-            console.log(`Deleted ${oldLogsSnapshot.size} old usage logs`);
+            functions.logger.info(`Deleted ${oldLogsSnapshot.size} old usage logs`);
         }
-        console.log("API key cleanup completed");
+        functions.logger.info("API key cleanup completed");
     }
     catch (error) {
-        console.error("Cleanup API keys error:", error);
+        functions.logger.error("Cleanup API keys error:", error);
     }
 });
 //# sourceMappingURL=apiKeys.js.map

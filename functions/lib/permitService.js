@@ -157,14 +157,14 @@ exports.createPermit = functions
             updated_at: admin.firestore.FieldValue.serverTimestamp(),
         };
         const permitRef = await db.collection("permits").add(permitData);
-        console.log(`Permit created: ${permitRef.id} (type=${type}, project=${projectId}, ahj=${ahjId})`);
+        functions.logger.info(`Permit created: ${permitRef.id} (type=${type}, project=${projectId}, ahj=${ahjId})`);
         return {
             success: true,
             permitId: permitRef.id,
         };
     }
     catch (error) {
-        console.error("Create permit error:", error);
+        functions.logger.error("Create permit error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to create permit");
@@ -236,7 +236,7 @@ exports.submitPermit = functions
             updatedAt: admin.firestore.FieldValue.serverTimestamp(),
         };
         const aiTaskRef = await db.collection("ai_tasks").add(aiTaskData);
-        console.log(`Permit ${permitId} submission initiated — AI task: ${aiTaskRef.id}`);
+        functions.logger.info(`Permit ${permitId} submission initiated — AI task: ${aiTaskRef.id}`);
         return {
             success: true,
             permitId,
@@ -244,7 +244,7 @@ exports.submitPermit = functions
         };
     }
     catch (error) {
-        console.error(`Submit permit error (${permitId}):`, error);
+        functions.logger.error(`Submit permit error (${permitId}):`, error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to submit permit");
@@ -311,7 +311,7 @@ exports.updatePermitStatus = functions
             updateData["review.reviewer_name"] = details.reviewer_name;
         }
         await permitRef.update(updateData);
-        console.log(`Permit ${permitId} status updated: ${status}`);
+        functions.logger.info(`Permit ${permitId} status updated: ${status}`);
         return {
             success: true,
             permitId,
@@ -319,7 +319,7 @@ exports.updatePermitStatus = functions
         };
     }
     catch (error) {
-        console.error(`Update permit status error (${permitId}):`, error);
+        functions.logger.error(`Update permit status error (${permitId}):`, error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to update permit status");
@@ -433,7 +433,7 @@ exports.addPermitCorrection = functions
             timeline: admin.firestore.FieldValue.arrayUnion(buildTimelineEntry("corrections_needed", "ahj", `Correction requested: ${correction.item}`)),
             updated_at: admin.firestore.FieldValue.serverTimestamp(),
         });
-        console.log(`Correction added to permit ${permitId}: ${correctionId} — ${correction.item}`);
+        functions.logger.info(`Correction added to permit ${permitId}: ${correctionId} — ${correction.item}`);
         return {
             success: true,
             permitId,
@@ -441,7 +441,7 @@ exports.addPermitCorrection = functions
         };
     }
     catch (error) {
-        console.error(`Add correction error (${permitId}):`, error);
+        functions.logger.error(`Add correction error (${permitId}):`, error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to add correction");
@@ -497,7 +497,7 @@ exports.resolveCorrection = functions
             timeline: admin.firestore.FieldValue.arrayUnion(buildTimelineEntry("corrections_needed", "human", `Correction resolved: ${correctionId} — ${resolution}`)),
             updated_at: admin.firestore.FieldValue.serverTimestamp(),
         });
-        console.log(`Correction ${correctionId} resolved on permit ${permitId}. All resolved: ${allResolved}`);
+        functions.logger.info(`Correction ${correctionId} resolved on permit ${permitId}. All resolved: ${allResolved}`);
         return {
             success: true,
             permitId,
@@ -505,7 +505,7 @@ exports.resolveCorrection = functions
         };
     }
     catch (error) {
-        console.error(`Resolve correction error (${permitId}):`, error);
+        functions.logger.error(`Resolve correction error (${permitId}):`, error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to resolve correction");
@@ -536,10 +536,10 @@ exports.checkPermitStatuses = functions
             .limit(100)
             .get();
         if (submittedSnap.empty) {
-            console.log("checkPermitStatuses: No permits to check");
+            functions.logger.info("checkPermitStatuses: No permits to check");
             return null;
         }
-        console.log(`checkPermitStatuses: Found ${submittedSnap.size} permits to check`);
+        functions.logger.info(`checkPermitStatuses: Found ${submittedSnap.size} permits to check`);
         // Create an AI task for each permit that needs checking
         const batch = db.batch();
         let taskCount = 0;
@@ -573,11 +573,11 @@ exports.checkPermitStatuses = functions
             taskCount++;
         }
         await batch.commit();
-        console.log(`checkPermitStatuses: Created ${taskCount} permit_check AI tasks`);
+        functions.logger.info(`checkPermitStatuses: Created ${taskCount} permit_check AI tasks`);
         return null;
     }
     catch (error) {
-        console.error("checkPermitStatuses error:", error);
+        functions.logger.error("checkPermitStatuses error:", error);
         return null;
     }
 });

@@ -334,16 +334,16 @@ exports.auditProjectCredits = functions
             await db.collection("ai_tasks").add(taskData);
         }
         catch (taskErr) {
-            console.warn(`Failed to create AI task for audit ${auditRef.id}:`, taskErr.message);
+            functions.logger.warn(`Failed to create AI task for audit ${auditRef.id}:`, taskErr.message);
         }
-        console.log(`Credit audit created: ${auditRef.id} for project ${projectId}`);
+        functions.logger.info(`Credit audit created: ${auditRef.id} for project ${projectId}`);
         return {
             success: true,
             auditId: auditRef.id,
         };
     }
     catch (error) {
-        console.error("Audit project credits error:", error);
+        functions.logger.error("Audit project credits error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to audit project credits");
@@ -460,11 +460,11 @@ exports.certifyAudit = functions
             certification,
             updatedAt: admin.firestore.FieldValue.serverTimestamp(),
         });
-        console.log(`Audit certified: ${auditId}`);
+        functions.logger.info(`Audit certified: ${auditId}`);
         return { success: true, auditId, certification };
     }
     catch (error) {
-        console.error(`Certify audit error (${auditId}):`, error);
+        functions.logger.error(`Certify audit error (${auditId}):`, error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to certify audit");
@@ -563,7 +563,7 @@ exports.addAuditCheck = functions
         return { success: true };
     }
     catch (error) {
-        console.error(`Add audit check error (${auditId}):`, error);
+        functions.logger.error(`Add audit check error (${auditId}):`, error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to add audit check");
@@ -686,7 +686,7 @@ exports.assessCreditRisk = functions
         const insuranceRef = await db
             .collection("tax_credit_insurance")
             .add(insuranceData);
-        console.log(`Credit risk assessed: ${insuranceRef.id} for audit ${auditId} (score: ${riskScore}, risk: ${overallRisk})`);
+        functions.logger.info(`Credit risk assessed: ${insuranceRef.id} for audit ${auditId} (score: ${riskScore}, risk: ${overallRisk})`);
         return {
             success: true,
             insuranceId: insuranceRef.id,
@@ -695,7 +695,7 @@ exports.assessCreditRisk = functions
         };
     }
     catch (error) {
-        console.error(`Assess credit risk error (${auditId}):`, error);
+        functions.logger.error(`Assess credit risk error (${auditId}):`, error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to assess credit risk");
@@ -760,7 +760,7 @@ exports.quoteCreditInsurance = functions
             status: "quoted",
             updatedAt: admin.firestore.FieldValue.serverTimestamp(),
         });
-        console.log(`Insurance quoted: ${insuranceDoc.id} — $${premium} premium (${(premiumRate * 100).toFixed(1)}%) for $${creditAmount} credit`);
+        functions.logger.info(`Insurance quoted: ${insuranceDoc.id} — $${premium} premium (${(premiumRate * 100).toFixed(1)}%) for $${creditAmount} credit`);
         return {
             success: true,
             insuranceId: insuranceDoc.id,
@@ -774,7 +774,7 @@ exports.quoteCreditInsurance = functions
         };
     }
     catch (error) {
-        console.error(`Quote credit insurance error (${auditId}):`, error);
+        functions.logger.error(`Quote credit insurance error (${auditId}):`, error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to quote insurance");
@@ -816,11 +816,11 @@ exports.activateInsurance = functions
             "coverage.paymentRef": paymentRef,
             updatedAt: admin.firestore.FieldValue.serverTimestamp(),
         });
-        console.log(`Insurance activated: ${insuranceId}`);
+        functions.logger.info(`Insurance activated: ${insuranceId}`);
         return { success: true };
     }
     catch (error) {
-        console.error(`Activate insurance error (${insuranceId}):`, error);
+        functions.logger.error(`Activate insurance error (${insuranceId}):`, error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to activate insurance");
@@ -969,11 +969,11 @@ exports.createCreditListing = functions
             status: "listed",
             updatedAt: admin.firestore.FieldValue.serverTimestamp(),
         });
-        console.log(`Credit listing created: ${listingRef.id} — $${creditAmount} credit at $${askingPrice} (${discountRate}% discount, Level ${level})`);
+        functions.logger.info(`Credit listing created: ${listingRef.id} — $${creditAmount} credit at $${askingPrice} (${discountRate}% discount, Level ${level})`);
         return { success: true, listingId: listingRef.id };
     }
     catch (error) {
-        console.error("Create credit listing error:", error);
+        functions.logger.error("Create credit listing error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to create listing");
@@ -1041,7 +1041,7 @@ exports.searchCreditListings = functions
         return { success: true, listings, count: listings.length };
     }
     catch (error) {
-        console.error("Search credit listings error:", error);
+        functions.logger.error("Search credit listings error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to search listings");
@@ -1108,7 +1108,7 @@ exports.getCreditListing = functions
         return { success: true, listing: listingData, audit, insurance };
     }
     catch (error) {
-        console.error(`Get credit listing error (${listingId}):`, error);
+        functions.logger.error(`Get credit listing error (${listingId}):`, error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to get listing");
@@ -1174,11 +1174,11 @@ exports.makeOffer = functions
             status: "under_offer",
             updatedAt: admin.firestore.FieldValue.serverTimestamp(),
         });
-        console.log(`Offer made: ${offerId} on listing ${listingId} — $${offerAmount}`);
+        functions.logger.info(`Offer made: ${offerId} on listing ${listingId} — $${offerAmount}`);
         return { success: true, offerId };
     }
     catch (error) {
-        console.error(`Make offer error (${listingId}):`, error);
+        functions.logger.error(`Make offer error (${listingId}):`, error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to make offer");
@@ -1249,11 +1249,11 @@ exports.respondToOffer = functions
             status: listingStatus,
             updatedAt: admin.firestore.FieldValue.serverTimestamp(),
         });
-        console.log(`Offer ${offerId} on listing ${listingId}: ${response}`);
+        functions.logger.info(`Offer ${offerId} on listing ${listingId}: ${response}`);
         return { success: true };
     }
     catch (error) {
-        console.error(`Respond to offer error (${listingId}/${offerId}):`, error);
+        functions.logger.error(`Respond to offer error (${listingId}/${offerId}):`, error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to respond to offer");
@@ -1394,11 +1394,11 @@ exports.initiateCreditTransfer = functions
             status: "pending_transfer",
             updatedAt: admin.firestore.FieldValue.serverTimestamp(),
         });
-        console.log(`Credit transfer initiated: ${txRef.id} — $${salePrice} for $${creditAmount} credit (fee: $${platformFee})`);
+        functions.logger.info(`Credit transfer initiated: ${txRef.id} — $${salePrice} for $${creditAmount} credit (fee: $${platformFee})`);
         return { success: true, transactionId: txRef.id };
     }
     catch (error) {
-        console.error("Initiate credit transfer error:", error);
+        functions.logger.error("Initiate credit transfer error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to initiate transfer");
@@ -1482,11 +1482,11 @@ exports.completeCreditTransfer = functions
                 });
             }
         }
-        console.log(`Credit transfer completed: ${transactionId}`);
+        functions.logger.info(`Credit transfer completed: ${transactionId}`);
         return { success: true };
     }
     catch (error) {
-        console.error(`Complete credit transfer error (${transactionId}):`, error);
+        functions.logger.error(`Complete credit transfer error (${transactionId}):`, error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to complete transfer");
@@ -1527,7 +1527,7 @@ exports.getCreditTransactions = functions
         return { success: true, transactions, count: transactions.length };
     }
     catch (error) {
-        console.error("Get credit transactions error:", error);
+        functions.logger.error("Get credit transactions error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to get transactions");
@@ -1619,7 +1619,7 @@ exports.getCreditMarketStats = functions
         };
     }
     catch (error) {
-        console.error("Get credit market stats error:", error);
+        functions.logger.error("Get credit market stats error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to get market stats");

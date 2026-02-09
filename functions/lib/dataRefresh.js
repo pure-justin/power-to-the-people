@@ -166,14 +166,14 @@ exports.refreshSolarData = functions
         started_at: admin.firestore.Timestamp.now(),
     };
     await logRef.set(logEntry);
-    console.log("Starting weekly solar data refresh...");
+    functions.logger.info("Starting weekly solar data refresh...");
     // Priority states to refresh (expand as data grows)
     const states = ["TX", "CA", "FL", "NC", "AZ"];
     let totalProcessed = 0;
     let totalUpdated = 0;
     const allErrors = [];
     for (const state of states) {
-        console.log(`Refreshing utility rates for ${state}...`);
+        functions.logger.info(`Refreshing utility rates for ${state}...`);
         const result = await refreshUtilityRatesFromOpenEI(state, db);
         totalProcessed += result.processed;
         totalUpdated += result.updated;
@@ -189,7 +189,7 @@ exports.refreshSolarData = functions
         completed_at: admin.firestore.Timestamp.now(),
         duration_ms: duration,
     });
-    console.log(`Solar data refresh complete. Processed: ${totalProcessed}, Updated: ${totalUpdated}, Errors: ${allErrors.length}, Duration: ${duration}ms`);
+    functions.logger.info(`Solar data refresh complete. Processed: ${totalProcessed}, Updated: ${totalUpdated}, Errors: ${allErrors.length}, Duration: ${duration}ms`);
 });
 // ─── Manual Refresh Trigger ────────────────────────────────────────────────────
 /**

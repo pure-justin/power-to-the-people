@@ -133,7 +133,7 @@ exports.createAhj = functions
         return { success: true, ahjId };
     }
     catch (error) {
-        console.error("createAhj error:", error);
+        functions.logger.error("createAhj error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to create/update AHJ record.");
@@ -174,7 +174,7 @@ exports.getAhj = functions
     catch (error) {
         if (error instanceof functions.https.HttpsError)
             throw error;
-        console.error("getAhj error:", error);
+        functions.logger.error("getAhj error:", error);
         throw new functions.https.HttpsError("internal", error.message || "Failed to retrieve AHJ record.");
     }
 });
@@ -253,7 +253,7 @@ exports.searchAhj = functions
         return { results, count: results.length };
     }
     catch (error) {
-        console.error("searchAhj error:", error);
+        functions.logger.error("searchAhj error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to search AHJ records.");
@@ -383,7 +383,7 @@ exports.findAhjForAddress = functions
     catch (error) {
         if (error instanceof functions.https.HttpsError)
             throw error;
-        console.error("findAhjForAddress error:", error);
+        functions.logger.error("findAhjForAddress error:", error);
         throw new functions.https.HttpsError("internal", error.message || "Failed to find AHJ for address.");
     }
 });
@@ -428,7 +428,7 @@ exports.updateAhjRequirements = functions
     catch (error) {
         if (error instanceof functions.https.HttpsError)
             throw error;
-        console.error("updateAhjRequirements error:", error);
+        functions.logger.error("updateAhjRequirements error:", error);
         throw new functions.https.HttpsError("internal", error.message || "Failed to update AHJ requirements.");
     }
 });
@@ -512,7 +512,7 @@ exports.createPermitSop = functions
     catch (error) {
         if (error instanceof functions.https.HttpsError)
             throw error;
-        console.error("createPermitSop error:", error);
+        functions.logger.error("createPermitSop error:", error);
         throw new functions.https.HttpsError("internal", error.message || "Failed to create permit SOP.");
     }
 });
@@ -558,7 +558,7 @@ exports.getPermitSop = functions
         };
     }
     catch (error) {
-        console.error("getPermitSop error:", error);
+        functions.logger.error("getPermitSop error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to retrieve permit SOP.");
@@ -611,7 +611,7 @@ exports.verifyAhj = functions
     catch (error) {
         if (error instanceof functions.https.HttpsError)
             throw error;
-        console.error("verifyAhj error:", error);
+        functions.logger.error("verifyAhj error:", error);
         throw new functions.https.HttpsError("internal", error.message || "Failed to verify AHJ.");
     }
 });
@@ -680,7 +680,7 @@ exports.getAhjStats = functions
         };
     }
     catch (error) {
-        console.error("getAhjStats error:", error);
+        functions.logger.error("getAhjStats error:", error);
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to compute AHJ statistics.");

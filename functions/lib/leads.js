@@ -42,6 +42,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.leadWebhook = exports.recalculateLeadScores = exports.assignLead = exports.addLeadNote = exports.updateLead = exports.createLead = exports.LeadSource = exports.LeadStatus = void 0;
 const functions = __importStar(require("firebase-functions/v1"));
 const admin = __importStar(require("firebase-admin"));
+const corsConfig_1 = require("./corsConfig");
 /**
  * Lead status enum - tracks progress through sales funnel
  */
@@ -160,7 +161,7 @@ exports.createLead = functions
         newLead.score = calculateLeadScore(newLead);
         // Save to Firestore
         await leadRef.set(newLead);
-        console.log(`Created lead ${leadRef.id} for ${data.customerName}`);
+        functions.logger.info(`Created lead ${leadRef.id} for ${data.customerName}`);
         return {
             success: true,
             leadId: leadRef.id,
@@ -168,7 +169,7 @@ exports.createLead = functions
         };
     }
     catch (error) {
-        console.error("Create lead error:", error);
+        functions.logger.error("Create lead error:", error);
         throw new functions.https.HttpsError("internal", error.message || "Failed to create lead");
     }
 });
@@ -239,14 +240,14 @@ exports.updateLead = functions
         delete updateData.createdAt;
         delete updateData.createdBy;
         await leadRef.update(updateData);
-        console.log(`Updated lead ${leadId} by user ${context.auth.uid}`);
+        functions.logger.info(`Updated lead ${leadId} by user ${context.auth.uid}`);
         return {
             success: true,
             leadId,
         };
     }
     catch (error) {
-        console.error("Update lead error:", error);
+        functions.logger.error("Update lead error:", error);
         throw new functions.https.HttpsError("internal", error.message || "Failed to update lead");
     }
 });
@@ -293,14 +294,14 @@ exports.addLeadNote = functions
             notes: admin.firestore.FieldValue.arrayUnion(note),
             updatedAt: admin.firestore.Timestamp.now(),
         });
-        console.log(`Added note to lead ${leadId} by ${context.auth.uid}`);
+        functions.logger.info(`Added note to lead ${leadId} by ${context.auth.uid}`);
         return {
             success: true,
             note,
         };
     }
     catch (error) {
-        console.error("Add note error:", error);
+        functions.logger.error("Add note error:", error);
         throw new functions.https.HttpsError("internal", error.message || "Failed to add note");
     }
 });
@@ -339,7 +340,7 @@ exports.assignLead = functions
             assignedToName: assignToName || assignToUserId,
             updatedAt: admin.firestore.Timestamp.now(),
         });
-        console.log(`Assigned lead ${leadId} to ${assignToUserId} by ${context.auth.uid}`);
+        functions.logger.info(`Assigned lead ${leadId} to ${assignToUserId} by ${context.auth.uid}`);
         return {
             success: true,
             leadId,
@@ -347,7 +348,7 @@ exports.assignLead = functions
         };
     }
     catch (error) {
-        console.error("Assign lead error:", error);
+        functions.logger.error("Assign lead error:", error);
         throw new functions.https.HttpsError("internal", error.message || "Failed to assign lead");
     }
 });
@@ -393,7 +394,7 @@ exports.recalculateLeadScores = functions
         if (updated > 0) {
             await batch.commit();
         }
-        console.log(`Recalculated scores for ${updated} leads`);
+        functions.logger.info(`Recalculated scores for ${updated} leads`);
         return {
             success: true,
             totalLeads: leadsSnapshot.size,
@@ -401,7 +402,7 @@ exports.recalculateLeadScores = functions
         };
     }
     catch (error) {
-        console.error("Recalculate scores error:", error);
+        functions.logger.error("Recalculate scores error:", error);
         throw new functions.https.HttpsError("internal", error.message || "Failed to recalculate scores");
     }
 });
@@ -427,14 +428,9 @@ exports.leadWebhook = functions
 })
     .https.onRequest(async (req, res) => {
     var _a, _b;
-    // CORS
-    res.set("Access-Control-Allow-Origin", "*");
-    res.set("Access-Control-Allow-Methods", "POST, OPTIONS");
-    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
-    if (req.method === "OPTIONS") {
-        res.status(204).send("");
+    if ((0, corsConfig_1.handleOptions)(req, res))
         return;
-    }
+    (0, corsConfig_1.setCors)(req, res);
     if (req.method !== "POST") {
         res.status(405).json({ error: "Method not allowed" });
         return;
@@ -496,7 +492,7 @@ exports.leadWebhook = functions
         // Calculate score
         newLead.score = calculateLeadScore(newLead);
         await leadRef.set(newLead);
-        console.log(`Webhook created lead ${leadRef.id} for ${data.customerName} from IP ${req.ip}`);
+        functions.logger.info(`Webhook created lead ${leadRef.id} for ${data.customerName} from IP ${req.ip}`);
         res.json({
             success: true,
             leadId: leadRef.id,
@@ -504,7 +500,7 @@ exports.leadWebhook = functions
         });
     }
     catch (error) {
-        console.error("Lead webhook error:", error);
+        functions.logger.error("Lead webhook error:", error);
         res.status(500).json({
             success: false,
             error: error.message || "Failed to create lead",

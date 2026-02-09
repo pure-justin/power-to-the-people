@@ -47,20 +47,7 @@ const functions = __importStar(require("firebase-functions/v1"));
 const admin = __importStar(require("firebase-admin"));
 const apiKeys_1 = require("./apiKeys");
 const complianceEngine_1 = require("./complianceEngine");
-// ─── CORS Helper ───────────────────────────────────────────────────────────────
-function setCors(res) {
-    res.set("Access-Control-Allow-Origin", "*");
-    res.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
-}
-function handleOptions(req, res) {
-    if (req.method === "OPTIONS") {
-        setCors(res);
-        res.status(204).send("");
-        return true;
-    }
-    return false;
-}
+const corsConfig_1 = require("./corsConfig");
 // ─── Equipment Endpoint ────────────────────────────────────────────────────────
 /**
  * Queries the solar equipment database with search, filtering, sorting, and pagination
@@ -80,9 +67,9 @@ function handleOptions(req, res) {
 exports.solarEquipment = functions
     .runWith({ timeoutSeconds: 30, memory: "256MB" })
     .https.onRequest(async (req, res) => {
-    if (handleOptions(req, res))
+    if ((0, corsConfig_1.handleOptions)(req, res))
         return;
-    setCors(res);
+    (0, corsConfig_1.setCors)(req, res);
     if (req.method !== "GET") {
         res.status(405).json({ error: "Method not allowed" });
         return;
@@ -216,7 +203,7 @@ exports.solarEquipment = functions
         });
     }
     catch (error) {
-        console.error("Solar equipment query error:", error);
+        functions.logger.error("Solar equipment query error:", error);
         const status = error.code === "unauthenticated"
             ? 401
             : error.code === "permission-denied"
@@ -248,9 +235,9 @@ exports.solarEquipment = functions
 exports.solarUtilities = functions
     .runWith({ timeoutSeconds: 30, memory: "256MB" })
     .https.onRequest(async (req, res) => {
-    if (handleOptions(req, res))
+    if ((0, corsConfig_1.handleOptions)(req, res))
         return;
-    setCors(res);
+    (0, corsConfig_1.setCors)(req, res);
     if (req.method !== "GET") {
         res.status(405).json({ error: "Method not allowed" });
         return;
@@ -285,7 +272,7 @@ exports.solarUtilities = functions
         });
     }
     catch (error) {
-        console.error("Solar utilities query error:", error);
+        functions.logger.error("Solar utilities query error:", error);
         const status = error.code === "unauthenticated"
             ? 401
             : error.code === "permission-denied"
@@ -317,9 +304,9 @@ exports.solarUtilities = functions
 exports.solarIncentives = functions
     .runWith({ timeoutSeconds: 30, memory: "256MB" })
     .https.onRequest(async (req, res) => {
-    if (handleOptions(req, res))
+    if ((0, corsConfig_1.handleOptions)(req, res))
         return;
-    setCors(res);
+    (0, corsConfig_1.setCors)(req, res);
     if (req.method !== "GET") {
         res.status(405).json({ error: "Method not allowed" });
         return;
@@ -354,7 +341,7 @@ exports.solarIncentives = functions
         });
     }
     catch (error) {
-        console.error("Solar incentives query error:", error);
+        functions.logger.error("Solar incentives query error:", error);
         const status = error.code === "unauthenticated"
             ? 401
             : error.code === "permission-denied"
@@ -386,9 +373,9 @@ exports.solarIncentives = functions
 exports.solarPermits = functions
     .runWith({ timeoutSeconds: 30, memory: "256MB" })
     .https.onRequest(async (req, res) => {
-    if (handleOptions(req, res))
+    if ((0, corsConfig_1.handleOptions)(req, res))
         return;
-    setCors(res);
+    (0, corsConfig_1.setCors)(req, res);
     if (req.method !== "GET") {
         res.status(405).json({ error: "Method not allowed" });
         return;
@@ -420,7 +407,7 @@ exports.solarPermits = functions
         });
     }
     catch (error) {
-        console.error("Solar permits query error:", error);
+        functions.logger.error("Solar permits query error:", error);
         const status = error.code === "unauthenticated"
             ? 401
             : error.code === "permission-denied"
@@ -452,9 +439,9 @@ exports.solarPermits = functions
 exports.solarComplianceCheck = functions
     .runWith({ timeoutSeconds: 60, memory: "512MB" })
     .https.onRequest(async (req, res) => {
-    if (handleOptions(req, res))
+    if ((0, corsConfig_1.handleOptions)(req, res))
         return;
-    setCors(res);
+    (0, corsConfig_1.setCors)(req, res);
     if (req.method !== "POST") {
         res.status(405).json({ error: "Method not allowed" });
         return;
@@ -513,7 +500,7 @@ exports.solarComplianceCheck = functions
         });
     }
     catch (error) {
-        console.error("Compliance check error:", error);
+        functions.logger.error("Compliance check error:", error);
         const status = error.code === "unauthenticated"
             ? 401
             : error.code === "permission-denied"
@@ -545,9 +532,9 @@ exports.solarComplianceCheck = functions
 exports.solarComplianceQuickCheck = functions
     .runWith({ timeoutSeconds: 30, memory: "256MB" })
     .https.onRequest(async (req, res) => {
-    if (handleOptions(req, res))
+    if ((0, corsConfig_1.handleOptions)(req, res))
         return;
-    setCors(res);
+    (0, corsConfig_1.setCors)(req, res);
     if (req.method !== "GET") {
         res.status(405).json({ error: "Method not allowed" });
         return;
@@ -568,7 +555,7 @@ exports.solarComplianceQuickCheck = functions
         });
     }
     catch (error) {
-        console.error("Quick compliance check error:", error);
+        functions.logger.error("Quick compliance check error:", error);
         const status = error.code === "unauthenticated"
             ? 401
             : error.code === "permission-denied"
@@ -600,9 +587,9 @@ exports.solarComplianceQuickCheck = functions
 exports.solarEstimate = functions
     .runWith({ timeoutSeconds: 60, memory: "512MB" })
     .https.onRequest(async (req, res) => {
-    if (handleOptions(req, res))
+    if ((0, corsConfig_1.handleOptions)(req, res))
         return;
-    setCors(res);
+    (0, corsConfig_1.setCors)(req, res);
     if (req.method !== "POST") {
         res.status(405).json({ error: "Method not allowed" });
         return;
@@ -776,7 +763,7 @@ exports.solarEstimate = functions
         });
     }
     catch (error) {
-        console.error("Solar estimate error:", error);
+        functions.logger.error("Solar estimate error:", error);
         const status = error.code === "unauthenticated"
             ? 401
             : error.code === "permission-denied"
