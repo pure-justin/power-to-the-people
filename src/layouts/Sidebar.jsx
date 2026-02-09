@@ -92,6 +92,7 @@ const NAV_ITEMS = {
   customer: [
     { to: "/portal", label: "Home", icon: Home },
     { to: "/portal/project", label: "My Project", icon: FolderKanban },
+    { to: "/portal/tasks", label: "My Tasks", icon: ClipboardList },
     { to: "/portal/survey", label: "Site Survey", icon: Camera },
     { to: "/portal/schedule", label: "Schedule", icon: Calendar },
     { to: "/portal/credits", label: "Tax Credits", icon: BadgeDollarSign },

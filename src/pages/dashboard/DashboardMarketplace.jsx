@@ -94,8 +94,75 @@ function formatCurrency(val) {
   }).format(val);
 }
 
+// ---- Distance Calculation (Haversine) ----
+function calcDistanceMiles(lat1, lng1, lat2, lng2) {
+  if (!lat1 || !lng1 || !lat2 || !lng2) return null;
+  const R = 3958.8; // Earth radius in miles
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLng = ((lng2 - lng1) * Math.PI) / 180;
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos((lat1 * Math.PI) / 180) *
+      Math.cos((lat2 * Math.PI) / 180) *
+      Math.sin(dLng / 2) *
+      Math.sin(dLng / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
+
+// ---- Bid Score Preview ----
+function computeBidScorePreview({
+  price,
+  budget,
+  certifications,
+  workerProfile,
+}) {
+  const breakdown = [];
+  let total = 0;
+
+  // Price score (40 points max) - lower price within budget = higher score
+  if (budget && price) {
+    const mid = (budget.min + budget.max) / 2;
+    const priceRatio = price / mid;
+    let priceScore;
+    if (priceRatio <= 0.8) priceScore = 40;
+    else if (priceRatio <= 1.0) priceScore = 35;
+    else if (priceRatio <= 1.2) priceScore = 25;
+    else priceScore = 10;
+    breakdown.push({
+      label: "Price competitiveness",
+      score: priceScore,
+      max: 40,
+    });
+    total += priceScore;
+  } else {
+    breakdown.push({ label: "Price competitiveness", score: 20, max: 40 });
+    total += 20;
+  }
+
+  // Certifications (20 points max)
+  const certCount = certifications?.length || 0;
+  const certScore = Math.min(certCount * 5, 20);
+  breakdown.push({ label: "Certifications", score: certScore, max: 20 });
+  total += certScore;
+
+  // Reliability / Rating (20 points max)
+  const rating = workerProfile?.ratings?.overall || 0;
+  const ratingScore = Math.round((rating / 5) * 20);
+  breakdown.push({ label: "Rating", score: ratingScore, max: 20 });
+  total += ratingScore;
+
+  // Completed jobs (20 points max)
+  const jobs = workerProfile?.completed_jobs || 0;
+  const jobScore = Math.min(jobs * 2, 20);
+  breakdown.push({ label: "Experience", score: jobScore, max: 20 });
+  total += jobScore;
+
+  return { total, breakdown };
+}
+
 // ---- Bid Submission Modal ----
-function BidModal({ listing, onClose, onSubmitted }) {
+function BidModal({ listing, onClose, onSubmitted, workerProfile }) {
   const [price, setPrice] = useState("");
   const [timeline, setTimeline] = useState("");
   const [notes, setNotes] = useState("");
@@ -233,6 +300,57 @@ function BidModal({ listing, onClose, onSubmitted }) {
               ))}
             </div>
           </div>
+
+          {/* Bid Score Preview */}
+          {price && (
+            <div className="rounded-lg border border-blue-200 bg-blue-50 p-3">
+              <h4 className="mb-2 flex items-center gap-1.5 text-xs font-semibold uppercase text-blue-700">
+                <BarChart3 className="h-3.5 w-3.5" />
+                Estimated Bid Score
+              </h4>
+              {(() => {
+                const selectedCerts = Object.entries(certs)
+                  .filter(([, v]) => v)
+                  .map(([k]) => k);
+                const preview = computeBidScorePreview({
+                  price: parseFloat(price),
+                  budget: listing.budget,
+                  certifications: selectedCerts,
+                  workerProfile,
+                });
+                return (
+                  <div className="space-y-1.5">
+                    {preview.breakdown.map((item) => (
+                      <div key={item.label} className="flex items-center gap-2">
+                        <span className="w-36 text-xs text-blue-600">
+                          {item.label}
+                        </span>
+                        <div className="flex-1 rounded-full bg-blue-100 h-1.5">
+                          <div
+                            className="h-1.5 rounded-full bg-blue-500"
+                            style={{
+                              width: `${(item.score / item.max) * 100}%`,
+                            }}
+                          />
+                        </div>
+                        <span className="w-12 text-right text-xs font-medium text-blue-700">
+                          {item.score}/{item.max}
+                        </span>
+                      </div>
+                    ))}
+                    <div className="flex items-center justify-between border-t border-blue-200 pt-1.5">
+                      <span className="text-xs font-semibold text-blue-800">
+                        Total Score
+                      </span>
+                      <span className="text-sm font-bold text-blue-800">
+                        {preview.total}/100
+                      </span>
+                    </div>
+                  </div>
+                );
+              })()}
+            </div>
+          )}
 
           <div className="flex justify-end gap-3 pt-2">
             <button
@@ -491,14 +609,51 @@ function CreateListingModal({ onClose, onCreated }) {
 }
 
 // ---- Listing Card ----
-function ListingCard({ listing, onBid, isOwn }) {
+function ListingCard({
+  listing,
+  onBid,
+  isOwn,
+  workerSkills,
+  workerLat,
+  workerLng,
+}) {
   const [expanded, setExpanded] = useState(false);
 
+  // Check if listing matches worker's skills
+  const isSmartMatch =
+    workerSkills?.length > 0 &&
+    workerSkills.some(
+      (skill) =>
+        skill === listing.service_type ||
+        listing.service_type?.includes(skill) ||
+        skill.includes(listing.service_type || ""),
+    );
+
+  // Calculate distance if coordinates available
+  const distance = calcDistanceMiles(
+    workerLat,
+    workerLng,
+    listing.project_context?.lat,
+    listing.project_context?.lng,
+  );
+
   return (
-    <div className="card border border-gray-200 p-4">
+    <div
+      className={`card border p-4 ${
+        isSmartMatch
+          ? "border-emerald-300 bg-emerald-50/30 ring-1 ring-emerald-200"
+          : "border-gray-200"
+      }`}
+    >
       <div className="flex items-start justify-between">
         <div className="flex-1">
           <div className="flex items-center gap-2">
+            {isSmartMatch && (
+              <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-700">
+                <Sparkles className="h-3 w-3" />
+                Match
+              </span>
+            )}
             <span className="rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-700">
               {SERVICE_TYPE_LABELS[listing.service_type] ||
                 listing.service_type}

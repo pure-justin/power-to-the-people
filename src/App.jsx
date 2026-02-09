@@ -43,6 +43,7 @@ const PortalFinancing = lazy(() => import("./pages/portal/PortalFinancing"));
 const PortalSurvey = lazy(() => import("./pages/portal/PortalSurvey"));
 const PortalSchedule = lazy(() => import("./pages/portal/PortalSchedule"));
 const PortalCredits = lazy(() => import("./pages/portal/PortalCredits"));
+const PortalTasks = lazy(() => import("./pages/portal/PortalTasks"));
 
 // Dashboard (installer) — lazy loaded
 const DashboardHome = lazy(() => import("./pages/dashboard/DashboardHome"));
@@ -183,6 +184,7 @@ function App() {
                 element={<PortalSurvey />}
               />
               <Route path="/portal/schedule" element={<PortalSchedule />} />
+              <Route path="/portal/tasks" element={<PortalTasks />} />
               <Route path="/portal/credits" element={<PortalCredits />} />
             </Route>
 
