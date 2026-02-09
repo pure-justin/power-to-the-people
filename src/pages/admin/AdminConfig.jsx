@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import {
+import { getFunctions, httpsCallable } from "firebase/functions";
+import app, {
   db,
   collection,
   getDocs,
@@ -23,6 +24,7 @@ import {
   ChevronDown,
   Activity,
   Server,
+  Loader2,
 } from "lucide-react";
 
 const INTEGRATIONS = [
@@ -61,11 +63,21 @@ const INTEGRATIONS = [
     configDoc: "openei",
     requiredKeys: [],
   },
+  {
+    key: "google_solar",
+    name: "Google Solar",
+    description: "Google Solar API for rooftop analysis",
+    configDoc: "google_solar",
+    requiredKeys: ["solar_api_key"],
+  },
 ];
+
+const functions = getFunctions(app, "us-central1");
 
 export default function AdminConfig() {
   useAuth();
   const [loading, setLoading] = useState(true);
+  const [syncing, setSyncing] = useState(false);
   const [configDocs, setConfigDocs] = useState({});
   const [refreshLogs, setRefreshLogs] = useState([]);
   const [integrationHealth, setIntegrationHealth] = useState({});
@@ -74,15 +86,27 @@ export default function AdminConfig() {
   const [expandedLog, setExpandedLog] = useState(null);
 
   useEffect(() => {
-    loadData();
+    loadData(true);
   }, []);
 
-  const loadData = async () => {
+  const syncConfig = async () => {
+    setSyncing(true);
+    try {
+      const callable = httpsCallable(functions, "syncConfigStatus");
+      await callable();
+    } catch (e) {
+      console.error("Config sync failed:", e);
+    } finally {
+      setSyncing(false);
+    }
+  };
+
+  const loadData = async (autoSync = false) => {
     try {
       setLoading(true);
 
       // Load all config docs
-      const configs = {};
+      let configs = {};
       try {
         const configRef = collection(db, "config");
         const configSnap = await getDocs(configRef);
@@ -91,6 +115,22 @@ export default function AdminConfig() {
         });
       } catch (e) {
         /* collection may not exist */
+      }
+
+      // Auto-sync if config collection is empty on first load
+      if (autoSync && Object.keys(configs).length === 0) {
+        await syncConfig();
+        // Reload after sync
+        try {
+          const configRef = collection(db, "config");
+          const configSnap = await getDocs(configRef);
+          configs = {};
+          configSnap.docs.forEach((d) => {
+            configs[d.id] = { id: d.id, ...d.data() };
+          });
+        } catch (e) {
+          /* ignore */
+        }
       }
       setConfigDocs(configs);
 
@@ -277,10 +317,27 @@ export default function AdminConfig() {
 
       {/* Integration Health */}
       <div className="bg-white rounded-xl border border-gray-200 p-6">
-        <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-          <Webhook size={20} className="text-blue-500" />
-          Integration Health
-        </h3>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+            <Webhook size={20} className="text-blue-500" />
+            Integration Health
+          </h3>
+          <button
+            onClick={async () => {
+              await syncConfig();
+              await loadData();
+            }}
+            disabled={syncing}
+            className="flex items-center gap-1.5 px-3 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 disabled:opacity-50 transition-colors"
+          >
+            {syncing ? (
+              <Loader2 size={14} className="animate-spin" />
+            ) : (
+              <RefreshCw size={14} />
+            )}
+            {syncing ? "Syncing..." : "Sync Config"}
+          </button>
+        </div>
         <div className="space-y-3">
           {INTEGRATIONS.map((integration) => {
             const health = integrationHealth[integration.key] || {

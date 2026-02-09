@@ -306,3 +306,6 @@ export {
 
 // Export Proposal Generator functions (customer-facing proposal generation)
 export { generateSolarProposal, getSolarProposal } from "./proposalGenerator";
+
+// Export Config Sync function (admin-only, bridges functions.config → Firestore)
+export { syncConfigStatus } from "./configSync";

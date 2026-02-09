@@ -1,6 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import { db, collection, getDocs, limit, query } from "../../services/firebase";
+import { db, collection, getDocs } from "../../services/firebase";
+import DataTable from "../../components/ui/DataTable";
+import FilterBar from "../../components/ui/FilterBar";
 import {
   Database,
   Search,
@@ -9,6 +12,11 @@ import {
   Building2,
   Award,
   FileCheck,
+  Download,
+  ShieldCheck,
+  CheckCircle,
+  Flag,
+  AlertTriangle,
   ChevronDown,
 } from "lucide-react";
 
@@ -39,13 +47,138 @@ const TABS = [
   },
 ];
 
+// --- Rendering helpers ---
+
+const boolBadge = (val) => {
+  if (val === true)
+    return (
+      <span className="px-2 py-0.5 rounded bg-green-100 text-green-700 text-xs font-semibold">
+        Yes
+      </span>
+    );
+  if (val === false)
+    return (
+      <span className="px-2 py-0.5 rounded bg-red-100 text-red-700 text-xs font-semibold">
+        No
+      </span>
+    );
+  if (val === "partial")
+    return (
+      <span className="px-2 py-0.5 rounded bg-amber-100 text-amber-700 text-xs font-semibold">
+        Partial
+      </span>
+    );
+  return <span className="text-gray-300">--</span>;
+};
+
+const currencyRender = (val) => {
+  if (val == null) return <span className="text-gray-300">--</span>;
+  if (typeof val === "number")
+    return `$${val.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  return String(val);
+};
+
+const statusBadge = (val) => {
+  if (!val) return <span className="text-gray-300">--</span>;
+  const s = String(val).toLowerCase();
+  const color =
+    s === "active"
+      ? "bg-green-100 text-green-700"
+      : s === "expired"
+        ? "bg-red-100 text-red-700"
+        : "bg-gray-100 text-gray-600";
+  return (
+    <span
+      className={`px-2 py-0.5 rounded text-xs font-semibold capitalize ${color}`}
+    >
+      {val}
+    </span>
+  );
+};
+
+const typeBadge = (val) => {
+  if (!val) return <span className="text-gray-300">--</span>;
+  return (
+    <span className="px-2.5 py-1 rounded-md text-xs font-semibold capitalize bg-gray-100 text-gray-700">
+      {val}
+    </span>
+  );
+};
+
+// --- Column definitions per tab ---
+
+const TAB_COLUMNS = {
+  equipment: [
+    { key: "manufacturer", label: "Manufacturer" },
+    { key: "model", label: "Model" },
+    { key: "type", label: "Type", render: (v) => typeBadge(v) },
+    { key: "feoc_compliant", label: "FEOC", render: (v) => boolBadge(v) },
+    {
+      key: "domestic_content_compliant",
+      label: "Domestic",
+      render: (v) => boolBadge(v),
+    },
+    { key: "tariff_safe", label: "Tariff Safe", render: (v) => boolBadge(v) },
+    { key: "country_of_origin", label: "Origin" },
+  ],
+  utilities: [
+    { key: "utility_name", label: "Utility" },
+    { key: "state", label: "State" },
+    { key: "rate_type", label: "Rate Type" },
+    {
+      key: "has_net_metering",
+      label: "Net Metering",
+      render: (v) => boolBadge(v),
+    },
+    { key: "avg_rate", label: "Avg Rate", render: (v) => currencyRender(v) },
+  ],
+  incentives: [
+    { key: "name", label: "Name" },
+    { key: "state", label: "State" },
+    { key: "incentive_type", label: "Type", render: (v) => typeBadge(v) },
+    { key: "amount", label: "Amount", render: (v) => currencyRender(v) },
+    { key: "status", label: "Status", render: (v) => statusBadge(v) },
+    { key: "sector", label: "Sector", render: (v) => typeBadge(v) },
+  ],
+  permits: [
+    { key: "jurisdiction", label: "Jurisdiction" },
+    { key: "state", label: "State" },
+    { key: "county", label: "County" },
+    { key: "permit_type", label: "Type", render: (v) => typeBadge(v) },
+    { key: "fee", label: "Fee", render: (v) => currencyRender(v) },
+  ],
+};
+
+// --- Extract unique sorted values from data for a given field ---
+
+function uniqueValues(records, field) {
+  const set = new Set();
+  records.forEach((r) => {
+    const v = r[field];
+    if (v != null && v !== "")
+      set.add(typeof v === "boolean" ? String(v) : String(v));
+  });
+  return [...set].sort();
+}
+
+function boolOptions(label) {
+  return [
+    { value: "true", label: `${label}: Yes` },
+    { value: "false", label: `${label}: No` },
+  ];
+}
+
 export default function AdminSolarData() {
   useAuth();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState("equipment");
+  const [activeTab, setActiveTab] = useState(
+    searchParams.get("tab") || "equipment",
+  );
   const [data, setData] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
-  const [expandedRow, setExpandedRow] = useState(null);
+  const [activeFilters, setActiveFilters] = useState({});
+  const [complianceOpen, setComplianceOpen] = useState(true);
 
   useEffect(() => {
     loadAllData();
@@ -58,9 +191,9 @@ export default function AdminSolarData() {
       for (const tab of TABS) {
         try {
           const ref = collection(db, tab.collection);
-          const snap = await getDocs(query(ref, limit(200)));
+          const snap = await getDocs(ref);
           results[tab.key] = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
-        } catch (e) {
+        } catch {
           results[tab.key] = [];
         }
       }
@@ -72,78 +205,197 @@ export default function AdminSolarData() {
     }
   };
 
-  const currentData = data[activeTab] || [];
-  const filtered = currentData.filter((item) => {
-    if (!searchTerm) return true;
-    const term = searchTerm.toLowerCase();
-    return Object.values(item).some(
-      (v) => typeof v === "string" && v.toLowerCase().includes(term),
-    );
-  });
-
-  const getColumns = (tab) => {
-    const colMap = {
-      equipment: [
-        { key: "manufacturer", label: "Manufacturer" },
-        { key: "model", label: "Model" },
-        { key: "type", label: "Type" },
-        { key: "feoc_compliant", label: "FEOC" },
-        { key: "domestic_content_compliant", label: "Domestic" },
-        { key: "tariff_safe", label: "Tariff Safe" },
-      ],
-      utilities: [
-        { key: "utility_name", label: "Utility" },
-        { key: "state", label: "State" },
-        { key: "rate_type", label: "Rate Type" },
-        { key: "has_net_metering", label: "Net Metering" },
-        { key: "avg_rate", label: "Avg Rate" },
-      ],
-      incentives: [
-        { key: "name", label: "Name" },
-        { key: "state", label: "State" },
-        { key: "incentive_type", label: "Type" },
-        { key: "amount", label: "Amount" },
-        { key: "status", label: "Status" },
-        { key: "sector", label: "Sector" },
-      ],
-      permits: [
-        { key: "jurisdiction", label: "Jurisdiction" },
-        { key: "state", label: "State" },
-        { key: "county", label: "County" },
-        { key: "permit_type", label: "Type" },
-        { key: "fee", label: "Fee" },
-      ],
-    };
-    return colMap[tab] || [];
+  const switchTab = (key) => {
+    setActiveTab(key);
+    setSearchTerm("");
+    setActiveFilters({});
+    setSearchParams({ tab: key });
   };
 
-  const renderValue = (val, key) => {
-    if (val === true)
-      return (
-        <span className="px-2 py-0.5 rounded bg-green-100 text-green-700 text-xs font-semibold">
-          Yes
-        </span>
+  const currentData = data[activeTab] || [];
+
+  // --- Build dynamic filter definitions based on loaded data ---
+
+  const filterDefs = useMemo(() => {
+    if (!currentData.length) return [];
+    const defs = {
+      equipment: [
+        {
+          key: "manufacturer",
+          label: "Manufacturer",
+          options: uniqueValues(currentData, "manufacturer"),
+        },
+        {
+          key: "type",
+          label: "Type",
+          options: uniqueValues(currentData, "type"),
+        },
+        { key: "feoc_compliant", label: "FEOC", options: boolOptions("FEOC") },
+        {
+          key: "domestic_content_compliant",
+          label: "Domestic Content",
+          options: boolOptions("Domestic"),
+        },
+        {
+          key: "tariff_safe",
+          label: "Tariff Safe",
+          options: boolOptions("Tariff"),
+        },
+        {
+          key: "country_of_origin",
+          label: "Country",
+          options: uniqueValues(currentData, "country_of_origin"),
+        },
+      ],
+      utilities: [
+        {
+          key: "state",
+          label: "State",
+          options: uniqueValues(currentData, "state"),
+        },
+        {
+          key: "rate_type",
+          label: "Rate Type",
+          options: uniqueValues(currentData, "rate_type"),
+        },
+        {
+          key: "has_net_metering",
+          label: "Net Metering",
+          options: boolOptions("Net Metering"),
+        },
+      ],
+      incentives: [
+        {
+          key: "state",
+          label: "State",
+          options: uniqueValues(currentData, "state"),
+        },
+        {
+          key: "incentive_type",
+          label: "Type",
+          options: uniqueValues(currentData, "incentive_type"),
+        },
+        {
+          key: "status",
+          label: "Status",
+          options: uniqueValues(currentData, "status"),
+        },
+        {
+          key: "sector",
+          label: "Sector",
+          options: uniqueValues(currentData, "sector"),
+        },
+      ],
+      permits: [
+        {
+          key: "state",
+          label: "State",
+          options: uniqueValues(currentData, "state"),
+        },
+        {
+          key: "county",
+          label: "County",
+          options: uniqueValues(currentData, "county"),
+        },
+        {
+          key: "permit_type",
+          label: "Type",
+          options: uniqueValues(currentData, "permit_type"),
+        },
+      ],
+    };
+    // Filter out empty option lists
+    return (defs[activeTab] || []).filter((f) => f.options.length > 0);
+  }, [currentData, activeTab]);
+
+  // --- Apply search + filters ---
+
+  const filtered = useMemo(() => {
+    let items = currentData;
+
+    // Text search
+    if (searchTerm) {
+      const term = searchTerm.toLowerCase();
+      items = items.filter((item) =>
+        Object.values(item).some(
+          (v) => typeof v === "string" && v.toLowerCase().includes(term),
+        ),
       );
-    if (val === false)
-      return (
-        <span className="px-2 py-0.5 rounded bg-red-100 text-red-700 text-xs font-semibold">
-          No
-        </span>
-      );
-    if (val === null || val === undefined)
-      return <span className="text-gray-300">--</span>;
-    if (typeof val === "number") {
-      if (key === "avg_rate" || key === "fee" || key === "amount")
-        return `$${val.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-      return val.toLocaleString();
     }
-    if (typeof val === "object")
-      return (
-        <span className="text-xs text-gray-500">
-          {JSON.stringify(val).substring(0, 50)}
-        </span>
-      );
-    return String(val);
+
+    // Field-specific filters
+    Object.entries(activeFilters).forEach(([key, value]) => {
+      if (value == null) return;
+      items = items.filter((item) => {
+        const fieldVal = item[key];
+        // Boolean fields stored as true/false but filter value is "true"/"false" string
+        if (value === "true") return fieldVal === true;
+        if (value === "false") return fieldVal === false;
+        return (
+          String(fieldVal ?? "").toLowerCase() === String(value).toLowerCase()
+        );
+      });
+    });
+
+    return items;
+  }, [currentData, searchTerm, activeFilters]);
+
+  // --- Compliance summary (Equipment tab only) ---
+
+  const complianceStats = useMemo(() => {
+    const eq = data.equipment || [];
+    if (!eq.length) return null;
+    const total = eq.length;
+    const feoc = eq.filter((e) => e.feoc_compliant === true).length;
+    const domestic = eq.filter(
+      (e) => e.domestic_content_compliant === true,
+    ).length;
+    const tariff = eq.filter((e) => e.tariff_safe === true).length;
+    const flagged = eq.filter(
+      (e) => e.feoc_compliant === false || e.tariff_safe === false,
+    ).length;
+    const pct = (n) => (total ? Math.round((n / total) * 100) : 0);
+    return {
+      total,
+      feoc,
+      domestic,
+      tariff,
+      flagged,
+      feocPct: pct(feoc),
+      domesticPct: pct(domestic),
+      tariffPct: pct(tariff),
+    };
+  }, [data.equipment]);
+
+  // --- CSV export ---
+
+  const handleExport = () => {
+    const cols = TAB_COLUMNS[activeTab] || [];
+    const header = cols.map((c) => c.label);
+    const rows = filtered.map((item) =>
+      cols.map((c) => {
+        const v = item[c.key];
+        if (typeof v === "boolean") return v ? "Yes" : "No";
+        if (v == null) return "";
+        return String(v);
+      }),
+    );
+    const csv = [header, ...rows]
+      .map((r) => r.map((c) => `"${c}"`).join(","))
+      .join("\n");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `solar-${activeTab}-${new Date().toISOString().split("T")[0]}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  // --- Compliance metric click → set filter ---
+
+  const applyComplianceFilter = (key, value) => {
+    setActiveFilters({ [key]: value });
   };
 
   if (loading) {
@@ -172,7 +424,7 @@ export default function AdminSolarData() {
 
   return (
     <div className="space-y-6">
-      {/* Count Cards / Tab Selector */}
+      {/* Tab Bar / Count Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {TABS.map((tab) => {
           const Icon = tab.icon;
@@ -180,11 +432,7 @@ export default function AdminSolarData() {
           return (
             <button
               key={tab.key}
-              onClick={() => {
-                setActiveTab(tab.key);
-                setSearchTerm("");
-                setExpandedRow(null);
-              }}
+              onClick={() => switchTab(tab.key)}
               className={`rounded-xl border p-5 text-left transition-all hover:shadow-md ${
                 activeTab === tab.key
                   ? "bg-emerald-50 border-emerald-300 ring-2 ring-emerald-200"
@@ -211,7 +459,107 @@ export default function AdminSolarData() {
         })}
       </div>
 
-      {/* Search & Refresh */}
+      {/* Compliance Summary Strip (Equipment tab only) */}
+      {activeTab === "equipment" && complianceStats && (
+        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+          <button
+            onClick={() => setComplianceOpen(!complianceOpen)}
+            className="w-full flex items-center justify-between p-4 hover:bg-gray-50 transition-colors"
+          >
+            <h3 className="text-sm font-bold text-gray-900 flex items-center gap-2">
+              <ShieldCheck size={16} className="text-blue-500" />
+              Compliance Summary
+            </h3>
+            <ChevronDown
+              size={16}
+              className={`text-gray-400 transition-transform ${complianceOpen ? "rotate-180" : ""}`}
+            />
+          </button>
+          {complianceOpen && (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 px-4 pb-4">
+              <button
+                onClick={() => applyComplianceFilter("feoc_compliant", "true")}
+                className="rounded-lg border border-gray-100 p-4 text-left hover:border-emerald-300 hover:bg-emerald-50 transition-all"
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-semibold text-gray-500 uppercase">
+                    FEOC
+                  </span>
+                  <CheckCircle size={16} className="text-green-500" />
+                </div>
+                <div className="text-2xl font-extrabold text-gray-900">
+                  {complianceStats.feocPct}%
+                </div>
+                <p className="text-xs text-gray-400">
+                  {complianceStats.feoc} of {complianceStats.total}
+                </p>
+              </button>
+              <button
+                onClick={() =>
+                  applyComplianceFilter("domestic_content_compliant", "true")
+                }
+                className="rounded-lg border border-gray-100 p-4 text-left hover:border-purple-300 hover:bg-purple-50 transition-all"
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-semibold text-gray-500 uppercase">
+                    Domestic
+                  </span>
+                  <Flag size={16} className="text-purple-500" />
+                </div>
+                <div className="text-2xl font-extrabold text-gray-900">
+                  {complianceStats.domesticPct}%
+                </div>
+                <p className="text-xs text-gray-400">
+                  {complianceStats.domestic} of {complianceStats.total}
+                </p>
+              </button>
+              <button
+                onClick={() => applyComplianceFilter("tariff_safe", "true")}
+                className="rounded-lg border border-gray-100 p-4 text-left hover:border-blue-300 hover:bg-blue-50 transition-all"
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-semibold text-gray-500 uppercase">
+                    Tariff Safe
+                  </span>
+                  <ShieldCheck size={16} className="text-blue-500" />
+                </div>
+                <div className="text-2xl font-extrabold text-gray-900">
+                  {complianceStats.tariffPct}%
+                </div>
+                <p className="text-xs text-gray-400">
+                  {complianceStats.tariff} of {complianceStats.total}
+                </p>
+              </button>
+              <button
+                onClick={() => applyComplianceFilter("feoc_compliant", "false")}
+                className="rounded-lg border border-gray-100 p-4 text-left hover:border-red-300 hover:bg-red-50 transition-all"
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-semibold text-gray-500 uppercase">
+                    Flagged
+                  </span>
+                  <AlertTriangle size={16} className="text-red-500" />
+                </div>
+                <div className="text-2xl font-extrabold text-gray-900">
+                  {complianceStats.flagged}
+                </div>
+                <p className="text-xs text-gray-400">items need attention</p>
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Filter Bar */}
+      {filterDefs.length > 0 && (
+        <FilterBar
+          filters={filterDefs}
+          activeFilters={activeFilters}
+          onChange={setActiveFilters}
+        />
+      )}
+
+      {/* Search & Actions */}
       <div className="flex gap-3">
         <div className="relative flex-1">
           <Search
@@ -227,6 +575,14 @@ export default function AdminSolarData() {
           />
         </div>
         <button
+          onClick={handleExport}
+          disabled={!filtered.length}
+          className="flex items-center gap-2 px-4 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+        >
+          <Download size={16} />
+          Export CSV
+        </button>
+        <button
           onClick={loadAllData}
           className="flex items-center gap-2 px-4 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
         >
@@ -235,104 +591,31 @@ export default function AdminSolarData() {
         </button>
       </div>
 
+      {/* Record count */}
+      <p className="text-sm text-gray-500">
+        {filtered.length} record{filtered.length !== 1 ? "s" : ""}
+        {Object.keys(activeFilters).length > 0 &&
+          ` (filtered from ${currentData.length})`}
+      </p>
+
       {/* Data Table */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6">
-        <p className="text-sm text-gray-500 mb-4">
-          {filtered.length} record{filtered.length !== 1 ? "s" : ""}
-        </p>
-
-        {filtered.length === 0 ? (
-          <div className="text-center py-16">
-            <Database size={40} className="mx-auto text-gray-300 mb-3" />
-            <p className="text-gray-500 font-medium">
-              No {activeTab} data found
-            </p>
-            <p className="text-sm text-gray-400 mt-1">
-              Data will appear after import
-            </p>
-          </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="bg-gray-50 border-b border-gray-200">
-                  {getColumns(activeTab).map((col) => (
-                    <th
-                      key={col.key}
-                      className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide"
-                    >
-                      {col.label}
-                    </th>
-                  ))}
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Details
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {filtered.slice(0, 100).map((item) => (
-                  <tr
-                    key={item.id}
-                    className="hover:bg-gray-50 transition-colors cursor-pointer"
-                    onClick={() =>
-                      setExpandedRow(expandedRow === item.id ? null : item.id)
-                    }
-                  >
-                    {getColumns(activeTab).map((col) => (
-                      <td
-                        key={col.key}
-                        className="px-4 py-3 text-sm text-gray-700"
-                      >
-                        {renderValue(item[col.key], col.key)}
-                      </td>
-                    ))}
-                    <td className="px-4 py-3">
-                      <ChevronDown
-                        size={16}
-                        className={`text-gray-400 transition-transform ${expandedRow === item.id ? "rotate-180" : ""}`}
-                      />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-
-            {/* Expanded Row Detail */}
-            {expandedRow && (
-              <div className="border-t border-gray-200 px-4 py-4 bg-gray-50">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-                  {Object.entries(
-                    filtered.find((i) => i.id === expandedRow) || {},
-                  )
-                    .filter(([k]) => k !== "id")
-                    .map(([k, v]) => (
-                      <div key={k}>
-                        <span className="text-xs text-gray-500 font-medium">
-                          {k}
-                        </span>
-                        <p className="text-gray-900 font-medium truncate">
-                          {typeof v === "boolean"
-                            ? v
-                              ? "Yes"
-                              : "No"
-                            : typeof v === "object"
-                              ? JSON.stringify(v)
-                              : String(v ?? "N/A")}
-                        </p>
-                      </div>
-                    ))}
-                </div>
-              </div>
-            )}
-
-            {filtered.length > 100 && (
-              <p className="text-center text-sm text-gray-400 mt-4">
-                Showing first 100 of {filtered.length} records
-              </p>
-            )}
-          </div>
-        )}
-      </div>
+      {filtered.length === 0 ? (
+        <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
+          <Database size={40} className="mx-auto text-gray-300 mb-3" />
+          <p className="text-gray-500 font-medium">No {activeTab} data found</p>
+          <p className="text-sm text-gray-400 mt-1">
+            {currentData.length > 0
+              ? "Try adjusting your filters"
+              : "Data will appear after import"}
+          </p>
+        </div>
+      ) : (
+        <DataTable
+          columns={TAB_COLUMNS[activeTab] || []}
+          data={filtered}
+          emptyMessage={`No ${activeTab} data found`}
+        />
+      )}
     </div>
   );
 }

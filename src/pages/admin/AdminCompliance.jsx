@@ -1,6 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { db, collection, getDocs } from "../../services/firebase";
+import DataTable from "../../components/ui/DataTable";
+import FilterBar from "../../components/ui/FilterBar";
 import {
   ShieldCheck,
   AlertTriangle,
@@ -12,6 +15,7 @@ import {
   Download,
   BarChart3,
   Flag,
+  ExternalLink,
 } from "lucide-react";
 
 const CRITICAL_DATES = [
@@ -45,8 +49,6 @@ export default function AdminCompliance() {
   const [loading, setLoading] = useState(true);
   const [equipment, setEquipment] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [complianceFilter, setComplianceFilter] = useState("all");
-  const [typeFilter, setTypeFilter] = useState("all");
 
   useEffect(() => {
     loadEquipment();
@@ -92,31 +94,62 @@ export default function AdminCompliance() {
     ),
   ];
 
-  const filtered = equipment.filter((e) => {
-    const term = searchTerm.toLowerCase();
-    const matchesSearch =
-      !term ||
-      (e.manufacturer || "").toLowerCase().includes(term) ||
-      (e.model || "").toLowerCase().includes(term) ||
-      (e.type || "").toLowerCase().includes(term);
+  // Build filter definitions for FilterBar
+  const auditFilterDefs = useMemo(() => {
+    const defs = [
+      {
+        key: "compliance",
+        label: "Compliance",
+        options: [
+          { value: "feoc_pass", label: "FEOC Compliant" },
+          { value: "feoc_fail", label: "FEOC Non-Compliant" },
+          { value: "domestic_pass", label: "Domestic Content" },
+          { value: "tariff_safe", label: "Tariff Safe" },
+          { value: "flagged", label: "Flagged" },
+        ],
+      },
+    ];
+    if (equipmentTypes.length > 0) {
+      defs.push({
+        key: "type",
+        label: "Type",
+        options: equipmentTypes.map((t) => ({
+          value: t,
+          label: t.charAt(0).toUpperCase() + t.slice(1),
+        })),
+      });
+    }
+    return defs;
+  }, [equipmentTypes]);
 
-    let matchesCompliance = true;
-    if (complianceFilter === "feoc_pass")
-      matchesCompliance = e.feoc_compliant === true;
-    if (complianceFilter === "feoc_fail")
-      matchesCompliance = e.feoc_compliant === false;
-    if (complianceFilter === "domestic_pass")
-      matchesCompliance = e.domestic_content_compliant === true;
-    if (complianceFilter === "tariff_safe")
-      matchesCompliance = e.tariff_safe === true;
-    if (complianceFilter === "flagged")
-      matchesCompliance = e.feoc_compliant === false || e.tariff_safe === false;
+  const [auditFilters, setAuditFilters] = useState({});
 
-    const matchesType =
-      typeFilter === "all" || (e.type || "").toLowerCase() === typeFilter;
+  const filtered = useMemo(() => {
+    return equipment.filter((e) => {
+      const term = searchTerm.toLowerCase();
+      const matchesSearch =
+        !term ||
+        (e.manufacturer || "").toLowerCase().includes(term) ||
+        (e.model || "").toLowerCase().includes(term) ||
+        (e.type || "").toLowerCase().includes(term);
 
-    return matchesSearch && matchesCompliance && matchesType;
-  });
+      let matchesCompliance = true;
+      const cf = auditFilters.compliance;
+      if (cf === "feoc_pass") matchesCompliance = e.feoc_compliant === true;
+      if (cf === "feoc_fail") matchesCompliance = e.feoc_compliant === false;
+      if (cf === "domestic_pass")
+        matchesCompliance = e.domestic_content_compliant === true;
+      if (cf === "tariff_safe") matchesCompliance = e.tariff_safe === true;
+      if (cf === "flagged")
+        matchesCompliance =
+          e.feoc_compliant === false || e.tariff_safe === false;
+
+      const tf = auditFilters.type;
+      const matchesType = !tf || (e.type || "").toLowerCase() === tf;
+
+      return matchesSearch && matchesCompliance && matchesType;
+    });
+  }, [equipment, searchTerm, auditFilters]);
 
   // Compliance breakdown by manufacturer
   const mfrBreakdown = {};
@@ -399,8 +432,8 @@ export default function AdminCompliance() {
       </div>
 
       {/* Equipment Audit Table */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6">
-        <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
+      <div className="space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-3">
           <h3 className="text-lg font-bold text-gray-900">Equipment Audit</h3>
           <div className="flex flex-wrap items-center gap-3">
             <div className="relative">
@@ -416,32 +449,6 @@ export default function AdminCompliance() {
                 className="pl-9 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
             </div>
-            <select
-              value={complianceFilter}
-              onChange={(e) => setComplianceFilter(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
-            >
-              <option value="all">All Compliance</option>
-              <option value="feoc_pass">FEOC Compliant</option>
-              <option value="feoc_fail">FEOC Non-Compliant</option>
-              <option value="domestic_pass">Domestic Content</option>
-              <option value="tariff_safe">Tariff Safe</option>
-              <option value="flagged">Flagged</option>
-            </select>
-            {equipmentTypes.length > 0 && (
-              <select
-                value={typeFilter}
-                onChange={(e) => setTypeFilter(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
-              >
-                <option value="all">All Types</option>
-                {equipmentTypes.map((t) => (
-                  <option key={t} value={t}>
-                    {t.charAt(0).toUpperCase() + t.slice(1)}
-                  </option>
-                ))}
-              </select>
-            )}
             <button
               onClick={handleExport}
               className="flex items-center gap-2 px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-700 hover:bg-gray-50 transition-colors"
@@ -449,72 +456,64 @@ export default function AdminCompliance() {
               <Download size={14} />
               Export
             </button>
+            <Link
+              to="/admin/solar-data?tab=equipment"
+              className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-emerald-700 hover:text-emerald-800 transition-colors"
+            >
+              Full catalog
+              <ExternalLink size={14} />
+            </Link>
           </div>
         </div>
 
-        <p className="text-sm text-gray-500 mb-4">
+        <FilterBar
+          filters={auditFilterDefs}
+          activeFilters={auditFilters}
+          onChange={setAuditFilters}
+        />
+
+        <p className="text-sm text-gray-500">
           {filtered.length} item{filtered.length !== 1 ? "s" : ""}
         </p>
 
-        {filtered.length === 0 ? (
-          <div className="text-center py-16">
-            <ShieldCheck size={40} className="mx-auto text-gray-300 mb-3" />
-            <p className="text-gray-500 font-medium">No equipment found</p>
-          </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="bg-gray-50 border-b border-gray-200">
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Manufacturer
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Model
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Type
-                  </th>
-                  <th className="text-center px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    FEOC
-                  </th>
-                  <th className="text-center px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Domestic
-                  </th>
-                  <th className="text-center px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Tariff Safe
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {filtered.map((e) => (
-                  <tr key={e.id} className="hover:bg-gray-50 transition-colors">
-                    <td className="px-4 py-3 text-sm font-semibold text-gray-900">
-                      {e.manufacturer || "N/A"}
-                    </td>
-                    <td className="px-4 py-3 text-sm text-gray-600">
-                      {e.model || "N/A"}
-                    </td>
-                    <td className="px-4 py-3">
-                      <span className="px-2.5 py-1 rounded-md text-xs font-semibold capitalize bg-gray-100 text-gray-700">
-                        {e.type || "N/A"}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 text-center">
-                      {complianceIcon(e.feoc_compliant)}
-                    </td>
-                    <td className="px-4 py-3 text-center">
-                      {complianceIcon(e.domestic_content_compliant)}
-                    </td>
-                    <td className="px-4 py-3 text-center">
-                      {complianceIcon(e.tariff_safe)}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+        <DataTable
+          columns={[
+            {
+              key: "manufacturer",
+              label: "Manufacturer",
+              render: (v) => (
+                <span className="font-semibold">{v || "N/A"}</span>
+              ),
+            },
+            { key: "model", label: "Model" },
+            {
+              key: "type",
+              label: "Type",
+              render: (v) => (
+                <span className="px-2.5 py-1 rounded-md text-xs font-semibold capitalize bg-gray-100 text-gray-700">
+                  {v || "N/A"}
+                </span>
+              ),
+            },
+            {
+              key: "feoc_compliant",
+              label: "FEOC",
+              render: (v) => complianceIcon(v),
+            },
+            {
+              key: "domestic_content_compliant",
+              label: "Domestic",
+              render: (v) => complianceIcon(v),
+            },
+            {
+              key: "tariff_safe",
+              label: "Tariff Safe",
+              render: (v) => complianceIcon(v),
+            },
+          ]}
+          data={filtered}
+          emptyMessage="No equipment found"
+        />
       </div>
     </div>
   );
