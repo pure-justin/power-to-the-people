@@ -44,7 +44,7 @@ const admin = __importStar(require("firebase-admin"));
 const crypto = __importStar(require("crypto"));
 const db = admin.firestore();
 // Webhook secret for signature verification
-const WEBHOOK_SECRET = ((_a = functions.config().webhook) === null || _a === void 0 ? void 0 : _a.secret) || "development-secret-change-in-prod";
+const WEBHOOK_SECRET = (_a = functions.config().webhook) === null || _a === void 0 ? void 0 : _a.secret;
 /**
  * Verify webhook signature
  */
@@ -76,9 +76,14 @@ exports.referralStatusWebhook = functions.https.onRequest(async (req, res) => {
         return;
     }
     const signature = req.headers["x-webhook-signature"];
-    // Verify signature in production
-    if (process.env.NODE_ENV === "production" &&
-        !verifyWebhookSignature(req.body, signature)) {
+    // Verify webhook secret is configured
+    if (!WEBHOOK_SECRET) {
+        console.error("webhook.secret not configured");
+        res.status(500).json({ error: "Webhook secret not configured" });
+        return;
+    }
+    // Verify HMAC signature
+    if (!verifyWebhookSignature(req.body, signature)) {
         console.error("Invalid webhook signature");
         res.status(401).json({ error: "Invalid signature" });
         return;
@@ -168,8 +173,14 @@ exports.referralBulkUpdateWebhook = functions.https.onRequest(async (req, res) =
         return;
     }
     const signature = req.headers["x-webhook-signature"];
-    if (process.env.NODE_ENV === "production" &&
-        !verifyWebhookSignature(req.body, signature)) {
+    // Verify webhook secret is configured
+    if (!WEBHOOK_SECRET) {
+        console.error("webhook.secret not configured");
+        res.status(500).json({ error: "Webhook secret not configured" });
+        return;
+    }
+    // Verify HMAC signature
+    if (!verifyWebhookSignature(req.body, signature)) {
         res.status(401).json({ error: "Invalid signature" });
         return;
     }
@@ -244,7 +255,12 @@ exports.referralStatsWebhook = functions.https.onRequest(async (req, res) => {
     }
     // Simple API key authentication
     const apiKey = req.query.apiKey;
-    const expectedKey = ((_a = functions.config().webhook) === null || _a === void 0 ? void 0 : _a.api_key) || "development-key";
+    const expectedKey = (_a = functions.config().webhook) === null || _a === void 0 ? void 0 : _a.api_key;
+    if (!expectedKey) {
+        console.error("webhook.api_key not configured");
+        res.status(500).json({ error: "Webhook API key not configured" });
+        return;
+    }
     if (apiKey !== expectedKey) {
         res.status(401).json({ error: "Invalid API key" });
         return;

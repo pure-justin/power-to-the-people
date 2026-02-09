@@ -52,6 +52,7 @@ exports.smtWebhook = exports.fetchSmtUsage = void 0;
 const functions = __importStar(require("firebase-functions/v1"));
 const admin = __importStar(require("firebase-admin"));
 const puppeteer_core_1 = __importDefault(require("puppeteer-core"));
+const apiKeys_1 = require("./apiKeys");
 // Browserless.io endpoint (or self-hosted)
 const BROWSERLESS_URL = process.env.BROWSERLESS_URL || "wss://chrome.browserless.io";
 const BROWSERLESS_TOKEN = process.env.BROWSERLESS_TOKEN || "";
@@ -253,6 +254,17 @@ exports.smtWebhook = functions
     }
     if (req.method !== "POST") {
         res.status(405).json({ error: "Method not allowed" });
+        return;
+    }
+    // Validate API key authentication
+    try {
+        await (0, apiKeys_1.validateApiKeyFromRequest)(req, apiKeys_1.ApiKeyScope.WRITE_SMT);
+    }
+    catch (error) {
+        const status = error.code === "unauthenticated" ? 401 : 403;
+        res
+            .status(status)
+            .json({ error: error.message || "Authentication failed" });
         return;
     }
     const { username, password, projectId } = req.body;

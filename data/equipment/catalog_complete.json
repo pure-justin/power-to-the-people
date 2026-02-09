@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "description": "Complete solar equipment catalog for the Solar CRM — panels, inverters, and batteries with 2026 market data, compliance status, and pricing.",
-    "version": "1.0.0",
-    "last_updated": "2026-02-08",
+    "description": "Complete solar equipment catalog for the Solar CRM -- panels, inverters, batteries, and racking with 2026 market data, compliance status, and pricing.",
+    "version": "2.0.0",
+    "last_updated": "2026-02-09",
     "sources": [
       "Manufacturer datasheets and spec sheets",
       "ENF Solar Panel Directory",
@@ -10,6 +10,8 @@
       "US Solar Supplier wholesale pricing",
       "Solar Electric Supply wholesale pricing",
       "A1 SolarStore retail pricing",
+      "RES Supply distributor pricing",
+      "Signature Solar distributor pricing",
       "SolarReviews cost analysis 2026",
       "EcoWatch battery reviews 2026",
       "HomeGuide cost guides 2026",
@@ -19,18 +21,22 @@
       "Treasury FEOC Final Rule (May 2024)",
       "DOE FEOC Guidance (December 2023)"
     ],
-    "total_products": 38,
-    "total_panels": 20,
-    "total_inverters": 10,
+    "total_products": 57,
+    "total_panels": 24,
+    "total_inverters": 15,
     "total_batteries": 8,
+    "total_racking": 10,
     "compliance_summary": {
-      "domestic_content_panels": 8,
-      "feoc_compliant_panels": 12,
-      "tariff_safe_panels": 12,
-      "domestic_content_inverters": 6,
-      "feoc_compliant_inverters": 10,
+      "domestic_content_panels": 10,
+      "feoc_compliant_panels": 14,
+      "tariff_safe_panels": 14,
+      "domestic_content_inverters": 8,
+      "feoc_compliant_inverters": 14,
+      "tariff_safe_inverters": 14,
       "domestic_content_batteries": 4,
-      "feoc_compliant_batteries": 6
+      "feoc_compliant_batteries": 6,
+      "domestic_content_racking": 10,
+      "feoc_compliant_racking": 10
     },
     "market_context_2026": {
       "residential_itc_expired": true,
@@ -44,7 +50,9 @@
     "files": {
       "panels": "panels.json",
       "inverters": "inverters.json",
-      "batteries": "batteries.json"
+      "batteries": "batteries.json",
+      "racking": "racking.json",
+      "manufacturers": "manufacturers.json"
     }
   },
   "panels": [
@@ -67,7 +75,11 @@
     { "$ref": "panels.json#/panels/16", "id": "astronergy_astro_n7_pro_580", "manufacturer": "Astronergy", "model": "ASTRO N7 Pro 580W", "wattage": 580, "efficiency_pct": 22.8, "technology": "N-type TOPCon", "domestic_content": false, "feoc_compliant": false, "origin": "China", "price_wholesale_per_w": 0.19 },
     { "$ref": "panels.json#/panels/17", "id": "longi_himo6_explorer_440", "manufacturer": "LONGi", "model": "Hi-MO 6 Explorer 440W", "wattage": 440, "efficiency_pct": 22.3, "technology": "P-type HPBC", "domestic_content": false, "feoc_compliant": false, "origin": "China", "price_wholesale_per_w": 0.16 },
     { "$ref": "panels.json#/panels/18", "id": "jinko_tiger_neo_445_res", "manufacturer": "Jinko Solar", "model": "Tiger Neo 445W Residential", "wattage": 445, "efficiency_pct": 22.53, "technology": "N-type TOPCon", "domestic_content": false, "feoc_compliant": false, "origin": "China/USA", "price_wholesale_per_w": 0.22 },
-    { "$ref": "panels.json#/panels/19", "id": "heliene_144hc_m6_450_mono", "manufacturer": "Heliene", "model": "144HC M6 Monofacial 450W", "wattage": 450, "efficiency_pct": 22.0, "technology": "Mono PERC", "domestic_content": true, "feoc_compliant": true, "origin": "USA/Canada", "price_wholesale_per_w": 0.35 }
+    { "$ref": "panels.json#/panels/19", "id": "heliene_144hc_m6_450_mono", "manufacturer": "Heliene", "model": "144HC M6 Monofacial 450W", "wattage": 450, "efficiency_pct": 22.0, "technology": "Mono PERC", "domestic_content": true, "feoc_compliant": true, "origin": "USA/Canada", "price_wholesale_per_w": 0.35 },
+    { "$ref": "panels.json#/panels/20", "id": "silfab_sil420_qd", "manufacturer": "Silfab Solar", "model": "SIL-420 QD 420W", "wattage": 420, "efficiency_pct": 21.5, "technology": "N-type TOPCon", "domestic_content": true, "feoc_compliant": true, "origin": "USA/Canada", "price_wholesale_per_w": 0.38 },
+    { "$ref": "panels.json#/panels/21", "id": "canadian_solar_tophiku6_440_tx", "manufacturer": "Canadian Solar", "model": "TOPHiKu6 440W (TX Assembly)", "wattage": 440, "efficiency_pct": 22.5, "technology": "N-type TOPCon", "domestic_content": false, "feoc_compliant": false, "origin": "USA/China", "price_wholesale_per_w": 0.28 },
+    { "$ref": "panels.json#/panels/22", "id": "qcells_qtron_blk_mg2_plus_440", "manufacturer": "QCells", "model": "Q.TRON BLK M-G2+ 440W", "wattage": 440, "efficiency_pct": 22.5, "technology": "N-type TOPCon", "domestic_content": true, "feoc_compliant": true, "origin": "USA", "price_wholesale_per_w": 0.40 },
+    { "$ref": "panels.json#/panels/23", "id": "rec_alpha_pure_rx_430", "manufacturer": "REC Group", "model": "Alpha Pure-RX 430W", "wattage": 430, "efficiency_pct": 22.3, "technology": "HJT", "domestic_content": false, "feoc_compliant": true, "origin": "Singapore", "price_wholesale_per_w": 0.48 }
   ],
   "inverters": [
     { "$ref": "inverters.json#/inverters/0", "id": "enphase_iq8plus", "manufacturer": "Enphase", "model": "IQ8+ 300VA", "type_detail": "microinverter", "power_w": 300, "domestic_content": true, "feoc_compliant": true, "price_wholesale": 135 },
@@ -79,7 +91,12 @@
     { "$ref": "inverters.json#/inverters/6", "id": "sma_sunny_boy_smart_energy_77", "manufacturer": "SMA", "model": "Sunny Boy SE 7.7", "type_detail": "hybrid", "power_w": 7650, "domestic_content": false, "feoc_compliant": true, "price_wholesale": 2800 },
     { "$ref": "inverters.json#/inverters/7", "id": "fronius_primo_gen24_10", "manufacturer": "Fronius", "model": "Primo GEN24 10.0", "type_detail": "hybrid", "power_w": 10000, "domestic_content": false, "feoc_compliant": true, "price_wholesale": 2500 },
     { "$ref": "inverters.json#/inverters/8", "id": "generac_pwrcell_inverter_76", "manufacturer": "Generac", "model": "PWRcell 7.6kW", "type_detail": "hybrid", "power_w": 7600, "domestic_content": true, "feoc_compliant": true, "price_wholesale": 2800 },
-    { "$ref": "inverters.json#/inverters/9", "id": "tesla_inverter_pw3", "manufacturer": "Tesla", "model": "Powerwall 3 Integrated", "type_detail": "integrated_hybrid", "power_w": 11500, "domestic_content": true, "feoc_compliant": true, "price_wholesale": null }
+    { "$ref": "inverters.json#/inverters/9", "id": "tesla_inverter_pw3", "manufacturer": "Tesla", "model": "Powerwall 3 Integrated", "type_detail": "integrated_hybrid", "power_w": 11500, "domestic_content": true, "feoc_compliant": true, "price_wholesale": null },
+    { "$ref": "inverters.json#/inverters/10", "id": "solark_15k_2p", "manufacturer": "Sol-Ark", "model": "15K-2P Whole Home Hybrid", "type_detail": "hybrid", "power_w": 15000, "domestic_content": true, "feoc_compliant": true, "price_wholesale": 5500 },
+    { "$ref": "inverters.json#/inverters/11", "id": "solark_12k_2p", "manufacturer": "Sol-Ark", "model": "12K-2P Hybrid", "type_detail": "hybrid", "power_w": 12000, "domestic_content": true, "feoc_compliant": true, "price_wholesale": 3800 },
+    { "$ref": "inverters.json#/inverters/12", "id": "goodwe_es_us20_114k", "manufacturer": "GoodWe", "model": "ES-US20 11.4kW", "type_detail": "hybrid", "power_w": 11400, "domestic_content": false, "feoc_compliant": false, "price_wholesale": 1800 },
+    { "$ref": "inverters.json#/inverters/13", "id": "solaredge_home_hub_10k", "manufacturer": "SolarEdge", "model": "Home Hub 10kW", "type_detail": "hybrid", "power_w": 10000, "domestic_content": false, "feoc_compliant": true, "price_wholesale": 2300 },
+    { "$ref": "inverters.json#/inverters/14", "id": "enphase_iq8p", "manufacturer": "Enphase", "model": "IQ8P 480VA", "type_detail": "microinverter", "power_w": 480, "domestic_content": true, "feoc_compliant": true, "price_wholesale": 175 }
   ],
   "batteries": [
     { "$ref": "batteries.json#/batteries/0", "id": "tesla_powerwall_3", "manufacturer": "Tesla", "model": "Powerwall 3", "capacity_kwh": 13.5, "power_kw": 11.5, "chemistry": "LFP", "domestic_content": true, "feoc_compliant": true, "price_installed": 15400 },
@@ -90,5 +107,17 @@
     { "$ref": "batteries.json#/batteries/5", "id": "panasonic_evervolt_2_l6", "manufacturer": "Panasonic", "model": "EverVolt 2.0 17.1 kWh", "capacity_kwh": 17.1, "power_kw": 9.6, "chemistry": "LFP", "domestic_content": false, "feoc_compliant": true, "price_installed": 24000 },
     { "$ref": "batteries.json#/batteries/6", "id": "sonnen_ecolinx_20", "manufacturer": "sonnen", "model": "ecoLinx 20 kWh", "capacity_kwh": 20, "power_kw": 8, "chemistry": "LFP", "domestic_content": true, "feoc_compliant": true, "price_installed": 42000 },
     { "$ref": "batteries.json#/batteries/7", "id": "byd_battery_box_hvs", "manufacturer": "BYD", "model": "Battery-Box HVS 12.8 kWh", "capacity_kwh": 12.8, "power_kw": 12.8, "chemistry": "LFP", "domestic_content": false, "feoc_compliant": false, "price_installed": 9500 }
+  ],
+  "racking": [
+    { "$ref": "racking.json#/racking/0", "id": "ironridge_xr100_roof_mount", "manufacturer": "IronRidge", "model": "XR100 Roof Mount", "type_detail": "roof_mount_rail", "domestic_content": true, "feoc_compliant": true, "price_per_module": 35 },
+    { "$ref": "racking.json#/racking/1", "id": "ironridge_xr1000_roof_mount", "manufacturer": "IronRidge", "model": "XR1000 Heavy-Duty Roof Mount", "type_detail": "roof_mount_rail", "domestic_content": true, "feoc_compliant": true, "price_per_module": 50 },
+    { "$ref": "racking.json#/racking/2", "id": "ironridge_ground_mount", "manufacturer": "IronRidge", "model": "Ground Mount GFT", "type_detail": "ground_mount", "domestic_content": true, "feoc_compliant": true, "price_per_module": 75 },
+    { "$ref": "racking.json#/racking/3", "id": "unirac_solarmount", "manufacturer": "Unirac", "model": "SolarMount", "type_detail": "roof_mount_rail", "domestic_content": true, "feoc_compliant": true, "price_per_module": 30 },
+    { "$ref": "racking.json#/racking/4", "id": "unirac_nxt_umount", "manufacturer": "Unirac", "model": "NXT UMOUNT", "type_detail": "roof_mount_rail", "domestic_content": true, "feoc_compliant": true, "price_per_module": 35 },
+    { "$ref": "racking.json#/racking/5", "id": "snapnrack_ultra_rail", "manufacturer": "SnapNrack", "model": "Ultra Rail", "type_detail": "roof_mount_rail", "domestic_content": true, "feoc_compliant": true, "price_per_module": 32 },
+    { "$ref": "racking.json#/racking/6", "id": "snapnrack_200_ground_mount", "manufacturer": "SnapNrack", "model": "200 Ground Mount", "type_detail": "ground_mount", "domestic_content": true, "feoc_compliant": true, "price_per_module": 70 },
+    { "$ref": "racking.json#/racking/7", "id": "quickmount_qrail", "manufacturer": "Quick Mount PV", "model": "QRail", "type_detail": "roof_mount_rail", "domestic_content": true, "feoc_compliant": true, "price_per_module": 38 },
+    { "$ref": "racking.json#/racking/8", "id": "quickmount_quick_rack", "manufacturer": "Quick Mount PV", "model": "Quick Rack Rail-Free", "type_detail": "roof_mount_railfree", "domestic_content": true, "feoc_compliant": true, "price_per_module": 25 },
+    { "$ref": "racking.json#/racking/9", "id": "pegasus_skiprail", "manufacturer": "Pegasus Solar", "model": "SkipRail", "type_detail": "roof_mount_rail", "domestic_content": true, "feoc_compliant": true, "price_per_module": 28 }
   ]
 }

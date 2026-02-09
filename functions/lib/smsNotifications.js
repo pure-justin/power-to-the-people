@@ -442,6 +442,22 @@ exports.getSmsStats = functions.https.onCall(async (data, context) => {
  * @firestore smsLog
  */
 exports.twilioStatusCallback = functions.https.onRequest(async (req, res) => {
+    var _a;
+    // Validate Twilio signature
+    const twilioSignature = req.headers["x-twilio-signature"];
+    if (!twilioSignature) {
+        res.status(401).json({ error: "Missing Twilio signature" });
+        return;
+    }
+    const twilioAuthTokenConfig = (_a = functions.config().twilio) === null || _a === void 0 ? void 0 : _a.auth_token;
+    if (twilioAuthTokenConfig) {
+        const requestUrl = `https://${req.headers.host}${req.originalUrl}`;
+        const isValid = twilio.validateRequest(twilioAuthTokenConfig, twilioSignature, requestUrl, req.body);
+        if (!isValid) {
+            res.status(403).json({ error: "Invalid Twilio signature" });
+            return;
+        }
+    }
     const { MessageSid, MessageStatus, To, ErrorCode, ErrorMessage } = req.body;
     if (!MessageSid) {
         res.status(400).send("Missing MessageSid");

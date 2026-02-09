@@ -426,7 +426,7 @@ exports.leadWebhook = functions
     memory: "512MB",
 })
     .https.onRequest(async (req, res) => {
-    var _a;
+    var _a, _b;
     // CORS
     res.set("Access-Control-Allow-Origin", "*");
     res.set("Access-Control-Allow-Methods", "POST, OPTIONS");
@@ -439,11 +439,16 @@ exports.leadWebhook = functions
         res.status(405).json({ error: "Method not allowed" });
         return;
     }
-    // Validate API key (in production, use proper auth)
+    // Validate API key
     const apiKey = (_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.replace("Bearer ", "");
-    const validApiKey = process.env.LEAD_WEBHOOK_API_KEY;
-    if (validApiKey && apiKey !== validApiKey) {
-        res.status(401).json({ error: "Unauthorized" });
+    const validApiKey = process.env.LEAD_WEBHOOK_API_KEY ||
+        ((_b = functions.config().lead) === null || _b === void 0 ? void 0 : _b.webhook_api_key);
+    if (!validApiKey) {
+        res.status(500).json({ error: "Lead webhook API key not configured" });
+        return;
+    }
+    if (apiKey !== validApiKey) {
+        res.status(401).json({ error: "Invalid API key" });
         return;
     }
     const data = req.body;

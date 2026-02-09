@@ -40,6 +40,7 @@ var __importStar = (this && this.__importStar) || (function () {
         return result;
     };
 })();
+var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.syncInvoiceStatus = exports.cancelMercuryInvoice = exports.listMercuryInvoices = exports.getMercuryInvoice = exports.createMercuryInvoice = exports.createMercuryCustomer = void 0;
 const functions = __importStar(require("firebase-functions/v1"));
@@ -47,7 +48,7 @@ const admin = __importStar(require("firebase-admin"));
 const smsNotifications_1 = require("./smsNotifications");
 // Mercury API config
 const MERCURY_API_BASE = "https://api.mercury.com/api/v1";
-const MERCURY_ACCOUNT_ID = "ecc22c2c-aabf-11f0-955b-13f894471589";
+const MERCURY_ACCOUNT_ID = ((_a = functions.config().mercury) === null || _a === void 0 ? void 0 : _a.account_id) || "";
 /**
  * Internal helper for authenticated Mercury Banking API requests
  *
