@@ -93,6 +93,9 @@ export {
   sendPaymentReminders,
   getSmsStats,
   twilioStatusCallback,
+  updateSmsPreferences,
+  handleIncomingSms,
+  getProjectSmsHistory,
 } from "./smsNotifications";
 
 // Export Mercury Invoice functions

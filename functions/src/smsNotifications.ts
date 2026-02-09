@@ -149,22 +149,39 @@ export const onProjectCreated = functions.firestore
     const project = snap.data();
     const projectId = context.params.projectId;
 
-    // Send customer confirmation
-    if (project.phone) {
+    // Support both flat and nested data structures
+    const phone = project.phone || project.customer?.phone;
+    const firstName =
+      project.firstName || project.customer?.firstName || "there";
+    const lastName = project.lastName || project.customer?.lastName || "";
+    const city = project.city || project.address?.city || "Unknown";
+    const smsOptIn = project.smsOptIn !== false; // Default to true for backward compat
+
+    // Send customer confirmation (only if opted in)
+    if (phone && smsOptIn) {
       const message = SMS_TEMPLATES.ENROLLMENT_CONFIRMATION(
-        project.firstName || "there",
+        firstName,
         projectId,
       );
-      await sendSMS(project.phone, message);
+      await sendSMS(phone, message);
     }
+
+    // Create in-app notification for the project
+    await createInAppNotification({
+      projectId,
+      type: "enrollment_confirmation",
+      title: "Enrollment Confirmed",
+      message: `Welcome ${firstName}! Your solar application ${projectId} is being reviewed. We'll notify you of updates.`,
+      link: `https://power-to-the-people-vpp.web.app/project/${projectId}`,
+    });
 
     // Send admin notification
     const adminPhone =
       functions.config().admin?.phone || process.env.ADMIN_PHONE;
     if (adminPhone && project.systemSize) {
       const message = SMS_TEMPLATES.NEW_LEAD_ADMIN(
-        project.firstName + " " + project.lastName,
-        project.city || "Unknown",
+        firstName + " " + lastName,
+        city,
         project.systemSize.toString(),
       );
       await sendSMS(adminPhone, message);
@@ -173,11 +190,13 @@ export const onProjectCreated = functions.firestore
     // Check if high-value lead (>$40k system)
     if (project.systemCost && project.systemCost > 40000) {
       const message = SMS_TEMPLATES.HIGH_VALUE_LEAD(
-        project.firstName + " " + project.lastName,
+        firstName + " " + lastName,
         project.systemCost.toLocaleString(),
         project.leadScore || "85",
       );
-      await sendSMS(adminPhone, message);
+      if (adminPhone) {
+        await sendSMS(adminPhone, message);
+      }
     }
   });
 
@@ -205,10 +224,13 @@ export const onProjectStatusUpdate = functions.firestore
       return;
     }
 
-    const phone = after.phone;
+    const phone = after.phone || after.customer?.phone;
     if (!phone) return;
 
-    const name = after.firstName || "there";
+    // Check SMS opt-in
+    if (after.smsOptIn === false) return;
+
+    const name = after.firstName || after.customer?.firstName || "there";
 
     let message: string | null = null;
 
@@ -248,6 +270,38 @@ export const onProjectStatusUpdate = functions.firestore
     if (message) {
       await sendSMS(phone, message);
     }
+
+    // Create in-app notification for status changes
+    const projectId = context.params.projectId;
+    const notifMap: Record<string, { type: string; title: string }> = {
+      approved: {
+        type: "application_approved",
+        title: "Application Approved",
+      },
+      pending_info: {
+        type: "status_update",
+        title: "Info Required",
+      },
+      installation_scheduled: {
+        type: "installation_scheduled",
+        title: "Installation Scheduled",
+      },
+      installed: {
+        type: "installation_complete",
+        title: "System Installed",
+      },
+    };
+
+    const notifConfig = notifMap[after.status];
+    if (notifConfig && message) {
+      await createInAppNotification({
+        projectId,
+        type: notifConfig.type,
+        title: notifConfig.title,
+        message,
+        link: `https://power-to-the-people-vpp.web.app/project/${projectId}`,
+      });
+    }
   });
 
 /**
@@ -284,13 +338,22 @@ export const onReferralReward = functions.firestore
     const referrer = referrerDoc.data();
     if (!referrer?.phone) return;
 
-    const message = SMS_TEMPLATES.REFERRAL_REWARD(
+    const rewardMessage = SMS_TEMPLATES.REFERRAL_REWARD(
       referrer.firstName || "there",
       after.rewardAmount?.toFixed(0) || "500",
       after.referredName || "Your friend",
     );
 
-    await sendSMS(referrer.phone, message);
+    await sendSMS(referrer.phone, rewardMessage);
+
+    // Create in-app notification for referral reward
+    await createInAppNotification({
+      userId: after.referrerId,
+      type: "referral_reward",
+      title: "Referral Reward Earned",
+      message: rewardMessage,
+      link: "https://power-to-the-people-vpp.web.app/referrals",
+    });
   });
 
 /**
@@ -462,18 +525,27 @@ export const sendPaymentReminders = functions.pubsub
         return;
       }
 
-      const message = SMS_TEMPLATES.PAYMENT_REMINDER(
+      const paymentMessage = SMS_TEMPLATES.PAYMENT_REMINDER(
         project.firstName || "there",
         project.nextPaymentAmount.toFixed(2),
         new Date(project.nextPaymentDate).toLocaleDateString(),
       );
 
-      const success = await sendSMS(project.phone, message);
+      const success = await sendSMS(project.phone, paymentMessage);
 
       if (success) {
         // Mark reminder as sent
         await doc.ref.update({
           paymentReminderSent: true,
+        });
+
+        // Create in-app notification
+        await createInAppNotification({
+          projectId: doc.id,
+          type: "payment_reminder",
+          title: "Payment Reminder",
+          message: paymentMessage,
+          link: "https://power-to-the-people-vpp.web.app/portal",
         });
       }
     });
@@ -609,5 +681,212 @@ export const twilioStatusCallback = functions.https.onRequest(
     }
 
     res.status(200).send("OK");
+  },
+);
+
+/**
+ * HTTP Callable: Update SMS Preferences
+ * Allows customers to opt-in or opt-out of SMS notifications
+ */
+export const updateSmsPreferences = functions.https.onCall(
+  async (data, context) => {
+    if (!context.auth) {
+      throw new functions.https.HttpsError(
+        "unauthenticated",
+        "Must be authenticated to update preferences",
+      );
+    }
+
+    const { projectId, smsOptIn } = data;
+
+    if (!projectId || typeof smsOptIn !== "boolean") {
+      throw new functions.https.HttpsError(
+        "invalid-argument",
+        "projectId and smsOptIn (boolean) are required",
+      );
+    }
+
+    // Update project SMS preference
+    const projectRef = admin.firestore().collection("projects").doc(projectId);
+    const projectDoc = await projectRef.get();
+
+    if (!projectDoc.exists) {
+      throw new functions.https.HttpsError("not-found", "Project not found");
+    }
+
+    await projectRef.update({
+      smsOptIn,
+      smsPreferencesUpdatedAt: admin.firestore.FieldValue.serverTimestamp(),
+    });
+
+    // If opting out, send confirmation SMS
+    const project = projectDoc.data();
+    const phone = project?.phone || project?.customer?.phone;
+    if (!smsOptIn && phone) {
+      await sendSMS(
+        phone,
+        "You've been unsubscribed from Power to the People SMS notifications. Reply START to re-subscribe.",
+      );
+    }
+
+    return { success: true, smsOptIn };
+  },
+);
+
+/**
+ * HTTP Endpoint: Handle Incoming SMS (Twilio webhook)
+ * Processes STOP/START keywords for opt-out/opt-in
+ */
+export const handleIncomingSms = functions.https.onRequest(async (req, res) => {
+  const { From, Body } = req.body;
+
+  if (!From || !Body) {
+    res.status(400).send("Missing From or Body");
+    return;
+  }
+
+  const normalizedBody = Body.trim().toUpperCase();
+  const formattedPhone = From.startsWith("+")
+    ? From
+    : `+1${From.replace(/\D/g, "")}`;
+
+  // Handle STOP/UNSUBSCRIBE
+  if (["STOP", "UNSUBSCRIBE", "CANCEL", "QUIT"].includes(normalizedBody)) {
+    // Find projects with this phone number and opt them out
+    const projectsSnapshot = await admin
+      .firestore()
+      .collection("projects")
+      .where("customer.phone", "==", formattedPhone)
+      .get();
+
+    // Also check flat phone field
+    const flatSnapshot = await admin
+      .firestore()
+      .collection("projects")
+      .where("phone", "==", formattedPhone)
+      .get();
+
+    const allDocs = [...projectsSnapshot.docs, ...flatSnapshot.docs];
+    const updatePromises = allDocs.map((doc) =>
+      doc.ref.update({
+        smsOptIn: false,
+        smsPreferencesUpdatedAt: admin.firestore.FieldValue.serverTimestamp(),
+      }),
+    );
+
+    await Promise.all(updatePromises);
+
+    // Log the opt-out
+    await admin.firestore().collection("smsLog").add({
+      from: formattedPhone,
+      action: "opt_out",
+      keyword: normalizedBody,
+      projectsUpdated: allDocs.length,
+      timestamp: admin.firestore.FieldValue.serverTimestamp(),
+    });
+  }
+
+  // Handle START/SUBSCRIBE
+  if (["START", "SUBSCRIBE", "YES"].includes(normalizedBody)) {
+    const projectsSnapshot = await admin
+      .firestore()
+      .collection("projects")
+      .where("customer.phone", "==", formattedPhone)
+      .get();
+
+    const flatSnapshot = await admin
+      .firestore()
+      .collection("projects")
+      .where("phone", "==", formattedPhone)
+      .get();
+
+    const allDocs = [...projectsSnapshot.docs, ...flatSnapshot.docs];
+    const updatePromises = allDocs.map((doc) =>
+      doc.ref.update({
+        smsOptIn: true,
+        smsPreferencesUpdatedAt: admin.firestore.FieldValue.serverTimestamp(),
+      }),
+    );
+
+    await Promise.all(updatePromises);
+
+    await admin.firestore().collection("smsLog").add({
+      from: formattedPhone,
+      action: "opt_in",
+      keyword: normalizedBody,
+      projectsUpdated: allDocs.length,
+      timestamp: admin.firestore.FieldValue.serverTimestamp(),
+    });
+  }
+
+  // Respond with TwiML (empty response - Twilio handles STOP/START natively too)
+  res.set("Content-Type", "text/xml");
+  res.send("<Response></Response>");
+});
+
+/**
+ * HTTP Callable: Get SMS History for a Project
+ * Returns SMS log entries for a specific project's phone number
+ */
+export const getProjectSmsHistory = functions.https.onCall(
+  async (data, context) => {
+    if (!context.auth) {
+      throw new functions.https.HttpsError(
+        "unauthenticated",
+        "Must be authenticated to view SMS history",
+      );
+    }
+
+    const { projectId } = data;
+
+    if (!projectId) {
+      throw new functions.https.HttpsError(
+        "invalid-argument",
+        "projectId is required",
+      );
+    }
+
+    // Get the project to find the phone number
+    const projectDoc = await admin
+      .firestore()
+      .collection("projects")
+      .doc(projectId)
+      .get();
+
+    if (!projectDoc.exists) {
+      throw new functions.https.HttpsError("not-found", "Project not found");
+    }
+
+    const project = projectDoc.data();
+    const phone = project?.phone || project?.customer?.phone;
+
+    if (!phone) {
+      return { messages: [], smsOptIn: project?.smsOptIn !== false };
+    }
+
+    // Format phone for matching
+    const formattedPhone = phone.startsWith("+")
+      ? phone
+      : `+1${phone.replace(/\D/g, "")}`;
+
+    // Get SMS log entries for this phone
+    const logsSnapshot = await admin
+      .firestore()
+      .collection("smsLog")
+      .where("to", "==", formattedPhone)
+      .orderBy("sentAt", "desc")
+      .limit(50)
+      .get();
+
+    const messages = logsSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+      sentAt: doc.data().sentAt?.toDate?.()?.toISOString() || null,
+    }));
+
+    return {
+      messages,
+      smsOptIn: project?.smsOptIn !== false,
+    };
   },
 );

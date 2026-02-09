@@ -12,18 +12,12 @@ import {
   Mail,
   AlertCircle,
 } from "lucide-react";
+import { collection, getDocs, query, orderBy, db } from "../services/firebase";
 import {
-  collection,
-  getDocs,
-  query,
-  where,
-  orderBy,
-  limit,
-  updateDoc,
-  doc,
-} from "firebase/firestore";
-import { db } from "../services/firebase";
-import { updateReferralStatus } from "../services/referralService";
+  updateReferralStatus,
+  getAllPayouts,
+  updatePayoutStatus,
+} from "../services/referralService";
 
 /**
  * Admin Panel for Managing Referrals
@@ -37,6 +31,8 @@ export default function ReferralAdminPanel() {
   const [statusFilter, setStatusFilter] = useState("all");
   const [selectedReferral, setSelectedReferral] = useState(null);
   const [updating, setUpdating] = useState(false);
+  const [payouts, setPayouts] = useState([]);
+  const [adminSubTab, setAdminSubTab] = useState("referrals"); // referrals, payouts
 
   useEffect(() => {
     loadAllData();
@@ -68,8 +64,12 @@ export default function ReferralAdminPanel() {
         ...doc.data(),
       }));
 
+      // Load all payouts
+      const payoutsData = await getAllPayouts().catch(() => []);
+
       setReferrals(trackingData);
       setAllReferrers(referrersData);
+      setPayouts(payoutsData);
     } catch (error) {
       console.error("Error loading admin data:", error);
     } finally {
@@ -99,6 +99,20 @@ export default function ReferralAdminPanel() {
     } catch (error) {
       console.error("Error updating status:", error);
       alert("Failed to update status: " + error.message);
+    } finally {
+      setUpdating(false);
+    }
+  };
+
+  const handlePayoutStatusUpdate = async (payoutId, newStatus) => {
+    try {
+      setUpdating(true);
+      await updatePayoutStatus(payoutId, newStatus);
+      await loadAllData();
+      alert(`Payout ${newStatus} successfully!`);
+    } catch (error) {
+      console.error("Error updating payout:", error);
+      alert("Failed to update payout: " + error.message);
     } finally {
       setUpdating(false);
     }
@@ -240,245 +254,402 @@ export default function ReferralAdminPanel() {
         </div>
       </div>
 
-      {/* Filters and Actions */}
-      <div className="bg-gray-900 rounded-xl p-6 border border-gray-800">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3 flex-1 w-full">
-            <div className="relative flex-1">
-              <Search
-                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                size={20}
-              />
-              <input
-                type="text"
-                placeholder="Search by name or email..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-gray-800 text-white rounded-lg outline-none focus:ring-2 focus:ring-emerald-500"
-              />
-            </div>
-
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              className="px-4 py-3 bg-gray-800 text-white rounded-lg outline-none focus:ring-2 focus:ring-emerald-500"
-            >
-              <option value="all">All Statuses</option>
-              <option value="signed_up">Signed Up</option>
-              <option value="qualified">Qualified</option>
-              <option value="site_survey">Site Survey</option>
-              <option value="installed">Installed</option>
-            </select>
-          </div>
-
-          <button
-            onClick={exportToCSV}
-            className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition flex items-center gap-2"
-          >
-            <Download size={18} />
-            Export CSV
-          </button>
-        </div>
+      {/* Sub-tab Navigation */}
+      <div className="flex items-center gap-2">
+        <button
+          onClick={() => setAdminSubTab("referrals")}
+          className={`px-4 py-2 rounded-lg font-medium transition ${
+            adminSubTab === "referrals"
+              ? "bg-emerald-600 text-white"
+              : "bg-gray-800 text-gray-400 hover:bg-gray-700"
+          }`}
+        >
+          Referrals
+        </button>
+        <button
+          onClick={() => setAdminSubTab("payouts")}
+          className={`px-4 py-2 rounded-lg font-medium transition ${
+            adminSubTab === "payouts"
+              ? "bg-emerald-600 text-white"
+              : "bg-gray-800 text-gray-400 hover:bg-gray-700"
+          }`}
+        >
+          Payouts ({payouts.filter((p) => p.status === "pending").length}{" "}
+          pending)
+        </button>
       </div>
 
-      {/* Referrals Table */}
-      <div className="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-gray-800">
-              <tr>
-                <th className="text-left py-4 px-6 text-gray-400 font-semibold">
-                  Referrer
-                </th>
-                <th className="text-left py-4 px-6 text-gray-400 font-semibold">
-                  Referred Customer
-                </th>
-                <th className="text-left py-4 px-6 text-gray-400 font-semibold">
-                  Status
-                </th>
-                <th className="text-left py-4 px-6 text-gray-400 font-semibold">
-                  Earnings
-                </th>
-                <th className="text-left py-4 px-6 text-gray-400 font-semibold">
-                  Date
-                </th>
-                <th className="text-left py-4 px-6 text-gray-400 font-semibold">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredReferrals.map((ref) => (
-                <tr
-                  key={ref.id}
-                  className="border-t border-gray-800 hover:bg-gray-800/50 transition"
-                >
-                  <td className="py-4 px-6">
-                    <div>
+      {/* Payouts Management Tab */}
+      {adminSubTab === "payouts" && (
+        <div className="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-gray-800">
+                <tr>
+                  <th className="text-left py-4 px-6 text-gray-400 font-semibold">
+                    User
+                  </th>
+                  <th className="text-left py-4 px-6 text-gray-400 font-semibold">
+                    Amount
+                  </th>
+                  <th className="text-left py-4 px-6 text-gray-400 font-semibold">
+                    Method
+                  </th>
+                  <th className="text-left py-4 px-6 text-gray-400 font-semibold">
+                    Status
+                  </th>
+                  <th className="text-left py-4 px-6 text-gray-400 font-semibold">
+                    Requested
+                  </th>
+                  <th className="text-left py-4 px-6 text-gray-400 font-semibold">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {payouts.map((payout) => (
+                  <tr
+                    key={payout.id}
+                    className="border-t border-gray-800 hover:bg-gray-800/50 transition"
+                  >
+                    <td className="py-4 px-6">
                       <div className="text-white font-medium">
-                        {ref.referrerCode}
+                        {payout.userName || "N/A"}
                       </div>
                       <div className="text-gray-400 text-sm">
-                        {ref.referrerEmail}
+                        {payout.userEmail}
                       </div>
-                    </div>
-                  </td>
-                  <td className="py-4 px-6">
-                    <div>
-                      <div className="text-white font-medium">
-                        {ref.referredName}
-                      </div>
-                      <div className="text-gray-400 text-sm">
-                        {ref.referredEmail}
-                      </div>
-                      {ref.referredPhone && (
-                        <div className="text-gray-500 text-xs">
-                          {ref.referredPhone}
+                    </td>
+                    <td className="py-4 px-6 text-emerald-400 font-semibold">
+                      ${payout.amount?.toFixed(2)}
+                    </td>
+                    <td className="py-4 px-6 text-gray-300 capitalize">
+                      {payout.method?.replace("_", " ")}
+                    </td>
+                    <td className="py-4 px-6">
+                      <span
+                        className={`px-3 py-1 rounded-full text-xs font-semibold text-white ${
+                          payout.status === "pending"
+                            ? "bg-yellow-600"
+                            : payout.status === "processing"
+                              ? "bg-blue-600"
+                              : payout.status === "completed"
+                                ? "bg-green-600"
+                                : "bg-red-600"
+                        }`}
+                      >
+                        {payout.status}
+                      </span>
+                    </td>
+                    <td className="py-4 px-6 text-gray-400">
+                      {payout.requestedAt?.toDate?.().toLocaleDateString() ||
+                        "N/A"}
+                    </td>
+                    <td className="py-4 px-6">
+                      {payout.status === "pending" && (
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() =>
+                              handlePayoutStatusUpdate(payout.id, "processing")
+                            }
+                            disabled={updating}
+                            className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm transition"
+                          >
+                            Process
+                          </button>
+                          <button
+                            onClick={() =>
+                              handlePayoutStatusUpdate(payout.id, "failed")
+                            }
+                            disabled={updating}
+                            className="px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded text-sm transition"
+                          >
+                            Reject
+                          </button>
                         </div>
                       )}
-                    </div>
-                  </td>
-                  <td className="py-4 px-6">{getStatusBadge(ref.status)}</td>
-                  <td className="py-4 px-6">
-                    <div className="text-emerald-400 font-semibold">
-                      ${ref.earnings || 0}
-                    </div>
-                  </td>
-                  <td className="py-4 px-6 text-gray-400">
-                    {ref.createdAt?.toDate?.().toLocaleDateString() || "N/A"}
-                  </td>
-                  <td className="py-4 px-6">
-                    <button
-                      onClick={() => setSelectedReferral(ref)}
-                      className="px-3 py-1 bg-gray-700 hover:bg-gray-600 text-white rounded text-sm transition"
-                    >
-                      Update
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-
-          {filteredReferrals.length === 0 && (
-            <div className="text-center py-12 text-gray-400">
-              <AlertCircle className="w-12 h-12 mx-auto mb-4 opacity-50" />
-              <p>No referrals found</p>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Update Status Modal */}
-      {selectedReferral && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-gray-900 rounded-xl p-6 max-w-md w-full border border-gray-800">
-            <h3 className="text-xl font-bold text-white mb-4">
-              Update Referral Status
-            </h3>
-
-            <div className="mb-4">
-              <div className="text-gray-400 text-sm mb-2">Customer</div>
-              <div className="text-white font-medium">
-                {selectedReferral.referredName}
-              </div>
-              <div className="text-gray-500 text-sm">
-                {selectedReferral.referredEmail}
-              </div>
-            </div>
-
-            <div className="mb-6">
-              <div className="text-gray-400 text-sm mb-2">Current Status</div>
-              {getStatusBadge(selectedReferral.status)}
-            </div>
-
-            <div className="mb-6">
-              <div className="text-gray-400 text-sm mb-3">Update to:</div>
-              <div className="space-y-2">
-                {[
-                  { value: "signed_up", label: "Signed Up", earnings: 0 },
-                  { value: "qualified", label: "Qualified", earnings: 0 },
-                  {
-                    value: "site_survey",
-                    label: "Site Survey",
-                    earnings: 50,
-                  },
-                  { value: "installed", label: "Installed", earnings: 450 },
-                ].map((status) => (
-                  <button
-                    key={status.value}
-                    onClick={() =>
-                      handleStatusUpdate(selectedReferral.id, status.value)
-                    }
-                    disabled={
-                      updating || selectedReferral.status === status.value
-                    }
-                    className={`w-full px-4 py-3 rounded-lg font-medium transition ${
-                      selectedReferral.status === status.value
-                        ? "bg-gray-800 text-gray-500 cursor-not-allowed"
-                        : "bg-gray-800 hover:bg-gray-700 text-white"
-                    }`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <span>{status.label}</span>
-                      {status.earnings > 0 && (
-                        <span className="text-emerald-400 text-sm">
-                          +${status.earnings}
+                      {payout.status === "processing" && (
+                        <button
+                          onClick={() =>
+                            handlePayoutStatusUpdate(payout.id, "completed")
+                          }
+                          disabled={updating}
+                          className="px-3 py-1 bg-green-600 hover:bg-green-700 text-white rounded text-sm transition"
+                        >
+                          Mark Paid
+                        </button>
+                      )}
+                      {(payout.status === "completed" ||
+                        payout.status === "failed") && (
+                        <span className="text-gray-500 text-sm">
+                          {payout.processedAt
+                            ?.toDate?.()
+                            .toLocaleDateString() || "—"}
                         </span>
                       )}
-                    </div>
-                  </button>
+                    </td>
+                  </tr>
                 ))}
+              </tbody>
+            </table>
+            {payouts.length === 0 && (
+              <div className="text-center py-12 text-gray-400">
+                <DollarSign className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                <p>No payout requests yet</p>
               </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => setSelectedReferral(null)}
-                disabled={updating}
-                className="flex-1 px-4 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-lg transition"
-              >
-                Cancel
-              </button>
-            </div>
+            )}
           </div>
         </div>
       )}
 
-      {/* Top Referrers */}
-      <div className="bg-gray-900 rounded-xl p-6 border border-gray-800">
-        <h3 className="text-xl font-bold text-white mb-6">Top Referrers</h3>
-        <div className="space-y-3">
-          {allReferrers.slice(0, 10).map((referrer, index) => (
-            <div
-              key={referrer.id}
-              className="flex items-center justify-between p-4 bg-gray-800 rounded-lg"
-            >
-              <div className="flex items-center gap-4">
-                <div className="w-8 h-8 bg-emerald-900/30 rounded-full flex items-center justify-center text-emerald-400 font-bold text-sm">
-                  {index + 1}
+      {/* Filters and Actions */}
+      {adminSubTab === "referrals" && (
+        <>
+          <div className="bg-gray-900 rounded-xl p-6 border border-gray-800">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+              <div className="flex items-center gap-3 flex-1 w-full">
+                <div className="relative flex-1">
+                  <Search
+                    className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                    size={20}
+                  />
+                  <input
+                    type="text"
+                    placeholder="Search by name or email..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full pl-10 pr-4 py-3 bg-gray-800 text-white rounded-lg outline-none focus:ring-2 focus:ring-emerald-500"
+                  />
                 </div>
-                <div>
-                  <div className="text-white font-medium">
-                    {referrer.displayName || referrer.email}
-                  </div>
-                  <div className="text-gray-400 text-sm">
-                    {referrer.referralCode}
-                  </div>
-                </div>
+
+                <select
+                  value={statusFilter}
+                  onChange={(e) => setStatusFilter(e.target.value)}
+                  className="px-4 py-3 bg-gray-800 text-white rounded-lg outline-none focus:ring-2 focus:ring-emerald-500"
+                >
+                  <option value="all">All Statuses</option>
+                  <option value="signed_up">Signed Up</option>
+                  <option value="qualified">Qualified</option>
+                  <option value="site_survey">Site Survey</option>
+                  <option value="installed">Installed</option>
+                </select>
               </div>
-              <div className="text-right">
-                <div className="text-white font-bold">
-                  {referrer.installedReferrals} installed
+
+              <button
+                onClick={exportToCSV}
+                className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition flex items-center gap-2"
+              >
+                <Download size={18} />
+                Export CSV
+              </button>
+            </div>
+          </div>
+
+          {/* Referrals Table */}
+          <div className="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-gray-800">
+                  <tr>
+                    <th className="text-left py-4 px-6 text-gray-400 font-semibold">
+                      Referrer
+                    </th>
+                    <th className="text-left py-4 px-6 text-gray-400 font-semibold">
+                      Referred Customer
+                    </th>
+                    <th className="text-left py-4 px-6 text-gray-400 font-semibold">
+                      Status
+                    </th>
+                    <th className="text-left py-4 px-6 text-gray-400 font-semibold">
+                      Earnings
+                    </th>
+                    <th className="text-left py-4 px-6 text-gray-400 font-semibold">
+                      Date
+                    </th>
+                    <th className="text-left py-4 px-6 text-gray-400 font-semibold">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredReferrals.map((ref) => (
+                    <tr
+                      key={ref.id}
+                      className="border-t border-gray-800 hover:bg-gray-800/50 transition"
+                    >
+                      <td className="py-4 px-6">
+                        <div>
+                          <div className="text-white font-medium">
+                            {ref.referrerCode}
+                          </div>
+                          <div className="text-gray-400 text-sm">
+                            {ref.referrerEmail}
+                          </div>
+                        </div>
+                      </td>
+                      <td className="py-4 px-6">
+                        <div>
+                          <div className="text-white font-medium">
+                            {ref.referredName}
+                          </div>
+                          <div className="text-gray-400 text-sm">
+                            {ref.referredEmail}
+                          </div>
+                          {ref.referredPhone && (
+                            <div className="text-gray-500 text-xs">
+                              {ref.referredPhone}
+                            </div>
+                          )}
+                        </div>
+                      </td>
+                      <td className="py-4 px-6">
+                        {getStatusBadge(ref.status)}
+                      </td>
+                      <td className="py-4 px-6">
+                        <div className="text-emerald-400 font-semibold">
+                          ${ref.earnings || 0}
+                        </div>
+                      </td>
+                      <td className="py-4 px-6 text-gray-400">
+                        {ref.createdAt?.toDate?.().toLocaleDateString() ||
+                          "N/A"}
+                      </td>
+                      <td className="py-4 px-6">
+                        <button
+                          onClick={() => setSelectedReferral(ref)}
+                          className="px-3 py-1 bg-gray-700 hover:bg-gray-600 text-white rounded text-sm transition"
+                        >
+                          Update
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+
+              {filteredReferrals.length === 0 && (
+                <div className="text-center py-12 text-gray-400">
+                  <AlertCircle className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                  <p>No referrals found</p>
                 </div>
-                <div className="text-emerald-400 text-sm">
-                  ${referrer.totalEarnings.toFixed(0)} earned
+              )}
+            </div>
+          </div>
+
+          {/* Update Status Modal */}
+          {selectedReferral && (
+            <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+              <div className="bg-gray-900 rounded-xl p-6 max-w-md w-full border border-gray-800">
+                <h3 className="text-xl font-bold text-white mb-4">
+                  Update Referral Status
+                </h3>
+
+                <div className="mb-4">
+                  <div className="text-gray-400 text-sm mb-2">Customer</div>
+                  <div className="text-white font-medium">
+                    {selectedReferral.referredName}
+                  </div>
+                  <div className="text-gray-500 text-sm">
+                    {selectedReferral.referredEmail}
+                  </div>
+                </div>
+
+                <div className="mb-6">
+                  <div className="text-gray-400 text-sm mb-2">
+                    Current Status
+                  </div>
+                  {getStatusBadge(selectedReferral.status)}
+                </div>
+
+                <div className="mb-6">
+                  <div className="text-gray-400 text-sm mb-3">Update to:</div>
+                  <div className="space-y-2">
+                    {[
+                      { value: "signed_up", label: "Signed Up", earnings: 0 },
+                      { value: "qualified", label: "Qualified", earnings: 0 },
+                      {
+                        value: "site_survey",
+                        label: "Site Survey",
+                        earnings: 50,
+                      },
+                      { value: "installed", label: "Installed", earnings: 450 },
+                    ].map((status) => (
+                      <button
+                        key={status.value}
+                        onClick={() =>
+                          handleStatusUpdate(selectedReferral.id, status.value)
+                        }
+                        disabled={
+                          updating || selectedReferral.status === status.value
+                        }
+                        className={`w-full px-4 py-3 rounded-lg font-medium transition ${
+                          selectedReferral.status === status.value
+                            ? "bg-gray-800 text-gray-500 cursor-not-allowed"
+                            : "bg-gray-800 hover:bg-gray-700 text-white"
+                        }`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <span>{status.label}</span>
+                          {status.earnings > 0 && (
+                            <span className="text-emerald-400 text-sm">
+                              +${status.earnings}
+                            </span>
+                          )}
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => setSelectedReferral(null)}
+                    disabled={updating}
+                    className="flex-1 px-4 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-lg transition"
+                  >
+                    Cancel
+                  </button>
                 </div>
               </div>
             </div>
-          ))}
-        </div>
-      </div>
+          )}
+
+          {/* Top Referrers */}
+          <div className="bg-gray-900 rounded-xl p-6 border border-gray-800">
+            <h3 className="text-xl font-bold text-white mb-6">Top Referrers</h3>
+            <div className="space-y-3">
+              {allReferrers.slice(0, 10).map((referrer, index) => (
+                <div
+                  key={referrer.id}
+                  className="flex items-center justify-between p-4 bg-gray-800 rounded-lg"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="w-8 h-8 bg-emerald-900/30 rounded-full flex items-center justify-center text-emerald-400 font-bold text-sm">
+                      {index + 1}
+                    </div>
+                    <div>
+                      <div className="text-white font-medium">
+                        {referrer.displayName || referrer.email}
+                      </div>
+                      <div className="text-gray-400 text-sm">
+                        {referrer.referralCode}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-white font-bold">
+                      {referrer.installedReferrals} installed
+                    </div>
+                    <div className="text-emerald-400 text-sm">
+                      ${referrer.totalEarnings.toFixed(0)} earned
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }

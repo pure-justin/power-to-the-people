@@ -78,6 +78,39 @@ export const SMS_TEMPLATES = {
 };
 
 /**
+ * Update SMS notification preferences for a project
+ * @param {string} projectId - Project ID
+ * @param {boolean} smsOptIn - Whether to opt in to SMS
+ * @returns {Promise<{success: boolean, smsOptIn: boolean}>}
+ */
+export async function updateSmsPreferences(projectId, smsOptIn) {
+  try {
+    const updateFunc = httpsCallable(functions, "updateSmsPreferences");
+    const result = await updateFunc({ projectId, smsOptIn });
+    return result.data;
+  } catch (error) {
+    console.error("Error updating SMS preferences:", error);
+    throw error;
+  }
+}
+
+/**
+ * Get SMS message history for a project
+ * @param {string} projectId - Project ID
+ * @returns {Promise<{messages: Array, smsOptIn: boolean}>}
+ */
+export async function getProjectSmsHistory(projectId) {
+  try {
+    const getHistoryFunc = httpsCallable(functions, "getProjectSmsHistory");
+    const result = await getHistoryFunc({ projectId });
+    return result.data;
+  } catch (error) {
+    console.error("Error getting SMS history:", error);
+    throw error;
+  }
+}
+
+/**
  * Format phone number to E.164 format (+1 for US)
  * @param {string} phone - Phone number in any format
  * @returns {string} Formatted phone number

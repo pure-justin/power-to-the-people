@@ -308,6 +308,53 @@ export const generateReferralLink = (referralCode) => {
 };
 
 /**
+ * Track a referral link click for analytics
+ */
+export const trackReferralClick = async (referralCode, source = "direct") => {
+  if (!db) return;
+
+  try {
+    await addDoc(collection(db, "referralClicks"), {
+      referralCode: referralCode.toUpperCase(),
+      source, // direct, email, sms, facebook, twitter, linkedin, qr
+      userAgent: navigator.userAgent,
+      timestamp: serverTimestamp(),
+    });
+  } catch (error) {
+    // Silently fail - click tracking is non-critical
+    console.warn("Click tracking failed:", error);
+  }
+};
+
+/**
+ * Get click analytics for a referral code
+ */
+export const getReferralClickStats = async (referralCode) => {
+  if (!db) throw new Error("Firestore not initialized");
+
+  const clicksRef = collection(db, "referralClicks");
+  const q = query(
+    clicksRef,
+    where("referralCode", "==", referralCode.toUpperCase()),
+  );
+
+  const snapshot = await getDocs(q);
+  const clicks = [];
+  const sourceCounts = {};
+
+  snapshot.forEach((doc) => {
+    const data = doc.data();
+    clicks.push(data);
+    sourceCounts[data.source] = (sourceCounts[data.source] || 0) + 1;
+  });
+
+  return {
+    totalClicks: clicks.length,
+    sourceCounts,
+  };
+};
+
+/**
  * Get referral analytics
  */
 export const getReferralAnalytics = async (userId) => {
@@ -351,6 +398,196 @@ export const getReferralAnalytics = async (userId) => {
   };
 };
 
+/**
+ * Request a payout (user-initiated)
+ */
+export const requestPayout = async (
+  userId,
+  amount,
+  method = "direct_deposit",
+) => {
+  if (!db) throw new Error("Firestore not initialized");
+
+  const referrerRef = doc(db, "referrals", userId);
+  const referrerSnap = await getDoc(referrerRef);
+
+  if (!referrerSnap.exists()) {
+    throw new Error("Referral account not found");
+  }
+
+  const referralData = referrerSnap.data();
+
+  if (amount > referralData.pendingEarnings) {
+    throw new Error("Insufficient pending earnings");
+  }
+
+  if (amount < 25) {
+    throw new Error("Minimum payout is $25");
+  }
+
+  const payoutData = {
+    userId,
+    amount,
+    status: "pending",
+    method,
+    requestedAt: serverTimestamp(),
+    processedAt: null,
+    userEmail: referralData.email,
+    userName: referralData.displayName,
+  };
+
+  const payoutRef = await addDoc(collection(db, "payouts"), payoutData);
+
+  // Move from pending to "requested" (still pending until admin processes)
+  await updateDoc(referrerRef, {
+    pendingEarnings: increment(-amount),
+    updatedAt: serverTimestamp(),
+  });
+
+  return payoutRef.id;
+};
+
+/**
+ * Get payout history for a user
+ */
+export const getUserPayouts = async (userId) => {
+  if (!db) throw new Error("Firestore not initialized");
+
+  const payoutsRef = collection(db, "payouts");
+  const q = query(
+    payoutsRef,
+    where("userId", "==", userId),
+    orderBy("requestedAt", "desc"),
+  );
+
+  const snapshot = await getDocs(q);
+  const payouts = [];
+
+  snapshot.forEach((doc) => {
+    payouts.push({ id: doc.id, ...doc.data() });
+  });
+
+  return payouts;
+};
+
+/**
+ * Sync lead status change to referral tracking
+ * Call this when a lead's status changes in the admin panel
+ */
+export const syncLeadStatusToReferral = async (leadEmail, newLeadStatus) => {
+  if (!db) throw new Error("Firestore not initialized");
+
+  // Map lead statuses to referral statuses
+  const statusMap = {
+    submitted: "signed_up",
+    reviewing: "signed_up",
+    qualified: "qualified",
+    approved: "qualified",
+    scheduled: "site_survey",
+    completed: "installed",
+  };
+
+  const referralStatus = statusMap[newLeadStatus];
+  if (!referralStatus) return null;
+
+  // Find the referral tracking record for this email
+  const trackingRef = collection(db, "referralTracking");
+  const q = query(
+    trackingRef,
+    where("referredEmail", "==", leadEmail),
+    limit(1),
+  );
+
+  const snapshot = await getDocs(q);
+  if (snapshot.empty) return null;
+
+  const trackingDoc = snapshot.docs[0];
+  const currentStatus = trackingDoc.data().status;
+
+  // Only update if the new status is further along the pipeline
+  const statusOrder = ["signed_up", "qualified", "site_survey", "installed"];
+  if (
+    statusOrder.indexOf(referralStatus) <= statusOrder.indexOf(currentStatus)
+  ) {
+    return null;
+  }
+
+  await updateReferralStatus(trackingDoc.id, referralStatus);
+  return { trackingId: trackingDoc.id, newStatus: referralStatus };
+};
+
+/**
+ * Get all payouts (admin)
+ */
+export const getAllPayouts = async (statusFilter = null) => {
+  if (!db) throw new Error("Firestore not initialized");
+
+  const payoutsRef = collection(db, "payouts");
+  let q;
+
+  if (statusFilter) {
+    q = query(
+      payoutsRef,
+      where("status", "==", statusFilter),
+      orderBy("requestedAt", "desc"),
+    );
+  } else {
+    q = query(payoutsRef, orderBy("requestedAt", "desc"));
+  }
+
+  const snapshot = await getDocs(q);
+  const payouts = [];
+
+  snapshot.forEach((doc) => {
+    payouts.push({ id: doc.id, ...doc.data() });
+  });
+
+  return payouts;
+};
+
+/**
+ * Update payout status (admin)
+ */
+export const updatePayoutStatus = async (payoutId, newStatus) => {
+  if (!db) throw new Error("Firestore not initialized");
+
+  const payoutRef = doc(db, "payouts", payoutId);
+  const payoutSnap = await getDoc(payoutRef);
+
+  if (!payoutSnap.exists()) {
+    throw new Error("Payout not found");
+  }
+
+  const updates = {
+    status: newStatus,
+  };
+
+  if (newStatus === "completed") {
+    updates.processedAt = serverTimestamp();
+
+    // Update the referrer's paidEarnings
+    const payoutData = payoutSnap.data();
+    const referrerRef = doc(db, "referrals", payoutData.userId);
+    await updateDoc(referrerRef, {
+      paidEarnings: increment(payoutData.amount),
+      updatedAt: serverTimestamp(),
+    });
+  }
+
+  if (newStatus === "failed") {
+    // Refund the pending earnings
+    const payoutData = payoutSnap.data();
+    const referrerRef = doc(db, "referrals", payoutData.userId);
+    await updateDoc(referrerRef, {
+      pendingEarnings: increment(payoutData.amount),
+      updatedAt: serverTimestamp(),
+    });
+  }
+
+  await updateDoc(payoutRef, updates);
+  return { payoutId, newStatus };
+};
+
 export default {
   generateReferralCode,
   createReferralRecord,
@@ -362,5 +599,12 @@ export default {
   processReferralPayout,
   getReferralLeaderboard,
   generateReferralLink,
+  trackReferralClick,
+  getReferralClickStats,
   getReferralAnalytics,
+  requestPayout,
+  getUserPayouts,
+  syncLeadStatusToReferral,
+  getAllPayouts,
+  updatePayoutStatus,
 };

@@ -485,6 +485,224 @@ export function getInstallerScore(installer) {
   };
 }
 
+/**
+ * Calculate per-installer ROI projection over N years
+ */
+export function calculateInstallerROI(
+  installer,
+  systemSizeKw = 10,
+  years = 25,
+) {
+  const pricing = calculatePriceEstimate(installer, systemSizeKw);
+  const sunshineHours = 1800; // TX average
+  const efficiency = 0.8;
+  const degradation = 0.008;
+  const utilityRate = 0.16;
+  const utilityEscalator = 0.035;
+  const annualUsageKwh = 12000;
+
+  const yearlyData = [];
+  let cumulativeSavings = 0;
+  let paybackYear = null;
+
+  for (let year = 1; year <= years; year++) {
+    const production =
+      systemSizeKw *
+      sunshineHours *
+      efficiency *
+      Math.max(1 - degradation * (year - 1), 0.75);
+    const currentUtilityRate =
+      utilityRate * Math.pow(1 + utilityEscalator, year - 1);
+    const utilityCost = currentUtilityRate * annualUsageKwh;
+    const solarOffset = Math.min(production, annualUsageKwh);
+    const savingsFromSolar = solarOffset * currentUtilityRate;
+    const annualLoanPayment = year <= 25 ? pricing.monthlyPayment * 12 : 0;
+    const netSavings = savingsFromSolar - annualLoanPayment;
+    cumulativeSavings += netSavings;
+
+    if (!paybackYear && cumulativeSavings > 0) {
+      paybackYear = year;
+    }
+
+    yearlyData.push({
+      year,
+      production: Math.round(production),
+      utilityCost: Math.round(utilityCost),
+      savingsFromSolar: Math.round(savingsFromSolar),
+      annualLoanPayment: Math.round(annualLoanPayment),
+      netSavings: Math.round(netSavings),
+      cumulativeSavings: Math.round(cumulativeSavings),
+    });
+  }
+
+  return {
+    installer: installer.name,
+    installerId: installer.id,
+    netCost: pricing.netCost,
+    monthlyPayment: pricing.monthlyPayment,
+    paybackYear: paybackYear || years,
+    totalSavings25yr: yearlyData[years - 1].cumulativeSavings,
+    yearlyData,
+  };
+}
+
+/**
+ * Get match score for an installer based on user preferences
+ */
+export function getMatchScore(installer, preferences = {}) {
+  const {
+    budgetPriority = 5, // 1-10, how important is price
+    qualityPriority = 5, // 1-10, how important is quality
+    speedPriority = 5, // 1-10, how important is speed
+    warrantyPriority = 5, // 1-10, how important is warranty
+    localPriority = 5, // 1-10, how important is local expertise
+  } = preferences;
+
+  const totalWeight =
+    budgetPriority +
+    qualityPriority +
+    speedPriority +
+    warrantyPriority +
+    localPriority;
+
+  // Price score (lower is better, scale 2.0-3.5 to 100-0)
+  const priceScore = Math.max(
+    0,
+    Math.min(100, ((3.5 - installer.pricePerWatt) / 1.5) * 100),
+  );
+
+  // Quality score
+  const qualityScore =
+    (installer.rating / 5) * 50 + (installer.customerSatisfaction / 100) * 50;
+
+  // Speed score (faster is better, scale 3-10 weeks to 100-0)
+  const minWeeks = parseInt(installer.installationTime.split("-")[0]);
+  const speedScore = Math.max(0, Math.min(100, ((10 - minWeeks) / 7) * 100));
+
+  // Warranty score (average across categories)
+  const avgWarranty =
+    (installer.warranty.workmanship +
+      installer.warranty.panels +
+      installer.warranty.inverters +
+      installer.warranty.batteries) /
+    4;
+  const warrantyScore = Math.min(100, (avgWarranty / 25) * 100);
+
+  // Local expertise score
+  const isTexas = installer.serviceAreas.some(
+    (a) => a.includes("Texas") || a.includes("All"),
+  );
+  const localScore = isTexas
+    ? installer.serviceAreas.length <= 3
+      ? 100
+      : 60
+    : 30;
+
+  const weightedScore =
+    priceScore * (budgetPriority / totalWeight) +
+    qualityScore * (qualityPriority / totalWeight) +
+    speedScore * (speedPriority / totalWeight) +
+    warrantyScore * (warrantyPriority / totalWeight) +
+    localScore * (localPriority / totalWeight);
+
+  return {
+    total: Math.round(weightedScore),
+    breakdown: {
+      price: Math.round(priceScore),
+      quality: Math.round(qualityScore),
+      speed: Math.round(speedScore),
+      warranty: Math.round(warrantyScore),
+      local: Math.round(localScore),
+    },
+  };
+}
+
+/**
+ * Get head-to-head comparison between two installers
+ */
+export function getHeadToHead(installerId1, installerId2, systemSizeKw = 10) {
+  const inst1 = getInstallerById(installerId1);
+  const inst2 = getInstallerById(installerId2);
+  if (!inst1 || !inst2) return null;
+
+  const pricing1 = calculatePriceEstimate(inst1, systemSizeKw);
+  const pricing2 = calculatePriceEstimate(inst2, systemSizeKw);
+  const score1 = getInstallerScore(inst1);
+  const score2 = getInstallerScore(inst2);
+
+  const categories = [
+    {
+      name: "Price",
+      winner:
+        pricing1.netCost <= pricing2.netCost ? installerId1 : installerId2,
+      diff: Math.abs(pricing1.netCost - pricing2.netCost),
+      unit: "$",
+    },
+    {
+      name: "Rating",
+      winner: inst1.rating >= inst2.rating ? installerId1 : installerId2,
+      diff: Math.abs(inst1.rating - inst2.rating).toFixed(1),
+      unit: "stars",
+    },
+    {
+      name: "Satisfaction",
+      winner:
+        inst1.customerSatisfaction >= inst2.customerSatisfaction
+          ? installerId1
+          : installerId2,
+      diff: Math.abs(inst1.customerSatisfaction - inst2.customerSatisfaction),
+      unit: "%",
+    },
+    {
+      name: "Experience",
+      winner:
+        inst1.yearsInBusiness >= inst2.yearsInBusiness
+          ? installerId1
+          : installerId2,
+      diff: Math.abs(inst1.yearsInBusiness - inst2.yearsInBusiness),
+      unit: "years",
+    },
+    {
+      name: "Speed",
+      winner:
+        parseInt(inst1.installationTime) <= parseInt(inst2.installationTime)
+          ? installerId1
+          : installerId2,
+      diff: Math.abs(
+        parseInt(inst1.installationTime) - parseInt(inst2.installationTime),
+      ),
+      unit: "weeks",
+    },
+    {
+      name: "Overall Score",
+      winner: score1.total >= score2.total ? installerId1 : installerId2,
+      diff: Math.abs(score1.total - score2.total),
+      unit: "pts",
+    },
+  ];
+
+  const winsCount = {};
+  winsCount[installerId1] = categories.filter(
+    (c) => c.winner === installerId1,
+  ).length;
+  winsCount[installerId2] = categories.filter(
+    (c) => c.winner === installerId2,
+  ).length;
+
+  return {
+    installers: [
+      { ...inst1, pricing: pricing1, score: score1 },
+      { ...inst2, pricing: pricing2, score: score2 },
+    ],
+    categories,
+    winsCount,
+    overallWinner:
+      winsCount[installerId1] >= winsCount[installerId2]
+        ? installerId1
+        : installerId2,
+  };
+}
+
 export default {
   getAllInstallers,
   getInstallerById,
@@ -492,4 +710,7 @@ export default {
   compareInstallers,
   getRecommendedInstallers,
   getInstallerScore,
+  calculateInstallerROI,
+  getMatchScore,
+  getHeadToHead,
 };

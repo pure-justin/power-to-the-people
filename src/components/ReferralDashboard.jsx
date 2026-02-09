@@ -9,10 +9,13 @@ import {
   Gift,
   Target,
   Zap,
+  MousePointer,
 } from "lucide-react";
 import {
   getReferralAnalytics,
   getUserReferrals,
+  getReferralClickStats,
+  getReferralData,
 } from "../services/referralService";
 
 /**
@@ -22,6 +25,7 @@ import {
 export default function ReferralDashboard({ userId }) {
   const [analytics, setAnalytics] = useState(null);
   const [referrals, setReferrals] = useState([]);
+  const [clickStats, setClickStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [timeframe, setTimeframe] = useState("all"); // all, month, week
 
@@ -32,13 +36,24 @@ export default function ReferralDashboard({ userId }) {
   const loadDashboardData = async () => {
     try {
       setLoading(true);
-      const [analyticsData, referralsData] = await Promise.all([
+      const [analyticsData, referralsData, referralData] = await Promise.all([
         getReferralAnalytics(userId),
         getUserReferrals(userId),
+        getReferralData(userId),
       ]);
 
       setAnalytics(analyticsData);
       setReferrals(filterByTimeframe(referralsData, timeframe));
+
+      // Load click stats if we have a referral code
+      if (referralData?.referralCode) {
+        try {
+          const clicks = await getReferralClickStats(referralData.referralCode);
+          setClickStats(clicks);
+        } catch {
+          // Click stats are non-critical
+        }
+      }
     } catch (error) {
       console.error("Error loading dashboard:", error);
     } finally {
@@ -250,7 +265,7 @@ export default function ReferralDashboard({ userId }) {
       </div>
 
       {/* Performance Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <div className="bg-gray-900 rounded-xl p-6 border border-gray-800">
           <div className="flex items-center gap-3 mb-4">
             <div className="p-3 bg-blue-900/30 rounded-lg">
@@ -305,6 +320,25 @@ export default function ReferralDashboard({ userId }) {
             </div>
           </div>
           <p className="text-gray-500 text-sm">Per referral</p>
+        </div>
+
+        <div className="bg-gray-900 rounded-xl p-6 border border-gray-800">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="p-3 bg-orange-900/30 rounded-lg">
+              <MousePointer size={24} className="text-orange-400" />
+            </div>
+            <div>
+              <div className="text-gray-400 text-sm">Link Clicks</div>
+              <div className="text-2xl font-bold text-white">
+                {clickStats?.totalClicks || 0}
+              </div>
+            </div>
+          </div>
+          <p className="text-gray-500 text-sm">
+            {referrals.length > 0 && clickStats?.totalClicks > 0
+              ? `${Math.round((referrals.length / clickStats.totalClicks) * 100)}% signup rate`
+              : "Share your link to get started"}
+          </p>
         </div>
       </div>
 
