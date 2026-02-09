@@ -275,20 +275,137 @@ export default function DashboardWorkerProfile() {
           listingsSnap.docs.map((d) => ({ id: d.id, ...d.data() })),
         );
 
-        // Load active tasks (assigned marketplace listings)
+        // Lookup city/state from zip
+        if (data.zip) {
+          const resolved = lookupZipCityState(data.zip);
+          setCityState(resolved);
+        }
+
+        // Load active tasks (assigned + in_progress marketplace listings)
         try {
-          const activeQ = query(
+          const assignedQ = query(
             collection(db, "marketplace_listings"),
             where("winning_bid.bidderId", "==", data.user_id),
             where("status", "==", "assigned"),
             limit(20),
           );
-          const activeSnap = await getDocs(activeQ);
-          setActiveTasks(
-            activeSnap.docs.map((d) => ({ id: d.id, ...d.data() })),
+          const inProgressQ = query(
+            collection(db, "marketplace_listings"),
+            where("winning_bid.bidderId", "==", data.user_id),
+            where("status", "==", "in_progress"),
+            limit(20),
           );
+          const [assignedSnap, inProgressSnap] = await Promise.all([
+            getDocs(assignedQ),
+            getDocs(inProgressQ),
+          ]);
+          const allActive = [
+            ...assignedSnap.docs.map((d) => ({ id: d.id, ...d.data() })),
+            ...inProgressSnap.docs.map((d) => ({ id: d.id, ...d.data() })),
+          ];
+          setActiveTasks(allActive);
         } catch (activeErr) {
           console.error("Failed to load active tasks:", activeErr);
+        }
+
+        // Load matched listings (open listings in worker's service area)
+        try {
+          const matchQ = query(
+            collection(db, "marketplace_listings"),
+            where("status", "==", "open"),
+            orderBy("posted_at", "desc"),
+            limit(20),
+          );
+          const matchSnap = await getDocs(matchQ);
+          let matched = matchSnap.docs.map((d) => ({
+            id: d.id,
+            ...d.data(),
+          }));
+
+          // Filter by worker's state-based service areas if available
+          if (data.service_areas?.length > 0) {
+            matched = matched.filter(
+              (l) =>
+                !l.project_context?.state ||
+                data.service_areas.includes(l.project_context.state),
+            );
+          }
+
+          // Filter by distance if worker has lat/lng
+          if (data.lat && data.lng && data.service_radius) {
+            matched = matched.filter((l) => {
+              if (!l.project_context?.lat || !l.project_context?.lng)
+                return true;
+              const dist = calcDistanceMiles(
+                data.lat,
+                data.lng,
+                l.project_context.lat,
+                l.project_context.lng,
+              );
+              return dist <= data.service_radius;
+            });
+          }
+
+          setMatchedListings(matched.slice(0, 5));
+        } catch (matchErr) {
+          console.error("Failed to load matched listings:", matchErr);
+        }
+
+        // Compute earnings from completed listings
+        try {
+          const allCompletedQ = query(
+            collection(db, "marketplace_listings"),
+            where("winning_bid.bidderId", "==", data.user_id),
+            where("status", "==", "completed"),
+            orderBy("completed_at", "desc"),
+            limit(50),
+          );
+          const allCompletedSnap = await getDocs(allCompletedQ);
+          const allCompleted = allCompletedSnap.docs.map((d) => ({
+            id: d.id,
+            ...d.data(),
+          }));
+
+          const now = new Date();
+          const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+
+          let totalEarned = 0;
+          let monthEarned = 0;
+          const payments = [];
+
+          allCompleted.forEach((listing) => {
+            const price = listing.winning_bid?.price || 0;
+            totalEarned += price;
+
+            const completedDate = listing.completed_at?.toDate
+              ? listing.completed_at.toDate()
+              : listing.completed_at
+                ? new Date(listing.completed_at)
+                : null;
+
+            if (completedDate && completedDate >= monthStart) {
+              monthEarned += price;
+            }
+
+            if (payments.length < 5) {
+              payments.push({
+                id: listing.id,
+                amount: price,
+                service_type: listing.service_type,
+                date: completedDate,
+              });
+            }
+          });
+
+          setEarnings({
+            total: totalEarned,
+            thisMonth: monthEarned,
+            avgJobValue:
+              allCompleted.length > 0 ? totalEarned / allCompleted.length : 0,
+            recentPayments: payments,
+          });
+        } catch (earningsErr) {
+          console.error("Failed to compute earnings:", earningsErr);
         }
       } catch (err) {
         console.error("Failed to load worker:", err);
@@ -338,6 +455,60 @@ export default function DashboardWorkerProfile() {
       setSaving(false);
     }
   };
+
+  const handleUpdateServiceArea = async () => {
+    if (!isOwnProfile) return;
+    setUpdatingServiceArea(true);
+    setError(null);
+    try {
+      await updateDoc(doc(db, "workers", workerId), {
+        zip: editZip || null,
+        service_radius: editRadius,
+      });
+      // Reload worker
+      const workerSnap = await getDoc(doc(db, "workers", workerId));
+      const updatedData = { id: workerSnap.id, ...workerSnap.data() };
+      setWorker(updatedData);
+      if (updatedData.zip) {
+        setCityState(lookupZipCityState(updatedData.zip));
+      }
+    } catch (err) {
+      setError(err.message || "Failed to update service area");
+    } finally {
+      setUpdatingServiceArea(false);
+    }
+  };
+
+  // Helper: days remaining until deadline
+  function getDaysRemaining(deadline) {
+    if (!deadline) return null;
+    const end = deadline.toDate ? deadline.toDate() : new Date(deadline);
+    const now = new Date();
+    const diff = end - now;
+    return Math.ceil(diff / (1000 * 60 * 60 * 24));
+  }
+
+  // Helper: format currency
+  function formatCurrency(val) {
+    if (val == null) return "$0";
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 0,
+    }).format(val);
+  }
+
+  // Compute reliability stats
+  const reliabilityStats = (() => {
+    const completedJobs = worker?.completed_jobs || 0;
+    const onTimeRate = worker?.on_time_rate ?? (completedJobs > 0 ? 95 : null);
+    const score = worker?.reliability_score ?? null;
+    const strikes = worker?.strikes?.history || [];
+    const activeStrikes = strikes.filter((s) => s.status !== "resolved");
+    const slaCompliant =
+      score != null ? score >= 80 && activeStrikes.length === 0 : null;
+    return { completedJobs, onTimeRate, score, strikes, slaCompliant };
+  })();
 
   if (loading) {
     return (
@@ -633,11 +804,30 @@ export default function DashboardWorkerProfile() {
           ) : (
             <>
               <div className="space-y-2">
+                {/* Visual service area display */}
+                {worker.zip && (
+                  <div className="rounded-lg bg-emerald-50 border border-emerald-200 px-3 py-2.5">
+                    <div className="flex items-center gap-2">
+                      <Navigation className="h-4 w-4 text-emerald-600" />
+                      <span className="text-sm font-medium text-emerald-800">
+                        Serving {cityState || `ZIP ${worker.zip}`}
+                        {worker.service_radius
+                          ? ` + ${worker.service_radius} mile radius`
+                          : ""}
+                      </span>
+                    </div>
+                  </div>
+                )}
                 {worker.zip && (
                   <div className="flex items-center gap-2 text-sm">
                     <MapPin className="h-4 w-4 text-gray-400" />
                     <span className="text-gray-700">
                       ZIP {worker.zip}
+                      {cityState && (
+                        <span className="ml-1 text-gray-500">
+                          ({cityState})
+                        </span>
+                      )}
                       {worker.service_radius &&
                         ` -- ${worker.service_radius} mile radius`}
                     </span>
@@ -663,6 +853,69 @@ export default function DashboardWorkerProfile() {
                     </span>
                   )}
               </div>
+
+              {/* Inline service area update (own profile only) */}
+              {isOwnProfile && !editing && (
+                <div className="mt-3 rounded-lg border border-gray-200 bg-gray-50 p-3">
+                  <h3 className="mb-2 text-xs font-medium text-gray-500">
+                    Quick Update Service Area
+                  </h3>
+                  <div className="flex flex-wrap items-end gap-3">
+                    <div className="w-28">
+                      <label className="mb-0.5 block text-[10px] text-gray-500">
+                        Zip Code
+                      </label>
+                      <input
+                        value={editZip}
+                        onChange={(e) => {
+                          setEditZip(e.target.value);
+                          setCityState(lookupZipCityState(e.target.value));
+                        }}
+                        className="input-field text-sm"
+                        placeholder="78701"
+                        maxLength={5}
+                      />
+                    </div>
+                    <div className="flex-1 min-w-[140px] max-w-[200px]">
+                      <label className="mb-0.5 flex items-center justify-between text-[10px] text-gray-500">
+                        <span>Radius</span>
+                        <span className="font-medium text-gray-700">
+                          {editRadius} mi
+                        </span>
+                      </label>
+                      <input
+                        type="range"
+                        min={10}
+                        max={100}
+                        step={5}
+                        value={editRadius}
+                        onChange={(e) =>
+                          setEditRadius(parseInt(e.target.value, 10))
+                        }
+                        className="w-full accent-emerald-600"
+                      />
+                    </div>
+                    <button
+                      onClick={handleUpdateServiceArea}
+                      disabled={updatingServiceArea}
+                      className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-emerald-700 disabled:opacity-50"
+                    >
+                      {updatingServiceArea ? (
+                        <Loader2 className="h-3 w-3 animate-spin" />
+                      ) : (
+                        <MapPin className="h-3 w-3" />
+                      )}
+                      Update Service Area
+                    </button>
+                  </div>
+                  {editZip && lookupZipCityState(editZip) && (
+                    <p className="mt-1.5 text-[10px] text-emerald-600">
+                      {lookupZipCityState(editZip)}
+                    </p>
+                  )}
+                </div>
+              )}
+
               <div className="mt-3 flex items-center gap-4">
                 <div className="flex items-center gap-1.5 text-sm text-gray-600">
                   <Settings className="h-3.5 w-3.5 text-gray-400" />
@@ -688,33 +941,81 @@ export default function DashboardWorkerProfile() {
         </div>
       </div>
 
-      {/* Reliability Score */}
+      {/* Reliability Dashboard */}
       <div className="card border border-gray-200 p-5">
-        <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold uppercase text-gray-400">
-          <Gauge className="h-4 w-4" />
-          Reliability Score
-        </h2>
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="flex items-center gap-2 text-sm font-semibold uppercase text-gray-400">
+            <Gauge className="h-4 w-4" />
+            Reliability Dashboard
+          </h2>
+          {reliabilityStats.slaCompliant != null && (
+            <span
+              className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                reliabilityStats.slaCompliant
+                  ? "bg-emerald-100 text-emerald-700"
+                  : "bg-red-100 text-red-700"
+              }`}
+            >
+              <BadgeCheck className="h-3 w-3" />
+              {reliabilityStats.slaCompliant
+                ? "SLA Compliant"
+                : "SLA Non-Compliant"}
+            </span>
+          )}
+        </div>
+
+        {/* Stats Row */}
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 mb-4">
+          <div className="rounded-lg border border-gray-200 bg-gray-50 p-3 text-center">
+            <p className="text-xl font-bold text-gray-900">
+              {reliabilityStats.score ?? "--"}
+            </p>
+            <p className="text-[10px] text-gray-500">Reliability Score</p>
+          </div>
+          <div className="rounded-lg border border-gray-200 bg-gray-50 p-3 text-center">
+            <p className="text-xl font-bold text-gray-900">
+              {reliabilityStats.completedJobs}
+            </p>
+            <p className="text-[10px] text-gray-500">Jobs Completed</p>
+          </div>
+          <div className="rounded-lg border border-gray-200 bg-gray-50 p-3 text-center">
+            <p className="text-xl font-bold text-gray-900">
+              {reliabilityStats.onTimeRate != null
+                ? `${reliabilityStats.onTimeRate}%`
+                : "--"}
+            </p>
+            <p className="text-[10px] text-gray-500">On-Time Rate</p>
+          </div>
+          <div className="rounded-lg border border-gray-200 bg-gray-50 p-3 text-center">
+            <p className="text-xl font-bold text-gray-900">
+              {reliabilityStats.strikes.length}
+            </p>
+            <p className="text-[10px] text-gray-500">Total Strikes</p>
+          </div>
+        </div>
+
+        {/* Score Bar */}
         {(() => {
-          const score = worker.reliability_score ?? null;
+          const score = reliabilityStats.score;
           if (score == null) {
             return (
               <p className="text-sm text-gray-400">No reliability data yet</p>
             );
           }
           const color =
-            score > 80
+            score >= 80
               ? "bg-emerald-500"
               : score >= 50
                 ? "bg-amber-500"
                 : "bg-red-500";
           const textColor =
-            score > 80
+            score >= 80
               ? "text-emerald-700"
               : score >= 50
                 ? "text-amber-700"
                 : "text-red-700";
           const label =
-            score > 80
+            score >= 80
               ? "Excellent"
               : score >= 50
                 ? "Fair"
@@ -726,7 +1027,7 @@ export default function DashboardWorkerProfile() {
                   {label}
                 </span>
                 <span className={`text-lg font-bold ${textColor}`}>
-                  {score}
+                  {score}/100
                 </span>
               </div>
               <div className="h-3 w-full rounded-full bg-gray-200">
@@ -749,7 +1050,7 @@ export default function DashboardWorkerProfile() {
           <div className="mt-4 border-t border-gray-100 pt-3">
             <h3 className="mb-2 flex items-center gap-1.5 text-xs font-semibold uppercase text-gray-400">
               <AlertTriangle className="h-3.5 w-3.5" />
-              Strike History
+              Strike History ({worker.strikes.history.length})
             </h3>
             <div className="space-y-2">
               {worker.strikes.history.map((strike, i) => {
@@ -772,9 +1073,27 @@ export default function DashboardWorkerProfile() {
                       <p className="text-xs text-gray-700">
                         {strike.reason || "No reason provided"}
                       </p>
-                      <p className="mt-0.5 text-[10px] text-gray-400">
-                        {formatDate(strike.date)}
-                      </p>
+                      <div className="mt-0.5 flex items-center gap-2">
+                        <p className="text-[10px] text-gray-400">
+                          {formatDate(strike.date)}
+                        </p>
+                        {strike.project_id && (
+                          <p className="text-[10px] text-gray-400">
+                            Project: {strike.project_id}
+                          </p>
+                        )}
+                        {strike.status && (
+                          <span
+                            className={`rounded-full px-1.5 py-0.5 text-[10px] font-medium ${
+                              strike.status === "resolved"
+                                ? "bg-emerald-100 text-emerald-700"
+                                : "bg-red-100 text-red-700"
+                            }`}
+                          >
+                            {strike.status}
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </div>
                 );
@@ -786,45 +1105,243 @@ export default function DashboardWorkerProfile() {
 
       {/* Active Tasks */}
       <div className="card border border-gray-200 p-5">
-        <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold uppercase text-gray-400">
-          <ListChecks className="h-4 w-4" />
-          Active Tasks ({activeTasks.length}
-          {worker.max_concurrent_tasks &&
-            ` / ${worker.max_concurrent_tasks} max`}
-          )
-        </h2>
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="flex items-center gap-2 text-sm font-semibold uppercase text-gray-400">
+            <ListChecks className="h-4 w-4" />
+            Active Tasks ({activeTasks.length}
+            {worker.max_concurrent_tasks &&
+              ` / ${worker.max_concurrent_tasks} max`}
+            )
+          </h2>
+          {activeTasks.length >= (worker.max_concurrent_tasks || 3) && (
+            <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-medium text-amber-700">
+              At Capacity
+            </span>
+          )}
+        </div>
         {activeTasks.length === 0 ? (
           <p className="text-sm text-gray-400">No active tasks</p>
         ) : (
           <div className="space-y-2">
-            {activeTasks.map((task) => (
-              <div
-                key={task.id}
-                className="flex items-center justify-between rounded-lg border border-blue-100 bg-blue-50/50 px-4 py-3"
+            {activeTasks.map((task) => {
+              const daysLeft = getDaysRemaining(task.deadline);
+              const isUrgent = daysLeft != null && daysLeft <= 2;
+              const isOverdue = daysLeft != null && daysLeft < 0;
+              return (
+                <div
+                  key={task.id}
+                  className={`flex items-center justify-between rounded-lg border px-4 py-3 ${
+                    isOverdue
+                      ? "border-red-200 bg-red-50/50"
+                      : isUrgent
+                        ? "border-amber-200 bg-amber-50/50"
+                        : "border-blue-100 bg-blue-50/50"
+                  }`}
+                >
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2">
+                      <span className="rounded bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700">
+                        {SERVICE_TYPE_LABELS[task.service_type] ||
+                          task.service_type?.replace(/_/g, " ") ||
+                          "N/A"}
+                      </span>
+                      <span
+                        className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${
+                          task.status === "in_progress"
+                            ? "bg-purple-100 text-purple-700"
+                            : "bg-blue-100 text-blue-700"
+                        }`}
+                      >
+                        {task.status === "in_progress"
+                          ? "In Progress"
+                          : "Assigned"}
+                      </span>
+                    </div>
+                    <p className="mt-1 text-sm text-gray-700 line-clamp-1">
+                      {task.requirements}
+                    </p>
+                    <div className="mt-0.5 flex items-center gap-3">
+                      {task.project_context?.state && (
+                        <p className="flex items-center gap-1 text-xs text-gray-500">
+                          <MapPin className="h-3 w-3" />
+                          {task.project_context.state}
+                          {task.project_context?.zip &&
+                            ` ${task.project_context.zip}`}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  <div className="ml-4 flex flex-col items-end gap-1 shrink-0">
+                    {task.deadline && (
+                      <p className="text-xs text-gray-500">
+                        Due {formatDate(task.deadline)}
+                      </p>
+                    )}
+                    {daysLeft != null && (
+                      <span
+                        className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold ${
+                          isOverdue
+                            ? "bg-red-100 text-red-700"
+                            : isUrgent
+                              ? "bg-amber-100 text-amber-700 animate-pulse"
+                              : daysLeft <= 5
+                                ? "bg-amber-100 text-amber-700"
+                                : "bg-blue-100 text-blue-700"
+                        }`}
+                      >
+                        <Timer className="h-3 w-3" />
+                        {isOverdue
+                          ? `${Math.abs(daysLeft)}d overdue`
+                          : `${daysLeft}d remaining`}
+                      </span>
+                    )}
+                    {task.winning_bid?.price && (
+                      <p className="font-medium text-xs text-gray-700">
+                        {formatCurrency(task.winning_bid.price)}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+
+      {/* Earnings Summary */}
+      <div className="card border border-gray-200 p-5">
+        <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold uppercase text-gray-400">
+          <DollarSign className="h-4 w-4" />
+          Earnings Summary
+        </h2>
+
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 mb-4">
+          <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-3 text-center">
+            <p className="text-xl font-bold text-emerald-700">
+              {formatCurrency(earnings.total)}
+            </p>
+            <p className="text-[10px] text-emerald-600">Total Earned</p>
+          </div>
+          <div className="rounded-lg border border-blue-200 bg-blue-50 p-3 text-center">
+            <p className="text-xl font-bold text-blue-700">
+              {formatCurrency(earnings.thisMonth)}
+            </p>
+            <p className="text-[10px] text-blue-600">This Month</p>
+          </div>
+          <div className="rounded-lg border border-gray-200 bg-gray-50 p-3 text-center">
+            <p className="text-xl font-bold text-gray-700">
+              {formatCurrency(earnings.avgJobValue)}
+            </p>
+            <p className="text-[10px] text-gray-500">Avg Job Value</p>
+          </div>
+        </div>
+
+        {/* Recent Payments */}
+        {earnings.recentPayments.length > 0 && (
+          <div className="border-t border-gray-100 pt-3">
+            <h3 className="mb-2 text-xs font-semibold uppercase text-gray-400">
+              Recent Payments
+            </h3>
+            <div className="space-y-1.5">
+              {earnings.recentPayments.map((payment) => (
+                <div
+                  key={payment.id}
+                  className="flex items-center justify-between rounded bg-gray-50 px-3 py-1.5"
+                >
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="h-3 w-3 text-emerald-500" />
+                    <span className="text-xs text-gray-700">
+                      {SERVICE_TYPE_LABELS[payment.service_type] ||
+                        payment.service_type?.replace(/_/g, " ") ||
+                        "Job"}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs text-gray-400">
+                      {payment.date
+                        ? payment.date.toLocaleDateString("en-US", {
+                            month: "short",
+                            day: "numeric",
+                          })
+                        : "N/A"}
+                    </span>
+                    <span className="text-xs font-medium text-emerald-700">
+                      {formatCurrency(payment.amount)}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {earnings.total === 0 && earnings.recentPayments.length === 0 && (
+          <p className="text-sm text-gray-400">No earnings recorded yet</p>
+        )}
+      </div>
+
+      {/* Matched Listings Preview */}
+      <div className="card border border-gray-200 p-5">
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="flex items-center gap-2 text-sm font-semibold uppercase text-gray-400">
+            <Store className="h-4 w-4" />
+            Nearby Open Listings
+          </h2>
+          <Link
+            to="/dashboard/marketplace"
+            className="inline-flex items-center gap-1 text-xs font-medium text-emerald-600 hover:text-emerald-700"
+          >
+            View All
+            <ArrowRight className="h-3 w-3" />
+          </Link>
+        </div>
+
+        {matchedListings.length === 0 ? (
+          <p className="text-sm text-gray-400">
+            No matching open listings in your service area
+          </p>
+        ) : (
+          <div className="space-y-2">
+            {matchedListings.map((listing) => (
+              <Link
+                key={listing.id}
+                to="/dashboard/marketplace"
+                className="flex items-center justify-between rounded-lg border border-gray-100 bg-gray-50 px-4 py-3 transition-colors hover:bg-gray-100"
               >
-                <div>
-                  <span className="rounded bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700">
-                    {task.service_type?.replace(/_/g, " ") || "N/A"}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <span className="rounded bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-700">
+                      {SERVICE_TYPE_LABELS[listing.service_type] ||
+                        listing.service_type?.replace(/_/g, " ") ||
+                        "N/A"}
+                    </span>
+                    {listing.project_context?.state && (
+                      <span className="flex items-center gap-0.5 text-[10px] text-gray-500">
+                        <MapPin className="h-2.5 w-2.5" />
+                        {listing.project_context.state}
+                        {listing.project_context?.zip &&
+                          ` ${listing.project_context.zip}`}
+                      </span>
+                    )}
+                  </div>
+                  {listing.requirements && (
+                    <p className="mt-1 text-xs text-gray-600 line-clamp-1">
+                      {listing.requirements}
+                    </p>
+                  )}
+                </div>
+                <div className="ml-4 flex flex-col items-end gap-0.5 shrink-0">
+                  {listing.budget && (
+                    <span className="text-xs font-medium text-gray-700">
+                      {formatCurrency(listing.budget.min)} -{" "}
+                      {formatCurrency(listing.budget.max)}
+                    </span>
+                  )}
+                  <span className="text-[10px] text-gray-400">
+                    {formatDate(listing.posted_at)}
                   </span>
-                  <p className="mt-1 text-sm text-gray-700 line-clamp-1">
-                    {task.requirements}
-                  </p>
-                  {task.project_context?.state && (
-                    <p className="mt-0.5 flex items-center gap-1 text-xs text-gray-500">
-                      <MapPin className="h-3 w-3" />
-                      {task.project_context.state}
-                    </p>
-                  )}
                 </div>
-                <div className="text-right text-xs text-gray-500">
-                  {task.deadline && <p>Due {formatDate(task.deadline)}</p>}
-                  {task.winning_bid?.price && (
-                    <p className="font-medium text-gray-700">
-                      ${task.winning_bid.price.toLocaleString()}
-                    </p>
-                  )}
-                </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}

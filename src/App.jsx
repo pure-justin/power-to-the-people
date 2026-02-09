@@ -34,6 +34,8 @@ const CreditDetail = lazy(() => import("./pages/marketplace/CreditDetail"));
 const About = lazy(() => import("./pages/About"));
 const Features = lazy(() => import("./pages/Features"));
 const Contact = lazy(() => import("./pages/Contact"));
+const SolarStatesIndex = lazy(() => import("./pages/SolarStatesIndex"));
+const SolarState = lazy(() => import("./pages/SolarState"));
 
 // Portal (customer) — lazy loaded
 const PortalHome = lazy(() => import("./pages/portal/PortalHome"));
@@ -135,6 +137,7 @@ const AdminCampaigns = lazy(() => import("./pages/admin/AdminCampaigns"));
 const AdminAnalytics = lazy(() => import("./pages/admin/AdminAnalytics"));
 const AdminTasks = lazy(() => import("./pages/admin/AdminTasks"));
 const AdminCredits = lazy(() => import("./pages/admin/AdminCredits"));
+const AdminWebhooks = lazy(() => import("./pages/admin/AdminWebhooks"));
 
 /** Redirect /project/:id → /portal/project/:id with actual param substitution */
 function ProjectRedirect() {
@@ -174,6 +177,8 @@ function App() {
               element={<CreditMarketplace />}
             />
             <Route path="/marketplace/credits/:id" element={<CreditDetail />} />
+            <Route path="/solar" element={<SolarStatesIndex />} />
+            <Route path="/solar/:stateSlug" element={<SolarState />} />
 
             {/* Homeowner Portal */}
             <Route element={<AppShell requiredRole="customer" />}>
@@ -290,6 +295,7 @@ function App() {
               <Route path="/admin/analytics" element={<AdminAnalytics />} />
               <Route path="/admin/tasks" element={<AdminTasks />} />
               <Route path="/admin/credits" element={<AdminCredits />} />
+              <Route path="/admin/webhooks" element={<AdminWebhooks />} />
             </Route>
 
             {/* Legacy redirect */}

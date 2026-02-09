@@ -26,6 +26,7 @@ import {
   limit,
   getDocs,
   updateDoc,
+  deleteDoc,
   increment,
 } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -496,6 +497,7 @@ export {
   orderBy,
   limit,
   updateDoc,
+  deleteDoc,
   increment,
 };
 export default app;

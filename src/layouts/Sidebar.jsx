@@ -37,6 +37,7 @@ import {
   BadgeDollarSign,
   Camera,
   ClipboardCheck,
+  Webhook,
 } from "lucide-react";
 
 const NAV_ITEMS = {
@@ -50,6 +51,7 @@ const NAV_ITEMS = {
     { to: "/admin/sms", label: "SMS", icon: MessageSquare },
     { to: "/admin/referrals", label: "Referrals", icon: Gift },
     { to: "/admin/api-keys", label: "API Keys", icon: Key },
+    { to: "/admin/webhooks", label: "Webhooks", icon: Webhook },
     { to: "/admin/solar-data", label: "Solar Data", icon: Database },
     { to: "/admin/compliance", label: "Compliance", icon: ShieldCheck },
     { to: "/admin/config", label: "Config", icon: Settings },
