@@ -15,6 +15,8 @@ import {
   Globe,
   Headphones,
 } from "lucide-react";
+import PublicNav from "../components/PublicNav";
+import PublicFooter from "../components/PublicFooter";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -75,90 +77,7 @@ export default function Contact() {
           font-family: 'Inter', -apple-system, sans-serif;
         }
 
-        /* HEADER */
-        .ct-header {
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          z-index: 100;
-          padding: 16px 0;
-          background: rgba(10, 10, 15, 0.8);
-          backdrop-filter: blur(20px);
-          border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .ct-header .container {
-          max-width: 1400px;
-          margin: 0 auto;
-          padding: 0 40px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
-
-        .ct-logo {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          font-weight: 800;
-          font-size: 1.25rem;
-          color: #fff;
-          text-decoration: none;
-          letter-spacing: -0.02em;
-        }
-
-        .ct-logo-icon {
-          width: 38px;
-          height: 38px;
-          background: linear-gradient(135deg, #10b981, #059669);
-          border-radius: 10px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          box-shadow: 0 0 24px rgba(16, 185, 129, 0.4);
-        }
-
-        .ct-nav {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-        }
-
-        .ct-nav-link {
-          color: rgba(255,255,255,0.6);
-          text-decoration: none;
-          font-weight: 500;
-          font-size: 0.9rem;
-          transition: all 0.3s;
-          padding: 8px 16px;
-          border-radius: 8px;
-        }
-
-        .ct-nav-link:hover {
-          color: #fff;
-          background: rgba(255,255,255,0.05);
-        }
-
-        .ct-nav-cta {
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-          padding: 10px 20px;
-          background: linear-gradient(135deg, #10b981, #059669);
-          color: white;
-          font-weight: 600;
-          font-size: 0.9rem;
-          border-radius: 10px;
-          text-decoration: none;
-          transition: all 0.3s;
-          box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
-        }
-
-        .ct-nav-cta:hover {
-          transform: translateY(-1px);
-          box-shadow: 0 0 30px rgba(16, 185, 129, 0.5);
-        }
+        /* Header handled by PublicNav component */
 
         /* HERO */
         .ct-hero {
@@ -527,42 +446,7 @@ export default function Contact() {
           margin: 0 auto;
         }
 
-        /* FOOTER */
-        .ct-footer {
-          padding: 40px 0;
-          background: #050508;
-          border-top: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .ct-footer .container {
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 0 40px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
-
-        .ct-footer-links {
-          display: flex;
-          gap: 32px;
-        }
-
-        .ct-footer-links a {
-          color: rgba(255,255,255,0.4);
-          text-decoration: none;
-          font-size: 0.85rem;
-          transition: color 0.2s;
-        }
-
-        .ct-footer-links a:hover {
-          color: #10b981;
-        }
-
-        .ct-footer-copy {
-          color: rgba(255,255,255,0.25);
-          font-size: 0.8rem;
-        }
+        /* Footer handled by PublicFooter component */
 
         /* RESPONSIVE */
         @media (max-width: 1024px) {
@@ -573,10 +457,6 @@ export default function Contact() {
         }
 
         @media (max-width: 768px) {
-          .ct-nav-link:not(.ct-nav-cta) {
-            display: none;
-          }
-
           .ct-hero {
             padding: 120px 20px 40px;
           }
@@ -592,44 +472,10 @@ export default function Contact() {
           .ct-form-card {
             padding: 28px;
           }
-
-          .ct-footer .container {
-            flex-direction: column;
-            gap: 16px;
-            text-align: center;
-          }
         }
       `}</style>
 
-      {/* HEADER */}
-      <header className="ct-header">
-        <div className="container">
-          <Link to="/" className="ct-logo">
-            <div className="ct-logo-icon">
-              <Sun size={20} />
-            </div>
-            SolarOS
-          </Link>
-          <nav className="ct-nav">
-            <Link to="/features" className="ct-nav-link">
-              Features
-            </Link>
-            <Link to="/pricing" className="ct-nav-link">
-              Pricing
-            </Link>
-            <Link to="/about" className="ct-nav-link">
-              About
-            </Link>
-            <Link to="/login" className="ct-nav-link">
-              Sign In
-            </Link>
-            <Link to="/get-started" className="ct-nav-cta">
-              Get Started
-              <ArrowRight size={16} />
-            </Link>
-          </nav>
-        </div>
-      </header>
+      <PublicNav />
 
       {/* HERO */}
       <section className="ct-hero">
@@ -879,20 +725,7 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="ct-footer">
-        <div className="container">
-          <div className="ct-footer-links">
-            <Link to="/">Home</Link>
-            <Link to="/features">Features</Link>
-            <Link to="/pricing">Pricing</Link>
-            <Link to="/about">About</Link>
-          </div>
-          <p className="ct-footer-copy">
-            &copy; 2026 SolarOS. All rights reserved.
-          </p>
-        </div>
-      </footer>
+      <PublicFooter />
     </div>
   );
 }

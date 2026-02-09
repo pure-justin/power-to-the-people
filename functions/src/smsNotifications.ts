@@ -139,6 +139,9 @@ export async function sendSMS(to: string, message: string): Promise<boolean> {
  * @billing sms
  * @rateLimit none
  * @firestore projects, smsLog
+ * @note Exported as "smsOnProjectCreated" in index.ts. A separate trigger in
+ *       referrals.ts is exported as "onProjectCreated" — both fire
+ *       independently on the same Firestore path and do not conflict.
  */
 export const onProjectCreated = functions.firestore
   .document("projects/{projectId}")

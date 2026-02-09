@@ -47,6 +47,9 @@ interface ReferralTrackingData {
  * @billing none
  * @rateLimit none
  * @firestore projects, referralTracking, referrals
+ * @note Exported as "onProjectCreated" in index.ts. A separate trigger in
+ *       smsNotifications.ts is exported as "smsOnProjectCreated" — both fire
+ *       independently on the same Firestore path and do not conflict.
  */
 export const onProjectCreated = functions.firestore
   .document("projects/{projectId}")
@@ -173,7 +176,9 @@ export const onProjectUpdated = functions.firestore
       const newIndex = statusOrder.indexOf(newReferralStatus);
 
       if (newIndex > currentIndex) {
-        functions.logger.info(`Updating referral status to: ${newReferralStatus}`);
+        functions.logger.info(
+          `Updating referral status to: ${newReferralStatus}`,
+        );
         await updateReferralStatus(trackingDoc.id, newReferralStatus);
 
         // Send notification to referrer

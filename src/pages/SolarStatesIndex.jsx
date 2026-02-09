@@ -12,6 +12,8 @@ import {
   ArrowUpDown,
   BarChart3,
 } from "lucide-react";
+import PublicNav from "../components/PublicNav";
+import PublicFooter from "../components/PublicFooter";
 import { db } from "../services/firebase";
 import { collection, getDocs } from "firebase/firestore";
 
@@ -176,34 +178,7 @@ export default function SolarStatesIndex() {
     <div className="si-page">
       <style>{getStyles()}</style>
 
-      {/* HEADER */}
-      <header className="si-header">
-        <div className="container">
-          <Link to="/" className="si-logo">
-            <div className="si-logo-icon">
-              <Sun size={20} />
-            </div>
-            SolarOS
-          </Link>
-          <nav className="si-nav">
-            <Link to="/features" className="si-nav-link">
-              Features
-            </Link>
-            <Link to="/pricing" className="si-nav-link">
-              Pricing
-            </Link>
-            <Link to="/about" className="si-nav-link">
-              About
-            </Link>
-            <Link to="/login" className="si-nav-link">
-              Sign In
-            </Link>
-            <Link to="/get-started" className="si-nav-cta">
-              Get Started <ArrowRight size={16} />
-            </Link>
-          </nav>
-        </div>
-      </header>
+      <PublicNav />
 
       {/* HERO */}
       <section className="si-hero">
