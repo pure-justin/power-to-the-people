@@ -35,6 +35,23 @@ import {
   ArrowRight,
   Lock,
   Workflow,
+  Star,
+  DollarSign,
+  Timer,
+  ExternalLink,
+  Activity,
+  BarChart3,
+  Hammer,
+  Ruler,
+  Wrench,
+  Zap,
+  ClipboardCheck,
+  Send,
+  Eye,
+  Compass,
+  PenTool,
+  HardHat,
+  Bolt,
 } from "lucide-react";
 
 const PIPELINE_STAGES = [

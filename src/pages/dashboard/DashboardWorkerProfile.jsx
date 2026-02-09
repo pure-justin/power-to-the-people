@@ -11,6 +11,7 @@ import {
   orderBy,
   limit,
   getDocs,
+  updateDoc,
 } from "../../services/firebase";
 import { getFunctions, httpsCallable } from "firebase/functions";
 import {
@@ -33,6 +34,15 @@ import {
   AlertTriangle,
   ListChecks,
   Settings,
+  DollarSign,
+  TrendingUp,
+  Navigation,
+  Calendar,
+  Store,
+  ArrowRight,
+  Timer,
+  BadgeCheck,
+  Zap,
 } from "lucide-react";
 
 const functions = getFunctions(undefined, "us-central1");
@@ -78,6 +88,17 @@ export default function DashboardWorkerProfile() {
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState(null);
+
+  // New data state
+  const [matchedListings, setMatchedListings] = useState([]);
+  const [earnings, setEarnings] = useState({
+    total: 0,
+    thisMonth: 0,
+    avgJobValue: 0,
+    recentPayments: [],
+  });
+  const [cityState, setCityState] = useState("");
+  const [updatingServiceArea, setUpdatingServiceArea] = useState(false);
 
   // Edit form state
   const [editName, setEditName] = useState("");
