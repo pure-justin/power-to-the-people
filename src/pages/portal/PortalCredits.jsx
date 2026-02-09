@@ -7,7 +7,7 @@
  *   - Track purchased credits and transfer status
  *   - Download transfer documents
  */
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { getCreditTransactions } from "../../services/taxCreditService";
@@ -34,6 +34,8 @@ import {
   AlertTriangle,
   Package,
 } from "lucide-react";
+import DataTable from "../../components/ui/DataTable";
+import FilterBar from "../../components/ui/FilterBar";
 
 const VERIFICATION_LABELS = {
   1: { label: "Bronze", color: "text-amber-700 bg-amber-100" },
@@ -122,6 +124,262 @@ export default function PortalCredits() {
     loadData();
   }, [loadData]);
 
+  const [offerFilters, setOfferFilters] = useState({});
+  const [txFilters, setTxFilters] = useState({});
+
+  // Flatten offers: one row per listing with the user's latest offer extracted
+  const offerRows = useMemo(() => {
+    return offers.map((listing) => {
+      const myOffers = (listing.offers || []).filter(
+        (o) => o.buyerId === user?.uid,
+      );
+      const latestOffer = myOffers[myOffers.length - 1];
+      const verLevel = listing.verificationLevel?.level || 1;
+      return {
+        id: listing.id,
+        creditType:
+          listing.listing?.creditType?.replace(/_/g, " ") || "unknown",
+        creditAmount: listing.listing?.creditAmount || 0,
+        offerAmount: latestOffer?.amount || 0,
+        verificationLevel: verLevel,
+        offerStatus: latestOffer?.status || "unknown",
+      };
+    });
+  }, [offers, user?.uid]);
+
+  // Filter definitions for offers table
+  const offerFilterDefs = useMemo(() => {
+    const statuses = [...new Set(offerRows.map((r) => r.offerStatus))].sort();
+    const verLevels = [
+      ...new Set(offerRows.map((r) => r.verificationLevel)),
+    ].sort();
+    return [
+      {
+        key: "offerStatus",
+        label: "Status",
+        options: statuses.map((s) => ({ value: s, label: s })),
+      },
+      {
+        key: "verificationLevel",
+        label: "Verification",
+        options: verLevels.map((v) => ({
+          value: String(v),
+          label: VERIFICATION_LABELS[v]?.label || `Level ${v}`,
+        })),
+      },
+    ];
+  }, [offerRows]);
+
+  // Filtered offers
+  const filteredOffers = useMemo(() => {
+    return offerRows.filter((row) => {
+      if (
+        offerFilters.offerStatus &&
+        row.offerStatus !== offerFilters.offerStatus
+      )
+        return false;
+      if (
+        offerFilters.verificationLevel &&
+        String(row.verificationLevel) !== offerFilters.verificationLevel
+      )
+        return false;
+      return true;
+    });
+  }, [offerRows, offerFilters]);
+
+  // Columns for offers table
+  const offerColumns = useMemo(
+    () => [
+      {
+        key: "creditType",
+        label: "Credit",
+        sortable: true,
+        render: (val) => (
+          <span className="rounded bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-700">
+            {val}
+          </span>
+        ),
+      },
+      {
+        key: "creditAmount",
+        label: "Amount",
+        sortable: true,
+        render: (val) => (
+          <span className="font-medium">${(val || 0).toLocaleString()}</span>
+        ),
+      },
+      {
+        key: "offerAmount",
+        label: "Your Offer",
+        sortable: true,
+        render: (val) => <span>${(val || 0).toLocaleString()}</span>,
+      },
+      {
+        key: "verificationLevel",
+        label: "Verification",
+        sortable: true,
+        render: (val) => {
+          const verConfig = VERIFICATION_LABELS[val] || VERIFICATION_LABELS[1];
+          return (
+            <span
+              className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ${verConfig.color}`}
+            >
+              <Star className="h-3 w-3 fill-current" />
+              {verConfig.label}
+            </span>
+          );
+        },
+      },
+      {
+        key: "offerStatus",
+        label: "Status",
+        sortable: true,
+        render: (val) => (
+          <span
+            className={`rounded-full px-2 py-0.5 text-xs font-medium ${
+              val === "accepted"
+                ? "bg-green-100 text-green-700"
+                : val === "pending"
+                  ? "bg-amber-100 text-amber-700"
+                  : val === "countered"
+                    ? "bg-blue-100 text-blue-700"
+                    : "bg-gray-100 text-gray-600"
+            }`}
+          >
+            {val}
+          </span>
+        ),
+      },
+      {
+        key: "id",
+        label: "",
+        sortable: false,
+        render: (val) => (
+          <Link
+            to={`/marketplace/credits/${val}`}
+            className="text-emerald-600 hover:underline"
+          >
+            View <ArrowRight className="inline h-3 w-3" />
+          </Link>
+        ),
+      },
+    ],
+    [],
+  );
+
+  // Flatten transactions: one row per tx with computed savings
+  const txRows = useMemo(() => {
+    return transactions.map((tx) => {
+      const paid = tx.payment?.fromBuyer?.amount || 0;
+      const creditVal = tx.creditAmount || 0;
+      return {
+        id: tx.id,
+        creditAmount: creditVal,
+        paid,
+        savings: creditVal - paid,
+        transferStatus: tx.transfer?.status || "unknown",
+        documentUrl: tx.documents?.transferElection || null,
+      };
+    });
+  }, [transactions]);
+
+  // Filter definitions for transactions table
+  const txFilterDefs = useMemo(() => {
+    const statuses = [...new Set(txRows.map((r) => r.transferStatus))].sort();
+    return [
+      {
+        key: "transferStatus",
+        label: "Transfer Status",
+        options: statuses.map((s) => ({
+          value: s,
+          label: s.replace(/_/g, " "),
+        })),
+      },
+    ];
+  }, [txRows]);
+
+  // Filtered transactions
+  const filteredTx = useMemo(() => {
+    return txRows.filter((row) => {
+      if (
+        txFilters.transferStatus &&
+        row.transferStatus !== txFilters.transferStatus
+      )
+        return false;
+      return true;
+    });
+  }, [txRows, txFilters]);
+
+  // Columns for transactions table
+  const txColumns = useMemo(
+    () => [
+      {
+        key: "creditAmount",
+        label: "Credit Value",
+        sortable: true,
+        render: (val) => (
+          <span className="font-medium">${(val || 0).toLocaleString()}</span>
+        ),
+      },
+      {
+        key: "paid",
+        label: "You Paid",
+        sortable: true,
+        render: (val) => <span>${(val || 0).toLocaleString()}</span>,
+      },
+      {
+        key: "savings",
+        label: "Savings",
+        sortable: true,
+        render: (val) => (
+          <span className="font-medium text-emerald-600">
+            ${(val || 0).toLocaleString()}
+          </span>
+        ),
+      },
+      {
+        key: "transferStatus",
+        label: "Transfer Status",
+        sortable: true,
+        render: (val) => (
+          <span
+            className={`rounded-full px-2 py-0.5 text-xs font-medium ${
+              val === "completed"
+                ? "bg-green-100 text-green-700"
+                : val === "initiated"
+                  ? "bg-blue-100 text-blue-700"
+                  : val === "in_escrow"
+                    ? "bg-purple-100 text-purple-700"
+                    : "bg-gray-100 text-gray-600"
+            }`}
+          >
+            {val?.replace(/_/g, " ") || "unknown"}
+          </span>
+        ),
+      },
+      {
+        key: "documentUrl",
+        label: "Documents",
+        sortable: false,
+        render: (val, row) =>
+          row.transferStatus === "completed" && val ? (
+            <a
+              href={val}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-emerald-600 hover:underline"
+            >
+              <FileText className="h-3.5 w-3.5" />
+              Form 3800
+            </a>
+          ) : (
+            <span className="text-xs text-gray-400">Pending</span>
+          ),
+      },
+    ],
+    [],
+  );
+
   if (loading) {
     return (
       <div className="animate-pulse space-y-6">
@@ -205,101 +463,34 @@ export default function PortalCredits() {
 
       {/* Active Offers */}
       {offers.length > 0 && (
-        <div className="card">
-          <div className="border-b border-gray-200 px-6 py-4">
-            <h2 className="text-lg font-semibold text-gray-900">Your Offers</h2>
-            <p className="mt-0.5 text-xs text-gray-500">
-              Credits you've made offers on
-            </p>
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-lg font-semibold text-gray-900">
+                Your Offers
+              </h2>
+              <p className="mt-0.5 text-xs text-gray-500">
+                Credits you've made offers on
+              </p>
+            </div>
           </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b bg-gray-50">
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">
-                    Credit
-                  </th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">
-                    Amount
-                  </th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">
-                    Your Offer
-                  </th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">
-                    Verification
-                  </th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">
-                    Status
-                  </th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-500"></th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {offers.map((listing) => {
-                  const myOffers = (listing.offers || []).filter(
-                    (o) => o.buyerId === user.uid,
-                  );
-                  const latestOffer = myOffers[myOffers.length - 1];
-                  const verLevel = listing.verificationLevel?.level || 1;
-                  const verConfig =
-                    VERIFICATION_LABELS[verLevel] || VERIFICATION_LABELS[1];
-                  return (
-                    <tr key={listing.id} className="hover:bg-gray-50">
-                      <td className="px-4 py-3">
-                        <span className="rounded bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-700">
-                          {listing.listing?.creditType?.replace(/_/g, " ")}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3 font-medium">
-                        ${(listing.listing?.creditAmount || 0).toLocaleString()}
-                      </td>
-                      <td className="px-4 py-3">
-                        ${(latestOffer?.amount || 0).toLocaleString()}
-                      </td>
-                      <td className="px-4 py-3">
-                        <span
-                          className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ${verConfig.color}`}
-                        >
-                          <Star className="h-3 w-3 fill-current" />
-                          {verConfig.label}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3">
-                        <span
-                          className={`rounded-full px-2 py-0.5 text-xs font-medium ${
-                            latestOffer?.status === "accepted"
-                              ? "bg-green-100 text-green-700"
-                              : latestOffer?.status === "pending"
-                                ? "bg-amber-100 text-amber-700"
-                                : latestOffer?.status === "countered"
-                                  ? "bg-blue-100 text-blue-700"
-                                  : "bg-gray-100 text-gray-600"
-                          }`}
-                        >
-                          {latestOffer?.status || "unknown"}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3">
-                        <Link
-                          to={`/marketplace/credits/${listing.id}`}
-                          className="text-emerald-600 hover:underline"
-                        >
-                          View <ArrowRight className="inline h-3 w-3" />
-                        </Link>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+          <FilterBar
+            filters={offerFilterDefs}
+            activeFilters={offerFilters}
+            onChange={setOfferFilters}
+          />
+          <DataTable
+            columns={offerColumns}
+            data={filteredOffers}
+            emptyMessage="No offers match the selected filters."
+          />
         </div>
       )}
 
       {/* Completed Purchases / Transfer Tracking */}
       {transactions.length > 0 ? (
-        <div className="card">
-          <div className="border-b border-gray-200 px-6 py-4">
+        <div className="space-y-3">
+          <div>
             <h2 className="text-lg font-semibold text-gray-900">
               Purchased Credits
             </h2>
@@ -307,78 +498,16 @@ export default function PortalCredits() {
               Track transfer status and download documents
             </p>
           </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b bg-gray-50">
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">
-                    Credit Value
-                  </th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">
-                    You Paid
-                  </th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">
-                    Savings
-                  </th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">
-                    Transfer Status
-                  </th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">
-                    Documents
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {transactions.map((tx) => {
-                  const paid = tx.payment?.fromBuyer?.amount || 0;
-                  const creditVal = tx.creditAmount || 0;
-                  const savings = creditVal - paid;
-                  return (
-                    <tr key={tx.id} className="hover:bg-gray-50">
-                      <td className="px-4 py-3 font-medium">
-                        ${creditVal.toLocaleString()}
-                      </td>
-                      <td className="px-4 py-3">${paid.toLocaleString()}</td>
-                      <td className="px-4 py-3 font-medium text-emerald-600">
-                        ${savings.toLocaleString()}
-                      </td>
-                      <td className="px-4 py-3">
-                        <span
-                          className={`rounded-full px-2 py-0.5 text-xs font-medium ${
-                            tx.transfer?.status === "completed"
-                              ? "bg-green-100 text-green-700"
-                              : tx.transfer?.status === "initiated"
-                                ? "bg-blue-100 text-blue-700"
-                                : tx.transfer?.status === "in_escrow"
-                                  ? "bg-purple-100 text-purple-700"
-                                  : "bg-gray-100 text-gray-600"
-                          }`}
-                        >
-                          {tx.transfer?.status?.replace(/_/g, " ") || "unknown"}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3">
-                        {tx.transfer?.status === "completed" &&
-                        tx.documents?.transferElection ? (
-                          <a
-                            href={tx.documents.transferElection}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 text-emerald-600 hover:underline"
-                          >
-                            <FileText className="h-3.5 w-3.5" />
-                            Form 3800
-                          </a>
-                        ) : (
-                          <span className="text-xs text-gray-400">Pending</span>
-                        )}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+          <FilterBar
+            filters={txFilterDefs}
+            activeFilters={txFilters}
+            onChange={setTxFilters}
+          />
+          <DataTable
+            columns={txColumns}
+            data={filteredTx}
+            emptyMessage="No purchased credits match the selected filters."
+          />
         </div>
       ) : (
         offers.length === 0 && (

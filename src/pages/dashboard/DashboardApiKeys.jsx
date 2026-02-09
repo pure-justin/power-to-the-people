@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import {
   createApiKey,
@@ -15,6 +15,8 @@ import {
   AlertTriangle,
   ToggleRight,
 } from "lucide-react";
+import DataTable from "../../components/ui/DataTable";
+import FilterBar from "../../components/ui/FilterBar";
 
 const AVAILABLE_SCOPES = [
   { value: "read_leads", label: "Read Leads", group: "Leads" },
@@ -243,6 +245,7 @@ export default function DashboardApiKeys() {
   const [loading, setLoading] = useState(true);
   const [showCreate, setShowCreate] = useState(false);
   const [newKey, setNewKey] = useState(null);
+  const [filters, setFilters] = useState({});
 
   const loadKeys = async () => {
     try {
@@ -337,6 +340,176 @@ export default function DashboardApiKeys() {
     }
   };
 
+  const filterDefs = useMemo(() => {
+    const statuses = [...new Set(keys.map((k) => k.status || "active"))].map(
+      (s) => ({ value: s, label: s.charAt(0).toUpperCase() + s.slice(1) }),
+    );
+    const environments = [
+      ...new Set(keys.map((k) => k.environment).filter(Boolean)),
+    ].map((e) => ({ value: e, label: e.charAt(0).toUpperCase() + e.slice(1) }));
+    const defs = [{ key: "status", label: "Status", options: statuses }];
+    if (environments.length > 0) {
+      defs.push({
+        key: "environment",
+        label: "Environment",
+        options: environments,
+      });
+    }
+    return defs;
+  }, [keys]);
+
+  const filtered = useMemo(() => {
+    let result = keys;
+    if (filters.status) {
+      result = result.filter((k) => (k.status || "active") === filters.status);
+    }
+    if (filters.environment) {
+      result = result.filter((k) => k.environment === filters.environment);
+    }
+    return result;
+  }, [keys, filters]);
+
+  const columns = useMemo(
+    () => [
+      {
+        key: "keyPrefix",
+        label: "Key",
+        sortable: true,
+        render: (val) => (
+          <code className="rounded bg-gray-100 px-2 py-0.5 font-mono text-xs text-gray-700">
+            {val || "pk_..."}
+          </code>
+        ),
+      },
+      {
+        key: "name",
+        label: "Name",
+        sortable: true,
+        render: (val, row) => (
+          <span className="font-medium text-gray-900">
+            {val || "Unnamed"}
+            {row.environment && (
+              <span
+                className={`ml-2 rounded-full px-2 py-0.5 text-xs ${
+                  row.environment === "production"
+                    ? "bg-emerald-100 text-emerald-700"
+                    : "bg-amber-100 text-amber-700"
+                }`}
+              >
+                {row.environment === "production" ? "prod" : "dev"}
+              </span>
+            )}
+          </span>
+        ),
+      },
+      {
+        key: "status",
+        label: "Status",
+        sortable: true,
+        render: (val) => (
+          <span
+            className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium ${
+              val === "active"
+                ? "bg-green-100 text-green-700"
+                : "bg-red-100 text-red-700"
+            }`}
+          >
+            {val || "active"}
+          </span>
+        ),
+      },
+      {
+        key: "scopes",
+        label: "Scopes",
+        sortable: false,
+        render: (val) => (
+          <div className="flex flex-wrap gap-1">
+            {(val || []).slice(0, 3).map((scope) => (
+              <span
+                key={scope}
+                className="rounded bg-gray-100 px-1.5 py-0.5 text-xs text-gray-600"
+              >
+                {scope}
+              </span>
+            ))}
+            {(val || []).length > 3 && (
+              <span className="rounded bg-gray-100 px-1.5 py-0.5 text-xs text-gray-500">
+                +{val.length - 3}
+              </span>
+            )}
+          </div>
+        ),
+      },
+      {
+        key: "lastUsed",
+        label: "Last Used",
+        sortable: true,
+        render: (val) => (
+          <span className="text-gray-500 text-xs">
+            {val?.toDate
+              ? val.toDate().toLocaleDateString()
+              : val
+                ? new Date(val).toLocaleDateString()
+                : "Never"}
+          </span>
+        ),
+      },
+      {
+        key: "createdAt",
+        label: "Created",
+        sortable: true,
+        render: (val) => (
+          <span className="text-gray-500 text-xs">
+            {val?.toDate
+              ? val.toDate().toLocaleDateString()
+              : val
+                ? new Date(val).toLocaleDateString()
+                : "N/A"}
+          </span>
+        ),
+      },
+      {
+        key: "actions",
+        label: "Actions",
+        sortable: false,
+        render: (_val, row) => (
+          <div className="flex items-center gap-1">
+            {(row.status || "active") === "active" && (
+              <>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleRotate(row);
+                  }}
+                  className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-medium text-blue-600 hover:bg-blue-50"
+                  title="Rotate key (generate new value)"
+                >
+                  <Key className="h-3.5 w-3.5" />
+                  Rotate
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleRevoke(row);
+                  }}
+                  className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50"
+                  title="Revoke key permanently"
+                >
+                  <ToggleRight className="h-3.5 w-3.5" />
+                  Revoke
+                </button>
+              </>
+            )}
+            {row.status === "revoked" && (
+              <span className="text-xs text-gray-400">Revoked</span>
+            )}
+          </div>
+        ),
+      },
+    ],
+    [],
+  );
+
   if (loading) {
     return (
       <div className="animate-pulse space-y-4">
@@ -366,145 +539,19 @@ export default function DashboardApiKeys() {
         <NewKeyDisplay apiKey={newKey} onDismiss={() => setNewKey(null)} />
       )}
 
+      {/* Filters */}
+      <FilterBar
+        filters={filterDefs}
+        activeFilters={filters}
+        onChange={setFilters}
+      />
+
       {/* Table */}
-      <div className="card overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b bg-gray-50">
-                <th className="px-4 py-3 text-left font-medium text-gray-500">
-                  Key
-                </th>
-                <th className="px-4 py-3 text-left font-medium text-gray-500">
-                  Name
-                </th>
-                <th className="px-4 py-3 text-left font-medium text-gray-500">
-                  Status
-                </th>
-                <th className="px-4 py-3 text-left font-medium text-gray-500">
-                  Scopes
-                </th>
-                <th className="px-4 py-3 text-left font-medium text-gray-500">
-                  Last Used
-                </th>
-                <th className="px-4 py-3 text-left font-medium text-gray-500">
-                  Created
-                </th>
-                <th className="px-4 py-3 text-left font-medium text-gray-500">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100">
-              {keys.map((key) => (
-                <tr key={key.id} className="hover:bg-gray-50">
-                  <td className="px-4 py-3">
-                    <code className="rounded bg-gray-100 px-2 py-0.5 font-mono text-xs text-gray-700">
-                      {key.keyPrefix || "pk_..."}
-                    </code>
-                  </td>
-                  <td className="px-4 py-3 font-medium text-gray-900">
-                    {key.name || "Unnamed"}
-                    {key.environment && (
-                      <span
-                        className={`ml-2 rounded-full px-2 py-0.5 text-xs ${
-                          key.environment === "production"
-                            ? "bg-emerald-100 text-emerald-700"
-                            : "bg-amber-100 text-amber-700"
-                        }`}
-                      >
-                        {key.environment === "production" ? "prod" : "dev"}
-                      </span>
-                    )}
-                  </td>
-                  <td className="px-4 py-3">
-                    <span
-                      className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                        key.status === "active"
-                          ? "bg-green-100 text-green-700"
-                          : "bg-red-100 text-red-700"
-                      }`}
-                    >
-                      {key.status || "active"}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3">
-                    <div className="flex flex-wrap gap-1">
-                      {(key.scopes || []).slice(0, 3).map((scope) => (
-                        <span
-                          key={scope}
-                          className="rounded bg-gray-100 px-1.5 py-0.5 text-xs text-gray-600"
-                        >
-                          {scope}
-                        </span>
-                      ))}
-                      {(key.scopes || []).length > 3 && (
-                        <span className="rounded bg-gray-100 px-1.5 py-0.5 text-xs text-gray-500">
-                          +{key.scopes.length - 3}
-                        </span>
-                      )}
-                    </div>
-                  </td>
-                  <td className="px-4 py-3 text-gray-500 text-xs">
-                    {key.lastUsed?.toDate
-                      ? key.lastUsed.toDate().toLocaleDateString()
-                      : key.lastUsed
-                        ? new Date(key.lastUsed).toLocaleDateString()
-                        : "Never"}
-                  </td>
-                  <td className="px-4 py-3 text-gray-500 text-xs">
-                    {key.createdAt?.toDate
-                      ? key.createdAt.toDate().toLocaleDateString()
-                      : key.createdAt
-                        ? new Date(key.createdAt).toLocaleDateString()
-                        : "N/A"}
-                  </td>
-                  <td className="px-4 py-3">
-                    <div className="flex items-center gap-1">
-                      {key.status === "active" && (
-                        <>
-                          <button
-                            onClick={() => handleRotate(key)}
-                            className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-medium text-blue-600 hover:bg-blue-50"
-                            title="Rotate key (generate new value)"
-                          >
-                            <Key className="h-3.5 w-3.5" />
-                            Rotate
-                          </button>
-                          <button
-                            onClick={() => handleRevoke(key)}
-                            className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50"
-                            title="Revoke key permanently"
-                          >
-                            <ToggleRight className="h-3.5 w-3.5" />
-                            Revoke
-                          </button>
-                        </>
-                      )}
-                      {key.status === "revoked" && (
-                        <span className="text-xs text-gray-400">Revoked</span>
-                      )}
-                    </div>
-                  </td>
-                </tr>
-              ))}
-              {keys.length === 0 && (
-                <tr>
-                  <td
-                    colSpan={7}
-                    className="px-4 py-12 text-center text-gray-500"
-                  >
-                    <Key className="mx-auto h-8 w-8 text-gray-300" />
-                    <p className="mt-2">
-                      No API keys yet. Create one to get started.
-                    </p>
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <DataTable
+        columns={columns}
+        data={filtered}
+        emptyMessage="No API keys yet. Create one to get started."
+      />
 
       {/* Create modal */}
       {showCreate && (

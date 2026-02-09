@@ -1,6 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { db, collection, query, where, getDocs } from "../../services/firebase";
+import DataTable from "../../components/ui/DataTable";
+import FilterBar from "../../components/ui/FilterBar";
 import {
   Users,
   DollarSign,
@@ -25,6 +27,8 @@ export default function PortalReferrals() {
   const [referrals, setReferrals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
+
+  const [filters, setFilters] = useState({});
 
   const referralCode = user?.uid?.slice(0, 8)?.toUpperCase() || "--------";
   const referralLink = `${window.location.origin}/qualify?ref=${referralCode}`;
@@ -73,6 +77,83 @@ export default function PortalReferrals() {
     .filter((r) => ["installed", "qualified"].includes(r.status))
     .reduce((sum, r) => sum + (r.commission || 0), 0);
   const totalReferrals = referrals.length;
+
+  const filterDefs = useMemo(() => {
+    const statuses = [
+      ...new Set(referrals.map((r) => r.status).filter(Boolean)),
+    ];
+    return [
+      {
+        key: "status",
+        label: "Status",
+        options: statuses.map((s) => ({
+          value: s,
+          label: REFERRAL_STATUS[s]?.label || s,
+        })),
+      },
+    ];
+  }, [referrals]);
+
+  const filtered = useMemo(() => {
+    return referrals.filter((r) => {
+      if (filters.status && r.status !== filters.status) return false;
+      return true;
+    });
+  }, [referrals, filters]);
+
+  const columns = useMemo(
+    () => [
+      {
+        key: "referredName",
+        label: "Referral",
+        sortable: true,
+        render: (val, row) => (
+          <div>
+            <p className="text-sm font-medium text-gray-900">
+              {row.referredName || "Referred Customer"}
+            </p>
+            <p className="text-xs text-gray-500">{row.referredEmail || ""}</p>
+          </div>
+        ),
+      },
+      {
+        key: "status",
+        label: "Status",
+        sortable: true,
+        render: (val) => {
+          const statusCfg = REFERRAL_STATUS[val] || REFERRAL_STATUS.pending;
+          return (
+            <span
+              className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium ${statusCfg.className}`}
+            >
+              {statusCfg.label}
+            </span>
+          );
+        },
+      },
+      {
+        key: "commission",
+        label: "Commission",
+        sortable: true,
+        render: (val) => (
+          <span className="text-sm font-medium text-gray-900">
+            {val ? `$${val.toLocaleString()}` : "--"}
+          </span>
+        ),
+      },
+      {
+        key: "createdAt",
+        label: "Date",
+        sortable: true,
+        render: (val) => (
+          <span className="text-sm text-gray-500">
+            {val?.toDate ? val.toDate().toLocaleDateString() : "--"}
+          </span>
+        ),
+      },
+    ],
+    [],
+  );
 
   if (loading) {
     return (
@@ -189,14 +270,21 @@ export default function PortalReferrals() {
       </div>
 
       {/* Referrals Table */}
-      <div className="rounded-xl border border-gray-200 bg-white">
-        <div className="border-b border-gray-100 px-6 py-4">
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold text-gray-900">
             Your Referrals
           </h2>
         </div>
+        {referrals.length > 0 && (
+          <FilterBar
+            filters={filterDefs}
+            activeFilters={filters}
+            onChange={setFilters}
+          />
+        )}
         {referrals.length === 0 ? (
-          <div className="px-6 py-12 text-center">
+          <div className="rounded-xl border border-gray-200 bg-white px-6 py-12 text-center">
             <Gift className="mx-auto h-8 w-8 text-gray-300" />
             <p className="mt-2 text-sm font-medium text-gray-900">
               No referrals yet
@@ -206,61 +294,11 @@ export default function PortalReferrals() {
             </p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-gray-100">
-                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
-                    Referral
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
-                    Status
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
-                    Commission
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
-                    Date
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-50">
-                {referrals.map((ref) => {
-                  const statusCfg =
-                    REFERRAL_STATUS[ref.status] || REFERRAL_STATUS.pending;
-                  return (
-                    <tr key={ref.id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4">
-                        <p className="text-sm font-medium text-gray-900">
-                          {ref.referredName || "Referred Customer"}
-                        </p>
-                        <p className="text-xs text-gray-500">
-                          {ref.referredEmail || ""}
-                        </p>
-                      </td>
-                      <td className="px-6 py-4">
-                        <span
-                          className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium ${statusCfg.className}`}
-                        >
-                          {statusCfg.label}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-gray-900">
-                        {ref.commission
-                          ? `$${ref.commission.toLocaleString()}`
-                          : "--"}
-                      </td>
-                      <td className="px-6 py-4 text-sm text-gray-500">
-                        {ref.createdAt?.toDate
-                          ? ref.createdAt.toDate().toLocaleDateString()
-                          : "--"}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+          <DataTable
+            columns={columns}
+            data={filtered}
+            emptyMessage="No referrals match the selected filters."
+          />
         )}
       </div>
     </div>

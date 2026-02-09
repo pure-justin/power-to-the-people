@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import {
   db,
@@ -23,6 +23,8 @@ import {
   XCircle,
   Zap,
 } from "lucide-react";
+import DataTable from "../../components/ui/DataTable";
+import FilterBar from "../../components/ui/FilterBar";
 
 const STAGES_ORDERED = [
   { value: "new", label: "New", color: "bg-blue-500" },
@@ -139,6 +141,130 @@ export default function SalesPerformance() {
     load();
   }, [user]);
 
+  const [filters, setFilters] = useState({});
+
+  // Leaderboard data from all sales leads
+  const leaderboard = useMemo(() => {
+    const salesRepMap = {};
+    allSalesLeads.forEach((l) => {
+      if (!l.assignedTo) return;
+      if (!salesRepMap[l.assignedTo]) {
+        salesRepMap[l.assignedTo] = { won: 0, total: 0, revenue: 0, name: "" };
+      }
+      salesRepMap[l.assignedTo].total++;
+      if (l.status === "won") {
+        salesRepMap[l.assignedTo].won++;
+        salesRepMap[l.assignedTo].revenue += l.estimatedValue || 0;
+      }
+      if (l.assignedToName) {
+        salesRepMap[l.assignedTo].name = l.assignedToName;
+      }
+    });
+
+    return Object.entries(salesRepMap)
+      .map(([uid, data]) => ({
+        uid,
+        name:
+          data.name ||
+          (uid === user?.uid ? profile?.displayName || "You" : "Rep"),
+        won: data.won,
+        total: data.total,
+        revenue: data.revenue,
+        rate: data.total > 0 ? Math.round((data.won / data.total) * 100) : 0,
+        isMe: uid === user?.uid,
+      }))
+      .sort((a, b) => b.revenue - a.revenue)
+      .slice(0, 10)
+      .map((rep, i) => ({ ...rep, rank: i + 1 }));
+  }, [allSalesLeads, user, profile]);
+
+  const leaderboardFilterDefs = useMemo(() => {
+    const repNames = [...new Set(leaderboard.map((r) => r.name))].sort();
+    return [
+      {
+        key: "rep",
+        label: "Rep",
+        options: repNames.map((n) => ({ value: n, label: n })),
+      },
+      {
+        key: "rateRange",
+        label: "Close Rate",
+        options: [
+          { value: "30+", label: "30%+" },
+          { value: "15-29", label: "15-29%" },
+          { value: "0-14", label: "Under 15%" },
+        ],
+      },
+    ];
+  }, [leaderboard]);
+
+  const filteredLeaderboard = useMemo(() => {
+    let result = leaderboard;
+    if (filters.rep) {
+      result = result.filter((r) => r.name === filters.rep);
+    }
+    if (filters.rateRange) {
+      result = result.filter((r) => {
+        if (filters.rateRange === "30+") return r.rate >= 30;
+        if (filters.rateRange === "15-29") return r.rate >= 15 && r.rate < 30;
+        if (filters.rateRange === "0-14") return r.rate < 15;
+        return true;
+      });
+    }
+    return result;
+  }, [leaderboard, filters]);
+
+  const leaderboardColumns = useMemo(
+    () => [
+      {
+        key: "rank",
+        label: "#",
+        sortable: false,
+        render: (val) => (
+          <span className="font-medium text-gray-500">{val}</span>
+        ),
+      },
+      {
+        key: "name",
+        label: "Rep",
+        sortable: true,
+        render: (val, row) => (
+          <span
+            className={`font-medium ${row.isMe ? "text-emerald-700" : "text-gray-900"}`}
+          >
+            {val}
+            {row.isMe && " (You)"}
+          </span>
+        ),
+      },
+      { key: "won", label: "Won", sortable: true },
+      { key: "total", label: "Total", sortable: true },
+      {
+        key: "rate",
+        label: "Rate",
+        sortable: true,
+        render: (val) => (
+          <span
+            className={`font-medium ${val >= 30 ? "text-green-600" : val >= 15 ? "text-amber-600" : "text-red-600"}`}
+          >
+            {val}%
+          </span>
+        ),
+      },
+      {
+        key: "revenue",
+        label: "Revenue",
+        sortable: true,
+        render: (val) => (
+          <span className="font-medium text-gray-900">
+            ${val.toLocaleString()}
+          </span>
+        ),
+      },
+    ],
+    [],
+  );
+
   if (loading) {
     return (
       <div className="animate-pulse space-y-6">
@@ -226,37 +352,6 @@ export default function SalesPerformance() {
       pctOfPrevious: i > 0 ? convRate : undefined,
     };
   });
-
-  // Leaderboard
-  const salesRepMap = {};
-  allSalesLeads.forEach((l) => {
-    if (!l.assignedTo) return;
-    if (!salesRepMap[l.assignedTo]) {
-      salesRepMap[l.assignedTo] = { won: 0, total: 0, revenue: 0, name: "" };
-    }
-    salesRepMap[l.assignedTo].total++;
-    if (l.status === "won") {
-      salesRepMap[l.assignedTo].won++;
-      salesRepMap[l.assignedTo].revenue += l.estimatedValue || 0;
-    }
-    if (l.assignedToName) {
-      salesRepMap[l.assignedTo].name = l.assignedToName;
-    }
-  });
-
-  const leaderboard = Object.entries(salesRepMap)
-    .map(([uid, data]) => ({
-      uid,
-      name:
-        data.name || (uid === user.uid ? profile?.displayName || "You" : "Rep"),
-      won: data.won,
-      total: data.total,
-      revenue: data.revenue,
-      rate: data.total > 0 ? Math.round((data.won / data.total) * 100) : 0,
-      isMe: uid === user.uid,
-    }))
-    .sort((a, b) => b.revenue - a.revenue)
-    .slice(0, 10);
 
   return (
     <div className="space-y-6">
@@ -395,72 +490,23 @@ export default function SalesPerformance() {
 
       {/* Leaderboard */}
       {leaderboard.length > 1 && (
-        <div className="card">
-          <div className="border-b border-gray-200 px-6 py-4">
-            <h2 className="flex items-center gap-2 text-lg font-semibold text-gray-900">
-              <Award className="h-5 w-5 text-amber-500" />
+        <div className="space-y-4">
+          <div className="flex items-center gap-2">
+            <Award className="h-5 w-5 text-amber-500" />
+            <h2 className="text-lg font-semibold text-gray-900">
               Sales Leaderboard
             </h2>
           </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b bg-gray-50">
-                  <th className="px-6 py-3 text-left font-medium text-gray-500">
-                    #
-                  </th>
-                  <th className="px-6 py-3 text-left font-medium text-gray-500">
-                    Rep
-                  </th>
-                  <th className="px-6 py-3 text-right font-medium text-gray-500">
-                    Won
-                  </th>
-                  <th className="px-6 py-3 text-right font-medium text-gray-500">
-                    Total
-                  </th>
-                  <th className="px-6 py-3 text-right font-medium text-gray-500">
-                    Rate
-                  </th>
-                  <th className="px-6 py-3 text-right font-medium text-gray-500">
-                    Revenue
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {leaderboard.map((rep, i) => (
-                  <tr key={rep.uid} className={rep.isMe ? "bg-emerald-50" : ""}>
-                    <td className="px-6 py-3 font-medium text-gray-500">
-                      {i + 1}
-                    </td>
-                    <td className="px-6 py-3">
-                      <span
-                        className={`font-medium ${rep.isMe ? "text-emerald-700" : "text-gray-900"}`}
-                      >
-                        {rep.name}
-                        {rep.isMe && " (You)"}
-                      </span>
-                    </td>
-                    <td className="px-6 py-3 text-right text-gray-700">
-                      {rep.won}
-                    </td>
-                    <td className="px-6 py-3 text-right text-gray-500">
-                      {rep.total}
-                    </td>
-                    <td className="px-6 py-3 text-right">
-                      <span
-                        className={`font-medium ${rep.rate >= 30 ? "text-green-600" : rep.rate >= 15 ? "text-amber-600" : "text-red-600"}`}
-                      >
-                        {rep.rate}%
-                      </span>
-                    </td>
-                    <td className="px-6 py-3 text-right font-medium text-gray-900">
-                      ${rep.revenue.toLocaleString()}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <FilterBar
+            filters={leaderboardFilterDefs}
+            activeFilters={filters}
+            onChange={setFilters}
+          />
+          <DataTable
+            columns={leaderboardColumns}
+            data={filteredLeaderboard}
+            emptyMessage="No reps match the selected filters."
+          />
         </div>
       )}
     </div>

@@ -7,7 +7,7 @@
  *   - Track transaction history
  *   - See analytics (avg sale price, time to sell, revenue)
  */
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import {
@@ -38,6 +38,8 @@ import {
   FileText,
   RefreshCw,
 } from "lucide-react";
+import DataTable from "../../components/ui/DataTable";
+import FilterBar from "../../components/ui/FilterBar";
 
 export default function DashboardCredits() {
   const { user } = useAuth();
@@ -148,6 +150,227 @@ export default function DashboardCredits() {
     }
   };
 
+  // --- Listings filters, filtered data, and columns ---
+  const [listingFilters, setListingFilters] = useState({});
+
+  const listingFilterDefs = useMemo(() => {
+    const statuses = [
+      ...new Set(listings.map((l) => l.status).filter(Boolean)),
+    ].sort();
+    const creditTypes = [
+      ...new Set(listings.map((l) => l.listing?.creditType).filter(Boolean)),
+    ].sort();
+    return [
+      {
+        key: "status",
+        label: "Status",
+        options: statuses.map((s) => ({
+          value: s,
+          label: s.replace(/_/g, " "),
+        })),
+      },
+      {
+        key: "creditType",
+        label: "Credit Type",
+        options: creditTypes.map((t) => ({
+          value: t,
+          label: t.replace(/_/g, " "),
+        })),
+      },
+    ];
+  }, [listings]);
+
+  const filteredListings = useMemo(() => {
+    let result = listings;
+    if (listingFilters.status) {
+      result = result.filter((l) => l.status === listingFilters.status);
+    }
+    if (listingFilters.creditType) {
+      result = result.filter(
+        (l) => l.listing?.creditType === listingFilters.creditType,
+      );
+    }
+    return result;
+  }, [listings, listingFilters]);
+
+  const listingColumns = useMemo(
+    () => [
+      {
+        key: "creditType",
+        label: "Credit",
+        sortable: true,
+        render: (_val, row) => (
+          <span className="rounded bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-700">
+            {row.listing?.creditType?.replace(/_/g, " ")}
+          </span>
+        ),
+      },
+      {
+        key: "creditAmount",
+        label: "Amount",
+        sortable: true,
+        render: (_val, row) => (
+          <span className="font-medium">
+            ${(row.listing?.creditAmount || 0).toLocaleString()}
+          </span>
+        ),
+      },
+      {
+        key: "askingPrice",
+        label: "Asking",
+        sortable: true,
+        render: (_val, row) =>
+          `$${(row.listing?.askingPrice || 0).toLocaleString()}`,
+      },
+      {
+        key: "discountRate",
+        label: "Discount",
+        sortable: true,
+        render: (_val, row) => (
+          <span className="text-emerald-600">
+            {row.listing?.discountRate || 0}%
+          </span>
+        ),
+      },
+      {
+        key: "offers",
+        label: "Offers",
+        sortable: false,
+        render: (_val, row) => {
+          const pendingCount = (row.offers || []).filter(
+            (o) => o.status === "pending",
+          ).length;
+          return pendingCount > 0 ? (
+            <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700">
+              {pendingCount} pending
+            </span>
+          ) : (
+            <span className="text-gray-400">None</span>
+          );
+        },
+      },
+      {
+        key: "status",
+        label: "Status",
+        sortable: true,
+        render: (val) => (
+          <span
+            className={`rounded-full px-2 py-0.5 text-xs font-medium ${
+              val === "active"
+                ? "bg-green-100 text-green-700"
+                : val === "under_offer"
+                  ? "bg-blue-100 text-blue-700"
+                  : val === "sold"
+                    ? "bg-purple-100 text-purple-700"
+                    : "bg-gray-100 text-gray-600"
+            }`}
+          >
+            {val?.replace(/_/g, " ")}
+          </span>
+        ),
+      },
+      {
+        key: "actions",
+        label: "",
+        sortable: false,
+        render: (_val, row) => (
+          <Link
+            to={`/marketplace/credits/${row.id}`}
+            className="text-emerald-600 hover:underline"
+          >
+            View <ArrowRight className="inline h-3 w-3" />
+          </Link>
+        ),
+      },
+    ],
+    [],
+  );
+
+  // --- Transaction filters, filtered data, and columns ---
+  const [txFilters, setTxFilters] = useState({});
+
+  const txFilterDefs = useMemo(() => {
+    const statuses = [
+      ...new Set(transactions.map((t) => t.transfer?.status).filter(Boolean)),
+    ].sort();
+    return [
+      {
+        key: "transferStatus",
+        label: "Status",
+        options: statuses.map((s) => ({ value: s, label: s })),
+      },
+    ];
+  }, [transactions]);
+
+  const filteredTransactions = useMemo(() => {
+    let result = transactions;
+    if (txFilters.transferStatus) {
+      result = result.filter(
+        (t) => t.transfer?.status === txFilters.transferStatus,
+      );
+    }
+    return result;
+  }, [transactions, txFilters]);
+
+  const transactionColumns = useMemo(
+    () => [
+      {
+        key: "creditAmount",
+        label: "Credit",
+        sortable: true,
+        render: (val) => (
+          <span className="font-medium">${(val || 0).toLocaleString()}</span>
+        ),
+      },
+      {
+        key: "salePrice",
+        label: "Sale Price",
+        sortable: true,
+        render: (val) => `$${(val || 0).toLocaleString()}`,
+      },
+      {
+        key: "platformFee",
+        label: "Platform Fee",
+        sortable: true,
+        render: (val) => (
+          <span className="text-red-600">-${(val || 0).toLocaleString()}</span>
+        ),
+      },
+      {
+        key: "netToSeller",
+        label: "Net to You",
+        sortable: true,
+        render: (_val, row) => (
+          <span className="font-medium text-green-600">
+            ${(row.payment?.toSeller?.amount || 0).toLocaleString()}
+          </span>
+        ),
+      },
+      {
+        key: "transferStatus",
+        label: "Status",
+        sortable: true,
+        render: (_val, row) => {
+          const status = row.transfer?.status;
+          return (
+            <span
+              className={`rounded-full px-2 py-0.5 text-xs font-medium ${
+                status === "completed"
+                  ? "bg-green-100 text-green-700"
+                  : status === "initiated"
+                    ? "bg-blue-100 text-blue-700"
+                    : "bg-gray-100 text-gray-600"
+              }`}
+            >
+              {status || "unknown"}
+            </span>
+          );
+        },
+      },
+    ],
+    [],
+  );
+
   if (loading) {
     return (
       <div className="animate-pulse space-y-6">
@@ -222,96 +445,18 @@ export default function DashboardCredits() {
 
       {/* Active Listings */}
       {listings.length > 0 && (
-        <div className="card">
-          <div className="border-b border-gray-200 px-6 py-4">
-            <h2 className="text-lg font-semibold text-gray-900">
-              Your Listings
-            </h2>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b bg-gray-50">
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">
-                    Credit
-                  </th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">
-                    Amount
-                  </th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">
-                    Asking
-                  </th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">
-                    Discount
-                  </th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">
-                    Offers
-                  </th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">
-                    Status
-                  </th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-500"></th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {listings.map((listing) => {
-                  const pendingCount = (listing.offers || []).filter(
-                    (o) => o.status === "pending",
-                  ).length;
-                  return (
-                    <tr key={listing.id} className="hover:bg-gray-50">
-                      <td className="px-4 py-3">
-                        <span className="rounded bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-700">
-                          {listing.listing?.creditType?.replace(/_/g, " ")}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3 font-medium">
-                        ${(listing.listing?.creditAmount || 0).toLocaleString()}
-                      </td>
-                      <td className="px-4 py-3">
-                        ${(listing.listing?.askingPrice || 0).toLocaleString()}
-                      </td>
-                      <td className="px-4 py-3 text-emerald-600">
-                        {listing.listing?.discountRate || 0}%
-                      </td>
-                      <td className="px-4 py-3">
-                        {pendingCount > 0 ? (
-                          <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700">
-                            {pendingCount} pending
-                          </span>
-                        ) : (
-                          <span className="text-gray-400">None</span>
-                        )}
-                      </td>
-                      <td className="px-4 py-3">
-                        <span
-                          className={`rounded-full px-2 py-0.5 text-xs font-medium ${
-                            listing.status === "active"
-                              ? "bg-green-100 text-green-700"
-                              : listing.status === "under_offer"
-                                ? "bg-blue-100 text-blue-700"
-                                : listing.status === "sold"
-                                  ? "bg-purple-100 text-purple-700"
-                                  : "bg-gray-100 text-gray-600"
-                          }`}
-                        >
-                          {listing.status?.replace(/_/g, " ")}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3">
-                        <Link
-                          to={`/marketplace/credits/${listing.id}`}
-                          className="text-emerald-600 hover:underline"
-                        >
-                          View <ArrowRight className="inline h-3 w-3" />
-                        </Link>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+        <div className="space-y-3">
+          <h2 className="text-lg font-semibold text-gray-900">Your Listings</h2>
+          <FilterBar
+            filters={listingFilterDefs}
+            activeFilters={listingFilters}
+            onChange={setListingFilters}
+          />
+          <DataTable
+            columns={listingColumns}
+            data={filteredListings}
+            emptyMessage="No listings match current filters"
+          />
         </div>
       )}
 
@@ -368,66 +513,20 @@ export default function DashboardCredits() {
 
       {/* Transaction History */}
       {transactions.length > 0 && (
-        <div className="card">
-          <div className="border-b border-gray-200 px-6 py-4">
-            <h2 className="text-lg font-semibold text-gray-900">
-              Transaction History
-            </h2>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b bg-gray-50">
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">
-                    Credit
-                  </th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">
-                    Sale Price
-                  </th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">
-                    Platform Fee
-                  </th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">
-                    Net to You
-                  </th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">
-                    Status
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {transactions.map((tx) => (
-                  <tr key={tx.id} className="hover:bg-gray-50">
-                    <td className="px-4 py-3 font-medium">
-                      ${(tx.creditAmount || 0).toLocaleString()}
-                    </td>
-                    <td className="px-4 py-3">
-                      ${(tx.salePrice || 0).toLocaleString()}
-                    </td>
-                    <td className="px-4 py-3 text-red-600">
-                      -${(tx.platformFee || 0).toLocaleString()}
-                    </td>
-                    <td className="px-4 py-3 font-medium text-green-600">
-                      ${(tx.payment?.toSeller?.amount || 0).toLocaleString()}
-                    </td>
-                    <td className="px-4 py-3">
-                      <span
-                        className={`rounded-full px-2 py-0.5 text-xs font-medium ${
-                          tx.transfer?.status === "completed"
-                            ? "bg-green-100 text-green-700"
-                            : tx.transfer?.status === "initiated"
-                              ? "bg-blue-100 text-blue-700"
-                              : "bg-gray-100 text-gray-600"
-                        }`}
-                      >
-                        {tx.transfer?.status || "unknown"}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+        <div className="space-y-3">
+          <h2 className="text-lg font-semibold text-gray-900">
+            Transaction History
+          </h2>
+          <FilterBar
+            filters={txFilterDefs}
+            activeFilters={txFilters}
+            onChange={setTxFilters}
+          />
+          <DataTable
+            columns={transactionColumns}
+            data={filteredTransactions}
+            emptyMessage="No transactions match current filters"
+          />
         </div>
       )}
     </div>
