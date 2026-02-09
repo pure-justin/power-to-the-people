@@ -218711,6 +218711,12 @@
     "city": "Waipahu",
     "state": "HI"
   },
+  "96799": {
+    "lat": -14.2781,
+    "lng": -170.7025,
+    "city": "Pago Pago",
+    "state": "AS"
+  },
   "96801": {
     "lat": 21.3278,
     "lng": -157.8294,
@@ -219010,6 +219016,150 @@
     "lng": 166.6419,
     "city": "Wake Island",
     "state": "HI"
+  },
+  "96910": {
+    "lat": 13.452,
+    "lng": 144.7465,
+    "city": "Hagatna",
+    "state": "GU"
+  },
+  "96911": {
+    "lat": 13.4443,
+    "lng": 144.7863,
+    "city": "Tamuning",
+    "state": "GU"
+  },
+  "96912": {
+    "lat": 13.4443,
+    "lng": 144.7863,
+    "city": "Dededo",
+    "state": "GU"
+  },
+  "96913": {
+    "lat": 13.4443,
+    "lng": 144.7863,
+    "city": "Barrigada",
+    "state": "GU"
+  },
+  "96914": {
+    "lat": 13.4443,
+    "lng": 144.7863,
+    "city": "Yona",
+    "state": "GU"
+  },
+  "96915": {
+    "lat": 13.3633,
+    "lng": 144.7102,
+    "city": "Santa Rita",
+    "state": "GU"
+  },
+  "96916": {
+    "lat": 13.2637,
+    "lng": 144.7016,
+    "city": "Merizo",
+    "state": "GU"
+  },
+  "96917": {
+    "lat": 13.2944,
+    "lng": 144.7211,
+    "city": "Inarajan",
+    "state": "GU"
+  },
+  "96918": {
+    "lat": 13.4443,
+    "lng": 144.7863,
+    "city": "Umatac",
+    "state": "GU"
+  },
+  "96919": {
+    "lat": 13.4443,
+    "lng": 144.7863,
+    "city": "Agana Heights",
+    "state": "GU"
+  },
+  "96921": {
+    "lat": 13.4593,
+    "lng": 144.7942,
+    "city": "Barrigada",
+    "state": "GU"
+  },
+  "96922": {
+    "lat": 13.4443,
+    "lng": 144.7863,
+    "city": "Asan",
+    "state": "GU"
+  },
+  "96923": {
+    "lat": 13.4443,
+    "lng": 144.7863,
+    "city": "Mangilao",
+    "state": "GU"
+  },
+  "96925": {
+    "lat": 13.4443,
+    "lng": 144.7863,
+    "city": "Piti",
+    "state": "GU"
+  },
+  "96926": {
+    "lat": 13.4443,
+    "lng": 144.7863,
+    "city": "Sinajana",
+    "state": "GU"
+  },
+  "96927": {
+    "lat": 13.4443,
+    "lng": 144.7863,
+    "city": "Mongmong",
+    "state": "GU"
+  },
+  "96928": {
+    "lat": 13.3893,
+    "lng": 144.6604,
+    "city": "Agat",
+    "state": "GU"
+  },
+  "96929": {
+    "lat": 13.5702,
+    "lng": 144.8834,
+    "city": "Yigo",
+    "state": "GU"
+  },
+  "96930": {
+    "lat": 13.4443,
+    "lng": 144.7863,
+    "city": "Talofofo",
+    "state": "GU"
+  },
+  "96931": {
+    "lat": 13.4443,
+    "lng": 144.7863,
+    "city": "Tamuning",
+    "state": "GU"
+  },
+  "96932": {
+    "lat": 13.4746,
+    "lng": 144.7464,
+    "city": "Hagatna",
+    "state": "GU"
+  },
+  "96950": {
+    "lat": 15.1685,
+    "lng": 145.7408,
+    "city": "Saipan",
+    "state": "MP"
+  },
+  "96951": {
+    "lat": 14.154,
+    "lng": 145.201,
+    "city": "Rota",
+    "state": "MP"
+  },
+  "96952": {
+    "lat": 15.029,
+    "lng": 145.616,
+    "city": "Tinian",
+    "state": "MP"
   },
   "96960": {
     "lat": 7.1128,
@@ -227854,6 +228004,1164 @@
     "lng": -73.0451,
     "city": "Holtsville",
     "state": "NY"
+  },
+  "00601": {
+    "lat": 18.1627,
+    "lng": -66.7221,
+    "city": "Adjuntas",
+    "state": "PR"
+  },
+  "00602": {
+    "lat": 18.3794,
+    "lng": -67.1882,
+    "city": "Aguada",
+    "state": "PR"
+  },
+  "00603": {
+    "lat": 18.4274,
+    "lng": -67.1541,
+    "city": "Aguadilla",
+    "state": "PR"
+  },
+  "00604": {
+    "lat": 18.4274,
+    "lng": -67.1541,
+    "city": "Aguadilla",
+    "state": "PR"
+  },
+  "00605": {
+    "lat": 18.4274,
+    "lng": -67.1541,
+    "city": "Aguadilla",
+    "state": "PR"
+  },
+  "00606": {
+    "lat": 18.1808,
+    "lng": -66.9799,
+    "city": "Maricao",
+    "state": "PR"
+  },
+  "00610": {
+    "lat": 18.2827,
+    "lng": -67.1396,
+    "city": "Anasco",
+    "state": "PR"
+  },
+  "00611": {
+    "lat": 18.285,
+    "lng": -66.7993,
+    "city": "Angeles",
+    "state": "PR"
+  },
+  "00612": {
+    "lat": 18.4724,
+    "lng": -66.7157,
+    "city": "Arecibo",
+    "state": "PR"
+  },
+  "00613": {
+    "lat": 18.4724,
+    "lng": -66.7157,
+    "city": "Arecibo",
+    "state": "PR"
+  },
+  "00614": {
+    "lat": 18.4724,
+    "lng": -66.7157,
+    "city": "Arecibo",
+    "state": "PR"
+  },
+  "00616": {
+    "lat": 18.4266,
+    "lng": -66.6832,
+    "city": "Bajadero",
+    "state": "PR"
+  },
+  "00617": {
+    "lat": 18.4505,
+    "lng": -66.5385,
+    "city": "Barceloneta",
+    "state": "PR"
+  },
+  "00622": {
+    "lat": 18.0269,
+    "lng": -67.1691,
+    "city": "Boqueron",
+    "state": "PR"
+  },
+  "00623": {
+    "lat": 18.0866,
+    "lng": -67.1457,
+    "city": "Cabo Rojo",
+    "state": "PR"
+  },
+  "00624": {
+    "lat": 18.0564,
+    "lng": -66.7216,
+    "city": "Penuelas",
+    "state": "PR"
+  },
+  "00627": {
+    "lat": 18.4838,
+    "lng": -66.8449,
+    "city": "Camuy",
+    "state": "PR"
+  },
+  "00631": {
+    "lat": 18.1805,
+    "lng": -66.8321,
+    "city": "Castaner",
+    "state": "PR"
+  },
+  "00636": {
+    "lat": 18.1625,
+    "lng": -67.0791,
+    "city": "Rosario",
+    "state": "PR"
+  },
+  "00637": {
+    "lat": 18.0777,
+    "lng": -66.9605,
+    "city": "Sabana Grande",
+    "state": "PR"
+  },
+  "00638": {
+    "lat": 18.3361,
+    "lng": -66.4688,
+    "city": "Ciales",
+    "state": "PR"
+  },
+  "00641": {
+    "lat": 18.2655,
+    "lng": -66.7005,
+    "city": "Utuado",
+    "state": "PR"
+  },
+  "00646": {
+    "lat": 18.4588,
+    "lng": -66.2677,
+    "city": "Dorado",
+    "state": "PR"
+  },
+  "00647": {
+    "lat": 17.9689,
+    "lng": -66.9335,
+    "city": "Ensenada",
+    "state": "PR"
+  },
+  "00650": {
+    "lat": 18.3624,
+    "lng": -66.5613,
+    "city": "Florida",
+    "state": "PR"
+  },
+  "00652": {
+    "lat": 18.4577,
+    "lng": -66.611,
+    "city": "Garrochales",
+    "state": "PR"
+  },
+  "00653": {
+    "lat": 17.9716,
+    "lng": -66.908,
+    "city": "Guanica",
+    "state": "PR"
+  },
+  "00656": {
+    "lat": 18.0191,
+    "lng": -66.7918,
+    "city": "Guayanilla",
+    "state": "PR"
+  },
+  "00659": {
+    "lat": 18.4863,
+    "lng": -66.8255,
+    "city": "Hatillo",
+    "state": "PR"
+  },
+  "00660": {
+    "lat": 18.1397,
+    "lng": -67.1274,
+    "city": "Hormigueros",
+    "state": "PR"
+  },
+  "00662": {
+    "lat": 18.5008,
+    "lng": -67.0243,
+    "city": "Isabela",
+    "state": "PR"
+  },
+  "00664": {
+    "lat": 18.2186,
+    "lng": -66.5916,
+    "city": "Jayuya",
+    "state": "PR"
+  },
+  "00667": {
+    "lat": 18.05,
+    "lng": -67.0593,
+    "city": "Lajas",
+    "state": "PR"
+  },
+  "00669": {
+    "lat": 18.2947,
+    "lng": -66.8771,
+    "city": "Lares",
+    "state": "PR"
+  },
+  "00670": {
+    "lat": 18.2519,
+    "lng": -66.9921,
+    "city": "Las Marias",
+    "state": "PR"
+  },
+  "00674": {
+    "lat": 18.4274,
+    "lng": -66.4921,
+    "city": "Manati",
+    "state": "PR"
+  },
+  "00676": {
+    "lat": 18.3947,
+    "lng": -67.1132,
+    "city": "Moca",
+    "state": "PR"
+  },
+  "00677": {
+    "lat": 18.3402,
+    "lng": -67.2499,
+    "city": "Rincon",
+    "state": "PR"
+  },
+  "00678": {
+    "lat": 18.4738,
+    "lng": -66.9385,
+    "city": "Quebradillas",
+    "state": "PR"
+  },
+  "00680": {
+    "lat": 18.2011,
+    "lng": -67.1396,
+    "city": "Mayaguez",
+    "state": "PR"
+  },
+  "00681": {
+    "lat": 18.2011,
+    "lng": -67.1396,
+    "city": "Mayaguez",
+    "state": "PR"
+  },
+  "00682": {
+    "lat": 18.2011,
+    "lng": -67.1396,
+    "city": "Mayaguez",
+    "state": "PR"
+  },
+  "00683": {
+    "lat": 18.0816,
+    "lng": -67.0449,
+    "city": "San German",
+    "state": "PR"
+  },
+  "00685": {
+    "lat": 18.3366,
+    "lng": -66.9902,
+    "city": "San Sebastian",
+    "state": "PR"
+  },
+  "00687": {
+    "lat": 18.3258,
+    "lng": -66.4066,
+    "city": "Morovis",
+    "state": "PR"
+  },
+  "00688": {
+    "lat": 18.4338,
+    "lng": -66.6138,
+    "city": "Sabana Hoyos",
+    "state": "PR"
+  },
+  "00690": {
+    "lat": 18.4922,
+    "lng": -67.0985,
+    "city": "San Antonio",
+    "state": "PR"
+  },
+  "00692": {
+    "lat": 18.4122,
+    "lng": -66.3313,
+    "city": "Vega Alta",
+    "state": "PR"
+  },
+  "00693": {
+    "lat": 18.4444,
+    "lng": -66.3877,
+    "city": "Vega Baja",
+    "state": "PR"
+  },
+  "00694": {
+    "lat": 18.4444,
+    "lng": -66.3877,
+    "city": "Vega Baja",
+    "state": "PR"
+  },
+  "00698": {
+    "lat": 18.035,
+    "lng": -66.8499,
+    "city": "Yauco",
+    "state": "PR"
+  },
+  "00703": {
+    "lat": 18.2569,
+    "lng": -66.1029,
+    "city": "Aguas Buenas",
+    "state": "PR"
+  },
+  "00704": {
+    "lat": 17.9529,
+    "lng": -66.262,
+    "city": "Aguirre",
+    "state": "PR"
+  },
+  "00705": {
+    "lat": 18.14,
+    "lng": -66.266,
+    "city": "Aibonito",
+    "state": "PR"
+  },
+  "00707": {
+    "lat": 18.0072,
+    "lng": -65.8993,
+    "city": "Maunabo",
+    "state": "PR"
+  },
+  "00714": {
+    "lat": 17.9658,
+    "lng": -66.0613,
+    "city": "Arroyo",
+    "state": "PR"
+  },
+  "00715": {
+    "lat": 18.011,
+    "lng": -66.5632,
+    "city": "Mercedita",
+    "state": "PR"
+  },
+  "00716": {
+    "lat": 18.0111,
+    "lng": -66.6141,
+    "city": "Ponce",
+    "state": "PR"
+  },
+  "00717": {
+    "lat": 18.0111,
+    "lng": -66.6141,
+    "city": "Ponce",
+    "state": "PR"
+  },
+  "00718": {
+    "lat": 18.2116,
+    "lng": -65.7349,
+    "city": "Naguabo",
+    "state": "PR"
+  },
+  "00719": {
+    "lat": 18.3008,
+    "lng": -66.2449,
+    "city": "Naranjito",
+    "state": "PR"
+  },
+  "00720": {
+    "lat": 18.2269,
+    "lng": -66.391,
+    "city": "Orocovis",
+    "state": "PR"
+  },
+  "00721": {
+    "lat": 18.3705,
+    "lng": -65.7741,
+    "city": "Palmer",
+    "state": "PR"
+  },
+  "00723": {
+    "lat": 18.0064,
+    "lng": -66.0157,
+    "city": "Patillas",
+    "state": "PR"
+  },
+  "00725": {
+    "lat": 18.2341,
+    "lng": -66.0485,
+    "city": "Caguas",
+    "state": "PR"
+  },
+  "00726": {
+    "lat": 18.2341,
+    "lng": -66.0485,
+    "city": "Caguas",
+    "state": "PR"
+  },
+  "00727": {
+    "lat": 18.2341,
+    "lng": -66.0485,
+    "city": "Caguas",
+    "state": "PR"
+  },
+  "00728": {
+    "lat": 18.0111,
+    "lng": -66.6141,
+    "city": "Ponce",
+    "state": "PR"
+  },
+  "00729": {
+    "lat": 18.3751,
+    "lng": -65.8993,
+    "city": "Canovanas",
+    "state": "PR"
+  },
+  "00730": {
+    "lat": 18.0111,
+    "lng": -66.6141,
+    "city": "Ponce",
+    "state": "PR"
+  },
+  "00731": {
+    "lat": 18.0111,
+    "lng": -66.6141,
+    "city": "Ponce",
+    "state": "PR"
+  },
+  "00732": {
+    "lat": 18.0111,
+    "lng": -66.6141,
+    "city": "Ponce",
+    "state": "PR"
+  },
+  "00733": {
+    "lat": 18.0111,
+    "lng": -66.6141,
+    "city": "Ponce",
+    "state": "PR"
+  },
+  "00734": {
+    "lat": 18.0111,
+    "lng": -66.6141,
+    "city": "Ponce",
+    "state": "PR"
+  },
+  "00735": {
+    "lat": 18.2641,
+    "lng": -65.6485,
+    "city": "Ceiba",
+    "state": "PR"
+  },
+  "00736": {
+    "lat": 18.1119,
+    "lng": -66.166,
+    "city": "Cayey",
+    "state": "PR"
+  },
+  "00737": {
+    "lat": 18.1119,
+    "lng": -66.166,
+    "city": "Cayey",
+    "state": "PR"
+  },
+  "00738": {
+    "lat": 18.3258,
+    "lng": -65.6524,
+    "city": "Fajardo",
+    "state": "PR"
+  },
+  "00739": {
+    "lat": 18.1758,
+    "lng": -66.1613,
+    "city": "Cidra",
+    "state": "PR"
+  },
+  "00740": {
+    "lat": 18.25,
+    "lng": -65.7493,
+    "city": "Puerto Real",
+    "state": "PR"
+  },
+  "00741": {
+    "lat": 18.1663,
+    "lng": -65.7482,
+    "city": "Punta Santiago",
+    "state": "PR"
+  },
+  "00742": {
+    "lat": 18.235,
+    "lng": -65.6291,
+    "city": "Roosevelt Roads",
+    "state": "PR"
+  },
+  "00744": {
+    "lat": 18.2183,
+    "lng": -65.7885,
+    "city": "Rio Blanco",
+    "state": "PR"
+  },
+  "00745": {
+    "lat": 18.3802,
+    "lng": -65.8313,
+    "city": "Rio Grande",
+    "state": "PR"
+  },
+  "00751": {
+    "lat": 17.9775,
+    "lng": -66.2979,
+    "city": "Salinas",
+    "state": "PR"
+  },
+  "00754": {
+    "lat": 18.1894,
+    "lng": -65.961,
+    "city": "San Lorenzo",
+    "state": "PR"
+  },
+  "00757": {
+    "lat": 17.9661,
+    "lng": -66.4049,
+    "city": "Santa Isabel",
+    "state": "PR"
+  },
+  "00765": {
+    "lat": 18.0859,
+    "lng": -66.2431,
+    "city": "Vieques",
+    "state": "PR"
+  },
+  "00766": {
+    "lat": 18.1272,
+    "lng": -66.4921,
+    "city": "Villalba",
+    "state": "PR"
+  },
+  "00767": {
+    "lat": 18.0505,
+    "lng": -65.8793,
+    "city": "Yabucoa",
+    "state": "PR"
+  },
+  "00769": {
+    "lat": 18.08,
+    "lng": -66.3579,
+    "city": "Coamo",
+    "state": "PR"
+  },
+  "00771": {
+    "lat": 18.183,
+    "lng": -65.8663,
+    "city": "Las Piedras",
+    "state": "PR"
+  },
+  "00772": {
+    "lat": 18.4313,
+    "lng": -65.8802,
+    "city": "Loiza",
+    "state": "PR"
+  },
+  "00773": {
+    "lat": 18.3725,
+    "lng": -65.7166,
+    "city": "Luquillo",
+    "state": "PR"
+  },
+  "00775": {
+    "lat": 18.303,
+    "lng": -65.301,
+    "city": "Culebra",
+    "state": "PR"
+  },
+  "00777": {
+    "lat": 18.2275,
+    "lng": -65.921,
+    "city": "Juncos",
+    "state": "PR"
+  },
+  "00778": {
+    "lat": 18.2544,
+    "lng": -65.9729,
+    "city": "Gurabo",
+    "state": "PR"
+  },
+  "00780": {
+    "lat": 18.0497,
+    "lng": -66.5513,
+    "city": "Coto Laurel",
+    "state": "PR"
+  },
+  "00782": {
+    "lat": 18.218,
+    "lng": -66.226,
+    "city": "Comerio",
+    "state": "PR"
+  },
+  "00783": {
+    "lat": 18.3411,
+    "lng": -66.3168,
+    "city": "Corozal",
+    "state": "PR"
+  },
+  "00784": {
+    "lat": 17.9841,
+    "lng": -66.1138,
+    "city": "Guayama",
+    "state": "PR"
+  },
+  "00785": {
+    "lat": 17.9841,
+    "lng": -66.1138,
+    "city": "Guayama",
+    "state": "PR"
+  },
+  "00786": {
+    "lat": 18.1544,
+    "lng": -66.2329,
+    "city": "La Plata",
+    "state": "PR"
+  },
+  "00791": {
+    "lat": 18.1497,
+    "lng": -65.8274,
+    "city": "Humacao",
+    "state": "PR"
+  },
+  "00792": {
+    "lat": 18.1497,
+    "lng": -65.8274,
+    "city": "Humacao",
+    "state": "PR"
+  },
+  "00794": {
+    "lat": 18.1866,
+    "lng": -66.3063,
+    "city": "Barranquitas",
+    "state": "PR"
+  },
+  "00795": {
+    "lat": 18.0525,
+    "lng": -66.5066,
+    "city": "Juana Diaz",
+    "state": "PR"
+  },
+  "00801": {
+    "lat": 18.3484,
+    "lng": -64.974,
+    "city": "St Thomas",
+    "state": "VI"
+  },
+  "00802": {
+    "lat": 18.3387,
+    "lng": -64.916,
+    "city": "St Thomas",
+    "state": "VI"
+  },
+  "00803": {
+    "lat": 18.3223,
+    "lng": -64.9637,
+    "city": "St Thomas",
+    "state": "VI"
+  },
+  "00804": {
+    "lat": 18.3223,
+    "lng": -64.9637,
+    "city": "St Thomas",
+    "state": "VI"
+  },
+  "00805": {
+    "lat": 18.3223,
+    "lng": -64.9637,
+    "city": "St Thomas",
+    "state": "VI"
+  },
+  "00820": {
+    "lat": 17.7342,
+    "lng": -64.7347,
+    "city": "Christiansted",
+    "state": "VI"
+  },
+  "00821": {
+    "lat": 17.7342,
+    "lng": -64.7347,
+    "city": "Christiansted",
+    "state": "VI"
+  },
+  "00822": {
+    "lat": 17.7342,
+    "lng": -64.7347,
+    "city": "Christiansted",
+    "state": "VI"
+  },
+  "00823": {
+    "lat": 17.7237,
+    "lng": -64.7445,
+    "city": "Christiansted",
+    "state": "VI"
+  },
+  "00824": {
+    "lat": 17.7446,
+    "lng": -64.6825,
+    "city": "Christiansted",
+    "state": "VI"
+  },
+  "00830": {
+    "lat": 18.3282,
+    "lng": -64.7407,
+    "city": "St John",
+    "state": "VI"
+  },
+  "00831": {
+    "lat": 18.3273,
+    "lng": -64.7864,
+    "city": "St John",
+    "state": "VI"
+  },
+  "00840": {
+    "lat": 17.7226,
+    "lng": -64.8729,
+    "city": "Frederiksted",
+    "state": "VI"
+  },
+  "00841": {
+    "lat": 17.7648,
+    "lng": -64.8096,
+    "city": "Frederiksted",
+    "state": "VI"
+  },
+  "00850": {
+    "lat": 17.7208,
+    "lng": -64.8002,
+    "city": "Kingshill",
+    "state": "VI"
+  },
+  "00851": {
+    "lat": 17.7099,
+    "lng": -64.7009,
+    "city": "Kingshill",
+    "state": "VI"
+  },
+  "00901": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00902": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00906": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00907": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00908": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00909": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00910": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00911": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00912": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00913": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00914": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00915": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00916": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00917": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00918": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00919": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00920": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00921": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00922": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00923": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00924": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00925": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00926": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00927": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00928": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00929": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00930": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00931": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00933": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00934": {
+    "lat": 18.4122,
+    "lng": -66.1221,
+    "city": "Fort Buchanan",
+    "state": "PR"
+  },
+  "00935": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00936": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00937": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00938": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00939": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00940": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00949": {
+    "lat": 18.4438,
+    "lng": -66.2596,
+    "city": "Toa Baja",
+    "state": "PR"
+  },
+  "00950": {
+    "lat": 18.4438,
+    "lng": -66.2596,
+    "city": "Toa Baja",
+    "state": "PR"
+  },
+  "00951": {
+    "lat": 18.4438,
+    "lng": -66.2596,
+    "city": "Toa Baja",
+    "state": "PR"
+  },
+  "00952": {
+    "lat": 18.4269,
+    "lng": -66.1846,
+    "city": "Sabana Seca",
+    "state": "PR"
+  },
+  "00953": {
+    "lat": 18.3883,
+    "lng": -66.2482,
+    "city": "Toa Alta",
+    "state": "PR"
+  },
+  "00954": {
+    "lat": 18.3883,
+    "lng": -66.2482,
+    "city": "Toa Alta",
+    "state": "PR"
+  },
+  "00955": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00956": {
+    "lat": 18.3986,
+    "lng": -66.1557,
+    "city": "Bayamon",
+    "state": "PR"
+  },
+  "00957": {
+    "lat": 18.3986,
+    "lng": -66.1557,
+    "city": "Bayamon",
+    "state": "PR"
+  },
+  "00958": {
+    "lat": 18.3986,
+    "lng": -66.1557,
+    "city": "Bayamon",
+    "state": "PR"
+  },
+  "00959": {
+    "lat": 18.3986,
+    "lng": -66.1557,
+    "city": "Bayamon",
+    "state": "PR"
+  },
+  "00960": {
+    "lat": 18.3986,
+    "lng": -66.1557,
+    "city": "Bayamon",
+    "state": "PR"
+  },
+  "00961": {
+    "lat": 18.3986,
+    "lng": -66.1557,
+    "city": "Bayamon",
+    "state": "PR"
+  },
+  "00962": {
+    "lat": 18.4413,
+    "lng": -66.1182,
+    "city": "Catano",
+    "state": "PR"
+  },
+  "00963": {
+    "lat": 18.4413,
+    "lng": -66.1182,
+    "city": "Catano",
+    "state": "PR"
+  },
+  "00965": {
+    "lat": 18.3575,
+    "lng": -66.111,
+    "city": "Guaynabo",
+    "state": "PR"
+  },
+  "00966": {
+    "lat": 18.3575,
+    "lng": -66.111,
+    "city": "Guaynabo",
+    "state": "PR"
+  },
+  "00968": {
+    "lat": 18.3575,
+    "lng": -66.111,
+    "city": "Guaynabo",
+    "state": "PR"
+  },
+  "00969": {
+    "lat": 18.3575,
+    "lng": -66.111,
+    "city": "Guaynabo",
+    "state": "PR"
+  },
+  "00970": {
+    "lat": 18.3575,
+    "lng": -66.111,
+    "city": "Guaynabo",
+    "state": "PR"
+  },
+  "00971": {
+    "lat": 18.3575,
+    "lng": -66.111,
+    "city": "Guaynabo",
+    "state": "PR"
+  },
+  "00975": {
+    "lat": 18.4663,
+    "lng": -66.1057,
+    "city": "San Juan",
+    "state": "PR"
+  },
+  "00976": {
+    "lat": 18.3547,
+    "lng": -66.0074,
+    "city": "Trujillo Alto",
+    "state": "PR"
+  },
+  "00977": {
+    "lat": 18.3547,
+    "lng": -66.0074,
+    "city": "Trujillo Alto",
+    "state": "PR"
+  },
+  "00978": {
+    "lat": 18.3786,
+    "lng": -66.05,
+    "city": "St Just",
+    "state": "PR"
+  },
+  "00979": {
+    "lat": 18.3808,
+    "lng": -65.9574,
+    "city": "Carolina",
+    "state": "PR"
+  },
+  "00981": {
+    "lat": 18.3808,
+    "lng": -65.9574,
+    "city": "Carolina",
+    "state": "PR"
+  },
+  "00982": {
+    "lat": 18.3808,
+    "lng": -65.9574,
+    "city": "Carolina",
+    "state": "PR"
+  },
+  "00983": {
+    "lat": 18.3808,
+    "lng": -65.9574,
+    "city": "Carolina",
+    "state": "PR"
+  },
+  "00984": {
+    "lat": 18.3808,
+    "lng": -65.9574,
+    "city": "Carolina",
+    "state": "PR"
+  },
+  "00985": {
+    "lat": 18.3808,
+    "lng": -65.9574,
+    "city": "Carolina",
+    "state": "PR"
+  },
+  "00986": {
+    "lat": 18.3808,
+    "lng": -65.9574,
+    "city": "Carolina",
+    "state": "PR"
+  },
+  "00987": {
+    "lat": 18.3808,
+    "lng": -65.9574,
+    "city": "Carolina",
+    "state": "PR"
+  },
+  "00988": {
+    "lat": 18.3808,
+    "lng": -65.9574,
+    "city": "Carolina",
+    "state": "PR"
   },
   "01001": {
     "lat": 42.0702,

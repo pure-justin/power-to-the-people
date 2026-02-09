@@ -64,9 +64,10 @@ const COL = {
 // ── Main ─────────────────────────────────────────────────────────────────────
 
 function main() {
-  // Verify input file exists
-  if (!fs.existsSync(INPUT_FILE)) {
-    console.error(`Input file not found: ${INPUT_FILE}`);
+  // Verify main input file exists
+  const mainFile = INPUT_FILES[0].file;
+  if (!fs.existsSync(mainFile)) {
+    console.error(`Input file not found: ${mainFile}`);
     console.error("Download it first:");
     console.error(
       '  curl -s "https://download.geonames.org/export/zip/US.zip" -o /tmp/us_zips.zip',
@@ -75,62 +76,82 @@ function main() {
     process.exit(1);
   }
 
-  console.log(`Reading GeoNames data from ${INPUT_FILE}...`);
-  const raw = fs.readFileSync(INPUT_FILE, "utf-8");
-  const lines = raw.split("\n").filter((line) => line.trim().length > 0);
-  console.log(`  Found ${lines.length} raw lines`);
-
-  // Parse into zip code map (first occurrence wins for duplicates)
+  // Parse all input files into a single zip code map
   const zipMap = {};
   let skipped = 0;
   let duplicates = 0;
+  let totalLines = 0;
 
-  for (const line of lines) {
-    const cols = line.split("\t");
-
-    // Validate we have enough columns
-    if (cols.length < 11) {
-      skipped++;
+  for (const { file, stateOverride } of INPUT_FILES) {
+    if (!fs.existsSync(file)) {
+      console.warn(`  Skipping missing file: ${file}`);
       continue;
     }
 
-    const zip = cols[COL.POSTAL_CODE].trim();
-    const city = cols[COL.PLACE_NAME].trim();
-    const stateCode = cols[COL.STATE_CODE].trim();
-    const lat = parseFloat(cols[COL.LATITUDE]);
-    const lng = parseFloat(cols[COL.LONGITUDE]);
+    const raw = fs.readFileSync(file, "utf-8");
+    const lines = raw.split("\n").filter((line) => line.trim().length > 0);
+    console.log(`Reading ${file} ... ${lines.length} lines`);
+    totalLines += lines.length;
 
-    // Validate zip code format (5 digits)
-    if (!/^\d{5}$/.test(zip)) {
-      skipped++;
-      continue;
+    for (const line of lines) {
+      const cols = line.split("\t");
+
+      // Validate we have enough columns (some territory files are shorter)
+      if (cols.length < 11) {
+        skipped++;
+        continue;
+      }
+
+      const zip = cols[COL.POSTAL_CODE].trim();
+      const city = cols[COL.PLACE_NAME].trim();
+      const lat = parseFloat(cols[COL.LATITUDE]);
+      const lng = parseFloat(cols[COL.LONGITUDE]);
+
+      // For territories, use the override state code.
+      // For US data, use the admin_code1 column (2-letter state abbr).
+      // Some territory files put numeric FIPS codes in admin_code1 instead of
+      // the 2-letter state abbreviation, so we need the override.
+      let stateCode;
+      if (stateOverride) {
+        stateCode = stateOverride;
+      } else {
+        stateCode = cols[COL.STATE_CODE].trim();
+      }
+
+      // Validate zip code format (5 digits)
+      if (!/^\d{5}$/.test(zip)) {
+        skipped++;
+        continue;
+      }
+
+      // Validate coordinates
+      if (isNaN(lat) || isNaN(lng)) {
+        skipped++;
+        continue;
+      }
+
+      // Validate state code exists
+      if (!stateCode || stateCode.length === 0) {
+        skipped++;
+        continue;
+      }
+
+      // Deduplicate: keep first entry (GeoNames sorts by accuracy)
+      if (zipMap[zip]) {
+        duplicates++;
+        continue;
+      }
+
+      zipMap[zip] = {
+        lat: Math.round(lat * 10000) / 10000, // 4 decimal places (~11m precision)
+        lng: Math.round(lng * 10000) / 10000,
+        city: city,
+        state: stateCode,
+      };
     }
-
-    // Validate coordinates
-    if (isNaN(lat) || isNaN(lng)) {
-      skipped++;
-      continue;
-    }
-
-    // Validate state code exists
-    if (!stateCode || stateCode.length === 0) {
-      skipped++;
-      continue;
-    }
-
-    // Deduplicate: keep first entry (GeoNames sorts by accuracy)
-    if (zipMap[zip]) {
-      duplicates++;
-      continue;
-    }
-
-    zipMap[zip] = {
-      lat: Math.round(lat * 10000) / 10000, // 4 decimal places (~11m precision)
-      lng: Math.round(lng * 10000) / 10000,
-      city: city,
-      state: stateCode,
-    };
   }
+
+  console.log(`\nTotal lines processed: ${totalLines}`);
 
   // Sort by zip code for clean output
   const sortedZips = Object.keys(zipMap).sort();
