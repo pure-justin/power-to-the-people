@@ -676,6 +676,20 @@ function ListingCard({
                 {listing.project_context.state}
                 {listing.project_context.jurisdiction &&
                   ` / ${listing.project_context.jurisdiction}`}
+                {listing.project_context?.zip &&
+                  ` ${listing.project_context.zip}`}
+              </span>
+            )}
+            {distance != null && (
+              <span className="inline-flex items-center gap-1 font-medium text-blue-600">
+                <Navigation className="h-3 w-3" />
+                {distance.toFixed(1)} mi
+              </span>
+            )}
+            {distance == null && listing.project_context?.zip && workerLat && (
+              <span className="inline-flex items-center gap-1 text-gray-400">
+                <Navigation className="h-3 w-3" />
+                ZIP {listing.project_context.zip}
               </span>
             )}
             {listing.project_context?.system_size_kw && (
@@ -963,6 +977,11 @@ export default function DashboardMarketplace() {
   const [statusFilter, setStatusFilter] = useState("open");
   const [searchQuery, setSearchQuery] = useState("");
 
+  // Location-aware filtering
+  const [filterZip, setFilterZip] = useState("");
+  const [filterRadius, setFilterRadius] = useState(50);
+  const [workerProfile, setWorkerProfile] = useState(null);
+
   // Worker filters
   const [workerSkillFilter, setWorkerSkillFilter] = useState("");
   const [workerStateFilter, setWorkerStateFilter] = useState("");
@@ -973,6 +992,31 @@ export default function DashboardMarketplace() {
 
   // Expanded listing for bid review
   const [reviewListingId, setReviewListingId] = useState(null);
+
+  // Load worker profile for smart-matching and location
+  useEffect(() => {
+    if (!user?.uid) return;
+    const loadProfile = async () => {
+      try {
+        // Try to find worker doc by user_id
+        const wq = query(
+          collection(db, "workers"),
+          where("user_id", "==", user.uid),
+          limit(1),
+        );
+        const wSnap = await getDocs(wq);
+        if (!wSnap.empty) {
+          const data = { id: wSnap.docs[0].id, ...wSnap.docs[0].data() };
+          setWorkerProfile(data);
+          if (data.zip) setFilterZip(data.zip);
+          if (data.service_radius) setFilterRadius(data.service_radius);
+        }
+      } catch (err) {
+        console.error("Failed to load worker profile:", err);
+      }
+    };
+    loadProfile();
+  }, [user?.uid]);
 
   const loadBrowseListings = useCallback(async () => {
     setLoading(true);
@@ -1062,15 +1106,57 @@ export default function DashboardMarketplace() {
   }, [tab, loadBrowseListings, loadMyListings, loadMyBids, loadWorkers]);
 
   const filteredListings = useMemo(() => {
-    if (!searchQuery) return listings;
-    const s = searchQuery.toLowerCase();
-    return listings.filter(
-      (l) =>
-        (l.requirements || "").toLowerCase().includes(s) ||
-        (l.service_type || "").toLowerCase().includes(s) ||
-        (l.project_context?.state || "").toLowerCase().includes(s),
-    );
-  }, [listings, searchQuery]);
+    let result = listings;
+
+    // Text search
+    if (searchQuery) {
+      const s = searchQuery.toLowerCase();
+      result = result.filter(
+        (l) =>
+          (l.requirements || "").toLowerCase().includes(s) ||
+          (l.service_type || "").toLowerCase().includes(s) ||
+          (l.project_context?.state || "").toLowerCase().includes(s) ||
+          (l.project_context?.zip || "").toLowerCase().includes(s),
+      );
+    }
+
+    // Distance filtering (only if worker has lat/lng and listings have lat/lng)
+    if (workerProfile?.lat && workerProfile?.lng && filterRadius) {
+      result = result.filter((l) => {
+        if (!l.project_context?.lat || !l.project_context?.lng) return true; // keep listings without location
+        const dist = calcDistanceMiles(
+          workerProfile.lat,
+          workerProfile.lng,
+          l.project_context.lat,
+          l.project_context.lng,
+        );
+        return dist <= filterRadius;
+      });
+    }
+
+    // Sort smart-matched listings to top
+    if (workerProfile?.skills?.length > 0) {
+      result = [...result].sort((a, b) => {
+        const aMatch = workerProfile.skills.some(
+          (s) =>
+            s === a.service_type ||
+            a.service_type?.includes(s) ||
+            s.includes(a.service_type || ""),
+        );
+        const bMatch = workerProfile.skills.some(
+          (s) =>
+            s === b.service_type ||
+            b.service_type?.includes(s) ||
+            s.includes(b.service_type || ""),
+        );
+        if (aMatch && !bMatch) return -1;
+        if (!aMatch && bMatch) return 1;
+        return 0;
+      });
+    }
+
+    return result;
+  }, [listings, searchQuery, workerProfile, filterRadius]);
 
   const tabs = [
     { id: "browse", label: "Browse Jobs", icon: Store },

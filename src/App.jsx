@@ -24,6 +24,7 @@ const Success = lazy(() => import("./pages/Success"));
 const Pricing = lazy(() => import("./pages/Pricing"));
 const Signup = lazy(() => import("./pages/Signup"));
 const ApiDocs = lazy(() => import("./pages/ApiDocs"));
+const GetStarted = lazy(() => import("./pages/GetStarted"));
 const InstallerComparison = lazy(() => import("./pages/InstallerComparison"));
 const SubHubCompare = lazy(() => import("./pages/SubHubCompare"));
 const CreditMarketplace = lazy(
@@ -160,6 +161,7 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/api-docs" element={<ApiDocs />} />
             <Route path="/compare" element={<SubHubCompare />} />
+            <Route path="/get-started" element={<GetStarted />} />
             <Route path="/installers" element={<InstallerComparison />} />
             <Route
               path="/marketplace/credits"

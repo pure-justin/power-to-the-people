@@ -137,8 +137,28 @@ export default function PortalSurvey() {
     rate_schedule: "",
   });
 
+  // Roof measurements
+  const [roofMeasurements, setRoofMeasurements] = useState({
+    area_sqft: "",
+    pitch_degrees: "",
+    orientation: "",
+  });
+
+  // Obstruction checklist
+  const [obstructionChecklist, setObstructionChecklist] = useState({
+    trees: false,
+    vents: false,
+    chimneys: false,
+    skylights: false,
+    satellite_dishes: false,
+  });
+
   // Photos organized by type
   const [photos, setPhotos] = useState({
+    roof_north: [],
+    roof_south: [],
+    roof_east: [],
+    roof_west: [],
     roof_overview: [],
     electrical_panel: [],
     meter: [],
@@ -249,8 +269,21 @@ export default function PortalSurvey() {
         ),
       }));
     }
+    if (survey.roof_measurements) {
+      setRoofMeasurements((prev) => ({ ...prev, ...survey.roof_measurements }));
+    }
+    if (survey.obstruction_checklist) {
+      setObstructionChecklist((prev) => ({
+        ...prev,
+        ...survey.obstruction_checklist,
+      }));
+    }
     if (survey.photos && survey.photos.length > 0) {
       const grouped = {
+        roof_north: [],
+        roof_south: [],
+        roof_east: [],
+        roof_west: [],
         roof_overview: [],
         electrical_panel: [],
         meter: [],
@@ -355,6 +388,15 @@ export default function PortalSurvey() {
       const cleanUtility = filterEmpty(utility);
       if (Object.keys(cleanUtility).length > 0)
         sectionData.utility = cleanUtility;
+
+      // Roof measurements
+      const cleanRoofMeasurements = filterEmpty(roofMeasurements);
+      if (Object.keys(cleanRoofMeasurements).length > 0)
+        sectionData.roof_measurements = cleanRoofMeasurements;
+
+      // Obstruction checklist — save all values
+      const anyChecked = Object.values(obstructionChecklist).some(Boolean);
+      if (anyChecked) sectionData.obstruction_checklist = obstructionChecklist;
 
       if (Object.keys(sectionData).length > 0) {
         const updateResult = await updateSurvey(id, sectionData);
@@ -860,16 +902,139 @@ export default function PortalSurvey() {
               )}
             </div>
 
-            {/* Roof photos */}
-            <div>
-              <label className="mb-2 block text-sm font-medium text-gray-700">
-                Roof Photos (optional but helpful)
+            {/* Roof measurements */}
+            <div className="space-y-4">
+              <label className="block text-sm font-medium text-gray-700">
+                Roof Measurements
               </label>
-              <PhotoUploadArea
-                photos={photos.roof_overview}
-                onUpload={() => triggerPhotoUpload("roof_overview")}
-                label="Upload roof photos"
-              />
+              <div className="grid grid-cols-3 gap-4">
+                <div>
+                  <label className="mb-1 block text-xs text-gray-500">
+                    Roof Area (sqft)
+                  </label>
+                  <input
+                    type="number"
+                    value={roofMeasurements.area_sqft}
+                    onChange={(e) =>
+                      setRoofMeasurements((p) => ({
+                        ...p,
+                        area_sqft: e.target.value,
+                      }))
+                    }
+                    placeholder="e.g., 1800"
+                    min="0"
+                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                  />
+                </div>
+                <div>
+                  <label className="mb-1 block text-xs text-gray-500">
+                    Pitch (degrees)
+                  </label>
+                  <input
+                    type="number"
+                    value={roofMeasurements.pitch_degrees}
+                    onChange={(e) =>
+                      setRoofMeasurements((p) => ({
+                        ...p,
+                        pitch_degrees: e.target.value,
+                      }))
+                    }
+                    placeholder="e.g., 25"
+                    min="0"
+                    max="90"
+                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                  />
+                </div>
+                <div>
+                  <label className="mb-1 block text-xs text-gray-500">
+                    Orientation
+                  </label>
+                  <select
+                    value={roofMeasurements.orientation}
+                    onChange={(e) =>
+                      setRoofMeasurements((p) => ({
+                        ...p,
+                        orientation: e.target.value,
+                      }))
+                    }
+                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                  >
+                    <option value="">Select...</option>
+                    <option value="N">North</option>
+                    <option value="S">South</option>
+                    <option value="E">East</option>
+                    <option value="W">West</option>
+                    <option value="NE">Northeast</option>
+                    <option value="NW">Northwest</option>
+                    <option value="SE">Southeast</option>
+                    <option value="SW">Southwest</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            {/* Roof photos from 4 angles */}
+            <div className="space-y-3">
+              <label className="block text-sm font-medium text-gray-700">
+                Roof Photos - 4 Angles (optional but helpful)
+              </label>
+              <p className="text-xs text-gray-400">
+                Take photos of your roof from each side of your home.
+              </p>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <p className="mb-1 text-xs font-medium text-gray-500">
+                    North Side
+                  </p>
+                  <PhotoUploadArea
+                    photos={photos.roof_north}
+                    onUpload={() => triggerPhotoUpload("roof_north")}
+                    label="North"
+                  />
+                </div>
+                <div>
+                  <p className="mb-1 text-xs font-medium text-gray-500">
+                    South Side
+                  </p>
+                  <PhotoUploadArea
+                    photos={photos.roof_south}
+                    onUpload={() => triggerPhotoUpload("roof_south")}
+                    label="South"
+                  />
+                </div>
+                <div>
+                  <p className="mb-1 text-xs font-medium text-gray-500">
+                    East Side
+                  </p>
+                  <PhotoUploadArea
+                    photos={photos.roof_east}
+                    onUpload={() => triggerPhotoUpload("roof_east")}
+                    label="East"
+                  />
+                </div>
+                <div>
+                  <p className="mb-1 text-xs font-medium text-gray-500">
+                    West Side
+                  </p>
+                  <PhotoUploadArea
+                    photos={photos.roof_west}
+                    onUpload={() => triggerPhotoUpload("roof_west")}
+                    label="West"
+                  />
+                </div>
+              </div>
+
+              {/* Overview photo */}
+              <div>
+                <p className="mb-1 text-xs font-medium text-gray-500">
+                  Overall Roof Overview
+                </p>
+                <PhotoUploadArea
+                  photos={photos.roof_overview}
+                  onUpload={() => triggerPhotoUpload("roof_overview")}
+                  label="Upload roof overview"
+                />
+              </div>
             </div>
           </div>
         )}

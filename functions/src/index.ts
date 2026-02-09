@@ -282,3 +282,6 @@ export {
 
 // Export Webhook API functions (dynamic webhook registration & delivery)
 export { webhookApi, deliverWebhookEvent } from "./webhookApi";
+
+// Export Location Matching functions (geo-based worker matching)
+export { seedZipCoordinates } from "./locationMatching";

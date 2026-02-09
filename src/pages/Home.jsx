@@ -574,7 +574,7 @@ export default function Home() {
             Power to the People
           </Link>
           <nav className="dark-nav">
-            <Link to="/qualify" className="dark-nav-link">
+            <Link to="/get-started" className="dark-nav-link">
               Get Started
             </Link>
             <Link to="/portal" className="dark-nav-link">
