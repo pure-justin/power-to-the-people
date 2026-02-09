@@ -42,6 +42,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getProjectTimeline = exports.completeProjectTask = exports.assignProjectTask = exports.createProjectTask = exports.advanceProjectStage = void 0;
 const functions = __importStar(require("firebase-functions/v1"));
 const admin = __importStar(require("firebase-admin"));
+const pipelineAutoTasks_1 = require("./pipelineAutoTasks");
 const db = admin.firestore();
 // Valid pipeline stages in order
 const PIPELINE_STAGES = [
@@ -154,6 +155,17 @@ exports.advanceProjectStage = functions.https.onCall(async (data, context) => {
         updatedAt: admin.firestore.FieldValue.serverTimestamp(),
     };
     await projectRef.update(updateData);
+    // When project reaches "sold", create pipeline tasks and open the first ones
+    if (newStage === "sold") {
+        try {
+            const projectData = projectSnap.data();
+            await (0, pipelineAutoTasks_1.createPipelineTasks)(projectId, projectData);
+            await (0, pipelineAutoTasks_1.openNextTasks)(projectId);
+        }
+        catch (err) {
+            console.warn(`Failed to create pipeline tasks for project ${projectId}:`, err);
+        }
+    }
     return {
         success: true,
         projectId,
@@ -278,6 +290,17 @@ exports.completeProjectTask = functions.https.onCall(async (data, context) => {
         updateData.rating = rating;
     }
     await taskRef.update(updateData);
+    // Cascade pipeline: mark pipeline task completed and open downstream tasks
+    const taskData = taskSnap.data();
+    const taskType = taskData.type;
+    if (taskType) {
+        try {
+            await (0, pipelineAutoTasks_1.onPipelineTaskCompleted)(projectId, taskType);
+        }
+        catch (err) {
+            console.warn(`Pipeline cascade failed for task ${taskType} on project ${projectId}:`, err);
+        }
+    }
     return {
         success: true,
         projectId,

@@ -1,113 +1,186 @@
 {
   "state": "MN",
   "state_name": "Minnesota",
-  "data_compiled": "2026-02-08",
-  "general_requirements": {
-    "permit_required": true,
-    "permit_type": "both",
-    "typical_fee_range": "$100-$400",
-    "typical_timeline_days": "7-21",
-    "inspection_required": true,
-    "inspection_stages": [
-      "final"
-    ],
-    "statewide_permit_program": true,
-    "statewide_program_name": "Minnesota offers SolarAPP+ permitting incentive program through Dept of Commerce. Provides financial incentives and technical assistance to jurisdictions adopting SolarAPP+ automated permitting."
-  },
-  "interconnection": {
-    "utility_approval_required": true,
-    "net_metering_available": true,
-    "net_metering_details": "Minnesota has net metering for systems up to 1 MW. Credits at retail rate for systems up to 40 kW residential. Xcel Energy (Northern States Power) is the largest utility and offers Solar*Rewards and community solar programs. Monthly rollover, annual true-up.",
-    "typical_timeline_days": "15-30",
-    "fees": "Xcel Energy: minimal for residential; application fee varies for commercial"
-  },
-  "special_considerations": {
-    "hoa_restrictions": "Minnesota has a solar access law (Minn. Stat. 500.30). Solar easements protected. HOAs cannot unreasonably restrict solar installations.",
-    "historic_districts": "Historic districts in Minneapolis, St. Paul, and other cities. Minnesota SHPO reviews solar in National Register districts.",
-    "wind_load_requirements": "Standard IBC wind load requirements. Open prairie areas may have enhanced wind considerations. Design wind speeds typically 90-110 mph.",
-    "snow_load_requirements": "Significant snow loads throughout the state (30-70 psf ground snow load). Northern Minnesota has the highest requirements. Structural engineer certification required for structural system support including snow-drift loads and firefighter live loads."
-  },
-  "licensing": {
-    "contractor_license_required": true,
-    "license_type": "Licensed electrician required for PV installations. Type A Master Electrician or Journeyman Electrician under master's supervision. Building contractor license for structural work.",
-    "nabcep_required": false
-  },
-  "notes": "Minnesota is a strong solar market with favorable net metering, community solar programs (one of the largest in the nation), and SolarAPP+ adoption incentives. Xcel Energy's Solar*Rewards program provides additional production-based incentives. The Made in Minnesota Solar Incentive Program promoted domestic manufacturing. Property tax exemption available. Snow loads are a critical engineering consideration requiring structural certification. The state has a 1.5% solar energy standard within its 25% RPS.",
+  "last_updated": "2026-02-08",
   "jurisdictions": [
     {
-      "jurisdiction_id": "minneapolis_mn",
-      "name": "Minneapolis",
-      "state": "MN",
+      "jurisdiction_id": "mn_minneapolis",
+      "name": "City of Minneapolis",
+      "county": "Hennepin",
       "type": "city",
-      "population": 429954,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://www.minneapolismn.gov/business/licenses-permits/building-permits/",
-      "submission_method": "online",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": null,
-      "fees": {
-        "base_fee": 200,
-        "per_kw": null,
-        "inspection_fee": 75,
-        "estimated_total_residential": 325
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
       },
-      "typical_timeline_days": 10,
-      "fire_code_requirements": "MN building code. PV arrays limited to 150 ft in any direction.",
-      "rapid_shutdown_required": true,
-      "contacts": {
+      "fees": {
+        "permit_fee_range": "$200-$350",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
         "department": "Community Planning & Economic Development",
         "phone": "612-673-3000",
-        "url": "https://www.minneapolismn.gov"
+        "website": "https://www.minneapolismn.gov/business/licenses-permits/building-permits/",
+        "online_portal": true
       },
-      "special_requirements": [
-        "MN SolarAPP+ permitting incentive",
-        "Xcel Energy interconnection",
-        "PV arrays max 150 ft in any direction"
-      ],
-      "notes": "Minnesota offers SolarAPP+ permitting incentive program. Xcel Energy serves Minneapolis.",
-      "source_url": "https://www.minneapolismn.gov",
-      "updated_at": "2026-02-08"
+      "notes": "MN SolarAPP+ permitting incentive eligible jurisdiction. Xcel Energy interconnection. PV arrays max 150 ft in any direction per MN building code. Snow loads 35-45 psf."
     },
     {
-      "jurisdiction_id": "st_paul_mn",
-      "name": "St. Paul",
-      "state": "MN",
+      "jurisdiction_id": "mn_st_paul",
+      "name": "City of St. Paul",
+      "county": "Ramsey",
       "type": "city",
-      "population": 311527,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://www.stpaul.gov/departments/safety-inspections/permits",
-      "submission_method": "online",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": null,
-      "fees": {
-        "base_fee": 175,
-        "per_kw": null,
-        "inspection_fee": 75,
-        "estimated_total_residential": 300
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
       },
-      "typical_timeline_days": 10,
-      "fire_code_requirements": "MN building code setbacks.",
-      "rapid_shutdown_required": true,
-      "contacts": {
+      "fees": {
+        "permit_fee_range": "$138-$300",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
         "department": "Safety & Inspections",
         "phone": "651-266-9090",
-        "url": "https://www.stpaul.gov"
+        "website": "https://www.stpaul.gov/departments/safety-inspections/permits",
+        "online_portal": true
       },
-      "special_requirements": [
-        "Xcel Energy interconnection"
-      ],
-      "notes": "Standard MN permitting. Xcel Energy serves the area.",
-      "source_url": "https://www.stpaul.gov",
-      "updated_at": "2026-02-08"
+      "notes": "Permit fee starts at $138 for systems 0-20 kW. Xcel Energy interconnection. Historic district review may apply."
+    },
+    {
+      "jurisdiction_id": "mn_rochester",
+      "name": "City of Rochester",
+      "county": "Olmsted",
+      "type": "city",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$150-$300",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
+        "department": "Building Safety",
+        "phone": "507-328-2600",
+        "website": "https://www.rochestermn.gov/departments/building-safety",
+        "online_portal": true
+      },
+      "notes": "Standard MN permitting. Rochester Public Utilities (RPU) municipal utility provides interconnection. SolarAPP+ incentive eligible."
+    },
+    {
+      "jurisdiction_id": "mn_duluth",
+      "name": "City of Duluth",
+      "county": "St. Louis",
+      "type": "city",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$150-$300",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
+        "department": "Inspection Services",
+        "phone": "218-730-5250",
+        "website": "https://duluthmn.gov/inspection/",
+        "online_portal": true
+      },
+      "notes": "SolSmart Gold designated community. Solar allowed by-right as accessory use in all major zones. Minnesota Power (ALLETE) interconnection. Northern MN snow loads 50-70 psf -- structural considerations critical."
+    },
+    {
+      "jurisdiction_id": "mn_bloomington",
+      "name": "City of Bloomington",
+      "county": "Hennepin",
+      "type": "city",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$150-$300",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
+        "department": "Community Development - Planning",
+        "phone": "952-563-8920",
+        "website": "https://www.bloomingtonmn.gov/plan/solar-checklist",
+        "online_portal": true
+      },
+      "notes": "Solar permit checklist available online for residential and commercial PV systems. Xcel Energy interconnection. SolarAPP+ incentive eligible."
     }
   ],
-  "jurisdiction_count": 2
+  "state_level_requirements": {
+    "contractor_license_required": true,
+    "contractor_license_type": "Licensed electrician required. Type A Master Electrician or Journeyman Electrician under master's supervision. Building contractor license for structural work.",
+    "interconnection_agreement": true,
+    "net_metering_available": true,
+    "net_metering_details": "Net metering for systems up to 1 MW. Credits at retail rate for systems up to 40 kW residential. Monthly rollover, annual true-up. Xcel Energy (Northern States Power), Minnesota Power, and municipal utilities. Solar*Rewards production incentive from Xcel.",
+    "solar_access_law": true,
+    "solar_access_details": "Minn. Stat. 500.30 protects solar easements. HOAs cannot unreasonably restrict solar installations.",
+    "solarapp_participating": true,
+    "solarapp_details": "Minnesota Department of Commerce administers $2M SolarAPP+ permitting incentive program. $1.5M for Xcel Energy territory, $500K outside. Incentives of $5,000-$20,000 per jurisdiction (capped at $10,000 base). Applications accepted since February 2025.",
+    "property_tax_exemption": true,
+    "sales_tax_exemption": true,
+    "state_incentive_program": "SolarAPP+ permitting incentives ($2M program); Xcel Solar*Rewards; Community Solar Gardens (one of largest programs nationally); property and sales tax exemptions; 1.5% solar energy standard within 25% RPS"
+  }
 }

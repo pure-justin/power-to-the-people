@@ -1,114 +1,186 @@
 {
   "state": "OR",
   "state_name": "Oregon",
-  "data_compiled": "2026-02-08",
-  "general_requirements": {
-    "permit_required": true,
-    "permit_type": "both",
-    "typical_fee_range": "$300-$600",
-    "typical_timeline_days": "3-14",
-    "inspection_required": true,
-    "inspection_stages": [
-      "final"
-    ],
-    "statewide_permit_program": false,
-    "statewide_program_name": "Building and electrical permits required. Portland has Solar Prescriptive Path for simple roofs. Oregon requires registered design professional for certain systems."
-  },
-  "interconnection": {
-    "utility_approval_required": true,
-    "net_metering_available": true,
-    "net_metering_details": "Net metering available for systems up to 25 kW residential. PGE and Pacific Power primary utilities.",
-    "typical_timeline_days": "14-30",
-    "fees": "PGE: $0 interconnection fee for residential"
-  },
-  "special_considerations": {
-    "hoa_restrictions": "ORS 105.880 protects solar access. HOAs cannot prohibit solar.",
-    "historic_districts": "Portland historic districts require additional review and may extend timeline several weeks.",
-    "wind_load_requirements": "Coastal areas have enhanced wind requirements. Design wind speeds 85-110 mph.",
-    "snow_load_requirements": "Mountain areas may have significant snow loads. Cascades 50-200+ psf."
-  },
-  "licensing": {
-    "contractor_license_required": true,
-    "license_type": "Oregon Construction Contractors Board license. Electrical permits through Oregon BCD.",
-    "nabcep_required": false
-  },
-  "notes": "Strong solar market with good incentives. Portland has streamlined Solar Prescriptive Path. NEC 2020 rapid shutdown requirements enforced. Clackamas County requires structural engineering for older homes.",
+  "last_updated": "2026-02-08",
   "jurisdictions": [
     {
-      "jurisdiction_id": "portland_or",
-      "name": "Portland",
-      "state": "OR",
+      "jurisdiction_id": "or_portland",
+      "name": "City of Portland",
+      "county": "Multnomah",
       "type": "city",
-      "population": 652503,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://www.portland.gov/ppd/solar-development/solar-permits",
-      "submission_method": "online",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": null,
-      "fees": {
-        "base_fee": 300,
-        "per_kw": null,
-        "inspection_fee": 100,
-        "estimated_total_residential": 450
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
       },
-      "typical_timeline_days": 7,
-      "fire_code_requirements": "Standard IFC setbacks. Historic district installations require additional review.",
-      "rapid_shutdown_required": true,
-      "contacts": {
+      "fees": {
+        "permit_fee_range": "$300-$600",
+        "plan_review_fee": "included",
+        "inspection_fee": "$100"
+      },
+      "timeline": {
+        "plan_review_days": 3,
+        "permit_issuance_days": 2,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 8
+      },
+      "contact": {
         "department": "Bureau of Development Services",
         "phone": "503-823-7300",
-        "url": "https://www.portland.gov/ppd"
+        "website": "https://www.portland.gov/ppd/solar-development/solar-permits",
+        "online_portal": true
       },
-      "special_requirements": [
-        "Solar Prescriptive Path for simple roofs",
-        "DevHub online application",
-        "Historic district delays possible",
-        "PGE interconnection"
-      ],
-      "notes": "Solar Prescriptive Path streamlines simple roof installations. Historic districts may add weeks. Fees $300-$600. Clackamas County requires structural engineering for older homes.",
-      "source_url": "https://www.portland.gov/ppd/solar-development/solar-permits",
-      "updated_at": "2026-02-08"
+      "notes": "Solar Prescriptive Path streamlines simple roof installations with flat fee and 2-3 day turnaround. DevHub online application. Historic districts may add weeks. PGE interconnection. Energy Trust of Oregon $2,500 incentive."
     },
     {
-      "jurisdiction_id": "salem_or",
-      "name": "Salem",
-      "state": "OR",
+      "jurisdiction_id": "or_salem",
+      "name": "City of Salem",
+      "county": "Marion",
       "type": "city",
-      "population": 175535,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://www.cityofsalem.net/community/permits",
-      "submission_method": "online",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": null,
-      "fees": {
-        "base_fee": 250,
-        "per_kw": null,
-        "inspection_fee": 75,
-        "estimated_total_residential": 375
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
       },
-      "typical_timeline_days": 7,
-      "fire_code_requirements": "Standard IFC setbacks.",
-      "rapid_shutdown_required": true,
-      "contacts": {
+      "fees": {
+        "permit_fee_range": "$250-$450",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 2,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 10
+      },
+      "contact": {
         "department": "Building & Safety Division",
         "phone": "503-588-6256",
-        "url": "https://www.cityofsalem.net"
+        "website": "https://www.cityofsalem.net/community/permits",
+        "online_portal": true
       },
-      "special_requirements": [
-        "PGE or Pacific Power interconnection"
-      ],
-      "notes": "Standard OR permitting.",
-      "source_url": "https://www.cityofsalem.net",
-      "updated_at": "2026-02-08"
+      "notes": "Standard OR permitting. PGE or Pacific Power interconnection. Energy Trust of Oregon incentives available."
+    },
+    {
+      "jurisdiction_id": "or_eugene",
+      "name": "City of Eugene",
+      "county": "Lane",
+      "type": "city",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$250-$450",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 2,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 10
+      },
+      "contact": {
+        "department": "Building & Permit Services",
+        "phone": "541-682-5086",
+        "website": "https://www.eugene-or.gov/731/Building-Permit-Services",
+        "online_portal": true
+      },
+      "notes": "EWEB (Eugene Water & Electric Board) serves as municipal utility. EWEB solar incentive $0.40/AC watt up to $2,500. Separate from Energy Trust of Oregon programs."
+    },
+    {
+      "jurisdiction_id": "or_bend",
+      "name": "City of Bend",
+      "county": "Deschutes",
+      "type": "city",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$200-$400",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
+        "department": "Building Division",
+        "phone": "541-388-5580",
+        "website": "https://www.bendoregon.gov/services/building-department",
+        "online_portal": true
+      },
+      "notes": "Pacific Power interconnection. Solar access permits available per BDC 3.5.500. High desert location with excellent solar resource. Snow loads in mountain areas."
+    },
+    {
+      "jurisdiction_id": "or_beaverton",
+      "name": "City of Beaverton",
+      "county": "Washington",
+      "type": "city",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$250-$450",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 2,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 10
+      },
+      "contact": {
+        "department": "Building Division",
+        "phone": "503-526-2424",
+        "website": "https://www.beavertonoregon.gov/162/Building",
+        "online_portal": true
+      },
+      "notes": "Prescriptive Solar PV System Permit available for qualifying systems. Standard systems use Building Permit Fee Schedule. PGE interconnection. Energy Trust of Oregon incentives available."
     }
   ],
-  "jurisdiction_count": 2
+  "state_level_requirements": {
+    "contractor_license_required": true,
+    "contractor_license_type": "Oregon Construction Contractors Board (CCB) license required. Electrical permits through Oregon Building Codes Division (BCD). Licensed electrician required for PV electrical work.",
+    "interconnection_agreement": true,
+    "net_metering_available": true,
+    "net_metering_details": "Net metering for systems up to 25 kW residential. Credits at retail rate. PGE and Pacific Power are primary utilities. EWEB (Eugene) is municipal utility with separate programs. Monthly rollover, annual true-up.",
+    "solar_access_law": true,
+    "solar_access_details": "ORS 105.880 protects solar access rights. HOAs cannot prohibit solar installations. Solar access permits available in some cities.",
+    "solarapp_participating": false,
+    "solarapp_details": "No statewide SolarAPP+ program. Oregon has statewide prescriptive methodology (OAR 918-050-0180) for solar structural installation permits with flat fees and streamlined review.",
+    "property_tax_exemption": true,
+    "sales_tax_exemption": true,
+    "state_incentive_program": "Energy Trust of Oregon incentives ($2,500 flat for 2026); Oregon Solar + Storage Rebate Program; no state income tax but no sales tax either; property tax exemption; EWEB solar incentive (Eugene only)"
+  }
 }

@@ -1,275 +1,1007 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Sun, Check, Zap, Shield, BarChart3 } from "lucide-react";
+import {
+  Sun,
+  ArrowRight,
+  Zap,
+  Shield,
+  Users,
+  Code,
+  Headphones,
+  Check,
+  X,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
 
-const TIERS = [
+const tiers = [
   {
     name: "Starter",
     price: 79,
-    description: "For 1-2 person solar shops",
+    description: "For independent installers getting started with automation.",
+    limits: {
+      leads: "50 / mo",
+      api: "1,000 / mo",
+      compliance: "25 / mo",
+    },
     features: [
-      "50 leads/month",
-      "1,000 API calls/month",
-      "25 compliance checks/month",
-      "Lead management CRM",
-      "Mercury ACH invoicing",
-      "SMS notifications",
-      "Equipment compliance checker",
-      "Referral tracking",
+      { text: "Basic lead management", included: true },
+      { text: "API access", included: true },
+      { text: "Equipment database", included: true },
+      { text: "Email support", included: true },
+      { text: "Smart bidding", included: false },
+      { text: "Worker matching", included: false },
+      { text: "SLA monitoring", included: false },
+      { text: "Webhook integrations", included: false },
+      { text: "Custom integrations", included: false },
+      { text: "Dedicated account manager", included: false },
     ],
-    cta: "Start free trial",
-    popular: false,
+    cta: "Start Free Trial",
+    highlighted: false,
   },
   {
     name: "Professional",
     price: 149,
-    description: "For growing installers",
+    description:
+      "For growing teams that need the full automation and bidding engine.",
+    limits: {
+      leads: "200 / mo",
+      api: "10,000 / mo",
+      compliance: "200 / mo",
+    },
     features: [
-      "200 leads/month",
-      "10,000 API calls/month",
-      "200 compliance checks/month",
-      "Everything in Starter",
-      "Solar estimate builder",
-      "API key management",
-      "Advanced lead scoring",
-      "Bulk SMS campaigns",
-      "Priority support",
+      { text: "Everything in Starter", included: true },
+      { text: "Smart bidding engine", included: true },
+      { text: "Worker matching", included: true },
+      { text: "SLA monitoring", included: true },
+      { text: "Webhook integrations", included: true },
+      { text: "Priority support", included: true },
+      { text: "Custom integrations", included: false },
+      { text: "Dedicated account manager", included: false },
+      { text: "White-label options", included: false },
+      { text: "API SLA guarantee", included: false },
     ],
-    cta: "Start free trial",
-    popular: true,
+    cta: "Start Free Trial",
+    highlighted: true,
   },
   {
     name: "Enterprise",
     price: 299,
-    description: "For large companies",
+    description:
+      "For large operations that need unlimited scale and dedicated support.",
+    limits: {
+      leads: "Unlimited",
+      api: "100,000 / mo",
+      compliance: "Unlimited",
+    },
     features: [
-      "Unlimited leads",
-      "100,000 API calls/month",
-      "Unlimited compliance checks",
-      "Everything in Professional",
-      "Custom API integrations",
-      "White-label proposals",
-      "Dedicated account manager",
-      "SLA guarantee",
-      "Custom reporting",
+      { text: "Everything in Professional", included: true },
+      { text: "Unlimited leads", included: true },
+      { text: "Unlimited compliance checks", included: true },
+      { text: "Custom integrations", included: true },
+      { text: "Dedicated account manager", included: true },
+      { text: "White-label options", included: true },
+      { text: "API SLA guarantee", included: true },
+      { text: "Custom reporting", included: true },
+      { text: "SSO / SAML", included: true },
+      { text: "On-call engineering support", included: true },
     ],
-    cta: "Contact sales",
-    popular: false,
+    cta: "Start Free Trial",
+    highlighted: false,
   },
 ];
 
-const COMPARISON = [
+const faqs = [
   {
-    feature: "Aurora Solar",
-    price: "$220-259/mo/user",
-    gap: "Design only, no CRM or compliance",
+    question: "Is there a free trial?",
+    answer:
+      "Yes. Every plan includes a 14-day free trial with full access to all features in that tier. No credit card required to start.",
   },
-  { feature: "Enerflo", price: "Volume-based", gap: "No compliance tools" },
-  { feature: "OpenSolar", price: "Free", gap: "Limited features, no API" },
   {
-    feature: "SolarOS",
-    price: "$79-299/mo",
-    gap: "Full-stack: CRM + compliance + API + invoicing",
-    highlight: true,
+    question: "Can I change plans later?",
+    answer:
+      "Absolutely. You can upgrade or downgrade your plan at any time. When upgrading, you get immediate access to the new tier. Downgrades take effect at the end of your current billing cycle.",
+  },
+  {
+    question: "What happens if I exceed my monthly limits?",
+    answer:
+      "You will receive a notification at 80% and 100% usage. Once you hit your limit, additional requests will return a rate-limit error. You can upgrade your plan or purchase add-on packs to continue.",
+  },
+  {
+    question: "Do you offer annual billing?",
+    answer:
+      "Yes. Annual billing is available at a 20% discount. Contact us for annual pricing details.",
+  },
+  {
+    question: "What payment methods do you accept?",
+    answer:
+      "We accept all major credit cards through Stripe. Enterprise customers can also pay via ACH bank transfer through our Mercury integration.",
+  },
+  {
+    question: "Can I cancel anytime?",
+    answer:
+      "Yes. There are no long-term contracts. You can cancel your subscription at any time and your access will continue until the end of your current billing period.",
   },
 ];
 
 export default function Pricing() {
+  const [openFaq, setOpenFaq] = useState(null);
+
+  const toggleFaq = (index) => {
+    setOpenFaq(openFaq === index ? null : index);
+  };
+
   return (
-    <div className="min-h-screen bg-white">
-      {/* Nav */}
-      <header className="border-b border-gray-100">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
-          <Link to="/" className="flex items-center gap-2">
-            <Sun className="h-8 w-8 text-emerald-500" />
-            <span className="text-xl font-bold">SolarOS</span>
+    <div className="pricing-page">
+      <style>{`
+        .pricing-page {
+          background: #0a0a0f;
+          min-height: 100vh;
+          color: #ffffff;
+          overflow-x: hidden;
+          font-family: 'Inter', -apple-system, sans-serif;
+        }
+
+        /* HEADER */
+        .pr-header {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 100;
+          padding: 16px 0;
+          background: rgba(10, 10, 15, 0.8);
+          backdrop-filter: blur(20px);
+          border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .pr-header .container {
+          max-width: 1400px;
+          margin: 0 auto;
+          padding: 0 40px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+
+        .pr-logo {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          font-weight: 800;
+          font-size: 1.25rem;
+          color: #fff;
+          text-decoration: none;
+          letter-spacing: -0.02em;
+        }
+
+        .pr-logo-icon {
+          width: 38px;
+          height: 38px;
+          background: linear-gradient(135deg, #10b981, #059669);
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 0 24px rgba(16, 185, 129, 0.4);
+        }
+
+        .pr-nav {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .pr-nav-link {
+          color: rgba(255,255,255,0.6);
+          text-decoration: none;
+          font-weight: 500;
+          font-size: 0.9rem;
+          transition: all 0.3s;
+          padding: 8px 16px;
+          border-radius: 8px;
+        }
+
+        .pr-nav-link:hover {
+          color: #fff;
+          background: rgba(255,255,255,0.05);
+        }
+
+        .pr-nav-cta {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          padding: 10px 20px;
+          background: linear-gradient(135deg, #10b981, #059669);
+          color: white;
+          font-weight: 600;
+          font-size: 0.9rem;
+          border-radius: 10px;
+          text-decoration: none;
+          transition: all 0.3s;
+          box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .pr-nav-cta:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 0 30px rgba(16, 185, 129, 0.5);
+        }
+
+        /* HERO */
+        .pr-hero {
+          padding: 160px 40px 80px;
+          text-align: center;
+          position: relative;
+        }
+
+        .pr-hero::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(16, 185, 129, 0.08) 0%, transparent 60%);
+        }
+
+        .pr-hero-content {
+          max-width: 800px;
+          margin: 0 auto;
+          position: relative;
+          z-index: 1;
+        }
+
+        .pr-hero-label {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 6px 16px;
+          background: rgba(16, 185, 129, 0.1);
+          border: 1px solid rgba(16, 185, 129, 0.2);
+          border-radius: 100px;
+          font-size: 0.85rem;
+          color: #34d399;
+          font-weight: 500;
+          margin-bottom: 32px;
+        }
+
+        .pr-hero-title {
+          font-size: clamp(2.5rem, 5vw, 4rem);
+          font-weight: 800;
+          line-height: 1.1;
+          margin-bottom: 24px;
+          letter-spacing: -0.03em;
+        }
+
+        .pr-hero-title .highlight {
+          background: linear-gradient(135deg, #10b981, #34d399, #6ee7b7);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+
+        .pr-hero-desc {
+          font-size: 1.2rem;
+          color: rgba(255,255,255,0.55);
+          line-height: 1.8;
+          max-width: 640px;
+          margin: 0 auto;
+        }
+
+        /* COMMON */
+        .pr-container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 40px;
+        }
+
+        /* PRICING CARDS */
+        .pr-cards-section {
+          padding: 40px 0 120px;
+          position: relative;
+        }
+
+        .pr-cards-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 24px;
+          align-items: stretch;
+        }
+
+        .pr-card {
+          background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+          border: 1px solid rgba(255,255,255,0.06);
+          border-radius: 24px;
+          padding: 40px 32px;
+          display: flex;
+          flex-direction: column;
+          transition: all 0.4s ease;
+          position: relative;
+        }
+
+        .pr-card:hover {
+          transform: translateY(-4px);
+          border-color: rgba(16, 185, 129, 0.15);
+          box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        .pr-card.highlighted {
+          border-color: rgba(16, 185, 129, 0.3);
+          background: linear-gradient(135deg, rgba(16, 185, 129, 0.06), rgba(16, 185, 129, 0.01));
+          box-shadow: 0 0 60px rgba(16, 185, 129, 0.08);
+        }
+
+        .pr-card.highlighted:hover {
+          border-color: rgba(16, 185, 129, 0.4);
+          box-shadow: 0 20px 80px rgba(16, 185, 129, 0.12);
+        }
+
+        .pr-recommended {
+          position: absolute;
+          top: -14px;
+          left: 50%;
+          transform: translateX(-50%);
+          padding: 6px 20px;
+          background: linear-gradient(135deg, #10b981, #059669);
+          color: white;
+          font-size: 0.75rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+          border-radius: 100px;
+          box-shadow: 0 0 24px rgba(16, 185, 129, 0.4);
+          white-space: nowrap;
+        }
+
+        .pr-card-name {
+          font-size: 1.2rem;
+          font-weight: 700;
+          margin-bottom: 8px;
+        }
+
+        .pr-card-desc {
+          font-size: 0.9rem;
+          color: rgba(255,255,255,0.45);
+          line-height: 1.6;
+          margin-bottom: 24px;
+        }
+
+        .pr-card-price {
+          display: flex;
+          align-items: baseline;
+          gap: 4px;
+          margin-bottom: 8px;
+        }
+
+        .pr-card-price-value {
+          font-size: 3rem;
+          font-weight: 800;
+          letter-spacing: -0.03em;
+        }
+
+        .pr-card.highlighted .pr-card-price-value {
+          background: linear-gradient(135deg, #10b981, #34d399);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+
+        .pr-card-price-period {
+          font-size: 1rem;
+          color: rgba(255,255,255,0.4);
+          font-weight: 500;
+        }
+
+        .pr-card-billed {
+          font-size: 0.8rem;
+          color: rgba(255,255,255,0.3);
+          margin-bottom: 28px;
+        }
+
+        /* LIMITS */
+        .pr-limits {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          padding: 20px 0;
+          margin-bottom: 24px;
+          border-top: 1px solid rgba(255,255,255,0.06);
+          border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .pr-limit-row {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+
+        .pr-limit-label {
+          font-size: 0.85rem;
+          color: rgba(255,255,255,0.5);
+        }
+
+        .pr-limit-value {
+          font-size: 0.85rem;
+          font-weight: 700;
+          color: #fff;
+        }
+
+        /* FEATURES */
+        .pr-features {
+          list-style: none;
+          padding: 0;
+          margin: 0 0 32px;
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          flex-grow: 1;
+        }
+
+        .pr-feature {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          font-size: 0.9rem;
+        }
+
+        .pr-feature.included {
+          color: rgba(255,255,255,0.7);
+        }
+
+        .pr-feature.excluded {
+          color: rgba(255,255,255,0.2);
+        }
+
+        .pr-feature svg {
+          flex-shrink: 0;
+        }
+
+        .pr-feature.included svg {
+          color: #10b981;
+        }
+
+        .pr-feature.excluded svg {
+          color: rgba(255,255,255,0.15);
+        }
+
+        /* CTA BUTTON */
+        .pr-card-cta {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          padding: 14px 24px;
+          border-radius: 12px;
+          font-weight: 700;
+          font-size: 0.95rem;
+          text-decoration: none;
+          transition: all 0.3s;
+          cursor: pointer;
+          border: none;
+        }
+
+        .pr-card-cta.primary {
+          background: linear-gradient(135deg, #10b981, #059669);
+          color: white;
+          box-shadow: 0 0 30px rgba(16, 185, 129, 0.3);
+        }
+
+        .pr-card-cta.primary:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 0 50px rgba(16, 185, 129, 0.5);
+        }
+
+        .pr-card-cta.secondary {
+          background: rgba(255,255,255,0.05);
+          border: 1px solid rgba(255,255,255,0.1);
+          color: white;
+        }
+
+        .pr-card-cta.secondary:hover {
+          background: rgba(255,255,255,0.1);
+          border-color: rgba(255,255,255,0.2);
+          transform: translateY(-2px);
+        }
+
+        /* COMPARE BAR */
+        .pr-compare-bar {
+          padding: 80px 0;
+          background: #0f1419;
+        }
+
+        .pr-compare-inner {
+          text-align: center;
+        }
+
+        .pr-compare-title {
+          font-size: 0.8rem;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          color: rgba(255,255,255,0.4);
+          margin-bottom: 32px;
+        }
+
+        .pr-compare-icons {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 48px;
+          flex-wrap: wrap;
+        }
+
+        .pr-compare-item {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 12px;
+        }
+
+        .pr-compare-item-icon {
+          width: 56px;
+          height: 56px;
+          background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
+          border-radius: 14px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #10b981;
+        }
+
+        .pr-compare-item-label {
+          font-size: 0.8rem;
+          color: rgba(255,255,255,0.5);
+          font-weight: 500;
+        }
+
+        /* FAQ */
+        .pr-faq-section {
+          padding: 100px 0;
+          background: #0a0a0f;
+        }
+
+        .pr-faq-header {
+          text-align: center;
+          margin-bottom: 56px;
+        }
+
+        .pr-faq-label {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 0.8rem;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          color: #10b981;
+          margin-bottom: 16px;
+        }
+
+        .pr-faq-title {
+          font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+          font-weight: 800;
+          letter-spacing: -0.02em;
+        }
+
+        .pr-faq-list {
+          max-width: 760px;
+          margin: 0 auto;
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+        }
+
+        .pr-faq-item {
+          background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+          border: 1px solid rgba(255,255,255,0.06);
+          border-radius: 16px;
+          overflow: hidden;
+          transition: border-color 0.3s;
+        }
+
+        .pr-faq-item:hover {
+          border-color: rgba(255,255,255,0.1);
+        }
+
+        .pr-faq-item.open {
+          border-color: rgba(16, 185, 129, 0.15);
+        }
+
+        .pr-faq-question {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 20px 24px;
+          cursor: pointer;
+          font-size: 1rem;
+          font-weight: 600;
+          color: #fff;
+          background: none;
+          border: none;
+          width: 100%;
+          text-align: left;
+          transition: color 0.2s;
+          font-family: inherit;
+        }
+
+        .pr-faq-question:hover {
+          color: #34d399;
+        }
+
+        .pr-faq-question svg {
+          flex-shrink: 0;
+          color: rgba(255,255,255,0.3);
+          transition: color 0.2s;
+        }
+
+        .pr-faq-item.open .pr-faq-question svg {
+          color: #10b981;
+        }
+
+        .pr-faq-answer {
+          padding: 0 24px 20px;
+          font-size: 0.95rem;
+          color: rgba(255,255,255,0.5);
+          line-height: 1.7;
+        }
+
+        /* CTA */
+        .pr-cta-section {
+          padding: 120px 0;
+          text-align: center;
+          position: relative;
+          background: #0f1419;
+        }
+
+        .pr-cta-section::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(16, 185, 129, 0.08) 0%, transparent 60%);
+        }
+
+        .pr-cta-content {
+          position: relative;
+          z-index: 1;
+        }
+
+        .pr-cta-title {
+          font-size: clamp(2rem, 4vw, 3rem);
+          font-weight: 800;
+          margin-bottom: 16px;
+          letter-spacing: -0.02em;
+        }
+
+        .pr-cta-desc {
+          font-size: 1.1rem;
+          color: rgba(255,255,255,0.5);
+          margin-bottom: 40px;
+          max-width: 500px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .pr-btn-primary {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 16px 32px;
+          background: linear-gradient(135deg, #10b981, #059669);
+          color: white;
+          font-weight: 700;
+          font-size: 1rem;
+          border-radius: 12px;
+          text-decoration: none;
+          transition: all 0.3s;
+          box-shadow: 0 0 40px rgba(16, 185, 129, 0.3);
+        }
+
+        .pr-btn-primary:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 0 60px rgba(16, 185, 129, 0.5);
+        }
+
+        /* FOOTER */
+        .pr-footer {
+          padding: 40px 0;
+          background: #050508;
+          border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .pr-footer .container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 40px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+
+        .pr-footer-links {
+          display: flex;
+          gap: 32px;
+        }
+
+        .pr-footer-links a {
+          color: rgba(255,255,255,0.4);
+          text-decoration: none;
+          font-size: 0.85rem;
+          transition: color 0.2s;
+        }
+
+        .pr-footer-links a:hover {
+          color: #10b981;
+        }
+
+        .pr-footer-copy {
+          color: rgba(255,255,255,0.25);
+          font-size: 0.8rem;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+          .pr-cards-grid {
+            grid-template-columns: 1fr;
+            max-width: 480px;
+            margin: 0 auto;
+          }
+
+          .pr-card.highlighted {
+            order: -1;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .pr-nav-link:not(.pr-nav-cta) {
+            display: none;
+          }
+
+          .pr-hero {
+            padding: 120px 20px 60px;
+          }
+
+          .pr-container {
+            padding: 0 20px;
+          }
+
+          .pr-compare-icons {
+            gap: 24px;
+          }
+
+          .pr-footer .container {
+            flex-direction: column;
+            gap: 16px;
+            text-align: center;
+          }
+        }
+      `}</style>
+
+      {/* HEADER */}
+      <header className="pr-header">
+        <div className="container">
+          <Link to="/" className="pr-logo">
+            <div className="pr-logo-icon">
+              <Sun size={20} />
+            </div>
+            SolarOS
           </Link>
-          <div className="flex items-center gap-4">
-            <Link
-              to="/login"
-              className="text-sm font-medium text-gray-600 hover:text-gray-900"
-            >
-              Sign in
+          <nav className="pr-nav">
+            <Link to="/features" className="pr-nav-link">
+              Features
             </Link>
-            <Link to="/signup" className="btn-primary text-sm">
-              Get started
+            <Link to="/pricing" className="pr-nav-link">
+              Pricing
             </Link>
-          </div>
+            <Link to="/about" className="pr-nav-link">
+              About
+            </Link>
+            <Link to="/login" className="pr-nav-link">
+              Sign In
+            </Link>
+            <Link to="/get-started" className="pr-nav-cta">
+              Get Started
+              <ArrowRight size={16} />
+            </Link>
+          </nav>
         </div>
       </header>
 
-      {/* Hero */}
-      <section className="mx-auto max-w-7xl px-4 py-16 text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-          The only solar CRM with
-          <br />
-          <span className="text-emerald-500">built-in FEOC compliance</span>
-        </h1>
-        <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-500">
-          Stop using 5 tools. CRM + design + compliance + invoicing + API in one
-          platform. Built for the post-ITC 2026 solar market.
-        </p>
-      </section>
-
-      {/* Tier Cards */}
-      <section className="mx-auto max-w-7xl px-4 pb-16">
-        <div className="grid gap-8 md:grid-cols-3">
-          {TIERS.map((tier) => (
-            <div
-              key={tier.name}
-              className={`relative rounded-2xl border p-8 ${
-                tier.popular
-                  ? "border-emerald-500 ring-2 ring-emerald-500 shadow-lg"
-                  : "border-gray-200"
-              }`}
-            >
-              {tier.popular && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-emerald-500 px-4 py-1 text-xs font-medium text-white">
-                  Most popular
-                </span>
-              )}
-              <h3 className="text-lg font-semibold text-gray-900">
-                {tier.name}
-              </h3>
-              <p className="mt-1 text-sm text-gray-500">{tier.description}</p>
-              <div className="mt-4">
-                <span className="text-4xl font-bold text-gray-900">
-                  ${tier.price}
-                </span>
-                <span className="text-gray-500">/mo</span>
-              </div>
-              <Link
-                to="/signup"
-                className={`mt-6 block w-full rounded-lg py-2.5 text-center text-sm font-medium transition-colors ${
-                  tier.popular
-                    ? "bg-emerald-500 text-white hover:bg-emerald-600"
-                    : "bg-gray-100 text-gray-900 hover:bg-gray-200"
-                }`}
-              >
-                {tier.cta}
-              </Link>
-              <ul className="mt-8 space-y-3">
-                {tier.features.map((f) => (
-                  <li
-                    key={f}
-                    className="flex items-start gap-2 text-sm text-gray-600"
-                  >
-                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" />
-                    {f}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+      {/* HERO */}
+      <section className="pr-hero">
+        <div className="pr-hero-content">
+          <div className="pr-hero-label">
+            <Zap size={14} />
+            Simple, transparent pricing
+          </div>
+          <h1 className="pr-hero-title">
+            One platform,
+            <br />
+            <span className="highlight">three plans</span>
+          </h1>
+          <p className="pr-hero-desc">
+            Start free for 14 days. No credit card required. Pick the plan that
+            fits your volume and scale as you grow.
+          </p>
         </div>
       </section>
 
-      {/* Key Differentiators */}
-      <section className="border-t border-gray-100 bg-gray-50 py-16">
-        <div className="mx-auto max-w-7xl px-4">
-          <h2 className="text-center text-2xl font-bold text-gray-900">
-            Why SolarOS?
-          </h2>
-          <div className="mt-10 grid gap-8 sm:grid-cols-3">
-            <div className="text-center">
-              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-100">
-                <Shield className="h-6 w-6 text-emerald-600" />
+      {/* PRICING CARDS */}
+      <section className="pr-cards-section">
+        <div className="pr-container">
+          <div className="pr-cards-grid">
+            {tiers.map((tier) => (
+              <div
+                key={tier.name}
+                className={`pr-card ${tier.highlighted ? "highlighted" : ""}`}
+              >
+                {tier.highlighted && (
+                  <div className="pr-recommended">Recommended</div>
+                )}
+
+                <div className="pr-card-name">{tier.name}</div>
+                <div className="pr-card-desc">{tier.description}</div>
+
+                <div className="pr-card-price">
+                  <span className="pr-card-price-value">${tier.price}</span>
+                  <span className="pr-card-price-period">/mo</span>
+                </div>
+                <div className="pr-card-billed">Billed monthly</div>
+
+                <div className="pr-limits">
+                  <div className="pr-limit-row">
+                    <span className="pr-limit-label">Leads</span>
+                    <span className="pr-limit-value">{tier.limits.leads}</span>
+                  </div>
+                  <div className="pr-limit-row">
+                    <span className="pr-limit-label">API Calls</span>
+                    <span className="pr-limit-value">{tier.limits.api}</span>
+                  </div>
+                  <div className="pr-limit-row">
+                    <span className="pr-limit-label">Compliance Checks</span>
+                    <span className="pr-limit-value">
+                      {tier.limits.compliance}
+                    </span>
+                  </div>
+                </div>
+
+                <ul className="pr-features">
+                  {tier.features.map((feature) => (
+                    <li
+                      key={feature.text}
+                      className={`pr-feature ${feature.included ? "included" : "excluded"}`}
+                    >
+                      {feature.included ? <Check size={16} /> : <X size={16} />}
+                      <span>{feature.text}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <Link
+                  to="/get-started"
+                  className={`pr-card-cta ${tier.highlighted ? "primary" : "secondary"}`}
+                >
+                  {tier.cta}
+                  <ArrowRight size={16} />
+                </Link>
               </div>
-              <h3 className="mt-4 font-semibold text-gray-900">
-                FEOC Compliance Engine
-              </h3>
-              <p className="mt-2 text-sm text-gray-500">
-                Real-time equipment compliance tracking. Nobody else does this.
-                FEOC, domestic content, AD/CVD tariffs — all automated.
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100">
-                <Zap className="h-6 w-6 text-blue-600" />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* WHAT'S INCLUDED */}
+      <section className="pr-compare-bar">
+        <div className="pr-container">
+          <div className="pr-compare-inner">
+            <div className="pr-compare-title">Every plan includes</div>
+            <div className="pr-compare-icons">
+              <div className="pr-compare-item">
+                <div className="pr-compare-item-icon">
+                  <Shield size={24} />
+                </div>
+                <span className="pr-compare-item-label">Compliance Engine</span>
               </div>
-              <h3 className="mt-4 font-semibold text-gray-900">
-                Full-Stack Platform
-              </h3>
-              <p className="mt-2 text-sm text-gray-500">
-                CRM, estimates, invoicing, API, SMS, referrals — all in one.
-                Replace Aurora + Podio + QuickBooks + spreadsheets.
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-yellow-100">
-                <BarChart3 className="h-6 w-6 text-yellow-600" />
+              <div className="pr-compare-item">
+                <div className="pr-compare-item-icon">
+                  <Code size={24} />
+                </div>
+                <span className="pr-compare-item-label">REST API Access</span>
               </div>
-              <h3 className="mt-4 font-semibold text-gray-900">
-                2026-Ready Economics
-              </h3>
-              <p className="mt-2 text-sm text-gray-500">
-                Post-ITC savings calculations, lease/PPA comparisons, battery
-                ROI with grid services revenue — accurate for today's market.
-              </p>
+              <div className="pr-compare-item">
+                <div className="pr-compare-item-icon">
+                  <Users size={24} />
+                </div>
+                <span className="pr-compare-item-label">Lead Management</span>
+              </div>
+              <div className="pr-compare-item">
+                <div className="pr-compare-item-icon">
+                  <Zap size={24} />
+                </div>
+                <span className="pr-compare-item-label">
+                  Equipment Database
+                </span>
+              </div>
+              <div className="pr-compare-item">
+                <div className="pr-compare-item-icon">
+                  <Headphones size={24} />
+                </div>
+                <span className="pr-compare-item-label">Support</span>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Competitive Comparison */}
-      <section className="mx-auto max-w-4xl px-4 py-16">
-        <h2 className="text-center text-2xl font-bold text-gray-900">
-          How we compare
-        </h2>
-        <div className="mt-8 overflow-hidden rounded-xl border border-gray-200">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="bg-gray-50">
-                <th className="px-6 py-3 text-left font-medium text-gray-500">
-                  Platform
-                </th>
-                <th className="px-6 py-3 text-left font-medium text-gray-500">
-                  Price
-                </th>
-                <th className="px-6 py-3 text-left font-medium text-gray-500">
-                  Coverage
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200">
-              {COMPARISON.map((row) => (
-                <tr
-                  key={row.feature}
-                  className={row.highlight ? "bg-emerald-50" : ""}
+      {/* FAQ */}
+      <section className="pr-faq-section">
+        <div className="pr-container">
+          <div className="pr-faq-header">
+            <div className="pr-faq-label">
+              <Zap size={14} />
+              FAQ
+            </div>
+            <h2 className="pr-faq-title">Frequently asked questions</h2>
+          </div>
+
+          <div className="pr-faq-list">
+            {faqs.map((faq, index) => (
+              <div
+                key={index}
+                className={`pr-faq-item ${openFaq === index ? "open" : ""}`}
+              >
+                <button
+                  className="pr-faq-question"
+                  onClick={() => toggleFaq(index)}
                 >
-                  <td
-                    className={`px-6 py-4 font-medium ${row.highlight ? "text-emerald-700" : "text-gray-900"}`}
-                  >
-                    {row.feature}
-                  </td>
-                  <td className="px-6 py-4 text-gray-600">{row.price}</td>
-                  <td
-                    className={`px-6 py-4 ${row.highlight ? "font-medium text-emerald-700" : "text-gray-500"}`}
-                  >
-                    {row.gap}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                  <span>{faq.question}</span>
+                  {openFaq === index ? (
+                    <ChevronUp size={18} />
+                  ) : (
+                    <ChevronDown size={18} />
+                  )}
+                </button>
+                {openFaq === index && (
+                  <div className="pr-faq-answer">{faq.answer}</div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Footer CTA */}
-      <section className="border-t border-gray-100 bg-gray-900 py-16 text-center">
-        <h2 className="text-3xl font-bold text-white">
-          Ready to modernize your solar business?
-        </h2>
-        <p className="mx-auto mt-4 max-w-xl text-gray-400">
-          Join the installers already using SolarOS to manage leads, check
-          compliance, and close deals faster.
-        </p>
-        <Link
-          to="/signup"
-          className="btn-primary mt-8 inline-flex px-8 py-3 text-base"
-        >
-          Start your free trial
-        </Link>
+      {/* CTA */}
+      <section className="pr-cta-section">
+        <div className="pr-cta-content">
+          <h2 className="pr-cta-title">
+            Ready to automate your solar business?
+          </h2>
+          <p className="pr-cta-desc">
+            Start your 14-day free trial today. No credit card required.
+          </p>
+          <Link to="/get-started" className="pr-btn-primary">
+            Get Started Free
+            <ArrowRight size={18} />
+          </Link>
+        </div>
       </section>
+
+      {/* FOOTER */}
+      <footer className="pr-footer">
+        <div className="container">
+          <div className="pr-footer-links">
+            <Link to="/">Home</Link>
+            <Link to="/features">Features</Link>
+            <Link to="/pricing">Pricing</Link>
+            <Link to="/about">About</Link>
+          </div>
+          <p className="pr-footer-copy">
+            &copy; 2026 SolarOS. All rights reserved.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }

@@ -1,149 +1,186 @@
 {
   "state": "WA",
   "state_name": "Washington",
-  "data_compiled": "2026-02-08",
-  "general_requirements": {
-    "permit_required": true,
-    "permit_type": "both",
-    "typical_fee_range": "$100-$500",
-    "typical_timeline_days": "1-14",
-    "inspection_required": true,
-    "inspection_stages": [
-      "final"
-    ],
-    "statewide_permit_program": false,
-    "statewide_program_name": "Building and electrical permits required. Seattle offers same-day online issuance for systems under 7.7 kW without plan review. PE stamps required for commercial installations."
-  },
-  "interconnection": {
-    "utility_approval_required": true,
-    "net_metering_available": true,
-    "net_metering_details": "Net metering available for systems up to 100 kW. Puget Sound Energy, Seattle City Light primary utilities.",
-    "typical_timeline_days": "14-30",
-    "fees": "PSE: minimal interconnection fee; Seattle City Light: $0"
-  },
-  "special_considerations": {
-    "hoa_restrictions": "RCW 64.38.055 limits HOA restrictions on solar installations.",
-    "historic_districts": "Seattle historic districts require additional review.",
-    "wind_load_requirements": "Standard IBC wind loads. Design wind speeds 85-100 mph.",
-    "snow_load_requirements": "Cascade areas significant snow loads 50-200+ psf."
-  },
-  "licensing": {
-    "contractor_license_required": true,
-    "license_type": "Washington State L&I electrical contractor license required.",
-    "nabcep_required": false
-  },
-  "notes": "Seattle same-day permits for <7.7 kW systems. Larger systems require plan review with fees based on system size. Strong net metering policy.",
+  "last_updated": "2026-02-08",
   "jurisdictions": [
     {
-      "jurisdiction_id": "seattle_wa",
-      "name": "Seattle",
-      "state": "WA",
+      "jurisdiction_id": "wa_seattle",
+      "name": "City of Seattle",
+      "county": "King",
       "type": "city",
-      "population": 737015,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://www.seattle.gov/sdci/permits/permits-we-issue",
-      "submission_method": "online",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": null,
-      "fees": {
-        "base_fee": 150,
-        "per_kw": null,
-        "inspection_fee": 75,
-        "estimated_total_residential": 275
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": false,
+        "inspection_required": true
       },
-      "typical_timeline_days": 1,
-      "fire_code_requirements": "Standard IFC setbacks.",
-      "rapid_shutdown_required": true,
-      "contacts": {
+      "fees": {
+        "permit_fee_range": "$150-$350",
+        "plan_review_fee": "$0 for <7.7 kW",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 0,
+        "permit_issuance_days": 1,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 4
+      },
+      "contact": {
         "department": "Seattle Dept of Construction & Inspections",
         "phone": "206-684-8850",
-        "url": "https://www.seattle.gov/sdci"
+        "website": "https://www.seattle.gov/sdci/permits/permits-we-issue",
+        "online_portal": true
       },
-      "special_requirements": [
-        "Same-day online issuance for systems <7.7 kW",
-        "No plan review needed for small systems",
-        "Seattle City Light interconnection"
-      ],
-      "notes": "Systems under 7.7 kW can apply online with same-day issuance and no plan review. Larger systems require plan review with tiered fees.",
-      "source_url": "https://www.seattle.gov/DPD/publications/CAM/cam420.pdf",
-      "updated_at": "2026-02-08"
+      "notes": "Systems under 7.7 kW can apply online with same-day issuance and no plan review required. Larger systems require plan review with tiered fees. Seattle City Light interconnection ($0 interconnection fee)."
     },
     {
-      "jurisdiction_id": "spokane_wa",
-      "name": "Spokane",
-      "state": "WA",
+      "jurisdiction_id": "wa_spokane",
+      "name": "City of Spokane",
+      "county": "Spokane",
       "type": "city",
-      "population": 228989,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://my.spokanecity.org/permits/",
-      "submission_method": "online",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": null,
-      "fees": {
-        "base_fee": 150,
-        "per_kw": null,
-        "inspection_fee": 75,
-        "estimated_total_residential": 275
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
       },
-      "typical_timeline_days": 7,
-      "fire_code_requirements": "Standard IFC setbacks.",
-      "rapid_shutdown_required": true,
-      "contacts": {
+      "fees": {
+        "permit_fee_range": "$150-$300",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 2,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 10
+      },
+      "contact": {
         "department": "Permits",
         "phone": "509-625-6300",
-        "url": "https://my.spokanecity.org"
+        "website": "https://my.spokanecity.org/permits/",
+        "online_portal": true
       },
-      "special_requirements": [
-        "Avista Utilities interconnection"
-      ],
-      "notes": "Standard WA permitting process.",
-      "source_url": "https://my.spokanecity.org",
-      "updated_at": "2026-02-08"
+      "notes": "Standard WA permitting. Avista Utilities interconnection. Eastern WA has higher snow loads than western WA."
     },
     {
-      "jurisdiction_id": "tacoma_wa",
-      "name": "Tacoma",
-      "state": "WA",
+      "jurisdiction_id": "wa_tacoma",
+      "name": "City of Tacoma",
+      "county": "Pierce",
       "type": "city",
-      "population": 219346,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://www.cityoftacoma.org/government/city_departments/planning_and_development_services",
-      "submission_method": "online",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": null,
-      "fees": {
-        "base_fee": 150,
-        "per_kw": null,
-        "inspection_fee": 75,
-        "estimated_total_residential": 275
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
       },
-      "typical_timeline_days": 7,
-      "fire_code_requirements": "Standard IFC setbacks.",
-      "rapid_shutdown_required": true,
-      "contacts": {
+      "fees": {
+        "permit_fee_range": "$150-$300",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 2,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 10
+      },
+      "contact": {
         "department": "Planning & Development Services",
         "phone": "253-591-5030",
-        "url": "https://www.cityoftacoma.org"
+        "website": "https://www.cityoftacoma.org/government/city_departments/planning_and_development_services",
+        "online_portal": true
       },
-      "special_requirements": [
-        "Tacoma Power interconnection"
-      ],
-      "notes": "Standard WA permitting. Tacoma Power provides interconnection.",
-      "source_url": "https://www.cityoftacoma.org",
-      "updated_at": "2026-02-08"
+      "notes": "Standard WA permitting. Tacoma Power (municipal utility) provides interconnection."
+    },
+    {
+      "jurisdiction_id": "wa_vancouver",
+      "name": "City of Vancouver",
+      "county": "Clark",
+      "type": "city",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$150-$300",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
+        "department": "Community Development",
+        "phone": "360-487-7800",
+        "website": "https://www.cityofvancouver.us/business/building-construction/residential-building-permits/",
+        "online_portal": true
+      },
+      "notes": "Engineering required if total dead load of modules and mounting exceeds 4 psf. Clark Public Utilities interconnection. Residential solar panel checklist available online."
+    },
+    {
+      "jurisdiction_id": "wa_bellevue",
+      "name": "City of Bellevue",
+      "county": "King",
+      "type": "city",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$150-$350",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 10,
+        "permit_issuance_days": 5,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 18
+      },
+      "contact": {
+        "department": "Development Services",
+        "phone": "425-452-6800",
+        "website": "https://bellevuewa.gov/city-government/departments/development/permits/electrical-mechanical-and-plumbing-permits/solar",
+        "online_portal": true
+      },
+      "notes": "Electrical permits required per BCC 23.05.090. Solar permits may take up to 2 months for plan review. PSE (Puget Sound Energy) interconnection. Detailed public information handout B-10 available for rooftop solar."
     }
   ],
-  "jurisdiction_count": 3
+  "state_level_requirements": {
+    "contractor_license_required": true,
+    "contractor_license_type": "Washington State L&I (Labor & Industries) electrical contractor license required. General contractor registration also needed for structural work.",
+    "interconnection_agreement": true,
+    "net_metering_available": true,
+    "net_metering_details": "Net metering for systems up to 100 kW. Credits at retail rate. Puget Sound Energy, Seattle City Light, Tacoma Power, Avista, Clark Public Utilities are major utilities. Monthly rollover, annual true-up at avoided cost.",
+    "solar_access_law": true,
+    "solar_access_details": "RCW 64.38.055 limits HOA restrictions on solar installations. Governing documents cannot prohibit solar panel installation.",
+    "solarapp_participating": false,
+    "solarapp_details": "No statewide SolarAPP+ program. Seattle offers same-day online permitting for systems under 7.7 kW. Washington State Energy Code has specific solar PV provisions.",
+    "property_tax_exemption": true,
+    "sales_tax_exemption": true,
+    "state_incentive_program": "100% sales tax exemption on solar equipment and installation; property tax exemption; Washington State Clean Energy Transformation Act (CETA) 100% clean by 2045; utility incentive programs vary"
+  }
 }

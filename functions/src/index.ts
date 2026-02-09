@@ -285,3 +285,12 @@ export { webhookApi, deliverWebhookEvent } from "./webhookApi";
 
 // Export Location Matching functions (geo-based worker matching)
 export { seedZipCoordinates } from "./locationMatching";
+
+// Export Marketplace Automation functions (scheduled + triggered)
+export {
+  checkSlaDeadlines,
+  closeBidWindows,
+  notifyMatchingWorkers,
+  notifyBidResult,
+  notifyTaskReady,
+} from "./marketplaceAutomation";

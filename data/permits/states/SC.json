@@ -1,155 +1,186 @@
 {
   "state": "SC",
   "state_name": "South Carolina",
-  "data_compiled": "2026-02-08",
-  "general_requirements": {
-    "permit_required": true,
-    "permit_type": "both",
-    "typical_fee_range": "$200-$500",
-    "typical_timeline_days": "7-21",
-    "inspection_required": true,
-    "inspection_stages": [
-      "rough_electrical",
-      "final"
-    ],
-    "statewide_permit_program": false,
-    "statewide_program_name": "Building and electrical permits required. Residential builder specialty registration with electrical classification required. Roof-mounted requires roofing classification. Systems limited to 20 kW AC per SC Code 58-39-20."
-  },
-  "interconnection": {
-    "utility_approval_required": true,
-    "net_metering_available": true,
-    "net_metering_details": "Net metering available with Duke Energy Carolinas and Dominion Energy SC. 2% cap on net metering participation.",
-    "typical_timeline_days": "30-60",
-    "fees": "Varies by utility"
-  },
-  "special_considerations": {
-    "hoa_restrictions": "SC Code 27-1-60 limits HOA restrictions on solar. Cannot increase cost >$1,000.",
-    "historic_districts": "Charleston historic district has strict additional requirements.",
-    "wind_load_requirements": "Coastal areas have hurricane wind requirements. Design wind speeds 100-150 mph on coast.",
-    "snow_load_requirements": "Minimal snow load requirements."
-  },
-  "licensing": {
-    "contractor_license_required": true,
-    "license_type": "Residential builder specialty registration with electrical classification. Roof-mounted also needs roofing classification.",
-    "nabcep_required": false
-  },
-  "notes": "Growing solar market. Systems limited to 20 kW AC for residential net metering. Greenville County requires sealed structural review. Charleston requires certified engineer plans for historic areas.",
+  "last_updated": "2026-02-08",
   "jurisdictions": [
     {
-      "jurisdiction_id": "charleston_sc",
-      "name": "Charleston",
-      "state": "SC",
+      "jurisdiction_id": "sc_charleston",
+      "name": "City of Charleston",
+      "county": "Charleston",
       "type": "city",
-      "population": 150227,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://charleston-sc.gov/142/Building-Inspections",
-      "submission_method": "online",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "structural_calcs",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": null,
-      "fees": {
-        "base_fee": 300,
-        "per_kw": null,
-        "inspection_fee": 100,
-        "estimated_total_residential": 450
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": true,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "limited_restrictions",
+        "plan_review_required": true,
+        "inspection_required": true
       },
-      "typical_timeline_days": 14,
-      "fire_code_requirements": "Coastal wind load requirements. Hurricane zone standards.",
-      "rapid_shutdown_required": true,
-      "contacts": {
+      "fees": {
+        "permit_fee_range": "$300-$500",
+        "plan_review_fee": "included",
+        "inspection_fee": "$100"
+      },
+      "timeline": {
+        "plan_review_days": 7,
+        "permit_issuance_days": 5,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 15
+      },
+      "contact": {
         "department": "Building Inspections",
         "phone": "843-724-3781",
-        "url": "https://charleston-sc.gov"
+        "website": "https://charleston-sc.gov/142/Building-Inspections",
+        "online_portal": true
       },
-      "special_requirements": [
-        "Certified engineer plans for historic areas",
-        "Wind load calculations",
-        "Systems limited to 20 kW AC"
-      ],
-      "notes": "Historic district has strict requirements. Permit $300-$500. Residential systems limited to 20 kW AC per SC law.",
-      "source_url": "https://charleston-sc.gov/DocumentCenter/View/39726/Solar-Panels--Residential-2",
-      "updated_at": "2026-02-08"
+      "notes": "Certified engineer plans required for historic areas. Coastal wind load calculations required. Hurricane zone standards apply. Systems limited to 20 kW AC per SC Code 58-39-20. Dominion Energy SC interconnection."
     },
     {
-      "jurisdiction_id": "columbia_sc",
-      "name": "Columbia",
-      "state": "SC",
+      "jurisdiction_id": "sc_columbia",
+      "name": "City of Columbia",
+      "county": "Richland",
       "type": "city",
-      "population": 136632,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://www.columbiasc.gov/building-inspections",
-      "submission_method": "online",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": null,
-      "fees": {
-        "base_fee": 200,
-        "per_kw": null,
-        "inspection_fee": 75,
-        "estimated_total_residential": 325
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "limited_restrictions",
+        "plan_review_required": true,
+        "inspection_required": true
       },
-      "typical_timeline_days": 10,
-      "fire_code_requirements": "Standard SC fire code setbacks.",
-      "rapid_shutdown_required": true,
-      "contacts": {
+      "fees": {
+        "permit_fee_range": "$200-$400",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
         "department": "Building Inspections",
         "phone": "803-545-3300",
-        "url": "https://www.columbiasc.gov"
+        "website": "https://www.columbiasc.gov/building-inspections",
+        "online_portal": true
       },
-      "special_requirements": [
-        "Systems limited to 20 kW AC",
-        "Dominion Energy SC interconnection"
-      ],
-      "notes": "Standard SC permitting. 20 kW AC residential limit.",
-      "source_url": "https://www.columbiasc.gov",
-      "updated_at": "2026-02-08"
+      "notes": "Standard SC permitting. 20 kW AC residential net metering limit. Dominion Energy SC interconnection."
     },
     {
-      "jurisdiction_id": "greenville_sc",
-      "name": "Greenville",
-      "state": "SC",
+      "jurisdiction_id": "sc_greenville",
+      "name": "City of Greenville",
+      "county": "Greenville",
       "type": "city",
-      "population": 72095,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://www.greenvillecounty.org/BuildingSafety/",
-      "submission_method": "in_person",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "structural_calcs",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": null,
-      "fees": {
-        "base_fee": 200,
-        "per_kw": null,
-        "inspection_fee": 75,
-        "estimated_total_residential": 325
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": true,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "limited_restrictions",
+        "plan_review_required": true,
+        "inspection_required": true
       },
-      "typical_timeline_days": 10,
-      "fire_code_requirements": "Standard SC setbacks.",
-      "rapid_shutdown_required": true,
-      "contacts": {
+      "fees": {
+        "permit_fee_range": "$200-$400",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
         "department": "Building Safety",
         "phone": "864-467-7220",
-        "url": "https://www.greenvillecounty.org"
+        "website": "https://www.greenvillecounty.org/BuildingSafety/",
+        "online_portal": false
       },
-      "special_requirements": [
-        "Sealed structural review with plan view required",
-        "Systems limited to 20 kW AC",
-        "Duke Energy Carolinas interconnection"
-      ],
-      "notes": "Greenville County requires sealed/signed structural review with plan view of panel system. 20 kW AC limit.",
-      "source_url": "https://www.greenvillecounty.org/BuildingSafety/forms/ResidentialSolarPhotovoltaicPanels.pdf",
-      "updated_at": "2026-02-08"
+      "notes": "Greenville County requires sealed/signed structural review with plan view of panel system. 20 kW AC limit. Duke Energy Carolinas interconnection."
+    },
+    {
+      "jurisdiction_id": "sc_north_charleston",
+      "name": "City of North Charleston",
+      "county": "Charleston",
+      "type": "city",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "limited_restrictions",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$200-$400",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
+        "department": "Building Inspections",
+        "phone": "843-740-5860",
+        "website": "https://www.northcharleston.org/residents/building-codes-inspections/",
+        "online_portal": true
+      },
+      "notes": "Standard SC permitting. Coastal wind load requirements apply. Dominion Energy SC interconnection. 20 kW AC residential limit."
+    },
+    {
+      "jurisdiction_id": "sc_myrtle_beach",
+      "name": "City of Myrtle Beach",
+      "county": "Horry",
+      "type": "city",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "limited_restrictions",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$200-$400",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 5,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 13
+      },
+      "contact": {
+        "department": "Building Department",
+        "phone": "843-918-1050",
+        "website": "https://www.cityofmyrtlebeach.com/departments/planning___zoning/building_permits.php",
+        "online_portal": true
+      },
+      "notes": "Coastal hurricane zone with enhanced wind load requirements. Design wind speeds 130-150 mph. Santee Cooper or Duke Energy interconnection. 20 kW AC residential limit."
     }
   ],
-  "jurisdiction_count": 3
+  "state_level_requirements": {
+    "contractor_license_required": true,
+    "contractor_license_type": "Residential builder specialty registration with electrical classification required. Roof-mounted systems also need roofing classification. Licensed electrician for electrical work.",
+    "interconnection_agreement": true,
+    "net_metering_available": true,
+    "net_metering_details": "Net metering available with Duke Energy Carolinas and Dominion Energy SC. 2% cap on net metering participation. Systems limited to 20 kW AC per SC Code 58-39-20. Energy Freedom Act governs solar policy.",
+    "solar_access_law": true,
+    "solar_access_details": "SC Code 27-1-60 limits HOA restrictions on solar. Cannot increase cost by more than $1,000. Bill 4460 (2025-2026 session) proposes further HOA solar protections.",
+    "solarapp_participating": false,
+    "solarapp_details": "No statewide SolarAPP+ program or standardized solar permit. Permitting requirements vary significantly by jurisdiction.",
+    "property_tax_exemption": false,
+    "sales_tax_exemption": false,
+    "state_incentive_program": "State solar tax credit (25% up to $3,500, ended 2025); Energy Freedom Act net metering; utility voluntary programs; no property or sales tax exemptions for solar"
+  }
 }

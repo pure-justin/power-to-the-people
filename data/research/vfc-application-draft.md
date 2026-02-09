@@ -1,8 +1,43 @@
-# Venture For ClimateTech — Cohort 6 Application Draft
+# Venture For ClimateTech -- Cohort 6 Application Draft
 
-> **Deadline**: February 20, 2026
+> **Deadline**: February 20, 2026 (12 DAYS FROM TODAY)
 > **Apply at**: https://www.f6s.com/venture-for-climatetech-2026
-> **Status**: DRAFT — Review and submit on F6S
+> **Program website**: https://forclimatetech.org/apply-to-cohort-6/
+> **Status**: FINAL DRAFT -- Review and submit on F6S
+> **Program**: 5-month virtual program, 8-12 hours/week commitment
+> **Funding**: Up to $50,000 non-dilutive per company (10 companies selected)
+> **Culminates**: In-person investor showcase at Climate Week NYC, September 2026
+> **Supported by**: NYSERDA (New York State Energy Research and Development Authority)
+> **Alumni track record**: 78 companies, $156M in follow-on funding, 128 jobs created
+> **Diversity**: 58% of alumni companies led by founders of color, 45% led by female founders
+
+---
+
+## PROGRAM REQUIREMENTS (from official application page)
+
+| Requirement | SolarOS Status |
+|-------------|---------------|
+| Stage: TRL 4-7 | YES -- Working platform deployed, TRL 5-6 |
+| Pre-seed or seed-stage | YES -- Pre-seed, $0 raised |
+| Climate/deep-tech innovation | YES -- Solar deployment acceleration |
+| Plans to help New York State | YES -- 5 NY jurisdictions in DB, CLCPA alignment |
+| 8-12 hours/week available | YES |
+| Part-time OK | YES |
+
+**Evaluation Criteria (from VFC website):**
+1. Potential carbon equivalent reduction impact
+2. Business opportunity substance + market evidence
+3. Founder quality: "sharp, motivated, self-aware, and coachable"
+4. Appropriate stage fit
+5. NYS ecosystem alignment
+6. Community impact considerations
+
+**Focus Sectors for Cohort 6:**
+- Buildings
+- Transportation
+- Grid
+- Industry
+(SolarOS fits **Grid** and **Buildings**)
 
 ---
 
@@ -25,7 +60,7 @@
 **Title**: CEO & Founder
 **Email**: justin@agntc.tech
 **LinkedIn**: https://www.linkedin.com/in/justin-griffith-86030013b/
-**Background**: CEO and Owner of Pure Energy, one of Texas's largest residential solar companies, covering most of the state with peak annual revenue of $100M. Built SolarOS from direct, at-scale experience with the permitting bottleneck that costs the solar industry billions annually. After years of watching his own teams spend more time on paperwork than installations, Justin built the platform to solve the problem he lived every day — automating permitting, compliance, and the entire deployment pipeline using AI.
+**Background**: CEO and Owner of Pure Energy, one of Texas's largest residential solar companies, covering most of the state with peak annual revenue of $100M. Built SolarOS from direct, at-scale experience with the permitting bottleneck that costs the solar industry billions annually. After years of watching his own teams spend more time on paperwork than installations, Justin built the platform to solve the problem he lived every day -- automating permitting, compliance, and the entire deployment pipeline using AI.
 
 ---
 
@@ -248,8 +283,8 @@ The cohort's focus on New York is particularly valuable — NY is our #1 target 
 - [ ] Create F6S account at https://www.f6s.com/venture-for-climatetech-2026
 - [ ] Fill in company profile on F6S
 - [ ] Complete application form using answers above
-- [ ] Create pitch deck (10 slides, PDF)
-- [ ] Record 2-minute video pitch (if required — check F6S form)
+- [ ] Create pitch deck (10 slides, PDF) -- see `pitch-deck-outline.md`
+- [ ] Record 2-minute video pitch (if required -- check F6S form)
 - [ ] Add team members to F6S profile
 - [ ] Review and submit before February 20, 2026
 - [ ] Screenshot/save confirmation
@@ -258,14 +293,59 @@ The cohort's focus on New York is particularly valuable — NY is our #1 target 
 
 ## REMAINING ITEMS BEFORE SUBMISSION
 
-1. ~~City/state~~ — **San Antonio, TX** ✅
-2. ~~Background~~ — **CEO Pure Energy, $100M/yr, statewide TX operations** ✅
-3. ~~LinkedIn~~ — **https://www.linkedin.com/in/justin-griffith-86030013b/** ✅
-4. ~~Installer contacts~~ — **Pure Energy = built-in first customer + TX municipal relationships** ✅
-5. **Record a 2-minute video pitch** (if F6S requires it — film with your phone, be authentic. Lead with: "I run a $100M/year solar company covering most of Texas. I built SolarOS because I was tired of watching my teams spend more time on paperwork than installations.")
-6. **Screenshots of the working platform** (for pitch deck — take 4-5 screenshots of key pages)
+1. ~~City/state~~ -- **San Antonio, TX**
+2. ~~Background~~ -- **CEO Pure Energy, $100M/yr, statewide TX operations**
+3. ~~LinkedIn~~ -- **https://www.linkedin.com/in/justin-griffith-86030013b/**
+4. ~~Installer contacts~~ -- **Pure Energy = built-in first customer + TX municipal relationships**
+5. **Record a 2-minute video pitch** (if F6S requires it -- film with your phone, be authentic. Lead with: "I run a $100M/year solar company covering most of Texas. I built SolarOS because I was tired of watching my teams spend more time on paperwork than installations.")
+6. **Screenshots of the working platform** (for pitch deck -- take 4-5 screenshots of key pages)
 7. **Create F6S account** and submit at https://www.f6s.com/venture-for-climatetech-2026
 
 ---
 
-*Draft prepared February 8, 2026. Ready for Justin's review and personalization before F6S submission.*
+## VFC APPLICATION STRATEGY NOTES
+
+### Why SolarOS Is a Strong Cohort 6 Candidate
+
+1. **Climate impact is quantifiable**: 338 kg CO2/month per project accelerated. At scale, 5M+ metric tons lifetime impact.
+2. **NYS alignment is natural**: NY has the fastest permitting baseline (25 days avg), CLCPA targets, the RAPID Act, and NY-Sun programs that all benefit from automation.
+3. **Stage fit is perfect**: TRL 5-6 with working platform, but pre-revenue and pre-seed. Exactly what VFC targets.
+4. **Founder credibility is exceptional**: $100M/yr solar company CEO building the tool he needed. Not theoretical.
+5. **Diversity of impact**: Benefits small community-based installers, LMI communities, and enables community solar.
+6. **The $50K will go far**: Small team, AI-augmented development, focused use of funds on NY market entry.
+
+### Key Messaging for F6S Form
+
+- **Lead with the operator story**: "I run a $100M solar company. I built the tool I wish existed."
+- **Quantify the climate cost of delay**: Every month of permitting delay = 338 kg CO2 per project.
+- **Show the NYS angle**: 5 NY jurisdictions already in database, CLCPA alignment, RAPID Act complement.
+- **Demonstrate the working product**: Link to https://power-to-the-people-vpp.web.app
+- **The 2026 inflection**: ITC expiration + tariff chaos + FEOC requirements created the moment for this platform.
+
+### Weak Points to Address Proactively
+
+- **Location**: Based in TX, not NY. Mitigate: "Permitting is a national problem with state-specific solutions. SolarOS already covers 5 NY jurisdictions and is committed to NY market expansion. The VFC cohort provides the connections to accelerate this."
+- **Solo founder**: Mitigate: "Pure Energy provides a built-in team of domain experts. AI-augmented development enables solo founder velocity. First hires planned with seed funding."
+- **Pre-revenue**: Mitigate: "Revenue model validated with Stripe billing. Pure Energy serves as first pilot customer. Platform is deployed and functional."
+
+### Video Pitch Script (2 minutes)
+
+"Hi, I'm Justin Griffith. I'm the CEO of Pure Energy, one of the largest residential solar companies in Texas, with peak revenue of $100 million a year.
+
+I've managed thousands of solar installations across dozens of jurisdictions. And the biggest problem I face every single day isn't the panels or the inverters -- it's the paperwork. Every city has different permitting rules, different forms, different fees, different portals. My teams spend more time navigating bureaucracy than installing solar.
+
+And it just got worse. In January 2026, the residential tax credit expired. Massive tariffs hit Southeast Asian panels. New domestic content and FEOC requirements created a compliance nightmare. Every deal now requires commercial-grade verification that used to be unnecessary.
+
+So I built SolarOS -- the operating system for solar installation. It's an AI-powered platform with a national permit database covering 106 jurisdictions across all 50 states, a real-time compliance engine, and a self-learning AI that gets smarter with every project.
+
+For New York specifically, SolarOS directly supports the CLCPA goals. We already have 5 New York jurisdictions in our database. Faster permitting means faster clean energy deployment for the state.
+
+The climate math is simple: every month of permitting delay on a single project means 338 kilograms of CO2 that could have been avoided. Multiply that across thousands of projects and years of delay, and you're talking about millions of tons.
+
+SolarOS is live, functional, and ready for pilot deployment. I'm looking for the VFC program to help me enter the New York market and connect with the investor ecosystem to scale nationally.
+
+Thank you."
+
+---
+
+*Draft updated February 8, 2026. Ready for Justin's review and F6S submission before February 20, 2026.*

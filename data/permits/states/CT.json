@@ -1,114 +1,153 @@
 {
   "state": "CT",
   "state_name": "Connecticut",
-  "data_compiled": "2026-02-08",
-  "general_requirements": {
-    "permit_required": true,
-    "permit_type": "both",
-    "typical_fee_range": "$200-$500",
-    "typical_timeline_days": "7-21",
-    "inspection_required": true,
-    "inspection_stages": [
-      "final"
-    ],
-    "statewide_permit_program": false,
-    "statewide_program_name": null
-  },
-  "interconnection": {
-    "utility_approval_required": true,
-    "net_metering_available": true,
-    "net_metering_details": "Connecticut has net metering for residential systems. Eversource and UI are the main utilities. Credits at retail rate for systems up to 20 kW residential. Excess credits roll over monthly, reconciled annually at avoided cost rate.",
-    "typical_timeline_days": "15-30",
-    "fees": "Minimal for residential systems; application fees vary by utility"
-  },
-  "special_considerations": {
-    "hoa_restrictions": "Solar access law protects homeowners. HOAs cannot unreasonably restrict solar installations.",
-    "historic_districts": "Connecticut has numerous historic districts. State Historic Preservation Office (SHPO) review may be required for properties on the National Register. Local historic district commissions review solar in designated districts.",
-    "wind_load_requirements": "Coastal areas (Long Island Sound) have enhanced wind requirements. Design wind speeds 110-130 mph along the coast.",
-    "snow_load_requirements": "Moderate snow loads throughout the state (25-50 psf ground snow load). Northwestern hills have higher requirements."
-  },
-  "licensing": {
-    "contractor_license_required": true,
-    "license_type": "Home Improvement Contractor (HIC) license plus PV-1 or E-1 license required. Installers need E-2 electrician license or PV-2 license and must work under licensed electrical contractor.",
-    "nabcep_required": false
-  },
-  "notes": "Connecticut has a robust solar market supported by the Residential Solar Investment Program (RSIP) and strong net metering. The state offers property tax exemptions for solar and sales tax exemptions. Eversource territory covers most of the state. Green Bank (CT Green Bank) provides financing options. Permitting handled at the municipal level with 169 towns having individual requirements.",
+  "last_updated": "2026-02-08",
   "jurisdictions": [
     {
-      "jurisdiction_id": "hartford_ct",
-      "name": "Hartford",
-      "state": "CT",
+      "jurisdiction_id": "ct_hartford",
+      "name": "City of Hartford",
+      "county": "Hartford",
       "type": "city",
-      "population": 121054,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://www.hartfordct.gov/Government/Departments/DDS/DDS-Divisions/Licenses-Inspections",
-      "submission_method": "in_person",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": null,
-      "fees": {
-        "base_fee": 150,
-        "per_kw": null,
-        "inspection_fee": 75,
-        "estimated_total_residential": 275
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
       },
-      "typical_timeline_days": 10,
-      "fire_code_requirements": "CT fire code setbacks.",
-      "rapid_shutdown_required": true,
-      "contacts": {
+      "fees": {
+        "permit_fee_range": "$150-$300",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
         "department": "Licenses & Inspections",
         "phone": "860-757-9780",
-        "url": "https://www.hartfordct.gov"
+        "website": "https://www.hartfordct.gov/Government/Departments/DDS/DDS-Divisions/Licenses-Inspections",
+        "online_portal": false
       },
-      "special_requirements": [
-        "CT standardized solar PV permit supplement",
-        "Eversource interconnection",
-        "ZREC/LREC incentives"
-      ],
-      "notes": "CT standardized solar PV permit application supplement available. Strong ZREC/LREC incentive programs.",
-      "source_url": "https://www.hartfordct.gov",
-      "updated_at": "2026-02-08"
+      "notes": "CT standardized solar PV permit supplement available. Eversource interconnection. ZREC/LREC incentive programs."
     },
     {
-      "jurisdiction_id": "stamford_ct",
-      "name": "Stamford",
-      "state": "CT",
+      "jurisdiction_id": "ct_stamford",
+      "name": "City of Stamford",
+      "county": "Fairfield",
       "type": "city",
-      "population": 135470,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://www.stamfordct.gov/building-department",
-      "submission_method": "online",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": null,
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
       "fees": {
-        "base_fee": 150,
-        "per_kw": null,
-        "inspection_fee": 75,
-        "estimated_total_residential": 275
+        "permit_fee_range": "$150-$300",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
       },
-      "typical_timeline_days": 10,
-      "fire_code_requirements": "CT fire code setbacks.",
-      "rapid_shutdown_required": true,
-      "contacts": {
-        "department": "Building Dept",
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
+        "department": "Building Department",
         "phone": "203-977-4180",
-        "url": "https://www.stamfordct.gov"
+        "website": "https://www.stamfordct.gov/building-department",
+        "online_portal": true
       },
-      "special_requirements": [
-        "CT standardized permit supplement",
-        "Eversource interconnection"
-      ],
-      "notes": "Standard CT permitting with standardized permit supplement.",
-      "source_url": "https://www.stamfordct.gov",
-      "updated_at": "2026-02-08"
+      "notes": "Standard CT permitting with standardized permit supplement. Eversource interconnection."
+    },
+    {
+      "jurisdiction_id": "ct_new_haven",
+      "name": "City of New Haven",
+      "county": "New Haven",
+      "type": "city",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$150-$300",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
+        "department": "Building Department",
+        "phone": "203-946-7790",
+        "website": "https://www.newhavenct.gov",
+        "online_portal": true
+      },
+      "notes": "Standard CT permitting. UI (United Illuminating) interconnection. Historic district review may apply."
+    },
+    {
+      "jurisdiction_id": "ct_bridgeport",
+      "name": "City of Bridgeport",
+      "county": "Fairfield",
+      "type": "city",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$150-$300",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
+        "department": "Building Department",
+        "phone": "203-576-7215",
+        "website": "https://www.bridgeportct.gov",
+        "online_portal": false
+      },
+      "notes": "Standard CT permitting. UI (United Illuminating) interconnection. Coastal wind load considerations."
     }
   ],
-  "jurisdiction_count": 2
+  "state_level_requirements": {
+    "contractor_license_required": true,
+    "contractor_license_type": "Home Improvement Contractor (HIC) license plus PV-1 or E-1 license. Installers need E-2 electrician license or PV-2 license under licensed contractor.",
+    "interconnection_agreement": true,
+    "net_metering_available": true,
+    "net_metering_details": "Net metering for residential systems up to 20 kW. Credits at retail rate. Monthly rollover, annual reconciliation at avoided cost. Eversource and UI are main utilities.",
+    "solar_access_law": true,
+    "solar_access_details": "Solar access law protects homeowners. HOAs cannot unreasonably restrict solar installations.",
+    "solarapp_participating": false,
+    "solarapp_details": "No statewide SolarAPP+ program. CT standardized solar PV permit supplement available for municipal adoption. 169 towns have individual requirements.",
+    "property_tax_exemption": true,
+    "sales_tax_exemption": true,
+    "state_incentive_program": "RSIP (Residential Solar Investment Program); CT Green Bank financing; ZREC/LREC programs; property and sales tax exemptions"
+  }
 }

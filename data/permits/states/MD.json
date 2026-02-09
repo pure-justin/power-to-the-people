@@ -1,78 +1,186 @@
 {
   "state": "MD",
   "state_name": "Maryland",
-  "data_compiled": "2026-02-08",
-  "general_requirements": {
-    "permit_required": true,
-    "permit_type": "both",
-    "typical_fee_range": "$200-$500",
-    "typical_timeline_days": "7-21",
-    "inspection_required": true,
-    "inspection_stages": [
-      "rough-in",
-      "final"
-    ],
-    "statewide_permit_program": true,
-    "statewide_program_name": "Maryland mandates automated solar permitting adoption by jurisdictions. Incentivizes SolarAPP+ through grants. State requires expedited permitting for residential solar."
-  },
-  "interconnection": {
-    "utility_approval_required": true,
-    "net_metering_available": true,
-    "net_metering_details": "Maryland has net metering for systems up to 2 MW. Credits at retail rate including all charges. Monthly rollover, annual true-up at generation rate. BGE, Pepco, Delmarva Power, and Potomac Edison are major utilities. Virtual net metering available for community solar.",
-    "typical_timeline_days": "10-30",
-    "fees": "Minimal for residential systems under 25 kW"
-  },
-  "special_considerations": {
-    "hoa_restrictions": "Strong solar access law. HOAs cannot prohibit solar installations. May impose only reasonable restrictions on placement that do not increase cost by more than $1,000.",
-    "historic_districts": "Annapolis, Frederick, and Baltimore have active historic preservation commissions. Maryland Historical Trust reviews solar on properties in National Register districts.",
-    "wind_load_requirements": "Coastal areas along Chesapeake Bay and Atlantic coast have enhanced wind requirements. Design wind speeds 110-130 mph in coastal zones.",
-    "snow_load_requirements": "Moderate snow loads (15-30 psf ground snow load). Western Maryland mountain areas have higher requirements (30-50 psf)."
-  },
-  "licensing": {
-    "contractor_license_required": true,
-    "license_type": "No mandatory solar contractor license. Licensed master electrician required for electrical work. MHIC (Maryland Home Improvement Contractor) license required.",
-    "nabcep_required": false
-  },
-  "notes": "Maryland is one of the strongest solar states on the East Coast with excellent net metering, SREC market, and streamlined permitting. The state was an early SolarAPP+ adopter and mandates automated permitting. Maryland offers property tax exemption for solar and sales tax exemption. The SREC market provides significant additional revenue. Community solar is active with virtual net metering. The Climate Solutions Now Act sets aggressive clean energy targets.",
+  "last_updated": "2026-02-08",
   "jurisdictions": [
     {
-      "jurisdiction_id": "baltimore_md",
-      "name": "Baltimore",
-      "state": "MD",
+      "jurisdiction_id": "md_baltimore",
+      "name": "City of Baltimore",
+      "county": "Baltimore City",
       "type": "city",
-      "population": 585708,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://www.baltimorecity.gov/housing/permits",
-      "submission_method": "online",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": 15,
-      "fees": {
-        "base_fee": 200,
-        "per_kw": null,
-        "inspection_fee": 100,
-        "estimated_total_residential": 350
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
       },
-      "typical_timeline_days": 10,
-      "fire_code_requirements": "Baltimore fire code setbacks. Row house considerations.",
-      "rapid_shutdown_required": true,
-      "contacts": {
+      "fees": {
+        "permit_fee_range": "$200-$400",
+        "plan_review_fee": "included",
+        "inspection_fee": "$100"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
         "department": "Housing & Community Development",
         "phone": "410-396-4673",
-        "url": "https://www.baltimorecity.gov"
+        "website": "https://www.baltimorecity.gov/housing/permits",
+        "online_portal": true
       },
-      "special_requirements": [
-        "BGE interconnection",
-        "SREC market",
-        "Row house structural considerations"
-      ],
-      "notes": "Row house roofs may require additional structural review. Maryland SREC market provides incentives.",
-      "source_url": "https://www.baltimorecity.gov",
-      "updated_at": "2026-02-08"
+      "notes": "Row house roofs may require additional structural review. BGE interconnection. Maryland SREC market provides incentives."
+    },
+    {
+      "jurisdiction_id": "md_montgomery_county",
+      "name": "Montgomery County",
+      "county": "Montgomery",
+      "type": "county",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": false,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$114-$200",
+        "plan_review_fee": "included",
+        "inspection_fee": "included"
+      },
+      "timeline": {
+        "plan_review_days": 0,
+        "permit_issuance_days": 1,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 4
+      },
+      "contact": {
+        "department": "Department of Permitting Services",
+        "phone": "240-777-0311",
+        "website": "https://www.montgomerycountymd.gov/DPS/Process/rci/residential-solar.html",
+        "online_portal": true
+      },
+      "notes": "eSolar expedited permitting program with SolarAPP+ integration. One of the first SolarAPP+ pilot jurisdictions in the nation. Permits issued in minutes for qualifying systems. SolSmart designated. Pepco interconnection."
+    },
+    {
+      "jurisdiction_id": "md_anne_arundel_county",
+      "name": "Anne Arundel County",
+      "county": "Anne Arundel",
+      "type": "county",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$150-$300",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
+        "department": "Inspections & Permits",
+        "phone": "410-222-7730",
+        "website": "https://www.aacounty.org/departments/inspections-and-permits/",
+        "online_portal": true
+      },
+      "notes": "Standard MD permitting. BGE interconnection."
+    },
+    {
+      "jurisdiction_id": "md_baltimore_county",
+      "name": "Baltimore County",
+      "county": "Baltimore",
+      "type": "county",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$150-$300",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
+        "department": "Permits, Approvals & Inspections",
+        "phone": "410-887-3353",
+        "website": "https://www.baltimorecountymd.gov/departments/pai/application/solar",
+        "online_portal": true
+      },
+      "notes": "Building permit required for systems 10 kW or more. BGE interconnection."
+    },
+    {
+      "jurisdiction_id": "md_prince_georges_county",
+      "name": "Prince George's County",
+      "county": "Prince George's",
+      "type": "county",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$150-$300",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
+        "department": "Dept of Permitting, Inspections & Enforcement",
+        "phone": "301-636-2000",
+        "website": "https://www.princegeorgescountymd.gov/departments-offices/permitting-inspections-and-enforcement",
+        "online_portal": true
+      },
+      "notes": "Standard MD permitting. Pepco interconnection."
     }
   ],
-  "jurisdiction_count": 1
+  "state_level_requirements": {
+    "contractor_license_required": true,
+    "contractor_license_type": "MHIC (Maryland Home Improvement Contractor) license required. Licensed master electrician for electrical work.",
+    "interconnection_agreement": true,
+    "net_metering_available": true,
+    "net_metering_details": "Net metering for systems up to 2 MW. Credits at retail rate including all charges. Monthly rollover, annual true-up at generation rate. BGE, Pepco, Delmarva Power, Potomac Edison are major utilities. Virtual net metering for community solar.",
+    "solar_access_law": true,
+    "solar_access_details": "Strong solar access law. HOAs cannot prohibit solar. May impose only reasonable restrictions that do not increase cost by more than $1,000.",
+    "solarapp_participating": true,
+    "solarapp_details": "Maryland mandates automated solar permitting adoption through SolarAPP+ Implementation Grant Program. Montgomery County was one of first national SolarAPP+ pilot jurisdictions.",
+    "property_tax_exemption": true,
+    "sales_tax_exemption": true,
+    "state_incentive_program": "SREC market; Maryland Solar Access Program (MSAP) up to $7,500 for income-eligible; property and sales tax exemptions; Climate Solutions Now Act"
+  }
 }

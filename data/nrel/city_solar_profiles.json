@@ -1,0 +1,488 @@
+{
+  "metadata": {
+    "source": "NREL Solar Resource API + PVWatts v8 + Utility Rates API",
+    "generated_at": "2026-02-08",
+    "system_assumptions": {
+      "capacity_kw": 8.0,
+      "azimuth_deg": 180,
+      "tilt_deg": 20,
+      "array_type": "Fixed Roof Mount",
+      "module_type": "Premium (19% efficiency)",
+      "losses_pct": 14.0,
+      "dc_ac_ratio": 1.2
+    },
+    "notes": "Data represents typical residential 8kW system. Monthly production and irradiance values from PVWatts v8."
+  },
+  "cities": [
+    {
+      "city": "Austin",
+      "state": "TX",
+      "lat": 30.27,
+      "lng": -97.74,
+      "solar_resource": {
+        "ghi_kwh_m2_day": 4.74,
+        "dni_kwh_m2_day": 4.88,
+        "tilt_at_latitude_kwh_m2_day": 5.21
+      },
+      "pvwatts": {
+        "annual_kwh": 11846,
+        "capacity_factor_pct": 16.9,
+        "solar_radiation_kwh_m2_day": 5.4,
+        "monthly_kwh": [808, 748, 950, 1078, 1107, 1125, 1205, 1230, 1047, 982, 777, 789]
+      },
+      "utility": {
+        "utility_name": "Austin Energy",
+        "residential_rate_kwh": 0.1044,
+        "commercial_rate_kwh": 0.0875,
+        "industrial_rate_kwh": 0.0587
+      },
+      "economics": {
+        "annual_savings_estimate": 1237,
+        "system_cost_estimate": 22000,
+        "simple_payback_years": 17.8
+      }
+    },
+    {
+      "city": "Los Angeles",
+      "state": "CA",
+      "lat": 34.05,
+      "lng": -118.24,
+      "solar_resource": {
+        "ghi_kwh_m2_day": 5.30,
+        "dni_kwh_m2_day": 5.72,
+        "tilt_at_latitude_kwh_m2_day": 6.06
+      },
+      "pvwatts": {
+        "annual_kwh": 13411,
+        "capacity_factor_pct": 19.1,
+        "solar_radiation_kwh_m2_day": 6.08,
+        "monthly_kwh": [875, 876, 1124, 1241, 1226, 1304, 1373, 1389, 1215, 1071, 921, 797]
+      },
+      "utility": {
+        "utility_name": "Los Angeles Dept of Water & Power",
+        "residential_rate_kwh": 0.1303,
+        "commercial_rate_kwh": 0.1274,
+        "industrial_rate_kwh": 0.1173
+      },
+      "economics": {
+        "annual_savings_estimate": 1747,
+        "system_cost_estimate": 22000,
+        "simple_payback_years": 12.6
+      }
+    },
+    {
+      "city": "Phoenix",
+      "state": "AZ",
+      "lat": 33.45,
+      "lng": -112.07,
+      "solar_resource": {
+        "ghi_kwh_m2_day": 5.78,
+        "dni_kwh_m2_day": 7.35,
+        "tilt_at_latitude_kwh_m2_day": 6.68
+      },
+      "pvwatts": {
+        "annual_kwh": 14059,
+        "capacity_factor_pct": 20.1,
+        "solar_radiation_kwh_m2_day": 6.54,
+        "monthly_kwh": [941, 973, 1232, 1372, 1442, 1387, 1256, 1233, 1186, 1125, 983, 929]
+      },
+      "utility": {
+        "utility_name": "Arizona Public Service Co",
+        "residential_rate_kwh": 0.1196,
+        "commercial_rate_kwh": 0.1022,
+        "industrial_rate_kwh": 0.0787
+      },
+      "economics": {
+        "annual_savings_estimate": 1682,
+        "system_cost_estimate": 22000,
+        "simple_payback_years": 13.1
+      }
+    },
+    {
+      "city": "Miami",
+      "state": "FL",
+      "lat": 25.76,
+      "lng": -80.19,
+      "solar_resource": {
+        "ghi_kwh_m2_day": 5.17,
+        "dni_kwh_m2_day": 5.04,
+        "tilt_at_latitude_kwh_m2_day": 5.63
+      },
+      "pvwatts": {
+        "annual_kwh": 12389,
+        "capacity_factor_pct": 17.7,
+        "solar_radiation_kwh_m2_day": 5.62,
+        "monthly_kwh": [933, 963, 1216, 1160, 1131, 1008, 1095, 1084, 995, 1005, 926, 873]
+      },
+      "utility": {
+        "utility_name": "Florida Power & Light Co",
+        "residential_rate_kwh": 0.1040,
+        "commercial_rate_kwh": 0.0872,
+        "industrial_rate_kwh": 0.0686
+      },
+      "economics": {
+        "annual_savings_estimate": 1288,
+        "system_cost_estimate": 22000,
+        "simple_payback_years": 17.1
+      }
+    },
+    {
+      "city": "Denver",
+      "state": "CO",
+      "lat": 39.74,
+      "lng": -104.99,
+      "solar_resource": {
+        "ghi_kwh_m2_day": 4.83,
+        "dni_kwh_m2_day": 6.12,
+        "tilt_at_latitude_kwh_m2_day": 5.85
+      },
+      "pvwatts": {
+        "annual_kwh": 12724,
+        "capacity_factor_pct": 18.2,
+        "solar_radiation_kwh_m2_day": 5.66,
+        "monthly_kwh": [795, 890, 1165, 1182, 1239, 1277, 1265, 1194, 1118, 979, 857, 762]
+      },
+      "utility": {
+        "utility_name": "Public Service Co of Colorado",
+        "residential_rate_kwh": 0.1105,
+        "commercial_rate_kwh": 0.0916,
+        "industrial_rate_kwh": 0.0604
+      },
+      "economics": {
+        "annual_savings_estimate": 1406,
+        "system_cost_estimate": 22000,
+        "simple_payback_years": 15.6
+      }
+    },
+    {
+      "city": "Las Vegas",
+      "state": "NV",
+      "lat": 36.17,
+      "lng": -115.14,
+      "solar_resource": {
+        "ghi_kwh_m2_day": 5.68,
+        "dni_kwh_m2_day": 7.62,
+        "tilt_at_latitude_kwh_m2_day": 6.69
+      },
+      "pvwatts": {
+        "annual_kwh": 14020,
+        "capacity_factor_pct": 20.0,
+        "solar_radiation_kwh_m2_day": 6.41,
+        "monthly_kwh": [887, 951, 1211, 1361, 1442, 1408, 1294, 1295, 1256, 1132, 924, 858]
+      },
+      "utility": {
+        "utility_name": "Nevada Power Co",
+        "residential_rate_kwh": 0.1215,
+        "commercial_rate_kwh": 0.0843,
+        "industrial_rate_kwh": 0.0756
+      },
+      "economics": {
+        "annual_savings_estimate": 1703,
+        "system_cost_estimate": 22000,
+        "simple_payback_years": 12.9
+      }
+    },
+    {
+      "city": "Charlotte",
+      "state": "NC",
+      "lat": 35.23,
+      "lng": -80.84,
+      "solar_resource": {
+        "ghi_kwh_m2_day": 4.52,
+        "dni_kwh_m2_day": 4.62,
+        "tilt_at_latitude_kwh_m2_day": 5.19
+      },
+      "utility": {
+        "utility_name": "Duke Energy Carolinas",
+        "residential_rate_kwh": 0.1022,
+        "commercial_rate_kwh": 0.0796,
+        "industrial_rate_kwh": 0.0605
+      },
+      "economics": {
+        "annual_savings_estimate": 1089,
+        "system_cost_estimate": 22000,
+        "simple_payback_years": 20.2
+      }
+    },
+    {
+      "city": "New York",
+      "state": "NY",
+      "lat": 40.71,
+      "lng": -74.01,
+      "solar_resource": {
+        "ghi_kwh_m2_day": 3.93,
+        "dni_kwh_m2_day": 3.79,
+        "tilt_at_latitude_kwh_m2_day": 4.62
+      },
+      "utility": {
+        "utility_name": "Consolidated Edison Co of New York Inc",
+        "residential_rate_kwh": 0.2321,
+        "commercial_rate_kwh": 0.1155,
+        "industrial_rate_kwh": 0.1060
+      },
+      "economics": {
+        "annual_savings_estimate": 2248,
+        "system_cost_estimate": 22000,
+        "simple_payback_years": 9.8,
+        "notes": "High electricity rates make solar very attractive despite lower irradiance"
+      }
+    },
+    {
+      "city": "Boston",
+      "state": "MA",
+      "lat": 42.36,
+      "lng": -71.06,
+      "solar_resource": {
+        "ghi_kwh_m2_day": 3.84,
+        "dni_kwh_m2_day": 3.79,
+        "tilt_at_latitude_kwh_m2_day": 4.57
+      },
+      "utility": {
+        "utility_name": "NSTAR Electric Co",
+        "residential_rate_kwh": 0.1491,
+        "commercial_rate_kwh": 0.1384,
+        "industrial_rate_kwh": 0.1257
+      },
+      "economics": {
+        "annual_savings_estimate": 1413,
+        "system_cost_estimate": 22000,
+        "simple_payback_years": 15.6,
+        "notes": "Strong SREC market and state incentives improve actual payback"
+      }
+    },
+    {
+      "city": "Seattle",
+      "state": "WA",
+      "lat": 47.61,
+      "lng": -122.33,
+      "solar_resource": {
+        "ghi_kwh_m2_day": 3.46,
+        "dni_kwh_m2_day": 3.50,
+        "tilt_at_latitude_kwh_m2_day": 3.98
+      },
+      "utility": {
+        "utility_name": "Seattle City Light",
+        "residential_rate_kwh": 0.0775,
+        "commercial_rate_kwh": 0.0680,
+        "industrial_rate_kwh": 0.0595
+      },
+      "economics": {
+        "annual_savings_estimate": 658,
+        "system_cost_estimate": 22000,
+        "simple_payback_years": 33.4,
+        "notes": "Low irradiance + low utility rates make solar challenging without incentives"
+      }
+    },
+    {
+      "city": "Houston",
+      "state": "TX",
+      "lat": 29.76,
+      "lng": -95.37,
+      "solar_resource": {
+        "ghi_kwh_m2_day": 4.55,
+        "dni_kwh_m2_day": 4.15,
+        "tilt_at_latitude_kwh_m2_day": 4.96
+      },
+      "utility": {
+        "utility_name": "CenterPoint Energy Houston Electric",
+        "residential_rate_kwh": 0.1100,
+        "commercial_rate_kwh": 0.0900,
+        "industrial_rate_kwh": 0.0650
+      },
+      "economics": {
+        "annual_savings_estimate": 1200,
+        "system_cost_estimate": 22000,
+        "simple_payback_years": 18.3
+      }
+    },
+    {
+      "city": "Dallas",
+      "state": "TX",
+      "lat": 32.78,
+      "lng": -96.80,
+      "solar_resource": {
+        "ghi_kwh_m2_day": 4.68,
+        "dni_kwh_m2_day": 4.86,
+        "tilt_at_latitude_kwh_m2_day": 5.24
+      },
+      "utility": {
+        "utility_name": "Oncor Electric Delivery",
+        "residential_rate_kwh": 0.1050,
+        "commercial_rate_kwh": 0.0880,
+        "industrial_rate_kwh": 0.0600
+      },
+      "economics": {
+        "annual_savings_estimate": 1180,
+        "system_cost_estimate": 22000,
+        "simple_payback_years": 18.6
+      }
+    },
+    {
+      "city": "San Antonio",
+      "state": "TX",
+      "lat": 29.42,
+      "lng": -98.49,
+      "solar_resource": {
+        "ghi_kwh_m2_day": 4.76,
+        "dni_kwh_m2_day": 4.64,
+        "tilt_at_latitude_kwh_m2_day": 5.21
+      },
+      "utility": {
+        "utility_name": "CPS Energy",
+        "residential_rate_kwh": 0.0950,
+        "commercial_rate_kwh": 0.0800,
+        "industrial_rate_kwh": 0.0580
+      },
+      "economics": {
+        "annual_savings_estimate": 1080,
+        "system_cost_estimate": 22000,
+        "simple_payback_years": 20.4,
+        "notes": "No ITC in 2026 for homeowners. TPO/lease makes solar accessible."
+      }
+    },
+    {
+      "city": "San Francisco",
+      "state": "CA",
+      "lat": 37.77,
+      "lng": -122.42,
+      "solar_resource": {
+        "ghi_kwh_m2_day": 4.35,
+        "dni_kwh_m2_day": 4.05,
+        "tilt_at_latitude_kwh_m2_day": 4.96
+      },
+      "utility": {
+        "utility_name": "Pacific Gas & Electric Co",
+        "residential_rate_kwh": 0.2500,
+        "commercial_rate_kwh": 0.1800,
+        "industrial_rate_kwh": 0.1400
+      },
+      "economics": {
+        "annual_savings_estimate": 2600,
+        "system_cost_estimate": 24000,
+        "simple_payback_years": 9.2,
+        "notes": "Highest utility rates in continental US. Solar extremely attractive despite fog."
+      }
+    },
+    {
+      "city": "Atlanta",
+      "state": "GA",
+      "lat": 33.75,
+      "lng": -84.39,
+      "solar_resource": {
+        "ghi_kwh_m2_day": 4.50,
+        "dni_kwh_m2_day": 4.42,
+        "tilt_at_latitude_kwh_m2_day": 5.09
+      },
+      "utility": {
+        "utility_name": "Georgia Power Co",
+        "residential_rate_kwh": 0.1160,
+        "commercial_rate_kwh": 0.0929,
+        "industrial_rate_kwh": 0.0572
+      }
+    },
+    {
+      "city": "Nashville",
+      "state": "TN",
+      "lat": 36.16,
+      "lng": -86.78,
+      "solar_resource": {
+        "ghi_kwh_m2_day": 4.25,
+        "dni_kwh_m2_day": 4.08,
+        "tilt_at_latitude_kwh_m2_day": 4.81
+      }
+    },
+    {
+      "city": "Philadelphia",
+      "state": "PA",
+      "lat": 39.95,
+      "lng": -75.17,
+      "solar_resource": {
+        "ghi_kwh_m2_day": 4.02,
+        "dni_kwh_m2_day": 3.95,
+        "tilt_at_latitude_kwh_m2_day": 4.72
+      },
+      "utility": {
+        "utility_name": "PECO Energy Co",
+        "residential_rate_kwh": 0.1290,
+        "commercial_rate_kwh": 0.0604,
+        "industrial_rate_kwh": 0.0152
+      }
+    },
+    {
+      "city": "Washington DC",
+      "state": "DC",
+      "lat": 38.91,
+      "lng": -77.04,
+      "solar_resource": {
+        "ghi_kwh_m2_day": 4.15,
+        "dni_kwh_m2_day": 4.21,
+        "tilt_at_latitude_kwh_m2_day": 4.87
+      },
+      "utility": {
+        "utility_name": "Potomac Electric Power Co",
+        "residential_rate_kwh": 0.1098,
+        "commercial_rate_kwh": 0.0479,
+        "industrial_rate_kwh": 0.0134
+      }
+    },
+    {
+      "city": "Salt Lake City",
+      "state": "UT",
+      "lat": 40.76,
+      "lng": -111.89,
+      "solar_resource": {
+        "ghi_kwh_m2_day": 4.71,
+        "dni_kwh_m2_day": 5.86,
+        "tilt_at_latitude_kwh_m2_day": 5.51
+      },
+      "utility": {
+        "utility_name": "PacifiCorp",
+        "residential_rate_kwh": 0.1031,
+        "commercial_rate_kwh": 0.0803,
+        "industrial_rate_kwh": 0.0548
+      }
+    },
+    {
+      "city": "Pittsburgh",
+      "state": "PA",
+      "lat": 40.44,
+      "lng": -79.99,
+      "solar_resource": {
+        "ghi_kwh_m2_day": 3.81,
+        "dni_kwh_m2_day": 3.42,
+        "tilt_at_latitude_kwh_m2_day": 4.35
+      }
+    }
+  ],
+  "national_summary": {
+    "best_solar_resource": {
+      "city": "Phoenix",
+      "state": "AZ",
+      "ghi": 5.78,
+      "annual_production_kwh": 14059
+    },
+    "best_economics": {
+      "city": "San Francisco",
+      "state": "CA",
+      "payback_years": 9.2,
+      "annual_savings": 2600
+    },
+    "average_residential_rate_kwh": 0.1265,
+    "average_annual_production_kwh": 12805,
+    "average_payback_years": 16.5,
+    "top_markets_by_economics": [
+      {"city": "San Francisco", "state": "CA", "payback": 9.2},
+      {"city": "New York", "state": "NY", "payback": 9.8},
+      {"city": "Los Angeles", "state": "CA", "payback": 12.6},
+      {"city": "Las Vegas", "state": "NV", "payback": 12.9},
+      {"city": "Phoenix", "state": "AZ", "payback": 13.1}
+    ],
+    "top_markets_by_production": [
+      {"city": "Phoenix", "state": "AZ", "annual_kwh": 14059},
+      {"city": "Las Vegas", "state": "NV", "annual_kwh": 14020},
+      {"city": "Los Angeles", "state": "CA", "annual_kwh": 13411},
+      {"city": "Denver", "state": "CO", "annual_kwh": 12724},
+      {"city": "Miami", "state": "FL", "annual_kwh": 12389}
+    ]
+  }
+}

@@ -1,112 +1,219 @@
 {
   "state": "VA",
   "state_name": "Virginia",
-  "data_compiled": "2026-02-08",
-  "general_requirements": {
-    "permit_required": true,
-    "permit_type": "both",
-    "typical_fee_range": "$100-$400",
-    "typical_timeline_days": "7-21",
-    "inspection_required": true,
-    "inspection_stages": [
-      "final"
-    ],
-    "statewide_permit_program": false,
-    "statewide_program_name": "Building and electrical permits required. DEQ PBR program does not regulate residential solar. Contact local government planning and zoning. PE stamps typically required for systems >12 kW."
-  },
-  "interconnection": {
-    "utility_approval_required": true,
-    "net_metering_available": true,
-    "net_metering_details": "Net metering available for systems up to 25 kW residential. Dominion Energy Virginia and Appalachian Power primary utilities.",
-    "typical_timeline_days": "30-60",
-    "fees": "Varies by utility"
-  },
-  "special_considerations": {
-    "hoa_restrictions": "Virginia Code 67-701 limits HOA restrictions on solar. Cannot increase cost >5% or reduce efficiency >10%.",
-    "historic_districts": "Virginia historic districts may require additional review.",
-    "wind_load_requirements": "Coastal areas have enhanced wind requirements. Design wind speeds 100-130 mph.",
-    "snow_load_requirements": "Mountain areas may have snow loads 20-40 psf."
-  },
-  "licensing": {
-    "contractor_license_required": true,
-    "license_type": "Virginia DPOR Class A or B contractor license required depending on project value.",
-    "nabcep_required": false
-  },
-  "notes": "Rapidly growing solar market. Virginia Clean Economy Act driving solar deployment. Local permitting varies significantly by jurisdiction. Solar Permit Map available at solarpermitmap.coopercenter.org.",
+  "last_updated": "2026-02-08",
   "jurisdictions": [
     {
-      "jurisdiction_id": "virginia_beach_va",
-      "name": "Virginia Beach",
-      "state": "VA",
+      "jurisdiction_id": "va_virginia_beach",
+      "name": "City of Virginia Beach",
+      "county": "Virginia Beach (Independent City)",
       "type": "city",
-      "population": 459470,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://www.vbgov.com/government/departments/planning/permits/Pages/default.aspx",
-      "submission_method": "online",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": 12,
-      "fees": {
-        "base_fee": 150,
-        "per_kw": null,
-        "inspection_fee": 75,
-        "estimated_total_residential": 275
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "limited_restrictions",
+        "plan_review_required": true,
+        "inspection_required": true
       },
-      "typical_timeline_days": 10,
-      "fire_code_requirements": "Coastal wind load requirements. Standard IFC setbacks.",
-      "rapid_shutdown_required": true,
-      "contacts": {
+      "fees": {
+        "permit_fee_range": "$150-$300",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
         "department": "Planning & Community Development",
         "phone": "757-385-4621",
-        "url": "https://www.vbgov.com"
+        "website": "https://www.vbgov.com/government/departments/planning/permits/Pages/default.aspx",
+        "online_portal": true
       },
-      "special_requirements": [
-        "Dominion Energy interconnection",
-        "Coastal wind load calcs may be required"
-      ],
-      "notes": "Standard VA permitting. Coastal location may require wind load calculations.",
-      "source_url": "https://www.vbgov.com",
-      "updated_at": "2026-02-08"
+      "notes": "Coastal wind load calculations may be required. Design wind speeds 100-130 mph. Dominion Energy Virginia interconnection."
     },
     {
-      "jurisdiction_id": "richmond_va",
-      "name": "Richmond",
-      "state": "VA",
+      "jurisdiction_id": "va_richmond",
+      "name": "City of Richmond",
+      "county": "Richmond (Independent City)",
       "type": "city",
-      "population": 226610,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://www.rva.gov/building-inspections/permits",
-      "submission_method": "online",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": 12,
-      "fees": {
-        "base_fee": 125,
-        "per_kw": null,
-        "inspection_fee": 75,
-        "estimated_total_residential": 250
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "limited_restrictions",
+        "plan_review_required": true,
+        "inspection_required": true
       },
-      "typical_timeline_days": 10,
-      "fire_code_requirements": "Standard IFC setbacks.",
-      "rapid_shutdown_required": true,
-      "contacts": {
+      "fees": {
+        "permit_fee_range": "$125-$275",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
         "department": "Building Inspections",
         "phone": "804-646-6430",
-        "url": "https://www.rva.gov"
+        "website": "https://www.rva.gov/building-inspections/permits",
+        "online_portal": true
       },
-      "special_requirements": [
-        "Dominion Energy interconnection"
-      ],
-      "notes": "Standard VA permitting. Dominion Energy serves the area.",
-      "source_url": "https://www.rva.gov",
-      "updated_at": "2026-02-08"
+      "notes": "Standard VA permitting. Historic district may require additional review. Dominion Energy Virginia interconnection."
+    },
+    {
+      "jurisdiction_id": "va_norfolk",
+      "name": "City of Norfolk",
+      "county": "Norfolk (Independent City)",
+      "type": "city",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "limited_restrictions",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$150-$300",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
+        "department": "Development Services Center",
+        "phone": "757-664-6510",
+        "website": "https://www.norfolk.gov/4869/Permits-Inspections",
+        "online_portal": true
+      },
+      "notes": "Coastal location with wind load requirements. Historic district review may apply. Dominion Energy Virginia interconnection."
+    },
+    {
+      "jurisdiction_id": "va_arlington_county",
+      "name": "Arlington County",
+      "county": "Arlington",
+      "type": "county",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "limited_restrictions",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$100-$250",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
+        "department": "Inspection Services Division",
+        "phone": "703-228-3800",
+        "website": "https://www.arlingtonva.us/Government/Programs/Building/Permits",
+        "online_portal": true
+      },
+      "notes": "SolSmart designated. Standard VA permitting. Dominion Energy Virginia interconnection. Active clean energy community."
+    },
+    {
+      "jurisdiction_id": "va_fairfax_county",
+      "name": "Fairfax County",
+      "county": "Fairfax",
+      "type": "county",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "limited_restrictions",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$0",
+        "plan_review_fee": "included",
+        "inspection_fee": "included"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
+        "department": "Land Development Services",
+        "phone": "703-222-0801",
+        "website": "https://www.fairfaxcounty.gov/landdevelopment/residential-solar-permit",
+        "online_portal": true
+      },
+      "notes": "Fairfax County waives permit fees for solar permit applications. 5-year solar energy equipment tax exemption available through Department of Tax Administration. Dominion Energy Virginia interconnection."
+    },
+    {
+      "jurisdiction_id": "va_prince_william_county",
+      "name": "Prince William County",
+      "county": "Prince William",
+      "type": "county",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "limited_restrictions",
+        "plan_review_required": false,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$100-$200",
+        "plan_review_fee": "included",
+        "inspection_fee": "included"
+      },
+      "timeline": {
+        "plan_review_days": 0,
+        "permit_issuance_days": 1,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 4
+      },
+      "contact": {
+        "department": "Development Services",
+        "phone": "703-792-6930",
+        "website": "https://www.pwcva.gov/residentialsolar",
+        "online_portal": true
+      },
+      "notes": "SolarAPP+ participating jurisdiction. Pre-approved contractors can use SolarAPP+ for instant permits. Contractors must provide VA Contractor License with AES designation and 7 recent project references. Dominion Energy Virginia interconnection."
     }
   ],
-  "jurisdiction_count": 2
+  "state_level_requirements": {
+    "contractor_license_required": true,
+    "contractor_license_type": "Virginia DPOR Class A or B contractor license required depending on project value. AES (Alternative Energy System) specialty designation for solar. PE stamps typically required for systems >12 kW.",
+    "interconnection_agreement": true,
+    "net_metering_available": true,
+    "net_metering_details": "Net metering for systems up to 25 kW residential. Credits at retail rate. Dominion Energy Virginia and Appalachian Power are primary utilities. Virginia Clean Economy Act supports solar deployment.",
+    "solar_access_law": true,
+    "solar_access_details": "Virginia Code 67-701 limits HOA restrictions on solar. Cannot increase cost by more than 5% or reduce efficiency by more than 10%.",
+    "solarapp_participating": true,
+    "solarapp_details": "Prince William County accepts SolarAPP+ for pre-approved residential solar contractors. Other jurisdictions may adopt. Solar Permit Map available at solarpermitmap.coopercenter.org.",
+    "property_tax_exemption": true,
+    "sales_tax_exemption": true,
+    "state_incentive_program": "Virginia Clean Economy Act; property tax exemption (local opt-in); sales tax exemption; Dominion Energy community solar; Fairfax County waives solar permit fees"
+  }
 }

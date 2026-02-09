@@ -1,77 +1,153 @@
 {
   "state": "HI",
   "state_name": "Hawaii",
-  "data_compiled": "2026-02-08",
-  "general_requirements": {
-    "permit_required": true,
-    "permit_type": "both",
-    "typical_fee_range": "$200-$600",
-    "typical_timeline_days": "7-21",
-    "inspection_required": true,
-    "inspection_stages": [
-      "final"
-    ],
-    "statewide_permit_program": false,
-    "statewide_program_name": null
-  },
-  "interconnection": {
-    "utility_approval_required": true,
-    "net_metering_available": false,
-    "net_metering_details": "Hawaii ended traditional net metering in 2015. Replaced with Customer Grid-Supply (CGS) and Customer Self-Supply (CSS) programs. Smart Export program pays time-varying export rates (approx 10-15 cents/kWh). Battery storage strongly incentivized for self-consumption. HECO, MECO, and HELCO handle interconnection.",
-    "typical_timeline_days": "15-60",
-    "fees": "Interconnection application fee varies; $50-$250 typical for residential"
-  },
-  "special_considerations": {
-    "hoa_restrictions": "Strong solar access law (HRS 196-7). Prohibits preventing solar installation on single-family dwellings or townhouses. One of the earliest solar access laws in the nation.",
-    "historic_districts": "Historic districts in Honolulu (Chinatown, Capitol District) and other areas may require additional review. State Historic Preservation Division consulted.",
-    "wind_load_requirements": "Hurricane zone requirements apply statewide. Design wind speeds 105-130 mph depending on island and exposure category. Compliance with IBC hurricane provisions required.",
-    "snow_load_requirements": "Not applicable for most areas. Mauna Kea summit area has snow but no residential installations."
-  },
-  "licensing": {
-    "contractor_license_required": true,
-    "license_type": "C-60 Solar Energy Contractor license or licensed General Contractor (automatically includes solar). Electrical work requires licensed electrician.",
-    "nabcep_required": false
-  },
-  "notes": "Hawaii has the highest electricity rates in the nation ($0.35-0.45/kWh), making solar extremely attractive even without net metering. The state has the highest per-capita solar adoption rate. Grid saturation on some islands has caused interconnection delays and curtailment. Battery storage is increasingly required for new installations to manage grid impacts. 100% renewable energy mandate by 2045. Unique island grid challenges not found in mainland states.",
+  "last_updated": "2026-02-08",
   "jurisdictions": [
     {
-      "jurisdiction_id": "honolulu_hi",
-      "name": "Honolulu",
-      "state": "HI",
+      "jurisdiction_id": "hi_honolulu",
+      "name": "City & County of Honolulu",
+      "county": "Honolulu",
       "type": "city",
-      "population": 350964,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://www.honolulu.gov/dpp/solar-permit/",
-      "submission_method": "online",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": 20,
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
       "fees": {
-        "base_fee": 200,
-        "per_kw": null,
-        "inspection_fee": 100,
-        "estimated_total_residential": 350
+        "permit_fee_range": "$200-$400",
+        "plan_review_fee": "included",
+        "inspection_fee": "$100"
       },
-      "typical_timeline_days": 7,
-      "fire_code_requirements": "Hawaii fire code setbacks. Wind load requirements for Pacific storm exposure.",
-      "rapid_shutdown_required": true,
-      "contacts": {
-        "department": "Dept of Planning & Permitting",
+      "timeline": {
+        "plan_review_days": 3,
+        "permit_issuance_days": 2,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 8
+      },
+      "contact": {
+        "department": "Department of Planning & Permitting",
         "phone": "808-768-8000",
-        "url": "https://www.honolulu.gov/dpp"
+        "website": "https://www.honolulu.gov/dpp/solar-permit/",
+        "online_portal": true
       },
-      "special_requirements": [
-        "Expedited permitting for systems up to 20 kW",
-        "HECO interconnection",
-        "High solar penetration area - interconnection study may be needed"
-      ],
-      "notes": "Expedited permitting for qualifying PV systems up to 20 kW. Hawaii has highest solar penetration in US - interconnection studies sometimes required.",
-      "source_url": "https://www.honolulu.gov/dpp/solar-permit/",
-      "updated_at": "2026-02-08"
+      "notes": "Expedited permitting for qualifying PV systems up to 20 kW. HECO (Hawaiian Electric Company) interconnection. High solar penetration area -- interconnection studies sometimes required. 25-year property tax exemption. Hurricane wind load requirements (105-130 mph)."
+    },
+    {
+      "jurisdiction_id": "hi_maui_county",
+      "name": "County of Maui",
+      "county": "Maui",
+      "type": "county",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$200-$400",
+        "plan_review_fee": "included",
+        "inspection_fee": "$100"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 5,
+        "total_estimated_days": 13
+      },
+      "contact": {
+        "department": "Department of Public Works",
+        "phone": "808-270-7253",
+        "website": "https://www.mauicounty.gov/1789/Building-Permits",
+        "online_portal": true
+      },
+      "notes": "MECO (Maui Electric Company) interconnection. Grid saturation may cause delays. Battery storage strongly recommended. Hurricane wind load requirements apply. Post-fire rebuilding areas may have expedited solar permitting."
+    },
+    {
+      "jurisdiction_id": "hi_hawaii_county",
+      "name": "County of Hawaii (Big Island)",
+      "county": "Hawaii",
+      "type": "county",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$200-$400",
+        "plan_review_fee": "included",
+        "inspection_fee": "$100"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 5,
+        "total_estimated_days": 13
+      },
+      "contact": {
+        "department": "Building Division",
+        "phone": "808-961-8321",
+        "website": "https://www.hawaiicounty.gov/departments/public-works/building",
+        "online_portal": true
+      },
+      "notes": "HELCO (Hawaii Electric Light Company) interconnection. Lava zones and flood zones may affect installations. Off-grid systems common in some areas. Multiple climate zones from tropical coast to alpine summit."
+    },
+    {
+      "jurisdiction_id": "hi_kauai_county",
+      "name": "County of Kauai",
+      "county": "Kauai",
+      "type": "county",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$200-$400",
+        "plan_review_fee": "included",
+        "inspection_fee": "$100"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 5,
+        "total_estimated_days": 13
+      },
+      "contact": {
+        "department": "Building Division",
+        "phone": "808-241-4854",
+        "website": "https://www.kauai.gov/Government/Departments-Agencies/Public-Works/Building-Division",
+        "online_portal": false
+      },
+      "notes": "KIUC (Kauai Island Utility Cooperative) provides interconnection -- separate from HECO. KIUC has different net metering and export policies. Battery storage highly recommended due to grid saturation. Hurricane wind load requirements."
     }
   ],
-  "jurisdiction_count": 1
+  "state_level_requirements": {
+    "contractor_license_required": true,
+    "contractor_license_type": "C-60 Solar Energy Contractor license or General Contractor license (B classification includes solar). Licensed electrician required for electrical work.",
+    "interconnection_agreement": true,
+    "net_metering_available": false,
+    "net_metering_details": "Hawaii ended traditional net metering in 2015. Replaced with Customer Grid-Supply (CGS) and Customer Self-Supply (CSS) programs. Smart Export program pays time-varying export rates (approximately 10-15 cents/kWh). Battery storage strongly incentivized for self-consumption. HECO, MECO, HELCO handle interconnection on most islands. KIUC (Kauai) operates independently. $25 minimum monthly grid connection bill.",
+    "solar_access_law": true,
+    "solar_access_details": "HRS 196-7 prohibits preventing solar installation on single-family dwellings or townhouses. One of the earliest and strongest solar access laws in the nation.",
+    "solarapp_participating": false,
+    "solarapp_details": "No statewide SolarAPP+ program. Hawaii Renewable Energy Permitting Wizard available at portal.ehawaii.gov. Honolulu offers expedited permitting for systems up to 20 kW.",
+    "property_tax_exemption": true,
+    "sales_tax_exemption": true,
+    "state_incentive_program": "25-year property tax exemption (Honolulu); no state sales tax (general excise tax exemption for solar); Smart Export time-varying rates; 100% renewable energy mandate by 2045; highest electricity rates in US ($0.35-0.45/kWh) make solar very attractive; battery storage incentives"
+  }
 }

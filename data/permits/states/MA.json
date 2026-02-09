@@ -1,117 +1,153 @@
 {
   "state": "MA",
   "state_name": "Massachusetts",
-  "data_compiled": "2026-02-08",
-  "general_requirements": {
-    "permit_required": true,
-    "permit_type": "both",
-    "typical_fee_range": "$200-$500",
-    "typical_timeline_days": "7-21",
-    "inspection_required": true,
-    "inspection_stages": [
-      "rough-in",
-      "final"
-    ],
-    "statewide_permit_program": false,
-    "statewide_program_name": null
-  },
-  "interconnection": {
-    "utility_approval_required": true,
-    "net_metering_available": true,
-    "net_metering_details": "Massachusetts has net metering for systems up to 25 kW AC (increased from 10 kW in Feb 2025). Credits at retail rate for residential. SMART (Solar Massachusetts Renewable Target) program provides additional incentive payments. National Grid, Eversource, and Unitil are major utilities.",
-    "typical_timeline_days": "15-30",
-    "fees": "Minimal for residential systems; SMART program has registration fees"
-  },
-  "special_considerations": {
-    "hoa_restrictions": "Strong solar access law (MGL Chapter 184 Section 23C). Solar easements protected. HOAs cannot prohibit solar installations. Certificate of appropriateness cannot be denied solely because of solar energy system installation.",
-    "historic_districts": "Massachusetts has numerous historic districts, especially in Boston, Cambridge, Salem, and Cape Cod. Massachusetts Historical Commission reviews solar in National Register districts. Some communities have specific historic district solar guidelines.",
-    "wind_load_requirements": "Cape Cod and Islands (Nantucket, Martha's Vineyard) have enhanced wind requirements. Design wind speeds 110-130 mph in coastal areas.",
-    "snow_load_requirements": "Moderate to significant snow loads (25-60 psf ground snow load). Western Massachusetts and Berkshires have higher requirements. Cape Cod lower."
-  },
-  "licensing": {
-    "contractor_license_required": true,
-    "license_type": "Licensed electrician (journeyman or master) required for solar PV installations. Construction Supervisor License for structural work. Home Improvement Contractor registration required.",
-    "nabcep_required": false
-  },
-  "notes": "Massachusetts is one of the strongest solar markets in the Northeast with excellent incentives. The SMART program provides declining block incentive payments above net metering credits. Net metering size limit increased to 25 kW AC in 2025. SREC-II program previously provided additional revenue. Property tax exemption (20 years) and sales tax exemption available. Many municipalities participate in SolSmart. The state has high electricity rates supporting strong solar economics.",
+  "last_updated": "2026-02-08",
   "jurisdictions": [
     {
-      "jurisdiction_id": "boston_ma",
-      "name": "Boston",
-      "state": "MA",
+      "jurisdiction_id": "ma_boston",
+      "name": "City of Boston",
+      "county": "Suffolk",
       "type": "city",
-      "population": 675647,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://www.boston.gov/departments/inspectional-services",
-      "submission_method": "online",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "structural_calcs",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": 15,
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": true,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
       "fees": {
-        "base_fee": 200,
-        "per_kw": null,
-        "inspection_fee": 100,
-        "estimated_total_residential": 350
+        "permit_fee_range": "$200-$400",
+        "plan_review_fee": "included",
+        "inspection_fee": "$100"
       },
-      "typical_timeline_days": 7,
-      "fire_code_requirements": "Massachusetts fire code setbacks. Historical district review may apply.",
-      "rapid_shutdown_required": true,
-      "contacts": {
-        "department": "Inspectional Services Dept",
+      "timeline": {
+        "plan_review_days": 3,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 9
+      },
+      "contact": {
+        "department": "Inspectional Services Department",
         "phone": "617-635-5300",
-        "url": "https://www.boston.gov"
+        "website": "https://www.boston.gov/departments/inspectional-services",
+        "online_portal": true
       },
-      "special_requirements": [
-        "Same-day in-person permitting available",
-        "Online permitting available",
-        "Eversource or National Grid interconnection",
-        "SMART program incentives"
-      ],
-      "notes": "Same-day in-person and online permitting available. Structural reviews required for most systems. SMART solar incentive program.",
-      "source_url": "https://www.boston.gov",
-      "updated_at": "2026-02-08"
+      "notes": "Same-day in-person and online permitting available. Structural reviews required for most systems. Eversource or National Grid interconnection. SMART 3.0 incentive program."
     },
     {
-      "jurisdiction_id": "worcester_ma",
-      "name": "Worcester",
-      "state": "MA",
+      "jurisdiction_id": "ma_worcester",
+      "name": "City of Worcester",
+      "county": "Worcester",
       "type": "city",
-      "population": 206518,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://www.worcesterma.gov/inspectional-services",
-      "submission_method": "online",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": 15,
-      "fees": {
-        "base_fee": 150,
-        "per_kw": null,
-        "inspection_fee": 75,
-        "estimated_total_residential": 275
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
       },
-      "typical_timeline_days": 10,
-      "fire_code_requirements": "MA fire code setbacks.",
-      "rapid_shutdown_required": true,
-      "contacts": {
+      "fees": {
+        "permit_fee_range": "$150-$300",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
         "department": "Inspectional Services",
         "phone": "508-799-1127",
-        "url": "https://www.worcesterma.gov"
+        "website": "https://www.worcesterma.gov/inspectional-services",
+        "online_portal": true
       },
-      "special_requirements": [
-        "Online permitting",
-        "National Grid interconnection"
-      ],
-      "notes": "Online permitting available. Standard MA process.",
-      "source_url": "https://www.worcesterma.gov",
-      "updated_at": "2026-02-08"
+      "notes": "Online permitting available. National Grid interconnection. SMART 3.0 incentives."
+    },
+    {
+      "jurisdiction_id": "ma_springfield",
+      "name": "City of Springfield",
+      "county": "Hampden",
+      "type": "city",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$150-$300",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
+        "department": "Building Department",
+        "phone": "413-787-6020",
+        "website": "https://www.springfield-ma.gov",
+        "online_portal": true
+      },
+      "notes": "Standard MA permitting. Eversource interconnection."
+    },
+    {
+      "jurisdiction_id": "ma_cambridge",
+      "name": "City of Cambridge",
+      "county": "Middlesex",
+      "type": "city",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$150-$350",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
+        "department": "Inspectional Services",
+        "phone": "617-349-6100",
+        "website": "https://www.cambridgema.gov/inspection",
+        "online_portal": true
+      },
+      "notes": "Historic district review may apply. Eversource interconnection. Active climate action community."
     }
   ],
-  "jurisdiction_count": 2
+  "state_level_requirements": {
+    "contractor_license_required": true,
+    "contractor_license_type": "Licensed electrician (journeyman or master) required. Construction Supervisor License for structural work. Home Improvement Contractor registration required.",
+    "interconnection_agreement": true,
+    "net_metering_available": true,
+    "net_metering_details": "Net metering for systems up to 25 kW AC (increased from 10 kW in Feb 2025). Credits at retail rate for residential. National Grid, Eversource, and Unitil are major utilities.",
+    "solar_access_law": true,
+    "solar_access_details": "MGL Chapter 184 Section 23C: Solar easements protected. HOAs cannot prohibit solar installations.",
+    "solarapp_participating": false,
+    "solarapp_details": "No statewide SolarAPP+ adoption. Many municipalities participate in SolSmart program.",
+    "property_tax_exemption": true,
+    "sales_tax_exemption": true,
+    "state_incentive_program": "SMART 3.0 program (Solar Massachusetts Renewable Target): declining block incentive payments. PY 2026 has 600 MW capacity. Property tax exemption (20 years)."
+  }
 }

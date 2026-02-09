@@ -1,115 +1,186 @@
 {
   "state": "NJ",
   "state_name": "New Jersey",
-  "data_compiled": "2026-02-08",
-  "general_requirements": {
-    "permit_required": true,
-    "permit_type": "both",
-    "typical_fee_range": "$200-$800",
-    "typical_timeline_days": "10-30",
-    "inspection_required": true,
-    "inspection_stages": [
-      "rough-in",
-      "final"
-    ],
-    "statewide_permit_program": true,
-    "statewide_program_name": "New Jersey passed automated solar permitting legislation in 2025 (unanimously). Developing state automated permitting platform. UCC (Uniform Construction Code) applies statewide."
-  },
-  "interconnection": {
-    "utility_approval_required": true,
-    "net_metering_available": true,
-    "net_metering_details": "New Jersey has net metering for systems up to 2 MW. Credits at retail rate. Cap at 2.9% of total annual kWh sold by each utility. PSE&G, JCP&L, and Atlantic City Electric are major utilities. Monthly rollover, annual true-up at wholesale. Successor Solar Incentive (SuSI) program replaced SRECs with TRECs and ADIs.",
-    "typical_timeline_days": "15-45",
-    "fees": "Varies by utility; typically $100-$200 for residential interconnection"
-  },
-  "special_considerations": {
-    "hoa_restrictions": "Strong solar access law (NJSA 45:22A-48.2). HOAs cannot prohibit solar installations. May impose only reasonable restrictions that do not significantly increase cost or reduce efficiency.",
-    "historic_districts": "Numerous historic districts throughout the state. NJ Historic Preservation Office reviews solar in National Register districts. Some communities have detailed solar-in-historic-district guidelines.",
-    "wind_load_requirements": "Coastal areas (Jersey Shore) have enhanced wind requirements. Design wind speeds 110-140 mph in coastal zones. Inland standard IBC.",
-    "snow_load_requirements": "Moderate snow loads (15-35 psf ground snow load). Northwestern New Jersey has higher requirements."
-  },
-  "licensing": {
-    "contractor_license_required": true,
-    "license_type": "Home Improvement Contractor (HIC) registration required. Licensed electrician for electrical work. No specific solar contractor license but solar-specific knowledge expected.",
-    "nabcep_required": false
-  },
-  "notes": "New Jersey is one of the strongest solar markets in the nation despite limited sunlight compared to southern/western states. Excellent incentives through SuSI program (TRECs for smaller systems, ADI for larger). Strong net metering. The state passed automated permitting legislation in 2025. Property tax exemption for solar. Sales tax exemption. High electricity rates support strong economics. 50% RPS by 2030. Community solar program active. One of the most mature residential solar markets in the US.",
+  "last_updated": "2026-02-08",
   "jurisdictions": [
     {
-      "jurisdiction_id": "newark_nj",
-      "name": "Newark",
-      "state": "NJ",
+      "jurisdiction_id": "nj_newark",
+      "name": "City of Newark",
+      "county": "Essex",
       "type": "city",
-      "population": 311549,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://www.newarknj.gov/departments/engineering/office-of-construction-codes-enforcement",
-      "submission_method": "in_person",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": null,
-      "fees": {
-        "base_fee": 65,
-        "per_kw": null,
-        "inspection_fee": 0,
-        "estimated_total_residential": 65
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
       },
-      "typical_timeline_days": 10,
-      "fire_code_requirements": "NJ fire code setbacks.",
-      "rapid_shutdown_required": true,
-      "contacts": {
+      "fees": {
+        "permit_fee_range": "$65",
+        "plan_review_fee": "included",
+        "inspection_fee": "included"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
         "department": "Construction Codes",
         "phone": "973-733-3860",
-        "url": "https://www.newarknj.gov"
+        "website": "https://www.newarknj.gov/departments/engineering/office-of-construction-codes-enforcement",
+        "online_portal": false
       },
-      "special_requirements": [
-        "NJ PV fee: $65 for 1-50 kW",
-        "PSE&G interconnection",
-        "Strong SREC-II market"
-      ],
-      "notes": "NJ PV permit fees are kW-based: 1-50 kW=$65, 51-100 kW=$129, >100 kW=$640. Strong SREC-II incentive market.",
-      "source_url": "https://www.newarknj.gov",
-      "updated_at": "2026-02-08"
+      "notes": "NJ standardized PV permit fee: 1-50 kW = $65, 51-100 kW = $129, >100 kW = $640. PSE&G interconnection. Strong TREC incentive market."
     },
     {
-      "jurisdiction_id": "jersey_city_nj",
-      "name": "Jersey City",
-      "state": "NJ",
+      "jurisdiction_id": "nj_jersey_city",
+      "name": "City of Jersey City",
+      "county": "Hudson",
       "type": "city",
-      "population": 292449,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://www.jerseycitynj.gov/community/constructioncode",
-      "submission_method": "online",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": null,
-      "fees": {
-        "base_fee": 65,
-        "per_kw": null,
-        "inspection_fee": 0,
-        "estimated_total_residential": 65
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
       },
-      "typical_timeline_days": 10,
-      "fire_code_requirements": "NJ fire code setbacks.",
-      "rapid_shutdown_required": true,
-      "contacts": {
+      "fees": {
+        "permit_fee_range": "$65",
+        "plan_review_fee": "included",
+        "inspection_fee": "included"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
         "department": "Construction Code",
         "phone": "201-547-5074",
-        "url": "https://www.jerseycitynj.gov"
+        "website": "https://www.jerseycitynj.gov/community/constructioncode",
+        "online_portal": true
       },
-      "special_requirements": [
-        "NJ PV fee schedule",
-        "PSE&G interconnection"
-      ],
-      "notes": "NJ standardized PV fee schedule. $65 for systems up to 50 kW.",
-      "source_url": "https://www.jerseycitynj.gov",
-      "updated_at": "2026-02-08"
+      "notes": "NJ standardized PV fee schedule ($65 for systems up to 50 kW). PSE&G interconnection."
+    },
+    {
+      "jurisdiction_id": "nj_paterson",
+      "name": "City of Paterson",
+      "county": "Passaic",
+      "type": "city",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$65",
+        "plan_review_fee": "included",
+        "inspection_fee": "included"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 5,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 13
+      },
+      "contact": {
+        "department": "Division of Construction Code",
+        "phone": "973-321-1323",
+        "website": "https://www.patersonnj.gov",
+        "online_portal": false
+      },
+      "notes": "NJ standardized PV fee schedule. PSE&G interconnection."
+    },
+    {
+      "jurisdiction_id": "nj_elizabeth",
+      "name": "City of Elizabeth",
+      "county": "Union",
+      "type": "city",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$65",
+        "plan_review_fee": "included",
+        "inspection_fee": "included"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 5,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 13
+      },
+      "contact": {
+        "department": "Building Department",
+        "phone": "908-820-4190",
+        "website": "https://www.elizabethnj.org",
+        "online_portal": false
+      },
+      "notes": "NJ standardized PV fee schedule. PSE&G interconnection."
+    },
+    {
+      "jurisdiction_id": "nj_trenton",
+      "name": "City of Trenton",
+      "county": "Mercer",
+      "type": "city",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$65",
+        "plan_review_fee": "included",
+        "inspection_fee": "included"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 5,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 13
+      },
+      "contact": {
+        "department": "Division of Inspections",
+        "phone": "609-989-3575",
+        "website": "https://www.trentonnj.org",
+        "online_portal": false
+      },
+      "notes": "NJ standardized PV fee schedule. PSE&G interconnection."
     }
   ],
-  "jurisdiction_count": 2
+  "state_level_requirements": {
+    "contractor_license_required": true,
+    "contractor_license_type": "Home Improvement Contractor (HIC) registration required. Licensed electrician for electrical work.",
+    "interconnection_agreement": true,
+    "net_metering_available": true,
+    "net_metering_details": "Net metering for systems up to 2 MW. Credits at retail rate. 2.9% utility cap. Monthly rollover, annual true-up at wholesale. PSE&G, JCP&L, Atlantic City Electric are major utilities.",
+    "solar_access_law": true,
+    "solar_access_details": "NJSA 45:22A-48.2: HOAs cannot prohibit solar. May impose only reasonable restrictions that do not significantly increase cost or reduce efficiency.",
+    "solarapp_participating": false,
+    "solarapp_details": "Governor Murphy signed automated solar permitting law (S4100/A5264) in January 2026. DCA must deploy statewide automated permitting platform within 18 months. Municipalities may opt out if they implement a comparable alternative.",
+    "property_tax_exemption": true,
+    "sales_tax_exemption": true,
+    "state_incentive_program": "Successor Solar Incentive (SuSI) program: TRECs for systems <5 MW, ADI for larger systems. Standardized PV permit fees ($65-$640 by kW tier)."
+  }
 }

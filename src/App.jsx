@@ -31,6 +31,9 @@ const CreditMarketplace = lazy(
   () => import("./pages/marketplace/CreditMarketplace"),
 );
 const CreditDetail = lazy(() => import("./pages/marketplace/CreditDetail"));
+const About = lazy(() => import("./pages/About"));
+const Features = lazy(() => import("./pages/Features"));
+const Contact = lazy(() => import("./pages/Contact"));
 
 // Portal (customer) — lazy loaded
 const PortalHome = lazy(() => import("./pages/portal/PortalHome"));
@@ -163,6 +166,9 @@ function App() {
             <Route path="/compare" element={<SubHubCompare />} />
             <Route path="/get-started" element={<GetStarted />} />
             <Route path="/installers" element={<InstallerComparison />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/features" element={<Features />} />
+            <Route path="/contact" element={<Contact />} />
             <Route
               path="/marketplace/credits"
               element={<CreditMarketplace />}

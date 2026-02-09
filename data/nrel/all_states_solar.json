@@ -1,0 +1,878 @@
+{
+  "metadata": {
+    "source": "NREL APIs (Solar Resource v1, Utility Rates v8, PVWatts v8)",
+    "generated_at": "2026-02-08",
+    "system_config": {
+      "capacity_kw": 8.0,
+      "azimuth": 180,
+      "tilt": 20,
+      "array_type": 1,
+      "module_type": 1,
+      "losses": 14,
+      "dc_ac_ratio": 1.2,
+      "installed_cost_per_watt": 2.5,
+      "total_system_cost": 20000
+    },
+    "notes": "Solar resource data from NREL Solar Resource API. Utility rates from NREL Utility Rates v8 API. Production estimates from NREL PVWatts v8 API. Alaska solar resource API returned error (high latitude); PVWatts data used instead. All data based on state capital locations."
+  },
+  "states": {
+    "AL": {
+      "name": "Alabama",
+      "capital": "Montgomery",
+      "lat": 32.38,
+      "lng": -86.3,
+      "solar_resource": { "avg_ghi": 4.65, "avg_dni": 4.56, "avg_lat_tilt": 5.23 },
+      "utility_rates": { "residential_rate": 0.1174, "commercial_rate": 0.1071, "utility_name": "Alabama Power Co" },
+      "production": {
+        "annual_kwh": 11774.5,
+        "capacity_factor": 16.8,
+        "monthly_kwh": [811.7, 812.2, 1022.5, 1079.5, 1179.4, 1055.3, 1117.7, 1126.0, 1055.7, 1009.9, 789.3, 715.3]
+      },
+      "economics": { "annual_savings_est": 1382.33, "payback_years_est": 14.47 }
+    },
+    "AK": {
+      "name": "Alaska",
+      "capital": "Juneau",
+      "lat": 61.22,
+      "lng": -149.89,
+      "solar_resource": { "avg_ghi": 3.17, "avg_dni": null, "avg_lat_tilt": null },
+      "utility_rates": { "residential_rate": 0.1348, "commercial_rate": 0.1077, "utility_name": "Anchorage Municipal Light & Power|Matanuska Electric Association Inc" },
+      "production": {
+        "annual_kwh": 7318.2,
+        "capacity_factor": 10.4,
+        "monthly_kwh": [111.2, 274.9, 781.2, 951.6, 1108.2, 1088.3, 985.4, 883.5, 607.9, 324.8, 139.5, 61.6]
+      },
+      "economics": { "annual_savings_est": 986.49, "payback_years_est": 20.27 }
+    },
+    "AZ": {
+      "name": "Arizona",
+      "capital": "Phoenix",
+      "lat": 33.45,
+      "lng": -112.07,
+      "solar_resource": { "avg_ghi": 5.78, "avg_dni": 7.35, "avg_lat_tilt": 6.68 },
+      "utility_rates": { "residential_rate": 0.1196, "commercial_rate": 0.1022, "utility_name": "Arizona Public Service Co" },
+      "production": {
+        "annual_kwh": 14059.3,
+        "capacity_factor": 20.1,
+        "monthly_kwh": [941.0, 972.7, 1232.2, 1371.7, 1441.9, 1387.0, 1256.1, 1233.1, 1186.1, 1125.2, 982.9, 929.4]
+      },
+      "economics": { "annual_savings_est": 1681.49, "payback_years_est": 11.89 }
+    },
+    "AR": {
+      "name": "Arkansas",
+      "capital": "Little Rock",
+      "lat": 34.75,
+      "lng": -92.29,
+      "solar_resource": { "avg_ghi": 4.41, "avg_dni": 4.37, "avg_lat_tilt": 4.97 },
+      "utility_rates": { "residential_rate": 0.0965, "commercial_rate": 0.0773, "utility_name": "Entergy Arkansas Inc" },
+      "production": {
+        "annual_kwh": 11284.1,
+        "capacity_factor": 16.1,
+        "monthly_kwh": [730.3, 766.5, 849.8, 1002.3, 1074.7, 1174.2, 1151.3, 1095.1, 1042.6, 950.7, 794.0, 652.5]
+      },
+      "economics": { "annual_savings_est": 1088.92, "payback_years_est": 18.37 }
+    },
+    "CA": {
+      "name": "California",
+      "capital": "Sacramento",
+      "lat": 38.56,
+      "lng": -121.47,
+      "solar_resource": { "avg_ghi": 5.07, "avg_dni": 5.78, "avg_lat_tilt": 5.75 },
+      "utility_rates": { "residential_rate": 0.1239, "commercial_rate": 0.1383, "utility_name": "Sacramento Municipal Utility District" },
+      "production": {
+        "annual_kwh": 12902.7,
+        "capacity_factor": 18.4,
+        "monthly_kwh": [618.4, 689.7, 1086.8, 1253.8, 1379.6, 1432.8, 1471.9, 1402.0, 1242.3, 1016.4, 699.0, 610.0]
+      },
+      "economics": { "annual_savings_est": 1598.64, "payback_years_est": 12.51 }
+    },
+    "CO": {
+      "name": "Colorado",
+      "capital": "Denver",
+      "lat": 39.74,
+      "lng": -104.98,
+      "solar_resource": { "avg_ghi": 4.83, "avg_dni": 6.12, "avg_lat_tilt": 5.85 },
+      "utility_rates": { "residential_rate": 0.1105, "commercial_rate": 0.0916, "utility_name": "Public Service Co of Colorado" },
+      "production": {
+        "annual_kwh": 12723.5,
+        "capacity_factor": 18.2,
+        "monthly_kwh": [794.5, 890.4, 1164.9, 1181.6, 1239.1, 1276.8, 1265.2, 1194.0, 1118.2, 979.3, 857.1, 762.3]
+      },
+      "economics": { "annual_savings_est": 1405.95, "payback_years_est": 14.22 }
+    },
+    "CT": {
+      "name": "Connecticut",
+      "capital": "Hartford",
+      "lat": 41.76,
+      "lng": -72.68,
+      "solar_resource": { "avg_ghi": 3.84, "avg_dni": 3.71, "avg_lat_tilt": 4.53 },
+      "utility_rates": { "residential_rate": 0.1267, "commercial_rate": 0.0763, "utility_name": "Connecticut Light & Power Co (The)" },
+      "production": {
+        "annual_kwh": 10007.2,
+        "capacity_factor": 14.3,
+        "monthly_kwh": [587.6, 720.9, 904.3, 992.8, 1039.0, 1017.2, 1098.8, 992.5, 899.1, 695.0, 580.0, 479.9]
+      },
+      "economics": { "annual_savings_est": 1267.91, "payback_years_est": 15.77 }
+    },
+    "DE": {
+      "name": "Delaware",
+      "capital": "Dover",
+      "lat": 39.16,
+      "lng": -75.52,
+      "solar_resource": { "avg_ghi": 4.13, "avg_dni": 4.08, "avg_lat_tilt": 4.81 },
+      "utility_rates": { "residential_rate": 0.1513, "commercial_rate": 0.1472, "utility_name": "Dover DE (City of)" },
+      "production": {
+        "annual_kwh": 11144.1,
+        "capacity_factor": 15.9,
+        "monthly_kwh": [678.2, 758.0, 892.6, 1107.8, 1186.4, 1104.4, 1180.4, 1136.6, 970.2, 854.7, 676.4, 598.6]
+      },
+      "economics": { "annual_savings_est": 1686.10, "payback_years_est": 11.86 }
+    },
+    "FL": {
+      "name": "Florida",
+      "capital": "Tallahassee",
+      "lat": 30.44,
+      "lng": -84.28,
+      "solar_resource": { "avg_ghi": 4.79, "avg_dni": 4.94, "avg_lat_tilt": 5.35 },
+      "utility_rates": { "residential_rate": 0.124, "commercial_rate": 0.1012, "utility_name": "Tallahassee FL (City of)|Talquin Electric Coop Inc" },
+      "production": {
+        "annual_kwh": 11257.5,
+        "capacity_factor": 16.1,
+        "monthly_kwh": [795.9, 821.8, 1050.7, 1033.6, 1136.2, 983.7, 1014.8, 947.6, 925.9, 961.2, 813.2, 773.0]
+      },
+      "economics": { "annual_savings_est": 1395.93, "payback_years_est": 14.33 }
+    },
+    "GA": {
+      "name": "Georgia",
+      "capital": "Atlanta",
+      "lat": 33.75,
+      "lng": -84.39,
+      "solar_resource": { "avg_ghi": 4.5, "avg_dni": 4.42, "avg_lat_tilt": 5.09 },
+      "utility_rates": { "residential_rate": 0.116, "commercial_rate": 0.0929, "utility_name": "Georgia Power Co" },
+      "production": {
+        "annual_kwh": 11198.1,
+        "capacity_factor": 16.0,
+        "monthly_kwh": [728.0, 757.0, 938.3, 1073.1, 1150.9, 1052.3, 1076.0, 1045.7, 964.5, 954.8, 766.8, 690.6]
+      },
+      "economics": { "annual_savings_est": 1298.98, "payback_years_est": 15.40 }
+    },
+    "HI": {
+      "name": "Hawaii",
+      "capital": "Honolulu",
+      "lat": 21.31,
+      "lng": -157.86,
+      "solar_resource": { "avg_ghi": 5.67, "avg_dni": 5.68, "avg_lat_tilt": 5.97 },
+      "utility_rates": { "residential_rate": 0.351, "commercial_rate": 0.3244, "utility_name": "Hawaiian Electric Co Inc" },
+      "production": {
+        "annual_kwh": 12939.1,
+        "capacity_factor": 18.5,
+        "monthly_kwh": [1003.7, 912.6, 1114.9, 1097.4, 1123.5, 1150.7, 1200.9, 1211.2, 1185.2, 1083.5, 926.2, 929.4]
+      },
+      "economics": { "annual_savings_est": 4541.62, "payback_years_est": 4.40 }
+    },
+    "ID": {
+      "name": "Idaho",
+      "capital": "Boise",
+      "lat": 43.62,
+      "lng": -116.2,
+      "solar_resource": { "avg_ghi": 4.61, "avg_dni": 6.07, "avg_lat_tilt": 5.48 },
+      "utility_rates": { "residential_rate": 0.0855, "commercial_rate": 0.0621, "utility_name": "Idaho Power Co" },
+      "production": {
+        "annual_kwh": 11618.8,
+        "capacity_factor": 16.6,
+        "monthly_kwh": [431.5, 633.2, 951.0, 1180.3, 1302.6, 1358.5, 1446.2, 1363.0, 1118.0, 874.0, 538.3, 422.2]
+      },
+      "economics": { "annual_savings_est": 993.41, "payback_years_est": 20.13 }
+    },
+    "IL": {
+      "name": "Illinois",
+      "capital": "Springfield",
+      "lat": 39.8,
+      "lng": -89.65,
+      "solar_resource": { "avg_ghi": 4.14, "avg_dni": 4.24, "avg_lat_tilt": 4.8 },
+      "utility_rates": { "residential_rate": 0.0977, "commercial_rate": 0.0771, "utility_name": "Springfield Water Light & Power Dept" },
+      "production": {
+        "annual_kwh": 10972.0,
+        "capacity_factor": 15.7,
+        "monthly_kwh": [591.3, 723.8, 948.0, 1051.1, 1069.4, 1187.2, 1203.4, 1105.2, 1031.4, 871.9, 663.3, 525.9]
+      },
+      "economics": { "annual_savings_est": 1071.96, "payback_years_est": 18.66 }
+    },
+    "IN": {
+      "name": "Indiana",
+      "capital": "Indianapolis",
+      "lat": 39.77,
+      "lng": -86.16,
+      "solar_resource": { "avg_ghi": 4.01, "avg_dni": 3.88, "avg_lat_tilt": 4.6 },
+      "utility_rates": { "residential_rate": 0.0906, "commercial_rate": 0.1008, "utility_name": "Indianapolis Power & Light" },
+      "production": {
+        "annual_kwh": 10632.2,
+        "capacity_factor": 15.2,
+        "monthly_kwh": [608.6, 679.7, 863.7, 1015.0, 1045.2, 1155.4, 1164.7, 1158.5, 987.9, 815.8, 619.0, 518.7]
+      },
+      "economics": { "annual_savings_est": 963.28, "payback_years_est": 20.76 }
+    },
+    "IA": {
+      "name": "Iowa",
+      "capital": "Des Moines",
+      "lat": 41.59,
+      "lng": -93.6,
+      "solar_resource": { "avg_ghi": 4.02, "avg_dni": 4.26, "avg_lat_tilt": 4.72 },
+      "utility_rates": { "residential_rate": 0.0883, "commercial_rate": 0.0676, "utility_name": "MidAmerican Energy Co" },
+      "production": {
+        "annual_kwh": 10907.2,
+        "capacity_factor": 15.6,
+        "monthly_kwh": [622.9, 715.7, 945.7, 1041.2, 1109.9, 1179.4, 1259.5, 1085.6, 961.3, 788.8, 630.1, 567.2]
+      },
+      "economics": { "annual_savings_est": 963.11, "payback_years_est": 20.77 }
+    },
+    "KS": {
+      "name": "Kansas",
+      "capital": "Topeka",
+      "lat": 39.05,
+      "lng": -95.68,
+      "solar_resource": { "avg_ghi": 4.31, "avg_dni": 4.71, "avg_lat_tilt": 5.06 },
+      "utility_rates": { "residential_rate": 0.107, "commercial_rate": 0.0851, "utility_name": "Westar Energy Inc" },
+      "production": {
+        "annual_kwh": 11540.4,
+        "capacity_factor": 16.5,
+        "monthly_kwh": [666.0, 795.9, 927.1, 1076.5, 1120.9, 1186.6, 1250.6, 1109.4, 1002.8, 996.4, 726.8, 681.3]
+      },
+      "economics": { "annual_savings_est": 1234.82, "payback_years_est": 16.20 }
+    },
+    "KY": {
+      "name": "Kentucky",
+      "capital": "Frankfort",
+      "lat": 38.19,
+      "lng": -84.86,
+      "solar_resource": { "avg_ghi": 4.11, "avg_dni": 3.99, "avg_lat_tilt": 4.68 },
+      "utility_rates": { "residential_rate": 0.074, "commercial_rate": 0.0835, "utility_name": "Frankfort KY (City of)" },
+      "production": {
+        "annual_kwh": 10550.5,
+        "capacity_factor": 15.1,
+        "monthly_kwh": [616.9, 663.2, 842.8, 967.7, 1096.6, 1139.3, 1114.6, 1090.3, 972.3, 849.4, 666.8, 530.7]
+      },
+      "economics": { "annual_savings_est": 780.74, "payback_years_est": 25.62 }
+    },
+    "LA": {
+      "name": "Louisiana",
+      "capital": "Baton Rouge",
+      "lat": 30.46,
+      "lng": -91.19,
+      "solar_resource": { "avg_ghi": 4.65, "avg_dni": 4.37, "avg_lat_tilt": 5.14 },
+      "utility_rates": { "residential_rate": 0.082, "commercial_rate": 0.0825, "utility_name": "Dixie Electric Membership Corp" },
+      "production": {
+        "annual_kwh": 11634.9,
+        "capacity_factor": 16.6,
+        "monthly_kwh": [795.5, 816.0, 1050.5, 1083.0, 1162.7, 1072.2, 1058.9, 1047.8, 990.6, 992.3, 852.6, 712.8]
+      },
+      "economics": { "annual_savings_est": 954.06, "payback_years_est": 20.96 }
+    },
+    "ME": {
+      "name": "Maine",
+      "capital": "Augusta",
+      "lat": 44.31,
+      "lng": -69.78,
+      "solar_resource": { "avg_ghi": 3.72, "avg_dni": 3.96, "avg_lat_tilt": 4.48 },
+      "utility_rates": { "residential_rate": 0.0694, "commercial_rate": 0.0415, "utility_name": "Central Maine Power Co" },
+      "production": {
+        "annual_kwh": 10080.0,
+        "capacity_factor": 14.4,
+        "monthly_kwh": [630.3, 780.4, 1002.0, 1020.1, 1034.2, 1030.3, 1073.4, 1011.9, 870.0, 686.1, 502.0, 439.3]
+      },
+      "economics": { "annual_savings_est": 699.55, "payback_years_est": 28.59 }
+    },
+    "MD": {
+      "name": "Maryland",
+      "capital": "Annapolis",
+      "lat": 38.97,
+      "lng": -76.49,
+      "solar_resource": { "avg_ghi": 4.14, "avg_dni": 4.08, "avg_lat_tilt": 4.82 },
+      "utility_rates": { "residential_rate": 0.1065, "commercial_rate": 0.0391, "utility_name": "Baltimore Gas & Electric Co" },
+      "production": {
+        "annual_kwh": 11110.5,
+        "capacity_factor": 15.9,
+        "monthly_kwh": [653.5, 798.9, 937.4, 1079.4, 1132.5, 1128.1, 1185.4, 1113.0, 936.5, 851.6, 672.0, 622.2]
+      },
+      "economics": { "annual_savings_est": 1183.27, "payback_years_est": 16.90 }
+    },
+    "MA": {
+      "name": "Massachusetts",
+      "capital": "Boston",
+      "lat": 42.36,
+      "lng": -71.06,
+      "solar_resource": { "avg_ghi": 3.84, "avg_dni": 3.79, "avg_lat_tilt": 4.57 },
+      "utility_rates": { "residential_rate": 0.1491, "commercial_rate": 0.1384, "utility_name": "NSTAR Electric Co" },
+      "production": {
+        "annual_kwh": 10390.4,
+        "capacity_factor": 14.8,
+        "monthly_kwh": [642.8, 717.6, 988.2, 992.3, 1113.1, 1023.7, 1144.0, 1047.3, 931.4, 758.5, 565.0, 466.5]
+      },
+      "economics": { "annual_savings_est": 1549.21, "payback_years_est": 12.91 }
+    },
+    "MI": {
+      "name": "Michigan",
+      "capital": "Lansing",
+      "lat": 42.73,
+      "lng": -84.56,
+      "solar_resource": { "avg_ghi": 3.8, "avg_dni": 3.65, "avg_lat_tilt": 4.38 },
+      "utility_rates": { "residential_rate": 0.1282, "commercial_rate": 0.113, "utility_name": "Lansing Board of Water & Light" },
+      "production": {
+        "annual_kwh": 10163.9,
+        "capacity_factor": 14.5,
+        "monthly_kwh": [511.9, 626.2, 903.2, 984.0, 1078.0, 1128.3, 1244.4, 1130.6, 921.1, 673.4, 542.6, 420.2]
+      },
+      "economics": { "annual_savings_est": 1303.01, "payback_years_est": 15.35 }
+    },
+    "MN": {
+      "name": "Minnesota",
+      "capital": "Saint Paul",
+      "lat": 44.98,
+      "lng": -93.27,
+      "solar_resource": { "avg_ghi": 3.79, "avg_dni": 4.09, "avg_lat_tilt": 4.56 },
+      "utility_rates": { "residential_rate": 0.1148, "commercial_rate": 0.0873, "utility_name": "Northern States Power Co (Minnesota)" },
+      "production": {
+        "annual_kwh": 10607.1,
+        "capacity_factor": 15.1,
+        "monthly_kwh": [622.5, 736.0, 1051.9, 1026.6, 1060.9, 1119.3, 1252.6, 1092.9, 942.8, 715.3, 521.9, 464.4]
+      },
+      "economics": { "annual_savings_est": 1217.70, "payback_years_est": 16.42 }
+    },
+    "MS": {
+      "name": "Mississippi",
+      "capital": "Jackson",
+      "lat": 32.3,
+      "lng": -90.18,
+      "solar_resource": { "avg_ghi": 4.58, "avg_dni": 4.39, "avg_lat_tilt": 5.1 },
+      "utility_rates": { "residential_rate": 0.0817, "commercial_rate": 0.0785, "utility_name": "Entergy Mississippi Inc" },
+      "production": {
+        "annual_kwh": 11304.8,
+        "capacity_factor": 16.1,
+        "monthly_kwh": [769.9, 702.0, 990.0, 1066.5, 1128.1, 1092.5, 1087.0, 1054.5, 1034.0, 963.3, 796.2, 620.6]
+      },
+      "economics": { "annual_savings_est": 923.60, "payback_years_est": 21.66 }
+    },
+    "MO": {
+      "name": "Missouri",
+      "capital": "Jefferson City",
+      "lat": 38.58,
+      "lng": -92.17,
+      "solar_resource": { "avg_ghi": 4.26, "avg_dni": 4.5, "avg_lat_tilt": 4.93 },
+      "utility_rates": { "residential_rate": 0.1017, "commercial_rate": 0.082, "utility_name": "no data" },
+      "production": {
+        "annual_kwh": 10647.1,
+        "capacity_factor": 15.2,
+        "monthly_kwh": [639.9, 704.3, 841.4, 919.0, 1084.9, 1065.2, 1127.0, 1108.7, 993.5, 866.5, 673.2, 623.6]
+      },
+      "economics": { "annual_savings_est": 1082.83, "payback_years_est": 18.47 }
+    },
+    "MT": {
+      "name": "Montana",
+      "capital": "Helena",
+      "lat": 46.59,
+      "lng": -112.02,
+      "solar_resource": { "avg_ghi": 3.99, "avg_dni": 5.04, "avg_lat_tilt": 4.91 },
+      "utility_rates": { "residential_rate": 0.0931, "commercial_rate": 0.0808, "utility_name": "NorthWestern Corp|Vigilante Electric Co Op Inc" },
+      "production": {
+        "annual_kwh": 10669.0,
+        "capacity_factor": 15.2,
+        "monthly_kwh": [502.7, 656.7, 948.9, 1058.6, 1144.3, 1214.1, 1322.9, 1177.9, 967.9, 756.0, 501.0, 418.0]
+      },
+      "economics": { "annual_savings_est": 993.28, "payback_years_est": 20.14 }
+    },
+    "NE": {
+      "name": "Nebraska",
+      "capital": "Lincoln",
+      "lat": 40.81,
+      "lng": -96.7,
+      "solar_resource": { "avg_ghi": 4.25, "avg_dni": 4.64, "avg_lat_tilt": 5.04 },
+      "utility_rates": { "residential_rate": 0.089, "commercial_rate": 0.0706, "utility_name": "Lincoln Electric System" },
+      "production": {
+        "annual_kwh": 11656.9,
+        "capacity_factor": 16.6,
+        "monthly_kwh": [679.0, 836.5, 1007.8, 1045.3, 1192.3, 1217.7, 1261.2, 1114.4, 1057.6, 912.9, 708.7, 623.6]
+      },
+      "economics": { "annual_savings_est": 1037.46, "payback_years_est": 19.28 }
+    },
+    "NV": {
+      "name": "Nevada",
+      "capital": "Carson City",
+      "lat": 39.16,
+      "lng": -119.77,
+      "solar_resource": { "avg_ghi": 5.27, "avg_dni": 7.21, "avg_lat_tilt": 6.23 },
+      "utility_rates": { "residential_rate": 0.1105, "commercial_rate": 0.0965, "utility_name": "Sierra Pacific Power Co" },
+      "production": {
+        "annual_kwh": 13497.3,
+        "capacity_factor": 19.3,
+        "monthly_kwh": [718.8, 796.3, 1194.5, 1332.8, 1398.5, 1445.4, 1427.7, 1395.0, 1235.0, 1082.3, 811.1, 660.0]
+      },
+      "economics": { "annual_savings_est": 1491.45, "payback_years_est": 13.41 }
+    },
+    "NH": {
+      "name": "New Hampshire",
+      "capital": "Concord",
+      "lat": 43.21,
+      "lng": -71.54,
+      "solar_resource": { "avg_ghi": 3.79, "avg_dni": 3.92, "avg_lat_tilt": 4.52 },
+      "utility_rates": { "residential_rate": 0.1392, "commercial_rate": 0.1148, "utility_name": "Unitil Energy Systems" },
+      "production": {
+        "annual_kwh": 10014.6,
+        "capacity_factor": 14.3,
+        "monthly_kwh": [620.9, 709.6, 933.2, 960.1, 1015.4, 993.8, 1120.3, 1025.0, 912.2, 680.6, 557.7, 485.7]
+      },
+      "economics": { "annual_savings_est": 1394.03, "payback_years_est": 14.35 }
+    },
+    "NJ": {
+      "name": "New Jersey",
+      "capital": "Trenton",
+      "lat": 40.22,
+      "lng": -74.76,
+      "solar_resource": { "avg_ghi": 3.99, "avg_dni": 3.89, "avg_lat_tilt": 4.67 },
+      "utility_rates": { "residential_rate": 0.1488, "commercial_rate": 0.0738, "utility_name": "Public Service Electric & Gas Co" },
+      "production": {
+        "annual_kwh": 10706.4,
+        "capacity_factor": 15.3,
+        "monthly_kwh": [662.0, 728.2, 1012.6, 1073.4, 1060.4, 1090.8, 1107.6, 1003.8, 970.0, 784.5, 669.2, 544.0]
+      },
+      "economics": { "annual_savings_est": 1593.11, "payback_years_est": 12.55 }
+    },
+    "NM": {
+      "name": "New Mexico",
+      "capital": "Santa Fe",
+      "lat": 35.68,
+      "lng": -105.94,
+      "solar_resource": { "avg_ghi": 5.47, "avg_dni": 7.59, "avg_lat_tilt": 6.49 },
+      "utility_rates": { "residential_rate": 0.1231, "commercial_rate": 0.102, "utility_name": "Public Service Co of New Mexico" },
+      "production": {
+        "annual_kwh": 14079.3,
+        "capacity_factor": 20.1,
+        "monthly_kwh": [986.8, 995.3, 1273.4, 1299.4, 1447.5, 1368.5, 1177.7, 1242.3, 1236.7, 1164.0, 988.8, 898.9]
+      },
+      "economics": { "annual_savings_est": 1733.16, "payback_years_est": 11.54 }
+    },
+    "NY": {
+      "name": "New York",
+      "capital": "Albany",
+      "lat": 42.65,
+      "lng": -73.76,
+      "solar_resource": { "avg_ghi": 3.82, "avg_dni": 4.03, "avg_lat_tilt": 4.51 },
+      "utility_rates": { "residential_rate": 0.1174, "commercial_rate": 0.0599, "utility_name": "Niagara Mohawk Power Corp" },
+      "production": {
+        "annual_kwh": 9782.5,
+        "capacity_factor": 14.0,
+        "monthly_kwh": [547.8, 654.5, 937.8, 951.8, 1003.3, 1016.2, 1138.3, 1038.5, 862.5, 695.6, 505.1, 431.2]
+      },
+      "economics": { "annual_savings_est": 1148.47, "payback_years_est": 17.42 }
+    },
+    "NC": {
+      "name": "North Carolina",
+      "capital": "Raleigh",
+      "lat": 35.77,
+      "lng": -78.64,
+      "solar_resource": { "avg_ghi": 4.46, "avg_dni": 4.56, "avg_lat_tilt": 5.14 },
+      "utility_rates": { "residential_rate": 0.1043, "commercial_rate": 0.085, "utility_name": "Duke Energy Carolinas|Progress Energy Carolinas" },
+      "production": {
+        "annual_kwh": 11042.7,
+        "capacity_factor": 15.8,
+        "monthly_kwh": [748.8, 753.0, 976.7, 1079.6, 1085.6, 1069.9, 1081.5, 1025.6, 964.3, 828.8, 781.5, 647.5]
+      },
+      "economics": { "annual_savings_est": 1151.75, "payback_years_est": 17.37 }
+    },
+    "ND": {
+      "name": "North Dakota",
+      "capital": "Bismarck",
+      "lat": 46.81,
+      "lng": -100.78,
+      "solar_resource": { "avg_ghi": 3.87, "avg_dni": 4.42, "avg_lat_tilt": 4.65 },
+      "utility_rates": { "residential_rate": 0.0828, "commercial_rate": 0.0773, "utility_name": "MDU Resources Group Inc" },
+      "production": {
+        "annual_kwh": 11006.6,
+        "capacity_factor": 15.7,
+        "monthly_kwh": [524.6, 717.5, 966.0, 1106.9, 1180.0, 1203.9, 1341.4, 1218.1, 961.9, 740.2, 568.3, 477.9]
+      },
+      "economics": { "annual_savings_est": 911.35, "payback_years_est": 21.95 }
+    },
+    "OH": {
+      "name": "Ohio",
+      "capital": "Columbus",
+      "lat": 39.96,
+      "lng": -82.99,
+      "solar_resource": { "avg_ghi": 3.91, "avg_dni": 3.63, "avg_lat_tilt": 4.46 },
+      "utility_rates": { "residential_rate": 0.1265, "commercial_rate": 0.1133, "utility_name": "Columbus OH (City of)|Columbus Southern Power Co" },
+      "production": {
+        "annual_kwh": 10320.0,
+        "capacity_factor": 14.7,
+        "monthly_kwh": [580.6, 672.6, 808.5, 977.6, 1123.0, 1127.5, 1154.0, 1091.8, 986.9, 726.4, 594.6, 476.4]
+      },
+      "economics": { "annual_savings_est": 1305.48, "payback_years_est": 15.32 }
+    },
+    "OK": {
+      "name": "Oklahoma",
+      "capital": "Oklahoma City",
+      "lat": 35.47,
+      "lng": -97.52,
+      "solar_resource": { "avg_ghi": 4.7, "avg_dni": 5.23, "avg_lat_tilt": 5.41 },
+      "utility_rates": { "residential_rate": 0.0976, "commercial_rate": 0.0713, "utility_name": "Oklahoma Gas & Electric Co" },
+      "production": {
+        "annual_kwh": 12187.4,
+        "capacity_factor": 17.4,
+        "monthly_kwh": [786.3, 776.2, 993.0, 1191.4, 1109.9, 1205.3, 1228.3, 1257.0, 1036.3, 993.8, 824.2, 785.6]
+      },
+      "economics": { "annual_savings_est": 1189.49, "payback_years_est": 16.82 }
+    },
+    "OR": {
+      "name": "Oregon",
+      "capital": "Salem",
+      "lat": 44.94,
+      "lng": -123.03,
+      "solar_resource": { "avg_ghi": 3.77, "avg_dni": 3.85, "avg_lat_tilt": 4.31 },
+      "utility_rates": { "residential_rate": 0.0821, "commercial_rate": 0.0767, "utility_name": "Salem Electric" },
+      "production": {
+        "annual_kwh": 9604.2,
+        "capacity_factor": 13.7,
+        "monthly_kwh": [336.1, 481.7, 750.7, 917.6, 1095.5, 1157.3, 1326.5, 1243.7, 983.8, 645.6, 370.5, 295.1]
+      },
+      "economics": { "annual_savings_est": 788.50, "payback_years_est": 25.36 }
+    },
+    "PA": {
+      "name": "Pennsylvania",
+      "capital": "Harrisburg",
+      "lat": 40.27,
+      "lng": -76.88,
+      "solar_resource": { "avg_ghi": 3.96, "avg_dni": 3.83, "avg_lat_tilt": 4.62 },
+      "utility_rates": { "residential_rate": 0.082, "commercial_rate": 0.0276, "utility_name": "PPL Electric Utilities Corp" },
+      "production": {
+        "annual_kwh": 10187.2,
+        "capacity_factor": 14.5,
+        "monthly_kwh": [571.4, 717.9, 953.6, 957.3, 1088.2, 1098.0, 1127.5, 975.3, 869.9, 748.4, 601.7, 477.8]
+      },
+      "economics": { "annual_savings_est": 835.35, "payback_years_est": 23.94 }
+    },
+    "RI": {
+      "name": "Rhode Island",
+      "capital": "Providence",
+      "lat": 41.82,
+      "lng": -71.41,
+      "solar_resource": { "avg_ghi": 3.86, "avg_dni": 3.83, "avg_lat_tilt": 4.59 },
+      "utility_rates": { "residential_rate": 0.1424, "commercial_rate": 0.081, "utility_name": "Narragansett Electric Co" },
+      "production": {
+        "annual_kwh": 10327.7,
+        "capacity_factor": 14.7,
+        "monthly_kwh": [660.0, 692.0, 941.8, 1022.9, 1079.9, 1031.0, 1107.6, 1027.7, 913.8, 760.7, 563.4, 526.9]
+      },
+      "economics": { "annual_savings_est": 1470.66, "payback_years_est": 13.60 }
+    },
+    "SC": {
+      "name": "South Carolina",
+      "capital": "Columbia",
+      "lat": 34.0,
+      "lng": -81.03,
+      "solar_resource": { "avg_ghi": 4.57, "avg_dni": 4.54, "avg_lat_tilt": 5.19 },
+      "utility_rates": { "residential_rate": 0.1364, "commercial_rate": 0.1056, "utility_name": "South Carolina Electric & Gas Co" },
+      "production": {
+        "annual_kwh": 11552.8,
+        "capacity_factor": 16.5,
+        "monthly_kwh": [799.4, 756.0, 986.4, 1114.8, 1113.6, 1137.4, 1080.0, 1119.1, 987.2, 920.0, 808.7, 730.3]
+      },
+      "economics": { "annual_savings_est": 1575.80, "payback_years_est": 12.69 }
+    },
+    "SD": {
+      "name": "South Dakota",
+      "capital": "Pierre",
+      "lat": 44.37,
+      "lng": -100.35,
+      "solar_resource": { "avg_ghi": 4.14, "avg_dni": 4.85, "avg_lat_tilt": 5.0 },
+      "utility_rates": { "residential_rate": 0.0926, "commercial_rate": 0.0858, "utility_name": "Pierre Municipal Electric" },
+      "production": {
+        "annual_kwh": 11315.2,
+        "capacity_factor": 16.1,
+        "monthly_kwh": [604.2, 706.4, 924.7, 1111.1, 1235.8, 1260.1, 1324.2, 1202.2, 1035.6, 833.0, 597.5, 480.2]
+      },
+      "economics": { "annual_savings_est": 1047.79, "payback_years_est": 19.09 }
+    },
+    "TN": {
+      "name": "Tennessee",
+      "capital": "Nashville",
+      "lat": 36.17,
+      "lng": -86.78,
+      "solar_resource": { "avg_ghi": 4.25, "avg_dni": 4.08, "avg_lat_tilt": 4.81 },
+      "utility_rates": { "residential_rate": 0.1026, "commercial_rate": 0.1032, "utility_name": "Nashville Electric Service|Tennessee Valley Authority" },
+      "production": {
+        "annual_kwh": 10678.2,
+        "capacity_factor": 15.2,
+        "monthly_kwh": [600.6, 670.5, 890.8, 980.7, 1121.8, 1058.1, 1100.1, 1061.8, 983.3, 869.6, 716.4, 624.7]
+      },
+      "economics": { "annual_savings_est": 1095.59, "payback_years_est": 18.26 }
+    },
+    "TX": {
+      "name": "Texas",
+      "capital": "Austin",
+      "lat": 30.27,
+      "lng": -97.74,
+      "solar_resource": { "avg_ghi": 4.74, "avg_dni": 4.88, "avg_lat_tilt": 5.21 },
+      "utility_rates": { "residential_rate": 0.1044, "commercial_rate": 0.0875, "utility_name": "Austin Energy|TXU Energy Retail Co LP" },
+      "production": {
+        "annual_kwh": 11845.8,
+        "capacity_factor": 16.9,
+        "monthly_kwh": [807.6, 748.2, 950.0, 1077.8, 1107.3, 1125.2, 1205.4, 1229.8, 1047.0, 981.7, 777.1, 788.8]
+      },
+      "economics": { "annual_savings_est": 1236.70, "payback_years_est": 16.17 }
+    },
+    "UT": {
+      "name": "Utah",
+      "capital": "Salt Lake City",
+      "lat": 40.76,
+      "lng": -111.89,
+      "solar_resource": { "avg_ghi": 4.71, "avg_dni": 5.86, "avg_lat_tilt": 5.51 },
+      "utility_rates": { "residential_rate": 0.1031, "commercial_rate": 0.0803, "utility_name": "PacifiCorp" },
+      "production": {
+        "annual_kwh": 11851.8,
+        "capacity_factor": 16.9,
+        "monthly_kwh": [592.6, 733.3, 1015.7, 1087.5, 1273.7, 1331.6, 1332.0, 1277.9, 1084.0, 938.5, 655.6, 529.2]
+      },
+      "economics": { "annual_savings_est": 1221.92, "payback_years_est": 16.37 }
+    },
+    "VT": {
+      "name": "Vermont",
+      "capital": "Montpelier",
+      "lat": 44.26,
+      "lng": -72.58,
+      "solar_resource": { "avg_ghi": 3.61, "avg_dni": 3.73, "avg_lat_tilt": 4.28 },
+      "utility_rates": { "residential_rate": 0.1688, "commercial_rate": 0.1363, "utility_name": "Green Mountain Power Corp" },
+      "production": {
+        "annual_kwh": 9518.7,
+        "capacity_factor": 13.6,
+        "monthly_kwh": [551.2, 688.8, 966.9, 949.6, 1049.3, 972.9, 1088.9, 999.7, 832.8, 562.2, 439.6, 416.7]
+      },
+      "economics": { "annual_savings_est": 1606.76, "payback_years_est": 12.45 }
+    },
+    "VA": {
+      "name": "Virginia",
+      "capital": "Richmond",
+      "lat": 37.54,
+      "lng": -77.43,
+      "solar_resource": { "avg_ghi": 4.27, "avg_dni": 4.31, "avg_lat_tilt": 4.97 },
+      "utility_rates": { "residential_rate": 0.1104, "commercial_rate": 0.078, "utility_name": "Virginia Electric & Power Co" },
+      "production": {
+        "annual_kwh": 10806.1,
+        "capacity_factor": 15.4,
+        "monthly_kwh": [666.8, 741.8, 963.3, 1063.8, 1099.9, 1126.5, 1094.9, 1037.0, 861.7, 861.1, 671.1, 618.1]
+      },
+      "economics": { "annual_savings_est": 1193.01, "payback_years_est": 16.77 }
+    },
+    "WA": {
+      "name": "Washington",
+      "capital": "Olympia",
+      "lat": 47.04,
+      "lng": -122.9,
+      "solar_resource": { "avg_ghi": 3.37, "avg_dni": 3.13, "avg_lat_tilt": 3.84 },
+      "utility_rates": { "residential_rate": 0.1036, "commercial_rate": 0.0946, "utility_name": "Puget Sound Energy Inc" },
+      "production": {
+        "annual_kwh": 8340.8,
+        "capacity_factor": 11.9,
+        "monthly_kwh": [263.4, 398.5, 633.1, 809.4, 1012.7, 1035.9, 1136.1, 1095.9, 833.7, 533.7, 334.1, 254.4]
+      },
+      "economics": { "annual_savings_est": 864.11, "payback_years_est": 23.15 }
+    },
+    "WV": {
+      "name": "West Virginia",
+      "capital": "Charleston",
+      "lat": 38.35,
+      "lng": -81.63,
+      "solar_resource": { "avg_ghi": 3.96, "avg_dni": 3.71, "avg_lat_tilt": 4.5 },
+      "utility_rates": { "residential_rate": 0.0957, "commercial_rate": 0.0847, "utility_name": "Appalachian Power Co" },
+      "production": {
+        "annual_kwh": 9848.6,
+        "capacity_factor": 14.1,
+        "monthly_kwh": [505.3, 603.8, 811.4, 920.0, 1033.8, 1084.2, 1061.9, 1050.8, 876.3, 775.6, 627.0, 498.4]
+      },
+      "economics": { "annual_savings_est": 942.51, "payback_years_est": 21.22 }
+    },
+    "WI": {
+      "name": "Wisconsin",
+      "capital": "Madison",
+      "lat": 43.07,
+      "lng": -89.4,
+      "solar_resource": { "avg_ghi": 3.83, "avg_dni": 4.02, "avg_lat_tilt": 4.47 },
+      "utility_rates": { "residential_rate": 0.1579, "commercial_rate": 0.1086, "utility_name": "Madison Gas & Electric Co" },
+      "production": {
+        "annual_kwh": 10609.1,
+        "capacity_factor": 15.1,
+        "monthly_kwh": [593.0, 642.1, 973.4, 970.9, 1124.6, 1165.9, 1215.3, 1089.6, 965.9, 767.0, 575.1, 526.3]
+      },
+      "economics": { "annual_savings_est": 1675.18, "payback_years_est": 11.94 }
+    },
+    "WY": {
+      "name": "Wyoming",
+      "capital": "Cheyenne",
+      "lat": 41.14,
+      "lng": -104.82,
+      "solar_resource": { "avg_ghi": 4.57, "avg_dni": 5.69, "avg_lat_tilt": 5.53 },
+      "utility_rates": { "residential_rate": 0.1153, "commercial_rate": 0.0902, "utility_name": "Cheyenne Light Fuel & Power Co" },
+      "production": {
+        "annual_kwh": 12213.8,
+        "capacity_factor": 17.4,
+        "monthly_kwh": [777.6, 818.5, 1084.7, 1128.5, 1152.2, 1290.9, 1259.2, 1208.0, 1090.3, 934.8, 765.9, 703.3]
+      },
+      "economics": { "annual_savings_est": 1408.25, "payback_years_est": 14.20 }
+    }
+  },
+  "rankings": {
+    "by_production": [
+      { "rank": 1, "state": "NM", "name": "New Mexico", "annual_kwh": 14079.3 },
+      { "rank": 2, "state": "AZ", "name": "Arizona", "annual_kwh": 14059.3 },
+      { "rank": 3, "state": "NV", "name": "Nevada", "annual_kwh": 13497.3 },
+      { "rank": 4, "state": "HI", "name": "Hawaii", "annual_kwh": 12939.1 },
+      { "rank": 5, "state": "CA", "name": "California", "annual_kwh": 12902.7 },
+      { "rank": 6, "state": "CO", "name": "Colorado", "annual_kwh": 12723.5 },
+      { "rank": 7, "state": "WY", "name": "Wyoming", "annual_kwh": 12213.8 },
+      { "rank": 8, "state": "OK", "name": "Oklahoma", "annual_kwh": 12187.4 },
+      { "rank": 9, "state": "UT", "name": "Utah", "annual_kwh": 11851.8 },
+      { "rank": 10, "state": "TX", "name": "Texas", "annual_kwh": 11845.8 },
+      { "rank": 11, "state": "AL", "name": "Alabama", "annual_kwh": 11774.5 },
+      { "rank": 12, "state": "NE", "name": "Nebraska", "annual_kwh": 11656.9 },
+      { "rank": 13, "state": "LA", "name": "Louisiana", "annual_kwh": 11634.9 },
+      { "rank": 14, "state": "ID", "name": "Idaho", "annual_kwh": 11618.8 },
+      { "rank": 15, "state": "SC", "name": "South Carolina", "annual_kwh": 11552.8 },
+      { "rank": 16, "state": "KS", "name": "Kansas", "annual_kwh": 11540.4 },
+      { "rank": 17, "state": "SD", "name": "South Dakota", "annual_kwh": 11315.2 },
+      { "rank": 18, "state": "MS", "name": "Mississippi", "annual_kwh": 11304.8 },
+      { "rank": 19, "state": "AR", "name": "Arkansas", "annual_kwh": 11284.1 },
+      { "rank": 20, "state": "FL", "name": "Florida", "annual_kwh": 11257.5 },
+      { "rank": 21, "state": "GA", "name": "Georgia", "annual_kwh": 11198.1 },
+      { "rank": 22, "state": "DE", "name": "Delaware", "annual_kwh": 11144.1 },
+      { "rank": 23, "state": "MD", "name": "Maryland", "annual_kwh": 11110.5 },
+      { "rank": 24, "state": "NC", "name": "North Carolina", "annual_kwh": 11042.7 },
+      { "rank": 25, "state": "ND", "name": "North Dakota", "annual_kwh": 11006.6 },
+      { "rank": 26, "state": "IL", "name": "Illinois", "annual_kwh": 10972.0 },
+      { "rank": 27, "state": "IA", "name": "Iowa", "annual_kwh": 10907.2 },
+      { "rank": 28, "state": "VA", "name": "Virginia", "annual_kwh": 10806.1 },
+      { "rank": 29, "state": "NJ", "name": "New Jersey", "annual_kwh": 10706.4 },
+      { "rank": 30, "state": "TN", "name": "Tennessee", "annual_kwh": 10678.2 },
+      { "rank": 31, "state": "MT", "name": "Montana", "annual_kwh": 10669.0 },
+      { "rank": 32, "state": "MO", "name": "Missouri", "annual_kwh": 10647.1 },
+      { "rank": 33, "state": "IN", "name": "Indiana", "annual_kwh": 10632.2 },
+      { "rank": 34, "state": "WI", "name": "Wisconsin", "annual_kwh": 10609.1 },
+      { "rank": 35, "state": "MN", "name": "Minnesota", "annual_kwh": 10607.1 },
+      { "rank": 36, "state": "KY", "name": "Kentucky", "annual_kwh": 10550.5 },
+      { "rank": 37, "state": "MA", "name": "Massachusetts", "annual_kwh": 10390.4 },
+      { "rank": 38, "state": "RI", "name": "Rhode Island", "annual_kwh": 10327.7 },
+      { "rank": 39, "state": "OH", "name": "Ohio", "annual_kwh": 10320.0 },
+      { "rank": 40, "state": "PA", "name": "Pennsylvania", "annual_kwh": 10187.2 },
+      { "rank": 41, "state": "MI", "name": "Michigan", "annual_kwh": 10163.9 },
+      { "rank": 42, "state": "ME", "name": "Maine", "annual_kwh": 10080.0 },
+      { "rank": 43, "state": "NH", "name": "New Hampshire", "annual_kwh": 10014.6 },
+      { "rank": 44, "state": "CT", "name": "Connecticut", "annual_kwh": 10007.2 },
+      { "rank": 45, "state": "WV", "name": "West Virginia", "annual_kwh": 9848.6 },
+      { "rank": 46, "state": "NY", "name": "New York", "annual_kwh": 9782.5 },
+      { "rank": 47, "state": "OR", "name": "Oregon", "annual_kwh": 9604.2 },
+      { "rank": 48, "state": "VT", "name": "Vermont", "annual_kwh": 9518.7 },
+      { "rank": 49, "state": "WA", "name": "Washington", "annual_kwh": 8340.8 },
+      { "rank": 50, "state": "AK", "name": "Alaska", "annual_kwh": 7318.2 }
+    ],
+    "by_savings": [
+      { "rank": 1, "state": "HI", "name": "Hawaii", "annual_savings_est": 4541.62 },
+      { "rank": 2, "state": "NM", "name": "New Mexico", "annual_savings_est": 1733.16 },
+      { "rank": 3, "state": "DE", "name": "Delaware", "annual_savings_est": 1686.10 },
+      { "rank": 4, "state": "AZ", "name": "Arizona", "annual_savings_est": 1681.49 },
+      { "rank": 5, "state": "WI", "name": "Wisconsin", "annual_savings_est": 1675.18 },
+      { "rank": 6, "state": "VT", "name": "Vermont", "annual_savings_est": 1606.76 },
+      { "rank": 7, "state": "CA", "name": "California", "annual_savings_est": 1598.64 },
+      { "rank": 8, "state": "NJ", "name": "New Jersey", "annual_savings_est": 1593.11 },
+      { "rank": 9, "state": "SC", "name": "South Carolina", "annual_savings_est": 1575.80 },
+      { "rank": 10, "state": "MA", "name": "Massachusetts", "annual_savings_est": 1549.21 },
+      { "rank": 11, "state": "NV", "name": "Nevada", "annual_savings_est": 1491.45 },
+      { "rank": 12, "state": "RI", "name": "Rhode Island", "annual_savings_est": 1470.66 },
+      { "rank": 13, "state": "WY", "name": "Wyoming", "annual_savings_est": 1408.25 },
+      { "rank": 14, "state": "CO", "name": "Colorado", "annual_savings_est": 1405.95 },
+      { "rank": 15, "state": "FL", "name": "Florida", "annual_savings_est": 1395.93 },
+      { "rank": 16, "state": "NH", "name": "New Hampshire", "annual_savings_est": 1394.03 },
+      { "rank": 17, "state": "AL", "name": "Alabama", "annual_savings_est": 1382.33 },
+      { "rank": 18, "state": "OH", "name": "Ohio", "annual_savings_est": 1305.48 },
+      { "rank": 19, "state": "MI", "name": "Michigan", "annual_savings_est": 1303.01 },
+      { "rank": 20, "state": "GA", "name": "Georgia", "annual_savings_est": 1298.98 },
+      { "rank": 21, "state": "CT", "name": "Connecticut", "annual_savings_est": 1267.91 },
+      { "rank": 22, "state": "TX", "name": "Texas", "annual_savings_est": 1236.70 },
+      { "rank": 23, "state": "KS", "name": "Kansas", "annual_savings_est": 1234.82 },
+      { "rank": 24, "state": "UT", "name": "Utah", "annual_savings_est": 1221.92 },
+      { "rank": 25, "state": "MN", "name": "Minnesota", "annual_savings_est": 1217.70 },
+      { "rank": 26, "state": "VA", "name": "Virginia", "annual_savings_est": 1193.01 },
+      { "rank": 27, "state": "OK", "name": "Oklahoma", "annual_savings_est": 1189.49 },
+      { "rank": 28, "state": "MD", "name": "Maryland", "annual_savings_est": 1183.27 },
+      { "rank": 29, "state": "NC", "name": "North Carolina", "annual_savings_est": 1151.75 },
+      { "rank": 30, "state": "NY", "name": "New York", "annual_savings_est": 1148.47 },
+      { "rank": 31, "state": "TN", "name": "Tennessee", "annual_savings_est": 1095.59 },
+      { "rank": 32, "state": "AR", "name": "Arkansas", "annual_savings_est": 1088.92 },
+      { "rank": 33, "state": "MO", "name": "Missouri", "annual_savings_est": 1082.83 },
+      { "rank": 34, "state": "IL", "name": "Illinois", "annual_savings_est": 1071.96 },
+      { "rank": 35, "state": "SD", "name": "South Dakota", "annual_savings_est": 1047.79 },
+      { "rank": 36, "state": "NE", "name": "Nebraska", "annual_savings_est": 1037.46 },
+      { "rank": 37, "state": "MT", "name": "Montana", "annual_savings_est": 993.28 },
+      { "rank": 38, "state": "ID", "name": "Idaho", "annual_savings_est": 993.41 },
+      { "rank": 39, "state": "AK", "name": "Alaska", "annual_savings_est": 986.49 },
+      { "rank": 40, "state": "IN", "name": "Indiana", "annual_savings_est": 963.28 },
+      { "rank": 41, "state": "IA", "name": "Iowa", "annual_savings_est": 963.11 },
+      { "rank": 42, "state": "LA", "name": "Louisiana", "annual_savings_est": 954.06 },
+      { "rank": 43, "state": "WV", "name": "West Virginia", "annual_savings_est": 942.51 },
+      { "rank": 44, "state": "MS", "name": "Mississippi", "annual_savings_est": 923.60 },
+      { "rank": 45, "state": "ND", "name": "North Dakota", "annual_savings_est": 911.35 },
+      { "rank": 46, "state": "WA", "name": "Washington", "annual_savings_est": 864.11 },
+      { "rank": 47, "state": "PA", "name": "Pennsylvania", "annual_savings_est": 835.35 },
+      { "rank": 48, "state": "OR", "name": "Oregon", "annual_savings_est": 788.50 },
+      { "rank": 49, "state": "KY", "name": "Kentucky", "annual_savings_est": 780.74 },
+      { "rank": 50, "state": "ME", "name": "Maine", "annual_savings_est": 699.55 }
+    ],
+    "by_utility_rate": [
+      { "rank": 1, "state": "HI", "name": "Hawaii", "residential_rate": 0.351 },
+      { "rank": 2, "state": "VT", "name": "Vermont", "residential_rate": 0.1688 },
+      { "rank": 3, "state": "WI", "name": "Wisconsin", "residential_rate": 0.1579 },
+      { "rank": 4, "state": "DE", "name": "Delaware", "residential_rate": 0.1513 },
+      { "rank": 5, "state": "MA", "name": "Massachusetts", "residential_rate": 0.1491 },
+      { "rank": 6, "state": "NJ", "name": "New Jersey", "residential_rate": 0.1488 },
+      { "rank": 7, "state": "RI", "name": "Rhode Island", "residential_rate": 0.1424 },
+      { "rank": 8, "state": "NH", "name": "New Hampshire", "residential_rate": 0.1392 },
+      { "rank": 9, "state": "SC", "name": "South Carolina", "residential_rate": 0.1364 },
+      { "rank": 10, "state": "AK", "name": "Alaska", "residential_rate": 0.1348 },
+      { "rank": 11, "state": "MI", "name": "Michigan", "residential_rate": 0.1282 },
+      { "rank": 12, "state": "CT", "name": "Connecticut", "residential_rate": 0.1267 },
+      { "rank": 13, "state": "OH", "name": "Ohio", "residential_rate": 0.1265 },
+      { "rank": 14, "state": "FL", "name": "Florida", "residential_rate": 0.124 },
+      { "rank": 15, "state": "CA", "name": "California", "residential_rate": 0.1239 },
+      { "rank": 16, "state": "NM", "name": "New Mexico", "residential_rate": 0.1231 },
+      { "rank": 17, "state": "AZ", "name": "Arizona", "residential_rate": 0.1196 },
+      { "rank": 18, "state": "AL", "name": "Alabama", "residential_rate": 0.1174 },
+      { "rank": 19, "state": "NY", "name": "New York", "residential_rate": 0.1174 },
+      { "rank": 20, "state": "GA", "name": "Georgia", "residential_rate": 0.116 },
+      { "rank": 21, "state": "WY", "name": "Wyoming", "residential_rate": 0.1153 },
+      { "rank": 22, "state": "MN", "name": "Minnesota", "residential_rate": 0.1148 },
+      { "rank": 23, "state": "CO", "name": "Colorado", "residential_rate": 0.1105 },
+      { "rank": 24, "state": "NV", "name": "Nevada", "residential_rate": 0.1105 },
+      { "rank": 25, "state": "VA", "name": "Virginia", "residential_rate": 0.1104 },
+      { "rank": 26, "state": "KS", "name": "Kansas", "residential_rate": 0.107 },
+      { "rank": 27, "state": "MD", "name": "Maryland", "residential_rate": 0.1065 },
+      { "rank": 28, "state": "TX", "name": "Texas", "residential_rate": 0.1044 },
+      { "rank": 29, "state": "NC", "name": "North Carolina", "residential_rate": 0.1043 },
+      { "rank": 30, "state": "WA", "name": "Washington", "residential_rate": 0.1036 },
+      { "rank": 31, "state": "UT", "name": "Utah", "residential_rate": 0.1031 },
+      { "rank": 32, "state": "TN", "name": "Tennessee", "residential_rate": 0.1026 },
+      { "rank": 33, "state": "MO", "name": "Missouri", "residential_rate": 0.1017 },
+      { "rank": 34, "state": "IL", "name": "Illinois", "residential_rate": 0.0977 },
+      { "rank": 35, "state": "OK", "name": "Oklahoma", "residential_rate": 0.0976 },
+      { "rank": 36, "state": "AR", "name": "Arkansas", "residential_rate": 0.0965 },
+      { "rank": 37, "state": "WV", "name": "West Virginia", "residential_rate": 0.0957 },
+      { "rank": 38, "state": "MT", "name": "Montana", "residential_rate": 0.0931 },
+      { "rank": 39, "state": "SD", "name": "South Dakota", "residential_rate": 0.0926 },
+      { "rank": 40, "state": "IN", "name": "Indiana", "residential_rate": 0.0906 },
+      { "rank": 41, "state": "NE", "name": "Nebraska", "residential_rate": 0.089 },
+      { "rank": 42, "state": "IA", "name": "Iowa", "residential_rate": 0.0883 },
+      { "rank": 43, "state": "ID", "name": "Idaho", "residential_rate": 0.0855 },
+      { "rank": 44, "state": "ND", "name": "North Dakota", "residential_rate": 0.0828 },
+      { "rank": 45, "state": "OR", "name": "Oregon", "residential_rate": 0.0821 },
+      { "rank": 46, "state": "LA", "name": "Louisiana", "residential_rate": 0.082 },
+      { "rank": 47, "state": "PA", "name": "Pennsylvania", "residential_rate": 0.082 },
+      { "rank": 48, "state": "MS", "name": "Mississippi", "residential_rate": 0.0817 },
+      { "rank": 49, "state": "KY", "name": "Kentucky", "residential_rate": 0.074 },
+      { "rank": 50, "state": "ME", "name": "Maine", "residential_rate": 0.0694 }
+    ]
+  }
+}

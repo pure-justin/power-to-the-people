@@ -1,185 +1,186 @@
 {
   "state": "NC",
   "state_name": "North Carolina",
-  "data_compiled": "2026-02-08",
-  "general_requirements": {
-    "permit_required": true,
-    "permit_type": "both",
-    "typical_fee_range": "$100-$400",
-    "typical_timeline_days": "5-21",
-    "inspection_required": true,
-    "inspection_stages": [
-      "rough_electrical",
-      "final"
-    ],
-    "statewide_permit_program": false,
-    "statewide_program_name": "Building permit required for projects $20,000+. Electrical contractor license required for all PV. Limited license for installations under $60,000."
-  },
-  "interconnection": {
-    "utility_approval_required": true,
-    "net_metering_available": true,
-    "net_metering_details": "Net metering available for systems up to 1 MW. Duke Energy and Dominion Energy are primary utilities. Avoided cost rate for excess generation.",
-    "typical_timeline_days": "30-60",
-    "fees": "Varies by utility; Duke Energy typically $0 for residential interconnection"
-  },
-  "special_considerations": {
-    "hoa_restrictions": "NC Gen. Stat. 22B-20 prohibits HOA covenants that prevent solar installation.",
-    "historic_districts": "Additional review required in historic districts.",
-    "wind_load_requirements": "Coastal areas have enhanced wind requirements. Design wind speeds 100-150 mph on coast.",
-    "snow_load_requirements": "Mountain areas may have snow load requirements up to 30 psf."
-  },
-  "licensing": {
-    "contractor_license_required": true,
-    "license_type": "NC General Contractors License or Electrical Contractor license. NCLBGC licensing required.",
-    "nabcep_required": false
-  },
-  "notes": "North Carolina is a major solar state ranking #4 nationally in installed capacity. Raleigh offers same-day online permitting for standard residential rooftop systems. Fragmented municipal requirements can extend timelines.",
+  "last_updated": "2026-02-08",
   "jurisdictions": [
     {
-      "jurisdiction_id": "charlotte_nc",
-      "name": "Charlotte",
-      "state": "NC",
+      "jurisdiction_id": "nc_charlotte",
+      "name": "City of Charlotte",
+      "county": "Mecklenburg",
       "type": "city",
-      "population": 874579,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://www.charlottenc.gov/Growth-and-Development/Getting-a-Permit",
-      "submission_method": "online",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": 20,
-      "fees": {
-        "base_fee": 150,
-        "per_kw": null,
-        "inspection_fee": 75,
-        "estimated_total_residential": 275
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
       },
-      "typical_timeline_days": 10,
-      "fire_code_requirements": "Standard IFC setbacks.",
-      "rapid_shutdown_required": true,
-      "contacts": {
+      "fees": {
+        "permit_fee_range": "$150-$300",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
         "department": "Code Enforcement",
         "phone": "704-336-2431",
-        "url": "https://www.charlottenc.gov"
+        "website": "https://www.charlottenc.gov/Growth-and-Development/Getting-a-Permit",
+        "online_portal": true
       },
-      "special_requirements": [
-        "Duke Energy Carolinas interconnection"
-      ],
-      "notes": "Standard NC permitting. Duke Energy Carolinas handles interconnection.",
-      "source_url": "https://www.charlottenc.gov",
-      "updated_at": "2026-02-08"
+      "notes": "PE stamp required for systems >20 kW. Duke Energy Carolinas interconnection."
     },
     {
-      "jurisdiction_id": "raleigh_nc",
-      "name": "Raleigh",
-      "state": "NC",
+      "jurisdiction_id": "nc_raleigh",
+      "name": "City of Raleigh",
+      "county": "Wake",
       "type": "city",
-      "population": 467665,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://raleighnc.gov/permits/services/residential-solar-photovoltaic-pv-system",
-      "submission_method": "online",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": 20,
-      "fees": {
-        "base_fee": 100,
-        "per_kw": null,
-        "inspection_fee": 50,
-        "estimated_total_residential": 200
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": false,
+        "inspection_required": true
       },
-      "typical_timeline_days": 1,
-      "fire_code_requirements": "Standard IFC setbacks.",
-      "rapid_shutdown_required": true,
-      "contacts": {
+      "fees": {
+        "permit_fee_range": "$100-$200",
+        "plan_review_fee": "included",
+        "inspection_fee": "$50"
+      },
+      "timeline": {
+        "plan_review_days": 0,
+        "permit_issuance_days": 1,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 4
+      },
+      "contact": {
         "department": "Development Services",
         "phone": "919-996-2499",
-        "url": "https://raleighnc.gov"
+        "website": "https://raleighnc.gov/permits/services/residential-solar-photovoltaic-pv-system",
+        "online_portal": true
       },
-      "special_requirements": [
-        "Same-day online permitting via Permit Portal",
-        "Duke Energy Progress interconnection"
-      ],
-      "notes": "Most residential rooftop solar eligible for same-day online permitting. Work must begin within 6 months.",
-      "source_url": "https://raleighnc.gov/permits/services/residential-solar-photovoltaic-pv-system",
-      "updated_at": "2026-02-08"
+      "notes": "SolSmart Silver designated city (working toward Gold). Most residential rooftop solar eligible for same-day online permitting via Permit Portal. Work must begin within 6 months. Duke Energy Progress interconnection."
     },
     {
-      "jurisdiction_id": "greensboro_nc",
-      "name": "Greensboro",
-      "state": "NC",
+      "jurisdiction_id": "nc_greensboro",
+      "name": "City of Greensboro",
+      "county": "Guilford",
       "type": "city",
-      "population": 299035,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://www.greensboro-nc.gov/departments/field-operations/inspections-permits",
-      "submission_method": "online",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": 20,
-      "fees": {
-        "base_fee": 125,
-        "per_kw": null,
-        "inspection_fee": 50,
-        "estimated_total_residential": 225
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
       },
-      "typical_timeline_days": 7,
-      "fire_code_requirements": "Standard IFC setbacks.",
-      "rapid_shutdown_required": true,
-      "contacts": {
+      "fees": {
+        "permit_fee_range": "$125-$250",
+        "plan_review_fee": "included",
+        "inspection_fee": "$50"
+      },
+      "timeline": {
+        "plan_review_days": 3,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 9
+      },
+      "contact": {
         "department": "Inspections & Permits",
         "phone": "336-373-2464",
-        "url": "https://www.greensboro-nc.gov"
+        "website": "https://www.greensboro-nc.gov/departments/field-operations/inspections-permits",
+        "online_portal": true
       },
-      "special_requirements": [
-        "Duke Energy interconnection"
-      ],
-      "notes": "Standard NC permitting process.",
-      "source_url": "https://www.greensboro-nc.gov",
-      "updated_at": "2026-02-08"
+      "notes": "Standard NC permitting process. Duke Energy interconnection."
     },
     {
-      "jurisdiction_id": "durham_nc",
-      "name": "Durham",
-      "state": "NC",
+      "jurisdiction_id": "nc_durham",
+      "name": "City of Durham",
+      "county": "Durham",
       "type": "city",
-      "population": 283506,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://www.durhamnc.gov/293/Building-Permits",
-      "submission_method": "online",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": 20,
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
       "fees": {
-        "base_fee": 125,
-        "per_kw": null,
-        "inspection_fee": 50,
-        "estimated_total_residential": 225
+        "permit_fee_range": "$125-$250",
+        "plan_review_fee": "included",
+        "inspection_fee": "$50"
       },
-      "typical_timeline_days": 7,
-      "fire_code_requirements": "Standard IFC setbacks.",
-      "rapid_shutdown_required": true,
-      "contacts": {
-        "department": "Inspections Dept",
+      "timeline": {
+        "plan_review_days": 3,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 9
+      },
+      "contact": {
+        "department": "Inspections Department",
         "phone": "919-560-4144",
-        "url": "https://www.durhamnc.gov"
+        "website": "https://www.durhamnc.gov/293/Building-Permits",
+        "online_portal": true
       },
-      "special_requirements": [
-        "Duke Energy Progress interconnection"
-      ],
-      "notes": "Standard NC permitting.",
-      "source_url": "https://www.durhamnc.gov",
-      "updated_at": "2026-02-08"
+      "notes": "SolSmart designated community. Duke Energy Progress interconnection."
+    },
+    {
+      "jurisdiction_id": "nc_wilmington",
+      "name": "City of Wilmington",
+      "county": "New Hanover",
+      "type": "city",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": true,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$150-$350",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
+        "department": "Development Services",
+        "phone": "910-341-3253",
+        "website": "https://www.wilmingtonnc.gov/departments/development-services",
+        "online_portal": true
+      },
+      "notes": "Coastal wind load requirements (design wind speed 130-150 mph). Structural engineering may be required. Duke Energy Progress interconnection."
     }
   ],
-  "jurisdiction_count": 4
+  "state_level_requirements": {
+    "contractor_license_required": true,
+    "contractor_license_type": "NC General Contractors License or Electrical Contractor license (NCLBGC). Limited license for installations under $60,000.",
+    "interconnection_agreement": true,
+    "net_metering_available": true,
+    "net_metering_details": "Net metering for systems up to 1 MW. Duke Energy and Dominion Energy are primary utilities. Avoided cost rate for excess generation.",
+    "solar_access_law": true,
+    "solar_access_details": "NC Gen. Stat. 22B-20: Prohibits HOA covenants that prevent solar installation.",
+    "solarapp_participating": false,
+    "solarapp_details": "No statewide SolarAPP+ program but many municipalities (Raleigh, Durham, Chapel Hill, Cary, Apex) have SolSmart designations with streamlined permitting.",
+    "property_tax_exemption": true,
+    "sales_tax_exemption": false,
+    "state_incentive_program": "Property tax exemption (80% of appraised value of solar); no state tax credit; Duke Energy rebate programs"
+  }
 }

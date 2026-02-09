@@ -1,294 +1,252 @@
 {
   "state": "AZ",
   "state_name": "Arizona",
-  "data_compiled": "2026-02-08",
-  "general_requirements": {
-    "permit_required": true,
-    "permit_type": "both",
-    "typical_fee_range": "$200-$500",
-    "typical_timeline_days": "5-14",
-    "inspection_required": true,
-    "inspection_stages": [
-      "final"
-    ],
-    "statewide_permit_program": true,
-    "statewide_program_name": "ARS 11-323 Standardized Solar Construction Permits - requires counties to adopt standardized permitting for residential systems under 10 kW"
-  },
-  "interconnection": {
-    "utility_approval_required": true,
-    "net_metering_available": false,
-    "net_metering_details": "Arizona transitioned from net metering to net billing (export rate) in 2017. APS and TEP use Resource Comparison Proxy (RCP) rates for solar exports, significantly below retail rates. SRP uses demand-based rate plans for solar customers.",
-    "typical_timeline_days": "10-30",
-    "fees": "APS: $150 interconnection fee typical; SRP: varies by plan"
-  },
-  "special_considerations": {
-    "hoa_restrictions": "Strong solar access law (ARS 33-1816). HOAs cannot prohibit solar installations but may adopt reasonable rules regarding placement that do not prevent installation, impair functioning, or adversely affect cost/efficiency.",
-    "historic_districts": "Local historic preservation commissions may review solar installations in designated historic districts; varies by municipality.",
-    "wind_load_requirements": "Standard IBC wind load requirements apply. Design wind speeds typically 90-115 mph.",
-    "snow_load_requirements": "Flagstaff and northern mountain areas have significant snow loads (30-60 psf ground snow load). Most of the state has minimal snow load requirements."
-  },
-  "licensing": {
-    "contractor_license_required": true,
-    "license_type": "ROC (Registrar of Contractors) license required; CR-11 Electrical or KB-2 General Residential Contractor with solar-specific experience",
-    "nabcep_required": false
-  },
-  "notes": "Arizona has streamlined solar permitting through ARS 11-323, which requires standardized permit processes for residential solar. The state pioneered distributed solar but has seen controversy over rate changes reducing export compensation. SRP's demand-based rates have been particularly contentious. Many jurisdictions participate in SolSmart or SolarAPP+ for expedited permitting. Strong solar resource makes Arizona one of the best states for solar generation despite policy headwinds.",
+  "last_updated": "2026-02-08",
   "jurisdictions": [
     {
-      "jurisdiction_id": "phoenix_az",
-      "name": "Phoenix",
-      "state": "AZ",
+      "jurisdiction_id": "az_phoenix",
+      "name": "City of Phoenix",
+      "county": "Maricopa",
       "type": "city",
-      "population": 1608139,
-      "solarapp_enabled": true,
-      "permit_portal_url": "https://www.phoenix.gov/pdd",
-      "submission_method": "online",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": null,
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": false,
+        "inspection_required": true
+      },
       "fees": {
-        "base_fee": 300,
-        "per_kw": null,
-        "inspection_fee": 0,
-        "estimated_total_residential": 300
+        "permit_fee_range": "$300",
+        "plan_review_fee": "included",
+        "inspection_fee": "included"
       },
-      "typical_timeline_days": 1,
-      "fire_code_requirements": "Phoenix Fire Dept requires separate permit for PV and battery storage systems. Standard setbacks.",
-      "rapid_shutdown_required": true,
-      "contacts": {
-        "department": "Planning & Development Dept",
+      "timeline": {
+        "plan_review_days": 0,
+        "permit_issuance_days": 1,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 4
+      },
+      "contact": {
+        "department": "Planning & Development Department",
         "phone": "602-262-7811",
-        "url": "https://www.phoenix.gov/pdd"
+        "website": "https://www.phoenix.gov/pdd",
+        "online_portal": true
       },
-      "special_requirements": [
-        "SolarAPP+ accepted",
-        "Separate Phoenix Fire Dept permit required",
-        "APS or SRP interconnection"
-      ],
-      "notes": "SolarAPP+ approved designs accepted. $300 roof-mounted permit includes all plan reviews and inspection. Separate fire department permit required.",
-      "source_url": "https://www.phoenix.gov/pdd/residential-building/resident-plan-reviews/solarapp-photovoltaic.html",
-      "updated_at": "2026-02-08"
+      "notes": "SolarAPP+ accepted for instant permit approval. $300 roof-mounted permit includes all plan reviews and inspection. Separate fire department permit required. APS or SRP interconnection depending on location."
     },
     {
-      "jurisdiction_id": "tucson_az",
-      "name": "Tucson",
-      "state": "AZ",
+      "jurisdiction_id": "az_tucson",
+      "name": "City of Tucson",
+      "county": "Pima",
       "type": "city",
-      "population": 542629,
-      "solarapp_enabled": true,
-      "permit_portal_url": "https://www.tucsonaz.gov/Departments/Planning-Development-Services/Permits/Residential-Solar-Permits",
-      "submission_method": "online",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": null,
-      "fees": {
-        "base_fee": 250,
-        "per_kw": null,
-        "inspection_fee": 0,
-        "estimated_total_residential": 250
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": false,
+        "inspection_required": true
       },
-      "typical_timeline_days": 1,
-      "fire_code_requirements": "Standard fire setbacks. Pima County may have additional requirements.",
-      "rapid_shutdown_required": true,
-      "contacts": {
+      "fees": {
+        "permit_fee_range": "$250",
+        "plan_review_fee": "included",
+        "inspection_fee": "included"
+      },
+      "timeline": {
+        "plan_review_days": 0,
+        "permit_issuance_days": 1,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 4
+      },
+      "contact": {
         "department": "Planning & Development Services",
         "phone": "520-791-5550",
-        "url": "https://www.tucsonaz.gov"
+        "website": "https://www.tucsonaz.gov/Departments/Planning-Development-Services/Permits/Residential-Solar-Permits",
+        "online_portal": true
       },
-      "special_requirements": [
-        "SolarAPP+ accepted",
-        "TEP interconnection"
-      ],
-      "notes": "SolarAPP accepted for residential PV. Tucson Electric Power handles interconnection.",
-      "source_url": "https://www.tucsonaz.gov/Departments/Planning-Development-Services/Permits/Residential-Solar-Permits",
-      "updated_at": "2026-02-08"
+      "notes": "SolarAPP+ accepted for residential PV. Tucson Electric Power (TEP) handles interconnection."
     },
     {
-      "jurisdiction_id": "mesa_az",
-      "name": "Mesa",
-      "state": "AZ",
+      "jurisdiction_id": "az_mesa",
+      "name": "City of Mesa",
+      "county": "Maricopa",
       "type": "city",
-      "population": 504258,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://www.mesaaz.gov/business/development-services",
-      "submission_method": "online",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": null,
-      "fees": {
-        "base_fee": 275,
-        "per_kw": null,
-        "inspection_fee": 0,
-        "estimated_total_residential": 275
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
       },
-      "typical_timeline_days": 5,
-      "fire_code_requirements": "Standard fire setbacks per IFC.",
-      "rapid_shutdown_required": true,
-      "contacts": {
+      "fees": {
+        "permit_fee_range": "$275",
+        "plan_review_fee": "included",
+        "inspection_fee": "included"
+      },
+      "timeline": {
+        "plan_review_days": 3,
+        "permit_issuance_days": 2,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 8
+      },
+      "contact": {
         "department": "Development Services",
         "phone": "480-644-2211",
-        "url": "https://www.mesaaz.gov"
+        "website": "https://www.mesaaz.gov/business/development-services",
+        "online_portal": true
       },
-      "special_requirements": [
-        "APS or SRP interconnection depending on location"
-      ],
-      "notes": "Standard Arizona permitting. Split between APS and SRP service territories.",
-      "source_url": "https://www.mesaaz.gov",
-      "updated_at": "2026-02-08"
+      "notes": "Standard Arizona permitting. Split between APS and SRP service territories. Mesa has its own electric utility for some areas."
     },
     {
-      "jurisdiction_id": "chandler_az",
-      "name": "Chandler",
-      "state": "AZ",
+      "jurisdiction_id": "az_chandler",
+      "name": "City of Chandler",
+      "county": "Maricopa",
       "type": "city",
-      "population": 275987,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://www.chandleraz.gov/government/departments/development-services",
-      "submission_method": "online",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": null,
-      "fees": {
-        "base_fee": 250,
-        "per_kw": null,
-        "inspection_fee": 0,
-        "estimated_total_residential": 250
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
       },
-      "typical_timeline_days": 5,
-      "fire_code_requirements": "Standard IFC setbacks.",
-      "rapid_shutdown_required": true,
-      "contacts": {
+      "fees": {
+        "permit_fee_range": "$250",
+        "plan_review_fee": "included",
+        "inspection_fee": "included"
+      },
+      "timeline": {
+        "plan_review_days": 3,
+        "permit_issuance_days": 2,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 8
+      },
+      "contact": {
         "department": "Development Services",
         "phone": "480-782-3000",
-        "url": "https://www.chandleraz.gov"
+        "website": "https://www.chandleraz.gov/government/departments/development-services",
+        "online_portal": true
       },
-      "special_requirements": [
-        "SRP interconnection"
-      ],
-      "notes": "Standard Arizona permitting process. SRP service territory.",
-      "source_url": "https://www.chandleraz.gov",
-      "updated_at": "2026-02-08"
+      "notes": "Standard Arizona permitting process. SRP service territory."
     },
     {
-      "jurisdiction_id": "scottsdale_az",
-      "name": "Scottsdale",
-      "state": "AZ",
+      "jurisdiction_id": "az_scottsdale",
+      "name": "City of Scottsdale",
+      "county": "Maricopa",
       "type": "city",
-      "population": 241361,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://www.scottsdaleaz.gov/planning-development/permit-services",
-      "submission_method": "online",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": null,
-      "fees": {
-        "base_fee": 275,
-        "per_kw": null,
-        "inspection_fee": 0,
-        "estimated_total_residential": 275
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
       },
-      "typical_timeline_days": 5,
-      "fire_code_requirements": "Standard IFC setbacks.",
-      "rapid_shutdown_required": true,
-      "contacts": {
+      "fees": {
+        "permit_fee_range": "$275",
+        "plan_review_fee": "included",
+        "inspection_fee": "included"
+      },
+      "timeline": {
+        "plan_review_days": 3,
+        "permit_issuance_days": 2,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 8
+      },
+      "contact": {
         "department": "Planning & Development",
         "phone": "480-312-2500",
-        "url": "https://www.scottsdaleaz.gov"
+        "website": "https://www.scottsdaleaz.gov/planning-development/permit-services",
+        "online_portal": true
       },
-      "special_requirements": [
-        "SRP or APS interconnection"
-      ],
-      "notes": "Standard Arizona permitting process.",
-      "source_url": "https://www.scottsdaleaz.gov/planning-development/permit-services",
-      "updated_at": "2026-02-08"
+      "notes": "Standard Arizona permitting. SRP or APS interconnection depending on location."
     },
     {
-      "jurisdiction_id": "gilbert_az",
-      "name": "Gilbert",
-      "state": "AZ",
+      "jurisdiction_id": "az_gilbert",
+      "name": "Town of Gilbert",
+      "county": "Maricopa",
       "type": "city",
-      "population": 267918,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://www.gilbertaz.gov/departments/development-services",
-      "submission_method": "online",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": null,
-      "fees": {
-        "base_fee": 250,
-        "per_kw": null,
-        "inspection_fee": 0,
-        "estimated_total_residential": 250
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
       },
-      "typical_timeline_days": 5,
-      "fire_code_requirements": "Standard IFC setbacks.",
-      "rapid_shutdown_required": true,
-      "contacts": {
+      "fees": {
+        "permit_fee_range": "$250",
+        "plan_review_fee": "included",
+        "inspection_fee": "included"
+      },
+      "timeline": {
+        "plan_review_days": 3,
+        "permit_issuance_days": 2,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 8
+      },
+      "contact": {
         "department": "Development Services",
         "phone": "480-503-6700",
-        "url": "https://www.gilbertaz.gov"
+        "website": "https://www.gilbertaz.gov/departments/development-services",
+        "online_portal": true
       },
-      "special_requirements": [
-        "SRP interconnection"
-      ],
-      "notes": "Standard Arizona permitting. SRP service territory.",
-      "source_url": "https://www.gilbertaz.gov",
-      "updated_at": "2026-02-08"
+      "notes": "Standard Arizona permitting. SRP service territory."
     },
     {
-      "jurisdiction_id": "glendale_az",
-      "name": "Glendale",
-      "state": "AZ",
+      "jurisdiction_id": "az_tempe",
+      "name": "City of Tempe",
+      "county": "Maricopa",
       "type": "city",
-      "population": 248325,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://www.glendaleaz.com/government/departments/building-safety",
-      "submission_method": "online",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": null,
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
       "fees": {
-        "base_fee": 250,
-        "per_kw": null,
-        "inspection_fee": 0,
-        "estimated_total_residential": 250
+        "permit_fee_range": "$250-$300",
+        "plan_review_fee": "included",
+        "inspection_fee": "included"
       },
-      "typical_timeline_days": 5,
-      "fire_code_requirements": "Standard IFC setbacks.",
-      "rapid_shutdown_required": true,
-      "contacts": {
-        "department": "Building Safety",
-        "phone": "623-930-2580",
-        "url": "https://www.glendaleaz.com"
+      "timeline": {
+        "plan_review_days": 3,
+        "permit_issuance_days": 2,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 8
       },
-      "special_requirements": [
-        "APS interconnection"
-      ],
-      "notes": "Standard Arizona permitting. APS service territory.",
-      "source_url": "https://www.glendaleaz.com",
-      "updated_at": "2026-02-08"
+      "contact": {
+        "department": "Development Services",
+        "phone": "480-350-8271",
+        "website": "https://www.tempe.gov/government/community-development/development-services",
+        "online_portal": true
+      },
+      "notes": "Standard Arizona permitting. APS or SRP interconnection."
     }
   ],
-  "jurisdiction_count": 7
+  "state_level_requirements": {
+    "contractor_license_required": true,
+    "contractor_license_type": "ROC CR-11 Electrical or KB-2 General Residential Contractor",
+    "interconnection_agreement": true,
+    "net_metering_available": false,
+    "net_metering_details": "Transitioned from net metering to net billing in 2017. APS and TEP use Resource Comparison Proxy (RCP) rates for solar exports, significantly below retail. SRP uses demand-based rate plans.",
+    "solar_access_law": true,
+    "solar_access_details": "ARS 33-1816: HOAs cannot prohibit solar. May impose reasonable restrictions that do not prevent installation, impair functioning, or adversely affect cost/efficiency.",
+    "solarapp_participating": true,
+    "solarapp_details": "ARS 11-323 requires counties to adopt standardized permitting for residential systems under 10 kW. Phoenix and Tucson accept SolarAPP+.",
+    "property_tax_exemption": true,
+    "sales_tax_exemption": false,
+    "state_incentive_program": "Arizona residential solar tax credit (25% up to $1,000); property tax exemption"
+  }
 }

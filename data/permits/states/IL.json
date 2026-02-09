@@ -1,78 +1,186 @@
 {
   "state": "IL",
   "state_name": "Illinois",
-  "data_compiled": "2026-02-08",
-  "general_requirements": {
-    "permit_required": true,
-    "permit_type": "both",
-    "typical_fee_range": "$100-$500",
-    "typical_timeline_days": "5-14",
-    "inspection_required": true,
-    "inspection_stages": [
-      "final"
-    ],
-    "statewide_permit_program": false,
-    "statewide_program_name": null
-  },
-  "interconnection": {
-    "utility_approval_required": true,
-    "net_metering_available": true,
-    "net_metering_details": "Illinois has net metering for systems up to 2 MW. Credits at full retail rate including supply and delivery charges. Monthly rollover. Illinois is transitioning under the Climate and Equitable Jobs Act (CEJA) toward a new distributed generation compensation structure. ComEd and Ameren Illinois are the major utilities.",
-    "typical_timeline_days": "10-30",
-    "fees": "ComEd: no interconnection fee for systems under 25 kW; Ameren: varies"
-  },
-  "special_considerations": {
-    "hoa_restrictions": "Strong solar access law (Homeowners' Energy Policy Statement Act, 2021). HOAs cannot prohibit solar installations. May impose only reasonable restrictions that do not significantly increase cost or decrease efficiency.",
-    "historic_districts": "Chicago and other cities have historic preservation commissions. Landmarks and historic districts require additional review. Chicago has specific guidelines for solar on historic properties.",
-    "wind_load_requirements": "Standard IBC wind load requirements. Design wind speeds typically 90-105 mph.",
-    "snow_load_requirements": "Moderate snow loads throughout the state (15-30 psf ground snow load). Northern Illinois has higher requirements."
-  },
-  "licensing": {
-    "contractor_license_required": true,
-    "license_type": "No dedicated state solar license. Electrical contractor license required for PV work. Chicago has specific licensing requirements including licensed electricians.",
-    "nabcep_required": false
-  },
-  "notes": "Illinois is a top solar market driven by the Adjustable Block Program under CEJA, which provides substantial incentives. Illinois Solar for All program targets low-income communities. Strong net metering with retail rate credits. SREC/REC market provides additional revenue. ComEd territory covers the Chicago metro area. Relatively fast permitting (median 30 days total). The state has both property and sales tax exemptions for solar equipment.",
+  "last_updated": "2026-02-08",
   "jurisdictions": [
     {
-      "jurisdiction_id": "chicago_il",
-      "name": "Chicago",
-      "state": "IL",
+      "jurisdiction_id": "il_chicago",
+      "name": "City of Chicago",
+      "county": "Cook",
       "type": "city",
-      "population": 2746388,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://www.chicago.gov/city/en/sites/guide-to-building-permits/home/instructions/EPP/SOLAR.html",
-      "submission_method": "online",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": null,
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": false,
+        "inspection_required": true
+      },
       "fees": {
-        "base_fee": 275,
-        "per_kw": null,
-        "inspection_fee": 0,
-        "estimated_total_residential": 275
+        "permit_fee_range": "$275",
+        "plan_review_fee": "included",
+        "inspection_fee": "included"
       },
-      "typical_timeline_days": 1,
-      "fire_code_requirements": "Chicago fire code setbacks.",
-      "rapid_shutdown_required": true,
-      "contacts": {
-        "department": "Dept of Buildings",
+      "timeline": {
+        "plan_review_days": 0,
+        "permit_issuance_days": 1,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 4
+      },
+      "contact": {
+        "department": "Department of Buildings",
         "phone": "312-744-3449",
-        "url": "https://www.chicago.gov"
+        "website": "https://www.chicago.gov/city/en/sites/guide-to-building-permits/home/instructions/EPP/SOLAR.html",
+        "online_portal": true
       },
-      "special_requirements": [
-        "Express Permit Program: same-day at $275",
-        "Licensed electrical contractor + ICC DG Installer cert required",
-        "ComEd interconnection",
-        "IL Shines SREC program"
-      ],
-      "notes": "Express Permit Program offers same-day approval at $275 (reduced from $375). Requires licensed electrical contractor and ICC DG Installer certification.",
-      "source_url": "https://www.chicago.gov/city/en/sites/guide-to-building-permits/home/instructions/EPP/SOLAR.html",
-      "updated_at": "2026-02-08"
+      "notes": "Express Permit Program (EPP) offers same-day approval at $275 flat fee. Requires licensed electrical contractor and ICC DG Installer certification. ComEd interconnection. IL Shines SREC program. Landmarks/historic district review may apply."
+    },
+    {
+      "jurisdiction_id": "il_aurora",
+      "name": "City of Aurora",
+      "county": "Kane/DuPage",
+      "type": "city",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$100-$250",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
+        "department": "Building Division",
+        "phone": "630-256-3080",
+        "website": "https://www.aurora-il.org/161/Building-Division",
+        "online_portal": true
+      },
+      "notes": "Standard IL permitting. ComEd interconnection. IL Adjustable Block Program incentives available."
+    },
+    {
+      "jurisdiction_id": "il_naperville",
+      "name": "City of Naperville",
+      "county": "DuPage/Will",
+      "type": "city",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$100-$250",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
+        "department": "Transportation, Engineering & Development",
+        "phone": "630-420-6100",
+        "website": "https://www.naperville.il.us/permits-licenses-and-codes/",
+        "online_portal": true
+      },
+      "notes": "SolSmart designated community. ComEd interconnection. Naperville has own electric utility for some areas."
+    },
+    {
+      "jurisdiction_id": "il_rockford",
+      "name": "City of Rockford",
+      "county": "Winnebago",
+      "type": "city",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$100-$250",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
+        "department": "Community & Economic Development",
+        "phone": "815-987-5600",
+        "website": "https://rockfordil.gov/community-economic-development/building-division/",
+        "online_portal": true
+      },
+      "notes": "Standard IL permitting. ComEd interconnection. Northern IL snow loads 25-30 psf."
+    },
+    {
+      "jurisdiction_id": "il_springfield",
+      "name": "City of Springfield",
+      "county": "Sangamon",
+      "type": "city",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$100-$250",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
+        "department": "Office of Planning & Economic Development",
+        "phone": "217-789-2377",
+        "website": "https://www.springfield.il.us/Departments/OPED/default.aspx",
+        "online_portal": false
+      },
+      "notes": "Standard IL permitting. CWLP (City Water Light & Power) municipal utility provides interconnection. Ameren Illinois may serve surrounding areas."
     }
   ],
-  "jurisdiction_count": 1
+  "state_level_requirements": {
+    "contractor_license_required": true,
+    "contractor_license_type": "No dedicated state solar license. Licensed electrical contractor required for PV work. ICC Distributed Generation (DG) Installer certification required in Chicago. Chicago has specific licensing requirements.",
+    "interconnection_agreement": true,
+    "net_metering_available": true,
+    "net_metering_details": "Net metering for systems up to 2 MW. As of January 1, 2025, Illinois transitioned to supply-only net metering for new installations (credits for supply portion only, not delivery charges). ComEd and Ameren Illinois are major utilities. Monthly rollover.",
+    "solar_access_law": true,
+    "solar_access_details": "Homeowners' Energy Policy Statement Act (2021): HOAs cannot prohibit solar installations. May impose only reasonable restrictions that do not significantly increase cost or decrease efficiency.",
+    "solarapp_participating": false,
+    "solarapp_details": "Illinois Solar Energy Association promotes SolarAPP+ adoption. No statewide mandate. Chicago Express Permit Program provides same-day permitting alternative.",
+    "property_tax_exemption": true,
+    "sales_tax_exemption": true,
+    "state_incentive_program": "Adjustable Block Program (IL Shines) under CEJA provides substantial SREC incentives; Illinois Solar for All (low-income); property and sales tax exemptions; supply-only net metering (post-2025); Community Solar program"
+  }
 }

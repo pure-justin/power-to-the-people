@@ -1,76 +1,186 @@
 {
   "state": "UT",
   "state_name": "Utah",
-  "data_compiled": "2026-02-08",
-  "general_requirements": {
-    "permit_required": true,
-    "permit_type": "both",
-    "typical_fee_range": "$100-$400",
-    "typical_timeline_days": "5-14",
-    "inspection_required": true,
-    "inspection_stages": [
-      "final"
-    ],
-    "statewide_permit_program": false,
-    "statewide_program_name": "Building and electrical permits required. Utah Clean Energy provides Model Solar Permit for municipalities. Salt Lake City offers online solar permitting."
-  },
-  "interconnection": {
-    "utility_approval_required": true,
-    "net_metering_available": true,
-    "net_metering_details": "Rocky Mountain Power net metering with export credit rate. Rate has been declining over recent years.",
-    "typical_timeline_days": "14-30",
-    "fees": "Rocky Mountain Power interconnection fee varies"
-  },
-  "special_considerations": {
-    "hoa_restrictions": "Utah Code 57-13a-102 protects solar access rights.",
-    "historic_districts": "Local review required in historic districts.",
-    "wind_load_requirements": "Standard IBC wind loads. Design wind speeds 85-100 mph.",
-    "snow_load_requirements": "Significant snow loads in mountain areas. Wasatch Front 30-60 psf."
-  },
-  "licensing": {
-    "contractor_license_required": true,
-    "license_type": "Utah DOPL licensed contractor required. Electrical contractor license for electrical work.",
-    "nabcep_required": false
-  },
-  "notes": "Growing solar market. PE stamps typically required for systems >12 kW in Salt Lake City metro. Model Solar Permit toolkit available for municipalities.",
+  "last_updated": "2026-02-08",
   "jurisdictions": [
     {
-      "jurisdiction_id": "salt_lake_city_ut",
+      "jurisdiction_id": "ut_salt_lake_city",
       "name": "Salt Lake City",
-      "state": "UT",
+      "county": "Salt Lake",
       "type": "city",
-      "population": 199723,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://www.slc.gov/buildingservices/solar-pv/",
-      "submission_method": "online",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": 12,
-      "fees": {
-        "base_fee": 150,
-        "per_kw": null,
-        "inspection_fee": 75,
-        "estimated_total_residential": 275
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
       },
-      "typical_timeline_days": 7,
-      "fire_code_requirements": "Standard IFC setbacks.",
-      "rapid_shutdown_required": true,
-      "contacts": {
+      "fees": {
+        "permit_fee_range": "$150-$300",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 3,
+        "permit_issuance_days": 2,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 8
+      },
+      "contact": {
         "department": "Building Services",
         "phone": "801-535-6000",
-        "url": "https://www.slc.gov/buildingservices"
+        "website": "https://www.slc.gov/buildingservices/solar-pv/",
+        "online_portal": true
       },
-      "special_requirements": [
-        "Online solar permitting",
-        "Rocky Mountain Power interconnection"
-      ],
-      "notes": "Online solar permitting available. PE stamps typically required >12 kW. Rocky Mountain Power handles interconnection.",
-      "source_url": "https://www.slc.gov/buildingservices/solar-pv/",
-      "updated_at": "2026-02-08"
+      "notes": "Online solar permitting available. PE stamps typically required for systems >12 kW. Rocky Mountain Power interconnection. SolSmart designated."
+    },
+    {
+      "jurisdiction_id": "ut_west_valley_city",
+      "name": "West Valley City",
+      "county": "Salt Lake",
+      "type": "city",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$100-$250",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
+        "department": "Community Development",
+        "phone": "801-963-3228",
+        "website": "https://www.wvc-ut.gov/183/Community-Development",
+        "online_portal": true
+      },
+      "notes": "Standard UT permitting. Rocky Mountain Power interconnection. Wasatch Front snow loads 30-40 psf."
+    },
+    {
+      "jurisdiction_id": "ut_provo",
+      "name": "City of Provo",
+      "county": "Utah",
+      "type": "city",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$100-$250",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
+        "department": "Community Development",
+        "phone": "801-852-6400",
+        "website": "https://www.provo.org/departments/community-development",
+        "online_portal": true
+      },
+      "notes": "Standard UT permitting. Provo Power (municipal utility) interconnection. Utah County snow loads 30-50 psf."
+    },
+    {
+      "jurisdiction_id": "ut_west_jordan",
+      "name": "City of West Jordan",
+      "county": "Salt Lake",
+      "type": "city",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$100-$250",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
+        "department": "Building Department",
+        "phone": "801-569-5070",
+        "website": "https://www.westjordan.utah.gov/departments/community-development/building/",
+        "online_portal": true
+      },
+      "notes": "Standard UT permitting. Rocky Mountain Power interconnection."
+    },
+    {
+      "jurisdiction_id": "ut_ogden",
+      "name": "City of Ogden",
+      "county": "Weber",
+      "type": "city",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$100-$250",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
+        "department": "Building Services",
+        "phone": "801-629-8930",
+        "website": "https://www.ogdencity.com/186/Building-Services",
+        "online_portal": true
+      },
+      "notes": "Standard UT permitting. Rocky Mountain Power interconnection. Northern Wasatch Front snow loads 40-60 psf."
     }
   ],
-  "jurisdiction_count": 1
+  "state_level_requirements": {
+    "contractor_license_required": true,
+    "contractor_license_type": "Utah DOPL (Division of Occupational and Professional Licensing) licensed contractor required. Electrical contractor license for electrical work. S202 Solar Photovoltaic specialty classification available.",
+    "interconnection_agreement": true,
+    "net_metering_available": true,
+    "net_metering_details": "Rocky Mountain Power net metering with declining export credit rate. Rate has been reduced over recent years from retail to approximately 5-6 cents/kWh for new customers. Monthly rollover. Provo Power and other municipal utilities may have different rates.",
+    "solar_access_law": true,
+    "solar_access_details": "Utah Code 57-13a-102 protects solar access rights. Solar easements are legally enforceable. HOAs cannot prohibit solar installations.",
+    "solarapp_participating": false,
+    "solarapp_details": "No statewide SolarAPP+ program. Utah Clean Energy provides Model Solar Permit toolkit for municipalities. Salt Lake City offers streamlined online solar permitting.",
+    "property_tax_exemption": true,
+    "sales_tax_exemption": false,
+    "state_incentive_program": "Property tax exemption for renewable energy systems; declining Rocky Mountain Power export rates; Utah Clean Energy Model Solar Permit; no state tax credit; no sales tax exemption"
+  }
 }

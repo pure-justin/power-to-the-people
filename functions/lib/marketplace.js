@@ -39,9 +39,11 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getMarketplaceListings = exports.searchWorkers = exports.registerWorker = exports.rateWorker = exports.completeMarketplaceJob = exports.acceptBid = exports.submitBid = exports.createMarketplaceListing = void 0;
+exports.getListingsForWorker = exports.getMarketplaceListings = exports.searchWorkers = exports.registerWorker = exports.rateWorker = exports.completeMarketplaceJob = exports.acceptBid = exports.submitBid = exports.createMarketplaceListing = void 0;
 const functions = __importStar(require("firebase-functions/v1"));
 const admin = __importStar(require("firebase-admin"));
+const smartBidding_1 = require("./smartBidding");
+const locationMatching_1 = require("./locationMatching");
 const db = admin.firestore();
 // Valid service types for marketplace listings
 const SERVICE_TYPES = [
@@ -68,7 +70,7 @@ exports.createMarketplaceListing = functions.https.onCall(async (data, context) 
     if (!context.auth) {
         throw new functions.https.HttpsError("unauthenticated", "Must be signed in");
     }
-    const { service_type, project_id, requirements, deliverables, budget, deadline, project_context, } = data;
+    const { service_type, project_id, requirements, deliverables, budget, deadline, project_context, project_zip, project_lat, project_lng, project_state, auto_created, source_task_id, source_project_id, bid_window_hours, allow_diy, customer_id, } = data;
     if (!service_type || !requirements) {
         throw new functions.https.HttpsError("invalid-argument", "service_type and requirements are required");
     }
@@ -79,6 +81,9 @@ exports.createMarketplaceListing = functions.https.onCall(async (data, context) 
         (typeof budget.min !== "number" || typeof budget.max !== "number")) {
         throw new functions.https.HttpsError("invalid-argument", "budget must have numeric min and max");
     }
+    const bidWindowHrs = typeof bid_window_hours === "number" ? bid_window_hours : 24;
+    const postedAt = new Date();
+    const bidWindowClosesAt = new Date(postedAt.getTime() + bidWindowHrs * 60 * 60 * 1000);
     const listingData = {
         service_type,
         project_id: project_id || null,
@@ -89,6 +94,17 @@ exports.createMarketplaceListing = functions.https.onCall(async (data, context) 
             ? admin.firestore.Timestamp.fromDate(new Date(deadline))
             : null,
         project_context: project_context || null,
+        project_zip: project_zip || null,
+        project_lat: typeof project_lat === "number" ? project_lat : null,
+        project_lng: typeof project_lng === "number" ? project_lng : null,
+        project_state: project_state || null,
+        auto_created: auto_created === true ? true : false,
+        source_task_id: source_task_id || null,
+        source_project_id: source_project_id || null,
+        bid_window_hours: bidWindowHrs,
+        bid_window_closes_at: admin.firestore.Timestamp.fromDate(bidWindowClosesAt),
+        allow_diy: allow_diy === true ? true : false,
+        customer_id: customer_id || null,
         status: "open",
         bid_count: 0,
         winning_bid: null,
@@ -154,7 +170,59 @@ exports.submitBid = functions.https.onCall(async (data, context) => {
         submitted_at: admin.firestore.FieldValue.serverTimestamp(),
         updatedAt: admin.firestore.FieldValue.serverTimestamp(),
     };
+    // Compute worker distance if listing has location data
+    let workerDistanceMiles = null;
+    if (listing.project_lat != null && listing.project_lng != null) {
+        // Try to get worker location from worker profile
+        const workerQuery = await db
+            .collection("workers")
+            .where("user_id", "==", context.auth.uid)
+            .limit(1)
+            .get();
+        if (!workerQuery.empty) {
+            const workerDoc = workerQuery.docs[0].data();
+            let wLat;
+            let wLng;
+            if (typeof workerDoc.lat === "number" &&
+                typeof workerDoc.lng === "number") {
+                wLat = workerDoc.lat;
+                wLng = workerDoc.lng;
+            }
+            else if (workerDoc.zip_code) {
+                const coords = await (0, locationMatching_1.getZipCoordinates)(workerDoc.zip_code);
+                if (coords) {
+                    wLat = coords.lat;
+                    wLng = coords.lng;
+                }
+            }
+            if (wLat !== undefined && wLng !== undefined) {
+                workerDistanceMiles =
+                    Math.round((0, locationMatching_1.haversineDistance)(listing.project_lat, listing.project_lng, wLat, wLng) * 100) / 100;
+            }
+        }
+    }
+    if (workerDistanceMiles !== null) {
+        bidData.worker_distance_miles = workerDistanceMiles;
+    }
     const bidRef = await db.collection("marketplace_bids").add(bidData);
+    // Compute bid score using smart bidding engine
+    try {
+        const weights = await (0, smartBidding_1.loadWeights)();
+        const workerQuery = await db
+            .collection("workers")
+            .where("user_id", "==", context.auth.uid)
+            .limit(1)
+            .get();
+        const workerData = workerQuery.empty ? {} : workerQuery.docs[0].data();
+        const bidScore = (0, smartBidding_1.scoreBid)(bidData, listing, workerData, weights);
+        await bidRef.update({
+            bid_score: bidScore.totalScore,
+            bid_score_breakdown: bidScore.breakdown,
+        });
+    }
+    catch (err) {
+        console.warn("Failed to compute bid score, continuing without it:", err);
+    }
     // Increment bid count on listing
     await listingRef.update({
         bid_count: admin.firestore.FieldValue.increment(1),
@@ -354,12 +422,25 @@ exports.rateWorker = functions.https.onCall(async (data, context) => {
  * registerWorker - Register or update a worker profile
  */
 exports.registerWorker = functions.https.onCall(async (data, context) => {
+    var _a, _b, _c, _d;
     if (!context.auth) {
         throw new functions.https.HttpsError("unauthenticated", "Must be signed in");
     }
-    const { name, skills, certifications, licenses, service_areas, insurance, background_check, } = data;
+    const { name, skills, certifications, licenses, service_areas, insurance, background_check, zip_code, service_radius_miles, } = data;
     if (!name || !skills || skills.length === 0) {
         throw new functions.https.HttpsError("invalid-argument", "name and at least one skill are required");
+    }
+    // Resolve zip code to coordinates if provided
+    let resolvedLat = null;
+    let resolvedLng = null;
+    let resolvedState = null;
+    if (zip_code && typeof zip_code === "string") {
+        const coords = await (0, locationMatching_1.getZipCoordinates)(zip_code);
+        if (coords) {
+            resolvedLat = coords.lat;
+            resolvedLng = coords.lng;
+            resolvedState = coords.state;
+        }
     }
     const workerData = {
         user_id: context.auth.uid,
@@ -371,6 +452,16 @@ exports.registerWorker = functions.https.onCall(async (data, context) => {
         service_areas: service_areas || [],
         insurance: insurance || null,
         background_check: background_check || null,
+        zip_code: zip_code || null,
+        service_radius_miles: typeof service_radius_miles === "number" ? service_radius_miles : 50,
+        lat: resolvedLat,
+        lng: resolvedLng,
+        state: resolvedState,
+        active_tasks: 0,
+        max_concurrent_tasks: 3,
+        strikes: { count: 0, history: [], blocked_customers: [] },
+        reliability_score: 100,
+        suspended_until: null,
         availability: "available",
         ratings: { overall: 0 },
         completed_jobs: 0,
@@ -385,12 +476,24 @@ exports.registerWorker = functions.https.onCall(async (data, context) => {
     if (!existing.empty) {
         // Update existing
         const docRef = existing.docs[0].ref;
-        // Preserve ratings and completed_jobs on update
+        // Preserve accumulated fields on update
         const current = existing.docs[0].data();
         delete workerData.ratings;
         delete workerData.completed_jobs;
+        delete workerData.active_tasks;
+        delete workerData.strikes;
+        delete workerData.reliability_score;
+        delete workerData.suspended_until;
         workerData.ratings = current.ratings;
         workerData.completed_jobs = current.completed_jobs;
+        workerData.active_tasks = (_a = current.active_tasks) !== null && _a !== void 0 ? _a : 0;
+        workerData.strikes = (_b = current.strikes) !== null && _b !== void 0 ? _b : {
+            count: 0,
+            history: [],
+            blocked_customers: [],
+        };
+        workerData.reliability_score = (_c = current.reliability_score) !== null && _c !== void 0 ? _c : 100;
+        workerData.suspended_until = (_d = current.suspended_until) !== null && _d !== void 0 ? _d : null;
         await docRef.update(workerData);
         return { success: true, workerId: docRef.id, updated: true };
     }
@@ -473,6 +576,101 @@ exports.getMarketplaceListings = functions.https.onCall(async (data, context) =>
         count: listings.length,
         hasMore: listings.length === resultsLimit,
         lastId: listings.length > 0 ? listings[listings.length - 1].id : null,
+    };
+});
+/**
+ * getListingsForWorker - Get open listings matching a worker's skills within their service radius
+ */
+exports.getListingsForWorker = functions.https.onCall(async (data, context) => {
+    if (!context.auth) {
+        throw new functions.https.HttpsError("unauthenticated", "Must be signed in");
+    }
+    const { worker_id } = data;
+    if (!worker_id) {
+        throw new functions.https.HttpsError("invalid-argument", "worker_id is required");
+    }
+    // Get the worker profile
+    const workerSnap = await db.collection("workers").doc(worker_id).get();
+    if (!workerSnap.exists) {
+        throw new functions.https.HttpsError("not-found", "Worker not found");
+    }
+    const worker = workerSnap.data();
+    const workerSkills = Array.isArray(worker.skills)
+        ? worker.skills
+        : [];
+    const workerRadiusMiles = typeof worker.service_radius_miles === "number"
+        ? worker.service_radius_miles
+        : 50;
+    // Determine worker coordinates
+    let workerLat;
+    let workerLng;
+    if (typeof worker.lat === "number" && typeof worker.lng === "number") {
+        workerLat = worker.lat;
+        workerLng = worker.lng;
+    }
+    else if (worker.zip_code && typeof worker.zip_code === "string") {
+        const coords = await (0, locationMatching_1.getZipCoordinates)(worker.zip_code);
+        if (coords) {
+            workerLat = coords.lat;
+            workerLng = coords.lng;
+        }
+    }
+    // Query open listings
+    const listingsSnap = await db
+        .collection("marketplace_listings")
+        .where("status", "==", "open")
+        .orderBy("posted_at", "desc")
+        .limit(200)
+        .get();
+    if (listingsSnap.empty) {
+        return { success: true, listings: [], count: 0 };
+    }
+    // Filter and score listings
+    const matchedListings = [];
+    for (const doc of listingsSnap.docs) {
+        const listing = doc.data();
+        // Check if listing matches any of worker's skills
+        const skillMatch = workerSkills.includes(listing.service_type);
+        // Calculate distance if both have coordinates
+        let distance = null;
+        if (workerLat !== undefined &&
+            workerLng !== undefined &&
+            typeof listing.project_lat === "number" &&
+            typeof listing.project_lng === "number") {
+            distance =
+                Math.round((0, locationMatching_1.haversineDistance)(workerLat, workerLng, listing.project_lat, listing.project_lng) * 100) / 100;
+            // Skip if outside worker's service radius
+            if (distance > workerRadiusMiles) {
+                continue;
+            }
+        }
+        matchedListings.push({
+            id: doc.id,
+            ...listing,
+            distance,
+            skill_match: skillMatch,
+        });
+    }
+    // Sort: skill matches first, then by distance (closest first)
+    matchedListings.sort((a, b) => {
+        // Skill matches come first
+        if (a.skill_match && !b.skill_match)
+            return -1;
+        if (!a.skill_match && b.skill_match)
+            return 1;
+        // Then by distance (null distance = at the end)
+        if (a.distance === null && b.distance === null)
+            return 0;
+        if (a.distance === null)
+            return 1;
+        if (b.distance === null)
+            return -1;
+        return a.distance - b.distance;
+    });
+    return {
+        success: true,
+        listings: matchedListings,
+        count: matchedListings.length,
     };
 });
 //# sourceMappingURL=marketplace.js.map

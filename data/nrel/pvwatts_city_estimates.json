@@ -1,0 +1,91 @@
+{
+  "metadata": {
+    "source": "NREL PVWatts v8 API",
+    "generated_at": "2026-02-08",
+    "system_config": {
+      "capacity_kw": 8.0,
+      "azimuth": 180,
+      "tilt": 20,
+      "array_type": "Fixed Roof Mount",
+      "module_type": "Premium (19% eff)",
+      "losses_pct": 14.0,
+      "dc_ac_ratio": 1.2
+    }
+  },
+  "estimates": [
+    {
+      "city": "Phoenix", "state": "AZ", "lat": 33.45, "lng": -112.07,
+      "annual_kwh": 14059, "capacity_factor": 20.1,
+      "monthly_kwh": [941, 973, 1232, 1372, 1442, 1387, 1256, 1233, 1186, 1125, 983, 929]
+    },
+    {
+      "city": "Las Vegas", "state": "NV", "lat": 36.17, "lng": -115.14,
+      "annual_kwh": 14020, "capacity_factor": 20.0,
+      "monthly_kwh": [887, 951, 1211, 1361, 1442, 1408, 1294, 1295, 1256, 1132, 924, 858]
+    },
+    {
+      "city": "Los Angeles", "state": "CA", "lat": 34.05, "lng": -118.24,
+      "annual_kwh": 13411, "capacity_factor": 19.1,
+      "monthly_kwh": [875, 876, 1124, 1241, 1226, 1304, 1373, 1389, 1215, 1071, 921, 797]
+    },
+    {
+      "city": "Honolulu", "state": "HI", "lat": 21.31, "lng": -157.86,
+      "annual_kwh": 12939, "capacity_factor": 18.5,
+      "monthly_kwh": [1004, 913, 1115, 1097, 1124, 1151, 1201, 1211, 1185, 1084, 926, 929]
+    },
+    {
+      "city": "Denver", "state": "CO", "lat": 39.74, "lng": -104.99,
+      "annual_kwh": 12724, "capacity_factor": 18.2,
+      "monthly_kwh": [795, 890, 1165, 1182, 1239, 1277, 1265, 1194, 1118, 979, 857, 762]
+    },
+    {
+      "city": "Miami", "state": "FL", "lat": 25.76, "lng": -80.19,
+      "annual_kwh": 12389, "capacity_factor": 17.7,
+      "monthly_kwh": [933, 963, 1216, 1160, 1131, 1008, 1095, 1084, 995, 1005, 926, 873]
+    },
+    {
+      "city": "Salt Lake City", "state": "UT", "lat": 40.76, "lng": -111.89,
+      "annual_kwh": 11852, "capacity_factor": 16.9,
+      "monthly_kwh": [593, 733, 1016, 1088, 1274, 1332, 1332, 1278, 1084, 939, 656, 529]
+    },
+    {
+      "city": "Austin", "state": "TX", "lat": 30.27, "lng": -97.74,
+      "annual_kwh": 11846, "capacity_factor": 16.9,
+      "monthly_kwh": [808, 748, 950, 1078, 1107, 1125, 1205, 1230, 1047, 982, 777, 789]
+    },
+    {
+      "city": "Washington DC", "state": "DC", "lat": 38.91, "lng": -77.04,
+      "annual_kwh": 11243, "capacity_factor": 16.0,
+      "monthly_kwh": [707, 765, 1017, 1080, 1154, 1135, 1170, 1091, 943, 869, 673, 640]
+    },
+    {
+      "city": "Atlanta", "state": "GA", "lat": 33.75, "lng": -84.39,
+      "annual_kwh": 11198, "capacity_factor": 16.0,
+      "monthly_kwh": [728, 757, 938, 1073, 1151, 1052, 1076, 1046, 965, 955, 767, 691]
+    },
+    {
+      "city": "Philadelphia", "state": "PA", "lat": 39.95, "lng": -75.17,
+      "annual_kwh": 10834, "capacity_factor": 15.5,
+      "monthly_kwh": [633, 779, 998, 1071, 1083, 1112, 1164, 1079, 896, 830, 622, 567]
+    },
+    {
+      "city": "Boston", "state": "MA", "lat": 42.36, "lng": -71.06,
+      "annual_kwh": 10390, "capacity_factor": 14.8,
+      "monthly_kwh": [643, 718, 988, 992, 1113, 1024, 1144, 1047, 931, 759, 565, 467]
+    },
+    {
+      "city": "New York", "state": "NY", "lat": 40.71, "lng": -74.01,
+      "annual_kwh": 10280, "capacity_factor": 14.7,
+      "monthly_kwh": [624, 722, 884, 996, 1087, 1099, 1129, 1033, 916, 738, 552, 502]
+    },
+    {
+      "city": "Seattle", "state": "WA", "lat": 47.61, "lng": -122.33,
+      "annual_kwh": 8680, "capacity_factor": 12.4,
+      "monthly_kwh": [315, 435, 649, 923, 1099, 1047, 1148, 1140, 816, 544, 303, 261]
+    }
+  ],
+  "ranking": {
+    "by_production": ["Phoenix", "Las Vegas", "Los Angeles", "Honolulu", "Denver", "Miami", "Salt Lake City", "Austin", "Washington DC", "Atlanta", "Philadelphia", "Boston", "New York", "Seattle"],
+    "by_capacity_factor": ["Phoenix (20.1%)", "Las Vegas (20.0%)", "Los Angeles (19.1%)", "Honolulu (18.5%)", "Denver (18.2%)", "Miami (17.7%)", "Salt Lake City (16.9%)", "Austin (16.9%)", "Washington DC (16.0%)", "Atlanta (16.0%)", "Philadelphia (15.5%)", "Boston (14.8%)", "New York (14.7%)", "Seattle (12.4%)"]
+  }
+}

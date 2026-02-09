@@ -1,150 +1,186 @@
 {
   "state": "GA",
   "state_name": "Georgia",
-  "data_compiled": "2026-02-08",
-  "general_requirements": {
-    "permit_required": true,
-    "permit_type": "both",
-    "typical_fee_range": "$150-$500",
-    "typical_timeline_days": "7-21",
-    "inspection_required": true,
-    "inspection_stages": [
-      "final"
-    ],
-    "statewide_permit_program": false,
-    "statewide_program_name": null
-  },
-  "interconnection": {
-    "utility_approval_required": true,
-    "net_metering_available": false,
-    "net_metering_details": "Georgia has no state-mandated net metering. Georgia Power offers a solar buyback program with rates significantly below retail. EMCs (Electric Membership Cooperatives) may offer limited net metering voluntarily. Georgia Power's solar export rate is approximately 2-4 cents/kWh.",
-    "typical_timeline_days": "15-45",
-    "fees": "Georgia Power charges interconnection fees; varies by system size"
-  },
-  "special_considerations": {
-    "hoa_restrictions": "Georgia has a solar easement statute but no comprehensive solar access law preventing HOA restrictions. HOAs may impose restrictions on solar installations.",
-    "historic_districts": "Savannah, Atlanta, and other cities have active historic preservation commissions. Properties in designated historic districts require additional review.",
-    "wind_load_requirements": "Coastal areas (Savannah, Brunswick) have enhanced wind requirements. Design wind speeds 120-150 mph along the coast.",
-    "snow_load_requirements": "Northern mountain areas have minimal snow loads (5-15 psf). Most of the state has negligible snow load requirements."
-  },
-  "licensing": {
-    "contractor_license_required": true,
-    "license_type": "No dedicated solar license. General contractor and/or electrical contractor license required. Licensed electrician must perform electrical work.",
-    "nabcep_required": false
-  },
-  "notes": "Georgia has a growing solar market driven primarily by utility-scale installations and Georgia Power's commercial programs. Residential solar is limited by low buyback rates and no net metering mandate. The state offers a property tax exemption for solar. Many jurisdictions participate in SolSmart program. Median permit timeline is approximately 45 days including interconnection. EMC territories may offer better terms for distributed solar than Georgia Power.",
+  "last_updated": "2026-02-08",
   "jurisdictions": [
     {
-      "jurisdiction_id": "atlanta_ga",
-      "name": "Atlanta",
-      "state": "GA",
+      "jurisdiction_id": "ga_atlanta",
+      "name": "City of Atlanta",
+      "county": "Fulton/DeKalb",
       "type": "city",
-      "population": 498715,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://www.atlantaga.gov/government/departments/city-planning/office-of-buildings/permits-licenses",
-      "submission_method": "online",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": 15,
-      "fees": {
-        "base_fee": 300,
-        "per_kw": null,
-        "inspection_fee": 100,
-        "estimated_total_residential": 445
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "varies",
+        "plan_review_required": true,
+        "inspection_required": true
       },
-      "typical_timeline_days": 14,
-      "fire_code_requirements": "Standard IFC setbacks.",
-      "rapid_shutdown_required": true,
-      "contacts": {
+      "fees": {
+        "permit_fee_range": "$300-$500",
+        "plan_review_fee": "included",
+        "inspection_fee": "$100"
+      },
+      "timeline": {
+        "plan_review_days": 7,
+        "permit_issuance_days": 5,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 15
+      },
+      "contact": {
         "department": "Office of Buildings",
         "phone": "404-330-6140",
-        "url": "https://www.atlantaga.gov"
+        "website": "https://www.atlantaga.gov/government/departments/city-planning/office-of-buildings/permits-licenses",
+        "online_portal": true
       },
-      "special_requirements": [
-        "Online permit application",
-        "Georgia Power interconnection",
-        "Higher volume may extend timeline"
-      ],
-      "notes": "Online solar permit applications. DeKalb County permit fee approximately $445. Urban area may have longer processing due to volume.",
-      "source_url": "https://www.atlantaga.gov",
-      "updated_at": "2026-02-08"
+      "notes": "Online solar permit applications. DeKalb County permit fee approximately $445. Urban area may have longer processing due to volume. Historic district review may apply. Georgia Power interconnection."
     },
     {
-      "jurisdiction_id": "augusta_ga",
-      "name": "Augusta",
-      "state": "GA",
+      "jurisdiction_id": "ga_augusta",
+      "name": "City of Augusta",
+      "county": "Richmond",
       "type": "city",
-      "population": 202081,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://www.augustaga.gov/586/Building-Permits",
-      "submission_method": "online",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": 15,
-      "fees": {
-        "base_fee": 200,
-        "per_kw": null,
-        "inspection_fee": 75,
-        "estimated_total_residential": 325
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "varies",
+        "plan_review_required": true,
+        "inspection_required": true
       },
-      "typical_timeline_days": 10,
-      "fire_code_requirements": "Standard IFC setbacks.",
-      "rapid_shutdown_required": true,
-      "contacts": {
+      "fees": {
+        "permit_fee_range": "$200-$350",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
         "department": "Planning & Development",
         "phone": "706-821-1796",
-        "url": "https://www.augustaga.gov"
+        "website": "https://www.augustaga.gov/586/Building-Permits",
+        "online_portal": true
       },
-      "special_requirements": [
-        "Georgia Power interconnection"
-      ],
-      "notes": "Online permit applications available. Standard GA process.",
-      "source_url": "https://www.augustaga.gov",
-      "updated_at": "2026-02-08"
+      "notes": "Online permit applications available. Standard GA process. Georgia Power interconnection."
     },
     {
-      "jurisdiction_id": "savannah_ga",
-      "name": "Savannah",
-      "state": "GA",
+      "jurisdiction_id": "ga_savannah",
+      "name": "City of Savannah",
+      "county": "Chatham",
       "type": "city",
-      "population": 147780,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://www.savannahga.gov/2052/Building-Permits",
-      "submission_method": "online",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": 15,
-      "fees": {
-        "base_fee": 200,
-        "per_kw": null,
-        "inspection_fee": 75,
-        "estimated_total_residential": 325
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "varies",
+        "plan_review_required": true,
+        "inspection_required": true
       },
-      "typical_timeline_days": 10,
-      "fire_code_requirements": "Standard IFC setbacks. Historic district restrictions.",
-      "rapid_shutdown_required": true,
-      "contacts": {
+      "fees": {
+        "permit_fee_range": "$200-$350",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
         "department": "Development Services",
         "phone": "912-651-6520",
-        "url": "https://www.savannahga.gov"
+        "website": "https://www.savannahga.gov/2052/Building-Permits",
+        "online_portal": true
       },
-      "special_requirements": [
-        "Historic district review may be required",
-        "Georgia Power interconnection"
-      ],
-      "notes": "Historic district (one of largest in US) may require additional review for solar installations.",
-      "source_url": "https://www.savannahga.gov",
-      "updated_at": "2026-02-08"
+      "notes": "Historic district (one of largest in US) may require additional design review via eTRAC system. Coastal wind load requirements (120-150 mph). Georgia Power interconnection."
+    },
+    {
+      "jurisdiction_id": "ga_columbus",
+      "name": "City of Columbus",
+      "county": "Muscogee",
+      "type": "city",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "varies",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$150-$300",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
+        "department": "Inspections & Code Enforcement",
+        "phone": "706-653-4186",
+        "website": "https://www.columbusga.gov/ICE/",
+        "online_portal": false
+      },
+      "notes": "Standard GA permitting. Georgia Power interconnection. Consolidated city-county government."
+    },
+    {
+      "jurisdiction_id": "ga_roswell",
+      "name": "City of Roswell",
+      "county": "Fulton",
+      "type": "city",
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "varies",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
+      "fees": {
+        "permit_fee_range": "$150-$300",
+        "plan_review_fee": "included",
+        "inspection_fee": "$75"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
+        "department": "Community Development",
+        "phone": "770-641-3780",
+        "website": "https://www.roswellgov.com/government/departments/community-development",
+        "online_portal": true
+      },
+      "notes": "SolSmart designated community. Georgia Power interconnection. Atlanta metro suburbs generally have streamlined processes."
     }
   ],
-  "jurisdiction_count": 3
+  "state_level_requirements": {
+    "contractor_license_required": true,
+    "contractor_license_type": "No dedicated solar license. General contractor and/or electrical contractor license required. Licensed electrician must perform electrical work.",
+    "interconnection_agreement": true,
+    "net_metering_available": false,
+    "net_metering_details": "Georgia has no state-mandated net metering. Georgia Power offers solar buyback program with export rate approximately 2-4 cents/kWh, significantly below retail. EMCs (Electric Membership Cooperatives) may offer limited net metering voluntarily.",
+    "solar_access_law": false,
+    "solar_access_details": "Georgia has a solar easement statute but no comprehensive solar access law preventing HOA restrictions. HOAs may impose restrictions on solar installations.",
+    "solarapp_participating": false,
+    "solarapp_details": "No statewide SolarAPP+ program. GA Solar endorses a model streamlined permitting process. Many jurisdictions participate in SolSmart program.",
+    "property_tax_exemption": true,
+    "sales_tax_exemption": false,
+    "state_incentive_program": "Property tax exemption for solar; no state tax credit; Georgia Power solar buyback; EMC voluntary programs; no sales tax exemption"
+  }
 }

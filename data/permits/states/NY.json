@@ -1,227 +1,186 @@
 {
   "state": "NY",
   "state_name": "New York",
-  "data_compiled": "2026-02-08",
-  "general_requirements": {
-    "permit_required": true,
-    "permit_type": "both",
-    "typical_fee_range": "$200-$800",
-    "typical_timeline_days": "5-14",
-    "inspection_required": true,
-    "inspection_stages": [
-      "final"
-    ],
-    "statewide_permit_program": true,
-    "statewide_program_name": "New York State Unified Solar Permit (NYS-USP). Standardizes permit application across municipalities. Permit determinations issued within 14 calendar days. Municipalities provide feedback within 7 days for incomplete applications."
-  },
-  "interconnection": {
-    "utility_approval_required": true,
-    "net_metering_available": true,
-    "net_metering_details": "New York has net metering through the Value of Distributed Energy Resources (VDER) tariff for new commercial systems, while residential systems still receive net metering at retail rate. ConEdison, National Grid, NYSEG, RG&E, Central Hudson, PSEG-LI are major utilities. NY-Sun program provides incentives.",
-    "typical_timeline_days": "10-25",
-    "fees": "Varies by utility; ConEdison charges interconnection fees; LIPA/PSEG-LI has separate process"
-  },
-  "special_considerations": {
-    "hoa_restrictions": "Strong solar access law (Real Property Law Section 335-b). HOAs and condo boards cannot unreasonably restrict solar installations. NYC has additional tenant protections.",
-    "historic_districts": "NYC Landmarks Preservation Commission has strict requirements for solar in designated landmarks and historic districts. Upstate historic districts reviewed by local boards. NY SHPO consulted for National Register properties. NYC requires special permits for solar on landmarked buildings.",
-    "wind_load_requirements": "NYC has enhanced wind load requirements for high-rise installations. Long Island coastal areas have hurricane zone requirements. Design wind speeds 100-130 mph in coastal areas.",
-    "snow_load_requirements": "Significant variation across the state. Upstate/Adirondacks: 50-100+ psf ground snow load. NYC/Long Island: 20-30 psf. Lake effect zones in western NY: 40-80 psf."
-  },
-  "licensing": {
-    "contractor_license_required": true,
-    "license_type": "NYC requires licensed Master Electrician for electrical work and General Contractor for construction permits. Outside NYC, licensed electrician required. NABCEP certification or IBEW-NECA training valued but not mandatory statewide.",
-    "nabcep_required": false
-  },
-  "notes": "New York has the fastest solar permitting timeline in the nation (median 25 days) thanks to the NYS-USP framework. NY-Sun program administered by NYSERDA provides declining block incentives. Strong net metering for residential. VDER/Value Stack for commercial provides compensation based on multiple value components. Community solar program is one of the largest in the nation. NYC has unique requirements including fire code setbacks and electrical licensing. Property tax exemption (15 years) and sales tax exemption available. 70% renewable by 2030 mandate.",
+  "last_updated": "2026-02-08",
   "jurisdictions": [
     {
-      "jurisdiction_id": "new_york_city_ny",
+      "jurisdiction_id": "ny_new_york_city",
       "name": "New York City",
-      "state": "NY",
+      "county": "Multiple Boroughs",
       "type": "city",
-      "population": 8336817,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://www.nyc.gov/site/buildings/codes/solar-panels.page",
-      "submission_method": "online",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "structural_calcs",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": null,
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": true,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "varies",
+        "plan_review_required": true,
+        "inspection_required": true
+      },
       "fees": {
-        "base_fee": 200,
-        "per_kw": null,
-        "inspection_fee": 100,
-        "estimated_total_residential": 350
+        "permit_fee_range": "$200-$400",
+        "plan_review_fee": "included",
+        "inspection_fee": "$100"
       },
-      "typical_timeline_days": 7,
-      "fire_code_requirements": "NYC Fire Code setbacks. Access pathways required. NYC-specific fire safety requirements.",
-      "rapid_shutdown_required": true,
-      "contacts": {
-        "department": "NYC Dept of Buildings",
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
+        "department": "NYC Department of Buildings",
         "phone": "212-393-2550",
-        "url": "https://www.nyc.gov/site/buildings"
+        "website": "https://www.nyc.gov/site/buildings/codes/solar-panels.page",
+        "online_portal": true
       },
-      "special_requirements": [
-        "NYC-Licensed Master Electrician required",
-        "Registered Design Professional for plan filing",
-        "Electrical permit + construction work permit",
-        "Property tax abatement available"
-      ],
-      "notes": "Requires NYC-Licensed Master Electrician and Registered Design Professional. Complete applications reviewed in 5-10 days. Property tax abatement for solar installations.",
-      "source_url": "https://www.nyc.gov/site/buildings/codes/solar-panels.page",
-      "updated_at": "2026-02-08"
+      "notes": "NYC-Licensed Master Electrician required. Registered Design Professional for plan filing. Electrical permit + construction work permit needed. Property tax abatement available. Landmarks Preservation Commission review for historic buildings. ConEdison interconnection."
     },
     {
-      "jurisdiction_id": "buffalo_ny",
-      "name": "Buffalo",
-      "state": "NY",
+      "jurisdiction_id": "ny_buffalo",
+      "name": "City of Buffalo",
+      "county": "Erie",
       "type": "city",
-      "population": 278349,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://www.buffalony.gov/349/Permits-Inspections",
-      "submission_method": "online",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": 25,
-      "fees": {
-        "base_fee": 75,
-        "per_kw": null,
-        "inspection_fee": 50,
-        "estimated_total_residential": 150
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
       },
-      "typical_timeline_days": 10,
-      "fire_code_requirements": "NYS fire code setbacks.",
-      "rapid_shutdown_required": true,
-      "contacts": {
+      "fees": {
+        "permit_fee_range": "$50-$150",
+        "plan_review_fee": "included",
+        "inspection_fee": "$50"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
         "department": "Permit & Inspection Services",
         "phone": "716-851-5858",
-        "url": "https://www.buffalony.gov"
+        "website": "https://www.buffalony.gov/349/Permits-Inspections",
+        "online_portal": true
       },
-      "special_requirements": [
-        "NYS Unified Solar Permit",
-        "NYSEG or National Grid interconnection"
-      ],
-      "notes": "Uses NYS Unified Solar Permit. Fees $50-$150 range. Expedited for systems under 25 kW.",
-      "source_url": "https://www.buffalony.gov",
-      "updated_at": "2026-02-08"
+      "notes": "NYS Unified Solar Permit adopted. Expedited for systems under 25 kW. NYSEG or National Grid interconnection. Lake effect snow load considerations."
     },
     {
-      "jurisdiction_id": "rochester_ny",
-      "name": "Rochester",
-      "state": "NY",
+      "jurisdiction_id": "ny_rochester",
+      "name": "City of Rochester",
+      "county": "Monroe",
       "type": "city",
-      "population": 211328,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://www.cityofrochester.gov/buildingpermits/",
-      "submission_method": "online",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": 25,
-      "fees": {
-        "base_fee": 75,
-        "per_kw": null,
-        "inspection_fee": 50,
-        "estimated_total_residential": 150
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
       },
-      "typical_timeline_days": 10,
-      "fire_code_requirements": "NYS fire code setbacks.",
-      "rapid_shutdown_required": true,
-      "contacts": {
+      "fees": {
+        "permit_fee_range": "$50-$150",
+        "plan_review_fee": "included",
+        "inspection_fee": "$50"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
         "department": "Bureau of Buildings & Zoning",
         "phone": "585-428-6520",
-        "url": "https://www.cityofrochester.gov"
+        "website": "https://www.cityofrochester.gov/buildingpermits/",
+        "online_portal": true
       },
-      "special_requirements": [
-        "NYS Unified Solar Permit",
-        "RG&E interconnection"
-      ],
-      "notes": "Uses NYS Unified Solar Permit. Standard processing.",
-      "source_url": "https://www.cityofrochester.gov",
-      "updated_at": "2026-02-08"
+      "notes": "NYS Unified Solar Permit adopted. RG&E interconnection."
     },
     {
-      "jurisdiction_id": "albany_ny",
-      "name": "Albany",
-      "state": "NY",
+      "jurisdiction_id": "ny_albany",
+      "name": "City of Albany",
+      "county": "Albany",
       "type": "city",
-      "population": 99224,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://www.albanyny.gov/Government/Departments/BuildingsRegulatoryCompliance.aspx",
-      "submission_method": "in_person",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": 25,
-      "fees": {
-        "base_fee": 75,
-        "per_kw": null,
-        "inspection_fee": 50,
-        "estimated_total_residential": 150
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
       },
-      "typical_timeline_days": 10,
-      "fire_code_requirements": "NYS fire code setbacks.",
-      "rapid_shutdown_required": true,
-      "contacts": {
+      "fees": {
+        "permit_fee_range": "$50-$150",
+        "plan_review_fee": "included",
+        "inspection_fee": "$50"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
         "department": "Buildings & Regulatory Compliance",
         "phone": "518-434-5995",
-        "url": "https://www.albanyny.gov"
+        "website": "https://www.albanyny.gov",
+        "online_portal": false
       },
-      "special_requirements": [
-        "NYS Unified Solar Permit",
-        "National Grid interconnection"
-      ],
-      "notes": "Uses NYS Unified Solar Permit.",
-      "source_url": "https://www.albanyny.gov",
-      "updated_at": "2026-02-08"
+      "notes": "NYS Unified Solar Permit adopted. National Grid interconnection."
     },
     {
-      "jurisdiction_id": "syracuse_ny",
-      "name": "Syracuse",
-      "state": "NY",
+      "jurisdiction_id": "ny_syracuse",
+      "name": "City of Syracuse",
+      "county": "Onondaga",
       "type": "city",
-      "population": 148620,
-      "solarapp_enabled": false,
-      "permit_portal_url": "https://www.syrgov.net/Permits.aspx",
-      "submission_method": "in_person",
-      "documents_required": [
-        "site_plan",
-        "electrical_diagram",
-        "equipment_specs"
-      ],
-      "pe_stamp_threshold_kw": 25,
-      "fees": {
-        "base_fee": 75,
-        "per_kw": null,
-        "inspection_fee": 50,
-        "estimated_total_residential": 150
+      "permit_type": "residential_solar",
+      "requirements": {
+        "structural_engineering": false,
+        "electrical_permit": true,
+        "building_permit": true,
+        "hoa_approval": "cannot_prohibit",
+        "plan_review_required": true,
+        "inspection_required": true
       },
-      "typical_timeline_days": 10,
-      "fire_code_requirements": "NYS fire code setbacks.",
-      "rapid_shutdown_required": true,
-      "contacts": {
+      "fees": {
+        "permit_fee_range": "$50-$150",
+        "plan_review_fee": "included",
+        "inspection_fee": "$50"
+      },
+      "timeline": {
+        "plan_review_days": 5,
+        "permit_issuance_days": 3,
+        "inspection_scheduling_days": 3,
+        "total_estimated_days": 11
+      },
+      "contact": {
         "department": "Code Enforcement",
         "phone": "315-448-8640",
-        "url": "https://www.syrgov.net"
+        "website": "https://www.syrgov.net",
+        "online_portal": false
       },
-      "special_requirements": [
-        "NYS Unified Solar Permit",
-        "National Grid interconnection"
-      ],
-      "notes": "Uses NYS Unified Solar Permit.",
-      "source_url": "https://www.syrgov.net",
-      "updated_at": "2026-02-08"
+      "notes": "NYS Unified Solar Permit adopted. National Grid interconnection. Lake effect snow load considerations."
     }
   ],
-  "jurisdiction_count": 5
+  "state_level_requirements": {
+    "contractor_license_required": true,
+    "contractor_license_type": "NYC requires Master Electrician. Outside NYC, licensed electrician required. NABCEP valued but not mandatory.",
+    "interconnection_agreement": true,
+    "net_metering_available": true,
+    "net_metering_details": "Residential net metering at retail rate. Commercial uses VDER/Value Stack tariff. ConEdison, National Grid, NYSEG, RG&E, Central Hudson, PSEG-LI are major utilities. NY-Sun provides incentives.",
+    "solar_access_law": true,
+    "solar_access_details": "Real Property Law Section 335-b: HOAs and condo boards cannot unreasonably restrict solar. NYC has additional tenant protections.",
+    "solarapp_participating": false,
+    "solarapp_details": "NYS Unified Solar Permit (NYS-USP) adopted by 300+ AHJs. Standardizes permit application for systems up to 25 kW DC. Permit determinations within 14 calendar days.",
+    "property_tax_exemption": true,
+    "sales_tax_exemption": true,
+    "state_incentive_program": "NY-Sun program (NYSERDA) declining block incentives; NYS-USP standardized permitting; property tax exemption (15 years); 70% renewable by 2030 mandate"
+  }
 }

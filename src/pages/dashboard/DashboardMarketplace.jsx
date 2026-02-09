@@ -40,7 +40,13 @@ import {
   Target,
   Navigation,
   BarChart3,
+  TrendingUp,
+  Timer,
+  History,
+  Inbox,
+  ArrowRight,
 } from "lucide-react";
+import BidComparison from "../../components/BidComparison";
 
 const functions = getFunctions(undefined, "us-central1");
 
@@ -159,6 +165,175 @@ function computeBidScorePreview({
   total += jobScore;
 
   return { total, breakdown };
+}
+
+// ---- Bid Countdown Timer ----
+function BidCountdown({ deadline }) {
+  const [timeLeft, setTimeLeft] = useState("");
+
+  useEffect(() => {
+    if (!deadline) return;
+    const end = deadline.toDate ? deadline.toDate() : new Date(deadline);
+
+    const tick = () => {
+      const now = new Date();
+      const diff = end - now;
+      if (diff <= 0) {
+        setTimeLeft("Ended");
+        return;
+      }
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor(
+        (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+      );
+      const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      if (days > 0) setTimeLeft(`${days}d ${hours}h ${mins}m`);
+      else if (hours > 0) setTimeLeft(`${hours}h ${mins}m`);
+      else setTimeLeft(`${mins}m`);
+    };
+
+    tick();
+    const interval = setInterval(tick, 60000);
+    return () => clearInterval(interval);
+  }, [deadline]);
+
+  if (!deadline || !timeLeft) return null;
+
+  const isUrgent =
+    timeLeft === "Ended" ||
+    (!timeLeft.includes("d") && !timeLeft.includes("h"));
+
+  return (
+    <span
+      className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold ${
+        timeLeft === "Ended"
+          ? "bg-red-100 text-red-700"
+          : isUrgent
+            ? "bg-amber-100 text-amber-700 animate-pulse"
+            : "bg-blue-100 text-blue-700"
+      }`}
+    >
+      <Timer className="h-3 w-3" />
+      {timeLeft}
+    </span>
+  );
+}
+
+// ---- Quick Bid Modal ----
+function QuickBidModal({ listing, onClose, onSubmitted, workerProfile }) {
+  const [price, setPrice] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState(null);
+
+  // Pre-fill with market rate estimate
+  useEffect(() => {
+    if (listing?.budget) {
+      const mid = Math.round((listing.budget.min + listing.budget.max) / 2);
+      setPrice(String(mid));
+    }
+  }, [listing]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(null);
+    setSubmitting(true);
+    try {
+      const submitBidFn = httpsCallable(functions, "submitBid");
+      await submitBidFn({
+        listing_id: listing.id,
+        price: parseFloat(price),
+        timeline: null,
+        notes: "Quick bid",
+        certifications: workerProfile?.certifications || [],
+      });
+      onSubmitted();
+    } catch (err) {
+      setError(err.message || "Failed to submit bid");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+      <div className="w-full max-w-sm rounded-xl bg-white p-5 shadow-xl">
+        <div className="mb-3 flex items-center justify-between">
+          <h3 className="flex items-center gap-2 text-base font-semibold text-gray-900">
+            <Zap className="h-4 w-4 text-amber-500" />
+            Quick Bid
+          </h3>
+          <button
+            onClick={onClose}
+            className="rounded-lg p-1 text-gray-400 hover:text-gray-600"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        </div>
+
+        <p className="mb-1 text-sm text-gray-700">
+          {SERVICE_TYPE_LABELS[listing.service_type] || listing.service_type}
+        </p>
+        {listing.budget && (
+          <p className="mb-3 text-xs text-gray-500">
+            Budget: {formatCurrency(listing.budget.min)} -{" "}
+            {formatCurrency(listing.budget.max)}
+            <span className="ml-2 text-emerald-600 font-medium">
+              (Market avg:{" "}
+              {formatCurrency(
+                Math.round((listing.budget.min + listing.budget.max) / 2),
+              )}
+              )
+            </span>
+          </p>
+        )}
+
+        {error && (
+          <div className="mb-3 flex items-center gap-2 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">
+            <AlertCircle className="h-4 w-4 shrink-0" />
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-3">
+          <div>
+            <label className="mb-1 block text-sm font-medium text-gray-700">
+              Your Price ($)
+            </label>
+            <input
+              type="number"
+              min="1"
+              step="0.01"
+              required
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              className="input-field text-lg font-semibold"
+            />
+          </div>
+          <div className="flex justify-end gap-2">
+            <button
+              type="button"
+              onClick={onClose}
+              className="rounded-lg px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={submitting || !price}
+              className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700 disabled:opacity-50"
+            >
+              {submitting ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Zap className="h-4 w-4" />
+              )}
+              Quick Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
 }
 
 // ---- Bid Submission Modal ----
@@ -612,6 +787,7 @@ function CreateListingModal({ onClose, onCreated }) {
 function ListingCard({
   listing,
   onBid,
+  onQuickBid,
   isOwn,
   workerSkills,
   workerLat,
@@ -715,18 +891,33 @@ function ListingCard({
               <Gavel className="h-3 w-3" />
               {listing.bid_count || 0} bid{listing.bid_count !== 1 ? "s" : ""}
             </span>
+            {listing.bid_deadline && (
+              <BidCountdown deadline={listing.bid_deadline} />
+            )}
           </div>
         </div>
 
         <div className="ml-4 flex shrink-0 flex-col items-end gap-2">
           {listing.status === "open" && !isOwn && (
-            <button
-              onClick={() => onBid(listing)}
-              className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-emerald-700"
-            >
-              <Send className="h-3 w-3" />
-              Submit Bid
-            </button>
+            <div className="flex items-center gap-1.5">
+              {listing.budget && onQuickBid && (
+                <button
+                  onClick={() => onQuickBid(listing)}
+                  className="inline-flex items-center gap-1 rounded-lg bg-amber-500 px-2.5 py-1.5 text-xs font-medium text-white hover:bg-amber-600"
+                  title="Quick bid at market average"
+                >
+                  <Zap className="h-3 w-3" />
+                  Quick
+                </button>
+              )}
+              <button
+                onClick={() => onBid(listing)}
+                className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-emerald-700"
+              >
+                <Send className="h-3 w-3" />
+                Bid
+              </button>
+            </div>
           )}
           <button
             onClick={() => setExpanded(!expanded)}
@@ -988,10 +1179,12 @@ export default function DashboardMarketplace() {
 
   // Modals
   const [bidListing, setBidListing] = useState(null);
+  const [quickBidListing, setQuickBidListing] = useState(null);
   const [showCreateListing, setShowCreateListing] = useState(false);
 
-  // Expanded listing for bid review
+  // Expanded listing for bid review / comparison
   const [reviewListingId, setReviewListingId] = useState(null);
+  const [compareListingId, setCompareListingId] = useState(null);
 
   // Load worker profile for smart-matching and location
   useEffect(() => {
@@ -1202,6 +1395,62 @@ export default function DashboardMarketplace() {
       {/* Browse Jobs Tab */}
       {tab === "browse" && (
         <div className="space-y-3">
+          {/* Smart Match Section */}
+          {workerProfile?.skills?.length > 0 &&
+            (() => {
+              const smartMatches = filteredListings
+                .filter((l) =>
+                  workerProfile.skills.some(
+                    (s) =>
+                      s === l.service_type ||
+                      l.service_type?.includes(s) ||
+                      s.includes(l.service_type || ""),
+                  ),
+                )
+                .slice(0, 3);
+              if (smartMatches.length === 0) return null;
+              return (
+                <div className="rounded-xl border border-emerald-200 bg-gradient-to-r from-emerald-50 to-teal-50 p-4">
+                  <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-emerald-800">
+                    <TrendingUp className="h-4 w-4" />
+                    Smart Matches for You
+                    <span className="rounded-full bg-emerald-200 px-2 py-0.5 text-[10px] font-bold text-emerald-800">
+                      AI
+                    </span>
+                  </h3>
+                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+                    {smartMatches.map((listing) => (
+                      <button
+                        key={listing.id}
+                        onClick={() => setBidListing(listing)}
+                        className="flex flex-col items-start rounded-lg border border-emerald-200 bg-white p-3 text-left transition-shadow hover:shadow-md"
+                      >
+                        <span className="mb-1 rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-medium text-emerald-700">
+                          {SERVICE_TYPE_LABELS[listing.service_type] ||
+                            listing.service_type}
+                        </span>
+                        <p className="text-xs text-gray-700 line-clamp-2">
+                          {listing.requirements}
+                        </p>
+                        <div className="mt-2 flex items-center gap-3 text-[10px] text-gray-500">
+                          {listing.budget && (
+                            <span className="font-medium text-emerald-600">
+                              {formatCurrency(listing.budget.min)} -{" "}
+                              {formatCurrency(listing.budget.max)}
+                            </span>
+                          )}
+                          {listing.bid_deadline && (
+                            <BidCountdown deadline={listing.bid_deadline} />
+                          )}
+                          <span>{listing.bid_count || 0} bids</span>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              );
+            })()}
+
           {/* Service Area Filter */}
           <div className="rounded-lg border border-gray-200 bg-gray-50 p-3">
             <h3 className="mb-2 flex items-center gap-1.5 text-xs font-semibold uppercase text-gray-500">
@@ -1302,11 +1551,47 @@ export default function DashboardMarketplace() {
               ))}
             </div>
           ) : filteredListings.length === 0 ? (
-            <div className="py-12 text-center">
-              <Store className="mx-auto h-8 w-8 text-gray-300" />
-              <p className="mt-2 text-sm text-gray-500">
-                No listings found matching your filters
+            <div className="py-16 text-center">
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gray-100">
+                <Inbox className="h-8 w-8 text-gray-300" />
+              </div>
+              <h3 className="text-sm font-semibold text-gray-700">
+                No listings found
+              </h3>
+              <p className="mt-1 text-xs text-gray-500">
+                {searchQuery
+                  ? `No results for "${searchQuery}". Try adjusting your search.`
+                  : serviceFilter !== "all"
+                    ? `No ${SERVICE_TYPE_LABELS[serviceFilter] || serviceFilter} listings with status "${statusFilter}".`
+                    : `No ${statusFilter} listings within ${filterRadius} miles.`}
               </p>
+              <div className="mt-4 flex items-center justify-center gap-3">
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery("")}
+                    className="inline-flex items-center gap-1 rounded-lg bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-200"
+                  >
+                    <X className="h-3 w-3" />
+                    Clear Search
+                  </button>
+                )}
+                {serviceFilter !== "all" && (
+                  <button
+                    onClick={() => setServiceFilter("all")}
+                    className="inline-flex items-center gap-1 rounded-lg bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-200"
+                  >
+                    <Filter className="h-3 w-3" />
+                    Clear Filter
+                  </button>
+                )}
+                <button
+                  onClick={() => setShowCreateListing(true)}
+                  className="inline-flex items-center gap-1 rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-emerald-700"
+                >
+                  <Plus className="h-3 w-3" />
+                  Post a Job
+                </button>
+              </div>
             </div>
           ) : (
             <div className="space-y-3">
@@ -1315,6 +1600,7 @@ export default function DashboardMarketplace() {
                   key={listing.id}
                   listing={listing}
                   onBid={setBidListing}
+                  onQuickBid={setQuickBidListing}
                   isOwn={listing.posted_by?.userId === user?.uid}
                   workerSkills={workerProfile?.skills}
                   workerLat={workerProfile?.lat}
@@ -1377,19 +1663,46 @@ export default function DashboardMarketplace() {
                     </div>
                   </div>
                   {listing.bid_count > 0 && listing.status === "open" && (
-                    <button
-                      onClick={() =>
-                        setReviewListingId(
-                          reviewListingId === listing.id ? null : listing.id,
-                        )
-                      }
-                      className="inline-flex items-center gap-1 rounded-lg bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 hover:bg-blue-100"
-                    >
-                      <Gavel className="h-3 w-3" />
-                      Review Bids
-                    </button>
+                    <div className="flex items-center gap-1.5">
+                      <button
+                        onClick={() =>
+                          setCompareListingId(
+                            compareListingId === listing.id ? null : listing.id,
+                          )
+                        }
+                        className="inline-flex items-center gap-1 rounded-lg bg-emerald-50 px-3 py-1.5 text-xs font-medium text-emerald-700 hover:bg-emerald-100"
+                      >
+                        <BarChart3 className="h-3 w-3" />
+                        Compare
+                      </button>
+                      <button
+                        onClick={() =>
+                          setReviewListingId(
+                            reviewListingId === listing.id ? null : listing.id,
+                          )
+                        }
+                        className="inline-flex items-center gap-1 rounded-lg bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 hover:bg-blue-100"
+                      >
+                        <Gavel className="h-3 w-3" />
+                        Review
+                      </button>
+                    </div>
                   )}
                 </div>
+
+                {compareListingId === listing.id && (
+                  <div className="mt-3 border-t border-gray-100 pt-3">
+                    <BidComparison
+                      listingId={listing.id}
+                      listing={listing}
+                      showActions
+                      onAccepted={() => {
+                        setCompareListingId(null);
+                        loadMyListings();
+                      }}
+                    />
+                  </div>
+                )}
 
                 {reviewListingId === listing.id && (
                   <BidReviewPanel
@@ -1408,7 +1721,45 @@ export default function DashboardMarketplace() {
 
       {/* My Bids Tab */}
       {tab === "my-bids" && (
-        <div className="space-y-3">
+        <div className="space-y-4">
+          {/* Bid Stats Summary */}
+          {!loading && myBids.length > 0 && (
+            <div className="grid grid-cols-4 gap-3">
+              <div className="rounded-lg border border-gray-200 bg-white p-3 text-center">
+                <p className="text-xl font-bold text-gray-900">
+                  {myBids.length}
+                </p>
+                <p className="text-xs text-gray-500">Total Bids</p>
+              </div>
+              <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-3 text-center">
+                <p className="text-xl font-bold text-emerald-700">
+                  {myBids.filter((b) => b.status === "accepted").length}
+                </p>
+                <p className="text-xs text-emerald-600">Won</p>
+              </div>
+              <div className="rounded-lg border border-amber-200 bg-amber-50 p-3 text-center">
+                <p className="text-xl font-bold text-amber-700">
+                  {myBids.filter((b) => b.status === "pending").length}
+                </p>
+                <p className="text-xs text-amber-600">Pending</p>
+              </div>
+              <div className="rounded-lg border border-gray-200 bg-gray-50 p-3 text-center">
+                <p className="text-xl font-bold text-gray-500">
+                  {myBids.filter((b) => b.status === "rejected").length}
+                </p>
+                <p className="text-xs text-gray-400">Rejected</p>
+              </div>
+            </div>
+          )}
+
+          {/* Recent Bids Header */}
+          {!loading && myBids.length > 0 && (
+            <h3 className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+              <History className="h-4 w-4 text-gray-400" />
+              Your Recent Bids
+            </h3>
+          )}
+
           {loading ? (
             <div className="animate-pulse space-y-3">
               {[1, 2, 3].map((i) => (
@@ -1433,43 +1784,76 @@ export default function DashboardMarketplace() {
             myBids.map((bid) => (
               <div
                 key={bid.id}
-                className="card flex items-center justify-between border border-gray-200 p-4"
+                className={`card border p-4 ${
+                  bid.status === "accepted"
+                    ? "border-emerald-200 bg-emerald-50/30"
+                    : bid.status === "rejected"
+                      ? "border-gray-200 opacity-60"
+                      : "border-gray-200"
+                }`}
               >
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium text-gray-900">
-                      {formatCurrency(bid.price)}
-                    </span>
-                    <span
-                      className={`rounded-full px-2 py-0.5 text-xs font-medium ${BID_STATUS_COLORS[bid.status] || "bg-gray-100 text-gray-600"}`}
-                    >
-                      {bid.status}
-                    </span>
+                <div className="flex items-center justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-semibold text-gray-900">
+                        {formatCurrency(bid.price)}
+                      </span>
+                      <span
+                        className={`rounded-full px-2 py-0.5 text-xs font-medium ${BID_STATUS_COLORS[bid.status] || "bg-gray-100 text-gray-600"}`}
+                      >
+                        {bid.status}
+                      </span>
+                      {bid.score != null && (
+                        <span className="rounded-full bg-blue-50 px-2 py-0.5 text-[10px] font-medium text-blue-700">
+                          Score: {bid.score}
+                        </span>
+                      )}
+                    </div>
+                    <div className="mt-1 flex flex-wrap items-center gap-3 text-xs text-gray-500">
+                      {bid.listing_service_type && (
+                        <span className="rounded bg-gray-100 px-1.5 py-0.5 text-[10px] font-medium text-gray-600">
+                          {SERVICE_TYPE_LABELS[bid.listing_service_type] ||
+                            bid.listing_service_type}
+                        </span>
+                      )}
+                      {bid.timeline && (
+                        <span className="inline-flex items-center gap-1">
+                          <Clock className="h-3 w-3" />
+                          {bid.timeline}
+                        </span>
+                      )}
+                      {bid.certifications?.length > 0 && (
+                        <span className="inline-flex items-center gap-1">
+                          <Award className="h-3 w-3" />
+                          {bid.certifications.length} cert(s)
+                        </span>
+                      )}
+                    </div>
+                    {bid.notes && (
+                      <p className="mt-1 text-xs text-gray-400 line-clamp-1">
+                        {bid.notes}
+                      </p>
+                    )}
+                    <p className="mt-1 text-[10px] text-gray-400">
+                      Submitted {formatDate(bid.submitted_at)}
+                    </p>
                   </div>
-                  {bid.timeline && (
-                    <p className="mt-0.5 text-xs text-gray-500">
-                      Timeline: {bid.timeline}
-                    </p>
-                  )}
-                  {bid.notes && (
-                    <p className="mt-0.5 text-xs text-gray-400 line-clamp-1">
-                      {bid.notes}
-                    </p>
-                  )}
-                  <p className="mt-1 text-xs text-gray-400">
-                    Submitted {formatDate(bid.submitted_at)}
-                  </p>
-                </div>
-                <div>
-                  {bid.status === "accepted" && (
-                    <CheckCircle2 className="h-5 w-5 text-emerald-500" />
-                  )}
-                  {bid.status === "rejected" && (
-                    <XCircle className="h-5 w-5 text-red-400" />
-                  )}
-                  {bid.status === "pending" && (
-                    <Clock className="h-5 w-5 text-amber-400" />
-                  )}
+                  <div className="ml-4 flex flex-col items-center gap-1">
+                    {bid.status === "accepted" && (
+                      <CheckCircle2 className="h-6 w-6 text-emerald-500" />
+                    )}
+                    {bid.status === "rejected" && (
+                      <XCircle className="h-6 w-6 text-red-400" />
+                    )}
+                    {bid.status === "pending" && (
+                      <Clock className="h-6 w-6 text-amber-400" />
+                    )}
+                    {bid.status === "accepted" && (
+                      <span className="text-[10px] font-medium text-emerald-600">
+                        Won
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
             ))
@@ -1534,6 +1918,17 @@ export default function DashboardMarketplace() {
           onClose={() => setBidListing(null)}
           onSubmitted={() => {
             setBidListing(null);
+            loadBrowseListings();
+          }}
+        />
+      )}
+      {quickBidListing && (
+        <QuickBidModal
+          listing={quickBidListing}
+          workerProfile={workerProfile}
+          onClose={() => setQuickBidListing(null)}
+          onSubmitted={() => {
+            setQuickBidListing(null);
             loadBrowseListings();
           }}
         />
