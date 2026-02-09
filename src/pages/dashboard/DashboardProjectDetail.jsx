@@ -133,7 +133,7 @@ export default function DashboardProjectDetail() {
         }
         setProject({ id: projectSnap.id, ...projectSnap.data() });
 
-        // Load tasks subcollection
+        // Load tasks subcollection (legacy)
         const tasksSnap = await getDocs(
           collection(db, "projects", projectId, "tasks"),
         );
@@ -142,6 +142,51 @@ export default function DashboardProjectDetail() {
           ...d.data(),
         }));
         setTasks(taskData);
+
+        // Load pipeline_tasks subcollection
+        try {
+          const pipelineSnap = await getDocs(
+            query(
+              collection(db, "projects", projectId, "pipeline_tasks"),
+              orderBy("order", "asc"),
+            ),
+          );
+          const pipelineData = pipelineSnap.docs.map((d) => ({
+            id: d.id,
+            ...d.data(),
+          }));
+          setPipelineTasks(pipelineData);
+
+          // Load marketplace listings for each pipeline task that has one
+          const listingIds = pipelineData
+            .map((t) => t.marketplace_listing_id)
+            .filter(Boolean);
+          if (listingIds.length > 0) {
+            const listingMap = {};
+            // Fetch each listing individually (Firestore doesn't support `in` with subcollections easily)
+            await Promise.all(
+              listingIds.map(async (lid) => {
+                try {
+                  const listingSnap = await getDoc(
+                    doc(db, "marketplace_listings", lid),
+                  );
+                  if (listingSnap.exists()) {
+                    listingMap[lid] = {
+                      id: listingSnap.id,
+                      ...listingSnap.data(),
+                    };
+                  }
+                } catch (e) {
+                  console.error("Failed to load listing:", lid, e);
+                }
+              }),
+            );
+            setMarketplaceData(listingMap);
+          }
+        } catch (pipelineErr) {
+          console.error("Failed to load pipeline tasks:", pipelineErr);
+          // Not fatal -- pipeline_tasks may not exist yet
+        }
       } catch (err) {
         console.error("Failed to load project:", err);
         setError("Failed to load project");
@@ -151,6 +196,31 @@ export default function DashboardProjectDetail() {
     };
     load();
   }, [user, projectId]);
+
+  const loadBidsForListing = async (listingId) => {
+    if (expandedBids === listingId) {
+      setExpandedBids(null);
+      setBidsList([]);
+      return;
+    }
+    setExpandedBids(listingId);
+    setBidsLoading(true);
+    try {
+      const bidsQ = query(
+        collection(db, "marketplace_bids"),
+        where("listing_id", "==", listingId),
+        orderBy("price", "asc"),
+        limit(50),
+      );
+      const bidsSnap = await getDocs(bidsQ);
+      setBidsList(bidsSnap.docs.map((d) => ({ id: d.id, ...d.data() })));
+    } catch (err) {
+      console.error("Failed to load bids:", err);
+      setBidsList([]);
+    } finally {
+      setBidsLoading(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -352,7 +422,245 @@ export default function DashboardProjectDetail() {
             </div>
           )}
         </Section>
+      </div>
 
+      {/* Pipeline Tasks (full width) */}
+      {pipelineTasks.length > 0 && (
+        <div className="card-padded">
+          <div className="mb-4 flex items-center gap-2">
+            <Workflow className="h-5 w-5 text-gray-400" />
+            <h2 className="text-sm font-semibold text-gray-900">
+              Pipeline Tasks ({pipelineTasks.length})
+            </h2>
+          </div>
+
+          {/* Dependency Chain Visualization */}
+          <div className="mb-6 overflow-x-auto">
+            <div className="flex items-center gap-0 min-w-max py-2">
+              {pipelineTasks.map((pt, i) => {
+                const isBlocked = pt.status === "blocked";
+                const isReady = pt.status === "ready" || pt.status === "open";
+                const isAssigned = pt.status === "assigned";
+                const isCompleted = pt.status === "completed";
+
+                let nodeColor = "bg-gray-200 text-gray-500";
+                let ringColor = "";
+                if (isCompleted) {
+                  nodeColor = "bg-emerald-500 text-white";
+                } else if (isAssigned) {
+                  nodeColor = "bg-blue-500 text-white";
+                } else if (isReady) {
+                  nodeColor = "bg-amber-400 text-white";
+                } else if (isBlocked) {
+                  nodeColor = "bg-gray-300 text-gray-500";
+                  ringColor = "ring-2 ring-red-300";
+                }
+
+                return (
+                  <div key={pt.id} className="flex items-center">
+                    <div className="flex flex-col items-center">
+                      <div
+                        className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold ${nodeColor} ${ringColor}`}
+                        title={`${TASK_TYPE_LABELS[pt.type] || pt.type}: ${pt.status}`}
+                      >
+                        {isCompleted ? (
+                          <CheckCircle2 className="h-4 w-4" />
+                        ) : isBlocked ? (
+                          <Lock className="h-3.5 w-3.5" />
+                        ) : (
+                          <span>{i + 1}</span>
+                        )}
+                      </div>
+                      <span className="mt-1 max-w-[64px] text-center text-[9px] leading-tight text-gray-500">
+                        {TASK_TYPE_LABELS[pt.type] || pt.type}
+                      </span>
+                      <span
+                        className={`mt-0.5 rounded-full px-1.5 py-0 text-[8px] font-medium ${TASK_STATUS_STYLES[pt.status] || "bg-gray-100 text-gray-500"}`}
+                      >
+                        {pt.status}
+                      </span>
+                    </div>
+                    {i < pipelineTasks.length - 1 && (
+                      <div className="mx-1 flex items-center">
+                        <div
+                          className={`h-0.5 w-6 ${isCompleted ? "bg-emerald-300" : "bg-gray-200"}`}
+                        />
+                        <ArrowRight
+                          className={`h-3 w-3 -ml-1 ${isCompleted ? "text-emerald-400" : "text-gray-300"}`}
+                        />
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Pipeline Task Details */}
+          <div className="space-y-2">
+            {pipelineTasks.map((pt) => {
+              const listing = pt.marketplace_listing_id
+                ? marketplaceData[pt.marketplace_listing_id]
+                : null;
+              const isExpanded = expandedBids === pt.marketplace_listing_id;
+
+              return (
+                <div
+                  key={pt.id}
+                  className="rounded-lg border border-gray-100 p-3"
+                >
+                  <div className="flex items-center gap-3">
+                    {pt.status === "completed" ? (
+                      <CheckCircle2 className="h-4 w-4 text-green-500 shrink-0" />
+                    ) : pt.status === "blocked" ? (
+                      <Lock className="h-4 w-4 text-red-400 shrink-0" />
+                    ) : (
+                      <Circle className="h-4 w-4 text-gray-300 shrink-0" />
+                    )}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <p className="text-sm font-medium text-gray-900">
+                          {TASK_TYPE_LABELS[pt.type] || pt.type}
+                        </p>
+                        <span
+                          className={`shrink-0 rounded-full px-2 py-0.5 text-xs font-medium ${TASK_STATUS_STYLES[pt.status] || "bg-gray-100 text-gray-600"}`}
+                        >
+                          {pt.status}
+                        </span>
+                      </div>
+                      {pt.description && (
+                        <p className="text-xs text-gray-500 truncate">
+                          {pt.description}
+                        </p>
+                      )}
+                      {pt.depends_on?.length > 0 && (
+                        <p className="mt-0.5 text-[10px] text-gray-400">
+                          Depends on:{" "}
+                          {pt.depends_on
+                            .map(
+                              (depId) =>
+                                TASK_TYPE_LABELS[
+                                  pipelineTasks.find((t) => t.id === depId)
+                                    ?.type
+                                ] || depId,
+                            )
+                            .join(", ")}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Marketplace info */}
+                    <div className="shrink-0 flex items-center gap-2">
+                      {listing ? (
+                        <>
+                          <div className="text-right text-xs">
+                            <span className="inline-flex items-center gap-1 text-gray-500">
+                              <Gavel className="h-3 w-3" />
+                              {listing.bid_count || 0} bids
+                            </span>
+                            {listing.winning_bid && (
+                              <p className="text-emerald-600 font-medium">
+                                {listing.winning_bid.bidderName || "Assigned"}
+                              </p>
+                            )}
+                            {listing.best_score != null && (
+                              <p className="text-gray-400">
+                                Best: {listing.best_score}
+                              </p>
+                            )}
+                          </div>
+                          {listing.bid_count > 0 && (
+                            <button
+                              onClick={() =>
+                                loadBidsForListing(pt.marketplace_listing_id)
+                              }
+                              className="inline-flex items-center gap-1 rounded-lg bg-gray-100 px-2 py-1 text-xs text-gray-600 hover:bg-gray-200"
+                            >
+                              {isExpanded ? (
+                                <ChevronUp className="h-3 w-3" />
+                              ) : (
+                                <ChevronDown className="h-3 w-3" />
+                              )}
+                              Bids
+                            </button>
+                          )}
+                        </>
+                      ) : pt.marketplace_listing_id ? (
+                        <span className="text-xs text-gray-400">
+                          <Store className="inline h-3 w-3" /> Listed
+                        </span>
+                      ) : (
+                        <span className="text-xs text-gray-300">
+                          No listing
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Expanded Bids */}
+                  {isExpanded && (
+                    <div className="mt-3 border-t border-gray-100 pt-3">
+                      {bidsLoading ? (
+                        <div className="flex items-center gap-2 py-2 text-xs text-gray-400">
+                          <Loader2 className="h-3 w-3 animate-spin" />
+                          Loading bids...
+                        </div>
+                      ) : bidsList.length === 0 ? (
+                        <p className="py-2 text-xs text-gray-400">
+                          No bids found
+                        </p>
+                      ) : (
+                        <div className="space-y-1.5">
+                          <h4 className="text-[10px] font-semibold uppercase text-gray-400">
+                            All Bids
+                          </h4>
+                          {bidsList.map((bid) => (
+                            <div
+                              key={bid.id}
+                              className="flex items-center justify-between rounded bg-gray-50 px-3 py-1.5"
+                            >
+                              <div>
+                                <span className="text-xs font-medium text-gray-900">
+                                  ${bid.price?.toLocaleString() || "N/A"}
+                                </span>
+                                {bid.timeline && (
+                                  <span className="ml-2 text-[10px] text-gray-500">
+                                    {bid.timeline}
+                                  </span>
+                                )}
+                                <p className="text-[10px] text-gray-500">
+                                  {bid.bidder?.displayName ||
+                                    bid.bidder?.email ||
+                                    "Anonymous"}
+                                  {bid.certifications?.length > 0 &&
+                                    ` -- ${bid.certifications.length} cert(s)`}
+                                </p>
+                              </div>
+                              <span
+                                className={`rounded-full px-1.5 py-0.5 text-[10px] font-medium ${
+                                  bid.status === "accepted"
+                                    ? "bg-emerald-100 text-emerald-700"
+                                    : bid.status === "rejected"
+                                      ? "bg-red-100 text-red-700"
+                                      : "bg-amber-100 text-amber-700"
+                                }`}
+                              >
+                                {bid.status}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      <div className="grid gap-6 lg:grid-cols-2">
         {/* Equipment */}
         <Section title="Equipment" icon={Package}>
           {project.equipment ? (

@@ -7,6 +7,8 @@
 
 import * as functions from "firebase-functions/v1";
 import * as admin from "firebase-admin";
+import { scoreBid, loadWeights } from "./smartBidding";
+import { getZipCoordinates, haversineDistance } from "./locationMatching";
 
 const db = admin.firestore();
 
@@ -49,6 +51,16 @@ export const createMarketplaceListing = functions.https.onCall(
       budget,
       deadline,
       project_context,
+      project_zip,
+      project_lat,
+      project_lng,
+      project_state,
+      auto_created,
+      source_task_id,
+      source_project_id,
+      bid_window_hours,
+      allow_diy,
+      customer_id,
     } = data;
 
     if (!service_type || !requirements) {
@@ -75,6 +87,13 @@ export const createMarketplaceListing = functions.https.onCall(
       );
     }
 
+    const bidWindowHrs =
+      typeof bid_window_hours === "number" ? bid_window_hours : 24;
+    const postedAt = new Date();
+    const bidWindowClosesAt = new Date(
+      postedAt.getTime() + bidWindowHrs * 60 * 60 * 1000,
+    );
+
     const listingData: Record<string, unknown> = {
       service_type,
       project_id: project_id || null,
@@ -85,6 +104,18 @@ export const createMarketplaceListing = functions.https.onCall(
         ? admin.firestore.Timestamp.fromDate(new Date(deadline))
         : null,
       project_context: project_context || null,
+      project_zip: project_zip || null,
+      project_lat: typeof project_lat === "number" ? project_lat : null,
+      project_lng: typeof project_lng === "number" ? project_lng : null,
+      project_state: project_state || null,
+      auto_created: auto_created === true ? true : false,
+      source_task_id: source_task_id || null,
+      source_project_id: source_project_id || null,
+      bid_window_hours: bidWindowHrs,
+      bid_window_closes_at:
+        admin.firestore.Timestamp.fromDate(bidWindowClosesAt),
+      allow_diy: allow_diy === true ? true : false,
+      customer_id: customer_id || null,
       status: "open",
       bid_count: 0,
       winning_bid: null,

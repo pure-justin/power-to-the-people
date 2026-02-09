@@ -125,6 +125,41 @@ firebase deploy --only functions --project power-to-the-people-vpp
 | fetchSmtUsage | onCall | firebase | Fetch Smart Meter Texas usage data |
 | smtWebhook | onRequest POST | none | SMT data webhook |
 
+### SolarOS Marketplace HTTP APIs (API-key authenticated)
+| Endpoint | Method | Scope | Description |
+|----------|--------|-------|-------------|
+| /marketplace/listings | GET | read_marketplace | Browse listings (filter: service_type, status, state, zip+radius) |
+| /marketplace/listings/:id | GET | read_marketplace | Get listing with bids |
+| /marketplace/listings | POST | write_marketplace | Create listing |
+| /marketplace/listings/:id/bid | POST | write_marketplace | Submit bid (auto-scores via smartBidding) |
+| /marketplace/listings/:id/accept | POST | write_marketplace | Accept bid (atomic batch) |
+| /marketplace/listings/:id/complete | POST | write_marketplace | Complete job |
+| /marketplace/workers | GET/POST | read/write_workers | Search/register workers |
+| /marketplace/workers/:id/rate | POST | write_marketplace | Rate worker |
+| /marketplace/my/* | GET | read_marketplace | My listings/bids/active-tasks |
+| /projects | GET | read_projects | List projects |
+| /projects/:id | GET | read_projects | Project detail + pipeline tasks |
+| /projects/:id/advance | POST | write_projects | Advance pipeline stage |
+| /projects/:id/tasks | GET/POST | read/write_projects | List/create tasks |
+| /projects/:id/tasks/:tid/complete | POST | write_projects | Complete task (cascades) |
+| /projects/:id/timeline | GET | read_projects | Project timeline |
+| /projects/:id/equipment | POST | write_projects | Set equipment selection |
+| /webhooks | GET/POST/PUT/DELETE | manage_webhooks | Webhook CRUD |
+| /webhooks/test | POST | manage_webhooks | Test webhook delivery |
+| /customer/signup | POST | none | Public lead submission |
+| /customer/project-status/:code | GET | none | Track by code |
+| /customer/survey | POST | firebase_auth | DIY survey submission |
+| /customer/survey/photos | POST | firebase_auth | Get signed upload URLs |
+| /customer/schedule | POST | firebase_auth | Submit schedule preferences |
+
+### SolarOS Engine Layer (internal utilities)
+| Module | Description |
+|--------|-------------|
+| smartBidding.ts | 7-factor bid scoring: price, rating, proximity, speed, availability, experience, reliability |
+| pipelineAutoTasks.ts | 10-task dependency chain: survey→CAD→engineering→permit→install→inspection→PTO |
+| slaEngine.ts | Strike system (1st=warn, 2nd=7d, 3rd=30d, 4th=deactivate), reliability scoring, auto-requeue |
+| locationMatching.ts | Zip→lat/lng (356 US zips), haversine distance, radius-based worker matching |
+
 ## Firestore Collections
 
 | Collection | Description | Key Fields |
@@ -239,6 +274,13 @@ Authorization: Bearer pk_live_[48 hex chars]   (production)
 | read_incentives | Access incentive programs |
 | read_permits | Access permit requirements |
 | read_compliance | Run compliance checks |
+| read_marketplace | Browse marketplace listings & bids |
+| write_marketplace | Create listings, submit bids, accept, complete |
+| read_projects | Read project data, tasks, timeline |
+| write_projects | Advance stages, create/complete tasks |
+| read_workers | Search/view worker profiles |
+| write_workers | Register/update worker profiles |
+| manage_webhooks | Register/manage webhook subscriptions |
 | admin | Full access |
 
 ## File Structure
@@ -264,6 +306,28 @@ solar-crm/
 │   │   ├── secureLeadWebhook.ts <-- API-key-protected webhook endpoints
 │   │   ├── smtConnector.ts    <-- Smart Meter Texas integration
 │   │   ├── dataRefresh.ts     <-- Solar data refresh from OpenEI/NREL (scheduled + manual)
+│   │   ├── marketplace.ts     <-- Marketplace CRUD (listings, bids, workers, ratings)
+│   │   ├── projectPipeline.ts <-- Project pipeline stage management
+│   │   ├── smartBidding.ts    <-- 7-factor weighted bid scoring engine
+│   │   ├── pipelineAutoTasks.ts <-- 10-task dependency chain (sold→PTO)
+│   │   ├── slaEngine.ts       <-- SLA enforcement, strikes, reliability scoring
+│   │   ├── locationMatching.ts <-- Zip-based geo worker matching (356 US zips)
+│   │   ├── marketplaceApi.ts  <-- HTTP API: 13 marketplace REST endpoints
+│   │   ├── projectApi.ts      <-- HTTP API: 8 project/pipeline REST endpoints
+│   │   ├── webhookApi.ts      <-- HTTP API: webhook registration + HMAC delivery
+│   │   ├── customerApi.ts     <-- HTTP API: public onboarding + DIY survey
+│   │   ├── taxCreditService.ts <-- Tax credit audit, insurance, marketplace
+│   │   ├── documentService.ts <-- HTML→PDF documents, e-signatures
+│   │   ├── surveyService.ts   <-- Site survey CRUD + AI task creation
+│   │   ├── permitService.ts   <-- Permit lifecycle tracking
+│   │   ├── cadService.ts      <-- CAD design generation
+│   │   ├── eagleviewService.ts <-- EagleView roof measurement integration
+│   │   ├── schedulingService.ts <-- Install scheduling + availability
+│   │   ├── photoAnalysisService.ts <-- Install photo QC
+│   │   ├── fundingService.ts  <-- Funding/bankability packages
+│   │   ├── pipelineOrchestrator.ts <-- Stage→stage auto-triggers
+│   │   ├── aiTaskEngine.ts    <-- AI-first/human-fallback task system
+│   │   ├── ahjDatabase.ts     <-- AHJ registry + permit SOPs
 │   │   └── examples/          <-- Example code
 │   └── package.json           <-- Backend deps: firebase-admin, firebase-functions, stripe, twilio, puppeteer-core
 ├── scripts/
