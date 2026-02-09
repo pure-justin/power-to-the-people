@@ -16,26 +16,7 @@ import {
   quickComplianceCheck,
   ComplianceInput,
 } from "./complianceEngine";
-
-// ─── CORS Helper ───────────────────────────────────────────────────────────────
-
-function setCors(res: functions.Response): void {
-  res.set("Access-Control-Allow-Origin", "*");
-  res.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
-}
-
-function handleOptions(
-  req: functions.https.Request,
-  res: functions.Response,
-): boolean {
-  if (req.method === "OPTIONS") {
-    setCors(res);
-    res.status(204).send("");
-    return true;
-  }
-  return false;
-}
+import { setCors, handleOptions } from "./corsConfig";
 
 // ─── Equipment Endpoint ────────────────────────────────────────────────────────
 

@@ -72,7 +72,7 @@ try {
 
     // Sign in anonymously as fallback (for Firestore access)
     signInAnonymously(auth)
-      .then(() => console.log("Firebase: Signed in anonymously"))
+      .then(() => {})
       .catch((error) =>
         console.error("Firebase: Anonymous auth error:", error),
       );
