@@ -724,6 +724,72 @@
         { "fieldPath": "apiKeyId", "order": "ASCENDING" },
         { "fieldPath": "timestamp", "order": "DESCENDING" }
       ]
+    },
+    {
+      "collectionGroup": "webhooks",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "user_id", "order": "ASCENDING" },
+        { "fieldPath": "status", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "webhooks",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "events", "arrayConfig": "CONTAINS" }
+      ]
+    },
+    {
+      "collectionGroup": "sla_violations",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "worker_id", "order": "ASCENDING" },
+        { "fieldPath": "created_at", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "sla_violations",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "project_id", "order": "ASCENDING" },
+        { "fieldPath": "created_at", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "marketplace_listings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "project_state", "order": "ASCENDING" },
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "service_type", "order": "ASCENDING" },
+        { "fieldPath": "posted_at", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "marketplace_bids",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "listing_id", "order": "ASCENDING" },
+        { "fieldPath": "bid_score", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "webhookLogs",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "webhook_id", "order": "ASCENDING" },
+        { "fieldPath": "timestamp", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "pipeline_tasks",
+      "queryScope": "COLLECTION_GROUP",
+      "fields": [
+        { "fieldPath": "dependency_status", "order": "ASCENDING" },
+        { "fieldPath": "task_order", "order": "ASCENDING" }
+      ]
     }
   ],
   "fieldOverrides": [

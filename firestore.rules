@@ -508,6 +508,60 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
+    // ZIP COORDINATES — Zip code geolocation cache
+    match /zip_coordinates/{zip} {
+      allow read: if true; // Public reference data
+      allow write: if isAdmin();
+    }
+
+    // WEBHOOKS — Dynamic webhook registrations (API-key owners)
+    match /webhooks/{webhookId} {
+      allow read: if isSignedIn() &&
+                    (resource.data.user_id == request.auth.uid || isAdmin());
+      allow create: if isSignedIn();
+      allow update: if isSignedIn() &&
+                      resource.data.user_id == request.auth.uid;
+      allow delete: if isSignedIn() &&
+                      (resource.data.user_id == request.auth.uid || isAdmin());
+    }
+
+    // SLA VIOLATIONS — Worker SLA violation records
+    match /sla_violations/{violationId} {
+      allow read: if isSignedIn();
+      allow write: if false; // Cloud Functions only
+    }
+
+    // PIPELINE TASKS — Auto-generated pipeline task subcollection
+    match /projects/{projectId}/pipeline_tasks/{taskId} {
+      allow read: if isSignedIn();
+      allow write: if false; // Cloud Functions only (managed by pipelineAutoTasks.ts)
+    }
+
+    // SURVEY DATA — DIY survey submissions
+    match /projects/{projectId}/survey_data/{submissionId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn();
+      allow update: if isAdmin();
+      allow delete: if false;
+    }
+
+    // SCHEDULING PREFERENCES — Customer scheduling preferences
+    match /projects/{projectId}/scheduling/{docId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn();
+      allow update: if isSignedIn();
+      allow delete: if false;
+    }
+
+    // TIMELINE — Project timeline events
+    match /projects/{projectId}/timeline/{eventId} {
+      allow read: if isSignedIn();
+      allow write: if false; // Cloud Functions only
+    }
+
+    // CONFIG — Bidding weights, referral settings, SLA rules, market rates
+    // (config collection already exists above, covers config/{document=**})
+
     // Default deny all other collections
     match /{document=**} {
       allow read, write: if false;
