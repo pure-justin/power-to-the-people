@@ -21,7 +21,6 @@ import {
   MapPin,
   Award,
   ShieldCheck,
-  FileText,
   Clock,
   CheckCircle2,
   Edit3,
@@ -35,14 +34,11 @@ import {
   ListChecks,
   Settings,
   DollarSign,
-  TrendingUp,
   Navigation,
-  Calendar,
   Store,
   ArrowRight,
   Timer,
   BadgeCheck,
-  Zap,
 } from "lucide-react";
 
 const functions = getFunctions(undefined, "us-central1");
