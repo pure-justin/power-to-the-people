@@ -559,6 +559,28 @@ export const getSmsStats = functions.https.onCall(async (data, context) => {
  */
 export const twilioStatusCallback = functions.https.onRequest(
   async (req, res) => {
+    // Validate Twilio signature
+    const twilioSignature = req.headers["x-twilio-signature"] as string;
+    if (!twilioSignature) {
+      res.status(401).json({ error: "Missing Twilio signature" });
+      return;
+    }
+
+    const twilioAuthTokenConfig = functions.config().twilio?.auth_token;
+    if (twilioAuthTokenConfig) {
+      const requestUrl = `https://${req.headers.host}${req.originalUrl}`;
+      const isValid = twilio.validateRequest(
+        twilioAuthTokenConfig,
+        twilioSignature,
+        requestUrl,
+        req.body,
+      );
+      if (!isValid) {
+        res.status(403).json({ error: "Invalid Twilio signature" });
+        return;
+      }
+    }
+
     const { MessageSid, MessageStatus, To, ErrorCode, ErrorMessage } = req.body;
 
     if (!MessageSid) {

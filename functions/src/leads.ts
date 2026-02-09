@@ -630,12 +630,18 @@ export const leadWebhook = functions
       return;
     }
 
-    // Validate API key (in production, use proper auth)
+    // Validate API key
     const apiKey = req.headers.authorization?.replace("Bearer ", "");
-    const validApiKey = process.env.LEAD_WEBHOOK_API_KEY;
+    const validApiKey =
+      process.env.LEAD_WEBHOOK_API_KEY ||
+      functions.config().lead?.webhook_api_key;
 
-    if (validApiKey && apiKey !== validApiKey) {
-      res.status(401).json({ error: "Unauthorized" });
+    if (!validApiKey) {
+      res.status(500).json({ error: "Lead webhook API key not configured" });
+      return;
+    }
+    if (apiKey !== validApiKey) {
+      res.status(401).json({ error: "Invalid API key" });
       return;
     }
 

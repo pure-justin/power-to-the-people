@@ -14,7 +14,7 @@
 import * as functions from "firebase-functions/v1";
 import * as admin from "firebase-admin";
 import puppeteer from "puppeteer-core";
-import { validateApiKeyFromRequest } from "./apiKeys";
+import { validateApiKeyFromRequest, ApiKeyScope } from "./apiKeys";
 
 // Browserless.io endpoint (or self-hosted)
 const BROWSERLESS_URL =
@@ -300,6 +300,17 @@ export const smtWebhook = functions
 
     if (req.method !== "POST") {
       res.status(405).json({ error: "Method not allowed" });
+      return;
+    }
+
+    // Validate API key authentication
+    try {
+      await validateApiKeyFromRequest(req, ApiKeyScope.WRITE_SMT);
+    } catch (error: any) {
+      const status = error.code === "unauthenticated" ? 401 : 403;
+      res
+        .status(status)
+        .json({ error: error.message || "Authentication failed" });
       return;
     }
 

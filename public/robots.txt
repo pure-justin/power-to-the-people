@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+Allow: /solar/
+Allow: /features
+Allow: /pricing
+Allow: /about
+Allow: /contact
+Allow: /get-started
+
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /portal/
+Disallow: /sales/
+Disallow: /api-docs/
+
+Sitemap: https://power-to-the-people-vpp.web.app/sitemap.xml

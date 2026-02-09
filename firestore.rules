@@ -63,8 +63,8 @@ service cloud.firestore {
       // Anyone authenticated can create
       allow create: if isSignedIn();
 
-      // Users can read their own projects
-      allow read: if isSignedIn();
+      // Users can read their own projects (owner, customer, or sales rep)
+      allow read: if isAdmin() || isInstaller() || (isSignedIn() && resource.data.userId == request.auth.uid) || (isSignedIn() && resource.data.customerId == request.auth.uid) || (isSignedIn() && resource.data.salesRepId == request.auth.uid);
 
       // Admins can read/write all
       allow read, write: if isAdmin();
@@ -83,8 +83,8 @@ service cloud.firestore {
       // Anyone can read cache
       allow read: if true;
 
-      // Only authenticated users can write cache
-      allow write: if isSignedIn();
+      // Only admins can write cache (prevents geocoding poisoning)
+      allow write: if isAdmin();
 
       // Admins can delete cache entries
       allow delete: if isAdmin();
@@ -131,9 +131,11 @@ service cloud.firestore {
 
     // REFERRALS COLLECTION
     match /referrals/{userId} {
-      // Users can read and write their own referral record
+      // Users can read their own referral record
       allow read: if isOwner(userId) || isAdmin();
-      allow write: if isOwner(userId) || isAdmin();
+      // Only admins can update referral records (prevents self-modifying earnings)
+      allow update: if isAdmin();
+      // Any signed-in user can create a referral
       allow create: if isSignedIn();
     }
 
