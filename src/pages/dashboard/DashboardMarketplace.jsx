@@ -36,6 +36,10 @@ import {
   Award,
   Filter,
   Zap,
+  Sparkles,
+  Target,
+  Navigation,
+  BarChart3,
 } from "lucide-react";
 
 const functions = getFunctions(undefined, "us-central1");
