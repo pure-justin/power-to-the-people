@@ -1,22 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import { db, collection, query, where, getDocs } from "../../services/firebase";
 import {
-  db,
-  collection,
-  query,
-  where,
-  getDocs,
-  orderBy,
-} from "../../services/firebase";
-import {
-  CreditCard,
   ExternalLink,
   FileText,
-  DollarSign,
   Clock,
   AlertCircle,
   CheckCircle2,
 } from "lucide-react";
+import DataTable from "../../components/ui/DataTable";
+import FilterBar from "../../components/ui/FilterBar";
 
 const STATUS_CONFIG = {
   paid: {
@@ -68,7 +61,7 @@ export default function PortalInvoices() {
   const { user } = useAuth();
   const [invoices, setInvoices] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState("all");
+  const [filters, setFilters] = useState({});
 
   useEffect(() => {
     if (!user?.email) return;
@@ -96,17 +89,111 @@ export default function PortalInvoices() {
     loadInvoices();
   }, [user]);
 
-  const filtered =
-    filter === "all"
-      ? invoices
-      : invoices.filter((inv) => inv.status === filter);
-
   const totalPaid = invoices
     .filter((inv) => inv.status === "paid")
     .reduce((sum, inv) => sum + (inv.amount || 0), 0);
   const totalOutstanding = invoices
     .filter((inv) => ["sent", "overdue"].includes(inv.status))
     .reduce((sum, inv) => sum + (inv.amount || 0), 0);
+
+  // Filter definitions — dynamically extracted from loaded data
+  const filterDefs = useMemo(() => {
+    const statuses = [
+      ...new Set(invoices.map((inv) => inv.status).filter(Boolean)),
+    ].sort();
+    return [
+      {
+        key: "status",
+        label: "Status",
+        options: statuses.map((s) => ({
+          value: s,
+          label:
+            STATUS_CONFIG[s]?.label || s.charAt(0).toUpperCase() + s.slice(1),
+        })),
+      },
+    ];
+  }, [invoices]);
+
+  // Filtered invoices
+  const filtered = useMemo(() => {
+    let result = invoices;
+    if (filters.status) {
+      result = result.filter((inv) => inv.status === filters.status);
+    }
+    return result;
+  }, [invoices, filters]);
+
+  // DataTable columns
+  const columns = useMemo(
+    () => [
+      {
+        key: "description",
+        label: "Description",
+        sortable: true,
+        render: (val, row) => (
+          <div>
+            <p className="text-sm font-medium text-gray-900">
+              {val || "Solar Invoice"}
+            </p>
+            <p className="text-xs text-gray-500">#{row.id.slice(0, 8)}</p>
+          </div>
+        ),
+      },
+      {
+        key: "amount",
+        label: "Amount",
+        sortable: true,
+        render: (val) => (
+          <span className="text-sm font-medium text-gray-900">
+            {formatCurrency(val)}
+          </span>
+        ),
+      },
+      {
+        key: "status",
+        label: "Status",
+        sortable: true,
+        render: (val) => {
+          const statusCfg = STATUS_CONFIG[val] || STATUS_CONFIG.draft;
+          return (
+            <span
+              className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium ${statusCfg.className}`}
+            >
+              {statusCfg.label}
+            </span>
+          );
+        },
+      },
+      {
+        key: "dueDate",
+        label: "Due Date",
+        sortable: true,
+        render: (val) => (
+          <span className="text-sm text-gray-500">{formatDate(val)}</span>
+        ),
+      },
+      {
+        key: "paymentUrl",
+        label: "Action",
+        sortable: false,
+        render: (val, row) =>
+          ["sent", "overdue"].includes(row.status) && val ? (
+            <a
+              href={val}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-emerald-700"
+            >
+              Pay Now
+              <ExternalLink className="h-3 w-3" />
+            </a>
+          ) : (
+            <span className="text-xs text-gray-400">--</span>
+          ),
+      },
+    ],
+    [],
+  );
 
   if (loading) {
     return (
@@ -160,107 +247,19 @@ export default function PortalInvoices() {
         </div>
       </div>
 
-      {/* Filter Tabs */}
-      <div className="flex gap-2 overflow-x-auto">
-        {["all", "sent", "paid", "overdue", "draft"].map((f) => (
-          <button
-            key={f}
-            onClick={() => setFilter(f)}
-            className={`rounded-lg px-3 py-1.5 text-sm font-medium capitalize transition-colors ${
-              filter === f
-                ? "bg-emerald-100 text-emerald-700"
-                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-            }`}
-          >
-            {f}
-          </button>
-        ))}
-      </div>
+      {/* Filter Bar */}
+      <FilterBar
+        filters={filterDefs}
+        activeFilters={filters}
+        onChange={setFilters}
+      />
 
       {/* Invoice Table */}
-      <div className="rounded-xl border border-gray-200 bg-white">
-        {filtered.length === 0 ? (
-          <div className="px-6 py-12 text-center">
-            <CreditCard className="mx-auto h-8 w-8 text-gray-300" />
-            <p className="mt-2 text-sm text-gray-500">
-              {filter === "all"
-                ? "No invoices found."
-                : `No ${filter} invoices.`}
-            </p>
-          </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-gray-100">
-                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
-                    Description
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
-                    Amount
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
-                    Status
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
-                    Due Date
-                  </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wide text-gray-500">
-                    Action
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-50">
-                {filtered.map((invoice) => {
-                  const statusCfg =
-                    STATUS_CONFIG[invoice.status] || STATUS_CONFIG.draft;
-                  return (
-                    <tr key={invoice.id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4">
-                        <p className="text-sm font-medium text-gray-900">
-                          {invoice.description || "Solar Invoice"}
-                        </p>
-                        <p className="text-xs text-gray-500">
-                          #{invoice.id.slice(0, 8)}
-                        </p>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-gray-900">
-                        {formatCurrency(invoice.amount)}
-                      </td>
-                      <td className="px-6 py-4">
-                        <span
-                          className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium ${statusCfg.className}`}
-                        >
-                          {statusCfg.label}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 text-sm text-gray-500">
-                        {formatDate(invoice.dueDate)}
-                      </td>
-                      <td className="px-6 py-4 text-right">
-                        {["sent", "overdue"].includes(invoice.status) &&
-                        invoice.paymentUrl ? (
-                          <a
-                            href={invoice.paymentUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-emerald-700"
-                          >
-                            Pay Now
-                            <ExternalLink className="h-3 w-3" />
-                          </a>
-                        ) : (
-                          <span className="text-xs text-gray-400">--</span>
-                        )}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
+      <DataTable
+        columns={columns}
+        data={filtered}
+        emptyMessage="No invoices found."
+      />
     </div>
   );
 }

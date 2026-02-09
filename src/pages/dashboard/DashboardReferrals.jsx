@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import {
   db,
@@ -8,6 +8,8 @@ import {
   getDocs,
   limit,
 } from "../../services/firebase";
+import DataTable from "../../components/ui/DataTable";
+import FilterBar from "../../components/ui/FilterBar";
 import {
   Gift,
   DollarSign,
@@ -43,6 +45,7 @@ export default function DashboardReferrals() {
   const [referrals, setReferrals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
+  const [filters, setFilters] = useState({});
 
   const referralLink = `https://power-to-the-people-vpp.web.app/ref/${user?.uid || ""}`;
 
@@ -103,6 +106,82 @@ export default function DashboardReferrals() {
     const found = REFERRAL_STATUSES.find((s) => s.value === status);
     return found?.label || status || "Unknown";
   };
+
+  const filterDefs = useMemo(() => {
+    const statuses = [
+      ...new Set(referrals.map((r) => r.status || "pending")),
+    ].sort();
+    return [
+      {
+        key: "status",
+        label: "Status",
+        options: statuses.map((s) => {
+          const found = REFERRAL_STATUSES.find((rs) => rs.value === s);
+          return { value: s, label: found?.label || s };
+        }),
+      },
+    ];
+  }, [referrals]);
+
+  const filtered = useMemo(() => {
+    return referrals.filter((r) => {
+      const matchesStatus =
+        !filters.status || (r.status || "pending") === filters.status;
+      return matchesStatus;
+    });
+  }, [referrals, filters]);
+
+  const columns = useMemo(
+    () => [
+      {
+        key: "customerName",
+        label: "Customer",
+        sortable: true,
+        render: (val, row) => (
+          <span className="font-medium text-gray-900">
+            {val || row.referredName || "N/A"}
+          </span>
+        ),
+      },
+      {
+        key: "status",
+        label: "Status",
+        sortable: true,
+        render: (val) => (
+          <span
+            className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium ${getStatusStyle(val)}`}
+          >
+            {getStatusLabel(val)}
+          </span>
+        ),
+      },
+      {
+        key: "commission",
+        label: "Commission",
+        sortable: true,
+        render: (val) => (
+          <span className="text-gray-900">
+            {val ? `$${val.toLocaleString()}` : "TBD"}
+          </span>
+        ),
+      },
+      {
+        key: "createdAt",
+        label: "Date",
+        sortable: true,
+        render: (val) => (
+          <span className="text-gray-500">
+            {val?.toDate
+              ? val.toDate().toLocaleDateString()
+              : val
+                ? new Date(val).toLocaleDateString()
+                : "N/A"}
+          </span>
+        ),
+      },
+    ],
+    [],
+  );
 
   if (loading) {
     return (
@@ -222,73 +301,27 @@ export default function DashboardReferrals() {
       </div>
 
       {/* Referral table */}
-      <div className="card overflow-hidden">
-        <div className="border-b border-gray-200 px-6 py-4">
+      <div className="space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-3">
           <h2 className="text-lg font-semibold text-gray-900">
             Referral History
           </h2>
+          <FilterBar
+            filters={filterDefs}
+            activeFilters={filters}
+            onChange={setFilters}
+          />
         </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b bg-gray-50">
-                <th className="px-4 py-3 text-left font-medium text-gray-500">
-                  Customer
-                </th>
-                <th className="px-4 py-3 text-left font-medium text-gray-500">
-                  Status
-                </th>
-                <th className="px-4 py-3 text-left font-medium text-gray-500">
-                  Commission
-                </th>
-                <th className="px-4 py-3 text-left font-medium text-gray-500">
-                  Date
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100">
-              {referrals.map((ref) => (
-                <tr key={ref.id} className="hover:bg-gray-50">
-                  <td className="px-4 py-3 font-medium text-gray-900">
-                    {ref.customerName || ref.referredName || "N/A"}
-                  </td>
-                  <td className="px-4 py-3">
-                    <span
-                      className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium ${getStatusStyle(ref.status)}`}
-                    >
-                      {getStatusLabel(ref.status)}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 text-gray-900">
-                    {ref.commission
-                      ? `$${ref.commission.toLocaleString()}`
-                      : "TBD"}
-                  </td>
-                  <td className="px-4 py-3 text-gray-500">
-                    {ref.createdAt?.toDate
-                      ? ref.createdAt.toDate().toLocaleDateString()
-                      : ref.createdAt
-                        ? new Date(ref.createdAt).toLocaleDateString()
-                        : "N/A"}
-                  </td>
-                </tr>
-              ))}
-              {referrals.length === 0 && (
-                <tr>
-                  <td
-                    colSpan={4}
-                    className="px-4 py-12 text-center text-gray-500"
-                  >
-                    <Gift className="mx-auto h-8 w-8 text-gray-300" />
-                    <p className="mt-2">
-                      No referrals yet. Share your link to start earning.
-                    </p>
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+
+        <p className="text-sm text-gray-500">
+          {filtered.length} referral{filtered.length !== 1 ? "s" : ""}
+        </p>
+
+        <DataTable
+          columns={columns}
+          data={filtered}
+          emptyMessage="No referrals yet. Share your link to start earning."
+        />
       </div>
 
       {/* How it works */}

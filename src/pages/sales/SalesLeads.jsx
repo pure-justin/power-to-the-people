@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import {
   db,
@@ -29,6 +29,8 @@ import {
   User,
   Star,
 } from "lucide-react";
+import DataTable from "../../components/ui/DataTable";
+import FilterBar from "../../components/ui/FilterBar";
 
 const STAGES = [
   {
@@ -380,12 +382,12 @@ function LeadDetailDrawer({ lead, onClose, onUpdate }) {
 export default function SalesLeads() {
   const { user } = useAuth();
   const [leads, setLeads] = useState([]);
-  const [filteredLeads, setFilteredLeads] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [selectedLead, setSelectedLead] = useState(null);
   const [viewMode, setViewMode] = useState("table"); // "table" or "kanban"
+  const [filters, setFilters] = useState({});
 
   useEffect(() => {
     if (!user) return;
@@ -400,7 +402,6 @@ export default function SalesLeads() {
         const snap = await getDocs(q);
         const data = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
         setLeads(data);
-        setFilteredLeads(data);
       } catch (err) {
         console.error("Failed to load leads:", err);
       } finally {
@@ -409,24 +410,6 @@ export default function SalesLeads() {
     };
     load();
   }, [user]);
-
-  useEffect(() => {
-    let filtered = leads;
-    if (statusFilter !== "all") {
-      filtered = filtered.filter((l) => l.status === statusFilter);
-    }
-    if (search) {
-      const s = search.toLowerCase();
-      filtered = filtered.filter(
-        (l) =>
-          (l.customerName || l.name || "").toLowerCase().includes(s) ||
-          (l.email || "").toLowerCase().includes(s) ||
-          (l.phone || "").includes(s) ||
-          (l.address || "").toLowerCase().includes(s),
-      );
-    }
-    setFilteredLeads(filtered);
-  }, [leads, search, statusFilter]);
 
   const handleLeadUpdate = (updated) => {
     setLeads((prev) => prev.map((l) => (l.id === updated.id ? updated : l)));
@@ -442,6 +425,142 @@ export default function SalesLeads() {
     const stage = STAGES.find((s) => s.value === status);
     return stage?.dot || "bg-gray-400";
   };
+
+  const filterDefs = useMemo(() => {
+    const sources = [
+      ...new Set(leads.map((l) => l.source).filter(Boolean)),
+    ].sort();
+    return [
+      {
+        key: "source",
+        label: "Source",
+        options: sources,
+      },
+    ];
+  }, [leads]);
+
+  const filteredLeads = useMemo(() => {
+    let result = leads;
+    if (statusFilter !== "all") {
+      result = result.filter((l) => l.status === statusFilter);
+    }
+    if (filters.source) {
+      result = result.filter((l) => l.source === filters.source);
+    }
+    if (search) {
+      const s = search.toLowerCase();
+      result = result.filter(
+        (l) =>
+          (l.customerName || l.name || "").toLowerCase().includes(s) ||
+          (l.email || "").toLowerCase().includes(s) ||
+          (l.phone || "").includes(s) ||
+          (l.address || "").toLowerCase().includes(s),
+      );
+    }
+    return result;
+  }, [leads, search, statusFilter, filters]);
+
+  const columns = useMemo(
+    () => [
+      {
+        key: "customerName",
+        label: "Name",
+        sortable: true,
+        render: (val, row) => (
+          <div className="flex items-center gap-3">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
+              <User className="h-4 w-4" />
+            </div>
+            <div className="min-w-0">
+              <p className="truncate font-medium text-gray-900">
+                {row.customerName || row.name || "Unnamed"}
+              </p>
+              <p className="truncate text-xs text-gray-500 sm:hidden">
+                {row.email || row.phone || ""}
+              </p>
+            </div>
+          </div>
+        ),
+      },
+      {
+        key: "email",
+        label: "Contact",
+        sortable: true,
+        render: (val, row) => (
+          <div className="min-w-0">
+            <p className="truncate text-gray-600">{row.email || "--"}</p>
+            <p className="truncate text-xs text-gray-400">{row.phone || ""}</p>
+          </div>
+        ),
+      },
+      {
+        key: "status",
+        label: "Stage",
+        sortable: true,
+        render: (val) => (
+          <span
+            className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium ${getStageStyle(val)}`}
+          >
+            <span className={`h-1.5 w-1.5 rounded-full ${getStageDot(val)}`} />
+            {STAGES.find((s) => s.value === val)?.label || val || "New"}
+          </span>
+        ),
+      },
+      {
+        key: "score",
+        label: "Score",
+        sortable: true,
+        render: (val) =>
+          val !== undefined ? (
+            <span
+              className={`font-medium ${
+                val >= 80
+                  ? "text-green-600"
+                  : val >= 60
+                    ? "text-emerald-600"
+                    : val >= 40
+                      ? "text-amber-600"
+                      : "text-red-600"
+              }`}
+            >
+              {val}
+            </span>
+          ) : (
+            <span className="text-gray-400">--</span>
+          ),
+      },
+      {
+        key: "estimatedValue",
+        label: "Value",
+        sortable: true,
+        render: (val) =>
+          val ? (
+            <span className="font-medium text-gray-700">
+              ${val.toLocaleString()}
+            </span>
+          ) : (
+            <span className="text-gray-400">--</span>
+          ),
+      },
+      {
+        key: "createdAt",
+        label: "Created",
+        sortable: true,
+        render: (val) => (
+          <span className="text-gray-500">
+            {val?.toDate ? val.toDate().toLocaleDateString() : "--"}
+          </span>
+        ),
+      },
+      {
+        key: "id",
+        label: "",
+        sortable: false,
+        render: () => <ChevronRight className="h-4 w-4 text-gray-400" />,
+      },
+    ],
+    [],
+  );
 
   if (loading) {
     return (
@@ -517,136 +636,27 @@ export default function SalesLeads() {
             className="input-field pl-9"
           />
         </div>
+        <FilterBar
+          filters={filterDefs}
+          activeFilters={filters}
+          onChange={setFilters}
+        />
         <span className="text-sm text-gray-500">
           {filteredLeads.length} results
         </span>
       </div>
 
       {/* Table */}
-      <div className="card overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b bg-gray-50">
-                <th className="px-4 py-3 text-left font-medium text-gray-500">
-                  Name
-                </th>
-                <th className="hidden px-4 py-3 text-left font-medium text-gray-500 sm:table-cell">
-                  Contact
-                </th>
-                <th className="px-4 py-3 text-left font-medium text-gray-500">
-                  Stage
-                </th>
-                <th className="hidden px-4 py-3 text-left font-medium text-gray-500 md:table-cell">
-                  Score
-                </th>
-                <th className="hidden px-4 py-3 text-left font-medium text-gray-500 lg:table-cell">
-                  Value
-                </th>
-                <th className="hidden px-4 py-3 text-left font-medium text-gray-500 lg:table-cell">
-                  Created
-                </th>
-                <th className="w-10 px-4 py-3" />
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100">
-              {filteredLeads.map((lead) => (
-                <tr
-                  key={lead.id}
-                  onClick={() => setSelectedLead(lead)}
-                  className="cursor-pointer transition-colors hover:bg-gray-50"
-                >
-                  <td className="px-4 py-3">
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
-                        <User className="h-4 w-4" />
-                      </div>
-                      <div className="min-w-0">
-                        <p className="truncate font-medium text-gray-900">
-                          {lead.customerName || lead.name || "Unnamed"}
-                        </p>
-                        <p className="truncate text-xs text-gray-500 sm:hidden">
-                          {lead.email || lead.phone || ""}
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="hidden px-4 py-3 sm:table-cell">
-                    <div className="min-w-0">
-                      <p className="truncate text-gray-600">
-                        {lead.email || "--"}
-                      </p>
-                      <p className="truncate text-xs text-gray-400">
-                        {lead.phone || ""}
-                      </p>
-                    </div>
-                  </td>
-                  <td className="px-4 py-3">
-                    <span
-                      className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium ${getStageStyle(lead.status)}`}
-                    >
-                      <span
-                        className={`h-1.5 w-1.5 rounded-full ${getStageDot(lead.status)}`}
-                      />
-                      {STAGES.find((s) => s.value === lead.status)?.label ||
-                        lead.status ||
-                        "New"}
-                    </span>
-                  </td>
-                  <td className="hidden px-4 py-3 md:table-cell">
-                    {lead.score !== undefined ? (
-                      <span
-                        className={`font-medium ${
-                          lead.score >= 80
-                            ? "text-green-600"
-                            : lead.score >= 60
-                              ? "text-emerald-600"
-                              : lead.score >= 40
-                                ? "text-amber-600"
-                                : "text-red-600"
-                        }`}
-                      >
-                        {lead.score}
-                      </span>
-                    ) : (
-                      <span className="text-gray-400">--</span>
-                    )}
-                  </td>
-                  <td className="hidden px-4 py-3 lg:table-cell">
-                    {lead.estimatedValue ? (
-                      <span className="font-medium text-gray-700">
-                        ${lead.estimatedValue.toLocaleString()}
-                      </span>
-                    ) : (
-                      <span className="text-gray-400">--</span>
-                    )}
-                  </td>
-                  <td className="hidden px-4 py-3 text-gray-500 lg:table-cell">
-                    {lead.createdAt?.toDate
-                      ? lead.createdAt.toDate().toLocaleDateString()
-                      : "--"}
-                  </td>
-                  <td className="px-4 py-3">
-                    <ChevronRight className="h-4 w-4 text-gray-400" />
-                  </td>
-                </tr>
-              ))}
-              {filteredLeads.length === 0 && (
-                <tr>
-                  <td
-                    colSpan={7}
-                    className="px-4 py-12 text-center text-gray-500"
-                  >
-                    {search || statusFilter !== "all"
-                      ? "No leads match your filters."
-                      : "No leads assigned yet."}
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <DataTable
+        columns={columns}
+        data={filteredLeads}
+        onRowClick={(row) => setSelectedLead(row)}
+        emptyMessage={
+          search || statusFilter !== "all" || Object.keys(filters).length > 0
+            ? "No leads match your filters."
+            : "No leads assigned yet."
+        }
+      />
 
       {/* Detail Drawer */}
       {selectedLead && (

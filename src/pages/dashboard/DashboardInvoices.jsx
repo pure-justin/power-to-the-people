@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import {
   db,
@@ -23,6 +23,8 @@ import {
   XCircle,
   Ban,
 } from "lucide-react";
+import DataTable from "../../components/ui/DataTable";
+import FilterBar from "../../components/ui/FilterBar";
 
 const INVOICE_STATUSES = [
   {
@@ -186,10 +188,8 @@ function InvoiceDrawer({ invoice, onClose }) {
 export default function DashboardInvoices() {
   const { user } = useAuth();
   const [invoices, setInvoices] = useState([]);
-  const [filteredInvoices, setFilteredInvoices] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
+  const [filters, setFilters] = useState({});
   const [selectedInvoice, setSelectedInvoice] = useState(null);
 
   useEffect(() => {
@@ -214,7 +214,6 @@ export default function DashboardInvoices() {
           return bTime - aTime;
         });
         setInvoices(data);
-        setFilteredInvoices(data);
       } catch (err) {
         console.error("Failed to load invoices:", err);
       } finally {
@@ -224,32 +223,107 @@ export default function DashboardInvoices() {
     load();
   }, [user]);
 
-  useEffect(() => {
-    let filtered = invoices;
-    if (statusFilter !== "all") {
-      filtered = filtered.filter((inv) => inv.status === statusFilter);
-    }
-    if (search) {
-      const s = search.toLowerCase();
-      filtered = filtered.filter(
-        (inv) =>
-          (inv.customerName || "").toLowerCase().includes(s) ||
-          (inv.invoiceNumber || "").toLowerCase().includes(s) ||
-          (inv.mercuryInvoiceId || "").toLowerCase().includes(s),
-      );
-    }
-    setFilteredInvoices(filtered);
-  }, [invoices, search, statusFilter]);
-
-  const getStatusStyle = (status) => {
-    const found = INVOICE_STATUSES.find((s) => s.value === status);
-    return found?.color || "bg-gray-100 text-gray-700";
+  const formatDate = (ts) => {
+    if (!ts) return "N/A";
+    const d = ts.toDate ? ts.toDate() : new Date(ts);
+    return d.toLocaleDateString();
   };
 
-  const getStatusLabel = (status) => {
-    const found = INVOICE_STATUSES.find((s) => s.value === status);
-    return found?.label || status || "Unknown";
-  };
+  // Filter definitions — dynamically extract unique values from loaded data
+  const filterDefs = useMemo(() => {
+    const statuses = [
+      ...new Set(invoices.map((inv) => inv.status).filter(Boolean)),
+    ].sort();
+    return [
+      {
+        key: "status",
+        label: "Status",
+        options: statuses.map((s) => {
+          const found = INVOICE_STATUSES.find((def) => def.value === s);
+          return { value: s, label: found?.label || s };
+        }),
+      },
+    ];
+  }, [invoices]);
+
+  // Filtered data
+  const filtered = useMemo(() => {
+    let result = invoices;
+    if (filters.status) {
+      result = result.filter((inv) => inv.status === filters.status);
+    }
+    return result;
+  }, [invoices, filters]);
+
+  // DataTable columns
+  const columns = useMemo(
+    () => [
+      {
+        key: "customerName",
+        label: "Customer",
+        sortable: true,
+        render: (val) => (
+          <span className="font-medium text-gray-900">{val || "N/A"}</span>
+        ),
+      },
+      {
+        key: "amount",
+        label: "Amount",
+        sortable: true,
+        render: (val) => (
+          <span className="font-bold text-gray-900">
+            $
+            {(val || 0).toLocaleString("en-US", {
+              minimumFractionDigits: 2,
+            })}
+          </span>
+        ),
+      },
+      {
+        key: "status",
+        label: "Status",
+        sortable: true,
+        render: (val) => {
+          const found = INVOICE_STATUSES.find((s) => s.value === val);
+          const colorClass = found?.color || "bg-gray-100 text-gray-700";
+          const label = found?.label || val || "Unknown";
+          return (
+            <span
+              className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium ${colorClass}`}
+            >
+              {label}
+            </span>
+          );
+        },
+      },
+      {
+        key: "dueDate",
+        label: "Due Date",
+        sortable: true,
+        render: (val) => (
+          <span className="text-gray-600">{formatDate(val)}</span>
+        ),
+      },
+      {
+        key: "actions",
+        label: "Actions",
+        sortable: false,
+        render: (_val, row) => (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setSelectedInvoice(row);
+            }}
+            className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-medium text-emerald-600 hover:bg-emerald-50"
+          >
+            <Eye className="h-3.5 w-3.5" />
+            View
+          </button>
+        ),
+      },
+    ],
+    [],
+  );
 
   // Summary stats
   const totalAmount = invoices.reduce((sum, inv) => sum + (inv.amount || 0), 0);
@@ -306,109 +380,19 @@ export default function DashboardInvoices() {
       </div>
 
       {/* Filters */}
-      <div className="flex flex-wrap items-center gap-3">
-        <div className="relative flex-1 sm:max-w-xs">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-          <input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search invoices..."
-            className="input-field pl-9"
-          />
-        </div>
-        <select
-          value={statusFilter}
-          onChange={(e) => setStatusFilter(e.target.value)}
-          className="input-field w-auto"
-        >
-          <option value="all">All statuses</option>
-          {INVOICE_STATUSES.map((s) => (
-            <option key={s.value} value={s.value}>
-              {s.label}
-            </option>
-          ))}
-        </select>
-        <span className="text-sm text-gray-500">
-          {filteredInvoices.length} invoices
-        </span>
-      </div>
+      <FilterBar
+        filters={filterDefs}
+        activeFilters={filters}
+        onChange={setFilters}
+      />
 
       {/* Table */}
-      <div className="card overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b bg-gray-50">
-                <th className="px-4 py-3 text-left font-medium text-gray-500">
-                  Customer
-                </th>
-                <th className="px-4 py-3 text-left font-medium text-gray-500">
-                  Amount
-                </th>
-                <th className="px-4 py-3 text-left font-medium text-gray-500">
-                  Status
-                </th>
-                <th className="px-4 py-3 text-left font-medium text-gray-500">
-                  Due Date
-                </th>
-                <th className="px-4 py-3 text-left font-medium text-gray-500">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100">
-              {filteredInvoices.map((invoice) => (
-                <tr key={invoice.id} className="hover:bg-gray-50">
-                  <td className="px-4 py-3 font-medium text-gray-900">
-                    {invoice.customerName || "N/A"}
-                  </td>
-                  <td className="px-4 py-3 text-gray-900">
-                    $
-                    {(invoice.amount || 0).toLocaleString("en-US", {
-                      minimumFractionDigits: 2,
-                    })}
-                  </td>
-                  <td className="px-4 py-3">
-                    <span
-                      className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium ${getStatusStyle(invoice.status)}`}
-                    >
-                      {getStatusLabel(invoice.status)}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 text-gray-600">
-                    {invoice.dueDate?.toDate
-                      ? invoice.dueDate.toDate().toLocaleDateString()
-                      : invoice.dueDate
-                        ? new Date(invoice.dueDate).toLocaleDateString()
-                        : "N/A"}
-                  </td>
-                  <td className="px-4 py-3">
-                    <button
-                      onClick={() => setSelectedInvoice(invoice)}
-                      className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-medium text-emerald-600 hover:bg-emerald-50"
-                    >
-                      <Eye className="h-3.5 w-3.5" />
-                      View
-                    </button>
-                  </td>
-                </tr>
-              ))}
-              {filteredInvoices.length === 0 && (
-                <tr>
-                  <td
-                    colSpan={5}
-                    className="px-4 py-12 text-center text-gray-500"
-                  >
-                    {search || statusFilter !== "all"
-                      ? "No invoices match your filters"
-                      : "No invoices yet"}
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <DataTable
+        columns={columns}
+        data={filtered}
+        onRowClick={(row) => setSelectedInvoice(row)}
+        emptyMessage="No invoices yet"
+      />
 
       {/* Drawer */}
       {selectedInvoice && (
