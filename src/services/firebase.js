@@ -91,7 +91,6 @@ export const signInWithGoogle = async () => {
     const result = await signInWithPopup(auth, googleProvider);
     // Get the Google credential
     googleCredential = GoogleAuthProvider.credentialFromResult(result);
-    console.log("Firebase: Signed in with Google, user:", result.user.uid);
     return result.user;
   } catch (error) {
     console.error("Firebase: Google sign-in error:", error);

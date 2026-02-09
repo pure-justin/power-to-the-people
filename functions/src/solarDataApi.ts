@@ -39,7 +39,7 @@ export const solarEquipment = functions
   .runWith({ timeoutSeconds: 30, memory: "256MB" })
   .https.onRequest(async (req, res) => {
     if (handleOptions(req, res)) return;
-    setCors(res);
+    setCors(req, res);
 
     if (req.method !== "GET") {
       res.status(405).json({ error: "Method not allowed" });
