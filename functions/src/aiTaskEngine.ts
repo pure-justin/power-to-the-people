@@ -29,7 +29,8 @@ export type AiTaskType =
   | "photo_analyze"
   | "funding_submit"
   | "schedule_match"
-  | "survey_process";
+  | "survey_process"
+  | "credit_audit";
 
 /** Task status lifecycle: pending -> ai_processing -> ai_completed/ai_failed/human_needed -> ... */
 export type AiTaskStatus =
@@ -154,6 +155,18 @@ async function handleSurveyProcess(
   return { confidence: 0, result: null };
 }
 
+/**
+ * Stub handler for credit/incentive audit.
+ * Will eventually verify ITC eligibility, domestic content, and FEOC compliance.
+ */
+async function handleCreditAudit(
+  _input: Record<string, unknown>,
+  _learnings: FirebaseFirestore.QuerySnapshot,
+): Promise<AiHandlerResult> {
+  console.log("AI handler: credit_audit (stub — no implementation yet)");
+  return { confidence: 0, result: null };
+}
+
 /** Maps each task type to its handler function */
 const TASK_HANDLERS: Record<
   AiTaskType,
@@ -169,6 +182,7 @@ const TASK_HANDLERS: Record<
   funding_submit: handleFundingSubmit,
   schedule_match: handleScheduleMatch,
   survey_process: handleSurveyProcess,
+  credit_audit: handleCreditAudit,
 };
 
 /** All valid task types for input validation */
