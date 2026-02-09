@@ -103,7 +103,7 @@ function StepIndicator({ currentStep }) {
 }
 
 export default function DashboardEstimates() {
-  const { user } = useAuth();
+  useAuth();
   const [step, setStep] = useState(0);
   const [calculating, setCalculating] = useState(false);
 

@@ -30,90 +30,7 @@ export default function About() {
           font-family: 'Inter', -apple-system, sans-serif;
         }
 
-        /* HEADER */
-        .about-header {
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          z-index: 100;
-          padding: 16px 0;
-          background: rgba(10, 10, 15, 0.8);
-          backdrop-filter: blur(20px);
-          border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .about-header .container {
-          max-width: 1400px;
-          margin: 0 auto;
-          padding: 0 40px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
-
-        .about-logo {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          font-weight: 800;
-          font-size: 1.25rem;
-          color: #fff;
-          text-decoration: none;
-          letter-spacing: -0.02em;
-        }
-
-        .about-logo-icon {
-          width: 38px;
-          height: 38px;
-          background: linear-gradient(135deg, #10b981, #059669);
-          border-radius: 10px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          box-shadow: 0 0 24px rgba(16, 185, 129, 0.4);
-        }
-
-        .about-nav {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-        }
-
-        .about-nav-link {
-          color: rgba(255,255,255,0.6);
-          text-decoration: none;
-          font-weight: 500;
-          font-size: 0.9rem;
-          transition: all 0.3s;
-          padding: 8px 16px;
-          border-radius: 8px;
-        }
-
-        .about-nav-link:hover {
-          color: #fff;
-          background: rgba(255,255,255,0.05);
-        }
-
-        .about-nav-cta {
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-          padding: 10px 20px;
-          background: linear-gradient(135deg, #10b981, #059669);
-          color: white;
-          font-weight: 600;
-          font-size: 0.9rem;
-          border-radius: 10px;
-          text-decoration: none;
-          transition: all 0.3s;
-          box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
-        }
-
-        .about-nav-cta:hover {
-          transform: translateY(-1px);
-          box-shadow: 0 0 30px rgba(16, 185, 129, 0.5);
-        }
+        /* Header handled by PublicNav component */
 
         /* HERO */
         .about-hero {
@@ -529,42 +446,7 @@ export default function About() {
           box-shadow: 0 0 60px rgba(16, 185, 129, 0.5);
         }
 
-        /* FOOTER */
-        .about-footer {
-          padding: 40px 0;
-          background: #050508;
-          border-top: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .about-footer .container {
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 0 40px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
-
-        .about-footer-links {
-          display: flex;
-          gap: 32px;
-        }
-
-        .about-footer-links a {
-          color: rgba(255,255,255,0.4);
-          text-decoration: none;
-          font-size: 0.85rem;
-          transition: color 0.2s;
-        }
-
-        .about-footer-links a:hover {
-          color: #10b981;
-        }
-
-        .about-footer-copy {
-          color: rgba(255,255,255,0.25);
-          font-size: 0.8rem;
-        }
+        /* Footer handled by PublicFooter component */
 
         /* CONTACT */
         .contact-section {
@@ -628,10 +510,6 @@ export default function About() {
         }
 
         @media (max-width: 768px) {
-          .about-nav-link:not(.about-nav-cta) {
-            display: none;
-          }
-
           .about-hero {
             padding: 120px 20px 60px;
           }
@@ -651,44 +529,10 @@ export default function About() {
             flex-wrap: wrap;
             gap: 24px;
           }
-
-          .about-footer .container {
-            flex-direction: column;
-            gap: 16px;
-            text-align: center;
-          }
         }
       `}</style>
 
-      {/* HEADER */}
-      <header className="about-header">
-        <div className="container">
-          <Link to="/" className="about-logo">
-            <div className="about-logo-icon">
-              <Sun size={20} />
-            </div>
-            SolarOS
-          </Link>
-          <nav className="about-nav">
-            <Link to="/features" className="about-nav-link">
-              Features
-            </Link>
-            <Link to="/pricing" className="about-nav-link">
-              Pricing
-            </Link>
-            <Link to="/about" className="about-nav-link">
-              About
-            </Link>
-            <Link to="/login" className="about-nav-link">
-              Sign In
-            </Link>
-            <Link to="/get-started" className="about-nav-cta">
-              Get Started
-              <ArrowRight size={16} />
-            </Link>
-          </nav>
-        </div>
-      </header>
+      <PublicNav />
 
       {/* HERO */}
       <section className="about-hero">
@@ -1056,20 +900,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="about-footer">
-        <div className="container">
-          <div className="about-footer-links">
-            <Link to="/">Home</Link>
-            <Link to="/features">Features</Link>
-            <Link to="/pricing">Pricing</Link>
-            <Link to="/about">About</Link>
-          </div>
-          <p className="about-footer-copy">
-            &copy; 2026 SolarOS. All rights reserved.
-          </p>
-        </div>
-      </footer>
+      <PublicFooter />
     </div>
   );
 }

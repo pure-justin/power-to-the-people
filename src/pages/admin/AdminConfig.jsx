@@ -64,7 +64,7 @@ const INTEGRATIONS = [
 ];
 
 export default function AdminConfig() {
-  const { user } = useAuth();
+  useAuth();
   const [loading, setLoading] = useState(true);
   const [configDocs, setConfigDocs] = useState({});
   const [refreshLogs, setRefreshLogs] = useState([]);

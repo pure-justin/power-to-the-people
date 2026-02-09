@@ -27,7 +27,7 @@ import {
 const AVA_API = "http://100.124.119.18:5050";
 
 export default function AdminAva() {
-  const { user } = useAuth();
+  useAuth();
   const [loading, setLoading] = useState(true);
   const [avaStatus, setAvaStatus] = useState(null);
   const [error, setError] = useState(null);

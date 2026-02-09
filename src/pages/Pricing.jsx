@@ -13,6 +13,8 @@ import {
   ChevronDown,
   ChevronUp,
 } from "lucide-react";
+import PublicNav from "../components/PublicNav";
+import PublicFooter from "../components/PublicFooter";
 
 const tiers = [
   {

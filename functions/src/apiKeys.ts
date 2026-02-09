@@ -709,7 +709,9 @@ export const rotateApiKey = functions
           updatedAt: admin.firestore.Timestamp.now(),
         });
 
-        functions.logger.info(`Rotated API key ${apiKeyId} for user ${context.auth.uid}`);
+        functions.logger.info(
+          `Rotated API key ${apiKeyId} for user ${context.auth.uid}`,
+        );
 
         // Return the new plain-text key (only time it's shown)
         return {
@@ -818,7 +820,9 @@ export const updateApiKey = functions
 
         await apiKeyRef.update(allowedUpdates);
 
-        functions.logger.info(`Updated API key ${apiKeyId} by user ${context.auth.uid}`);
+        functions.logger.info(
+          `Updated API key ${apiKeyId} by user ${context.auth.uid}`,
+        );
 
         return {
           success: true,
@@ -1048,33 +1052,46 @@ export async function validateApiKeyFromRequest(
     }
   }
 
-  // Check rate limits
-  const resetStats = getResetUsageStats(
-    apiKeyData.usageStats,
-    apiKeyData.rateLimit,
-  );
-  const currentStats = { ...apiKeyData.usageStats, ...resetStats };
-  const rateLimitCheck = checkRateLimit(currentStats, apiKeyData.rateLimit);
+  // Atomic rate limit check + increment via Firestore transaction
+  // This prevents race conditions where concurrent requests read stale counters
+  await admin.firestore().runTransaction(async (transaction) => {
+    const freshDoc = await transaction.get(apiKeyDoc.ref);
+    if (!freshDoc.exists) {
+      throw new functions.https.HttpsError(
+        "unauthenticated",
+        "API key not found",
+      );
+    }
+    const freshData = freshDoc.data() as ApiKey;
 
-  if (!rateLimitCheck.allowed) {
-    throw new functions.https.HttpsError(
-      "resource-exhausted",
-      rateLimitCheck.reason || "Rate limit exceeded",
+    const resetStats = getResetUsageStats(
+      freshData.usageStats,
+      freshData.rateLimit,
     );
-  }
+    const currentStats = { ...freshData.usageStats, ...resetStats };
+    const rateLimitCheck = checkRateLimit(currentStats, freshData.rateLimit);
 
-  // Update usage stats
-  await apiKeyDoc.ref.update({
-    "usageStats.totalRequests": admin.firestore.FieldValue.increment(1),
-    "usageStats.requestsThisMinute": admin.firestore.FieldValue.increment(1),
-    "usageStats.requestsThisHour": admin.firestore.FieldValue.increment(1),
-    "usageStats.requestsThisDay": admin.firestore.FieldValue.increment(1),
-    "usageStats.requestsThisMonth": admin.firestore.FieldValue.increment(1),
-    "usageStats.lastRequestAt": admin.firestore.Timestamp.now(),
-    lastUsedAt: admin.firestore.Timestamp.now(),
-    lastUsedIp: req.ip,
-    updatedAt: admin.firestore.Timestamp.now(),
-    ...resetStats,
+    if (!rateLimitCheck.allowed) {
+      throw new functions.https.HttpsError(
+        "resource-exhausted",
+        rateLimitCheck.reason || "Rate limit exceeded",
+      );
+    }
+
+    // Atomically increment counters within the same transaction
+    const now = admin.firestore.Timestamp.now();
+    transaction.update(apiKeyDoc.ref, {
+      "usageStats.totalRequests": admin.firestore.FieldValue.increment(1),
+      "usageStats.requestsThisMinute": admin.firestore.FieldValue.increment(1),
+      "usageStats.requestsThisHour": admin.firestore.FieldValue.increment(1),
+      "usageStats.requestsThisDay": admin.firestore.FieldValue.increment(1),
+      "usageStats.requestsThisMonth": admin.firestore.FieldValue.increment(1),
+      "usageStats.lastRequestAt": now,
+      lastUsedAt: now,
+      lastUsedIp: req.ip,
+      updatedAt: now,
+      ...resetStats,
+    });
   });
 
   // Log usage (async, don't wait)
@@ -1136,7 +1153,9 @@ export const cleanupApiKeys = functions
 
       if (expiredSnapshot.size > 0) {
         await expireBatch.commit();
-        functions.logger.info(`Marked ${expiredSnapshot.size} API keys as expired`);
+        functions.logger.info(
+          `Marked ${expiredSnapshot.size} API keys as expired`,
+        );
       }
 
       // Delete logs older than 90 days

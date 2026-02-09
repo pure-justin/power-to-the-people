@@ -446,7 +446,7 @@ function PermitCard({ permit, onRefresh }) {
 // ─── Main Page ──────────────────────────────────────────────────────────────────
 
 export default function DashboardPermits() {
-  const { user } = useAuth();
+  useAuth();
   const [permits, setPermits] = useState([]);
   const [loading, setLoading] = useState(true);
 

@@ -223,19 +223,60 @@ export const secureSolarWebhook = functions
         return;
       }
 
-      // Here you would integrate with Google Solar API
-      // For this example, we'll just return a mock response
+      // Google Solar API integration required
+      // Configure GOOGLE_SOLAR_API_KEY in Firebase config to enable
+      const googleSolarApiKey =
+        process.env.GOOGLE_SOLAR_API_KEY ||
+        functions.config().google?.solar_api_key;
+
+      if (!googleSolarApiKey) {
+        res.status(501).json({
+          success: false,
+          error:
+            "Solar API integration not configured. Set google.solar_api_key in Firebase config.",
+        });
+        return;
+      }
+
+      // Call Google Solar API Building Insights
+      const encodedAddress = encodeURIComponent(address);
+      const solarApiUrl = `https://solar.googleapis.com/v1/buildingInsights:findClosest?location.address=${encodedAddress}&key=${googleSolarApiKey}`;
+
+      const apiResponse = await fetch(solarApiUrl);
+
+      if (!apiResponse.ok) {
+        const errorBody = await apiResponse.text();
+        functions.logger.error("Google Solar API error:", errorBody);
+        res.status(502).json({
+          success: false,
+          error: "Google Solar API request failed",
+        });
+        return;
+      }
+
+      const buildingInsights = await apiResponse.json();
+
+      const solarPotential = (buildingInsights as any).solarPotential || {};
       const solarData = {
         address,
-        maxArrayPanels: 25,
-        maxArrayArea: 150,
-        maxSunshineHours: 1800,
-        carbonOffset: 5.2,
-        estimatedSystemSize: 8.5,
-        estimatedAnnualProduction: 12000,
+        maxArrayPanels: solarPotential.maxArrayPanelsCount || 0,
+        maxArrayArea: solarPotential.maxArrayAreaMeters2 || 0,
+        maxSunshineHours: solarPotential.maxSunshineHoursPerYear || 0,
+        carbonOffset: solarPotential.carbonOffsetFactorKgPerMwh || 0,
+        estimatedSystemSize:
+          ((solarPotential.maxArrayPanelsCount || 0) * 0.4) / 1000 || 0,
+        estimatedAnnualProduction: 0,
+        rawBuildingInsights: buildingInsights,
       };
 
-      // If leadId provided, update the lead
+      // Estimate annual production from panel configs if available
+      const panelConfigs = solarPotential.solarPanelConfigs;
+      if (Array.isArray(panelConfigs) && panelConfigs.length > 0) {
+        const bestConfig = panelConfigs[panelConfigs.length - 1];
+        solarData.estimatedAnnualProduction = bestConfig.yearlyEnergyDcKwh || 0;
+      }
+
+      // If leadId provided, update the lead with real data
       if (leadId) {
         const db = admin.firestore();
         await db.collection("leads").doc(leadId).update({

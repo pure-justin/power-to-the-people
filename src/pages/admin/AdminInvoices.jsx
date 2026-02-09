@@ -10,7 +10,7 @@ import {
 import { FileText, DollarSign, Clock, Calendar } from "lucide-react";
 
 export default function AdminInvoices() {
-  const { user } = useAuth();
+  useAuth();
   const [loading, setLoading] = useState(true);
   const [invoices, setInvoices] = useState([]);
 

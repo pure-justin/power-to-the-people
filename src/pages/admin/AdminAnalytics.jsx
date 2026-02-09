@@ -33,7 +33,7 @@ const STAGE_COLORS = {
 };
 
 export default function AdminAnalytics() {
-  const { user } = useAuth();
+  useAuth();
   const [loading, setLoading] = useState(true);
   const [leads, setLeads] = useState([]);
   const [projects, setProjects] = useState([]);

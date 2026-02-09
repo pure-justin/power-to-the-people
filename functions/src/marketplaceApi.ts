@@ -103,11 +103,23 @@ async function handleGetListings(
   // Order by posted_at descending
   query = query.orderBy("posted_at", "desc");
 
-  // Pagination
+  // Pagination: support cursor-based (startAfter) with offset fallback
   const limit = Math.min(parseInt(req.query.limit as string) || 20, 100);
+  const cursor = req.query.cursor as string | undefined;
   const offset = parseInt(req.query.offset as string) || 0;
 
-  if (offset > 0) {
+  if (cursor) {
+    // Cursor-based: fetch the document to start after
+    const cursorDoc = await admin
+      .firestore()
+      .collection("marketplace_listings")
+      .doc(cursor)
+      .get();
+    if (cursorDoc.exists) {
+      query = query.startAfter(cursorDoc);
+    }
+  } else if (offset > 0) {
+    // Legacy offset-based fallback
     query = query.offset(offset);
   }
   query = query.limit(limit + 1);
@@ -133,10 +145,15 @@ async function handleGetListings(
     });
   }
 
+  // Return nextCursor for cursor-based pagination
+  const nextCursor =
+    hasMore && docs.length > 0 ? docs[docs.length - 1].id : null;
+
   res.status(200).json({
     success: true,
     count: listings.length,
     hasMore,
+    nextCursor,
     data: listings,
   });
 }
@@ -608,10 +625,23 @@ async function handleGetWorkers(
   }
 
   const limit = Math.min(parseInt(req.query.limit as string) || 50, 100);
-  query = query.limit(limit);
+  const cursor = req.query.cursor as string | undefined;
+
+  // Cursor-based pagination
+  if (cursor) {
+    const cursorDoc = await db.collection("workers").doc(cursor).get();
+    if (cursorDoc.exists) {
+      query = query.startAfter(cursorDoc);
+    }
+  }
+
+  query = query.limit(limit + 1);
 
   const snapshot = await query.get();
-  let workers = snapshot.docs.map((doc) => ({
+  const hasMore = snapshot.docs.length > limit;
+  const docs = hasMore ? snapshot.docs.slice(0, limit) : snapshot.docs;
+
+  let workers = docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),
   }));
@@ -639,9 +669,14 @@ async function handleGetWorkers(
     workers = workers.filter((w: any) => w.zip_code === zip);
   }
 
+  const nextCursor =
+    hasMore && docs.length > 0 ? docs[docs.length - 1].id : null;
+
   res.status(200).json({
     success: true,
     count: workers.length,
+    hasMore,
+    nextCursor,
     data: workers,
   });
 }

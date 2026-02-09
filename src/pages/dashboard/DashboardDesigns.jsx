@@ -453,7 +453,7 @@ function DesignCard({ design, onRefresh }) {
 // ─── Main Page ──────────────────────────────────────────────────────────────────
 
 export default function DashboardDesigns() {
-  const { user } = useAuth();
+  useAuth();
   const [designs, setDesigns] = useState([]);
   const [loading, setLoading] = useState(true);
 

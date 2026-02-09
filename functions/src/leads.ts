@@ -622,15 +622,8 @@ export const leadWebhook = functions
     memory: "512MB",
   })
   .https.onRequest(async (req, res) => {
-    // CORS
-    res.set("Access-Control-Allow-Origin", "*");
-    res.set("Access-Control-Allow-Methods", "POST, OPTIONS");
-    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
-
-    if (req.method === "OPTIONS") {
-      res.status(204).send("");
-      return;
-    }
+    if (handleOptions(req, res)) return;
+    setCors(req, res);
 
     if (req.method !== "POST") {
       res.status(405).json({ error: "Method not allowed" });

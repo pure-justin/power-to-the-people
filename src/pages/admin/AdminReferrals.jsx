@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 
 export default function AdminReferrals() {
-  const { user } = useAuth();
+  useAuth();
   const [loading, setLoading] = useState(true);
   const [referrals, setReferrals] = useState([]);
   const [payouts, setPayouts] = useState([]);

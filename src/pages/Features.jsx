@@ -34,6 +34,8 @@ import {
   Hammer,
   Eye,
 } from "lucide-react";
+import PublicNav from "../components/PublicNav";
+import PublicFooter from "../components/PublicFooter";
 
 export default function Features() {
   const [visibleSections, setVisibleSections] = useState(new Set());
@@ -75,90 +77,7 @@ export default function Features() {
           font-family: 'Inter', -apple-system, sans-serif;
         }
 
-        /* HEADER */
-        .fp-header {
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          z-index: 100;
-          padding: 16px 0;
-          background: rgba(10, 10, 15, 0.8);
-          backdrop-filter: blur(20px);
-          border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .fp-header .container {
-          max-width: 1400px;
-          margin: 0 auto;
-          padding: 0 40px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
-
-        .fp-logo {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          font-weight: 800;
-          font-size: 1.25rem;
-          color: #fff;
-          text-decoration: none;
-          letter-spacing: -0.02em;
-        }
-
-        .fp-logo-icon {
-          width: 38px;
-          height: 38px;
-          background: linear-gradient(135deg, #10b981, #059669);
-          border-radius: 10px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          box-shadow: 0 0 24px rgba(16, 185, 129, 0.4);
-        }
-
-        .fp-nav {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-        }
-
-        .fp-nav-link {
-          color: rgba(255,255,255,0.6);
-          text-decoration: none;
-          font-weight: 500;
-          font-size: 0.9rem;
-          transition: all 0.3s;
-          padding: 8px 16px;
-          border-radius: 8px;
-        }
-
-        .fp-nav-link:hover {
-          color: #fff;
-          background: rgba(255,255,255,0.05);
-        }
-
-        .fp-nav-cta {
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-          padding: 10px 20px;
-          background: linear-gradient(135deg, #10b981, #059669);
-          color: white;
-          font-weight: 600;
-          font-size: 0.9rem;
-          border-radius: 10px;
-          text-decoration: none;
-          transition: all 0.3s;
-          box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
-        }
-
-        .fp-nav-cta:hover {
-          transform: translateY(-1px);
-          box-shadow: 0 0 30px rgba(16, 185, 129, 0.5);
-        }
+        /* Header handled by PublicNav component */
 
         /* HERO */
         .fp-hero {
@@ -674,42 +593,7 @@ export default function Features() {
           border-color: rgba(255,255,255,0.2);
         }
 
-        /* FOOTER */
-        .fp-footer {
-          padding: 40px 0;
-          background: #050508;
-          border-top: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .fp-footer .container {
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 0 40px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
-
-        .fp-footer-links {
-          display: flex;
-          gap: 32px;
-        }
-
-        .fp-footer-links a {
-          color: rgba(255,255,255,0.4);
-          text-decoration: none;
-          font-size: 0.85rem;
-          transition: color 0.2s;
-        }
-
-        .fp-footer-links a:hover {
-          color: #10b981;
-        }
-
-        .fp-footer-copy {
-          color: rgba(255,255,255,0.25);
-          font-size: 0.8rem;
-        }
+        /* Footer handled by PublicFooter component */
 
         /* RESPONSIVE */
         @media (max-width: 1024px) {
@@ -740,10 +624,6 @@ export default function Features() {
         }
 
         @media (max-width: 768px) {
-          .fp-nav-link:not(.fp-nav-cta) {
-            display: none;
-          }
-
           .fp-hero {
             padding: 120px 20px 60px;
           }
@@ -763,44 +643,10 @@ export default function Features() {
           .fp-data-stats {
             grid-template-columns: 1fr;
           }
-
-          .fp-footer .container {
-            flex-direction: column;
-            gap: 16px;
-            text-align: center;
-          }
         }
       `}</style>
 
-      {/* HEADER */}
-      <header className="fp-header">
-        <div className="container">
-          <Link to="/" className="fp-logo">
-            <div className="fp-logo-icon">
-              <Sun size={20} />
-            </div>
-            SolarOS
-          </Link>
-          <nav className="fp-nav">
-            <Link to="/features" className="fp-nav-link">
-              Features
-            </Link>
-            <Link to="/pricing" className="fp-nav-link">
-              Pricing
-            </Link>
-            <Link to="/about" className="fp-nav-link">
-              About
-            </Link>
-            <Link to="/login" className="fp-nav-link">
-              Sign In
-            </Link>
-            <Link to="/get-started" className="fp-nav-cta">
-              Get Started
-              <ArrowRight size={16} />
-            </Link>
-          </nav>
-        </div>
-      </header>
+      <PublicNav />
 
       {/* HERO */}
       <section className="fp-hero">
@@ -1509,20 +1355,7 @@ export default function Features() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="fp-footer">
-        <div className="container">
-          <div className="fp-footer-links">
-            <Link to="/">Home</Link>
-            <Link to="/features">Features</Link>
-            <Link to="/pricing">Pricing</Link>
-            <Link to="/about">About</Link>
-          </div>
-          <p className="fp-footer-copy">
-            &copy; 2026 SolarOS. All rights reserved.
-          </p>
-        </div>
-      </footer>
+      <PublicFooter />
     </div>
   );
 }

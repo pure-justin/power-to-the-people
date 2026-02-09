@@ -13,7 +13,7 @@ import { Users, Shield, UserPlus, X, ChevronDown } from "lucide-react";
 const ROLES = ["admin", "installer", "sales", "customer"];
 
 export default function AdminUsers() {
-  const { user } = useAuth();
+  useAuth();
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState([]);
   const [editingUser, setEditingUser] = useState(null);

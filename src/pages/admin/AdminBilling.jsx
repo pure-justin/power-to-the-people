@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 
 export default function AdminBilling() {
-  const { user } = useAuth();
+  useAuth();
   const [loading, setLoading] = useState(true);
   const [subscriptions, setSubscriptions] = useState([]);
   const [mrr, setMrr] = useState(0);

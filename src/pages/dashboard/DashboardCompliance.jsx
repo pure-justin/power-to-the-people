@@ -234,7 +234,7 @@ function ProgressBar({ value, threshold, label }) {
 // ─── Main Component ──────────────────────────────────────────────────────────
 
 export default function DashboardCompliance() {
-  const { user } = useAuth();
+  useAuth();
 
   // Equipment catalog from Firestore
   const [allEquipment, setAllEquipment] = useState([]);

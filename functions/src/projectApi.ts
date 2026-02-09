@@ -135,17 +135,31 @@ async function handleListProjects(
     query = query.where("status", "==", req.query.status as string);
   }
 
-  // Pagination
+  // Pagination: support cursor-based (startAfter) with offset fallback
   const limit = Math.min(parseInt(req.query.limit as string) || 50, 200);
+  const cursor = req.query.cursor as string | undefined;
   const offset = parseInt(req.query.offset as string) || 0;
 
-  if (offset > 0) {
+  // Need an orderBy for consistent cursor pagination
+  query = query.orderBy("createdAt", "desc");
+
+  if (cursor) {
+    // Cursor-based: fetch the document to start after
+    const cursorDoc = await db.collection("projects").doc(cursor).get();
+    if (cursorDoc.exists) {
+      query = query.startAfter(cursorDoc);
+    }
+  } else if (offset > 0) {
+    // Legacy offset-based fallback
     query = query.offset(offset);
   }
-  query = query.limit(limit);
+  query = query.limit(limit + 1);
 
   const snapshot = await query.get();
-  const projects = snapshot.docs.map((doc) => ({
+  const hasMore = snapshot.docs.length > limit;
+  const docs = hasMore ? snapshot.docs.slice(0, limit) : snapshot.docs;
+
+  const projects = docs.map((doc) => ({
     id: doc.id,
     status: doc.data().status,
     address: doc.data().address,
@@ -156,10 +170,14 @@ async function handleListProjects(
     pipeline: doc.data().pipeline,
   }));
 
+  const nextCursor =
+    hasMore && docs.length > 0 ? docs[docs.length - 1].id : null;
+
   res.status(200).json({
     success: true,
     count: projects.length,
-    offset,
+    hasMore,
+    nextCursor,
     data: projects,
   });
 }

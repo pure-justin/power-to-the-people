@@ -291,7 +291,7 @@ function DomesticBadge({ pct }) {
 }
 
 export default function DashboardEquipment() {
-  const { user } = useAuth();
+  useAuth();
   const [equipment, setEquipment] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
