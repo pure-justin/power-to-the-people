@@ -14,6 +14,7 @@
 import * as functions from "firebase-functions/v1";
 import * as admin from "firebase-admin";
 import puppeteer from "puppeteer-core";
+import { validateApiKeyFromRequest } from "./apiKeys";
 
 // Browserless.io endpoint (or self-hosted)
 const BROWSERLESS_URL =

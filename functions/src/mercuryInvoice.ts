@@ -13,7 +13,7 @@ import { sendSMS } from "./smsNotifications";
 
 // Mercury API config
 const MERCURY_API_BASE = "https://api.mercury.com/api/v1";
-const MERCURY_ACCOUNT_ID = "ecc22c2c-aabf-11f0-955b-13f894471589";
+const MERCURY_ACCOUNT_ID = functions.config().mercury?.account_id || "";
 
 /**
  * Internal helper for authenticated Mercury Banking API requests

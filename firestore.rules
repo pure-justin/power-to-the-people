@@ -28,8 +28,15 @@ service cloud.firestore {
 
     // LEADS COLLECTION
     match /leads/{leadId} {
-      // Anyone can create a lead (public form submission)
-      allow create: if true;
+      // Anyone can create a lead (public form submission) - with validation
+      allow create: if request.resource.data.keys().hasAll(['customerName', 'email', 'address'])
+                    && request.resource.data.customerName is string
+                    && request.resource.data.email is string
+                    && request.resource.data.address is string
+                    && request.resource.data.customerName.size() > 0
+                    && request.resource.data.customerName.size() < 200
+                    && request.resource.data.email.size() > 0
+                    && request.resource.data.email.size() < 200;
 
       // Users can read their own leads (by email)
       allow read: if isSignedIn() && (
@@ -137,15 +144,16 @@ service cloud.firestore {
                     (resource.data.referrerId == request.auth.uid || isAdmin());
       // Only admins can update referral status
       allow update: if isAdmin();
-      // Allow creation during signup (even anonymous users for tracking)
-      allow create: if true;
+      // Allow creation during signup (with basic validation)
+      allow create: if request.resource.data.keys().hasAny(['referrerId'])
+                    && request.resource.data.referrerId is string;
     }
 
     // REFERRAL CLICKS (Analytics)
     match /referralClicks/{clickId} {
-      allow read: if isSignedIn();
-      // Allow anonymous click tracking
-      allow write: if true;
+      allow read: if true;
+      // Allow anonymous click tracking (create only, no update/delete)
+      allow create: if true;
     }
 
     // PENDING NOTIFICATIONS (Email queue)

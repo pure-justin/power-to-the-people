@@ -15,7 +15,7 @@
       "RES Supply distributor pricing"
     ],
     "pricing_notes": "Wholesale prices are distributor-to-installer; retail is before installation labor. Microinverter prices are per unit. String/hybrid inverter prices are per unit. Tesla inverter is integrated with Powerwall 3 battery.",
-    "total_inverters": 10
+    "total_inverters": 15
   },
   "inverters": [
     {
