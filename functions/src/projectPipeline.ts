@@ -169,7 +169,7 @@ export const advanceProjectStage = functions.https.onCall(
         await createPipelineTasks(projectId, projectData);
         await openNextTasks(projectId);
       } catch (err) {
-        console.warn(
+        functions.logger.warn(
           `Failed to create pipeline tasks for project ${projectId}:`,
           err,
         );
@@ -369,7 +369,7 @@ export const completeProjectTask = functions.https.onCall(
       try {
         await onPipelineTaskCompleted(projectId, taskType);
       } catch (err) {
-        console.warn(
+        functions.logger.warn(
           `Pipeline cascade failed for task ${taskType} on project ${projectId}:`,
           err,
         );

@@ -167,7 +167,7 @@ export const createPermit = functions
 
       const permitRef = await db.collection("permits").add(permitData);
 
-      console.log(
+      functions.logger.info(
         `Permit created: ${permitRef.id} (type=${type}, project=${projectId}, ahj=${ahjId})`,
       );
 
@@ -176,7 +176,7 @@ export const createPermit = functions
         permitId: permitRef.id,
       };
     } catch (error: any) {
-      console.error("Create permit error:", error);
+      functions.logger.error("Create permit error:", error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -281,7 +281,7 @@ export const submitPermit = functions
 
       const aiTaskRef = await db.collection("ai_tasks").add(aiTaskData);
 
-      console.log(
+      functions.logger.info(
         `Permit ${permitId} submission initiated — AI task: ${aiTaskRef.id}`,
       );
 
@@ -291,7 +291,7 @@ export const submitPermit = functions
         aiTaskId: aiTaskRef.id,
       };
     } catch (error: any) {
-      console.error(`Submit permit error (${permitId}):`, error);
+      functions.logger.error(`Submit permit error (${permitId}):`, error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -387,7 +387,7 @@ export const updatePermitStatus = functions
 
       await permitRef.update(updateData);
 
-      console.log(`Permit ${permitId} status updated: ${status}`);
+      functions.logger.info(`Permit ${permitId} status updated: ${status}`);
 
       return {
         success: true,
@@ -395,7 +395,7 @@ export const updatePermitStatus = functions
         status,
       };
     } catch (error: any) {
-      console.error(`Update permit status error (${permitId}):`, error);
+      functions.logger.error(`Update permit status error (${permitId}):`, error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -564,7 +564,7 @@ export const addPermitCorrection = functions
         updated_at: admin.firestore.FieldValue.serverTimestamp(),
       });
 
-      console.log(
+      functions.logger.info(
         `Correction added to permit ${permitId}: ${correctionId} — ${correction.item}`,
       );
 
@@ -574,7 +574,7 @@ export const addPermitCorrection = functions
         correctionId,
       };
     } catch (error: any) {
-      console.error(`Add correction error (${permitId}):`, error);
+      functions.logger.error(`Add correction error (${permitId}):`, error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -661,7 +661,7 @@ export const resolveCorrection = functions
         updated_at: admin.firestore.FieldValue.serverTimestamp(),
       });
 
-      console.log(
+      functions.logger.info(
         `Correction ${correctionId} resolved on permit ${permitId}. All resolved: ${allResolved}`,
       );
 
@@ -671,7 +671,7 @@ export const resolveCorrection = functions
         allResolved,
       };
     } catch (error: any) {
-      console.error(`Resolve correction error (${permitId}):`, error);
+      functions.logger.error(`Resolve correction error (${permitId}):`, error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -708,11 +708,11 @@ export const checkPermitStatuses = functions
         .get();
 
       if (submittedSnap.empty) {
-        console.log("checkPermitStatuses: No permits to check");
+        functions.logger.info("checkPermitStatuses: No permits to check");
         return null;
       }
 
-      console.log(
+      functions.logger.info(
         `checkPermitStatuses: Found ${submittedSnap.size} permits to check`,
       );
 
@@ -753,13 +753,13 @@ export const checkPermitStatuses = functions
       }
 
       await batch.commit();
-      console.log(
+      functions.logger.info(
         `checkPermitStatuses: Created ${taskCount} permit_check AI tasks`,
       );
 
       return null;
     } catch (error: any) {
-      console.error("checkPermitStatuses error:", error);
+      functions.logger.error("checkPermitStatuses error:", error);
       return null;
     }
   });

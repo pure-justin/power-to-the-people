@@ -196,7 +196,7 @@ export const solarEquipment = functions
         data: equipment,
       });
     } catch (error: any) {
-      console.error("Solar equipment query error:", error);
+      functions.logger.error("Solar equipment query error:", error);
       const status =
         error.code === "unauthenticated"
           ? 401
@@ -277,7 +277,7 @@ export const solarUtilities = functions
         data: rates,
       });
     } catch (error: any) {
-      console.error("Solar utilities query error:", error);
+      functions.logger.error("Solar utilities query error:", error);
       const status =
         error.code === "unauthenticated"
           ? 401
@@ -358,7 +358,7 @@ export const solarIncentives = functions
         data: incentives,
       });
     } catch (error: any) {
-      console.error("Solar incentives query error:", error);
+      functions.logger.error("Solar incentives query error:", error);
       const status =
         error.code === "unauthenticated"
           ? 401
@@ -436,7 +436,7 @@ export const solarPermits = functions
         data: permits,
       });
     } catch (error: any) {
-      console.error("Solar permits query error:", error);
+      functions.logger.error("Solar permits query error:", error);
       const status =
         error.code === "unauthenticated"
           ? 401
@@ -548,7 +548,7 @@ export const solarComplianceCheck = functions
         incentives,
       });
     } catch (error: any) {
-      console.error("Compliance check error:", error);
+      functions.logger.error("Compliance check error:", error);
       const status =
         error.code === "unauthenticated"
           ? 401
@@ -609,7 +609,7 @@ export const solarComplianceQuickCheck = functions
         compliance: result,
       });
     } catch (error: any) {
-      console.error("Quick compliance check error:", error);
+      functions.logger.error("Quick compliance check error:", error);
       const status =
         error.code === "unauthenticated"
           ? 401
@@ -851,7 +851,7 @@ export const solarEstimate = functions
         financing_options: financingOptions,
       });
     } catch (error: any) {
-      console.error("Solar estimate error:", error);
+      functions.logger.error("Solar estimate error:", error);
       const status =
         error.code === "unauthenticated"
           ? 401

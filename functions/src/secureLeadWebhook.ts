@@ -9,6 +9,7 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import { validateApiKeyFromRequest, ApiKeyScope } from "./apiKeys";
 import { Lead, LeadStatus, LeadSource, CreateLeadInput } from "./leads";
+import { setCors, handleOptions } from "./corsConfig";
 
 /**
  * Creates a new lead via API key authentication with automatic rate limiting and usage tracking
@@ -31,15 +32,8 @@ export const secureLeadWebhook = functions
     memory: "512MB",
   })
   .https.onRequest(async (req, res) => {
-    // CORS
-    res.set("Access-Control-Allow-Origin", "*");
-    res.set("Access-Control-Allow-Methods", "POST, OPTIONS");
-    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
-
-    if (req.method === "OPTIONS") {
-      res.status(204).send("");
-      return;
-    }
+    if (handleOptions(req, res)) return;
+    setCors(req, res);
 
     if (req.method !== "POST") {
       res.status(405).json({ error: "Method not allowed" });
@@ -53,7 +47,7 @@ export const secureLeadWebhook = functions
         ApiKeyScope.WRITE_LEADS,
       );
 
-      console.log(
+      functions.logger.info(
         `Authenticated request from API key ${apiKeyData.id} (user: ${apiKeyData.userId})`,
       );
 
@@ -115,7 +109,7 @@ export const secureLeadWebhook = functions
 
       await leadRef.set(newLead);
 
-      console.log(
+      functions.logger.info(
         `API key ${apiKeyData.id} created lead ${leadRef.id} for ${data.customerName}`,
       );
 
@@ -132,7 +126,7 @@ export const secureLeadWebhook = functions
         },
       });
     } catch (error: any) {
-      console.error("Secure lead webhook error:", error);
+      functions.logger.error("Secure lead webhook error:", error);
 
       // Handle specific API key errors
       if (error.code === "unauthenticated") {
@@ -207,14 +201,8 @@ export const secureSolarWebhook = functions
     memory: "1GB",
   })
   .https.onRequest(async (req, res) => {
-    res.set("Access-Control-Allow-Origin", "*");
-    res.set("Access-Control-Allow-Methods", "POST, OPTIONS");
-    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
-
-    if (req.method === "OPTIONS") {
-      res.status(204).send("");
-      return;
-    }
+    if (handleOptions(req, res)) return;
+    setCors(req, res);
 
     if (req.method !== "POST") {
       res.status(405).json({ error: "Method not allowed" });
@@ -266,7 +254,7 @@ export const secureSolarWebhook = functions
         },
       });
     } catch (error: any) {
-      console.error("Secure solar webhook error:", error);
+      functions.logger.error("Secure solar webhook error:", error);
 
       if (error.code === "unauthenticated") {
         res.status(401).json({ error: "Invalid or missing API key" });
@@ -301,14 +289,8 @@ export const secureLeadQuery = functions
     memory: "512MB",
   })
   .https.onRequest(async (req, res) => {
-    res.set("Access-Control-Allow-Origin", "*");
-    res.set("Access-Control-Allow-Methods", "GET, OPTIONS");
-    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
-
-    if (req.method === "OPTIONS") {
-      res.status(204).send("");
-      return;
-    }
+    if (handleOptions(req, res)) return;
+    setCors(req, res);
 
     if (req.method !== "GET") {
       res.status(405).json({ error: "Method not allowed" });
@@ -370,7 +352,7 @@ export const secureLeadQuery = functions
         },
       });
     } catch (error: any) {
-      console.error("Secure lead query error:", error);
+      functions.logger.error("Secure lead query error:", error);
 
       if (error.code === "unauthenticated") {
         res.status(401).json({ error: "Invalid or missing API key" });

@@ -24,6 +24,7 @@
  * @module pipelineAutoTasks
  */
 
+import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 
 const db = admin.firestore();
@@ -172,7 +173,7 @@ export async function createPipelineTasks(
   // Check if tasks already exist to prevent duplicates
   const existing = await tasksRef.limit(1).get();
   if (!existing.empty) {
-    console.warn(
+    functions.logger.warn(
       `Pipeline tasks already exist for project ${projectId}, skipping creation`,
     );
     return;
@@ -228,7 +229,7 @@ export async function createPipelineTasks(
 
   await batch.commit();
 
-  console.log(
+  functions.logger.info(
     `Created ${hasBattery ? 10 : 9} pipeline tasks for project ${projectId}`,
   );
 
@@ -299,7 +300,7 @@ export async function openNextTasks(projectId: string): Promise<string[]> {
   }
 
   if (openedTasks.length > 0) {
-    console.log(
+    functions.logger.info(
       `Opened ${openedTasks.length} tasks for project ${projectId}: ${openedTasks.join(", ")}`,
     );
   }
@@ -327,7 +328,7 @@ export async function onPipelineTaskCompleted(
   const taskSnap = await taskRef.get();
 
   if (!taskSnap.exists) {
-    console.error(
+    functions.logger.error(
       `Pipeline task ${taskType} not found for project ${projectId}`,
     );
     return;
@@ -336,7 +337,7 @@ export async function onPipelineTaskCompleted(
   const task = taskSnap.data() as PipelineTask;
 
   if (task.dependency_status === "completed") {
-    console.warn(
+    functions.logger.warn(
       `Task ${taskType} already completed for project ${projectId}, skipping`,
     );
     return;
@@ -367,7 +368,7 @@ export async function onPipelineTaskCompleted(
         updatedAt: admin.firestore.FieldValue.serverTimestamp(),
       });
 
-      console.log(
+      functions.logger.info(
         `Advanced project ${projectId} from "${currentPhase}" to "${task.phase}"`,
       );
     }
@@ -382,7 +383,7 @@ export async function onPipelineTaskCompleted(
     timestamp: admin.firestore.FieldValue.serverTimestamp(),
   });
 
-  console.log(
+  functions.logger.info(
     `Pipeline task "${taskType}" completed for project ${projectId}. ` +
       `Opened ${openedTasks.length} downstream tasks.`,
   );
@@ -514,7 +515,7 @@ async function createMarketplaceListingForTask(
     dependency_status: "open",
   });
 
-  console.log(
+  functions.logger.info(
     `Created marketplace listing ${listingRef.id} for task "${taskType}" on project ${projectId}`,
   );
 }

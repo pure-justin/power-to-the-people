@@ -79,7 +79,7 @@ async function handlePermitSubmit(
   _input: Record<string, unknown>,
   _learnings: FirebaseFirestore.QuerySnapshot,
 ): Promise<AiHandlerResult> {
-  console.log("AI handler: permit_submit (stub — no implementation yet)");
+  functions.logger.info("AI handler: permit_submit (stub — no implementation yet)");
   return { confidence: 0, result: null };
 }
 
@@ -91,7 +91,7 @@ async function handlePermitCheck(
   _input: Record<string, unknown>,
   _learnings: FirebaseFirestore.QuerySnapshot,
 ): Promise<AiHandlerResult> {
-  console.log("AI handler: permit_check (stub — no implementation yet)");
+  functions.logger.info("AI handler: permit_check (stub — no implementation yet)");
   return { confidence: 0, result: null };
 }
 
@@ -103,7 +103,7 @@ async function handleCadGenerate(
   _input: Record<string, unknown>,
   _learnings: FirebaseFirestore.QuerySnapshot,
 ): Promise<AiHandlerResult> {
-  console.log("AI handler: cad_generate (stub — no implementation yet)");
+  functions.logger.info("AI handler: cad_generate (stub — no implementation yet)");
   return { confidence: 0, result: null };
 }
 
@@ -115,7 +115,7 @@ async function handlePhotoAnalyze(
   _input: Record<string, unknown>,
   _learnings: FirebaseFirestore.QuerySnapshot,
 ): Promise<AiHandlerResult> {
-  console.log("AI handler: photo_analyze (stub — no implementation yet)");
+  functions.logger.info("AI handler: photo_analyze (stub — no implementation yet)");
   return { confidence: 0, result: null };
 }
 
@@ -127,7 +127,7 @@ async function handleFundingSubmit(
   _input: Record<string, unknown>,
   _learnings: FirebaseFirestore.QuerySnapshot,
 ): Promise<AiHandlerResult> {
-  console.log("AI handler: funding_submit (stub — no implementation yet)");
+  functions.logger.info("AI handler: funding_submit (stub — no implementation yet)");
   return { confidence: 0, result: null };
 }
 
@@ -139,7 +139,7 @@ async function handleScheduleMatch(
   _input: Record<string, unknown>,
   _learnings: FirebaseFirestore.QuerySnapshot,
 ): Promise<AiHandlerResult> {
-  console.log("AI handler: schedule_match (stub — no implementation yet)");
+  functions.logger.info("AI handler: schedule_match (stub — no implementation yet)");
   return { confidence: 0, result: null };
 }
 
@@ -151,7 +151,7 @@ async function handleSurveyProcess(
   _input: Record<string, unknown>,
   _learnings: FirebaseFirestore.QuerySnapshot,
 ): Promise<AiHandlerResult> {
-  console.log("AI handler: survey_process (stub — no implementation yet)");
+  functions.logger.info("AI handler: survey_process (stub — no implementation yet)");
   return { confidence: 0, result: null };
 }
 
@@ -163,7 +163,7 @@ async function handleCreditAudit(
   _input: Record<string, unknown>,
   _learnings: FirebaseFirestore.QuerySnapshot,
 ): Promise<AiHandlerResult> {
-  console.log("AI handler: credit_audit (stub — no implementation yet)");
+  functions.logger.info("AI handler: credit_audit (stub — no implementation yet)");
   return { confidence: 0, result: null };
 }
 
@@ -368,7 +368,7 @@ export const createAiTask = functions
 
       const taskRef = await db.collection("ai_tasks").add(taskData);
 
-      console.log(
+      functions.logger.info(
         `AI task created: ${taskRef.id} (type=${type}, project=${projectId}, priority=${taskPriority})`,
       );
 
@@ -380,7 +380,7 @@ export const createAiTask = functions
         } catch (processError: any) {
           // Processing failure shouldn't fail task creation — the task exists
           // and can be retried. Log the error and return the task as pending.
-          console.error(
+          functions.logger.error(
             `Auto-process failed for task ${taskRef.id}:`,
             processError.message,
           );
@@ -397,7 +397,7 @@ export const createAiTask = functions
         status: currentStatus,
       };
     } catch (error: any) {
-      console.error("Create AI task error:", error);
+      functions.logger.error("Create AI task error:", error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -449,7 +449,7 @@ export const processAiTask = functions
       const result = await _processTask(taskId, db);
       return result;
     } catch (error: any) {
-      console.error(`Process AI task error (${taskId}):`, error);
+      functions.logger.error(`Process AI task error (${taskId}):`, error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -525,7 +525,7 @@ async function _processTask(
     const topLearning = learnings.docs[0].data();
     if (topLearning.confidence >= LEARNING_AUTO_APPLY_THRESHOLD) {
       highConfidenceLearning = topLearning;
-      console.log(
+      functions.logger.info(
         `Found high-confidence learning (${topLearning.confidence}) for ${taskType} — applying directly`,
       );
 
@@ -572,7 +572,7 @@ async function _processTask(
       });
     }
 
-    console.log(
+    functions.logger.info(
       `AI task ${taskId} processed: status=${newStatus}, confidence=${effectiveConfidence}`,
     );
 
@@ -607,7 +607,7 @@ async function _processTask(
       });
     }
 
-    console.warn(
+    functions.logger.warn(
       `AI task ${taskId} handler failed (retry ${retryCount}/${maxRetries}):`,
       handlerError.message,
     );
@@ -688,7 +688,7 @@ export const escalateToHuman = functions
 
       await taskRef.update(updateData);
 
-      console.log(
+      functions.logger.info(
         `AI task ${taskId} escalated to human` +
           (assignedTo ? ` (assigned to ${assignedTo})` : " (unassigned)"),
       );
@@ -699,7 +699,7 @@ export const escalateToHuman = functions
         status: newStatus,
       };
     } catch (error: any) {
-      console.error(`Escalate task error (${taskId}):`, error);
+      functions.logger.error(`Escalate task error (${taskId}):`, error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -787,12 +787,12 @@ export const completeHumanTask = functions
         learningId = await createLearningFromTask(
           await taskRef.get(), // Re-read to get the updated data
         );
-        console.log(
+        functions.logger.info(
           `Learning record created: ${learningId} from task ${taskId}`,
         );
       } catch (learningError: any) {
         // Learning creation failure shouldn't block task completion
-        console.error(
+        functions.logger.error(
           `Failed to create learning from task ${taskId}:`,
           learningError.message,
         );
@@ -812,7 +812,7 @@ export const completeHumanTask = functions
         updatedAt: admin.firestore.FieldValue.serverTimestamp(),
       });
 
-      console.log(
+      functions.logger.info(
         `Human task completed: ${taskId} by ${context.auth.uid}` +
           (learningId ? ` (learning: ${learningId})` : ""),
       );
@@ -823,7 +823,7 @@ export const completeHumanTask = functions
         learningId,
       };
     } catch (error: any) {
-      console.error(`Complete human task error (${taskId}):`, error);
+      functions.logger.error(`Complete human task error (${taskId}):`, error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -907,7 +907,7 @@ export const getTaskQueue = functions
         count: tasks.length,
       };
     } catch (error: any) {
-      console.error("Get task queue error:", error);
+      functions.logger.error("Get task queue error:", error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -993,7 +993,7 @@ export const retryAiTask = functions
       );
 
       const newLearningsCount = learnings.empty ? 0 : learnings.size;
-      console.log(
+      functions.logger.info(
         `Retrying task ${taskId}: found ${newLearningsCount} applicable learnings`,
       );
 
@@ -1007,7 +1007,7 @@ export const retryAiTask = functions
       const result = await _processTask(taskId, db);
       return result;
     } catch (error: any) {
-      console.error(`Retry AI task error (${taskId}):`, error);
+      functions.logger.error(`Retry AI task error (${taskId}):`, error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -1131,7 +1131,7 @@ export const getTaskStats = functions
         },
       };
     } catch (error: any) {
-      console.error("Get task stats error:", error);
+      functions.logger.error("Get task stats error:", error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",

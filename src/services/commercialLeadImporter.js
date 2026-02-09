@@ -267,7 +267,6 @@ export async function importProperty(property) {
     // Check if already exists
     const exists = await propertyExists(property.placeId);
     if (exists) {
-      console.log(`⚠️ Property already exists: ${property.propertyName}`);
       return { success: false, reason: "duplicate", id: null };
     }
 
@@ -277,8 +276,6 @@ export async function importProperty(property) {
     // Save to Firestore
     const docRef = doc(db, "leads", lead.id);
     await setDoc(docRef, lead);
-
-    console.log(`✓ Imported: ${property.propertyName} (${lead.id})`);
 
     return { success: true, reason: "imported", id: lead.id };
   } catch (error) {
@@ -303,16 +300,9 @@ export async function importPropertiesBatch(properties, batchSize = 100) {
     details: [],
   };
 
-  console.log(
-    `\n🚀 Starting batch import of ${properties.length} properties...`,
-  );
-
   // Process in chunks to respect Firestore limits
   for (let i = 0; i < properties.length; i += batchSize) {
     const chunk = properties.slice(i, i + batchSize);
-    console.log(
-      `\nProcessing batch ${Math.floor(i / batchSize) + 1} (${chunk.length} properties)...`,
-    );
 
     // Import each property in the chunk
     for (const property of chunk) {
@@ -331,12 +321,6 @@ export async function importPropertiesBatch(properties, batchSize = 100) {
       await new Promise((resolve) => setTimeout(resolve, 50));
     }
   }
-
-  console.log(`\n✅ Import complete!`);
-  console.log(`   Total: ${results.total}`);
-  console.log(`   Imported: ${results.imported}`);
-  console.log(`   Duplicates: ${results.duplicates}`);
-  console.log(`   Errors: ${results.errors}`);
 
   return results;
 }
@@ -361,10 +345,6 @@ export async function importFilteredProperties(properties, options = {}) {
     if (cities && !cities.includes(p.address.city)) return false;
     return true;
   });
-
-  console.log(
-    `\n📊 Filtered ${properties.length} properties to ${filtered.length}`,
-  );
 
   return importPropertiesBatch(filtered);
 }

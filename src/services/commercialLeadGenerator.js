@@ -550,10 +550,6 @@ export function generateAllNevadaProperties(propertiesPerType = 12) {
         propertiesPerType,
       );
       allProperties.push(...properties);
-
-      console.log(
-        `✓ Generated ${properties.length} ${propertyType.keyword} in ${location.name}`,
-      );
     }
   }
 
@@ -576,12 +572,7 @@ export function generateProperties(targetCount = 500) {
     targetCount / (typeCount * locationCount),
   );
 
-  console.log(`Generating ${targetCount} properties...`);
-  console.log(`Target: ${perTypePerLocation} per property type per location\n`);
-
   for (const location of NEVADA_LOCATIONS) {
-    console.log(`📍 ${location.name}:`);
-
     for (const [typeKey, propertyType] of Object.entries(PROPERTY_TYPES)) {
       const props = generatePropertiesForLocation(
         location,
@@ -589,8 +580,6 @@ export function generateProperties(targetCount = 500) {
         perTypePerLocation,
       );
       properties.push(...props);
-
-      console.log(`   ✓ ${propertyType.keyword}: ${props.length} properties`);
 
       // Stop if we've reached target
       if (properties.length >= targetCount) {
@@ -605,8 +594,6 @@ export function generateProperties(targetCount = 500) {
 
   // Trim to exact target
   const finalProperties = properties.slice(0, targetCount);
-
-  console.log(`\n✅ Generated ${finalProperties.length} total properties`);
 
   // Sort by lead score
   finalProperties.sort((a, b) => b.leadScore - a.leadScore);

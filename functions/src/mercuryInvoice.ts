@@ -57,7 +57,7 @@ async function mercuryFetch(
 
   if (!response.ok) {
     const errorText = await response.text();
-    console.error(`Mercury API error: ${response.status} ${errorText}`);
+    functions.logger.error(`Mercury API error: ${response.status} ${errorText}`);
     throw new functions.https.HttpsError(
       "internal",
       `Mercury API error: ${response.status} - ${errorText}`,
@@ -158,14 +158,14 @@ export const createMercuryCustomer = functions
           updatedAt: admin.firestore.Timestamp.now(),
         });
 
-        console.log(`Created Mercury customer ${result.id} for lead ${leadId}`);
+        functions.logger.info(`Created Mercury customer ${result.id} for lead ${leadId}`);
 
         return {
           success: true,
           customerId: result.id,
         };
       } catch (error: any) {
-        console.error("Create Mercury customer error:", error);
+        functions.logger.error("Create Mercury customer error:", error);
         if (error instanceof functions.https.HttpsError) throw error;
         throw new functions.https.HttpsError(
           "internal",
@@ -292,7 +292,7 @@ export const createMercuryInvoice = functions
             updatedAt: admin.firestore.Timestamp.now(),
           });
 
-        console.log(
+        functions.logger.info(
           `Created Mercury invoice ${result.id} for lead ${leadId} - $${amount}`,
         );
 
@@ -303,7 +303,7 @@ export const createMercuryInvoice = functions
           slug: result.slug,
         };
       } catch (error: any) {
-        console.error("Create Mercury invoice error:", error);
+        functions.logger.error("Create Mercury invoice error:", error);
         if (error instanceof functions.https.HttpsError) throw error;
         throw new functions.https.HttpsError(
           "internal",
@@ -357,7 +357,7 @@ export const getMercuryInvoice = functions
           invoice: result,
         };
       } catch (error: any) {
-        console.error("Get Mercury invoice error:", error);
+        functions.logger.error("Get Mercury invoice error:", error);
         if (error instanceof functions.https.HttpsError) throw error;
         throw new functions.https.HttpsError(
           "internal",
@@ -406,7 +406,7 @@ export const listMercuryInvoices = functions
           invoices: result,
         };
       } catch (error: any) {
-        console.error("List Mercury invoices error:", error);
+        functions.logger.error("List Mercury invoices error:", error);
         if (error instanceof functions.https.HttpsError) throw error;
         throw new functions.https.HttpsError(
           "internal",
@@ -470,14 +470,14 @@ export const cancelMercuryInvoice = functions
           });
         }
 
-        console.log(`Canceled Mercury invoice ${mercuryInvoiceId}`);
+        functions.logger.info(`Canceled Mercury invoice ${mercuryInvoiceId}`);
 
         return {
           success: true,
           mercuryInvoiceId,
         };
       } catch (error: any) {
-        console.error("Cancel Mercury invoice error:", error);
+        functions.logger.error("Cancel Mercury invoice error:", error);
         if (error instanceof functions.https.HttpsError) throw error;
         throw new functions.https.HttpsError(
           "internal",
@@ -514,7 +514,7 @@ export const syncInvoiceStatus = functions.pubsub
       .get();
 
     if (invoicesSnapshot.empty) {
-      console.log("No invoices to sync");
+      functions.logger.info("No invoices to sync");
       return null;
     }
 
@@ -579,7 +579,7 @@ export const syncInvoiceStatus = functions.pubsub
           }
         }
       } catch (error) {
-        console.error(
+        functions.logger.error(
           `Error syncing invoice ${invoice.mercuryInvoiceId}:`,
           error,
         );
@@ -587,7 +587,7 @@ export const syncInvoiceStatus = functions.pubsub
       }
     }
 
-    console.log(
+    functions.logger.info(
       `Invoice sync complete: ${updated} updated, ${paid} newly paid out of ${invoicesSnapshot.size} checked`,
     );
 

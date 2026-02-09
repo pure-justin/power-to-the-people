@@ -281,7 +281,7 @@ export const submitBid = functions.https.onCall(async (data, context) => {
       bid_score_breakdown: bidScore.breakdown,
     });
   } catch (err) {
-    console.warn("Failed to compute bid score, continuing without it:", err);
+    functions.logger.warn("Failed to compute bid score, continuing without it:", err);
   }
 
   // Increment bid count on listing

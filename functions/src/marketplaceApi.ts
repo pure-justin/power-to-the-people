@@ -1160,7 +1160,7 @@ async function marketplaceApiHandler(
       error: "Unknown endpoint. Available: /listings, /workers, /my",
     });
   } catch (error: any) {
-    console.error("Marketplace API error:", error);
+    functions.logger.error("Marketplace API error:", error);
     const status = errorStatus(error);
     res.status(status).json({
       success: false,

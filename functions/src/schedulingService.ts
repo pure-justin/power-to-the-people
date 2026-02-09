@@ -130,13 +130,13 @@ export const setAvailability = functions
         slotId = ref.id;
       }
 
-      console.log(
+      functions.logger.info(
         `Availability set: installer=${installerId}, date=${date}, slots=${timeSlots.length}`,
       );
 
       return { success: true, slotId };
     } catch (error: any) {
-      console.error("Set availability error:", error);
+      functions.logger.error("Set availability error:", error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -194,7 +194,7 @@ export const getAvailability = functions
 
       return { success: true, slots };
     } catch (error: any) {
-      console.error("Get availability error:", error);
+      functions.logger.error("Get availability error:", error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -333,7 +333,7 @@ export const proposeSchedule = functions
         updatedAt: admin.firestore.FieldValue.serverTimestamp(),
       });
 
-      console.log(
+      functions.logger.info(
         `Schedule proposed: ${scheduleRef.id} for project ${projectId}, ${proposedSlots.length} slots`,
       );
 
@@ -343,7 +343,7 @@ export const proposeSchedule = functions
         proposedSlots,
       };
     } catch (error: any) {
-      console.error("Propose schedule error:", error);
+      functions.logger.error("Propose schedule error:", error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -466,13 +466,13 @@ export const confirmSchedule = functions
 
       await scheduleRef.update(updateData);
 
-      console.log(
+      functions.logger.info(
         `Schedule ${scheduleId} confirmed by ${confirmedBy}, new status: ${newStatus}`,
       );
 
       return { success: true, status: newStatus };
     } catch (error: any) {
-      console.error("Confirm schedule error:", error);
+      functions.logger.error("Confirm schedule error:", error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -565,13 +565,13 @@ export const reschedule = functions
         updated_at: admin.firestore.FieldValue.serverTimestamp(),
       });
 
-      console.log(
+      functions.logger.info(
         `Schedule ${scheduleId} rescheduled to ${newDate}: ${reason}`,
       );
 
       return { success: true, status: "proposed" };
     } catch (error: any) {
-      console.error("Reschedule error:", error);
+      functions.logger.error("Reschedule error:", error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -630,7 +630,7 @@ export const getInstallSchedule = functions
         schedule: { id: scheduleSnap.id, ...scheduleSnap.data() },
       };
     } catch (error: any) {
-      console.error("Get install schedule error:", error);
+      functions.logger.error("Get install schedule error:", error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -697,7 +697,7 @@ export const getUpcomingInstalls = functions
 
       return { success: true, installs };
     } catch (error: any) {
-      console.error("Get upcoming installs error:", error);
+      functions.logger.error("Get upcoming installs error:", error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -770,7 +770,7 @@ export const getCustomerSchedule = functions
 
       return { success: true, schedules };
     } catch (error: any) {
-      console.error("Get customer schedule error:", error);
+      functions.logger.error("Get customer schedule error:", error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",

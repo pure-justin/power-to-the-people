@@ -88,7 +88,7 @@ async function placeEagleviewOrder(
     Date.now() + 48 * 60 * 60 * 1000,
   ).toISOString(); // ~48 hours
 
-  console.log(
+  functions.logger.info(
     `[STUB] EagleView order placed: ${mockOrderId} for ${_reportType}`,
   );
 
@@ -107,7 +107,7 @@ async function checkEagleviewOrderStatus(
   //   headers: { "Authorization": `Bearer ${token}` },
   // });
 
-  console.log(`[STUB] EagleView status check: ${_orderId}`);
+  functions.logger.info(`[STUB] EagleView status check: ${_orderId}`);
 
   return { status: "processing", percentComplete: 50 };
 }
@@ -188,7 +188,7 @@ export const orderEagleviewReport = functions
         .collection("eagleview_reports")
         .add(reportData);
 
-      console.log(
+      functions.logger.info(
         `EagleView report ordered: ${reportRef.id} (order=${orderId}, type=${reportType}, address=${address})`,
       );
 
@@ -199,7 +199,7 @@ export const orderEagleviewReport = functions
         estimatedDelivery,
       };
     } catch (error: any) {
-      console.error("Order EagleView report error:", error);
+      functions.logger.error("Order EagleView report error:", error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -272,7 +272,7 @@ export const checkEagleviewStatus = functions
         percentComplete: apiStatus.percentComplete,
       };
     } catch (error: any) {
-      console.error(`Check EagleView status error (${orderId}):`, error);
+      functions.logger.error(`Check EagleView status error (${orderId}):`, error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -369,7 +369,7 @@ export const processEagleviewDelivery = functions
         }
       }
 
-      console.log(
+      functions.logger.info(
         `EagleView report delivered for order ${orderId}. Survey updated: ${surveyUpdated}`,
       );
 
@@ -379,7 +379,7 @@ export const processEagleviewDelivery = functions
         surveyUpdated,
       };
     } catch (error: any) {
-      console.error(`Process EagleView delivery error (${orderId}):`, error);
+      functions.logger.error(`Process EagleView delivery error (${orderId}):`, error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -560,7 +560,7 @@ export const shouldOrderEagleview = functions
         recommendedType: needed ? recommendedType : null,
       };
     } catch (error: any) {
-      console.error(`shouldOrderEagleview error (${projectId}):`, error);
+      functions.logger.error(`shouldOrderEagleview error (${projectId}):`, error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",

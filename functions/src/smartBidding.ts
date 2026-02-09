@@ -26,6 +26,7 @@
  * @module smartBidding
  */
 
+import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 
 const db = admin.firestore();
@@ -164,7 +165,7 @@ export async function loadWeights(): Promise<BiddingWeights> {
           : DEFAULT_WEIGHTS.reliability,
     };
   } catch (err) {
-    console.warn(
+    functions.logger.warn(
       "Failed to load bidding weights from Firestore, using defaults:",
       err,
     );

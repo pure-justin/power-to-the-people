@@ -1707,7 +1707,7 @@ export const runFinancialAnalysis = functions
       }
     } catch (error: any) {
       if (error instanceof functions.https.HttpsError) throw error;
-      console.error("Financial analysis error:", error);
+      functions.logger.error("Financial analysis error:", error);
       throw new functions.https.HttpsError(
         "internal",
         "Financial analysis failed: " + (error.message || "Unknown error"),

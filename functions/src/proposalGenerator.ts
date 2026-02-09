@@ -1302,7 +1302,7 @@ export const generateSolarProposal = functions
       return { success: true, data: proposal };
     } catch (error: any) {
       if (error instanceof functions.https.HttpsError) throw error;
-      console.error("Proposal generation error:", error);
+      functions.logger.error("Proposal generation error:", error);
       throw new functions.https.HttpsError(
         "internal",
         "Proposal generation failed: " + (error.message || "Unknown error"),
@@ -1369,7 +1369,7 @@ export const getSolarProposal = functions
       return { success: true, data: { id: doc.id, ...doc.data() } };
     } catch (error: any) {
       if (error instanceof functions.https.HttpsError) throw error;
-      console.error("Get proposal error:", error);
+      functions.logger.error("Get proposal error:", error);
       throw new functions.https.HttpsError(
         "internal",
         "Failed to retrieve proposal: " + (error.message || "Unknown error"),

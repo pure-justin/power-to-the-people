@@ -15,6 +15,7 @@ import * as functions from "firebase-functions/v1";
 import * as admin from "firebase-admin";
 import puppeteer from "puppeteer-core";
 import { validateApiKeyFromRequest, ApiKeyScope } from "./apiKeys";
+import { setCors, handleOptions } from "./corsConfig";
 
 // Browserless.io endpoint (or self-hosted)
 const BROWSERLESS_URL =
@@ -54,7 +55,7 @@ async function fetchSmtData(
     ? `${BROWSERLESS_URL}?token=${BROWSERLESS_TOKEN}`
     : BROWSERLESS_URL;
 
-  console.log("Connecting to browser...");
+  functions.logger.info("Connecting to browser...");
 
   const browser = await puppeteer.connect({
     browserWSEndpoint,
@@ -68,26 +69,26 @@ async function fetchSmtData(
     );
 
     // Step 1: Load SMT
-    console.log("Loading SMT...");
+    functions.logger.info("Loading SMT...");
     await page.goto("https://www.smartmetertexas.com", {
       waitUntil: "networkidle2",
       timeout: 30000,
     });
 
     // Step 2: Click login
-    console.log("Opening login...");
+    functions.logger.info("Opening login...");
     await page.click("button.button-login");
     await page.waitForSelector('input[formcontrolname="username"]', {
       timeout: 5000,
     });
 
     // Step 3: Enter credentials
-    console.log("Entering credentials...");
+    functions.logger.info("Entering credentials...");
     await page.type('input[formcontrolname="username"]', username);
     await page.type('input[formcontrolname="password"]', password);
 
     // Step 4: Submit
-    console.log("Logging in...");
+    functions.logger.info("Logging in...");
     await page.click("button.btn-primary");
 
     // Step 5: Wait for dashboard
@@ -95,7 +96,7 @@ async function fetchSmtData(
     await new Promise((r) => setTimeout(r, 2000));
 
     // Step 6: Fetch data via API (from within page context)
-    console.log("Fetching usage data...");
+    functions.logger.info("Fetching usage data...");
     const result = await page.evaluate(async () => {
       // Get ESIID
       const metersResp = await fetch("/api/meters");
@@ -220,7 +221,7 @@ export const fetchSmtUsage = functions
     }
 
     try {
-      console.log(`Fetching SMT data for ${username}...`);
+      functions.logger.info(`Fetching SMT data for ${username}...`);
 
       // Fetch the data
       const usageData = await fetchSmtData(username, password);
@@ -240,7 +241,7 @@ export const fetchSmtUsage = functions
         { merge: true },
       );
 
-      console.log(`Saved SMT data for ESIID ${usageData.esiid}`);
+      functions.logger.info(`Saved SMT data for ESIID ${usageData.esiid}`);
 
       return {
         success: true,
@@ -248,7 +249,7 @@ export const fetchSmtUsage = functions
         savedTo: docRef.path,
       };
     } catch (error: any) {
-      console.error("SMT fetch error:", error);
+      functions.logger.error("SMT fetch error:", error);
 
       // Return user-friendly error
       if (
@@ -288,15 +289,8 @@ export const smtWebhook = functions
     memory: "1GB",
   })
   .https.onRequest(async (req, res) => {
-    // CORS
-    res.set("Access-Control-Allow-Origin", "*");
-    res.set("Access-Control-Allow-Methods", "POST, OPTIONS");
-    res.set("Access-Control-Allow-Headers", "Content-Type");
-
-    if (req.method === "OPTIONS") {
-      res.status(204).send("");
-      return;
-    }
+    if (handleOptions(req, res)) return;
+    setCors(req, res);
 
     if (req.method !== "POST") {
       res.status(405).json({ error: "Method not allowed" });
@@ -344,7 +338,7 @@ export const smtWebhook = functions
         savedTo: docRef.path,
       });
     } catch (error: any) {
-      console.error("SMT webhook error:", error);
+      functions.logger.error("SMT webhook error:", error);
       res.status(500).json({
         success: false,
         error: error.message || "Failed to fetch SMT data",

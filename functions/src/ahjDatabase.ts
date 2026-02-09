@@ -115,7 +115,7 @@ export const createAhj = functions
 
       return { success: true, ahjId };
     } catch (error: any) {
-      console.error("createAhj error:", error);
+      functions.logger.error("createAhj error:", error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -171,7 +171,7 @@ export const getAhj = functions
       return { id: doc.id, ...doc.data() };
     } catch (error: any) {
       if (error instanceof functions.https.HttpsError) throw error;
-      console.error("getAhj error:", error);
+      functions.logger.error("getAhj error:", error);
       throw new functions.https.HttpsError(
         "internal",
         error.message || "Failed to retrieve AHJ record.",
@@ -286,7 +286,7 @@ export const searchAhj = functions
 
         return { results, count: results.length };
       } catch (error: any) {
-        console.error("searchAhj error:", error);
+        functions.logger.error("searchAhj error:", error);
         if (error instanceof functions.https.HttpsError) throw error;
         throw new functions.https.HttpsError(
           "internal",
@@ -446,7 +446,7 @@ export const findAhjForAddress = functions
       };
     } catch (error: any) {
       if (error instanceof functions.https.HttpsError) throw error;
-      console.error("findAhjForAddress error:", error);
+      functions.logger.error("findAhjForAddress error:", error);
       throw new functions.https.HttpsError(
         "internal",
         error.message || "Failed to find AHJ for address.",
@@ -509,7 +509,7 @@ export const updateAhjRequirements = functions
       return { success: true, ahjId: data.ahjId };
     } catch (error: any) {
       if (error instanceof functions.https.HttpsError) throw error;
-      console.error("updateAhjRequirements error:", error);
+      functions.logger.error("updateAhjRequirements error:", error);
       throw new functions.https.HttpsError(
         "internal",
         error.message || "Failed to update AHJ requirements.",
@@ -616,7 +616,7 @@ export const createPermitSop = functions
       };
     } catch (error: any) {
       if (error instanceof functions.https.HttpsError) throw error;
-      console.error("createPermitSop error:", error);
+      functions.logger.error("createPermitSop error:", error);
       throw new functions.https.HttpsError(
         "internal",
         error.message || "Failed to create permit SOP.",
@@ -676,7 +676,7 @@ export const getPermitSop = functions
         stepCount: steps.length,
       };
     } catch (error: any) {
-      console.error("getPermitSop error:", error);
+      functions.logger.error("getPermitSop error:", error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -748,7 +748,7 @@ export const verifyAhj = functions
         };
       } catch (error: any) {
         if (error instanceof functions.https.HttpsError) throw error;
-        console.error("verifyAhj error:", error);
+        functions.logger.error("verifyAhj error:", error);
         throw new functions.https.HttpsError(
           "internal",
           error.message || "Failed to verify AHJ.",
@@ -834,7 +834,7 @@ export const getAhjStats = functions
         by_state: byState,
       };
     } catch (error: any) {
-      console.error("getAhjStats error:", error);
+      functions.logger.error("getAhjStats error:", error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",

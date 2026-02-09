@@ -387,13 +387,13 @@ export const auditProjectCredits = functions
         };
         await db.collection("ai_tasks").add(taskData);
       } catch (taskErr: any) {
-        console.warn(
+        functions.logger.warn(
           `Failed to create AI task for audit ${auditRef.id}:`,
           taskErr.message,
         );
       }
 
-      console.log(
+      functions.logger.info(
         `Credit audit created: ${auditRef.id} for project ${projectId}`,
       );
 
@@ -402,7 +402,7 @@ export const auditProjectCredits = functions
         auditId: auditRef.id,
       };
     } catch (error: any) {
-      console.error("Audit project credits error:", error);
+      functions.logger.error("Audit project credits error:", error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -571,11 +571,11 @@ export const certifyAudit = functions
         updatedAt: admin.firestore.FieldValue.serverTimestamp(),
       });
 
-      console.log(`Audit certified: ${auditId}`);
+      functions.logger.info(`Audit certified: ${auditId}`);
 
       return { success: true, auditId, certification };
     } catch (error: any) {
-      console.error(`Certify audit error (${auditId}):`, error);
+      functions.logger.error(`Certify audit error (${auditId}):`, error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -713,7 +713,7 @@ export const addAuditCheck = functions
 
       return { success: true };
     } catch (error: any) {
-      console.error(`Add audit check error (${auditId}):`, error);
+      functions.logger.error(`Add audit check error (${auditId}):`, error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -873,7 +873,7 @@ export const assessCreditRisk = functions
         .collection("tax_credit_insurance")
         .add(insuranceData);
 
-      console.log(
+      functions.logger.info(
         `Credit risk assessed: ${insuranceRef.id} for audit ${auditId} (score: ${riskScore}, risk: ${overallRisk})`,
       );
 
@@ -884,7 +884,7 @@ export const assessCreditRisk = functions
         overallRisk,
       };
     } catch (error: any) {
-      console.error(`Assess credit risk error (${auditId}):`, error);
+      functions.logger.error(`Assess credit risk error (${auditId}):`, error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -969,7 +969,7 @@ export const quoteCreditInsurance = functions
         updatedAt: admin.firestore.FieldValue.serverTimestamp(),
       });
 
-      console.log(
+      functions.logger.info(
         `Insurance quoted: ${insuranceDoc.id} — $${premium} premium (${(premiumRate * 100).toFixed(1)}%) for $${creditAmount} credit`,
       );
 
@@ -985,7 +985,7 @@ export const quoteCreditInsurance = functions
         },
       };
     } catch (error: any) {
-      console.error(`Quote credit insurance error (${auditId}):`, error);
+      functions.logger.error(`Quote credit insurance error (${auditId}):`, error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -1048,10 +1048,10 @@ export const activateInsurance = functions
         updatedAt: admin.firestore.FieldValue.serverTimestamp(),
       });
 
-      console.log(`Insurance activated: ${insuranceId}`);
+      functions.logger.info(`Insurance activated: ${insuranceId}`);
       return { success: true };
     } catch (error: any) {
-      console.error(`Activate insurance error (${insuranceId}):`, error);
+      functions.logger.error(`Activate insurance error (${insuranceId}):`, error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -1248,13 +1248,13 @@ export const createCreditListing = functions
         updatedAt: admin.firestore.FieldValue.serverTimestamp(),
       });
 
-      console.log(
+      functions.logger.info(
         `Credit listing created: ${listingRef.id} — $${creditAmount} credit at $${askingPrice} (${discountRate}% discount, Level ${level})`,
       );
 
       return { success: true, listingId: listingRef.id };
     } catch (error: any) {
-      console.error("Create credit listing error:", error);
+      functions.logger.error("Create credit listing error:", error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -1336,7 +1336,7 @@ export const searchCreditListings = functions
 
       return { success: true, listings, count: listings.length };
     } catch (error: any) {
-      console.error("Search credit listings error:", error);
+      functions.logger.error("Search credit listings error:", error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -1422,7 +1422,7 @@ export const getCreditListing = functions
 
       return { success: true, listing: listingData, audit, insurance };
     } catch (error: any) {
-      console.error(`Get credit listing error (${listingId}):`, error);
+      functions.logger.error(`Get credit listing error (${listingId}):`, error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -1522,13 +1522,13 @@ export const makeOffer = functions
         updatedAt: admin.firestore.FieldValue.serverTimestamp(),
       });
 
-      console.log(
+      functions.logger.info(
         `Offer made: ${offerId} on listing ${listingId} — $${offerAmount}`,
       );
 
       return { success: true, offerId };
     } catch (error: any) {
-      console.error(`Make offer error (${listingId}):`, error);
+      functions.logger.error(`Make offer error (${listingId}):`, error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -1638,11 +1638,11 @@ export const respondToOffer = functions
         updatedAt: admin.firestore.FieldValue.serverTimestamp(),
       });
 
-      console.log(`Offer ${offerId} on listing ${listingId}: ${response}`);
+      functions.logger.info(`Offer ${offerId} on listing ${listingId}: ${response}`);
 
       return { success: true };
     } catch (error: any) {
-      console.error(`Respond to offer error (${listingId}/${offerId}):`, error);
+      functions.logger.error(`Respond to offer error (${listingId}/${offerId}):`, error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -1811,13 +1811,13 @@ export const initiateCreditTransfer = functions
         updatedAt: admin.firestore.FieldValue.serverTimestamp(),
       });
 
-      console.log(
+      functions.logger.info(
         `Credit transfer initiated: ${txRef.id} — $${salePrice} for $${creditAmount} credit (fee: $${platformFee})`,
       );
 
       return { success: true, transactionId: txRef.id };
     } catch (error: any) {
-      console.error("Initiate credit transfer error:", error);
+      functions.logger.error("Initiate credit transfer error:", error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -1927,11 +1927,11 @@ export const completeCreditTransfer = functions
         }
       }
 
-      console.log(`Credit transfer completed: ${transactionId}`);
+      functions.logger.info(`Credit transfer completed: ${transactionId}`);
 
       return { success: true };
     } catch (error: any) {
-      console.error(
+      functions.logger.error(
         `Complete credit transfer error (${transactionId}):`,
         error,
       );
@@ -1986,7 +1986,7 @@ export const getCreditTransactions = functions
 
       return { success: true, transactions, count: transactions.length };
     } catch (error: any) {
-      console.error("Get credit transactions error:", error);
+      functions.logger.error("Get credit transactions error:", error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -2094,7 +2094,7 @@ export const getCreditMarketStats = functions
         },
       };
     } catch (error: any) {
-      console.error("Get credit market stats error:", error);
+      functions.logger.error("Get credit market stats error:", error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",

@@ -58,7 +58,7 @@ export const onSurveyApproved = functions
       return null;
     }
 
-    console.log(
+    functions.logger.info(
       `[Pipeline] Survey ${surveyId} approved → triggering CAD generation`,
     );
 
@@ -102,7 +102,7 @@ export const onSurveyApproved = functions
         project?.financingType === "ppa" ||
         project?.financingType === "lease"
       ) {
-        console.log(
+        functions.logger.info(
           `[Pipeline] PPA/Lease project — checking if EagleView needed`,
         );
         await db.collection("ai_tasks").add({
@@ -130,7 +130,7 @@ export const onSurveyApproved = functions
 
       return null;
     } catch (error) {
-      console.error(
+      functions.logger.error(
         `[Pipeline] Error triggering CAD generation for survey ${surveyId}:`,
         error,
       );
@@ -161,7 +161,7 @@ export const onDesignApproved = functions
       return null;
     }
 
-    console.log(
+    functions.logger.info(
       `[Pipeline] Design ${designId} approved → triggering permit submission`,
     );
 
@@ -174,7 +174,7 @@ export const onDesignApproved = functions
       const project = projectSnap.data();
 
       if (!project) {
-        console.error(`[Pipeline] Project ${after.projectId} not found`);
+        functions.logger.error(`[Pipeline] Project ${after.projectId} not found`);
         return null;
       }
 
@@ -246,7 +246,7 @@ export const onDesignApproved = functions
 
       return null;
     } catch (error) {
-      console.error(
+      functions.logger.error(
         `[Pipeline] Error creating permit for design ${designId}:`,
         error,
       );
@@ -277,7 +277,7 @@ export const onPermitApproved = functions
       return null;
     }
 
-    console.log(
+    functions.logger.info(
       `[Pipeline] Permit ${permitId} approved → checking if all permits done`,
     );
 
@@ -293,13 +293,13 @@ export const onPermitApproved = functions
       );
 
       if (!allApproved) {
-        console.log(
+        functions.logger.info(
           `[Pipeline] Not all permits approved yet for project ${after.projectId}`,
         );
         return null;
       }
 
-      console.log(`[Pipeline] All permits approved → triggering scheduling`);
+      functions.logger.info(`[Pipeline] All permits approved → triggering scheduling`);
 
       // Create AI task to propose a schedule
       await db.collection("ai_tasks").add({
@@ -331,7 +331,7 @@ export const onPermitApproved = functions
 
       return null;
     } catch (error) {
-      console.error(
+      functions.logger.error(
         `[Pipeline] Error triggering schedule for permit ${permitId}:`,
         error,
       );
@@ -374,7 +374,7 @@ export const onInstallComplete = functions
     }
 
     const projectId = after.projectId;
-    console.log(
+    functions.logger.info(
       `[Pipeline] Install complete for project ${projectId} → triggering funding + credit audit`,
     );
 
@@ -431,7 +431,7 @@ export const onInstallComplete = functions
 
       return null;
     } catch (error) {
-      console.error(
+      functions.logger.error(
         `[Pipeline] Error triggering post-install tasks for ${projectId}:`,
         error,
       );
@@ -463,7 +463,7 @@ export const onFundingComplete = functions
     }
 
     const projectId = after.projectId;
-    console.log(
+    functions.logger.info(
       `[Pipeline] Funding complete for project ${projectId} → project DONE`,
     );
 
@@ -484,7 +484,7 @@ export const onFundingComplete = functions
         .get();
 
       if (!auditQuery.empty) {
-        console.log(
+        functions.logger.info(
           `[Pipeline] Credit audit certified — credit ready for marketplace listing`,
         );
         // The seller can now list via the DashboardCredits UI
@@ -493,7 +493,7 @@ export const onFundingComplete = functions
 
       return null;
     } catch (error) {
-      console.error(`[Pipeline] Error completing project ${projectId}:`, error);
+      functions.logger.error(`[Pipeline] Error completing project ${projectId}:`, error);
       return null;
     }
   });

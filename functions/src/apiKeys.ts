@@ -353,7 +353,7 @@ export const createApiKey = functions
       // Save to Firestore
       await apiKeyRef.set(newApiKey);
 
-      console.log(
+      functions.logger.info(
         `Created API key ${apiKeyRef.id} (${data.name}) for user ${context.auth.uid}`,
       );
 
@@ -366,7 +366,7 @@ export const createApiKey = functions
         message: "Save this API key securely. It will not be shown again.",
       };
     } catch (error: any) {
-      console.error("Create API key error:", error);
+      functions.logger.error("Create API key error:", error);
       throw new functions.https.HttpsError(
         "internal",
         error.message || "Failed to create API key",
@@ -525,7 +525,7 @@ export const validateApiKey = functions
           ipAddress: context.rawRequest?.ip || "unknown",
           userAgent: context.rawRequest?.headers["user-agent"],
           timestamp: admin.firestore.Timestamp.now(),
-        }).catch((err) => console.error("Failed to log usage:", err));
+        }).catch((err) => functions.logger.error("Failed to log usage:", err));
 
         return {
           valid: true,
@@ -536,7 +536,7 @@ export const validateApiKey = functions
           usageStats: currentStats,
         };
       } catch (error: any) {
-        console.error("Validate API key error:", error);
+        functions.logger.error("Validate API key error:", error);
         throw error;
       }
     },
@@ -615,7 +615,7 @@ export const revokeApiKey = functions
           updatedAt: admin.firestore.Timestamp.now(),
         });
 
-        console.log(
+        functions.logger.info(
           `Revoked API key ${apiKeyId} by user ${context.auth.uid}: ${reason}`,
         );
 
@@ -625,7 +625,7 @@ export const revokeApiKey = functions
           message: "API key revoked successfully",
         };
       } catch (error: any) {
-        console.error("Revoke API key error:", error);
+        functions.logger.error("Revoke API key error:", error);
         throw new functions.https.HttpsError(
           "internal",
           error.message || "Failed to revoke API key",
@@ -709,7 +709,7 @@ export const rotateApiKey = functions
           updatedAt: admin.firestore.Timestamp.now(),
         });
 
-        console.log(`Rotated API key ${apiKeyId} for user ${context.auth.uid}`);
+        functions.logger.info(`Rotated API key ${apiKeyId} for user ${context.auth.uid}`);
 
         // Return the new plain-text key (only time it's shown)
         return {
@@ -721,7 +721,7 @@ export const rotateApiKey = functions
             "Save this new API key securely. The old key is now invalid.",
         };
       } catch (error: any) {
-        console.error("Rotate API key error:", error);
+        functions.logger.error("Rotate API key error:", error);
         throw new functions.https.HttpsError(
           "internal",
           error.message || "Failed to rotate API key",
@@ -818,14 +818,14 @@ export const updateApiKey = functions
 
         await apiKeyRef.update(allowedUpdates);
 
-        console.log(`Updated API key ${apiKeyId} by user ${context.auth.uid}`);
+        functions.logger.info(`Updated API key ${apiKeyId} by user ${context.auth.uid}`);
 
         return {
           success: true,
           apiKeyId,
         };
       } catch (error: any) {
-        console.error("Update API key error:", error);
+        functions.logger.error("Update API key error:", error);
         throw new functions.https.HttpsError(
           "internal",
           error.message || "Failed to update API key",
@@ -927,7 +927,7 @@ export const getApiKeyUsage = functions
           logCount: logs.length,
         };
       } catch (error: any) {
-        console.error("Get API key usage error:", error);
+        functions.logger.error("Get API key usage error:", error);
         throw new functions.https.HttpsError(
           "internal",
           error.message || "Failed to get API key usage",
@@ -950,7 +950,7 @@ async function logApiKeyUsage(log: Omit<ApiKeyUsageLog, "id">): Promise<void> {
       ...log,
     });
   } catch (error) {
-    console.error("Log API key usage error:", error);
+    functions.logger.error("Log API key usage error:", error);
     // Don't throw - logging should never break the main flow
   }
 }
@@ -1089,7 +1089,7 @@ export async function validateApiKeyFromRequest(
     ipAddress: req.ip,
     userAgent: req.headers["user-agent"],
     timestamp: admin.firestore.Timestamp.now(),
-  }).catch((err) => console.error("Failed to log usage:", err));
+  }).catch((err) => functions.logger.error("Failed to log usage:", err));
 
   return apiKeyData;
 }
@@ -1136,7 +1136,7 @@ export const cleanupApiKeys = functions
 
       if (expiredSnapshot.size > 0) {
         await expireBatch.commit();
-        console.log(`Marked ${expiredSnapshot.size} API keys as expired`);
+        functions.logger.info(`Marked ${expiredSnapshot.size} API keys as expired`);
       }
 
       // Delete logs older than 90 days
@@ -1156,11 +1156,11 @@ export const cleanupApiKeys = functions
           deleteBatch.delete(doc.ref);
         });
         await deleteBatch.commit();
-        console.log(`Deleted ${oldLogsSnapshot.size} old usage logs`);
+        functions.logger.info(`Deleted ${oldLogsSnapshot.size} old usage logs`);
       }
 
-      console.log("API key cleanup completed");
+      functions.logger.info("API key cleanup completed");
     } catch (error) {
-      console.error("Cleanup API keys error:", error);
+      functions.logger.error("Cleanup API keys error:", error);
     }
   });

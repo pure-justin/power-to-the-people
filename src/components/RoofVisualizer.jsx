@@ -126,15 +126,6 @@ export default function RoofVisualizer({
   const activePanelCount = selectedPanelCount ?? defaultPanelCount;
   const currentSystemKw = (activePanelCount * panelWattage) / 1000;
 
-  // Debug: log panel counts
-  console.log("Panel counts:", {
-    maxPanels,
-    defaultPanelCount,
-    selectedPanelCount,
-    activePanelCount,
-    propPanelCount: panelCount,
-  });
-
   // Stepper functions - notify parent when count changes
   // Step by 1 panel at a time for precise 100% offset matching
   const decreasePanels = () => {
@@ -215,8 +206,6 @@ export default function RoofVisualizer({
         throw new Error("Failed to capture images");
       }
 
-      console.log("🎨 Generating AI-enhanced solar preview...");
-
       // Strip data URL prefix for Gemini
       const cleanBase64 = cleanRoofBase64.replace(
         /^data:image\/\w+;base64,/,
@@ -293,7 +282,6 @@ Generate only the photorealistic image, no text response.`;
         const imageUrl = `data:image/${imageData.mimeType || "png"};base64,${imageData.data}`;
         setAiPreviewUrl(imageUrl);
         setShowAiPreview(true);
-        console.log("✅ AI preview generated successfully");
       } else {
         throw new Error("No image in Gemini response");
       }

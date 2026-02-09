@@ -55,25 +55,7 @@ const WEBHOOK_EVENT_TYPES = [
   "referral.payout_processed",
 ] as const;
 
-// ─── CORS Helper ─────────────────────────────────────────────────────────────
-
-function setCors(res: functions.Response): void {
-  res.set("Access-Control-Allow-Origin", "*");
-  res.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
-}
-
-function handleOptions(
-  req: functions.https.Request,
-  res: functions.Response,
-): boolean {
-  if (req.method === "OPTIONS") {
-    setCors(res);
-    res.status(204).send("");
-    return true;
-  }
-  return false;
-}
+import { setCors, handleOptions } from "./corsConfig";
 
 // ─── Error Handler Helper ────────────────────────────────────────────────────
 
@@ -124,7 +106,7 @@ export const webhookApi = functions
   .runWith({ timeoutSeconds: 30, memory: "256MB" })
   .https.onRequest(async (req, res) => {
     if (handleOptions(req, res)) return;
-    setCors(res);
+    setCors(req, res);
 
     try {
       const apiKey = await validateApiKeyFromRequest(
@@ -171,7 +153,7 @@ export const webhookApi = functions
 
       res.status(404).json({ error: "Not found" });
     } catch (error: any) {
-      console.error("Webhook API error:", error);
+      functions.logger.error("Webhook API error:", error);
       const status = mapErrorStatus(error);
       res.status(status).json({
         error: error.message || "Internal error",
@@ -275,7 +257,7 @@ async function handleCreateWebhook(
 
   await webhookRef.set(webhook);
 
-  console.log(
+  functions.logger.info(
     `Created webhook ${webhookRef.id} for user ${apiKey.userId} -> ${url}`,
   );
 
@@ -412,7 +394,7 @@ async function handleDeleteWebhook(
 
   await webhookRef.delete();
 
-  console.log(`Deleted webhook ${webhookId} for user ${apiKey.userId}`);
+  functions.logger.info(`Deleted webhook ${webhookId} for user ${apiKey.userId}`);
 
   res.status(200).json({
     success: true,

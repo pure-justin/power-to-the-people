@@ -10,26 +10,7 @@
 
 import * as functions from "firebase-functions/v1";
 import * as admin from "firebase-admin";
-
-// ─── CORS Helper ───────────────────────────────────────────────────────────────
-
-function setCors(res: functions.Response): void {
-  res.set("Access-Control-Allow-Origin", "*");
-  res.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
-}
-
-function handleOptions(
-  req: functions.https.Request,
-  res: functions.Response,
-): boolean {
-  if (req.method === "OPTIONS") {
-    setCors(res);
-    res.status(204).send("");
-    return true;
-  }
-  return false;
-}
+import { setCors, handleOptions } from "./corsConfig";
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -143,7 +124,7 @@ export const customerApi = functions
   .runWith({ timeoutSeconds: 60, memory: "256MB" })
   .https.onRequest(async (req, res) => {
     if (handleOptions(req, res)) return;
-    setCors(res);
+    setCors(req, res);
 
     // Extract path from URL — strip leading slash
     const urlPath = req.path.replace(/^\//, "");
@@ -185,7 +166,7 @@ export const customerApi = functions
       // ─── 404 ────────────────────────────────────────────────────────
       res.status(404).json({ error: "Endpoint not found" });
     } catch (error: any) {
-      console.error("Customer API error:", error);
+      functions.logger.error("Customer API error:", error);
       const status =
         error.code === "unauthenticated"
           ? 401
@@ -533,11 +514,9 @@ async function handleSchedule(
     !Array.isArray(preferred_dates) ||
     preferred_dates.length === 0
   ) {
-    res
-      .status(400)
-      .json({
-        error: "preferred_dates array is required and must not be empty",
-      });
+    res.status(400).json({
+      error: "preferred_dates array is required and must not be empty",
+    });
     return;
   }
 

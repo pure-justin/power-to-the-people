@@ -57,7 +57,7 @@ export const checkSlaDeadlines = functions.pubsub
       .get();
 
     if (snapshot.empty) {
-      console.log("checkSlaDeadlines: no assigned listings found");
+      functions.logger.info("checkSlaDeadlines: no assigned listings found");
       return null;
     }
 
@@ -119,7 +119,7 @@ export const checkSlaDeadlines = functions.pubsub
         }
 
         warned++;
-        console.log(
+        functions.logger.info(
           `SLA warning sent for listing ${listingId}, worker ${workerId} ` +
             `(${slaResult.hoursOverdue}h overdue)`,
         );
@@ -168,19 +168,19 @@ export const checkSlaDeadlines = functions.pubsub
         });
 
         violated++;
-        console.log(
+        functions.logger.info(
           `SLA violation recorded for listing ${listingId}, worker ${workerId} ` +
             `(${slaResult.hoursOverdue}h overdue, requeued)`,
         );
       } catch (err) {
-        console.error(
+        functions.logger.error(
           `Error processing SLA violation for listing ${listingId}:`,
           err,
         );
       }
     }
 
-    console.log(
+    functions.logger.info(
       `checkSlaDeadlines complete: ${snapshot.size} checked, ` +
         `${warned} warned, ${violated} violated, ${skipped} skipped`,
     );
@@ -217,7 +217,7 @@ export const closeBidWindows = functions.pubsub
       .get();
 
     if (snapshot.empty) {
-      console.log("closeBidWindows: no expired bid windows found");
+      functions.logger.info("closeBidWindows: no expired bid windows found");
       return null;
     }
 
@@ -241,7 +241,7 @@ export const closeBidWindows = functions.pubsub
           });
 
           accepted++;
-          console.log(
+          functions.logger.info(
             `Bid window closed for listing ${listingId}: accepted bid ${result.bidId} ` +
               `(score: ${result.score})`,
           );
@@ -275,21 +275,21 @@ export const closeBidWindows = functions.pubsub
           }
 
           extended++;
-          console.log(
+          functions.logger.info(
             `Bid window extended for listing ${listingId}: no bids, ` +
               `new deadline ${newDeadline.toISOString()}`,
           );
         }
       } catch (err) {
         errors++;
-        console.error(
+        functions.logger.error(
           `Error closing bid window for listing ${listingId}:`,
           err,
         );
       }
     }
 
-    console.log(
+    functions.logger.info(
       `closeBidWindows complete: ${snapshot.size} processed, ` +
         `${accepted} accepted, ${extended} extended, ${errors} errors`,
     );
@@ -333,7 +333,7 @@ export const notifyMatchingWorkers = functions.firestore
     });
 
     if (!projectZip) {
-      console.warn(
+      functions.logger.warn(
         `notifyMatchingWorkers: listing ${listingId} has no zip code, skipping worker notifications`,
       );
       return;
@@ -344,7 +344,7 @@ export const notifyMatchingWorkers = functions.firestore
     try {
       matches = await findWorkersInRange(projectZip, serviceType, radiusMiles);
     } catch (err) {
-      console.error(
+      functions.logger.error(
         `notifyMatchingWorkers: error finding workers for listing ${listingId}:`,
         err,
       );
@@ -352,7 +352,7 @@ export const notifyMatchingWorkers = functions.firestore
     }
 
     if (!matches || matches.length === 0) {
-      console.log(
+      functions.logger.info(
         `notifyMatchingWorkers: no matching workers for listing ${listingId} ` +
           `(${serviceType}, zip ${projectZip}, ${radiusMiles}mi)`,
       );
@@ -385,14 +385,14 @@ export const notifyMatchingWorkers = functions.firestore
         await sendSMS(workerPhone, message);
         notified++;
       } catch (err) {
-        console.error(
+        functions.logger.error(
           `Failed to SMS worker ${match.workerId} for listing ${listingId}:`,
           err,
         );
       }
     }
 
-    console.log(
+    functions.logger.info(
       `notifyMatchingWorkers: listing ${listingId} — ` +
         `${matches.length} matches found, ${notified} notified (top 10)`,
     );
@@ -497,7 +497,7 @@ export const notifyBidResult = functions.firestore
         price: after.price,
       });
 
-      console.log(
+      functions.logger.info(
         `notifyBidResult: bid ${bidId} accepted, worker ${workerId} notified`,
       );
     } else if (after.status === "rejected") {
@@ -534,7 +534,7 @@ export const notifyBidResult = functions.firestore
         worker_id: workerId,
       });
 
-      console.log(
+      functions.logger.info(
         `notifyBidResult: bid ${bidId} rejected, worker ${workerId} notified`,
       );
     }
@@ -593,7 +593,7 @@ export const notifyTaskReady = functions.firestore
     // Get project data for location info
     const projectSnap = await db.collection("projects").doc(projectId).get();
     if (!projectSnap.exists) {
-      console.warn(
+      functions.logger.warn(
         `notifyTaskReady: project ${projectId} not found, skipping notifications`,
       );
       return;
@@ -607,7 +607,7 @@ export const notifyTaskReady = functions.firestore
       "";
 
     if (!projectZip) {
-      console.warn(
+      functions.logger.warn(
         `notifyTaskReady: project ${projectId} has no zip code, skipping worker notifications`,
       );
       return;
@@ -620,7 +620,7 @@ export const notifyTaskReady = functions.firestore
     try {
       matches = await findWorkersInRange(projectZip, serviceType, radiusMiles);
     } catch (err) {
-      console.error(
+      functions.logger.error(
         `notifyTaskReady: error finding workers for task ${taskId} ` +
           `on project ${projectId}:`,
         err,
@@ -629,7 +629,7 @@ export const notifyTaskReady = functions.firestore
     }
 
     if (!matches || matches.length === 0) {
-      console.log(
+      functions.logger.info(
         `notifyTaskReady: no matching workers for task ${taskType} ` +
           `(${serviceType}, zip ${projectZip}, ${radiusMiles}mi)`,
       );
@@ -662,7 +662,7 @@ export const notifyTaskReady = functions.firestore
         await sendSMS(workerPhone, message);
         notified++;
       } catch (err) {
-        console.error(
+        functions.logger.error(
           `Failed to SMS worker ${match.workerId} for task ${taskId} ` +
             `on project ${projectId}:`,
           err,
@@ -679,7 +679,7 @@ export const notifyTaskReady = functions.firestore
       workers_notified: notified,
     });
 
-    console.log(
+    functions.logger.info(
       `notifyTaskReady: task ${taskType} on project ${projectId} — ` +
         `${matches.length} matches found, ${notified} notified (top 10)`,
     );

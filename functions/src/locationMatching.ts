@@ -564,7 +564,7 @@ export async function getZipCoordinates(
     }
   } catch (err) {
     // Firestore read failed — fall through to inline table
-    console.warn(`Firestore zip lookup failed for ${zip}:`, err);
+    functions.logger.warn(`Firestore zip lookup failed for ${zip}:`, err);
   }
 
   // 2. Fall back to inline lookup table
@@ -632,7 +632,7 @@ export async function findWorkersInRange(
   // Resolve project coordinates
   const projectCoords = await getZipCoordinates(projectZip);
   if (!projectCoords) {
-    console.warn(`Cannot resolve coordinates for project zip: ${projectZip}`);
+    functions.logger.warn(`Cannot resolve coordinates for project zip: ${projectZip}`);
     return [];
   }
 

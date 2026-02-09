@@ -20,6 +20,7 @@
  * @module slaEngine
  */
 
+import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 
 const db = admin.firestore();
@@ -209,7 +210,7 @@ export async function recordViolation(data: ViolationInput): Promise<string> {
   const workerSnap = await workerRef.get();
 
   if (!workerSnap.exists) {
-    console.error(`Worker ${workerId} not found when recording SLA violation`);
+    functions.logger.error(`Worker ${workerId} not found when recording SLA violation`);
     return violationRef.id;
   }
 
@@ -257,7 +258,7 @@ export async function recordViolation(data: ViolationInput): Promise<string> {
     new_reliability_score: newScore,
   });
 
-  console.log(
+  functions.logger.info(
     `SLA violation recorded for worker ${workerId}: ${type} (strike #${newStrikeCount}, ` +
       `penalty: ${penalty.penalty}, reliability: ${newScore})`,
   );
@@ -430,7 +431,7 @@ export async function autoRequeue(
   const listingSnap = await listingRef.get();
 
   if (!listingSnap.exists) {
-    console.error(`Marketplace listing ${listingId} not found for requeue`);
+    functions.logger.error(`Marketplace listing ${listingId} not found for requeue`);
     return;
   }
 
@@ -467,7 +468,7 @@ export async function autoRequeue(
           blocked_customers: admin.firestore.FieldValue.arrayUnion(customerId),
         });
 
-        console.log(
+        functions.logger.info(
           `Blocked worker ${workerId} from customer ${customerId}'s future projects`,
         );
       }
@@ -489,7 +490,7 @@ export async function autoRequeue(
   }
 
   // Log the requeue (SMS notification handled by smsNotifications module)
-  console.log(
+  functions.logger.info(
     `Auto-requeued listing ${listingId}: removed worker ${workerId} ` +
       `(reason: ${reason}). New 12h bid window until ${shortenedDeadline.toISOString()}`,
   );

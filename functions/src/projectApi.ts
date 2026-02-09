@@ -776,7 +776,7 @@ export const projectApi = functions
   .runWith({ timeoutSeconds: 60, memory: "512MB" })
   .https.onRequest(async (req, res) => {
     if (handleOptions(req, res)) return;
-    setCors(res);
+    setCors(req, res);
 
     try {
       const route = parsePath(req.path);
@@ -891,7 +891,7 @@ export const projectApi = functions
         ],
       });
     } catch (error: any) {
-      console.error("Project API error:", error);
+      functions.logger.error("Project API error:", error);
       const status = errorStatus(error);
       res.status(status).json({
         error: error.message || "Internal server error",

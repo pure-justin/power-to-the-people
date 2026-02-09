@@ -53,14 +53,14 @@ export const referralStatusWebhook = functions.https.onRequest(
 
     // Verify webhook secret is configured
     if (!WEBHOOK_SECRET) {
-      console.error("webhook.secret not configured");
+      functions.logger.error("webhook.secret not configured");
       res.status(500).json({ error: "Webhook secret not configured" });
       return;
     }
 
     // Verify HMAC signature
     if (!verifyWebhookSignature(req.body, signature)) {
-      console.error("Invalid webhook signature");
+      functions.logger.error("Invalid webhook signature");
       res.status(401).json({ error: "Invalid signature" });
       return;
     }
@@ -122,7 +122,7 @@ export const referralStatusWebhook = functions.https.onRequest(
         earningsAdded: result.earningsAdded,
       });
     } catch (error: any) {
-      console.error("Webhook error:", error);
+      functions.logger.error("Webhook error:", error);
 
       // Log failed webhook
       await db.collection("webhookLogs").add({
@@ -166,7 +166,7 @@ export const referralBulkUpdateWebhook = functions.https.onRequest(
 
     // Verify webhook secret is configured
     if (!WEBHOOK_SECRET) {
-      console.error("webhook.secret not configured");
+      functions.logger.error("webhook.secret not configured");
       res.status(500).json({ error: "Webhook secret not configured" });
       return;
     }
@@ -262,7 +262,7 @@ export const referralStatsWebhook = functions.https.onRequest(
     const expectedKey = functions.config().webhook?.api_key;
 
     if (!expectedKey) {
-      console.error("webhook.api_key not configured");
+      functions.logger.error("webhook.api_key not configured");
       res.status(500).json({ error: "Webhook API key not configured" });
       return;
     }
@@ -316,7 +316,7 @@ export const referralStatsWebhook = functions.https.onRequest(
         generatedAt: new Date().toISOString(),
       });
     } catch (error: any) {
-      console.error("Error fetching stats:", error);
+      functions.logger.error("Error fetching stats:", error);
       res.status(500).json({ error: error.message });
     }
   },

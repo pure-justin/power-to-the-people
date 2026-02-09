@@ -247,7 +247,7 @@ export const createLead = functions
       // Save to Firestore
       await leadRef.set(newLead);
 
-      console.log(`Created lead ${leadRef.id} for ${data.customerName}`);
+      functions.logger.info(`Created lead ${leadRef.id} for ${data.customerName}`);
 
       return {
         success: true,
@@ -255,7 +255,7 @@ export const createLead = functions
         lead: newLead,
       };
     } catch (error: any) {
-      console.error("Create lead error:", error);
+      functions.logger.error("Create lead error:", error);
       throw new functions.https.HttpsError(
         "internal",
         error.message || "Failed to create lead",
@@ -358,14 +358,14 @@ export const updateLead = functions
 
         await leadRef.update(updateData);
 
-        console.log(`Updated lead ${leadId} by user ${context.auth.uid}`);
+        functions.logger.info(`Updated lead ${leadId} by user ${context.auth.uid}`);
 
         return {
           success: true,
           leadId,
         };
       } catch (error: any) {
-        console.error("Update lead error:", error);
+        functions.logger.error("Update lead error:", error);
         throw new functions.https.HttpsError(
           "internal",
           error.message || "Failed to update lead",
@@ -438,14 +438,14 @@ export const addLeadNote = functions
           updatedAt: admin.firestore.Timestamp.now(),
         });
 
-        console.log(`Added note to lead ${leadId} by ${context.auth.uid}`);
+        functions.logger.info(`Added note to lead ${leadId} by ${context.auth.uid}`);
 
         return {
           success: true,
           note,
         };
       } catch (error: any) {
-        console.error("Add note error:", error);
+        functions.logger.error("Add note error:", error);
         throw new functions.https.HttpsError(
           "internal",
           error.message || "Failed to add note",
@@ -508,7 +508,7 @@ export const assignLead = functions
           updatedAt: admin.firestore.Timestamp.now(),
         });
 
-        console.log(
+        functions.logger.info(
           `Assigned lead ${leadId} to ${assignToUserId} by ${context.auth.uid}`,
         );
 
@@ -518,7 +518,7 @@ export const assignLead = functions
           assignedTo: assignToUserId,
         };
       } catch (error: any) {
-        console.error("Assign lead error:", error);
+        functions.logger.error("Assign lead error:", error);
         throw new functions.https.HttpsError(
           "internal",
           error.message || "Failed to assign lead",
@@ -578,7 +578,7 @@ export const recalculateLeadScores = functions
         await batch.commit();
       }
 
-      console.log(`Recalculated scores for ${updated} leads`);
+      functions.logger.info(`Recalculated scores for ${updated} leads`);
 
       return {
         success: true,
@@ -586,7 +586,7 @@ export const recalculateLeadScores = functions
         updatedLeads: updated,
       };
     } catch (error: any) {
-      console.error("Recalculate scores error:", error);
+      functions.logger.error("Recalculate scores error:", error);
       throw new functions.https.HttpsError(
         "internal",
         error.message || "Failed to recalculate scores",
@@ -699,7 +699,7 @@ export const leadWebhook = functions
 
       await leadRef.set(newLead);
 
-      console.log(
+      functions.logger.info(
         `Webhook created lead ${leadRef.id} for ${data.customerName} from IP ${req.ip}`,
       );
 
@@ -709,7 +709,7 @@ export const leadWebhook = functions
         message: "Lead created successfully",
       });
     } catch (error: any) {
-      console.error("Lead webhook error:", error);
+      functions.logger.error("Lead webhook error:", error);
       res.status(500).json({
         success: false,
         error: error.message || "Failed to create lead",

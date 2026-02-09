@@ -201,13 +201,13 @@ export const uploadInstallPhoto = functions
         updatedAt: admin.firestore.FieldValue.serverTimestamp(),
       });
 
-      console.log(
+      functions.logger.info(
         `Photo uploaded: project=${projectId}, phase=${phase}, photoId=${photoId}`,
       );
 
       return { success: true, photoId, recordId };
     } catch (error: any) {
-      console.error("Upload install photo error:", error);
+      functions.logger.error("Upload install photo error:", error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -264,7 +264,7 @@ export const getPhotosByProject = functions
 
       return { success: true, phases };
     } catch (error: any) {
-      console.error("Get photos by project error:", error);
+      functions.logger.error("Get photos by project error:", error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -366,7 +366,7 @@ export const getPhaseStatus = functions
         photoCount: photos.length,
       };
     } catch (error: any) {
-      console.error("Get phase status error:", error);
+      functions.logger.error("Get phase status error:", error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -462,13 +462,13 @@ export const requestPhotoReview = functions
         updatedAt: admin.firestore.FieldValue.serverTimestamp(),
       });
 
-      console.log(
+      functions.logger.info(
         `Photo review requested: project=${projectId}, photo=${photoId}, task=${taskRef.id}`,
       );
 
       return { success: true, taskId: taskRef.id };
     } catch (error: any) {
-      console.error("Request photo review error:", error);
+      functions.logger.error("Request photo review error:", error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -565,7 +565,7 @@ export const signOffPhase = functions
 
       await recordRef.update(updateData);
 
-      console.log(
+      functions.logger.info(
         `Phase signed off: project=${projectId}, phase=${phase}, role=${role}`,
       );
 
@@ -574,7 +574,7 @@ export const signOffPhase = functions
         signOff: { ...updatedSignOff, [`${role}_signed`]: true },
       };
     } catch (error: any) {
-      console.error("Sign off phase error:", error);
+      functions.logger.error("Sign off phase error:", error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -700,7 +700,7 @@ export const getInstallProgress = functions
         },
       };
     } catch (error: any) {
-      console.error("Get install progress error:", error);
+      functions.logger.error("Get install progress error:", error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",

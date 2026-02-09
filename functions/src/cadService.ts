@@ -150,7 +150,7 @@ export const generateDesign = functions
         updatedAt: admin.firestore.FieldValue.serverTimestamp(),
       });
 
-      console.log(
+      functions.logger.info(
         `Design created: ${designRef.id} for project ${projectId}, AI task: ${aiTaskRef.id}`,
       );
 
@@ -160,7 +160,7 @@ export const generateDesign = functions
         aiTaskId: aiTaskRef.id,
       };
     } catch (error: any) {
-      console.error("Generate design error:", error);
+      functions.logger.error("Generate design error:", error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -344,13 +344,13 @@ export const updateDesign = functions
 
       await designRef.update(updateData);
 
-      console.log(
+      functions.logger.info(
         `Design ${designId} updated by ${context.auth.uid}: ${Object.keys(changes).join(", ")}`,
       );
 
       return { success: true, designId };
     } catch (error: any) {
-      console.error(`Update design error (${designId}):`, error);
+      functions.logger.error(`Update design error (${designId}):`, error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",
@@ -419,11 +419,11 @@ export const approveDesign = functions
         updated_at: admin.firestore.FieldValue.serverTimestamp(),
       });
 
-      console.log(`Design ${designId} approved by ${context.auth.uid}`);
+      functions.logger.info(`Design ${designId} approved by ${context.auth.uid}`);
 
       return { success: true, designId };
     } catch (error: any) {
-      console.error(`Approve design error (${designId}):`, error);
+      functions.logger.error(`Approve design error (${designId}):`, error);
       if (error instanceof functions.https.HttpsError) throw error;
       throw new functions.https.HttpsError(
         "internal",

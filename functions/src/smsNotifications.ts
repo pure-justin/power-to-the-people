@@ -79,7 +79,7 @@ const SMS_TEMPLATES = {
  */
 export async function sendSMS(to: string, message: string): Promise<boolean> {
   if (!twilioClient) {
-    console.error(
+    functions.logger.error(
       "Twilio client not initialized. Check environment variables.",
     );
     return false;
@@ -97,7 +97,7 @@ export async function sendSMS(to: string, message: string): Promise<boolean> {
       to: formattedPhone,
     });
 
-    console.log(`SMS sent successfully to ${to}: ${result.sid}`);
+    functions.logger.info(`SMS sent successfully to ${to}: ${result.sid}`);
 
     // Log to Firestore for tracking
     await admin.firestore().collection("smsLog").add({
@@ -110,7 +110,7 @@ export async function sendSMS(to: string, message: string): Promise<boolean> {
 
     return true;
   } catch (error) {
-    console.error("Error sending SMS:", error);
+    functions.logger.error("Error sending SMS:", error);
 
     // Log error to Firestore
     await admin
@@ -477,7 +477,7 @@ export const sendPaymentReminders = functions.pubsub
 
     await Promise.all(reminderPromises);
 
-    console.log(`Sent ${reminderPromises.length} payment reminders`);
+    functions.logger.info(`Sent ${reminderPromises.length} payment reminders`);
   });
 
 /**

@@ -171,7 +171,7 @@ export const refreshSolarData = functions
     };
     await logRef.set(logEntry);
 
-    console.log("Starting weekly solar data refresh...");
+    functions.logger.info("Starting weekly solar data refresh...");
 
     // Priority states to refresh (expand as data grows)
     const states = ["TX", "CA", "FL", "NC", "AZ"];
@@ -180,7 +180,7 @@ export const refreshSolarData = functions
     const allErrors: string[] = [];
 
     for (const state of states) {
-      console.log(`Refreshing utility rates for ${state}...`);
+      functions.logger.info(`Refreshing utility rates for ${state}...`);
       const result = await refreshUtilityRatesFromOpenEI(state, db);
       totalProcessed += result.processed;
       totalUpdated += result.updated;
@@ -198,7 +198,7 @@ export const refreshSolarData = functions
       duration_ms: duration,
     });
 
-    console.log(
+    functions.logger.info(
       `Solar data refresh complete. Processed: ${totalProcessed}, Updated: ${totalUpdated}, Errors: ${allErrors.length}, Duration: ${duration}ms`,
     );
   });
