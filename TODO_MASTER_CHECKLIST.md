@@ -65,21 +65,21 @@
 - [ ] **AdminWebhooks** — verify webhook CRUD and test delivery
 
 ### 2.3 Portal (Customer) UX
-- [ ] **PortalHome** — verify customer dashboard shows their project status
+- [x] **PortalHome** — ✅ DONE (real Firestore project data, proper empty states)
 - [ ] **PortalProject** — test project detail view with real project
 - [x] **PortalInvoices** — ✅ DONE (DataTable/FilterBar upgrade)
 - [x] **PortalReferrals** — ✅ DONE (DataTable/FilterBar upgrade)
-- [ ] **PortalUsage** — verify energy usage display (SMT integration)
+- [x] **PortalUsage** — ✅ DONE (real SMT link status from Firestore, proper waiting states)
 - [ ] **PortalSettings** — verify profile update works
-- [ ] **PortalSavings** — verify savings calculator with real rates
-- [ ] **PortalFinancing** — verify financing options display
+- [x] **PortalSavings** — ✅ DONE (real billing data from Firestore, proper empty states)
+- [x] **PortalFinancing** — ✅ DONE (real project data + reasonable calculator defaults)
 - [ ] **PortalSurvey** — test full survey submission flow (multi-step)
 - [ ] **PortalSchedule** — verify scheduling slot selection
 - [ ] **PortalTasks** — verify task queue for customer actions
 - [x] **PortalCredits** — ✅ DONE (DataTable/FilterBar upgrade)
 
 ### 2.4 Dashboard (Installer) UX
-- [ ] **DashboardHome** — verify installer metrics are real
+- [x] **DashboardHome** — ✅ DONE (real Firestore leads/subscriptions/usage data)
 - [x] **DashboardLeads** — ✅ DONE (DataTable/FilterBar upgrade)
 - [ ] **DashboardProjects** — test project list and detail view
 - [ ] **DashboardProjectDetail** — verify full project detail with pipeline
@@ -87,14 +87,14 @@
 - [ ] **DashboardEstimates** — test solar estimate generation
 - [x] **DashboardInvoices** — ✅ DONE (DataTable/FilterBar upgrade)
 - [x] **DashboardApiKeys** — ✅ DONE (DataTable/FilterBar upgrade)
-- [ ] **DashboardBilling** — verify billing/subscription display
+- [x] **DashboardBilling** — ✅ DONE (real Stripe subscription data + usage gauges)
 - [x] **DashboardReferrals** — ✅ DONE (DataTable/FilterBar upgrade)
 - [x] **DashboardEquipment** — ✅ DONE (DataTable/FilterBar upgrade)
 - [ ] **DashboardTasks** — verify AI task queue
 - [ ] **DashboardSurvey** — test professional survey tool
 - [ ] **DashboardPermits** — verify permit tracking
 - [ ] **DashboardDesigns** — verify CAD design display
-- [ ] **DashboardSchedule** — test availability management
+- [x] **DashboardSchedule** — ✅ DONE (real Cloud Function calls for availability/scheduling)
 - [ ] **DashboardInstall** — test install photo QC flow
 - [ ] **DashboardFunding** — verify funding package management
 - [x] **DashboardCredits** — ✅ DONE (DataTable/FilterBar upgrade)
@@ -103,12 +103,12 @@
 - [ ] **DashboardWorkerProfile** — verify worker profile display
 
 ### 2.5 Sales Section UX
-- [ ] **SalesHome** — verify sales dashboard metrics
+- [x] **SalesHome** — ✅ DONE (real Firestore leads data, computed metrics)
 - [x] **SalesLeads** — ✅ DONE (DataTable/FilterBar upgrade)
-- [ ] **SalesAssignments** — verify assignment management
+- [x] **SalesAssignments** — ✅ DONE (real leads data, urgency calculations, Firestore writes)
 - [x] **SalesPerformance** — ✅ DONE (DataTable/FilterBar upgrade)
-- [ ] **SalesProposals** — test proposal generation
-- [ ] **SalesTerritory** — implement real map (replace placeholder)
+- [x] **SalesProposals** — ✅ DONE (real Firestore data, proposal builder with 2026 ITC rules)
+- [x] **SalesTerritory** — ✅ DONE (real Google Maps with status-colored lead markers)
 
 ### 2.6 Public Pages UX
 - [ ] **Home** — verify hero, features, CTA all look professional
