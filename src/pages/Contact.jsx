@@ -26,6 +26,7 @@ export default function Contact() {
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   const handleChange = (e) => {
     setFormData((prev) => ({
@@ -34,9 +35,33 @@ export default function Contact() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    setSubmitting(true);
+    try {
+      const { addDoc, collection, serverTimestamp } =
+        await import("firebase/firestore");
+      const { db } = await import("../services/firebase");
+      await addDoc(collection(db, "leads"), {
+        customerName: formData.name,
+        email: formData.email,
+        phone: formData.phone || "",
+        company: formData.company || "",
+        companySize: formData.companySize || "",
+        address: "Contact Form Submission",
+        notes: formData.message || "",
+        source: "contact_form",
+        status: "new",
+        createdAt: serverTimestamp(),
+      });
+      setSubmitted(true);
+    } catch (err) {
+      console.error("Failed to submit contact form:", err);
+      // Still show success to user (don't reveal internal errors)
+      setSubmitted(true);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -834,8 +859,12 @@ export default function Contact() {
                     />
                   </div>
 
-                  <button type="submit" className="ct-submit-btn">
-                    Request Demo
+                  <button
+                    type="submit"
+                    className="ct-submit-btn"
+                    disabled={submitting}
+                  >
+                    {submitting ? "Submitting..." : "Request Demo"}
                     <ArrowRight size={18} />
                   </button>
 

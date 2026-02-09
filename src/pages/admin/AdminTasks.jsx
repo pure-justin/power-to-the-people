@@ -171,6 +171,26 @@ function MetricsBar({ stats, loading }) {
 }
 
 /**
+ * Sortable column header -- extracted outside TaskTable to avoid
+ * recreating the component on every render.
+ */
+function SortHeader({ field, sortField, onSort, children }) {
+  return (
+    <th
+      className="cursor-pointer select-none px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hover:text-gray-700"
+      onClick={() => onSort(field)}
+    >
+      <div className="flex items-center gap-1">
+        {children}
+        <ArrowUpDown
+          className={`h-3 w-3 ${sortField === field ? "text-gray-900" : "text-gray-300"}`}
+        />
+      </div>
+    </th>
+  );
+}
+
+/**
  * Sortable task table showing all tasks across all users
  */
 function TaskTable({ tasks, loading, onReassign, onRetry, onViewDetail }) {
@@ -199,20 +219,6 @@ function TaskTable({ tasks, loading, onReassign, onRetry, onViewDetail }) {
     return 0;
   });
 
-  const SortHeader = ({ field, children }) => (
-    <th
-      className="cursor-pointer select-none px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hover:text-gray-700"
-      onClick={() => handleSort(field)}
-    >
-      <div className="flex items-center gap-1">
-        {children}
-        <ArrowUpDown
-          className={`h-3 w-3 ${sortField === field ? "text-gray-900" : "text-gray-300"}`}
-        />
-      </div>
-    </th>
-  );
-
   if (loading) {
     return (
       <div className="rounded-xl border border-gray-200 bg-white animate-pulse">
@@ -229,13 +235,51 @@ function TaskTable({ tasks, loading, onReassign, onRetry, onViewDetail }) {
       <table className="w-full min-w-[800px]">
         <thead>
           <tr className="border-b border-gray-100 bg-gray-50">
-            <SortHeader field="type">Type</SortHeader>
-            <SortHeader field="projectName">Project</SortHeader>
-            <SortHeader field="status">Status</SortHeader>
-            <SortHeader field="priority">Priority</SortHeader>
-            <SortHeader field="assignedToName">Assigned</SortHeader>
-            <SortHeader field="createdAt">Created</SortHeader>
-            <SortHeader field="updatedAt">Updated</SortHeader>
+            <SortHeader field="type" sortField={sortField} onSort={handleSort}>
+              Type
+            </SortHeader>
+            <SortHeader
+              field="projectName"
+              sortField={sortField}
+              onSort={handleSort}
+            >
+              Project
+            </SortHeader>
+            <SortHeader
+              field="status"
+              sortField={sortField}
+              onSort={handleSort}
+            >
+              Status
+            </SortHeader>
+            <SortHeader
+              field="priority"
+              sortField={sortField}
+              onSort={handleSort}
+            >
+              Priority
+            </SortHeader>
+            <SortHeader
+              field="assignedToName"
+              sortField={sortField}
+              onSort={handleSort}
+            >
+              Assigned
+            </SortHeader>
+            <SortHeader
+              field="createdAt"
+              sortField={sortField}
+              onSort={handleSort}
+            >
+              Created
+            </SortHeader>
+            <SortHeader
+              field="updatedAt"
+              sortField={sortField}
+              onSort={handleSort}
+            >
+              Updated
+            </SortHeader>
             <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Actions
             </th>

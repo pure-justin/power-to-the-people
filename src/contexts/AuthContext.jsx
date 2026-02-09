@@ -7,6 +7,9 @@ import {
   createAccount,
   logout as firebaseLogout,
   resetPassword,
+  db,
+  doc,
+  setDoc,
 } from "../services/firebase";
 
 const AuthContext = createContext(null);
@@ -79,6 +82,17 @@ export function AuthProvider({ children }) {
     selectedRole = "customer",
   ) => {
     const firebaseUser = await createAccount(email, password, displayName);
+    // Save role to Firestore users collection
+    await setDoc(
+      doc(db, "users", firebaseUser.uid),
+      {
+        email,
+        displayName,
+        role: selectedRole,
+        createdAt: new Date().toISOString(),
+      },
+      { merge: true },
+    );
     return firebaseUser;
   };
 

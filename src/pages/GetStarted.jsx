@@ -266,14 +266,43 @@ export default function GetStarted() {
                 </div>
               </div>
             </div>
-            <Link
-              to="/"
-              className="gs-btn gs-btn-primary"
-              style={{ marginTop: 32, display: "inline-flex" }}
-            >
-              Back to Home
-              <ArrowRight size={18} />
-            </Link>
+            <div style={{ marginTop: 32 }} className="gs-success-actions">
+              <a
+                href={`/signup?email=${encodeURIComponent(email)}&name=${encodeURIComponent(fullName)}`}
+                className="gs-btn gs-btn-primary"
+                style={{
+                  display: "inline-flex",
+                  width: "100%",
+                  justifyContent: "center",
+                }}
+              >
+                Create Your Account to Track Progress
+                <ArrowRight size={18} />
+              </a>
+              <p
+                style={{
+                  fontSize: "0.85rem",
+                  color: "rgba(255,255,255,0.4)",
+                  textAlign: "center",
+                  marginTop: 8,
+                }}
+              >
+                Track your project status, upload documents, and schedule
+                appointments
+              </p>
+              <Link
+                to="/"
+                className="gs-btn gs-btn-secondary"
+                style={{
+                  display: "inline-flex",
+                  width: "100%",
+                  justifyContent: "center",
+                  marginTop: 12,
+                }}
+              >
+                Back to Home
+              </Link>
+            </div>
           </div>
         </div>
       </div>

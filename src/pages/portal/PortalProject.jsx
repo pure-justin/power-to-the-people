@@ -1,7 +1,16 @@
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import { db, doc, getDoc } from "../../services/firebase";
+import {
+  db,
+  doc,
+  getDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+  limit,
+} from "../../services/firebase";
 import {
   CheckCircle2,
   Circle,
@@ -72,9 +81,37 @@ const MILESTONES = [
 export default function PortalProject() {
   const { id } = useParams();
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // If no project ID in URL, find the user's project
+  useEffect(() => {
+    if (!id && user) {
+      const fetchUserProject = async () => {
+        try {
+          const q = query(
+            collection(db, "projects"),
+            where("userId", "==", user.uid),
+            limit(1),
+          );
+          const snap = await getDocs(q);
+          if (!snap.empty) {
+            navigate(`/portal/project/${snap.docs[0].id}`, { replace: true });
+          } else {
+            setLoading(false);
+            setProject(null);
+          }
+        } catch (err) {
+          console.error("Failed to find user project:", err);
+          setLoading(false);
+          setProject(null);
+        }
+      };
+      fetchUserProject();
+    }
+  }, [id, user, navigate]);
 
   useEffect(() => {
     if (!id) return;
@@ -128,6 +165,26 @@ export default function PortalProject() {
         >
           <ArrowLeft className="h-4 w-4" />
           Back to Portal
+        </Link>
+      </div>
+    );
+  }
+
+  if (!loading && !project) {
+    return (
+      <div className="text-center py-16">
+        <Sun className="mx-auto h-12 w-12 text-gray-300 mb-4" />
+        <h2 className="text-xl font-semibold text-gray-900 mb-2">
+          No Project Yet
+        </h2>
+        <p className="text-gray-500 mb-6">
+          Start your solar journey to see your project details here.
+        </p>
+        <Link
+          to="/get-started"
+          className="inline-flex items-center px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700"
+        >
+          Get Started
         </Link>
       </div>
     );

@@ -294,3 +294,15 @@ export {
   notifyBidResult,
   notifyTaskReady,
 } from "./marketplaceAutomation";
+
+// Export Financial Engine functions (system sizing, production, financial analysis)
+export {
+  calculateSolarSystemSize,
+  estimateSolarProduction,
+  runFinancialAnalysis,
+  calculateSolarRECValue,
+  calculateSolarTaxBenefits,
+} from "./financialEngine";
+
+// Export Proposal Generator functions (customer-facing proposal generation)
+export { generateSolarProposal, getSolarProposal } from "./proposalGenerator";

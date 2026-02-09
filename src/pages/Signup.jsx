@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { Sun } from "lucide-react";
 
@@ -22,9 +22,10 @@ const ROLES = [
 ];
 
 export default function Signup() {
+  const [searchParams] = useSearchParams();
   const [form, setForm] = useState({
-    name: "",
-    email: "",
+    name: searchParams.get("name") || "",
+    email: searchParams.get("email") || "",
     password: "",
     confirmPassword: "",
     role: "customer",
