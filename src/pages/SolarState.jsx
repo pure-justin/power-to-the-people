@@ -20,6 +20,8 @@ import {
   Bolt,
   ArrowLeft,
 } from "lucide-react";
+import PublicNav from "../components/PublicNav";
+import PublicFooter from "../components/PublicFooter";
 import { db } from "../services/firebase";
 import {
   collection,
@@ -257,16 +259,7 @@ export default function SolarState() {
     return (
       <div className="ss-page">
         <style>{getStyles()}</style>
-        <header className="ss-header">
-          <div className="container">
-            <Link to="/" className="ss-logo">
-              <div className="ss-logo-icon">
-                <Sun size={20} />
-              </div>
-              SolarOS
-            </Link>
-          </div>
-        </header>
+        <PublicNav />
         <div className="ss-error-container">
           <h1>State Not Found</h1>
           <p>The state "{stateSlug}" could not be found.</p>
@@ -283,34 +276,7 @@ export default function SolarState() {
     <div className="ss-page">
       <style>{getStyles()}</style>
 
-      {/* HEADER */}
-      <header className="ss-header">
-        <div className="container">
-          <Link to="/" className="ss-logo">
-            <div className="ss-logo-icon">
-              <Sun size={20} />
-            </div>
-            SolarOS
-          </Link>
-          <nav className="ss-nav">
-            <Link to="/solar" className="ss-nav-link">
-              All States
-            </Link>
-            <Link to="/features" className="ss-nav-link">
-              Features
-            </Link>
-            <Link to="/pricing" className="ss-nav-link">
-              Pricing
-            </Link>
-            <Link to="/login" className="ss-nav-link">
-              Sign In
-            </Link>
-            <Link to="/get-started" className="ss-nav-cta">
-              Get Started <ArrowRight size={16} />
-            </Link>
-          </nav>
-        </div>
-      </header>
+      <PublicNav />
 
       {/* HERO */}
       <section className="ss-hero">
@@ -878,20 +844,7 @@ export default function SolarState() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="ss-footer">
-        <div className="container">
-          <div className="ss-footer-links">
-            <Link to="/">Home</Link>
-            <Link to="/solar">Solar by State</Link>
-            <Link to="/features">Features</Link>
-            <Link to="/pricing">Pricing</Link>
-          </div>
-          <p className="ss-footer-copy">
-            &copy; 2026 SolarOS. All rights reserved.
-          </p>
-        </div>
-      </footer>
+      <PublicFooter />
     </div>
   );
 }
@@ -906,90 +859,7 @@ function getStyles() {
       font-family: 'Inter', -apple-system, sans-serif;
     }
 
-    /* HEADER */
-    .ss-header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      padding: 16px 0;
-      background: rgba(10, 10, 15, 0.8);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .ss-header .container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 40px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .ss-logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-weight: 800;
-      font-size: 1.25rem;
-      color: #fff;
-      text-decoration: none;
-      letter-spacing: -0.02em;
-    }
-
-    .ss-logo-icon {
-      width: 38px;
-      height: 38px;
-      background: linear-gradient(135deg, #10b981, #059669);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 0 24px rgba(16, 185, 129, 0.4);
-    }
-
-    .ss-nav {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .ss-nav-link {
-      color: rgba(255,255,255,0.6);
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 0.9rem;
-      transition: all 0.3s;
-      padding: 8px 16px;
-      border-radius: 8px;
-    }
-
-    .ss-nav-link:hover {
-      color: #fff;
-      background: rgba(255,255,255,0.05);
-    }
-
-    .ss-nav-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 10px 20px;
-      background: linear-gradient(135deg, #10b981, #059669);
-      color: white;
-      font-weight: 600;
-      font-size: 0.9rem;
-      border-radius: 10px;
-      text-decoration: none;
-      transition: all 0.3s;
-      box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
-    }
-
-    .ss-nav-cta:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 0 30px rgba(16, 185, 129, 0.5);
-    }
+    /* Header handled by PublicNav component */
 
     /* HERO */
     .ss-hero {
@@ -1621,42 +1491,7 @@ function getStyles() {
       flex-wrap: wrap;
     }
 
-    /* FOOTER */
-    .ss-footer {
-      padding: 40px 0;
-      background: #050508;
-      border-top: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .ss-footer .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 40px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .ss-footer-links {
-      display: flex;
-      gap: 32px;
-    }
-
-    .ss-footer-links a {
-      color: rgba(255,255,255,0.4);
-      text-decoration: none;
-      font-size: 0.85rem;
-      transition: color 0.2s;
-    }
-
-    .ss-footer-links a:hover {
-      color: #10b981;
-    }
-
-    .ss-footer-copy {
-      color: rgba(255,255,255,0.25);
-      font-size: 0.8rem;
-    }
+    /* Footer handled by PublicFooter component */
 
     /* SKELETON */
     .ss-skeleton-card {
@@ -1733,10 +1568,6 @@ function getStyles() {
     }
 
     @media (max-width: 768px) {
-      .ss-nav-link:not(.ss-nav-cta) {
-        display: none;
-      }
-
       .ss-hero {
         padding: 120px 20px 60px;
       }
@@ -1780,12 +1611,6 @@ function getStyles() {
 
       .ss-nm-grid {
         grid-template-columns: 1fr;
-      }
-
-      .ss-footer .container {
-        flex-direction: column;
-        gap: 16px;
-        text-align: center;
       }
 
       .ss-month-grid {

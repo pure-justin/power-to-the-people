@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import {
   db,
@@ -13,10 +14,10 @@ import {
   TrendingDown,
   PiggyBank,
   Calendar,
-  ArrowDown,
   ArrowRight,
   Zap,
   Sun,
+  FolderKanban,
 } from "lucide-react";
 
 export default function PortalSavings() {
@@ -46,22 +47,6 @@ export default function PortalSavings() {
     load();
   }, [user]);
 
-  // Derive savings data from project or use defaults
-  const systemCost = project?.systemCost || 0;
-  const monthlyBillBefore = project?.monthlyBillBefore || 185;
-  const monthlyBillAfter = project?.monthlyBillAfter || 42;
-  const monthlySavings = monthlyBillBefore - monthlyBillAfter;
-  const annualSavings = monthlySavings * 12;
-  const paybackYears =
-    systemCost > 0 && annualSavings > 0
-      ? Math.round((systemCost / annualSavings) * 10) / 10
-      : 0;
-  const lifetimeSavings = annualSavings * 25;
-
-  // Payback gauge percentage (max 25 years)
-  const paybackPct =
-    paybackYears > 0 ? Math.min((paybackYears / 25) * 100, 100) : 0;
-
   if (loading) {
     return (
       <div className="animate-pulse space-y-6">
@@ -74,6 +59,110 @@ export default function PortalSavings() {
       </div>
     );
   }
+
+  // Show empty state if no project or no billing data
+  const hasBillingData =
+    project && (project.monthlyBillBefore > 0 || project.monthlyBillAfter > 0);
+
+  if (!hasBillingData) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Savings Tracker</h1>
+          <p className="mt-1 text-sm text-gray-500">
+            See how solar is saving you money
+          </p>
+        </div>
+
+        {/* Empty State */}
+        <div className="rounded-xl border border-gray-200 bg-white p-8 text-center">
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-50">
+            <PiggyBank className="h-8 w-8 text-emerald-600" />
+          </div>
+          <h2 className="mt-5 text-xl font-bold text-gray-900">
+            Savings Data Coming Soon
+          </h2>
+          <p className="mx-auto mt-2 max-w-md text-sm text-gray-500">
+            {project
+              ? "Your savings will be calculated once your system design and billing data are finalized. Check back after your installer completes the system design."
+              : "Start a solar project to see your estimated savings. Once your system is designed and your current energy costs are entered, we'll calculate your projected savings."}
+          </p>
+          <div className="mt-6 flex items-center justify-center gap-3">
+            <Link
+              to={project ? "/portal/project" : "/qualify"}
+              className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-emerald-700"
+            >
+              <FolderKanban className="h-4 w-4" />
+              {project ? "View Project" : "Check Eligibility"}
+            </Link>
+          </div>
+        </div>
+
+        {/* What gets tracked */}
+        <div className="rounded-xl border border-gray-200 bg-white p-6">
+          <h3 className="mb-4 text-base font-semibold text-gray-900">
+            What we'll track for you
+          </h3>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="flex items-start gap-3 rounded-lg bg-gray-50 p-4">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-red-50">
+                <Zap className="h-5 w-5 text-red-500" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-900">
+                  Before vs. After
+                </p>
+                <p className="mt-0.5 text-xs text-gray-500">
+                  Monthly bill comparison before and after solar installation.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3 rounded-lg bg-gray-50 p-4">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-emerald-50">
+                <DollarSign className="h-5 w-5 text-emerald-600" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-900">
+                  Lifetime Savings
+                </p>
+                <p className="mt-0.5 text-xs text-gray-500">
+                  Projected savings over 25 years of system operation.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3 rounded-lg bg-gray-50 p-4">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-purple-50">
+                <Calendar className="h-5 w-5 text-purple-600" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-900">
+                  Payback Period
+                </p>
+                <p className="mt-0.5 text-xs text-gray-500">
+                  How quickly your system pays for itself through energy
+                  savings.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Real data display
+  const systemCost = project.systemCost || 0;
+  const monthlyBillBefore = project.monthlyBillBefore;
+  const monthlyBillAfter = project.monthlyBillAfter;
+  const monthlySavings = monthlyBillBefore - monthlyBillAfter;
+  const annualSavings = monthlySavings * 12;
+  const paybackYears =
+    systemCost > 0 && annualSavings > 0
+      ? Math.round((systemCost / annualSavings) * 10) / 10
+      : 0;
+  const lifetimeSavings = annualSavings * 25;
+  const paybackPct =
+    paybackYears > 0 ? Math.min((paybackYears / 25) * 100, 100) : 0;
 
   return (
     <div className="space-y-6">
