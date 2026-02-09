@@ -275,25 +275,82 @@ export default function AdminOverview() {
 
     // Marketplace listings count for KPI
     let activeListings = 0;
+    let allListings = [];
     try {
       const listRef = collection(db, "marketplace_listings");
-      const openSnap = await getDocs(
-        query(listRef, where("status", "==", "open")),
-      );
-      activeListings = openSnap.size;
+      const listSnap = await getDocs(listRef);
+      allListings = listSnap.docs.map((d) => ({ id: d.id, ...d.data() }));
+      activeListings = allListings.filter((l) => l.status === "open").length;
     } catch (e) {
       /* collection may not exist */
     }
 
+    // Listings trend: compare this month vs last month new listings
+    const lastMonthListings = allListings.filter((l) => {
+      const ts = l.created_at || l.createdAt;
+      if (!ts) return false;
+      const d = ts.toDate ? ts.toDate() : new Date(ts);
+      return d >= lastMonthStart && d <= lastMonthEnd;
+    }).length;
+    const thisMonthListings = allListings.filter((l) =>
+      isThisMonth(l.created_at || l.createdAt),
+    ).length;
+    const listingsTrend =
+      lastMonthListings > 0
+        ? Math.round(
+            ((thisMonthListings - lastMonthListings) / lastMonthListings) * 100,
+          )
+        : thisMonthListings > 0
+          ? 100
+          : 0;
+
     // Workers count
     let workersCount = 0;
+    let allWorkers = [];
     try {
       const wRef = collection(db, "workers");
       const wSnap = await getDocs(wRef);
-      workersCount = wSnap.size;
+      allWorkers = wSnap.docs.map((d) => ({ id: d.id, ...d.data() }));
+      workersCount = allWorkers.length;
     } catch (e) {
       /* collection may not exist */
     }
+
+    // Workers trend: compare this month vs last month new registrations
+    const lastMonthWorkers = allWorkers.filter((w) => {
+      const ts = w.createdAt || w.created_at;
+      if (!ts) return false;
+      const d = ts.toDate ? ts.toDate() : new Date(ts);
+      return d >= lastMonthStart && d <= lastMonthEnd;
+    }).length;
+    const thisMonthWorkers = allWorkers.filter((w) =>
+      isThisMonth(w.createdAt || w.created_at),
+    ).length;
+    const workersTrend =
+      lastMonthWorkers > 0
+        ? Math.round(
+            ((thisMonthWorkers - lastMonthWorkers) / lastMonthWorkers) * 100,
+          )
+        : thisMonthWorkers > 0
+          ? 100
+          : 0;
+
+    // Revenue trend: compare this month vs last month
+    const lastMonthRevenue = projects
+      .filter((p) => {
+        if (!p.contractAmount && !p.systemCost) return false;
+        const ts = p.sold_at || p.createdAt;
+        if (!ts) return false;
+        const d = ts.toDate ? ts.toDate() : new Date(ts);
+        return d >= lastMonthStart && d <= lastMonthEnd;
+      })
+      .reduce((sum, p) => sum + (p.contractAmount || p.systemCost || 0), 0);
+    const revenueTrend =
+      lastMonthRevenue > 0
+        ? Math.round(((mtdRevenue - lastMonthRevenue) / lastMonthRevenue) * 100)
+        : mtdRevenue > 0
+          ? 100
+          : 0;
 
     setKpi({
       totalProjects: projects.length,
@@ -301,9 +358,9 @@ export default function AdminOverview() {
       workersRegistered: workersCount,
       revenueMtd: mtdRevenue,
       projectsTrend,
-      listingsTrend: 0,
-      workersTrend: 0,
-      revenueTrend: 0,
+      listingsTrend,
+      workersTrend,
+      revenueTrend,
     });
   };
 
