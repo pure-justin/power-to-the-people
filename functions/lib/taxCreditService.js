@@ -1544,10 +1544,16 @@ exports.getCreditTransactions = functions
 exports.getCreditMarketStats = functions
     .runWith({ timeoutSeconds: 30, memory: "512MB" })
     .https.onCall(async (_data, context) => {
+    var _a;
     if (!context.auth) {
         throw new functions.https.HttpsError("unauthenticated", "Must be authenticated");
     }
+    // Admin-only: verify caller has admin role
     const db = admin.firestore();
+    const callerSnap = await db.collection("users").doc(context.auth.uid).get();
+    if (!callerSnap.exists || ((_a = callerSnap.data()) === null || _a === void 0 ? void 0 : _a.role) !== "admin") {
+        throw new functions.https.HttpsError("permission-denied", "Admin access required");
+    }
     try {
         // Fetch all listings
         const listingsSnap = await db.collection("tax_credit_listings").get();

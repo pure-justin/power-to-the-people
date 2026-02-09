@@ -34,6 +34,13 @@ export enum ApiKeyScope {
   READ_INCENTIVES = "read_incentives", // Access incentive programs
   READ_PERMITS = "read_permits", // Access permit requirements
   READ_COMPLIANCE = "read_compliance", // Run compliance checks
+  READ_PROJECTS = "read_projects", // Read project data, tasks, timeline
+  WRITE_PROJECTS = "write_projects", // Advance stages, create/complete tasks, set equipment
+  READ_MARKETPLACE = "read_marketplace", // Browse marketplace listings & bids
+  WRITE_MARKETPLACE = "write_marketplace", // Create listings, submit bids, accept, complete
+  READ_WORKERS = "read_workers", // Search/view worker profiles
+  WRITE_WORKERS = "write_workers", // Register/update worker profiles
+  MANAGE_WEBHOOKS = "manage_webhooks", // Register/manage webhook subscriptions
   ADMIN = "admin", // Full access
 }
 

@@ -946,6 +946,19 @@ export const signDocument = functions
     const userSnap = await db.collection("users").doc(uid).get();
     const userData = userSnap.data() || {};
 
+    // Extract IP and user agent from server-side request for ESIGN Act compliance.
+    // Fall back to client-provided values if rawRequest is unavailable (onCall limitation).
+    const serverIp =
+      context.rawRequest?.headers?.["x-forwarded-for"]
+        ?.toString()
+        ?.split(",")[0]
+        ?.trim() ||
+      context.rawRequest?.ip ||
+      ipAddress ||
+      "unknown";
+    const serverUserAgent =
+      context.rawRequest?.headers?.["user-agent"] || userAgent || "unknown";
+
     // Build the signature entry with full audit trail
     const signatureEntry: SignatureEntry = {
       signerId: uid,
@@ -955,8 +968,8 @@ export const signDocument = functions
       signerRole: signerRole as SignatureEntry["signerRole"],
       signatureImageUrl,
       signedAt: admin.firestore.FieldValue.serverTimestamp(),
-      ipAddress: ipAddress || "unknown",
-      userAgent: userAgent || "unknown",
+      ipAddress: serverIp,
+      userAgent: serverUserAgent,
       consentGiven: true,
       consentText:
         "I agree to sign this document electronically. I understand this electronic signature is legally binding under the ESIGN Act and UETA.",

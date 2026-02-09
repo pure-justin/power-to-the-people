@@ -402,7 +402,10 @@ exports.registerWorker = functions.https.onCall(async (data, context) => {
 /**
  * searchWorkers - Search/browse worker profiles
  */
-exports.searchWorkers = functions.https.onCall(async (data, _context) => {
+exports.searchWorkers = functions.https.onCall(async (data, context) => {
+    if (!context.auth) {
+        throw new functions.https.HttpsError("unauthenticated", "Authentication required");
+    }
     const { skill, state, availability, min_rating, limit: queryLimit, } = data || {};
     let q = db.collection("workers");
     if (availability) {
@@ -435,7 +438,10 @@ exports.searchWorkers = functions.https.onCall(async (data, _context) => {
 /**
  * getMarketplaceListings - Get paginated marketplace listings
  */
-exports.getMarketplaceListings = functions.https.onCall(async (data, _context) => {
+exports.getMarketplaceListings = functions.https.onCall(async (data, context) => {
+    if (!context.auth) {
+        throw new functions.https.HttpsError("unauthenticated", "Authentication required");
+    }
     const { service_type, status, limit: queryLimit, startAfter } = data || {};
     let q = db.collection("marketplace_listings");
     // Filter by status (default: open)

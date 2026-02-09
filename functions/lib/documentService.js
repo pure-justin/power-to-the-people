@@ -770,6 +770,7 @@ exports.viewDocument = functions
 exports.signDocument = functions
     .runWith({ timeoutSeconds: 60, memory: "256MB" })
     .https.onCall(async (data, context) => {
+    var _a, _b, _c, _d, _e, _f, _g, _h;
     const uid = requireAuth(context);
     const { documentId, signatureImageUrl, signerRole, consentGiven, ipAddress, userAgent, } = data;
     // Validate required fields
@@ -794,6 +795,13 @@ exports.signDocument = functions
     // Get signer info from their user profile
     const userSnap = await db.collection("users").doc(uid).get();
     const userData = userSnap.data() || {};
+    // Extract IP and user agent from server-side request for ESIGN Act compliance.
+    // Fall back to client-provided values if rawRequest is unavailable (onCall limitation).
+    const serverIp = ((_e = (_d = (_c = (_b = (_a = context.rawRequest) === null || _a === void 0 ? void 0 : _a.headers) === null || _b === void 0 ? void 0 : _b["x-forwarded-for"]) === null || _c === void 0 ? void 0 : _c.toString()) === null || _d === void 0 ? void 0 : _d.split(",")[0]) === null || _e === void 0 ? void 0 : _e.trim()) ||
+        ((_f = context.rawRequest) === null || _f === void 0 ? void 0 : _f.ip) ||
+        ipAddress ||
+        "unknown";
+    const serverUserAgent = ((_h = (_g = context.rawRequest) === null || _g === void 0 ? void 0 : _g.headers) === null || _h === void 0 ? void 0 : _h["user-agent"]) || userAgent || "unknown";
     // Build the signature entry with full audit trail
     const signatureEntry = {
         signerId: uid,
@@ -802,8 +810,8 @@ exports.signDocument = functions
         signerRole: signerRole,
         signatureImageUrl,
         signedAt: admin.firestore.FieldValue.serverTimestamp(),
-        ipAddress: ipAddress || "unknown",
-        userAgent: userAgent || "unknown",
+        ipAddress: serverIp,
+        userAgent: serverUserAgent,
         consentGiven: true,
         consentText: "I agree to sign this document electronically. I understand this electronic signature is legally binding under the ESIGN Act and UETA.",
     };
