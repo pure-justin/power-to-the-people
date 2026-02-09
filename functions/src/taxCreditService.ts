@@ -1845,6 +1845,16 @@ export const completeCreditTransfer = functions
       );
     }
 
+    // Admin-only: verify caller has admin role
+    const db = admin.firestore();
+    const callerSnap = await db.collection("users").doc(context.auth.uid).get();
+    if (!callerSnap.exists || callerSnap.data()?.role !== "admin") {
+      throw new functions.https.HttpsError(
+        "permission-denied",
+        "Admin access required",
+      );
+    }
+
     const { transactionId } = data;
     if (!transactionId) {
       throw new functions.https.HttpsError(
@@ -1853,7 +1863,6 @@ export const completeCreditTransfer = functions
       );
     }
 
-    const db = admin.firestore();
     const txRef = db.collection("tax_credit_transactions").doc(transactionId);
     const txSnap = await txRef.get();
 
@@ -2004,7 +2013,15 @@ export const getCreditMarketStats = functions
       );
     }
 
+    // Admin-only: verify caller has admin role
     const db = admin.firestore();
+    const callerSnap = await db.collection("users").doc(context.auth.uid).get();
+    if (!callerSnap.exists || callerSnap.data()?.role !== "admin") {
+      throw new functions.https.HttpsError(
+        "permission-denied",
+        "Admin access required",
+      );
+    }
 
     try {
       // Fetch all listings

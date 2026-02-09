@@ -297,7 +297,7 @@ exports.processEagleviewDelivery = functions
         // If there's an associated survey, update it with the roof data
         let surveyUpdated = false;
         if (report.surveyId) {
-            const surveyRef = db.collection("surveys").doc(report.surveyId);
+            const surveyRef = db.collection("site_surveys").doc(report.surveyId);
             const surveySnap = await surveyRef.get();
             if (surveySnap.exists) {
                 await surveyRef.update({
@@ -411,7 +411,7 @@ exports.shouldOrderEagleview = functions
         }
         // Check survey data confidence
         const surveySnap = await db
-            .collection("surveys")
+            .collection("site_surveys")
             .where("projectId", "==", projectId)
             .orderBy("created_at", "desc")
             .limit(1)

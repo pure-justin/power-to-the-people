@@ -1416,14 +1416,20 @@ exports.initiateCreditTransfer = functions
 exports.completeCreditTransfer = functions
     .runWith({ timeoutSeconds: 30, memory: "256MB" })
     .https.onCall(async (data, context) => {
+    var _a;
     if (!context.auth) {
         throw new functions.https.HttpsError("unauthenticated", "Must be authenticated");
+    }
+    // Admin-only: verify caller has admin role
+    const db = admin.firestore();
+    const callerSnap = await db.collection("users").doc(context.auth.uid).get();
+    if (!callerSnap.exists || ((_a = callerSnap.data()) === null || _a === void 0 ? void 0 : _a.role) !== "admin") {
+        throw new functions.https.HttpsError("permission-denied", "Admin access required");
     }
     const { transactionId } = data;
     if (!transactionId) {
         throw new functions.https.HttpsError("invalid-argument", "transactionId is required");
     }
-    const db = admin.firestore();
     const txRef = db.collection("tax_credit_transactions").doc(transactionId);
     const txSnap = await txRef.get();
     if (!txSnap.exists) {

@@ -276,17 +276,24 @@ exports.submitSurvey = functions.https.onCall(async (data, context) => {
     // Create AI task for automated survey analysis
     const aiTaskRef = await db.collection("ai_tasks").add({
         type: "survey_process",
-        surveyId,
         projectId: surveyData.projectId,
         status: "pending",
         priority: 2,
-        created_at: now,
         input: {
             surveyId,
             photoCount: (surveyData.photos || []).length,
             sections: Object.keys(surveyData).filter((k) => VALID_SECTIONS.includes(k) &&
                 Object.keys(surveyData[k] || {}).length > 0),
         },
+        output: null,
+        aiAttempt: null,
+        humanFallback: null,
+        learningData: null,
+        retryCount: 0,
+        maxRetries: 3,
+        createdBy: context.auth.uid,
+        createdAt: now,
+        updatedAt: now,
     });
     // Update survey status to submitted
     await surveyRef.update({
