@@ -100,6 +100,91 @@ const TASK_STATUS_STYLES = {
   cancelled: "bg-red-100 text-red-700",
 };
 
+// Enhanced status styles for pipeline tasks (dark theme cards)
+const PIPELINE_STATUS_CONFIG = {
+  blocked: {
+    bg: "bg-gray-700/60",
+    border: "border-gray-600",
+    badge: "bg-gray-600 text-gray-300",
+    dot: "bg-gray-500",
+    label: "Blocked",
+  },
+  ready: {
+    bg: "bg-yellow-900/30",
+    border: "border-yellow-700/50",
+    badge: "bg-yellow-600/80 text-yellow-100",
+    dot: "bg-yellow-400",
+    label: "Ready",
+  },
+  open: {
+    bg: "bg-blue-900/30",
+    border: "border-blue-700/50",
+    badge: "bg-blue-600/80 text-blue-100",
+    dot: "bg-blue-400",
+    label: "Open (Bidding)",
+  },
+  assigned: {
+    bg: "bg-indigo-900/30",
+    border: "border-indigo-700/50",
+    badge: "bg-indigo-600/80 text-indigo-100",
+    dot: "bg-indigo-400",
+    label: "Assigned",
+  },
+  completed: {
+    bg: "bg-emerald-900/30",
+    border: "border-emerald-700/50",
+    badge: "bg-emerald-600/80 text-emerald-100",
+    dot: "bg-emerald-400",
+    label: "Completed",
+  },
+  pending: {
+    bg: "bg-yellow-900/30",
+    border: "border-yellow-700/50",
+    badge: "bg-yellow-600/80 text-yellow-100",
+    dot: "bg-yellow-400",
+    label: "Pending",
+  },
+};
+
+// SLA timelines in business days per task type
+const TASK_SLA_DAYS = {
+  site_survey: 3,
+  cad_design: 5,
+  engineering_stamp: 7,
+  permit_submission: 3,
+  hoa_approval: 14,
+  equipment_order: 10,
+  installation: 5,
+  inspection: 5,
+  pto_submission: 3,
+};
+
+// Task type icons
+const TASK_TYPE_ICONS = {
+  site_survey: Compass,
+  cad_design: PenTool,
+  engineering_stamp: Ruler,
+  permit_submission: FileText,
+  hoa_approval: ClipboardCheck,
+  equipment_order: Package,
+  installation: Hammer,
+  inspection: Eye,
+  pto_submission: Send,
+};
+
+// Dependency map for the diagram
+const TASK_DEPENDENCY_FLOW = [
+  { id: "site_survey", label: "Survey", col: 0, row: 0 },
+  { id: "cad_design", label: "CAD", col: 1, row: 0 },
+  { id: "engineering_stamp", label: "Engineering", col: 2, row: 0 },
+  { id: "permit_submission", label: "Permit Prep", col: 3, row: 0 },
+  { id: "hoa_approval", label: "HOA", col: 3, row: 1 },
+  { id: "equipment_order", label: "Equipment", col: 4, row: 1 },
+  { id: "installation", label: "Install", col: 5, row: 0 },
+  { id: "inspection", label: "Inspection", col: 6, row: 0 },
+  { id: "pto_submission", label: "PTO", col: 7, row: 0 },
+];
+
 function formatDate(val) {
   if (!val) return null;
   const d = val.toDate ? val.toDate() : new Date(val);
