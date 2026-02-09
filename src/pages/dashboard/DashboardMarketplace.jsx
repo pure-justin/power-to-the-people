@@ -1316,6 +1316,9 @@ export default function DashboardMarketplace() {
                   listing={listing}
                   onBid={setBidListing}
                   isOwn={listing.posted_by?.userId === user?.uid}
+                  workerSkills={workerProfile?.skills}
+                  workerLat={workerProfile?.lat}
+                  workerLng={workerProfile?.lng}
                 />
               ))}
             </div>
@@ -1527,6 +1530,7 @@ export default function DashboardMarketplace() {
       {bidListing && (
         <BidModal
           listing={bidListing}
+          workerProfile={workerProfile}
           onClose={() => setBidListing(null)}
           onSubmitted={() => {
             setBidListing(null);

@@ -131,3 +131,16 @@ export async function getCustomerSchedule(customerId) {
   const result = await fn({ customerId });
   return result.data;
 }
+
+/**
+ * Submit customer's preferred dates and time windows for scheduling.
+ *
+ * @param {string} customerId - Customer's user ID
+ * @param {Array<{date: string, timeWindow: string}>} preferredDates - Preferred dates with time windows
+ * @returns {Promise<{success: boolean}>}
+ */
+export async function submitPreferredDates(customerId, preferredDates) {
+  const fn = httpsCallable(functions, "submitPreferredDates");
+  const result = await fn({ customerId, preferredDates });
+  return result.data;
+}

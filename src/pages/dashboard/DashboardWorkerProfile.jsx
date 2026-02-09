@@ -28,6 +28,11 @@ import {
   Loader2,
   AlertCircle,
   X,
+  Target,
+  Gauge,
+  AlertTriangle,
+  ListChecks,
+  Settings,
 } from "lucide-react";
 
 const functions = getFunctions(undefined, "us-central1");
@@ -68,6 +73,7 @@ export default function DashboardWorkerProfile() {
   const [worker, setWorker] = useState(null);
   const [ratings, setRatings] = useState([]);
   const [completedListings, setCompletedListings] = useState([]);
+  const [activeTasks, setActiveTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -79,6 +85,9 @@ export default function DashboardWorkerProfile() {
   const [editCerts, setEditCerts] = useState("");
   const [editAreas, setEditAreas] = useState("");
   const [editInsurance, setEditInsurance] = useState("");
+  const [editZip, setEditZip] = useState("");
+  const [editRadius, setEditRadius] = useState(50);
+  const [editMaxConcurrent, setEditMaxConcurrent] = useState(3);
 
   useEffect(() => {
     const loadWorker = async () => {
@@ -98,6 +107,9 @@ export default function DashboardWorkerProfile() {
         setEditCerts((data.certifications || []).join(", "));
         setEditAreas((data.service_areas || []).join(", "));
         setEditInsurance(data.insurance || "");
+        setEditZip(data.zip || "");
+        setEditRadius(data.service_radius || 50);
+        setEditMaxConcurrent(data.max_concurrent_tasks || 3);
 
         // Load ratings
         const ratingsQ = query(
@@ -121,6 +133,22 @@ export default function DashboardWorkerProfile() {
         setCompletedListings(
           listingsSnap.docs.map((d) => ({ id: d.id, ...d.data() })),
         );
+
+        // Load active tasks (assigned marketplace listings)
+        try {
+          const activeQ = query(
+            collection(db, "marketplace_listings"),
+            where("winning_bid.bidderId", "==", data.user_id),
+            where("status", "==", "assigned"),
+            limit(20),
+          );
+          const activeSnap = await getDocs(activeQ);
+          setActiveTasks(
+            activeSnap.docs.map((d) => ({ id: d.id, ...d.data() })),
+          );
+        } catch (activeErr) {
+          console.error("Failed to load active tasks:", activeErr);
+        }
       } catch (err) {
         console.error("Failed to load worker:", err);
         setError("Failed to load worker profile");
@@ -154,6 +182,9 @@ export default function DashboardWorkerProfile() {
           .map((s) => s.trim())
           .filter(Boolean),
         insurance: editInsurance || null,
+        zip: editZip || null,
+        service_radius: editRadius,
+        max_concurrent_tasks: editMaxConcurrent,
       });
 
       // Reload
@@ -373,18 +404,51 @@ export default function DashboardWorkerProfile() {
           )}
         </div>
 
-        {/* Service Areas & Insurance */}
+        {/* Service Area & Settings */}
         <div className="card border border-gray-200 p-5">
           <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold uppercase text-gray-400">
-            <MapPin className="h-4 w-4" />
-            Service Areas
+            <Target className="h-4 w-4" />
+            Service Area & Settings
           </h2>
 
           {editing ? (
             <div className="space-y-3">
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="mb-1 block text-xs text-gray-500">
+                    Zip Code
+                  </label>
+                  <input
+                    value={editZip}
+                    onChange={(e) => setEditZip(e.target.value)}
+                    className="input-field"
+                    placeholder="78701"
+                    maxLength={5}
+                  />
+                </div>
+                <div>
+                  <label className="mb-1 flex items-center justify-between text-xs text-gray-500">
+                    <span>Service Radius</span>
+                    <span className="font-medium text-gray-700">
+                      {editRadius} mi
+                    </span>
+                  </label>
+                  <input
+                    type="range"
+                    min={10}
+                    max={100}
+                    step={5}
+                    value={editRadius}
+                    onChange={(e) =>
+                      setEditRadius(parseInt(e.target.value, 10))
+                    }
+                    className="w-full accent-emerald-600"
+                  />
+                </div>
+              </div>
               <div>
                 <label className="mb-1 block text-xs text-gray-500">
-                  Service Areas (comma-separated states)
+                  Additional Service Areas (comma-separated states)
                 </label>
                 <input
                   value={editAreas}
@@ -393,33 +457,78 @@ export default function DashboardWorkerProfile() {
                   placeholder="TX, CA, FL"
                 />
               </div>
-              <div>
-                <label className="mb-1 block text-xs text-gray-500">
-                  Insurance Info
-                </label>
-                <input
-                  value={editInsurance}
-                  onChange={(e) => setEditInsurance(e.target.value)}
-                  className="input-field"
-                  placeholder="$1M general liability"
-                />
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="mb-1 block text-xs text-gray-500">
+                    Max Concurrent Tasks
+                  </label>
+                  <select
+                    value={editMaxConcurrent}
+                    onChange={(e) =>
+                      setEditMaxConcurrent(parseInt(e.target.value, 10))
+                    }
+                    className="input-field"
+                  >
+                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
+                      <option key={n} value={n}>
+                        {n} task{n !== 1 ? "s" : ""}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="mb-1 block text-xs text-gray-500">
+                    Insurance Info
+                  </label>
+                  <input
+                    value={editInsurance}
+                    onChange={(e) => setEditInsurance(e.target.value)}
+                    className="input-field"
+                    placeholder="$1M general liability"
+                  />
+                </div>
               </div>
             </div>
           ) : (
             <>
-              <div className="flex flex-wrap gap-1.5">
-                {(worker.service_areas || []).map((area) => (
-                  <span
-                    key={area}
-                    className="rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-700"
-                  >
-                    {area}
-                  </span>
-                ))}
-                {(!worker.service_areas ||
-                  worker.service_areas.length === 0) && (
-                  <span className="text-xs text-gray-400">None listed</span>
+              <div className="space-y-2">
+                {worker.zip && (
+                  <div className="flex items-center gap-2 text-sm">
+                    <MapPin className="h-4 w-4 text-gray-400" />
+                    <span className="text-gray-700">
+                      ZIP {worker.zip}
+                      {worker.service_radius &&
+                        ` -- ${worker.service_radius} mile radius`}
+                    </span>
+                  </div>
                 )}
+                {(worker.service_areas || []).length > 0 && (
+                  <div className="flex flex-wrap gap-1.5">
+                    {worker.service_areas.map((area) => (
+                      <span
+                        key={area}
+                        className="rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-700"
+                      >
+                        {area}
+                      </span>
+                    ))}
+                  </div>
+                )}
+                {!worker.zip &&
+                  (!worker.service_areas ||
+                    worker.service_areas.length === 0) && (
+                    <span className="text-xs text-gray-400">
+                      No service area set
+                    </span>
+                  )}
+              </div>
+              <div className="mt-3 flex items-center gap-4">
+                <div className="flex items-center gap-1.5 text-sm text-gray-600">
+                  <Settings className="h-3.5 w-3.5 text-gray-400" />
+                  <span>
+                    Max {worker.max_concurrent_tasks || 3} concurrent tasks
+                  </span>
+                </div>
               </div>
               {worker.insurance && (
                 <div className="mt-3">
@@ -436,6 +545,148 @@ export default function DashboardWorkerProfile() {
             </>
           )}
         </div>
+      </div>
+
+      {/* Reliability Score */}
+      <div className="card border border-gray-200 p-5">
+        <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold uppercase text-gray-400">
+          <Gauge className="h-4 w-4" />
+          Reliability Score
+        </h2>
+        {(() => {
+          const score = worker.reliability_score ?? null;
+          if (score == null) {
+            return (
+              <p className="text-sm text-gray-400">No reliability data yet</p>
+            );
+          }
+          const color =
+            score > 80
+              ? "bg-emerald-500"
+              : score >= 50
+                ? "bg-amber-500"
+                : "bg-red-500";
+          const textColor =
+            score > 80
+              ? "text-emerald-700"
+              : score >= 50
+                ? "text-amber-700"
+                : "text-red-700";
+          const label =
+            score > 80
+              ? "Excellent"
+              : score >= 50
+                ? "Fair"
+                : "Needs Improvement";
+          return (
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <span className={`text-sm font-medium ${textColor}`}>
+                  {label}
+                </span>
+                <span className={`text-lg font-bold ${textColor}`}>
+                  {score}
+                </span>
+              </div>
+              <div className="h-3 w-full rounded-full bg-gray-200">
+                <div
+                  className={`h-3 rounded-full ${color} transition-all`}
+                  style={{ width: `${Math.min(score, 100)}%` }}
+                />
+              </div>
+              <div className="mt-1 flex justify-between text-[10px] text-gray-400">
+                <span>0</span>
+                <span>50</span>
+                <span>100</span>
+              </div>
+            </div>
+          );
+        })()}
+
+        {/* Strike History */}
+        {worker.strikes?.history?.length > 0 && (
+          <div className="mt-4 border-t border-gray-100 pt-3">
+            <h3 className="mb-2 flex items-center gap-1.5 text-xs font-semibold uppercase text-gray-400">
+              <AlertTriangle className="h-3.5 w-3.5" />
+              Strike History
+            </h3>
+            <div className="space-y-2">
+              {worker.strikes.history.map((strike, i) => {
+                const severityColors = {
+                  minor: "bg-amber-100 text-amber-700",
+                  major: "bg-orange-100 text-orange-700",
+                  critical: "bg-red-100 text-red-700",
+                };
+                return (
+                  <div
+                    key={i}
+                    className="flex items-start gap-2 rounded-lg bg-gray-50 px-3 py-2"
+                  >
+                    <span
+                      className={`mt-0.5 shrink-0 rounded-full px-2 py-0.5 text-[10px] font-medium ${severityColors[strike.severity] || "bg-gray-100 text-gray-600"}`}
+                    >
+                      {strike.severity || "unknown"}
+                    </span>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs text-gray-700">
+                        {strike.reason || "No reason provided"}
+                      </p>
+                      <p className="mt-0.5 text-[10px] text-gray-400">
+                        {formatDate(strike.date)}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Active Tasks */}
+      <div className="card border border-gray-200 p-5">
+        <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold uppercase text-gray-400">
+          <ListChecks className="h-4 w-4" />
+          Active Tasks ({activeTasks.length}
+          {worker.max_concurrent_tasks &&
+            ` / ${worker.max_concurrent_tasks} max`}
+          )
+        </h2>
+        {activeTasks.length === 0 ? (
+          <p className="text-sm text-gray-400">No active tasks</p>
+        ) : (
+          <div className="space-y-2">
+            {activeTasks.map((task) => (
+              <div
+                key={task.id}
+                className="flex items-center justify-between rounded-lg border border-blue-100 bg-blue-50/50 px-4 py-3"
+              >
+                <div>
+                  <span className="rounded bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700">
+                    {task.service_type?.replace(/_/g, " ") || "N/A"}
+                  </span>
+                  <p className="mt-1 text-sm text-gray-700 line-clamp-1">
+                    {task.requirements}
+                  </p>
+                  {task.project_context?.state && (
+                    <p className="mt-0.5 flex items-center gap-1 text-xs text-gray-500">
+                      <MapPin className="h-3 w-3" />
+                      {task.project_context.state}
+                    </p>
+                  )}
+                </div>
+                <div className="text-right text-xs text-gray-500">
+                  {task.deadline && <p>Due {formatDate(task.deadline)}</p>}
+                  {task.winning_bid?.price && (
+                    <p className="font-medium text-gray-700">
+                      ${task.winning_bid.price.toLocaleString()}
+                    </p>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Completed Jobs / Portfolio */}

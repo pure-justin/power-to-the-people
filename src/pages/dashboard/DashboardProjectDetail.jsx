@@ -9,6 +9,8 @@ import {
   getDocs,
   query,
   orderBy,
+  where,
+  limit,
 } from "../../services/firebase";
 import {
   ArrowLeft,
@@ -24,8 +26,15 @@ import {
   ClipboardList,
   Calendar,
   ChevronRight,
+  ChevronDown,
+  ChevronUp,
   AlertCircle,
   Loader2,
+  Store,
+  Gavel,
+  ArrowRight,
+  Lock,
+  Workflow,
 } from "lucide-react";
 
 const PIPELINE_STAGES = [
@@ -102,6 +111,11 @@ export default function DashboardProjectDetail() {
   const { user } = useAuth();
   const [project, setProject] = useState(null);
   const [tasks, setTasks] = useState([]);
+  const [pipelineTasks, setPipelineTasks] = useState([]);
+  const [marketplaceData, setMarketplaceData] = useState({}); // keyed by marketplace_listing_id
+  const [expandedBids, setExpandedBids] = useState(null); // listing_id to show bids for
+  const [bidsList, setBidsList] = useState([]);
+  const [bidsLoading, setBidsLoading] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 

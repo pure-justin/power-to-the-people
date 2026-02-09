@@ -9,6 +9,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import {
   getCustomerSchedule,
   confirmSchedule,
+  submitPreferredDates,
 } from "../../services/schedulingService";
 import { getInstallProgress } from "../../services/photoService";
 import {
@@ -21,6 +22,9 @@ import {
   CalendarCheck,
   Wrench,
   RefreshCw,
+  Plus,
+  X,
+  Send,
 } from "lucide-react";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -345,6 +349,192 @@ function ScheduleCard({ schedule, onConfirmed }) {
   );
 }
 
+// ─── Preferred Dates Form ─────────────────────────────────────────────────────
+
+const TIME_WINDOWS = [
+  { value: "morning", label: "Morning (8am - 12pm)" },
+  { value: "afternoon", label: "Afternoon (12pm - 5pm)" },
+  { value: "all_day", label: "All Day (8am - 5pm)" },
+];
+
+function PreferredDatesForm({ userId }) {
+  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedTimeWindow, setSelectedTimeWindow] = useState("all_day");
+  const [preferredDates, setPreferredDates] = useState([]);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState(null);
+
+  // Minimum date is tomorrow
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const minDate = tomorrow.toISOString().split("T")[0];
+
+  const addDate = () => {
+    if (!selectedDate) return;
+
+    // Check for duplicates
+    const exists = preferredDates.some(
+      (d) => d.date === selectedDate && d.timeWindow === selectedTimeWindow,
+    );
+    if (exists) return;
+
+    setPreferredDates((prev) => [
+      ...prev,
+      { date: selectedDate, timeWindow: selectedTimeWindow },
+    ]);
+    setSelectedDate("");
+  };
+
+  const removeDate = (index) => {
+    setPreferredDates((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const handleSubmit = async () => {
+    if (preferredDates.length === 0) {
+      setError("Please add at least one preferred date.");
+      return;
+    }
+
+    setSubmitting(true);
+    setError(null);
+    try {
+      await submitPreferredDates(userId, preferredDates);
+      setSubmitted(true);
+    } catch (err) {
+      console.error("Failed to submit preferred dates:", err);
+      setError("Failed to submit preferences. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  if (submitted) {
+    return (
+      <div className="rounded-2xl border border-green-200 bg-green-50 p-6 text-center">
+        <CheckCircle2 className="mx-auto h-10 w-10 text-green-500" />
+        <h3 className="mt-3 text-lg font-semibold text-green-800">
+          Preferences Submitted
+        </h3>
+        <p className="mt-1 text-sm text-green-600">
+          We'll match your preferred dates with available install crews and get
+          back to you soon.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-2xl border border-gray-200 bg-white p-6">
+      <h3 className="text-lg font-semibold text-gray-900">
+        Share Your Preferred Dates
+      </h3>
+      <p className="mt-1 text-sm text-gray-500">
+        Let us know when works best for your installation. Add as many dates as
+        you like.
+      </p>
+
+      {/* Date + time window picker */}
+      <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end">
+        <div className="flex-1">
+          <label className="mb-1 block text-sm font-medium text-gray-700">
+            Date
+          </label>
+          <input
+            type="date"
+            value={selectedDate}
+            onChange={(e) => setSelectedDate(e.target.value)}
+            min={minDate}
+            className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+          />
+        </div>
+        <div className="flex-1">
+          <label className="mb-1 block text-sm font-medium text-gray-700">
+            Time Window
+          </label>
+          <select
+            value={selectedTimeWindow}
+            onChange={(e) => setSelectedTimeWindow(e.target.value)}
+            className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+          >
+            {TIME_WINDOWS.map((tw) => (
+              <option key={tw.value} value={tw.value}>
+                {tw.label}
+              </option>
+            ))}
+          </select>
+        </div>
+        <button
+          onClick={addDate}
+          disabled={!selectedDate}
+          className="inline-flex items-center gap-1 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-emerald-700 disabled:opacity-40 disabled:cursor-not-allowed"
+        >
+          <Plus className="h-4 w-4" />
+          Add
+        </button>
+      </div>
+
+      {/* Preferred dates list */}
+      {preferredDates.length > 0 && (
+        <div className="mt-4 space-y-2">
+          <label className="text-xs font-semibold uppercase tracking-wide text-gray-400">
+            Your Preferred Dates
+          </label>
+          {preferredDates.map((item, index) => (
+            <div
+              key={`${item.date}-${item.timeWindow}-${index}`}
+              className="flex items-center justify-between rounded-lg border border-gray-200 bg-gray-50 px-4 py-3"
+            >
+              <div className="flex items-center gap-3">
+                <Calendar className="h-4 w-4 text-emerald-500" />
+                <div>
+                  <p className="text-sm font-medium text-gray-900">
+                    {formatDate(item.date)}
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    {TIME_WINDOWS.find((tw) => tw.value === item.timeWindow)
+                      ?.label || item.timeWindow}
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => removeDate(index)}
+                className="rounded p-1 text-gray-400 transition-colors hover:bg-red-50 hover:text-red-500"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Error message */}
+      {error && (
+        <div className="mt-3 flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+          <AlertCircle className="h-4 w-4 shrink-0" />
+          {error}
+        </div>
+      )}
+
+      {/* Submit button */}
+      <div className="mt-4">
+        <button
+          onClick={handleSubmit}
+          disabled={submitting || preferredDates.length === 0}
+          className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-emerald-700 disabled:opacity-40 disabled:cursor-not-allowed sm:w-auto"
+        >
+          {submitting ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <Send className="h-4 w-4" />
+          )}
+          Submit Preferred Dates
+        </button>
+      </div>
+    </div>
+  );
+}
+
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
 export default function PortalSchedule() {
@@ -397,16 +587,20 @@ export default function PortalSchedule() {
           ))}
         </div>
       ) : schedules.length === 0 ? (
-        <div className="py-16 text-center">
-          <Calendar className="mx-auto h-12 w-12 text-gray-300" />
-          <h2 className="mt-4 text-lg font-semibold text-gray-900">
-            No Installation Scheduled Yet
-          </h2>
-          <p className="mt-2 text-sm text-gray-500">
-            Once your permit is approved, we'll propose installation dates that
-            work for you.
-          </p>
-        </div>
+        <>
+          <div className="py-8 text-center">
+            <Calendar className="mx-auto h-12 w-12 text-gray-300" />
+            <h2 className="mt-4 text-lg font-semibold text-gray-900">
+              No Installation Scheduled Yet
+            </h2>
+            <p className="mt-2 text-sm text-gray-500">
+              Once your permit is approved, we'll propose installation dates
+              that work for you. In the meantime, let us know your preferred
+              dates.
+            </p>
+          </div>
+          <PreferredDatesForm userId={user?.uid} />
+        </>
       ) : (
         <div className="space-y-4">
           {schedules.map((schedule) => (
@@ -416,6 +610,11 @@ export default function PortalSchedule() {
               onConfirmed={loadData}
             />
           ))}
+
+          {/* Show preferred dates form below existing schedules too */}
+          <div className="border-t border-gray-100 pt-6">
+            <PreferredDatesForm userId={user?.uid} />
+          </div>
         </div>
       )}
     </div>

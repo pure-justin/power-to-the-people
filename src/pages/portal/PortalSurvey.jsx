@@ -212,6 +212,16 @@ export default function PortalSurvey() {
               setShading((prev) => ({ ...prev, ...parsed.shading }));
             if (parsed.utility)
               setUtility((prev) => ({ ...prev, ...parsed.utility }));
+            if (parsed.roofMeasurements)
+              setRoofMeasurements((prev) => ({
+                ...prev,
+                ...parsed.roofMeasurements,
+              }));
+            if (parsed.obstructionChecklist)
+              setObstructionChecklist((prev) => ({
+                ...prev,
+                ...parsed.obstructionChecklist,
+              }));
             if (parsed.surveyId) setSurveyId(parsed.surveyId);
             if (parsed.currentStep) setCurrentStep(parsed.currentStep);
           } catch {
