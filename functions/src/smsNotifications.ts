@@ -28,6 +28,32 @@ if (twilioAccountSid && twilioAuthToken) {
 }
 
 /**
+ * Create an in-app notification in Firestore.
+ * Stores in pendingNotifications collection for display and optional email delivery.
+ */
+async function createInAppNotification(params: {
+  projectId?: string;
+  userId?: string;
+  type: string;
+  title: string;
+  message: string;
+  link?: string;
+}): Promise<void> {
+  try {
+    const db = admin.firestore();
+    await db.collection("pendingNotifications").add({
+      ...params,
+      channel: "in_app",
+      read: false,
+      sent: false,
+      created_at: admin.firestore.FieldValue.serverTimestamp(),
+    });
+  } catch (err) {
+    functions.logger.warn("Failed to create in-app notification:", err);
+  }
+}
+
+/**
  * SMS Templates
  */
 const SMS_TEMPLATES = {
