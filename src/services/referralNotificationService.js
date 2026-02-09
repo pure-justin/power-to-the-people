@@ -1,5 +1,9 @@
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { getFunctions, httpsCallable } from "firebase/functions";
 import { db } from "./firebase";
+
+// Initialize Cloud Functions for notification delivery
+const functions = getFunctions(undefined, "us-central1");
 
 /**
  * Referral Notification Service
@@ -137,8 +141,9 @@ View full dashboard: ${window.location.origin}/referrals
 };
 
 /**
- * Send email notification using a Cloud Function or email API
- * In production, this would trigger a Cloud Function that sends via SendGrid/Mailgun
+ * Send email notification via the sendReferralEmail Cloud Function.
+ * Falls back to writing to pendingNotifications Firestore collection
+ * for batch email processing if the Cloud Function is unavailable.
  */
 export const sendReferralNotification = async (type, recipientEmail, data) => {
   try {
@@ -150,15 +155,23 @@ export const sendReferralNotification = async (type, recipientEmail, data) => {
 
     const { subject, body } = template(...Object.values(data));
 
-    // Log for development (in production, this would call a Cloud Function)
-    console.log("📧 Sending email notification:", {
-      to: recipientEmail,
-      subject,
-      body: body.substring(0, 100) + "...",
-    });
-
-    // Store notification in Firestore for email batch processing
-    await storeNotification(recipientEmail, type, subject, body);
+    // Attempt to send via Cloud Function for immediate delivery
+    try {
+      const sendReferralEmailFn = httpsCallable(functions, "sendReferralEmail");
+      await sendReferralEmailFn({
+        to: recipientEmail,
+        subject,
+        body,
+        type,
+      });
+    } catch (fnError) {
+      // Cloud Function unavailable or failed — fall back to Firestore queue
+      console.warn(
+        "Cloud Function sendReferralEmail unavailable, queuing in pendingNotifications:",
+        fnError.message,
+      );
+      await storeNotification(recipientEmail, type, subject, body);
+    }
 
     return { success: true };
   } catch (error) {
