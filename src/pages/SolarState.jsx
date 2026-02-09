@@ -11,13 +11,11 @@ import {
   FileCheck,
   Shield,
   Globe,
-  BarChart3,
   Clock,
   CheckCircle2,
   Activity,
   Award,
   Building2,
-  Bolt,
   ArrowLeft,
 } from "lucide-react";
 import PublicNav from "../components/PublicNav";
@@ -103,7 +101,7 @@ function formatCurrency(val) {
 
 function formatRate(val) {
   if (val == null) return "N/A";
-  return "$" + (val * 100).toFixed(1) + "\u00a2/kWh";
+  return (val * 100).toFixed(1) + "\u00a2/kWh";
 }
 
 function formatNumber(val, decimals = 0) {

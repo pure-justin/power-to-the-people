@@ -22,7 +22,6 @@ import {
   Search as SearchIcon,
   Zap,
   CheckCircle2,
-  AlertCircle,
   Filter,
   LayoutGrid,
   List,

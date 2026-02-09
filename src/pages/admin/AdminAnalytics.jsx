@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { db, collection, getDocs, query, limit } from "../../services/firebase";
+import DataTable from "../../components/ui/DataTable";
 import {
   BarChart3,
   TrendingUp,
@@ -144,6 +145,99 @@ export default function AdminAnalytics() {
     cohortEntries.length > 0
       ? Math.max(...cohortEntries.map(([, v]) => v.total))
       : 1;
+
+  // Cohort rows for DataTable
+  const cohortRows = useMemo(() => {
+    return cohortEntries.map(([month, data]) => ({
+      month,
+      total: data.total,
+      won: data.won,
+      lost: data.lost,
+      active: data.active,
+      winRate:
+        data.won + data.lost > 0
+          ? Math.round((data.won / (data.won + data.lost)) * 100)
+          : 0,
+      volumePct: maxCohortTotal > 0 ? (data.total / maxCohortTotal) * 100 : 0,
+    }));
+  }, [cohortEntries, maxCohortTotal]);
+
+  const cohortColumns = useMemo(
+    () => [
+      {
+        key: "month",
+        label: "Month",
+        render: (val) => (
+          <span className="text-sm font-semibold text-gray-900">{val}</span>
+        ),
+      },
+      {
+        key: "total",
+        label: "New Leads",
+        render: (val) => (
+          <span className="text-sm font-bold text-gray-900">{val}</span>
+        ),
+      },
+      {
+        key: "won",
+        label: "Won",
+        render: (val) => (
+          <span className="px-2 py-0.5 rounded bg-green-100 text-green-700 text-xs font-semibold">
+            {val}
+          </span>
+        ),
+      },
+      {
+        key: "lost",
+        label: "Lost",
+        render: (val) => (
+          <span className="px-2 py-0.5 rounded bg-red-100 text-red-700 text-xs font-semibold">
+            {val}
+          </span>
+        ),
+      },
+      {
+        key: "active",
+        label: "Active",
+        render: (val) => (
+          <span className="px-2 py-0.5 rounded bg-blue-100 text-blue-700 text-xs font-semibold">
+            {val}
+          </span>
+        ),
+      },
+      {
+        key: "winRate",
+        label: "Win Rate",
+        render: (val) => (
+          <span
+            className={`text-sm font-bold ${
+              val >= 50
+                ? "text-green-600"
+                : val >= 25
+                  ? "text-amber-600"
+                  : "text-gray-400"
+            }`}
+          >
+            {val}%
+          </span>
+        ),
+      },
+      {
+        key: "volumePct",
+        label: "Volume",
+        sortable: false,
+        render: (val) => (
+          <div className="w-24 bg-gray-200 rounded-full h-2">
+            <div
+              className="h-full bg-purple-500 rounded-full"
+              style={{ width: `${val}%` }}
+            />
+          </div>
+        ),
+      },
+    ],
+    [],
+  );
 
   // Score distribution
   const scoreRanges = [
@@ -466,110 +560,18 @@ export default function AdminAnalytics() {
       </div>
 
       {/* Cohort Analysis */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6">
-        <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+      <div className="space-y-4">
+        <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
           <Layers size={20} className="text-purple-500" />
           Cohort Analysis
           <span className="text-sm font-normal text-gray-400">(by month)</span>
         </h3>
 
-        {cohortEntries.length === 0 ? (
-          <div className="text-center py-12">
-            <Clock size={32} className="mx-auto text-gray-300 mb-2" />
-            <p className="text-gray-400 text-sm">
-              No time-based data available
-            </p>
-          </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="bg-gray-50 border-b border-gray-200">
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Month
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    New Leads
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Won
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Lost
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Active
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Win Rate
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Volume
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {cohortEntries.map(([month, data]) => {
-                  const winRate =
-                    data.won + data.lost > 0
-                      ? Math.round((data.won / (data.won + data.lost)) * 100)
-                      : 0;
-                  return (
-                    <tr
-                      key={month}
-                      className="hover:bg-gray-50 transition-colors"
-                    >
-                      <td className="px-4 py-3 text-sm font-semibold text-gray-900">
-                        {month}
-                      </td>
-                      <td className="px-4 py-3 text-sm font-bold text-gray-900">
-                        {data.total}
-                      </td>
-                      <td className="px-4 py-3">
-                        <span className="px-2 py-0.5 rounded bg-green-100 text-green-700 text-xs font-semibold">
-                          {data.won}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3">
-                        <span className="px-2 py-0.5 rounded bg-red-100 text-red-700 text-xs font-semibold">
-                          {data.lost}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3">
-                        <span className="px-2 py-0.5 rounded bg-blue-100 text-blue-700 text-xs font-semibold">
-                          {data.active}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3">
-                        <span
-                          className={`text-sm font-bold ${
-                            winRate >= 50
-                              ? "text-green-600"
-                              : winRate >= 25
-                                ? "text-amber-600"
-                                : "text-gray-400"
-                          }`}
-                        >
-                          {winRate}%
-                        </span>
-                      </td>
-                      <td className="px-4 py-3">
-                        <div className="w-24 bg-gray-200 rounded-full h-2">
-                          <div
-                            className="h-full bg-purple-500 rounded-full"
-                            style={{
-                              width: `${(data.total / maxCohortTotal) * 100}%`,
-                            }}
-                          />
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        )}
+        <DataTable
+          columns={cohortColumns}
+          data={cohortRows}
+          emptyMessage="No time-based data available"
+        />
       </div>
     </div>
   );

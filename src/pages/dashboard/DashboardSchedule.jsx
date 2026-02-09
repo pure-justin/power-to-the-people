@@ -64,6 +64,11 @@ function getMonthDates(referenceDate) {
   const first = new Date(year, month, 1);
   const last = new Date(year, month + 1, 0);
   const dates = [];
+  // Add empty padding for days before the 1st so the grid aligns with day-of-week headers
+  const startDay = first.getDay(); // 0=Sun, 1=Mon, etc.
+  for (let i = 0; i < startDay; i++) {
+    dates.push(null);
+  }
   for (let i = first.getDate(); i <= last.getDate(); i++) {
     dates.push(new Date(year, month, i).toISOString().split("T")[0]);
   }
@@ -298,7 +303,8 @@ export default function DashboardSchedule() {
       ? getWeekDates(referenceDate)
       : getMonthDates(referenceDate);
 
-  const startDate = dates[0];
+  // Find first and last actual date (skip null padding in month view)
+  const startDate = dates.find((d) => d !== null);
   const endDate = dates[dates.length - 1];
 
   const loadData = useCallback(async () => {
@@ -443,7 +449,17 @@ export default function DashboardSchedule() {
           ))}
 
           {/* Date cells */}
-          {(viewMode === "week" ? dates : dates).map((date) => {
+          {dates.map((date, idx) => {
+            // null entries are padding for month view alignment
+            if (date === null) {
+              return (
+                <div
+                  key={`pad-${idx}`}
+                  className="min-h-[100px] rounded-lg border border-transparent bg-transparent"
+                />
+              );
+            }
+
             const dayInstalls = installsByDate[date] || [];
             const daySlot = slotsByDate[date];
             const isToday = date === today;

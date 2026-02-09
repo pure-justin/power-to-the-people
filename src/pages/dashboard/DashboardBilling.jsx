@@ -99,8 +99,19 @@ function UsageGauge({ label, current, max, icon: Icon, color = "emerald" }) {
     : max > 0
       ? Math.min((current / max) * 100, 100)
       : 0;
+  const colorMap = {
+    emerald: "bg-emerald-500",
+    blue: "bg-blue-500",
+    amber: "bg-amber-500",
+    orange: "bg-orange-500",
+    purple: "bg-purple-500",
+  };
   const barColor =
-    pct > 90 ? "bg-red-500" : pct > 75 ? "bg-amber-500" : `bg-${color}-500`;
+    pct > 90
+      ? "bg-red-500"
+      : pct > 75
+        ? "bg-amber-500"
+        : colorMap[color] || colorMap.emerald;
 
   return (
     <div className="space-y-2">

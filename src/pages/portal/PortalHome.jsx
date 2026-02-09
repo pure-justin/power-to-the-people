@@ -13,7 +13,6 @@ import {
   Sun,
   DollarSign,
   Zap,
-  FileText,
   Users,
   Settings,
   ChevronRight,

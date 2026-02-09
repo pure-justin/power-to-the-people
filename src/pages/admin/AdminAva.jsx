@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import {
   db,
@@ -8,6 +8,8 @@ import {
   limit,
   getDocs,
 } from "../../services/firebase";
+import DataTable from "../../components/ui/DataTable";
+import FilterBar from "../../components/ui/FilterBar";
 import {
   Bot,
   Activity,
@@ -38,6 +40,7 @@ export default function AdminAva() {
   const [coordMessages, setCoordMessages] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [activeTab, setActiveTab] = useState("conversations");
+  const [taskFilters, setTaskFilters] = useState({});
 
   useEffect(() => {
     loadData();
@@ -200,6 +203,111 @@ export default function AdminAva() {
     (t) =>
       (t.status || "").toLowerCase() === "completed" ||
       (t.status || "").toLowerCase() === "done",
+  );
+
+  // Task filter definitions for FilterBar
+  const taskFilterDefs = useMemo(() => {
+    const statusValues = [
+      ...new Set(tasks.map((t) => (t.status || "pending").toLowerCase())),
+    ].sort();
+    const typeValues = [
+      ...new Set(tasks.map((t) => t.type || "general")),
+    ].sort();
+    return [
+      {
+        key: "status",
+        label: "Status",
+        options: statusValues.map((s) => ({
+          value: s,
+          label: s.charAt(0).toUpperCase() + s.slice(1).replace(/_/g, " "),
+        })),
+      },
+      {
+        key: "type",
+        label: "Type",
+        options: typeValues.map((t) => ({
+          value: t,
+          label: t.charAt(0).toUpperCase() + t.slice(1),
+        })),
+      },
+    ];
+  }, [tasks]);
+
+  // Filtered tasks based on active filters
+  const filteredTasks = useMemo(() => {
+    return tasks.filter((t) => {
+      if (
+        taskFilters.status &&
+        (t.status || "pending").toLowerCase() !== taskFilters.status
+      )
+        return false;
+      if (taskFilters.type && (t.type || "general") !== taskFilters.type)
+        return false;
+      return true;
+    });
+  }, [tasks, taskFilters]);
+
+  // DataTable columns for task queue
+  const taskColumns = useMemo(
+    () => [
+      {
+        key: "description",
+        label: "Task",
+        render: (val, row) => (
+          <span className="text-sm font-semibold text-gray-900 truncate max-w-xs block">
+            {row.description || row.title || row.name || "Unnamed task"}
+          </span>
+        ),
+      },
+      {
+        key: "type",
+        label: "Type",
+        render: (val) => (
+          <span className="px-2 py-0.5 bg-blue-50 text-blue-700 rounded text-xs font-mono">
+            {val || "general"}
+          </span>
+        ),
+      },
+      {
+        key: "priority",
+        label: "Priority",
+        render: (val) => (
+          <span className="text-sm font-bold text-gray-900">
+            {val || "N/A"}
+          </span>
+        ),
+      },
+      {
+        key: "status",
+        label: "Status",
+        render: (val) => (
+          <span
+            className={`px-2.5 py-1 rounded-md text-xs font-semibold capitalize ${taskStatusBadge(val)}`}
+          >
+            {val || "pending"}
+          </span>
+        ),
+      },
+      {
+        key: "assigned_to",
+        label: "Assigned",
+        render: (val, row) => (
+          <span className="text-sm text-gray-600">
+            {val || row.assignedTo || "Unassigned"}
+          </span>
+        ),
+      },
+      {
+        key: "created_at",
+        label: "Created",
+        render: (val) => (
+          <span className="text-sm text-gray-400">
+            {val ? new Date(val).toLocaleDateString() : "N/A"}
+          </span>
+        ),
+      },
+    ],
+    [],
   );
 
   const metricCards = [
@@ -497,91 +605,34 @@ export default function AdminAva() {
 
       {/* Task Queue Tab */}
       {activeTab === "tasks" && (
-        <div className="bg-white rounded-xl border border-gray-200 p-6">
-          <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-            <ListTodo size={20} className="text-purple-500" />
-            Task Queue
-            <span className="text-sm font-normal text-gray-400">
-              ({tasks.length} total)
-            </span>
-          </h3>
+        <div className="space-y-4">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+              <ListTodo size={20} className="text-purple-500" />
+              Task Queue
+              <span className="text-sm font-normal text-gray-400">
+                ({filteredTasks.length} of {tasks.length})
+              </span>
+            </h3>
+          </div>
 
-          {tasks.length === 0 ? (
-            <div className="text-center py-16">
-              <ListTodo size={40} className="mx-auto text-gray-300 mb-3" />
-              <p className="text-gray-500 font-medium">No tasks in queue</p>
-              <p className="text-sm text-gray-400 mt-1">
-                {isConnected
-                  ? "Task queue is empty"
-                  : "Unable to fetch tasks - Ava is offline"}
-              </p>
-            </div>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="bg-gray-50 border-b border-gray-200">
-                    <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                      Task
-                    </th>
-                    <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                      Type
-                    </th>
-                    <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                      Priority
-                    </th>
-                    <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                      Status
-                    </th>
-                    <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                      Assigned
-                    </th>
-                    <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                      Created
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-100">
-                  {tasks.map((task, idx) => (
-                    <tr
-                      key={task.id || idx}
-                      className="hover:bg-gray-50 transition-colors"
-                    >
-                      <td className="px-4 py-3 text-sm font-semibold text-gray-900 max-w-xs truncate">
-                        {task.description ||
-                          task.title ||
-                          task.name ||
-                          "Unnamed task"}
-                      </td>
-                      <td className="px-4 py-3">
-                        <span className="px-2 py-0.5 bg-blue-50 text-blue-700 rounded text-xs font-mono">
-                          {task.type || "general"}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3 text-sm font-bold text-gray-900">
-                        {task.priority || "N/A"}
-                      </td>
-                      <td className="px-4 py-3">
-                        <span
-                          className={`px-2.5 py-1 rounded-md text-xs font-semibold capitalize ${taskStatusBadge(task.status)}`}
-                        >
-                          {task.status || "pending"}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-600">
-                        {task.assigned_to || task.assignedTo || "Unassigned"}
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-400">
-                        {task.created_at
-                          ? new Date(task.created_at).toLocaleDateString()
-                          : "N/A"}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+          {tasks.length > 0 && (
+            <FilterBar
+              filters={taskFilterDefs}
+              activeFilters={taskFilters}
+              onChange={setTaskFilters}
+            />
           )}
+
+          <DataTable
+            columns={taskColumns}
+            data={filteredTasks}
+            emptyMessage={
+              isConnected
+                ? "No tasks in queue"
+                : "Unable to fetch tasks - Ava is offline"
+            }
+          />
         </div>
       )}
 

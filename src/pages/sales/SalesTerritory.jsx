@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import { useGoogleMaps } from "../../hooks/useGoogleMaps";
 import {
   db,
   collection,
@@ -25,6 +26,7 @@ import {
   Map as MapIcon,
   Filter,
   RefreshCw,
+  AlertTriangle,
 } from "lucide-react";
 
 const WEEKDAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
@@ -57,24 +59,234 @@ function DoorKnockCard({ lead, index, onSelect }) {
   );
 }
 
-function LeadMapPlaceholder({ leads }) {
-  // Count leads by rough location grouping (by zip prefix or city)
-  const locationGroups = {};
-  leads.forEach((l) => {
-    if (!l.address) return;
-    const zipMatch = l.address.match(/\b(\d{5})\b/);
-    const key = zipMatch
-      ? zipMatch[1]
-      : l.address.split(",").pop()?.trim() || "Unknown";
-    if (!locationGroups[key]) {
-      locationGroups[key] = [];
-    }
-    locationGroups[key].push(l);
-  });
+// Color mapping for lead statuses (matches SalesPerformance.jsx palette)
+const STATUS_MARKER_COLORS = {
+  new: "#3B82F6", // blue-500
+  contacted: "#6366F1", // indigo-500
+  qualified: "#10B981", // emerald-500
+  site_survey: "#14B8A6", // teal-500
+  proposal: "#F59E0B", // amber-500
+  negotiation: "#F97316", // orange-500
+  contract: "#A855F7", // purple-500
+  won: "#22C55E", // green-500
+  lost: "#EF4444", // red-500
+};
 
-  const sortedGroups = Object.entries(locationGroups)
-    .sort((a, b) => b[1].length - a[1].length)
-    .slice(0, 10);
+function getMarkerColor(status) {
+  return STATUS_MARKER_COLORS[status] || "#10B981";
+}
+
+function LeadMap({ leads, optimizedRoute, onSelectLead }) {
+  const { isLoaded, error, maps } = useGoogleMaps();
+  const mapContainerRef = useRef(null);
+  const mapInstanceRef = useRef(null);
+  const markersRef = useRef([]);
+  const polylineRef = useRef(null);
+  const infoWindowRef = useRef(null);
+
+  // Filter leads that have valid lat/lng
+  const mappableLeads = leads.filter(
+    (l) => l.lat != null && l.lng != null && !isNaN(l.lat) && !isNaN(l.lng),
+  );
+
+  // Initialize the map
+  useEffect(() => {
+    if (!isLoaded || !maps || !mapContainerRef.current) return;
+    if (mapInstanceRef.current) return; // Already initialized
+
+    // Compute center from leads, default to US center
+    let center = { lat: 32.7767, lng: -96.797 }; // Dallas, TX default
+    if (mappableLeads.length > 0) {
+      const avgLat =
+        mappableLeads.reduce((sum, l) => sum + Number(l.lat), 0) /
+        mappableLeads.length;
+      const avgLng =
+        mappableLeads.reduce((sum, l) => sum + Number(l.lng), 0) /
+        mappableLeads.length;
+      center = { lat: avgLat, lng: avgLng };
+    }
+
+    mapInstanceRef.current = new maps.Map(mapContainerRef.current, {
+      center,
+      zoom: mappableLeads.length > 0 ? 10 : 5,
+      mapTypeControl: false,
+      streetViewControl: false,
+      fullscreenControl: true,
+      zoomControl: true,
+      styles: [
+        {
+          featureType: "poi",
+          elementType: "labels",
+          stylers: [{ visibility: "off" }],
+        },
+      ],
+    });
+
+    infoWindowRef.current = new maps.InfoWindow();
+  }, [isLoaded, maps]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Render markers when leads change
+  const updateMarkers = useCallback(() => {
+    if (!mapInstanceRef.current || !maps) return;
+
+    // Clear old markers
+    markersRef.current.forEach((m) => m.setMap(null));
+    markersRef.current = [];
+
+    if (mappableLeads.length === 0) return;
+
+    const bounds = new maps.LatLngBounds();
+
+    mappableLeads.forEach((lead) => {
+      const position = {
+        lat: Number(lead.lat),
+        lng: Number(lead.lng),
+      };
+      const color = getMarkerColor(lead.status);
+
+      // Create an SVG marker icon
+      const svgIcon = {
+        path: maps.SymbolPath.CIRCLE,
+        fillColor: color,
+        fillOpacity: 0.85,
+        strokeColor: "#ffffff",
+        strokeWeight: 2,
+        scale: 8,
+      };
+
+      const marker = new maps.Marker({
+        position,
+        map: mapInstanceRef.current,
+        icon: svgIcon,
+        title: lead.customerName || lead.name || lead.address || "Lead",
+        cursor: "pointer",
+      });
+
+      marker.addListener("click", () => {
+        if (infoWindowRef.current) {
+          const statusLabel = (lead.status || "new")
+            .replace(/_/g, " ")
+            .replace(/\b\w/g, (c) => c.toUpperCase());
+          infoWindowRef.current.setContent(
+            `<div style="padding:4px 0;min-width:160px;">` +
+              `<p style="margin:0 0 4px;font-weight:600;font-size:14px;">${lead.customerName || lead.name || "Unnamed"}</p>` +
+              `<p style="margin:0 0 2px;font-size:12px;color:#666;">${lead.address || "No address"}</p>` +
+              `<p style="margin:0;font-size:12px;">` +
+              `<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${color};margin-right:4px;vertical-align:middle;"></span>` +
+              `${statusLabel}` +
+              `${lead.score != null ? ` &middot; Score: ${lead.score}` : ""}` +
+              `</p>` +
+              `</div>`,
+          );
+          infoWindowRef.current.open(mapInstanceRef.current, marker);
+        }
+        if (onSelectLead) {
+          onSelectLead(lead);
+        }
+      });
+
+      bounds.extend(position);
+      markersRef.current.push(marker);
+    });
+
+    // Fit bounds with padding if we have more than one marker
+    if (mappableLeads.length > 1) {
+      mapInstanceRef.current.fitBounds(bounds, {
+        top: 40,
+        right: 40,
+        bottom: 40,
+        left: 40,
+      });
+    } else if (mappableLeads.length === 1) {
+      mapInstanceRef.current.setCenter(bounds.getCenter());
+      mapInstanceRef.current.setZoom(14);
+    }
+  }, [maps, mappableLeads, onSelectLead]);
+
+  useEffect(() => {
+    updateMarkers();
+  }, [updateMarkers]);
+
+  // Draw optimized route polyline
+  useEffect(() => {
+    if (!mapInstanceRef.current || !maps) return;
+
+    // Clear previous polyline
+    if (polylineRef.current) {
+      polylineRef.current.setMap(null);
+      polylineRef.current = null;
+    }
+
+    if (!optimizedRoute || optimizedRoute.length < 2) return;
+
+    const routeCoords = optimizedRoute
+      .filter(
+        (stop) =>
+          stop.lat != null &&
+          stop.lng != null &&
+          !isNaN(stop.lat) &&
+          !isNaN(stop.lng),
+      )
+      .map((stop) => ({
+        lat: Number(stop.lat),
+        lng: Number(stop.lng),
+      }));
+
+    if (routeCoords.length < 2) return;
+
+    polylineRef.current = new maps.Polyline({
+      path: routeCoords,
+      geodesic: true,
+      strokeColor: "#10B981",
+      strokeOpacity: 0.8,
+      strokeWeight: 3,
+      map: mapInstanceRef.current,
+    });
+  }, [maps, optimizedRoute]);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      markersRef.current.forEach((m) => m.setMap(null));
+      markersRef.current = [];
+      if (polylineRef.current) {
+        polylineRef.current.setMap(null);
+        polylineRef.current = null;
+      }
+      if (infoWindowRef.current) {
+        infoWindowRef.current.close();
+      }
+      mapInstanceRef.current = null;
+    };
+  }, []);
+
+  // Error fallback
+  if (error) {
+    return (
+      <div className="card-padded">
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="flex items-center gap-2 text-lg font-semibold text-gray-900">
+            <MapIcon className="h-5 w-5 text-emerald-600" />
+            Territory Map
+          </h2>
+        </div>
+        <div className="flex h-64 items-center justify-center rounded-xl border-2 border-dashed border-gray-200 bg-gray-50">
+          <div className="text-center">
+            <AlertTriangle className="mx-auto h-10 w-10 text-amber-400" />
+            <p className="mt-2 text-sm font-medium text-gray-600">
+              Unable to load map
+            </p>
+            <p className="mt-1 text-xs text-gray-400">{error}</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Build the status legend from leads that are actually on the map
+  const statusesOnMap = [
+    ...new Set(mappableLeads.map((l) => l.status || "new")),
+  ];
 
   return (
     <div className="card-padded">
@@ -84,54 +296,41 @@ function LeadMapPlaceholder({ leads }) {
           Territory Map
         </h2>
         <span className="text-xs text-gray-400">
-          Interactive map coming soon
+          {mappableLeads.length} of {leads.length} leads mapped
         </span>
       </div>
 
-      {/* Map Placeholder */}
-      <div className="relative mb-4 flex h-64 items-center justify-center rounded-xl border-2 border-dashed border-gray-200 bg-gray-50">
-        <div className="text-center">
-          <MapIcon className="mx-auto h-12 w-12 text-gray-300" />
-          <p className="mt-2 text-sm font-medium text-gray-500">
-            Territory Map View
-          </p>
-          <p className="text-xs text-gray-400">
-            Map integration will display lead pins and optimized routes
-          </p>
-        </div>
-        {/* Dot indicators for leads with addresses */}
-        {leads.slice(0, 20).map((l, i) => (
-          <div
-            key={l.id}
-            className="absolute h-3 w-3 rounded-full bg-emerald-500 opacity-60"
-            style={{
-              top: `${20 + ((i * 37) % 60)}%`,
-              left: `${10 + ((i * 53) % 80)}%`,
-            }}
-            title={l.address}
-          />
-        ))}
+      {/* Google Map */}
+      <div
+        ref={mapContainerRef}
+        className="mb-4 h-80 w-full rounded-xl border border-gray-200 lg:h-96"
+        style={{ minHeight: "320px" }}
+      >
+        {!isLoaded && (
+          <div className="flex h-full items-center justify-center rounded-xl bg-gray-50">
+            <div className="text-center">
+              <RefreshCw className="mx-auto h-8 w-8 animate-spin text-gray-300" />
+              <p className="mt-2 text-sm text-gray-500">Loading map...</p>
+            </div>
+          </div>
+        )}
       </div>
 
-      {/* Location Clusters */}
-      {sortedGroups.length > 0 && (
-        <div>
-          <h3 className="mb-2 text-sm font-medium text-gray-700">
-            Lead Clusters
-          </h3>
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
-            {sortedGroups.map(([location, groupLeads]) => (
-              <div
-                key={location}
-                className="rounded-lg bg-gray-50 p-3 text-center"
-              >
-                <p className="text-lg font-bold text-emerald-600">
-                  {groupLeads.length}
-                </p>
-                <p className="truncate text-xs text-gray-500">{location}</p>
-              </div>
-            ))}
-          </div>
+      {/* Status Legend */}
+      {statusesOnMap.length > 0 && (
+        <div className="flex flex-wrap items-center gap-3">
+          <span className="text-xs font-medium text-gray-500">Legend:</span>
+          {statusesOnMap.map((status) => (
+            <div key={status} className="flex items-center gap-1.5">
+              <span
+                className="inline-block h-2.5 w-2.5 rounded-full"
+                style={{ backgroundColor: getMarkerColor(status) }}
+              />
+              <span className="text-xs capitalize text-gray-600">
+                {status.replace(/_/g, " ")}
+              </span>
+            </div>
+          ))}
         </div>
       )}
     </div>
@@ -261,7 +460,11 @@ export default function SalesTerritory() {
       </div>
 
       {/* Territory Map */}
-      <LeadMapPlaceholder leads={leadsWithAddress} />
+      <LeadMap
+        leads={leadsWithAddress}
+        optimizedRoute={dayLeads}
+        onSelectLead={setSelectedLead}
+      />
 
       {/* Stats Row */}
       <div className="grid gap-4 sm:grid-cols-4">

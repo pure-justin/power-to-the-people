@@ -573,7 +573,7 @@ export default function Contact() {
                   <Mail size={18} />
                   <div className="ct-contact-method-text">
                     Email us at{" "}
-                    <a href="mailto:contact@solaros.io">contact@solaros.io</a>
+                    <a href="mailto:contact@solarios.io">contact@solarios.io</a>
                   </div>
                 </div>
                 <div className="ct-contact-method">
@@ -716,7 +716,7 @@ export default function Contact() {
 
                   <p className="ct-form-note">
                     Or email us directly at{" "}
-                    <a href="mailto:contact@solaros.io">contact@solaros.io</a>
+                    <a href="mailto:contact@solarios.io">contact@solarios.io</a>
                   </p>
                 </form>
               )}

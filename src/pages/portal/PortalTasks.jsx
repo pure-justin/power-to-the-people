@@ -20,7 +20,6 @@ import {
   addDoc,
   serverTimestamp,
 } from "../../services/firebase";
-import { getFunctions, httpsCallable } from "firebase/functions";
 import {
   ClipboardList,
   Clock,
@@ -44,8 +43,6 @@ import {
   ChevronRight,
   CalendarClock,
 } from "lucide-react";
-
-const functions = getFunctions(undefined, "us-central1");
 
 /** Friendly labels for pipeline task names */
 const TASK_LABELS = {

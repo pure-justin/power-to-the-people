@@ -18,11 +18,9 @@ import {
   Mail,
   MapPin,
   Clock,
-  CheckCircle2,
   AlertTriangle,
   MessageSquare,
   ChevronRight,
-  Calendar,
   ArrowUpRight,
   PhoneCall,
   FileText,
@@ -322,7 +320,6 @@ function ActionDrawer({ lead, onClose, onUpdate }) {
                 .slice()
                 .reverse()
                 .map((n, i) => {
-                  const isAction = n.text?.startsWith("[");
                   return (
                     <div key={i} className="rounded-lg bg-gray-50 p-3 text-sm">
                       <p className="text-gray-600">{n.text}</p>

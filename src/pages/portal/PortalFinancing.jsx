@@ -1,5 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import {
+  db,
+  collection,
+  query,
+  where,
+  getDocs,
+  limit,
+} from "../../services/firebase";
 import {
   DollarSign,
   CreditCard,
@@ -81,11 +89,60 @@ function ComparisonColumn({
 }
 
 export default function PortalFinancing() {
-  useAuth();
+  const { user } = useAuth();
   const [systemCost, setSystemCost] = useState(28000);
   const [loanRate, setLoanRate] = useState(6.99);
   const [leaseCostPerMonth, setLeaseCostPerMonth] = useState(125);
+  const [loading, setLoading] = useState(true);
+  const [projectLoaded, setProjectLoaded] = useState(false);
   const loanTerm = 25;
+
+  useEffect(() => {
+    if (!user) {
+      setLoading(false);
+      return;
+    }
+    const loadProject = async () => {
+      try {
+        const q = query(
+          collection(db, "projects"),
+          where("userId", "==", user.uid),
+          limit(1),
+        );
+        const snap = await getDocs(q);
+        if (!snap.empty) {
+          const data = snap.docs[0].data();
+          if (data.systemCost && data.systemCost > 0) {
+            setSystemCost(data.systemCost);
+            setProjectLoaded(true);
+          }
+          if (data.leaseCostPerMonth && data.leaseCostPerMonth > 0) {
+            setLeaseCostPerMonth(data.leaseCostPerMonth);
+          }
+        }
+      } catch (err) {
+        console.error("Failed to load project for financing:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadProject();
+  }, [user]);
+
+  if (loading) {
+    return (
+      <div className="animate-pulse space-y-6">
+        <div className="h-8 w-56 rounded bg-gray-200" />
+        <div className="h-20 rounded-xl bg-gray-100" />
+        <div className="h-40 rounded-xl bg-gray-100" />
+        <div className="grid gap-4 lg:grid-cols-3">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="h-64 rounded-xl bg-gray-100" />
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   // Calculations
   const monthlyLoanPayment =
@@ -133,6 +190,11 @@ export default function PortalFinancing() {
             Adjust Your Numbers
           </h2>
         </div>
+        {projectLoaded && (
+          <p className="mb-3 text-xs text-emerald-600">
+            Values pre-filled from your project. Adjust to compare scenarios.
+          </p>
+        )}
         <div className="grid gap-4 sm:grid-cols-3">
           <div>
             <label className="mb-1.5 block text-sm font-medium text-gray-700">

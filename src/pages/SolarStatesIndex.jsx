@@ -10,7 +10,6 @@ import {
   Zap,
   MapPin,
   ArrowUpDown,
-  BarChart3,
 } from "lucide-react";
 import PublicNav from "../components/PublicNav";
 import PublicFooter from "../components/PublicFooter";

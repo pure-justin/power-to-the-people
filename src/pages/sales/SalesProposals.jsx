@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import {
   db,
@@ -15,7 +15,6 @@ import {
 } from "../../services/firebase";
 import {
   FileText,
-  Plus,
   DollarSign,
   Sun,
   Battery,
@@ -23,16 +22,9 @@ import {
   Home,
   ChevronRight,
   Calculator,
-  Send,
-  Eye,
-  Edit3,
   X,
   Check,
-  TrendingUp,
-  Clock,
-  Percent,
   CreditCard,
-  Building2,
   Search,
 } from "lucide-react";
 
@@ -498,7 +490,7 @@ export default function SalesProposals() {
   const [buildingFor, setBuildingFor] = useState(null);
   const [search, setSearch] = useState("");
 
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     if (!user) return;
     try {
       // Fetch leads assigned to me
@@ -532,11 +524,11 @@ export default function SalesProposals() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
 
   useEffect(() => {
     loadData();
-  }, [user]);
+  }, [loadData]);
 
   const filteredLeads = search
     ? leads.filter(

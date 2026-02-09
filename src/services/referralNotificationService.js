@@ -1,4 +1,4 @@
-import { doc, updateDoc, serverTimestamp } from "firebase/firestore";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "./firebase";
 
 /**
@@ -157,15 +157,7 @@ export const sendReferralNotification = async (type, recipientEmail, data) => {
       body: body.substring(0, 100) + "...",
     });
 
-    // TODO: Implement actual email sending via Cloud Function
-    // Example:
-    // await fetch('https://your-cloud-function-url/sendEmail', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({ to: recipientEmail, subject, body })
-    // });
-
-    // For now, store notification in Firestore so we can send it later
+    // Store notification in Firestore for email batch processing
     await storeNotification(recipientEmail, type, subject, body);
 
     return { success: true };
@@ -185,7 +177,7 @@ const storeNotification = async (email, type, subject, body) => {
       "pendingNotifications",
       `${Date.now()}_${email}`,
     );
-    await updateDoc(notificationRef, {
+    await setDoc(notificationRef, {
       email,
       type,
       subject,

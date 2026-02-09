@@ -13,7 +13,6 @@ import {
 } from "../../services/firebase";
 import {
   CheckCircle2,
-  Circle,
   ArrowLeft,
   Sun,
   FileText,

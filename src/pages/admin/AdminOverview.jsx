@@ -118,9 +118,9 @@ function isThisWeek(ts) {
 // --- Skeleton Loader ---
 function SkeletonCard() {
   return (
-    <div className="bg-gray-800 rounded-xl border border-gray-700 p-6 animate-pulse">
-      <div className="h-4 bg-gray-700 rounded w-1/2 mb-4" />
-      <div className="h-8 bg-gray-700 rounded w-1/3" />
+    <div className="bg-white rounded-xl border border-gray-200 p-6 animate-pulse">
+      <div className="h-4 bg-gray-200 rounded w-1/2 mb-4" />
+      <div className="h-8 bg-gray-200 rounded w-1/3" />
     </div>
   );
 }
@@ -128,7 +128,7 @@ function SkeletonCard() {
 function SkeletonBlock({ height = "h-64" }) {
   return (
     <div
-      className={`bg-gray-800 rounded-xl border border-gray-700 p-6 animate-pulse ${height}`}
+      className={`bg-white rounded-xl border border-gray-200 p-6 animate-pulse ${height}`}
     />
   );
 }
@@ -589,13 +589,13 @@ export default function AdminOverview() {
   const eventIcon = (type) => {
     switch (type) {
       case "project":
-        return <FolderKanban size={14} className="text-emerald-400" />;
+        return <FolderKanban size={14} className="text-emerald-500" />;
       case "bid":
-        return <Gavel size={14} className="text-blue-400" />;
+        return <Gavel size={14} className="text-blue-500" />;
       case "completion":
-        return <CheckCircle2 size={14} className="text-green-400" />;
+        return <CheckCircle2 size={14} className="text-green-500" />;
       case "violation":
-        return <AlertTriangle size={14} className="text-red-400" />;
+        return <AlertTriangle size={14} className="text-red-500" />;
       default:
         return <Activity size={14} className="text-gray-400" />;
     }
@@ -604,22 +604,22 @@ export default function AdminOverview() {
   const eventBadgeColor = (type) => {
     switch (type) {
       case "project":
-        return "bg-emerald-500/20 text-emerald-400";
+        return "bg-emerald-100 text-emerald-700";
       case "bid":
-        return "bg-blue-500/20 text-blue-400";
+        return "bg-blue-100 text-blue-700";
       case "completion":
-        return "bg-green-500/20 text-green-400";
+        return "bg-green-100 text-green-700";
       case "violation":
-        return "bg-red-500/20 text-red-400";
+        return "bg-red-100 text-red-700";
       default:
-        return "bg-gray-500/20 text-gray-400";
+        return "bg-gray-100 text-gray-600";
     }
   };
 
   const reliabilityColor = (score) => {
-    if (score > 80) return "text-green-400";
-    if (score >= 50) return "text-yellow-400";
-    return "text-red-400";
+    if (score > 80) return "text-green-600";
+    if (score >= 50) return "text-yellow-600";
+    return "text-red-600";
   };
 
   const reliabilityBg = (score) => {
@@ -631,7 +631,7 @@ export default function AdminOverview() {
   // --- Loading State ---
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-900 p-6 space-y-6">
+      <div className="space-y-6">
         {/* KPI Skeletons */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
           {[1, 2, 3, 4].map((i) => (
@@ -695,18 +695,18 @@ export default function AdminOverview() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-900 p-4 md:p-6 space-y-6">
+    <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white">Admin Dashboard</h1>
-          <p className="text-sm text-gray-400 mt-1">
+          <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
+          <p className="text-sm text-gray-500 mt-1">
             Platform analytics and operational overview
           </p>
         </div>
         <button
           onClick={loadAllData}
-          className="flex items-center gap-2 px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm text-gray-700 hover:bg-gray-50 transition-colors"
         >
           <RefreshCw size={14} />
           Refresh
@@ -718,10 +718,10 @@ export default function AdminOverview() {
         {kpiCards.map((card) => (
           <div
             key={card.label}
-            className="bg-gray-800 rounded-xl border border-gray-700 p-5 hover:border-gray-600 transition-all"
+            className="bg-white rounded-xl border border-gray-200 p-5 hover:shadow-md transition-all"
           >
             <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+              <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
                 {card.label}
               </span>
               <div
@@ -731,13 +731,13 @@ export default function AdminOverview() {
               </div>
             </div>
             <div className="flex items-end gap-3">
-              <span className="text-3xl font-extrabold text-white">
+              <span className="text-3xl font-extrabold text-gray-900">
                 {card.value}
               </span>
               {card.trend !== 0 && (
                 <span
                   className={`flex items-center gap-0.5 text-xs font-semibold mb-1 ${
-                    card.trend > 0 ? "text-green-400" : "text-red-400"
+                    card.trend > 0 ? "text-green-600" : "text-red-600"
                   }`}
                 >
                   {card.trend > 0 ? (
@@ -754,9 +754,9 @@ export default function AdminOverview() {
       </div>
 
       {/* ====== 2. Pipeline Funnel ====== */}
-      <div className="bg-gray-800 rounded-xl border border-gray-700 p-6">
-        <h3 className="text-lg font-bold text-white mb-1 flex items-center gap-2">
-          <BarChart3 size={20} className="text-emerald-400" />
+      <div className="bg-white rounded-xl border border-gray-200 p-6">
+        <h3 className="text-lg font-bold text-gray-900 mb-1 flex items-center gap-2">
+          <BarChart3 size={20} className="text-emerald-500" />
           Pipeline Funnel
         </h3>
         <p className="text-xs text-gray-500 mb-5">
@@ -779,10 +779,10 @@ export default function AdminOverview() {
 
             return (
               <div key={stage.value} className="flex items-center gap-3">
-                <span className="w-20 text-xs font-medium text-gray-400 text-right truncate">
+                <span className="w-20 text-xs font-medium text-gray-600 text-right truncate">
                   {stage.label}
                 </span>
-                <div className="flex-1 bg-gray-700/50 rounded-full h-7 overflow-hidden relative">
+                <div className="flex-1 bg-gray-100 rounded-full h-7 overflow-hidden relative">
                   <div
                     className={`h-full ${FUNNEL_COLORS[idx] || "bg-emerald-500"} rounded-full flex items-center px-3 transition-all duration-500`}
                     style={{ width: `${barWidth}%` }}
@@ -800,17 +800,17 @@ export default function AdminOverview() {
                     <span
                       className={
                         conversion >= 60
-                          ? "text-green-400"
+                          ? "text-green-600"
                           : conversion >= 30
-                            ? "text-yellow-400"
-                            : "text-red-400"
+                            ? "text-yellow-600"
+                            : "text-red-600"
                       }
                     >
                       {conversion}%
                     </span>
                     <ChevronDown
                       size={10}
-                      className="inline text-gray-600 ml-0.5"
+                      className="inline text-gray-400 ml-0.5"
                     />
                   </span>
                 ) : (
@@ -822,26 +822,26 @@ export default function AdminOverview() {
         </div>
 
         {/* Funnel summary row */}
-        <div className="flex items-center gap-6 mt-5 pt-4 border-t border-gray-700">
+        <div className="flex items-center gap-6 mt-5 pt-4 border-t border-gray-200">
           <div className="text-center">
-            <p className="text-2xl font-bold text-white">{pipelineTotal}</p>
+            <p className="text-2xl font-bold text-gray-900">{pipelineTotal}</p>
             <p className="text-xs text-gray-500">Total in Pipeline</p>
           </div>
           <div className="text-center">
-            <p className="text-2xl font-bold text-emerald-400">
+            <p className="text-2xl font-bold text-emerald-600">
               {pipelineCounts["activated"] || 0}
             </p>
             <p className="text-xs text-gray-500">Completed</p>
           </div>
           <div className="text-center">
-            <p className="text-2xl font-bold text-blue-400">
+            <p className="text-2xl font-bold text-blue-600">
               {(pipelineCounts["installing"] || 0) +
                 (pipelineCounts["inspection"] || 0)}
             </p>
             <p className="text-xs text-gray-500">In Progress</p>
           </div>
           <div className="text-center">
-            <p className="text-2xl font-bold text-yellow-400">
+            <p className="text-2xl font-bold text-amber-600">
               {pipelineTotal > 0
                 ? Math.round(
                     ((pipelineCounts["activated"] || 0) / pipelineTotal) * 100,
@@ -857,56 +857,56 @@ export default function AdminOverview() {
       {/* ====== 3. Marketplace Activity + 4. Worker Leaderboard ====== */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Marketplace Activity */}
-        <div className="bg-gray-800 rounded-xl border border-gray-700 p-6">
-          <h3 className="text-lg font-bold text-white mb-5 flex items-center gap-2">
-            <ShoppingCart size={20} className="text-blue-400" />
+        <div className="bg-white rounded-xl border border-gray-200 p-6">
+          <h3 className="text-lg font-bold text-gray-900 mb-5 flex items-center gap-2">
+            <ShoppingCart size={20} className="text-blue-500" />
             Marketplace Activity
           </h3>
 
           <div className="grid grid-cols-2 gap-4">
             {/* Open Listings */}
-            <div className="bg-gray-900/60 rounded-lg p-4 border border-gray-700/50">
+            <div className="bg-gray-50 rounded-lg p-4 border border-gray-100">
               <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">
                 Open Listings
               </p>
-              <p className="text-2xl font-bold text-white">
+              <p className="text-2xl font-bold text-gray-900">
                 {marketplace.openListings}
               </p>
             </div>
 
             {/* Avg Bid Score */}
-            <div className="bg-gray-900/60 rounded-lg p-4 border border-gray-700/50">
+            <div className="bg-gray-50 rounded-lg p-4 border border-gray-100">
               <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">
                 Avg Bid Score
               </p>
-              <p className="text-2xl font-bold text-white">
+              <p className="text-2xl font-bold text-gray-900">
                 {marketplace.avgBidScore}
                 <span className="text-sm text-gray-500">/100</span>
               </p>
             </div>
 
             {/* Bids Submitted */}
-            <div className="bg-gray-900/60 rounded-lg p-4 border border-gray-700/50 col-span-2">
+            <div className="bg-gray-50 rounded-lg p-4 border border-gray-100 col-span-2">
               <p className="text-xs text-gray-500 uppercase tracking-wider mb-3">
                 Bids Submitted
               </p>
               <div className="flex items-center gap-6">
                 <div>
-                  <p className="text-xl font-bold text-white">
+                  <p className="text-xl font-bold text-gray-900">
                     {marketplace.bidsToday}
                   </p>
                   <p className="text-xs text-gray-500">Today</p>
                 </div>
-                <div className="h-8 w-px bg-gray-700" />
+                <div className="h-8 w-px bg-gray-200" />
                 <div>
-                  <p className="text-xl font-bold text-white">
+                  <p className="text-xl font-bold text-gray-900">
                     {marketplace.bidsWeek}
                   </p>
                   <p className="text-xs text-gray-500">This Week</p>
                 </div>
-                <div className="h-8 w-px bg-gray-700" />
+                <div className="h-8 w-px bg-gray-200" />
                 <div>
-                  <p className="text-xl font-bold text-white">
+                  <p className="text-xl font-bold text-gray-900">
                     {marketplace.bidsMonth}
                   </p>
                   <p className="text-xs text-gray-500">This Month</p>
@@ -915,21 +915,21 @@ export default function AdminOverview() {
             </div>
 
             {/* Jobs Completed This Month */}
-            <div className="bg-gray-900/60 rounded-lg p-4 border border-gray-700/50">
+            <div className="bg-gray-50 rounded-lg p-4 border border-gray-100">
               <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">
                 Jobs Done (Month)
               </p>
-              <p className="text-2xl font-bold text-green-400">
+              <p className="text-2xl font-bold text-green-600">
                 {marketplace.jobsCompletedMonth}
               </p>
             </div>
 
             {/* Avg Time-to-Fill */}
-            <div className="bg-gray-900/60 rounded-lg p-4 border border-gray-700/50">
+            <div className="bg-gray-50 rounded-lg p-4 border border-gray-100">
               <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">
                 Avg Time to Fill
               </p>
-              <p className="text-2xl font-bold text-white">
+              <p className="text-2xl font-bold text-gray-900">
                 {marketplace.avgTimeToFill}
                 <span className="text-sm text-gray-500 ml-1">days</span>
               </p>
@@ -938,9 +938,9 @@ export default function AdminOverview() {
         </div>
 
         {/* Worker Leaderboard */}
-        <div className="bg-gray-800 rounded-xl border border-gray-700 p-6">
-          <h3 className="text-lg font-bold text-white mb-5 flex items-center gap-2">
-            <Award size={20} className="text-yellow-400" />
+        <div className="bg-white rounded-xl border border-gray-200 p-6">
+          <h3 className="text-lg font-bold text-gray-900 mb-5 flex items-center gap-2">
+            <Award size={20} className="text-yellow-500" />
             Worker Leaderboard
             <span className="text-xs text-gray-500 font-normal ml-1">
               Top 10 by Rating
@@ -949,14 +949,14 @@ export default function AdminOverview() {
 
           {topWorkers.length === 0 ? (
             <div className="text-center py-12">
-              <HardHat size={36} className="mx-auto text-gray-600 mb-3" />
+              <HardHat size={36} className="mx-auto text-gray-300 mb-3" />
               <p className="text-gray-500 text-sm">No workers registered yet</p>
             </div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-gray-700">
+                  <tr className="border-b border-gray-200">
                     <th className="text-left pb-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
                       #
                     </th>
@@ -977,17 +977,17 @@ export default function AdminOverview() {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-700/50">
+                <tbody className="divide-y divide-gray-100">
                   {topWorkers.map((w, i) => (
                     <tr
                       key={w.id}
-                      className="hover:bg-gray-700/30 transition-colors"
+                      className="hover:bg-gray-50 transition-colors"
                     >
                       <td className="py-2.5 text-sm text-gray-500 font-mono">
                         {i + 1}
                       </td>
                       <td className="py-2.5">
-                        <span className="text-sm font-medium text-white">
+                        <span className="text-sm font-medium text-gray-900">
                           {w.name}
                         </span>
                       </td>
@@ -995,19 +995,19 @@ export default function AdminOverview() {
                         <span className="flex items-center justify-center gap-1">
                           <Star
                             size={12}
-                            className="text-yellow-400 fill-yellow-400"
+                            className="text-yellow-500 fill-yellow-500"
                           />
-                          <span className="text-sm font-bold text-yellow-400">
+                          <span className="text-sm font-bold text-yellow-600">
                             {w.rating.toFixed(1)}
                           </span>
                         </span>
                       </td>
-                      <td className="py-2.5 text-center text-sm text-gray-300">
+                      <td className="py-2.5 text-center text-sm text-gray-600">
                         {w.jobsCompleted}
                       </td>
                       <td className="py-2.5 text-center">
                         <div className="flex items-center justify-center gap-2">
-                          <div className="w-16 bg-gray-700 rounded-full h-2 overflow-hidden">
+                          <div className="w-16 bg-gray-200 rounded-full h-2 overflow-hidden">
                             <div
                               className={`h-full rounded-full ${reliabilityBg(w.reliabilityScore)}`}
                               style={{
@@ -1022,7 +1022,7 @@ export default function AdminOverview() {
                           </span>
                         </div>
                       </td>
-                      <td className="py-2.5 text-center text-sm text-gray-300">
+                      <td className="py-2.5 text-center text-sm text-gray-600">
                         {w.avgBidScore || "--"}
                       </td>
                     </tr>
@@ -1037,9 +1037,9 @@ export default function AdminOverview() {
       {/* ====== 5. SLA Summary + 6. Recent Activity Feed ====== */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* SLA Summary */}
-        <div className="bg-gray-800 rounded-xl border border-gray-700 p-6">
-          <h3 className="text-lg font-bold text-white mb-5 flex items-center gap-2">
-            <ShieldAlert size={20} className="text-red-400" />
+        <div className="bg-white rounded-xl border border-gray-200 p-6">
+          <h3 className="text-lg font-bold text-gray-900 mb-5 flex items-center gap-2">
+            <ShieldAlert size={20} className="text-red-500" />
             SLA Summary
           </h3>
 
@@ -1047,14 +1047,14 @@ export default function AdminOverview() {
             {/* Active Violations */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-red-500/10 flex items-center justify-center">
-                  <AlertTriangle size={16} className="text-red-400" />
+                <div className="w-8 h-8 rounded-lg bg-red-50 flex items-center justify-center">
+                  <AlertTriangle size={16} className="text-red-500" />
                 </div>
-                <span className="text-sm text-gray-300">Active Violations</span>
+                <span className="text-sm text-gray-700">Active Violations</span>
               </div>
               <span
                 className={`text-xl font-bold ${
-                  sla.activeViolations > 0 ? "text-red-400" : "text-green-400"
+                  sla.activeViolations > 0 ? "text-red-600" : "text-green-600"
                 }`}
               >
                 {sla.activeViolations}
@@ -1064,16 +1064,16 @@ export default function AdminOverview() {
             {/* Suspended Workers */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-orange-500/10 flex items-center justify-center">
-                  <XCircle size={16} className="text-orange-400" />
+                <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center">
+                  <XCircle size={16} className="text-orange-500" />
                 </div>
-                <span className="text-sm text-gray-300">Workers Suspended</span>
+                <span className="text-sm text-gray-700">Workers Suspended</span>
               </div>
               <span
                 className={`text-xl font-bold ${
                   sla.suspendedWorkers > 0
-                    ? "text-orange-400"
-                    : "text-green-400"
+                    ? "text-orange-600"
+                    : "text-green-600"
                 }`}
               >
                 {sla.suspendedWorkers}
@@ -1083,37 +1083,37 @@ export default function AdminOverview() {
             {/* Auto-Requeued */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-yellow-500/10 flex items-center justify-center">
-                  <RefreshCw size={16} className="text-yellow-400" />
+                <div className="w-8 h-8 rounded-lg bg-yellow-50 flex items-center justify-center">
+                  <RefreshCw size={16} className="text-yellow-500" />
                 </div>
-                <span className="text-sm text-gray-300">
+                <span className="text-sm text-gray-700">
                   Auto-Requeued (Month)
                 </span>
               </div>
-              <span className="text-xl font-bold text-white">
+              <span className="text-xl font-bold text-gray-900">
                 {sla.autoRequeued}
               </span>
             </div>
 
             {/* Avg Compliance */}
-            <div className="pt-3 border-t border-gray-700">
+            <div className="pt-3 border-t border-gray-200">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm text-gray-300">
+                <span className="text-sm text-gray-700">
                   Avg SLA Compliance
                 </span>
                 <span
                   className={`text-lg font-bold ${
                     sla.avgCompliance >= 80
-                      ? "text-green-400"
+                      ? "text-green-600"
                       : sla.avgCompliance >= 50
-                        ? "text-yellow-400"
-                        : "text-red-400"
+                        ? "text-yellow-600"
+                        : "text-red-600"
                   }`}
                 >
                   {sla.avgCompliance}%
                 </span>
               </div>
-              <div className="w-full bg-gray-700 rounded-full h-3 overflow-hidden">
+              <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
                 <div
                   className={`h-full rounded-full transition-all duration-500 ${
                     sla.avgCompliance >= 80
@@ -1130,9 +1130,9 @@ export default function AdminOverview() {
         </div>
 
         {/* Recent Activity Feed */}
-        <div className="lg:col-span-2 bg-gray-800 rounded-xl border border-gray-700 p-6">
-          <h3 className="text-lg font-bold text-white mb-5 flex items-center gap-2">
-            <Clock size={20} className="text-gray-400" />
+        <div className="lg:col-span-2 bg-white rounded-xl border border-gray-200 p-6">
+          <h3 className="text-lg font-bold text-gray-900 mb-5 flex items-center gap-2">
+            <Clock size={20} className="text-gray-500" />
             Recent Activity
             <span className="text-xs text-gray-500 font-normal ml-1">
               Last 20 events
@@ -1141,7 +1141,7 @@ export default function AdminOverview() {
 
           {activityFeed.length === 0 ? (
             <div className="text-center py-12">
-              <Activity size={36} className="mx-auto text-gray-600 mb-3" />
+              <Activity size={36} className="mx-auto text-gray-300 mb-3" />
               <p className="text-gray-500 text-sm">No recent activity</p>
             </div>
           ) : (
@@ -1149,11 +1149,11 @@ export default function AdminOverview() {
               {activityFeed.map((event) => (
                 <div
                   key={event.id}
-                  className="flex items-start gap-3 py-2.5 px-3 rounded-lg hover:bg-gray-700/30 transition-colors"
+                  className="flex items-start gap-3 py-2.5 px-3 rounded-lg hover:bg-gray-50 transition-colors"
                 >
                   <div className="mt-0.5">{eventIcon(event.type)}</div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm text-gray-200 truncate">
+                    <p className="text-sm text-gray-800 truncate">
                       {event.description}
                     </p>
                     {event.detail && (

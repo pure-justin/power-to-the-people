@@ -12,16 +12,12 @@ import {
 import {
   Users,
   DollarSign,
-  TrendingUp,
-  TrendingDown,
   Target,
   Phone,
   CalendarPlus,
   FileText,
   ArrowRight,
   Clock,
-  CheckCircle2,
-  XCircle,
 } from "lucide-react";
 
 const ACTIVE_STAGES = [

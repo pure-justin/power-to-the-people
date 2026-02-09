@@ -30,7 +30,6 @@ import {
   ChevronUp,
   AlertCircle,
   Loader2,
-  Store,
   Gavel,
   ArrowRight,
   Lock,
@@ -43,7 +42,6 @@ import {
   BarChart3,
   Hammer,
   Ruler,
-  Wrench,
   Zap,
   ClipboardCheck,
   Send,
@@ -51,7 +49,6 @@ import {
   Compass,
   PenTool,
   HardHat,
-  Bolt,
 } from "lucide-react";
 
 const PIPELINE_STAGES = [
