@@ -1,5 +1,6 @@
-import { NavLink } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext";
+import { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth, ROLE_ROUTES } from "../contexts/AuthContext";
 import {
   LayoutDashboard,
   Users,
@@ -38,6 +39,8 @@ import {
   Camera,
   ClipboardCheck,
   Webhook,
+  BookOpen,
+  Eye,
 } from "lucide-react";
 
 const NAV_ITEMS = {
@@ -61,6 +64,7 @@ const NAV_ITEMS = {
     { to: "/admin/tasks", label: "AI Tasks", icon: Brain },
     { to: "/admin/credits", label: "Tax Credits", icon: BadgeDollarSign },
     { to: "/dashboard/marketplace", label: "Marketplace", icon: Store },
+    { to: "/api-docs", label: "API Docs", icon: BookOpen },
   ],
   installer: [
     { to: "/dashboard", label: "Overview", icon: LayoutDashboard },
@@ -82,6 +86,7 @@ const NAV_ITEMS = {
     { to: "/dashboard/referrals", label: "Referrals", icon: Gift },
     { to: "/dashboard/api-keys", label: "API Keys", icon: Key },
     { to: "/dashboard/billing", label: "Billing", icon: CreditCard },
+    { to: "/api-docs", label: "API Docs", icon: BookOpen },
   ],
   sales: [
     { to: "/sales", label: "Overview", icon: LayoutDashboard },
@@ -107,9 +112,25 @@ const NAV_ITEMS = {
   ],
 };
 
+const VIEW_AS_OPTIONS = [
+  { value: "admin", label: "Admin" },
+  { value: "installer", label: "Installer" },
+  { value: "sales", label: "Sales" },
+  { value: "customer", label: "Customer" },
+];
+
 export default function Sidebar({ open, onClose }) {
-  const { role } = useAuth();
-  const items = NAV_ITEMS[role] || NAV_ITEMS.customer;
+  const { role, isAdmin } = useAuth();
+  const navigate = useNavigate();
+  const [viewAs, setViewAs] = useState(null);
+  const activeRole = viewAs || role;
+  const items = NAV_ITEMS[activeRole] || NAV_ITEMS.customer;
+
+  const handleViewAs = (newRole) => {
+    setViewAs(newRole === role ? null : newRole);
+    const target = ROLE_ROUTES[newRole] || "/portal";
+    navigate(target);
+  };
 
   return (
     <>
@@ -140,6 +161,31 @@ export default function Sidebar({ open, onClose }) {
             <X className="h-5 w-5" />
           </button>
         </div>
+
+        {/* View As (admin only) */}
+        {isAdmin && (
+          <div className="mx-3 mb-2 rounded-lg bg-gray-800 p-2">
+            <div className="flex items-center gap-1.5 mb-1.5 px-1">
+              <Eye className="h-3.5 w-3.5 text-gray-500" />
+              <span className="text-xs font-medium text-gray-500">View as</span>
+            </div>
+            <div className="grid grid-cols-2 gap-1">
+              {VIEW_AS_OPTIONS.map((opt) => (
+                <button
+                  key={opt.value}
+                  onClick={() => handleViewAs(opt.value)}
+                  className={`rounded-md px-2 py-1 text-xs font-medium transition-colors ${
+                    activeRole === opt.value
+                      ? "bg-emerald-500/20 text-emerald-400"
+                      : "text-gray-400 hover:bg-gray-700 hover:text-white"
+                  }`}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Nav */}
         <nav className="flex-1 overflow-y-auto px-3 py-4">

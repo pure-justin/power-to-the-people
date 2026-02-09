@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import {
+  createApiKey,
+  revokeApiKey,
+  rotateApiKey,
+} from "../../services/apiKeyService";
+import {
   db,
   collection,
   query,
@@ -16,7 +21,229 @@ import {
   CheckCircle,
   XCircle,
   BarChart3,
+  Plus,
+  Copy,
+  Check,
+  X,
+  AlertTriangle,
+  ToggleRight,
+  RefreshCw,
 } from "lucide-react";
+
+const AVAILABLE_SCOPES = [
+  { value: "read_leads", label: "Read Leads", group: "Leads" },
+  { value: "write_leads", label: "Write Leads", group: "Leads" },
+  { value: "read_solar", label: "Read Solar Data", group: "Solar" },
+  { value: "write_solar", label: "Write Solar Data", group: "Solar" },
+  { value: "read_equipment", label: "Read Equipment", group: "Solar" },
+  { value: "read_utilities", label: "Read Utilities", group: "Solar" },
+  { value: "read_incentives", label: "Read Incentives", group: "Solar" },
+  { value: "read_permits", label: "Read Permits", group: "Solar" },
+  {
+    value: "read_compliance",
+    label: "Run Compliance Checks",
+    group: "Compliance",
+  },
+  {
+    value: "read_marketplace",
+    label: "Read Marketplace",
+    group: "Marketplace",
+  },
+  {
+    value: "write_marketplace",
+    label: "Write Marketplace",
+    group: "Marketplace",
+  },
+  { value: "read_projects", label: "Read Projects", group: "Projects" },
+  { value: "write_projects", label: "Write Projects", group: "Projects" },
+  { value: "manage_webhooks", label: "Manage Webhooks", group: "Webhooks" },
+  { value: "read_smt", label: "Read SMT Data", group: "SMT" },
+  { value: "write_smt", label: "Write SMT Data", group: "SMT" },
+  { value: "admin", label: "Full Admin Access", group: "Admin" },
+];
+
+function CreateKeyModal({ onClose, onCreate }) {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [environment, setEnvironment] = useState("development");
+  const [scopes, setScopes] = useState([
+    "read_leads",
+    "read_solar",
+    "read_equipment",
+  ]);
+  const [creating, setCreating] = useState(false);
+
+  const toggleScope = (scope) => {
+    setScopes((prev) =>
+      prev.includes(scope) ? prev.filter((s) => s !== scope) : [...prev, scope],
+    );
+  };
+
+  const handleCreate = async () => {
+    if (!name.trim()) return;
+    setCreating(true);
+    try {
+      await onCreate({ name, description, environment, scopes });
+    } finally {
+      setCreating(false);
+    }
+  };
+
+  const scopeGroups = {};
+  for (const scope of AVAILABLE_SCOPES) {
+    if (!scopeGroups[scope.group]) scopeGroups[scope.group] = [];
+    scopeGroups[scope.group].push(scope);
+  }
+
+  return (
+    <>
+      <div className="fixed inset-0 z-40 bg-black/30" onClick={onClose} />
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="w-full max-w-lg rounded-xl bg-white shadow-xl max-h-[90vh] overflow-y-auto">
+          <div className="flex items-center justify-between border-b px-6 py-4">
+            <h2 className="text-lg font-semibold text-gray-900">
+              Create API Key
+            </h2>
+            <button
+              onClick={onClose}
+              className="rounded-lg p-1 text-gray-400 hover:text-gray-600"
+            >
+              <X className="h-5 w-5" />
+            </button>
+          </div>
+          <div className="space-y-4 p-6">
+            <div>
+              <label className="mb-1 block text-sm font-medium text-gray-700">
+                Key Name
+              </label>
+              <input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="My Integration"
+                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              />
+            </div>
+            <div>
+              <label className="mb-1 block text-sm font-medium text-gray-700">
+                Description
+              </label>
+              <input
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="Optional description"
+                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              />
+            </div>
+            <div>
+              <label className="mb-2 block text-sm font-medium text-gray-700">
+                Environment
+              </label>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setEnvironment("development")}
+                  className={`flex-1 rounded-lg border-2 px-4 py-2 text-sm font-medium transition-colors ${environment === "development" ? "border-amber-500 bg-amber-50 text-amber-700" : "border-gray-200 text-gray-600 hover:border-gray-300"}`}
+                >
+                  Development
+                </button>
+                <button
+                  onClick={() => setEnvironment("production")}
+                  className={`flex-1 rounded-lg border-2 px-4 py-2 text-sm font-medium transition-colors ${environment === "production" ? "border-emerald-500 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-600 hover:border-gray-300"}`}
+                >
+                  Production
+                </button>
+              </div>
+            </div>
+            <div>
+              <label className="mb-2 block text-sm font-medium text-gray-700">
+                Scopes
+              </label>
+              <div className="space-y-3">
+                {Object.entries(scopeGroups).map(([group, groupScopes]) => (
+                  <div key={group}>
+                    <p className="mb-1 text-xs font-medium text-gray-500 uppercase">
+                      {group}
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {groupScopes.map((scope) => (
+                        <button
+                          key={scope.value}
+                          onClick={() => toggleScope(scope.value)}
+                          className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${scopes.includes(scope.value) ? "bg-emerald-100 text-emerald-700" : "bg-gray-100 text-gray-500 hover:bg-gray-200"}`}
+                        >
+                          {scope.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center justify-end gap-3 border-t px-6 py-4">
+            <button
+              onClick={onClose}
+              className="rounded-lg px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleCreate}
+              disabled={!name.trim() || scopes.length === 0 || creating}
+              className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              {creating ? "Creating..." : "Create Key"}
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+function NewKeyDisplay({ apiKey, onDismiss }) {
+  const [copied, setCopied] = useState(false);
+  const copyKey = () => {
+    navigator.clipboard.writeText(apiKey);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+  return (
+    <div className="rounded-xl border-2 border-amber-200 bg-amber-50 p-4">
+      <div className="flex items-start gap-3">
+        <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-amber-600" />
+        <div className="flex-1">
+          <h3 className="text-sm font-semibold text-amber-900">
+            Save your API key now
+          </h3>
+          <p className="mt-1 text-xs text-amber-700">
+            This key will only be shown once. Copy it and store it securely.
+          </p>
+          <div className="mt-3 flex items-center gap-2">
+            <code className="flex-1 rounded-lg bg-white px-3 py-2 font-mono text-xs text-gray-900 border border-amber-200 break-all">
+              {apiKey}
+            </code>
+            <button
+              onClick={copyKey}
+              className="rounded-lg bg-amber-600 px-3 py-2 text-white hover:bg-amber-700"
+            >
+              {copied ? (
+                <Check className="h-4 w-4" />
+              ) : (
+                <Copy className="h-4 w-4" />
+              )}
+            </button>
+          </div>
+          <button
+            onClick={onDismiss}
+            className="mt-2 text-xs font-medium text-amber-700 hover:text-amber-900"
+          >
+            I have saved my key
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function AdminApiKeys() {
   useAuth();
@@ -25,6 +252,8 @@ export default function AdminApiKeys() {
   const [usageLogs, setUsageLogs] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [showCreate, setShowCreate] = useState(false);
+  const [newKey, setNewKey] = useState(null);
   const [stats, setStats] = useState({
     total: 0,
     active: 0,
@@ -35,6 +264,68 @@ export default function AdminApiKeys() {
   useEffect(() => {
     loadData();
   }, []);
+
+  const handleCreateKey = async ({
+    name,
+    description,
+    environment,
+    scopes,
+  }) => {
+    try {
+      const result = await createApiKey({
+        name,
+        description,
+        scopes,
+        environment,
+      });
+      if (result.success) {
+        setNewKey(result.data.apiKey);
+        setShowCreate(false);
+        await loadData();
+      } else {
+        alert("Failed to create API key: " + result.error);
+      }
+    } catch (err) {
+      alert("Failed to create API key: " + err.message);
+    }
+  };
+
+  const handleRevoke = async (key) => {
+    if (!confirm(`Revoke API key "${key.name || key.id}"? This is permanent.`))
+      return;
+    try {
+      const result = await revokeApiKey(key.id);
+      if (result.success) {
+        setApiKeys((prev) =>
+          prev.map((k) => (k.id === key.id ? { ...k, status: "revoked" } : k)),
+        );
+      }
+    } catch (err) {
+      alert("Failed to revoke: " + err.message);
+    }
+  };
+
+  const handleRotate = async (key) => {
+    if (
+      !confirm(
+        `Rotate "${key.name || key.id}"? Old key stops working immediately.`,
+      )
+    )
+      return;
+    try {
+      const result = await rotateApiKey(key.id);
+      if (result.success) {
+        setNewKey(result.data.apiKey);
+        setApiKeys((prev) =>
+          prev.map((k) =>
+            k.id === key.id ? { ...k, keyPrefix: result.data.keyPrefix } : k,
+          ),
+        );
+      }
+    } catch (err) {
+      alert("Failed to rotate: " + err.message);
+    }
+  };
 
   const loadData = async () => {
     try {
@@ -169,6 +460,21 @@ export default function AdminApiKeys() {
 
   return (
     <div className="space-y-6">
+      {/* Create button + new key display */}
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold text-gray-900">API Keys</h1>
+        <button
+          onClick={() => setShowCreate(true)}
+          className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700"
+        >
+          <Plus className="h-4 w-4" /> Create Key
+        </button>
+      </div>
+
+      {newKey && (
+        <NewKeyDisplay apiKey={newKey} onDismiss={() => setNewKey(null)} />
+      )}
+
       {/* Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         {metricCards.map((m) => (
@@ -291,6 +597,9 @@ export default function AdminApiKeys() {
                   <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
                     Created
                   </th>
+                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                    Actions
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
@@ -343,6 +652,31 @@ export default function AdminApiKeys() {
                     </td>
                     <td className="px-4 py-3 text-sm text-gray-400">
                       {formatDate(k.createdAt)}
+                    </td>
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-1">
+                        {(k.status || "active") === "active" && (
+                          <>
+                            <button
+                              onClick={() => handleRotate(k)}
+                              className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-medium text-blue-600 hover:bg-blue-50"
+                              title="Rotate key"
+                            >
+                              <RefreshCw className="h-3.5 w-3.5" /> Rotate
+                            </button>
+                            <button
+                              onClick={() => handleRevoke(k)}
+                              className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50"
+                              title="Revoke key"
+                            >
+                              <XCircle className="h-3.5 w-3.5" /> Revoke
+                            </button>
+                          </>
+                        )}
+                        {(k.status || "") === "revoked" && (
+                          <span className="text-xs text-gray-400">Revoked</span>
+                        )}
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -413,6 +747,14 @@ export default function AdminApiKeys() {
             </table>
           </div>
         </div>
+      )}
+
+      {/* Create modal */}
+      {showCreate && (
+        <CreateKeyModal
+          onClose={() => setShowCreate(false)}
+          onCreate={handleCreateKey}
+        />
       )}
     </div>
   );
