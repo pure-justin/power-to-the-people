@@ -81,7 +81,7 @@ function ComparisonColumn({
 }
 
 export default function PortalFinancing() {
-  const { user } = useAuth();
+  useAuth();
   const [systemCost, setSystemCost] = useState(28000);
   const [loanRate, setLoanRate] = useState(6.99);
   const [leaseCostPerMonth, setLeaseCostPerMonth] = useState(125);

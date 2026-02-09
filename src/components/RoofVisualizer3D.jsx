@@ -190,13 +190,6 @@ export default function RoofVisualizer3D({
       // This loads the necessary tiles asynchronously
       const clamped = await viewer.scene.clampToHeightMostDetailed(positions);
 
-      console.log(
-        "Clamped positions:",
-        clamped.filter((p) => defined(p)).length,
-        "of",
-        positions.length,
-      );
-
       // Store clamped positions with panel data
       const panelsWithHeight = solarPanels
         .slice(0, maxPanels)
@@ -235,7 +228,6 @@ export default function RoofVisualizer3D({
       setHeightsReady(true);
       setStatusMessage("");
       setLoading(false);
-      console.log("Height sampling complete");
     } catch (err) {
       console.error("Height sampling error:", err);
       setStatusMessage("Using estimated heights");
@@ -264,7 +256,6 @@ export default function RoofVisualizer3D({
   // Handle tileset ready - fly to building and sample heights
   const handleTilesetReady = useCallback(
     async (tileset) => {
-      console.log("Google 3D Tiles ready");
       tilesetRef.current = tileset;
       setStatusMessage("Flying to location...");
 

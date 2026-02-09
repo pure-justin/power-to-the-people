@@ -10,7 +10,7 @@ import {
 import { FolderKanban, Search, PieChart } from "lucide-react";
 
 export default function AdminProjects() {
-  const { user } = useAuth();
+  useAuth();
   const [loading, setLoading] = useState(true);
   const [projects, setProjects] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");

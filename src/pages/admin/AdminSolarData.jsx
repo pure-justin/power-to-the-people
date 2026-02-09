@@ -40,7 +40,7 @@ const TABS = [
 ];
 
 export default function AdminSolarData() {
-  const { user } = useAuth();
+  useAuth();
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("equipment");
   const [data, setData] = useState({});

@@ -19,7 +19,7 @@ import {
 } from "lucide-react";
 
 export default function AdminApiKeys() {
-  const { user } = useAuth();
+  useAuth();
   const [loading, setLoading] = useState(true);
   const [apiKeys, setApiKeys] = useState([]);
   const [usageLogs, setUsageLogs] = useState([]);

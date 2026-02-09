@@ -15,6 +15,8 @@ import {
   Heart,
   Code,
 } from "lucide-react";
+import PublicNav from "../components/PublicNav";
+import PublicFooter from "../components/PublicFooter";
 
 export default function About() {
   return (

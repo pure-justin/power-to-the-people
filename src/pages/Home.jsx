@@ -32,6 +32,8 @@ import {
   Award,
   Activity,
 } from "lucide-react";
+import PublicNav from "../components/PublicNav";
+import PublicFooter from "../components/PublicFooter";
 
 export default function Home() {
   const [showContent, setShowContent] = useState(false);
@@ -76,93 +78,7 @@ export default function Home() {
           font-family: 'Inter', -apple-system, sans-serif;
         }
 
-        /* ============================================
-           HEADER
-           ============================================ */
-        .dark-header {
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          z-index: 100;
-          padding: 16px 0;
-          background: rgba(10, 10, 15, 0.8);
-          backdrop-filter: blur(20px);
-          border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .dark-header .container {
-          max-width: 1400px;
-          margin: 0 auto;
-          padding: 0 40px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
-
-        .dark-logo {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          font-weight: 800;
-          font-size: 1.25rem;
-          color: #fff;
-          text-decoration: none;
-          letter-spacing: -0.02em;
-        }
-
-        .dark-logo-icon {
-          width: 38px;
-          height: 38px;
-          background: linear-gradient(135deg, #10b981, #059669);
-          border-radius: 10px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          box-shadow: 0 0 24px rgba(16, 185, 129, 0.4);
-        }
-
-        .dark-nav {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-        }
-
-        .dark-nav-link {
-          color: rgba(255,255,255,0.6);
-          text-decoration: none;
-          font-weight: 500;
-          font-size: 0.9rem;
-          transition: all 0.3s;
-          padding: 8px 16px;
-          border-radius: 8px;
-        }
-
-        .dark-nav-link:hover {
-          color: #fff;
-          background: rgba(255,255,255,0.05);
-        }
-
-        .nav-cta {
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-          padding: 10px 20px !important;
-          background: linear-gradient(135deg, #10b981, #059669);
-          color: white !important;
-          font-weight: 600;
-          font-size: 0.9rem;
-          border-radius: 10px;
-          text-decoration: none;
-          transition: all 0.3s;
-          box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
-        }
-
-        .nav-cta:hover {
-          transform: translateY(-1px);
-          box-shadow: 0 0 30px rgba(16, 185, 129, 0.5);
-          background: linear-gradient(135deg, #34d399, #10b981) !important;
-        }
+        /* Header handled by PublicNav component */
 
         /* ============================================
            HERO
@@ -868,103 +784,7 @@ export default function Home() {
           flex-wrap: wrap;
         }
 
-        /* ============================================
-           FOOTER
-           ============================================ */
-        .site-footer {
-          padding: 60px 0 40px;
-          background: #050508;
-          border-top: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .footer-grid {
-          display: grid;
-          grid-template-columns: 2fr 1fr 1fr 1fr;
-          gap: 48px;
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 0 40px 40px;
-        }
-
-        .footer-brand {
-          max-width: 300px;
-        }
-
-        .footer-brand-name {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          font-weight: 800;
-          font-size: 1.1rem;
-          color: #fff;
-          margin-bottom: 12px;
-        }
-
-        .footer-brand-desc {
-          color: rgba(255,255,255,0.4);
-          font-size: 0.85rem;
-          line-height: 1.7;
-        }
-
-        .footer-col-title {
-          font-weight: 700;
-          font-size: 0.85rem;
-          color: rgba(255,255,255,0.8);
-          margin-bottom: 16px;
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-        }
-
-        .footer-col-links {
-          list-style: none;
-          padding: 0;
-          margin: 0;
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-        }
-
-        .footer-col-links a {
-          color: rgba(255,255,255,0.4);
-          text-decoration: none;
-          font-size: 0.9rem;
-          transition: color 0.2s;
-        }
-
-        .footer-col-links a:hover {
-          color: #10b981;
-        }
-
-        .footer-bottom {
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 24px 40px 0;
-          border-top: 1px solid rgba(255,255,255,0.05);
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
-
-        .footer-copy {
-          color: rgba(255,255,255,0.25);
-          font-size: 0.8rem;
-        }
-
-        .footer-social {
-          display: flex;
-          gap: 16px;
-        }
-
-        .footer-social a {
-          color: rgba(255,255,255,0.3);
-          text-decoration: none;
-          font-size: 0.8rem;
-          transition: color 0.2s;
-        }
-
-        .footer-social a:hover {
-          color: #10b981;
-        }
+        /* Footer handled by PublicFooter component */
 
         /* ============================================
            RESPONSIVE
@@ -983,20 +803,12 @@ export default function Home() {
             direction: ltr;
           }
 
-          .footer-grid {
-            grid-template-columns: 1fr 1fr;
-            gap: 32px;
-          }
+          /* Footer 1024px responsive handled by PublicFooter */
         }
 
         @media (max-width: 768px) {
-          .dark-header .container {
-            padding: 0 20px;
-          }
 
-          .dark-nav-link:not(.nav-cta) {
-            display: none;
-          }
+          /* Nav responsive handled by PublicNav */
 
           .hero-section {
             padding: 100px 20px 60px;
@@ -1043,16 +855,7 @@ export default function Home() {
             padding: 40px 24px;
           }
 
-          .footer-grid {
-            grid-template-columns: 1fr;
-            gap: 24px;
-          }
-
-          .footer-bottom {
-            flex-direction: column;
-            gap: 16px;
-            text-align: center;
-          }
+          /* Footer responsive handled by PublicFooter */
 
           .section-container {
             padding: 0 20px;
@@ -1060,40 +863,7 @@ export default function Home() {
         }
       `}</style>
 
-      {/* ================================================
-          HEADER
-          ================================================ */}
-      <header className="dark-header">
-        <div className="container">
-          <Link to="/" className="dark-logo">
-            <div className="dark-logo-icon">
-              <Sun size={20} />
-            </div>
-            SolarOS
-          </Link>
-          <nav className="dark-nav">
-            <Link to="/features" className="dark-nav-link">
-              Features
-            </Link>
-            <Link to="/pricing" className="dark-nav-link">
-              Pricing
-            </Link>
-            <Link to="/about" className="dark-nav-link">
-              About
-            </Link>
-            <Link to="/api-docs" className="dark-nav-link">
-              API
-            </Link>
-            <Link to="/login" className="dark-nav-link">
-              Sign In
-            </Link>
-            <Link to="/get-started" className="nav-cta">
-              Get Started
-              <ArrowRight size={16} />
-            </Link>
-          </nav>
-        </div>
-      </header>
+      <PublicNav />
 
       {/* ================================================
           HERO
@@ -1837,95 +1607,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================================================
-          FOOTER
-          ================================================ */}
-      <footer className="site-footer">
-        <div className="footer-grid">
-          <div className="footer-brand">
-            <div className="footer-brand-name">
-              <Sun size={20} style={{ color: "#10b981" }} />
-              SolarOS
-            </div>
-            <p className="footer-brand-desc">
-              The operating system for solar installation. Automating the full
-              lifecycle from lead to interconnection for homeowners, installers,
-              and sales teams nationwide.
-            </p>
-          </div>
-
-          <div>
-            <h4 className="footer-col-title">Product</h4>
-            <ul className="footer-col-links">
-              <li>
-                <Link to="/features">Features</Link>
-              </li>
-              <li>
-                <Link to="/pricing">Pricing</Link>
-              </li>
-              <li>
-                <Link to="/api-docs">API Docs</Link>
-              </li>
-              <li>
-                <Link to="/compare">Comparisons</Link>
-              </li>
-              <li>
-                <Link to="/marketplace/credits">Credit Marketplace</Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="footer-col-title">Company</h4>
-            <ul className="footer-col-links">
-              <li>
-                <Link to="/about">About</Link>
-              </li>
-              <li>
-                <a href="mailto:support@solarios.io">Contact</a>
-              </li>
-              <li>
-                <Link to="/about">Careers</Link>
-              </li>
-              <li>
-                <Link to="/about">Press</Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="footer-col-title">Legal</h4>
-            <ul className="footer-col-links">
-              <li>
-                <a href="#">Privacy Policy</a>
-              </li>
-              <li>
-                <a href="#">Terms of Service</a>
-              </li>
-              <li>
-                <a href="#">Cookie Policy</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="footer-bottom">
-          <p className="footer-copy">
-            &copy; 2026 SolarOS. All rights reserved.
-          </p>
-          <div className="footer-social">
-            <a href="#" target="_blank" rel="noopener noreferrer">
-              Twitter
-            </a>
-            <a href="#" target="_blank" rel="noopener noreferrer">
-              LinkedIn
-            </a>
-            <a href="#" target="_blank" rel="noopener noreferrer">
-              GitHub
-            </a>
-          </div>
-        </div>
-      </footer>
+      <PublicFooter />
     </div>
   );
 }

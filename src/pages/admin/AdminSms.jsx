@@ -23,7 +23,7 @@ import {
 const SMS_COST = 0.0075;
 
 export default function AdminSms() {
-  const { user } = useAuth();
+  useAuth();
   const [loading, setLoading] = useState(true);
   const [logs, setLogs] = useState([]);
   const [stats, setStats] = useState({

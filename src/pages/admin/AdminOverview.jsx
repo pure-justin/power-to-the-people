@@ -134,7 +134,7 @@ function SkeletonBlock({ height = "h-64" }) {
 }
 
 export default function AdminOverview() {
-  const { user } = useAuth();
+  useAuth();
   const [loading, setLoading] = useState(true);
 
   // KPI state

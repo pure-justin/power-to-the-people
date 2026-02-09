@@ -61,7 +61,7 @@ function BarChart({ data }) {
 }
 
 export default function PortalUsage() {
-  const { user } = useAuth();
+  useAuth();
   const [timeRange, setTimeRange] = useState("12m");
 
   const totalUsage = SAMPLE_MONTHLY_DATA.reduce((s, d) => s + d.usage, 0);

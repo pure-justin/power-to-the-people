@@ -9,27 +9,9 @@ import * as functions from "firebase-functions/v1";
 import * as admin from "firebase-admin";
 import { scoreBid, loadWeights } from "./smartBidding";
 import { getZipCoordinates, haversineDistance } from "./locationMatching";
+import { SERVICE_TYPES } from "./utils/constants";
 
 const db = admin.firestore();
-
-// Valid service types for marketplace listings
-const SERVICE_TYPES = [
-  "cad_design",
-  "engineering_stamp",
-  "permit_submission",
-  "site_survey",
-  "hoa_approval",
-  "installation",
-  "inspection",
-  "electrical",
-  "roofing",
-  "trenching",
-  "battery_install",
-  "panel_upgrade",
-  "monitoring_setup",
-  "maintenance",
-  "other",
-] as const;
 
 /**
  * createMarketplaceListing - Create a new marketplace job listing
@@ -281,7 +263,10 @@ export const submitBid = functions.https.onCall(async (data, context) => {
       bid_score_breakdown: bidScore.breakdown,
     });
   } catch (err) {
-    functions.logger.warn("Failed to compute bid score, continuing without it:", err);
+    functions.logger.warn(
+      "Failed to compute bid score, continuing without it:",
+      err,
+    );
   }
 
   // Increment bid count on listing

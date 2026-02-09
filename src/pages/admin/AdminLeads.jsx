@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 
 export default function AdminLeads() {
-  const { user } = useAuth();
+  useAuth();
   const [loading, setLoading] = useState(true);
   const [leads, setLeads] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");

@@ -23,6 +23,7 @@ import {
   getPipelineStatus,
 } from "./pipelineAutoTasks";
 import { setCors, handleOptions } from "./corsConfig";
+import { PIPELINE_STAGES, STAGE_TO_PHASE } from "./utils/constants";
 
 // ─── Error Helper ──────────────────────────────────────────────────────────────
 
@@ -33,46 +34,6 @@ function errorStatus(error: any): number {
   if (error.code === "not-found") return 404;
   return 500;
 }
-
-// ─── Valid Pipeline Stages (must match projectPipeline.ts) ─────────────────────
-
-const PIPELINE_STAGES = [
-  "lead",
-  "qualified",
-  "proposal",
-  "sold",
-  "survey",
-  "design",
-  "engineering",
-  "permit_submitted",
-  "permit_approved",
-  "scheduled",
-  "installing",
-  "inspection",
-  "pto_submitted",
-  "pto_approved",
-  "activated",
-  "monitoring",
-] as const;
-
-const STAGE_TO_PHASE: Record<string, string> = {
-  lead: "acquisition",
-  qualified: "acquisition",
-  proposal: "sales",
-  sold: "sales",
-  survey: "pre_construction",
-  design: "pre_construction",
-  engineering: "pre_construction",
-  permit_submitted: "pre_construction",
-  permit_approved: "pre_construction",
-  scheduled: "construction",
-  installing: "construction",
-  inspection: "construction",
-  pto_submitted: "activation",
-  pto_approved: "activation",
-  activated: "activation",
-  monitoring: "activation",
-};
 
 // ─── Route Parser ──────────────────────────────────────────────────────────────
 

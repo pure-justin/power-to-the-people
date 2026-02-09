@@ -7,6 +7,7 @@
 
 import * as functions from "firebase-functions/v1";
 import * as admin from "firebase-admin";
+import { setCors, handleOptions } from "./corsConfig";
 
 /**
  * Lead status enum - tracks progress through sales funnel
@@ -247,7 +248,9 @@ export const createLead = functions
       // Save to Firestore
       await leadRef.set(newLead);
 
-      functions.logger.info(`Created lead ${leadRef.id} for ${data.customerName}`);
+      functions.logger.info(
+        `Created lead ${leadRef.id} for ${data.customerName}`,
+      );
 
       return {
         success: true,
@@ -358,7 +361,9 @@ export const updateLead = functions
 
         await leadRef.update(updateData);
 
-        functions.logger.info(`Updated lead ${leadId} by user ${context.auth.uid}`);
+        functions.logger.info(
+          `Updated lead ${leadId} by user ${context.auth.uid}`,
+        );
 
         return {
           success: true,
@@ -438,7 +443,9 @@ export const addLeadNote = functions
           updatedAt: admin.firestore.Timestamp.now(),
         });
 
-        functions.logger.info(`Added note to lead ${leadId} by ${context.auth.uid}`);
+        functions.logger.info(
+          `Added note to lead ${leadId} by ${context.auth.uid}`,
+        );
 
         return {
           success: true,

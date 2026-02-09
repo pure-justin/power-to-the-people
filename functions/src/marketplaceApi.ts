@@ -24,6 +24,7 @@ import * as admin from "firebase-admin";
 import { validateApiKeyFromRequest, ApiKeyScope, ApiKey } from "./apiKeys";
 import { scoreBid, loadWeights } from "./smartBidding";
 import { setCors, handleOptions } from "./corsConfig";
+import { SERVICE_TYPES } from "./utils/constants";
 
 // ─── Error Helper ──────────────────────────────────────────────────────────────
 
@@ -34,26 +35,6 @@ function errorStatus(error: any): number {
   if (error.code === "not-found") return 404;
   return 500;
 }
-
-// ─── Valid service types (mirrors marketplace.ts) ──────────────────────────────
-
-const SERVICE_TYPES = [
-  "cad_design",
-  "engineering_stamp",
-  "permit_submission",
-  "site_survey",
-  "hoa_approval",
-  "installation",
-  "inspection",
-  "electrical",
-  "roofing",
-  "trenching",
-  "battery_install",
-  "panel_upgrade",
-  "monitoring_setup",
-  "maintenance",
-  "other",
-];
 
 // ─── Route Helpers ─────────────────────────────────────────────────────────────
 
@@ -100,7 +81,7 @@ async function handleGetListings(
   // Service type filter
   if (req.query.service_type) {
     const st = req.query.service_type as string;
-    if (!SERVICE_TYPES.includes(st)) {
+    if (!(SERVICE_TYPES as readonly string[]).includes(st)) {
       res.status(400).json({
         success: false,
         error: `Invalid service_type. Must be one of: ${SERVICE_TYPES.join(", ")}`,
@@ -247,7 +228,7 @@ async function handleCreateListing(
     return;
   }
 
-  if (!SERVICE_TYPES.includes(service_type)) {
+  if (!(SERVICE_TYPES as readonly string[]).includes(service_type)) {
     res.status(400).json({
       success: false,
       error: `Invalid service_type. Must be one of: ${SERVICE_TYPES.join(", ")}`,

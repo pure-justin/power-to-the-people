@@ -41,7 +41,7 @@ const TARIFF_RATES = [
 ];
 
 export default function AdminCompliance() {
-  const { user } = useAuth();
+  useAuth();
   const [loading, setLoading] = useState(true);
   const [equipment, setEquipment] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");

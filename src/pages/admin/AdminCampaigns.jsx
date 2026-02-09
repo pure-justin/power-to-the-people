@@ -25,7 +25,7 @@ import {
 } from "lucide-react";
 
 export default function AdminCampaigns() {
-  const { user } = useAuth();
+  useAuth();
   const [loading, setLoading] = useState(true);
   const [campaigns, setCampaigns] = useState([]);
   const [commercialLeads, setCommercialLeads] = useState([]);
