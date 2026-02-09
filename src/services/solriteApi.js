@@ -9,14 +9,13 @@
  * - VITE_SUBHUB_EMAIL
  * - VITE_SUBHUB_PASSWORD
  * - VITE_SUBHUB_ORG_ID (default: 2475)
- * - VITE_SOLNOVA_AUTH_TOKEN (default: X6vGEsj583NdBWOooLLk)
+ * - VITE_SOLNOVA_AUTH_TOKEN
  */
 
 const SUBHUB_API =
   import.meta.env.VITE_SUBHUB_API_URL || "https://api.virtualsaleportal.com";
 const ORG_ID = import.meta.env.VITE_SUBHUB_ORG_ID || "2475";
-const SOLNOVA_AUTH_TOKEN =
-  import.meta.env.VITE_SOLNOVA_AUTH_TOKEN || "X6vGEsj583NdBWOooLLk";
+const SOLNOVA_AUTH_TOKEN = import.meta.env.VITE_SOLNOVA_AUTH_TOKEN || "";
 
 let authToken = null;
 let tokenExpiry = null;
@@ -49,7 +48,7 @@ async function authenticate() {
     body: JSON.stringify({
       email,
       password,
-      ip_address: "127.0.0.1",
+      ip_address: "",
     }),
   });
 

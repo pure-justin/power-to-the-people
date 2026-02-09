@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import {
   Zap,
@@ -75,11 +75,7 @@ export default function InstallerComparison() {
   }, [selectedInstallers, systemSize]);
 
   // Load real installer data
-  useEffect(() => {
-    loadRealInstallers();
-  }, []);
-
-  const loadRealInstallers = async () => {
+  const loadRealInstallers = useCallback(async () => {
     setLoadingReal(true);
     try {
       const result = await searchInstallers({
@@ -95,7 +91,11 @@ export default function InstallerComparison() {
       console.error("Error loading real installers:", error);
     }
     setLoadingReal(false);
-  };
+  }, []);
+
+  useEffect(() => {
+    loadRealInstallers();
+  }, [loadRealInstallers]);
 
   const toggleInstallerSelection = (installerId) => {
     if (selectedInstallers.includes(installerId)) {

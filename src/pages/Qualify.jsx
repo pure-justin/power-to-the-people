@@ -245,8 +245,7 @@ export default function Qualify() {
   const [repLoading, setRepLoading] = useState(false);
 
   // SMT Connector API endpoint (local dev or deployed Cloud Run)
-  const SMT_API_URL =
-    import.meta.env.VITE_SMT_API_URL || "http://localhost:3001";
+  const SMT_API_URL = import.meta.env.VITE_SMT_API_URL || "";
 
   // Check for referral code in URL on mount
   useEffect(() => {
@@ -914,10 +913,7 @@ export default function Qualify() {
       if (!validation.valid) {
         setScanError(validation.error);
         // Store detailed message for display
-        setScanErrorDetails?.({
-          type: validation.error,
-          message: validation.message,
-        });
+        // scanErrorDetails removed - scanError state is sufficient
         setIsScanning(false);
         return;
       }
