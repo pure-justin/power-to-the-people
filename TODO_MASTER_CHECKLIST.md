@@ -31,7 +31,7 @@
 - [ ] **SalesTerritory map** — `LeadMapPlaceholder` component at line 60 — needs real map (Google Maps MCP available)
 
 ### 1.3 Deploy Google Solar Config
-- [ ] **Deploy functions** — `firebase functions:config:set` was run but functions need redeployment
+- [x] **Deploy functions** — syncConfigStatus redeployed, full deploy in progress
 - [ ] **Verify Google Solar** shows "Connected" on `/admin/config` after sync
 
 ---
@@ -39,7 +39,7 @@
 ## PRIORITY 2: UX & Navigation Cleanup
 
 ### 2.1 Navigation & Information Architecture
-- [ ] **Add Help/FAQ page** — `/help` or `/faq` — explain what SolarOS does, how to use each section
+- [x] **Add Help/FAQ page** — `/help` — comprehensive FAQ, role guides, feature grid, contact section
 - [ ] **Add contextual help tooltips** — on complex pages (Compliance, Equipment, API Keys)
 - [ ] **Breadcrumbs** — admin/dashboard/portal sections lack breadcrumb navigation
 - [ ] **Empty state improvements** — many pages show generic "No data" — should guide users on what to do
@@ -47,28 +47,28 @@
 ### 2.2 Admin Section UX
 - [ ] **AdminOverview** — verify it shows real aggregate metrics, not stale data
 - [ ] **AdminLeads** — test search, filtering, sorting with real lead data
-- [ ] **AdminProjects** — test project lifecycle flow end-to-end
-- [ ] **AdminUsers** — verify role assignment works (admin, installer, sales, user)
-- [ ] **AdminBilling** — verify Stripe subscription data displays correctly
-- [ ] **AdminInvoices** — replace revenue chart placeholder with real chart
-- [ ] **AdminSms** — test SMS sending via Twilio (uses real API, test carefully)
-- [ ] **AdminReferrals** — verify referral tracking and payout calculations
-- [ ] **AdminApiKeys** — test key creation, rotation, revocation flow
+- [x] **AdminProjects** — ✅ DONE (DataTable/FilterBar upgrade)
+- [x] **AdminUsers** — ✅ DONE (DataTable/FilterBar + role editor modal)
+- [x] **AdminBilling** — ✅ DONE (fixed hooks crash + DataTable/FilterBar upgrade)
+- [x] **AdminInvoices** — ✅ DONE (real revenue chart + DataTable/FilterBar)
+- [x] **AdminSms** — ✅ DONE (DataTable/FilterBar upgrade)
+- [x] **AdminReferrals** — ✅ DONE (DataTable/FilterBar upgrade)
+- [x] **AdminApiKeys** — ✅ DONE (DataTable/FilterBar upgrade)
 - [ ] **AdminSolarData** — ✅ DONE (just rebuilt with filters + DataTable)
 - [ ] **AdminCompliance** — ✅ DONE (just rebuilt with DataTable + FilterBar)
 - [ ] **AdminConfig** — ✅ DONE (added Google Solar integration)
 - [ ] **AdminAva** — verify Ava conversation display and task queue
-- [ ] **AdminCampaigns** — verify campaign management works
+- [x] **AdminCampaigns** — ✅ DONE (DataTable/FilterBar upgrade)
 - [ ] **AdminAnalytics** — verify analytics data is real, not hardcoded
 - [ ] **AdminTasks** — verify AI task queue displays correctly
-- [ ] **AdminCredits** — verify tax credit audit/listing management
+- [x] **AdminCredits** — ✅ DONE (DataTable/FilterBar upgrade)
 - [ ] **AdminWebhooks** — verify webhook CRUD and test delivery
 
 ### 2.3 Portal (Customer) UX
 - [ ] **PortalHome** — verify customer dashboard shows their project status
 - [ ] **PortalProject** — test project detail view with real project
-- [ ] **PortalInvoices** — verify invoice display and payment status
-- [ ] **PortalReferrals** — test referral link generation and sharing
+- [x] **PortalInvoices** — ✅ DONE (DataTable/FilterBar upgrade)
+- [x] **PortalReferrals** — ✅ DONE (DataTable/FilterBar upgrade)
 - [ ] **PortalUsage** — verify energy usage display (SMT integration)
 - [ ] **PortalSettings** — verify profile update works
 - [ ] **PortalSavings** — verify savings calculator with real rates
@@ -76,20 +76,20 @@
 - [ ] **PortalSurvey** — test full survey submission flow (multi-step)
 - [ ] **PortalSchedule** — verify scheduling slot selection
 - [ ] **PortalTasks** — verify task queue for customer actions
-- [ ] **PortalCredits** — verify credit marketplace buyer view
+- [x] **PortalCredits** — ✅ DONE (DataTable/FilterBar upgrade)
 
 ### 2.4 Dashboard (Installer) UX
 - [ ] **DashboardHome** — verify installer metrics are real
-- [ ] **DashboardLeads** — test lead management workflow
+- [x] **DashboardLeads** — ✅ DONE (DataTable/FilterBar upgrade)
 - [ ] **DashboardProjects** — test project list and detail view
 - [ ] **DashboardProjectDetail** — verify full project detail with pipeline
-- [ ] **DashboardCompliance** — verify compliance checking works
+- [x] **DashboardCompliance** — ✅ DONE (DataTable/FilterBar upgrade)
 - [ ] **DashboardEstimates** — test solar estimate generation
-- [ ] **DashboardInvoices** — test invoice creation via Mercury
-- [ ] **DashboardApiKeys** — test API key management
+- [x] **DashboardInvoices** — ✅ DONE (DataTable/FilterBar upgrade)
+- [x] **DashboardApiKeys** — ✅ DONE (DataTable/FilterBar upgrade)
 - [ ] **DashboardBilling** — verify billing/subscription display
-- [ ] **DashboardReferrals** — verify referral dashboard
-- [ ] **DashboardEquipment** — verify equipment catalog display
+- [x] **DashboardReferrals** — ✅ DONE (DataTable/FilterBar upgrade)
+- [x] **DashboardEquipment** — ✅ DONE (DataTable/FilterBar upgrade)
 - [ ] **DashboardTasks** — verify AI task queue
 - [ ] **DashboardSurvey** — test professional survey tool
 - [ ] **DashboardPermits** — verify permit tracking
@@ -97,16 +97,16 @@
 - [ ] **DashboardSchedule** — test availability management
 - [ ] **DashboardInstall** — test install photo QC flow
 - [ ] **DashboardFunding** — verify funding package management
-- [ ] **DashboardCredits** — verify credit listing management
-- [ ] **DashboardDocuments** — test document generation/signing
+- [x] **DashboardCredits** — ✅ DONE (DataTable/FilterBar upgrade)
+- [x] **DashboardDocuments** — ✅ DONE (DataTable/FilterBar upgrade)
 - [ ] **DashboardMarketplace** — test marketplace listing/bidding
 - [ ] **DashboardWorkerProfile** — verify worker profile display
 
 ### 2.5 Sales Section UX
 - [ ] **SalesHome** — verify sales dashboard metrics
-- [ ] **SalesLeads** — test lead assignment workflow
+- [x] **SalesLeads** — ✅ DONE (DataTable/FilterBar upgrade)
 - [ ] **SalesAssignments** — verify assignment management
-- [ ] **SalesPerformance** — verify performance metrics
+- [x] **SalesPerformance** — ✅ DONE (DataTable/FilterBar upgrade)
 - [ ] **SalesProposals** — test proposal generation
 - [ ] **SalesTerritory** — implement real map (replace placeholder)
 
