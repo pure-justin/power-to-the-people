@@ -1,6 +1,8 @@
 import { useState, useEffect, useMemo } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { db, collection, query, getDocs, limit } from "../../services/firebase";
+import DataTable from "../../components/ui/DataTable";
+import FilterBar from "../../components/ui/FilterBar";
 import {
   Search,
   Sun,
@@ -11,11 +13,8 @@ import {
   XCircle,
   Info,
   ChevronDown,
-  ChevronUp,
   ChevronRight,
   Package,
-  SlidersHorizontal,
-  ArrowUpDown,
   Cpu,
   Grid3X3,
   ShieldCheck,
@@ -180,87 +179,85 @@ function ExpandedRow({ item }) {
     .sort(([a], [b]) => a.localeCompare(b));
 
   return (
-    <tr>
-      <td colSpan={8} className="bg-gray-50 px-4 py-4">
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          {/* Specs */}
-          <div>
-            <h4 className="mb-2 text-xs font-semibold uppercase text-gray-400">
-              Full Specs
-            </h4>
+    <div className="bg-gray-50 px-4 py-4 border-t border-gray-200">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        {/* Specs */}
+        <div>
+          <h4 className="mb-2 text-xs font-semibold uppercase text-gray-400">
+            Full Specs
+          </h4>
+          <dl className="space-y-1">
+            {allSpecs.map(([k, v]) => (
+              <div key={k} className="flex justify-between text-xs">
+                <dt className="text-gray-500">
+                  {k
+                    .replace(/_/g, " ")
+                    .replace(/\b\w/g, (c) => c.toUpperCase())}
+                </dt>
+                <dd className="font-medium text-gray-700">
+                  {typeof v === "boolean" ? (v ? "Yes" : "No") : String(v)}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+
+        {/* Supply Chain */}
+        <div>
+          <h4 className="mb-2 text-xs font-semibold uppercase text-gray-400">
+            Supply Chain
+          </h4>
+          {supplyChain.length > 0 ? (
             <dl className="space-y-1">
-              {allSpecs.map(([k, v]) => (
-                <div key={k} className="flex justify-between text-xs">
-                  <dt className="text-gray-500">
-                    {k
-                      .replace(/_/g, " ")
-                      .replace(/\b\w/g, (c) => c.toUpperCase())}
-                  </dt>
-                  <dd className="font-medium text-gray-700">
-                    {typeof v === "boolean" ? (v ? "Yes" : "No") : String(v)}
-                  </dd>
+              {supplyChain.map((s) => (
+                <div key={s.label} className="flex justify-between text-xs">
+                  <dt className="text-gray-500">{s.label}</dt>
+                  <dd className="font-medium text-gray-700">{s.value}</dd>
                 </div>
               ))}
             </dl>
-          </div>
-
-          {/* Supply Chain */}
-          <div>
-            <h4 className="mb-2 text-xs font-semibold uppercase text-gray-400">
-              Supply Chain
-            </h4>
-            {supplyChain.length > 0 ? (
-              <dl className="space-y-1">
-                {supplyChain.map((s) => (
-                  <div key={s.label} className="flex justify-between text-xs">
-                    <dt className="text-gray-500">{s.label}</dt>
-                    <dd className="font-medium text-gray-700">{s.value}</dd>
-                  </div>
-                ))}
-              </dl>
-            ) : (
-              <p className="text-xs text-gray-400">No supply chain data</p>
-            )}
-          </div>
-
-          {/* Pricing & Tags */}
-          <div>
-            <h4 className="mb-2 text-xs font-semibold uppercase text-gray-400">
-              Pricing
-            </h4>
-            {pricing.length > 0 ? (
-              <dl className="space-y-1">
-                {pricing.map((s) => (
-                  <div key={s.label} className="flex justify-between text-xs">
-                    <dt className="text-gray-500">{s.label}</dt>
-                    <dd className="font-medium text-gray-700">{s.value}</dd>
-                  </div>
-                ))}
-              </dl>
-            ) : (
-              <p className="text-xs text-gray-400">No pricing data</p>
-            )}
-            {item.tags && item.tags.length > 0 && (
-              <div className="mt-3">
-                <h4 className="mb-1 text-xs font-semibold uppercase text-gray-400">
-                  Tags
-                </h4>
-                <div className="flex flex-wrap gap-1">
-                  {item.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded-full bg-emerald-50 px-2 py-0.5 text-xs text-emerald-700"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
+          ) : (
+            <p className="text-xs text-gray-400">No supply chain data</p>
+          )}
         </div>
-      </td>
-    </tr>
+
+        {/* Pricing & Tags */}
+        <div>
+          <h4 className="mb-2 text-xs font-semibold uppercase text-gray-400">
+            Pricing
+          </h4>
+          {pricing.length > 0 ? (
+            <dl className="space-y-1">
+              {pricing.map((s) => (
+                <div key={s.label} className="flex justify-between text-xs">
+                  <dt className="text-gray-500">{s.label}</dt>
+                  <dd className="font-medium text-gray-700">{s.value}</dd>
+                </div>
+              ))}
+            </dl>
+          ) : (
+            <p className="text-xs text-gray-400">No pricing data</p>
+          )}
+          {item.tags && item.tags.length > 0 && (
+            <div className="mt-3">
+              <h4 className="mb-1 text-xs font-semibold uppercase text-gray-400">
+                Tags
+              </h4>
+              <div className="flex flex-wrap gap-1">
+                {item.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full bg-emerald-50 px-2 py-0.5 text-xs text-emerald-700"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -296,17 +293,8 @@ export default function DashboardEquipment() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState("all");
-  const [manufacturerFilter, setManufacturerFilter] = useState("all");
   const [expandedId, setExpandedId] = useState(null);
-  const [showFilters, setShowFilters] = useState(false);
-  const [sortField, setSortField] = useState(null);
-  const [sortDir, setSortDir] = useState("asc");
-  const [complianceFilters, setComplianceFilters] = useState({
-    feoc: false,
-    domestic: false,
-    tariff: false,
-  });
-  const [availabilityFilter, setAvailabilityFilter] = useState("all");
+  const [filters, setFilters] = useState({});
 
   useEffect(() => {
     const loadEquipment = async () => {
@@ -335,18 +323,59 @@ export default function DashboardEquipment() {
     return counts;
   }, [equipment]);
 
-  // Compute manufacturers for current type filter
-  const manufacturers = useMemo(() => {
+  // Build FilterBar definitions from data
+  const filterDefs = useMemo(() => {
     const subset =
       typeFilter === "all"
         ? equipment
         : equipment.filter((e) => e.type === typeFilter);
-    return [
+
+    const manufacturerOptions = [
       ...new Set(subset.map((e) => e.manufacturer).filter(Boolean)),
     ].sort();
+
+    return [
+      {
+        key: "manufacturer",
+        label: "Manufacturer",
+        options: manufacturerOptions.map((m) => ({ value: m, label: m })),
+      },
+      {
+        key: "feoc",
+        label: "FEOC",
+        options: [
+          { value: "compliant", label: "FEOC Compliant" },
+          { value: "non_compliant", label: "Non-Compliant" },
+        ],
+      },
+      {
+        key: "domestic",
+        label: "Domestic Content",
+        options: [
+          { value: "gte50", label: "\u226550% US Content" },
+          { value: "lt50", label: "<50% US Content" },
+        ],
+      },
+      {
+        key: "tariff",
+        label: "Tariff",
+        options: [
+          { value: "safe", label: "Tariff Safe" },
+          { value: "subject", label: "Subject to Tariff" },
+        ],
+      },
+      {
+        key: "availability",
+        label: "Availability",
+        options: [
+          { value: "in_stock", label: "In Stock" },
+          { value: "backorder", label: "Backorder" },
+        ],
+      },
+    ];
   }, [equipment, typeFilter]);
 
-  // Filter and sort
+  // Filter data (sorting is handled by DataTable)
   const filtered = useMemo(() => {
     let result = equipment;
 
@@ -354,8 +383,8 @@ export default function DashboardEquipment() {
       result = result.filter((e) => e.type === typeFilter);
     }
 
-    if (manufacturerFilter !== "all") {
-      result = result.filter((e) => e.manufacturer === manufacturerFilter);
+    if (filters.manufacturer) {
+      result = result.filter((e) => e.manufacturer === filters.manufacturer);
     }
 
     if (search) {
@@ -370,81 +399,41 @@ export default function DashboardEquipment() {
       );
     }
 
-    if (complianceFilters.feoc) {
+    if (filters.feoc === "compliant") {
       result = result.filter((e) => e.feoc_compliant === true);
+    } else if (filters.feoc === "non_compliant") {
+      result = result.filter((e) => e.feoc_compliant === false);
     }
-    if (complianceFilters.domestic) {
+
+    if (filters.domestic === "gte50") {
       result = result.filter(
         (e) => e.domestic_content_pct != null && e.domestic_content_pct >= 50,
       );
-    }
-    if (complianceFilters.tariff) {
-      result = result.filter((e) => e.tariff_safe === true);
+    } else if (filters.domestic === "lt50") {
+      result = result.filter(
+        (e) => e.domestic_content_pct != null && e.domestic_content_pct < 50,
+      );
     }
 
-    if (availabilityFilter === "in_stock") {
+    if (filters.tariff === "safe") {
+      result = result.filter((e) => e.tariff_safe === true);
+    } else if (filters.tariff === "subject") {
+      result = result.filter((e) => e.tariff_safe === false);
+    }
+
+    if (filters.availability === "in_stock") {
       result = result.filter(
         (e) => e.availability && e.availability.toLowerCase().includes("stock"),
       );
-    } else if (availabilityFilter === "backorder") {
+    } else if (filters.availability === "backorder") {
       result = result.filter(
         (e) =>
           e.availability && e.availability.toLowerCase().includes("backorder"),
       );
     }
 
-    if (sortField) {
-      result = [...result].sort((a, b) => {
-        const aVal = a[sortField] ?? "";
-        const bVal = b[sortField] ?? "";
-        if (typeof aVal === "number" && typeof bVal === "number") {
-          return sortDir === "asc" ? aVal - bVal : bVal - aVal;
-        }
-        const cmp = String(aVal).localeCompare(String(bVal));
-        return sortDir === "asc" ? cmp : -cmp;
-      });
-    }
-
     return result;
-  }, [
-    equipment,
-    typeFilter,
-    manufacturerFilter,
-    search,
-    complianceFilters,
-    availabilityFilter,
-    sortField,
-    sortDir,
-  ]);
-
-  const handleSort = (field) => {
-    if (sortField === field) {
-      setSortDir((d) => (d === "asc" ? "desc" : "asc"));
-    } else {
-      setSortField(field);
-      setSortDir("asc");
-    }
-  };
-
-  const SortHeader = ({ field, children }) => (
-    <th
-      className="cursor-pointer select-none px-4 py-3 text-left font-medium text-gray-500 hover:text-gray-700"
-      onClick={() => handleSort(field)}
-    >
-      <span className="inline-flex items-center gap-1">
-        {children}
-        {sortField === field ? (
-          sortDir === "asc" ? (
-            <ChevronUp className="h-3 w-3" />
-          ) : (
-            <ChevronDown className="h-3 w-3" />
-          )
-        ) : (
-          <ArrowUpDown className="h-3 w-3 text-gray-300" />
-        )}
-      </span>
-    </th>
-  );
+  }, [equipment, typeFilter, filters, search]);
 
   const getTypeIcon = (type) => {
     const found = EQUIPMENT_TYPES.find((t) => t.value === type);
@@ -457,20 +446,119 @@ export default function DashboardEquipment() {
     return col.format ? col.format(raw) : String(raw);
   };
 
-  const activeFiltersCount =
-    (complianceFilters.feoc ? 1 : 0) +
-    (complianceFilters.domestic ? 1 : 0) +
-    (complianceFilters.tariff ? 1 : 0) +
-    (availabilityFilter !== "all" ? 1 : 0);
+  const activeFiltersCount = Object.keys(filters).length;
 
   const clearAllFilters = () => {
     setSearch("");
     setTypeFilter("all");
-    setManufacturerFilter("all");
-    setComplianceFilters({ feoc: false, domestic: false, tariff: false });
-    setAvailabilityFilter("all");
-    setSortField(null);
+    setFilters({});
   };
+
+  // DataTable column definitions
+  const columns = useMemo(
+    () => [
+      {
+        key: "_expand",
+        label: "",
+        sortable: false,
+        render: (_val, row) => {
+          const isExpanded = expandedId === row.id;
+          return isExpanded ? (
+            <ChevronDown className="h-4 w-4 text-gray-400" />
+          ) : (
+            <ChevronRight className="h-4 w-4 text-gray-400" />
+          );
+        },
+      },
+      {
+        key: "type",
+        label: "Type",
+        sortable: false,
+        render: (_val, row) => {
+          const TypeIcon = getTypeIcon(row.type);
+          return (
+            <span className="inline-flex items-center gap-1.5 text-gray-600">
+              <TypeIcon className="h-4 w-4" />
+              <span className="text-xs capitalize">
+                {(row.type || "N/A").replace(/_/g, " ")}
+              </span>
+            </span>
+          );
+        },
+      },
+      {
+        key: "manufacturer",
+        label: "Manufacturer",
+        sortable: true,
+        render: (val) => (
+          <span className="font-medium text-gray-900">{val || "N/A"}</span>
+        ),
+      },
+      {
+        key: "model",
+        label: "Model",
+        sortable: true,
+        render: (val) => <span className="text-gray-700">{val || "N/A"}</span>,
+      },
+      {
+        key: "_specs",
+        label: "Specs",
+        sortable: false,
+        render: (_val, row) => {
+          const cols = CATEGORY_COLUMNS[row.type] || [];
+          return (
+            <div className="flex flex-wrap gap-1">
+              {cols.map((col) => {
+                const v = getSpecValue(row, col);
+                if (!v) return null;
+                return (
+                  <span
+                    key={col.key}
+                    className="rounded bg-gray-100 px-1.5 py-0.5 text-xs text-gray-600"
+                  >
+                    {v}
+                  </span>
+                );
+              })}
+            </div>
+          );
+        },
+      },
+      {
+        key: "feoc_compliant",
+        label: "FEOC",
+        sortable: false,
+        render: (val) => (
+          <ComplianceBadge
+            value={val}
+            trueLabel="FEOC Safe"
+            falseLabel="FEOC Risk"
+          />
+        ),
+      },
+      {
+        key: "domestic_content_pct",
+        label: "Domestic",
+        sortable: true,
+        render: (val) => <DomesticBadge pct={val} />,
+      },
+      {
+        key: "tariff_safe",
+        label: "Tariff",
+        sortable: false,
+        render: (val) => (
+          <ComplianceBadge value={val} trueLabel="Safe" falseLabel="Subject" />
+        ),
+      },
+    ],
+    [expandedId],
+  );
+
+  // Find the currently expanded item for the detail panel
+  const expandedItem = useMemo(
+    () => (expandedId ? filtered.find((e) => e.id === expandedId) : null),
+    [expandedId, filtered],
+  );
 
   if (loading) {
     return (
@@ -508,7 +596,11 @@ export default function DashboardEquipment() {
               key={type.value}
               onClick={() => {
                 setTypeFilter(type.value);
-                setManufacturerFilter("all");
+                setFilters((prev) => {
+                  const next = { ...prev };
+                  delete next.manufacturer;
+                  return next;
+                });
               }}
               className={`inline-flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
                 typeFilter === type.value
@@ -532,7 +624,7 @@ export default function DashboardEquipment() {
         })}
       </div>
 
-      {/* Search and filter bar */}
+      {/* Search bar */}
       <div className="flex flex-wrap items-center gap-3">
         <div className="relative flex-1 sm:max-w-xs">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
@@ -543,39 +635,8 @@ export default function DashboardEquipment() {
             className="input-field pl-9"
           />
         </div>
-        <select
-          value={manufacturerFilter}
-          onChange={(e) => setManufacturerFilter(e.target.value)}
-          className="input-field w-auto"
-        >
-          <option value="all">All manufacturers</option>
-          {manufacturers.map((m) => (
-            <option key={m} value={m}>
-              {m}
-            </option>
-          ))}
-        </select>
-        <button
-          onClick={() => setShowFilters((v) => !v)}
-          className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-            showFilters || activeFiltersCount > 0
-              ? "bg-emerald-50 text-emerald-700"
-              : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-          }`}
-        >
-          <SlidersHorizontal className="h-4 w-4" />
-          Filters
-          {activeFiltersCount > 0 && (
-            <span className="rounded-full bg-emerald-600 px-1.5 py-0.5 text-xs text-white">
-              {activeFiltersCount}
-            </span>
-          )}
-        </button>
         <span className="text-sm text-gray-500">{filtered.length} results</span>
-        {(search ||
-          typeFilter !== "all" ||
-          manufacturerFilter !== "all" ||
-          activeFiltersCount > 0) && (
+        {(search || typeFilter !== "all" || activeFiltersCount > 0) && (
           <button
             onClick={clearAllFilters}
             className="inline-flex items-center gap-1 text-xs text-gray-400 hover:text-gray-600"
@@ -586,203 +647,29 @@ export default function DashboardEquipment() {
         )}
       </div>
 
-      {/* Filter sidebar panel */}
-      {showFilters && (
-        <div className="card space-y-4 border border-gray-200 p-4">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-            {/* Compliance toggles */}
-            <div>
-              <h4 className="mb-2 text-xs font-semibold uppercase text-gray-400">
-                Compliance
-              </h4>
-              <div className="space-y-2">
-                <label className="flex items-center gap-2 text-sm">
-                  <input
-                    type="checkbox"
-                    checked={complianceFilters.feoc}
-                    onChange={(e) =>
-                      setComplianceFilters((f) => ({
-                        ...f,
-                        feoc: e.target.checked,
-                      }))
-                    }
-                    className="rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
-                  />
-                  <span className="text-gray-700">FEOC Compliant</span>
-                </label>
-                <label className="flex items-center gap-2 text-sm">
-                  <input
-                    type="checkbox"
-                    checked={complianceFilters.domestic}
-                    onChange={(e) =>
-                      setComplianceFilters((f) => ({
-                        ...f,
-                        domestic: e.target.checked,
-                      }))
-                    }
-                    className="rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
-                  />
-                  <span className="text-gray-700">
-                    Domestic Content &ge;50%
-                  </span>
-                </label>
-                <label className="flex items-center gap-2 text-sm">
-                  <input
-                    type="checkbox"
-                    checked={complianceFilters.tariff}
-                    onChange={(e) =>
-                      setComplianceFilters((f) => ({
-                        ...f,
-                        tariff: e.target.checked,
-                      }))
-                    }
-                    className="rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
-                  />
-                  <span className="text-gray-700">Tariff Safe</span>
-                </label>
-              </div>
-            </div>
+      {/* FilterBar */}
+      <FilterBar
+        filters={filterDefs}
+        activeFilters={filters}
+        onChange={setFilters}
+      />
 
-            {/* Availability */}
-            <div>
-              <h4 className="mb-2 text-xs font-semibold uppercase text-gray-400">
-                Availability
-              </h4>
-              <select
-                value={availabilityFilter}
-                onChange={(e) => setAvailabilityFilter(e.target.value)}
-                className="input-field w-full"
-              >
-                <option value="all">All</option>
-                <option value="in_stock">In Stock</option>
-                <option value="backorder">Backorder</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* DataTable */}
+      <DataTable
+        columns={columns}
+        data={filtered}
+        onRowClick={(row) =>
+          setExpandedId((prev) => (prev === row.id ? null : row.id))
+        }
+        emptyMessage={
+          search || typeFilter !== "all" || activeFiltersCount > 0
+            ? "No equipment matches your filters"
+            : "No equipment data available"
+        }
+      />
 
-      {/* Table */}
-      <div className="card overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b bg-gray-50">
-                <th className="w-8 px-2 py-3" />
-                <th className="px-4 py-3 text-left font-medium text-gray-500">
-                  Type
-                </th>
-                <SortHeader field="manufacturer">Manufacturer</SortHeader>
-                <SortHeader field="model">Model</SortHeader>
-                <th className="px-4 py-3 text-left font-medium text-gray-500">
-                  Specs
-                </th>
-                <th className="px-4 py-3 text-left font-medium text-gray-500">
-                  FEOC
-                </th>
-                <th className="px-4 py-3 text-left font-medium text-gray-500">
-                  Domestic
-                </th>
-                <th className="px-4 py-3 text-left font-medium text-gray-500">
-                  Tariff
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100">
-              {filtered.map((item) => {
-                const TypeIcon = getTypeIcon(item.type);
-                const isExpanded = expandedId === item.id;
-                const cols = CATEGORY_COLUMNS[item.type] || [];
-                return (
-                  <>
-                    <tr
-                      key={item.id}
-                      onClick={() => setExpandedId(isExpanded ? null : item.id)}
-                      className="cursor-pointer hover:bg-gray-50"
-                    >
-                      <td className="px-2 py-3 text-gray-400">
-                        {isExpanded ? (
-                          <ChevronDown className="h-4 w-4" />
-                        ) : (
-                          <ChevronRight className="h-4 w-4" />
-                        )}
-                      </td>
-                      <td className="px-4 py-3">
-                        <span className="inline-flex items-center gap-1.5 text-gray-600">
-                          <TypeIcon className="h-4 w-4" />
-                          <span className="text-xs capitalize">
-                            {(item.type || "N/A").replace(/_/g, " ")}
-                          </span>
-                        </span>
-                      </td>
-                      <td className="px-4 py-3 font-medium text-gray-900">
-                        {item.manufacturer || "N/A"}
-                      </td>
-                      <td className="px-4 py-3 text-gray-700">
-                        {item.model || "N/A"}
-                      </td>
-                      <td className="px-4 py-3">
-                        <div className="flex flex-wrap gap-1">
-                          {cols.map((col) => {
-                            const val = getSpecValue(item, col);
-                            if (!val) return null;
-                            return (
-                              <span
-                                key={col.key}
-                                className="rounded bg-gray-100 px-1.5 py-0.5 text-xs text-gray-600"
-                              >
-                                {val}
-                              </span>
-                            );
-                          })}
-                        </div>
-                      </td>
-                      <td className="px-4 py-3">
-                        <ComplianceBadge
-                          value={item.feoc_compliant}
-                          trueLabel="FEOC Safe"
-                          falseLabel="FEOC Risk"
-                        />
-                      </td>
-                      <td className="px-4 py-3">
-                        <DomesticBadge pct={item.domestic_content_pct} />
-                      </td>
-                      <td className="px-4 py-3">
-                        <ComplianceBadge
-                          value={item.tariff_safe}
-                          trueLabel="Safe"
-                          falseLabel="Subject"
-                        />
-                      </td>
-                    </tr>
-                    {isExpanded && (
-                      <ExpandedRow key={`${item.id}-detail`} item={item} />
-                    )}
-                  </>
-                );
-              })}
-              {filtered.length === 0 && (
-                <tr>
-                  <td
-                    colSpan={8}
-                    className="px-4 py-12 text-center text-gray-500"
-                  >
-                    <Package className="mx-auto h-8 w-8 text-gray-300" />
-                    <p className="mt-2">
-                      {search ||
-                      typeFilter !== "all" ||
-                      manufacturerFilter !== "all" ||
-                      activeFiltersCount > 0
-                        ? "No equipment matches your filters"
-                        : "No equipment data available"}
-                    </p>
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      {/* Expanded detail panel */}
+      {expandedItem && <ExpandedRow item={expandedItem} />}
     </div>
   );
 }

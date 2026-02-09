@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { db, collection, query, getDocs, limit } from "../../services/firebase";
 import {
@@ -24,6 +24,8 @@ import {
   Zap,
   Lightbulb,
 } from "lucide-react";
+import DataTable from "../../components/ui/DataTable";
+import FilterBar from "../../components/ui/FilterBar";
 
 const EQUIPMENT_TYPES = [
   { value: "panel", label: "Solar Panel" },
@@ -432,6 +434,201 @@ export default function DashboardCompliance() {
     }, 100);
   }, [selectedItems, projectType, financingType, state, systemCost]);
 
+  // ── FEOC table filters, columns, filtered data ──
+  const [feocFilters, setFeocFilters] = useState({});
+
+  const feocFilterDefs = useMemo(() => {
+    const details = report?.feocDetails || [];
+    const types = [
+      ...new Set(details.map((d) => d.type).filter(Boolean)),
+    ].sort();
+    const feocStatuses = [
+      { value: "pass", label: "Pass" },
+      { value: "fail", label: "Fail" },
+    ];
+    const tariffStatuses = [
+      { value: "safe", label: "Safe" },
+      { value: "exposed", label: "Exposed" },
+    ];
+    return [
+      {
+        key: "type",
+        label: "Type",
+        options: types.map((t) => ({
+          value: t,
+          label: t.charAt(0).toUpperCase() + t.slice(1),
+        })),
+      },
+      { key: "feoc", label: "FEOC", options: feocStatuses },
+      { key: "tariff", label: "Tariff", options: tariffStatuses },
+    ];
+  }, [report?.feocDetails]);
+
+  const filteredFeocDetails = useMemo(() => {
+    let items = report?.feocDetails || [];
+    if (feocFilters.type) {
+      items = items.filter((d) => d.type === feocFilters.type);
+    }
+    if (feocFilters.feoc) {
+      items = items.filter((d) =>
+        feocFilters.feoc === "pass" ? d.feoc_compliant : !d.feoc_compliant,
+      );
+    }
+    if (feocFilters.tariff) {
+      items = items.filter((d) =>
+        feocFilters.tariff === "safe" ? d.tariff_safe : !d.tariff_safe,
+      );
+    }
+    return items;
+  }, [report?.feocDetails, feocFilters]);
+
+  const feocColumns = useMemo(
+    () => [
+      {
+        key: "manufacturer",
+        label: "Equipment",
+        sortable: true,
+        render: (_val, row) => (
+          <div>
+            <p className="font-medium text-gray-900">{row.manufacturer}</p>
+            <p className="text-xs text-gray-500">{row.name || row.model}</p>
+            <span className="rounded bg-gray-100 px-1 text-[10px] uppercase text-gray-500">
+              {row.type}
+            </span>
+          </div>
+        ),
+      },
+      {
+        key: "feoc_compliant",
+        label: "FEOC",
+        sortable: true,
+        render: (_val, row) => (
+          <ComplianceBadge
+            status={row.feoc_compliant ? "compliant" : "non-compliant"}
+            label={row.feoc_compliant ? "Pass" : "Fail"}
+          />
+        ),
+      },
+      {
+        key: "domestic_content_pct",
+        label: "Domestic %",
+        sortable: true,
+        render: (val) => (
+          <span
+            className={`font-medium ${val >= 50 ? "text-green-600" : "text-amber-600"}`}
+          >
+            {val}%
+          </span>
+        ),
+      },
+      {
+        key: "tariff_safe",
+        label: "Tariff",
+        sortable: true,
+        render: (_val, row) => (
+          <ComplianceBadge
+            status={row.tariff_safe ? "compliant" : "non-compliant"}
+            label={row.tariff_safe ? "Safe" : "Exposed"}
+          />
+        ),
+      },
+      {
+        key: "feoc_details",
+        label: "Details",
+        sortable: false,
+        render: (_val, row) => (
+          <span className="text-xs text-gray-500">
+            {row.feoc_details?.reason ||
+              (row.feoc_compliant
+                ? "FEOC-compliant"
+                : "FEOC entity or manufactured in FEOC country")}
+          </span>
+        ),
+      },
+    ],
+    [],
+  );
+
+  // ── Tariff Exposure table filters, columns, filtered data ──
+  const [tariffFilters, setTariffFilters] = useState({});
+
+  const tariffFilterDefs = useMemo(() => {
+    const items = report?.tariffExposure || [];
+    const countries = [
+      ...new Set(items.map((t) => t.country).filter(Boolean)),
+    ].sort();
+    const tariffTypes = [
+      ...new Set(items.map((t) => t.tariff_type).filter(Boolean)),
+    ].sort();
+    return [
+      {
+        key: "country",
+        label: "Origin",
+        options: countries.map((c) => ({ value: c, label: c })),
+      },
+      {
+        key: "tariff_type",
+        label: "Tariff Type",
+        options: tariffTypes.map((t) => ({ value: t, label: t })),
+      },
+    ];
+  }, [report?.tariffExposure]);
+
+  const filteredTariffExposure = useMemo(() => {
+    let items = report?.tariffExposure || [];
+    if (tariffFilters.country) {
+      items = items.filter((t) => t.country === tariffFilters.country);
+    }
+    if (tariffFilters.tariff_type) {
+      items = items.filter((t) => t.tariff_type === tariffFilters.tariff_type);
+    }
+    return items;
+  }, [report?.tariffExposure, tariffFilters]);
+
+  const tariffColumns = useMemo(
+    () => [
+      {
+        key: "name",
+        label: "Equipment",
+        sortable: true,
+        render: (val) => (
+          <span className="font-medium text-gray-900">{val}</span>
+        ),
+      },
+      {
+        key: "country",
+        label: "Origin",
+        sortable: true,
+        render: (val) => <span className="text-gray-600">{val}</span>,
+      },
+      {
+        key: "tariff_type",
+        label: "Tariff Type",
+        sortable: true,
+        render: (val) => <span className="text-gray-600">{val}</span>,
+      },
+      {
+        key: "rate",
+        label: "Rate",
+        sortable: true,
+        render: (val) => (
+          <span className="font-medium text-red-600">{val}%</span>
+        ),
+      },
+      {
+        key: "cost_impact",
+        label: "Est. Cost Impact",
+        sortable: true,
+        render: (val) => (
+          <span className="font-medium text-red-600">
+            {val > 0 ? `$${val.toLocaleString()}` : "-"}
+          </span>
+        ),
+      },
+    ],
+    [],
+  );
+
   // ── Loading state ──
   if (initialLoading) {
     return (
@@ -830,136 +1027,39 @@ export default function DashboardCompliance() {
           </div>
 
           {/* Per-Equipment FEOC Details */}
-          <div className="card">
-            <div className="border-b border-gray-200 px-6 py-4">
-              <h2 className="text-lg font-semibold text-gray-900">
-                Equipment FEOC Analysis
-              </h2>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b bg-gray-50">
-                    <th className="px-4 py-3 text-left font-medium text-gray-500">
-                      Equipment
-                    </th>
-                    <th className="px-4 py-3 text-left font-medium text-gray-500">
-                      FEOC
-                    </th>
-                    <th className="px-4 py-3 text-left font-medium text-gray-500">
-                      Domestic %
-                    </th>
-                    <th className="px-4 py-3 text-left font-medium text-gray-500">
-                      Tariff
-                    </th>
-                    <th className="px-4 py-3 text-left font-medium text-gray-500">
-                      Details
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-100">
-                  {report.feocDetails.map((item) => (
-                    <tr key={item.id} className="hover:bg-gray-50">
-                      <td className="px-4 py-3">
-                        <p className="font-medium text-gray-900">
-                          {item.manufacturer}
-                        </p>
-                        <p className="text-xs text-gray-500">
-                          {item.name || item.model}
-                        </p>
-                        <span className="rounded bg-gray-100 px-1 text-[10px] uppercase text-gray-500">
-                          {item.type}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3">
-                        <ComplianceBadge
-                          status={
-                            item.feoc_compliant ? "compliant" : "non-compliant"
-                          }
-                          label={item.feoc_compliant ? "Pass" : "Fail"}
-                        />
-                      </td>
-                      <td className="px-4 py-3">
-                        <span
-                          className={`font-medium ${item.domestic_content_pct >= 50 ? "text-green-600" : "text-amber-600"}`}
-                        >
-                          {item.domestic_content_pct}%
-                        </span>
-                      </td>
-                      <td className="px-4 py-3">
-                        <ComplianceBadge
-                          status={
-                            item.tariff_safe ? "compliant" : "non-compliant"
-                          }
-                          label={item.tariff_safe ? "Safe" : "Exposed"}
-                        />
-                      </td>
-                      <td className="px-4 py-3 text-xs text-gray-500 max-w-xs">
-                        {item.feoc_details?.reason ||
-                          (item.feoc_compliant
-                            ? "FEOC-compliant"
-                            : "FEOC entity or manufactured in FEOC country")}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+          <div className="space-y-3">
+            <h2 className="text-lg font-semibold text-gray-900">
+              Equipment FEOC Analysis
+            </h2>
+            <FilterBar
+              filters={feocFilterDefs}
+              activeFilters={feocFilters}
+              onChange={setFeocFilters}
+            />
+            <DataTable
+              columns={feocColumns}
+              data={filteredFeocDetails}
+              emptyMessage="No equipment to display."
+            />
           </div>
 
           {/* Tariff Exposure */}
           {report.tariffExposure.length > 0 && (
-            <div className="card">
-              <div className="border-b border-gray-200 px-6 py-4">
-                <h2 className="flex items-center gap-2 text-lg font-semibold text-gray-900">
-                  <Percent className="h-5 w-5 text-red-500" />
-                  Tariff Exposure
-                </h2>
-              </div>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b bg-gray-50">
-                      <th className="px-4 py-3 text-left font-medium text-gray-500">
-                        Equipment
-                      </th>
-                      <th className="px-4 py-3 text-left font-medium text-gray-500">
-                        Origin
-                      </th>
-                      <th className="px-4 py-3 text-left font-medium text-gray-500">
-                        Tariff Type
-                      </th>
-                      <th className="px-4 py-3 text-right font-medium text-gray-500">
-                        Rate
-                      </th>
-                      <th className="px-4 py-3 text-right font-medium text-gray-500">
-                        Est. Cost Impact
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-100">
-                    {report.tariffExposure.map((t, idx) => (
-                      <tr key={idx} className="hover:bg-gray-50">
-                        <td className="px-4 py-3 font-medium text-gray-900">
-                          {t.name}
-                        </td>
-                        <td className="px-4 py-3 text-gray-600">{t.country}</td>
-                        <td className="px-4 py-3 text-gray-600">
-                          {t.tariff_type}
-                        </td>
-                        <td className="px-4 py-3 text-right font-medium text-red-600">
-                          {t.rate}%
-                        </td>
-                        <td className="px-4 py-3 text-right font-medium text-red-600">
-                          {t.cost_impact > 0
-                            ? `$${t.cost_impact.toLocaleString()}`
-                            : "-"}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+            <div className="space-y-3">
+              <h2 className="flex items-center gap-2 text-lg font-semibold text-gray-900">
+                <Percent className="h-5 w-5 text-red-500" />
+                Tariff Exposure
+              </h2>
+              <FilterBar
+                filters={tariffFilterDefs}
+                activeFilters={tariffFilters}
+                onChange={setTariffFilters}
+              />
+              <DataTable
+                columns={tariffColumns}
+                data={filteredTariffExposure}
+                emptyMessage="No tariff exposure found."
+              />
             </div>
           )}
 
