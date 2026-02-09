@@ -199,6 +199,8 @@ export {
   processEagleviewDelivery,
   getEagleviewReport,
   shouldOrderEagleview,
+  getEagleviewResults,
+  eagleviewWebhook,
 } from "./eagleviewService";
 
 // Export Scheduling & Install Coordination functions
@@ -312,3 +314,10 @@ export { generateSolarProposal, getSolarProposal } from "./proposalGenerator";
 
 // Export Config Sync function (admin-only, bridges functions.config → Firestore)
 export { syncConfigStatus } from "./configSync";
+
+// Export Credit Check (iSoftPull) functions
+export {
+  runSoftCreditCheck,
+  getCreditCheckResult,
+  getCreditCheckStats,
+} from "./creditCheckService";

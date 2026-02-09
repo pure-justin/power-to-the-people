@@ -64,6 +64,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getDocumentStats = exports.saveDocumentTemplate = exports.voidDocument = exports.signDocument = exports.viewDocument = exports.sendDocument = exports.getDocumentsByProject = exports.getDocument = exports.generateDocument = void 0;
 const functions = __importStar(require("firebase-functions/v1"));
 const admin = __importStar(require("firebase-admin"));
+const smsNotifications_1 = require("./smsNotifications");
 const db = admin.firestore();
 /** Required signers for each document type */
 const REQUIRED_SIGNERS = {
@@ -696,8 +697,32 @@ exports.sendDocument = functions
         })),
         updatedAt: admin.firestore.FieldValue.serverTimestamp(),
     });
-    // TODO: Trigger actual email/SMS notification here
-    // For now, the document is marked as sent and viewable via the app
+    // Send SMS notifications to recipients who have phone numbers
+    const docTitle = docData.title || docData.type || "Document";
+    const viewUrl = `https://power-to-the-people-vpp.web.app/portal/project`;
+    for (const r of recipients) {
+        // Look up recipient's phone number from users collection
+        const userSnap = await db
+            .collection("users")
+            .where("email", "==", r.email)
+            .limit(1)
+            .get();
+        if (!userSnap.empty) {
+            const userData = userSnap.docs[0].data();
+            if (userData.phone) {
+                await (0, smsNotifications_1.sendSMS)(userData.phone, `Hi ${r.name || "there"}, a document "${docTitle}" has been sent to you from Power to the People. View it in your portal: ${viewUrl}`);
+            }
+        }
+        // Store in pendingNotifications for email delivery
+        await db.collection("pendingNotifications").add({
+            email: r.email,
+            type: "document_sent",
+            subject: `Document Ready: ${docTitle}`,
+            body: `Hi ${r.name || "there"}, a document "${docTitle}" has been shared with you. Please log in to your portal to view and sign it.`,
+            sent: false,
+            createdAt: admin.firestore.FieldValue.serverTimestamp(),
+        });
+    }
     return { sent: true, recipientCount: recipients.length };
 });
 /**

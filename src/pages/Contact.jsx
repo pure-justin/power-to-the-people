@@ -29,6 +29,7 @@ export default function Contact() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     setFormData((prev) => ({
@@ -40,6 +41,7 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
+    setError("");
     try {
       const { addDoc, collection, serverTimestamp } =
         await import("firebase/firestore");
@@ -59,8 +61,9 @@ export default function Contact() {
       setSubmitted(true);
     } catch (err) {
       console.error("Failed to submit contact form:", err);
-      // Still show success to user (don't reveal internal errors)
-      setSubmitted(true);
+      setError(
+        "Something went wrong. Please try again or email us directly at contact@solarios.io.",
+      );
     } finally {
       setSubmitting(false);
     }
@@ -713,6 +716,23 @@ export default function Contact() {
                     {submitting ? "Submitting..." : "Request Demo"}
                     <ArrowRight size={18} />
                   </button>
+
+                  {error && (
+                    <p
+                      style={{
+                        marginTop: 12,
+                        padding: "12px 16px",
+                        background: "rgba(239, 68, 68, 0.1)",
+                        border: "1px solid rgba(239, 68, 68, 0.3)",
+                        borderRadius: 8,
+                        color: "#ef4444",
+                        fontSize: "0.9rem",
+                        textAlign: "center",
+                      }}
+                    >
+                      {error}
+                    </p>
+                  )}
 
                   <p className="ct-form-note">
                     Or email us directly at{" "}

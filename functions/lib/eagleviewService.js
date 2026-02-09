@@ -56,7 +56,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.shouldOrderEagleview = exports.getEagleviewReport = exports.processEagleviewDelivery = exports.checkEagleviewStatus = exports.orderEagleviewReport = void 0;
+exports.eagleviewWebhook = exports.getEagleviewResults = exports.shouldOrderEagleview = exports.getEagleviewReport = exports.processEagleviewDelivery = exports.checkEagleviewStatus = exports.orderEagleviewReport = void 0;
 const functions = __importStar(require("firebase-functions/v1"));
 const admin = __importStar(require("firebase-admin"));
 /** Valid report types for input validation */
@@ -71,53 +71,188 @@ const REPORT_COSTS = {
     PremiumSunSite: 50,
     InForm: 40,
 };
-// ─── EagleView API Stub ─────────────────────────────────────────────────────────
+// ─── EagleView API ──────────────────────────────────────────────────────────────
 //
-// The actual EagleView API uses OAuth2 and RESTful endpoints.
-// These stubs structure the calls correctly for when we integrate.
-//
-// EagleView API Base: https://api.eagleview.com/v2
-// Auth: OAuth2 Bearer token (client_credentials flow)
+// OAuth2 Client Credentials flow with token caching.
+// API Base: https://webservices-integrations.eagleview.com (integration env)
 //
 // Endpoints:
-//   POST /orders — Create a new report order
-//   GET  /orders/{orderId} — Check order status
-//   GET  /orders/{orderId}/results — Download report data
+//   POST /v2/orders — Create a new report order
+//   GET  /v2/orders/{orderId} — Check order status
+//   GET  /v2/orders/{orderId}/results — Download report data
 //
+const EAGLEVIEW_TOKEN_URL = "https://api.eagleview.com/auth-service/v1/token";
+const EAGLEVIEW_API_BASE = "https://webservices-integrations.eagleview.com";
+/** Cached OAuth2 token and its expiry timestamp */
+let cachedToken = null;
 /**
- * Stub: Place an order with EagleView API.
- * Returns a mock order ID. Will be replaced with actual API call.
+ * Get a valid OAuth2 access token for EagleView API.
+ * Caches the token for 23 hours (tokens last 24h, refresh 1h early).
  */
-async function placeEagleviewOrder(_address, _reportType) {
-    // TODO: Replace with actual EagleView API call
-    // const response = await fetch("https://api.eagleview.com/v2/orders", {
-    //   method: "POST",
-    //   headers: {
-    //     "Authorization": `Bearer ${token}`,
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     address: _address,
-    //     productType: _reportType,
-    //     deliveryMethod: "API",
-    //   }),
-    // });
-    const mockOrderId = `EV-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
-    const estimatedDelivery = new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString(); // ~48 hours
-    functions.logger.info(`[STUB] EagleView order placed: ${mockOrderId} for ${_reportType}`);
-    return { orderId: mockOrderId, estimatedDelivery };
+async function getEagleviewToken() {
+    var _a, _b;
+    // Return cached token if still valid (with 1-hour safety margin)
+    if (cachedToken && Date.now() < cachedToken.expiresAt) {
+        return cachedToken.accessToken;
+    }
+    const config = functions.config();
+    const clientId = (_a = config.eagleview) === null || _a === void 0 ? void 0 : _a.client_id;
+    const clientSecret = (_b = config.eagleview) === null || _b === void 0 ? void 0 : _b.client_secret;
+    if (!clientId || !clientSecret) {
+        throw new Error("EagleView credentials not configured. Set eagleview.client_id and eagleview.client_secret in Firebase Functions config.");
+    }
+    const credentials = Buffer.from(`${clientId}:${clientSecret}`).toString("base64");
+    const response = await fetch(EAGLEVIEW_TOKEN_URL, {
+        method: "POST",
+        headers: {
+            Authorization: `Basic ${credentials}`,
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: "grant_type=client_credentials",
+    });
+    if (!response.ok) {
+        const errorBody = await response.text();
+        functions.logger.error("EagleView token request failed:", {
+            status: response.status,
+            body: errorBody,
+        });
+        throw new Error(`EagleView auth failed (${response.status}): ${errorBody}`);
+    }
+    const tokenData = (await response.json());
+    // Cache for 23 hours (expires_in is typically 86400s = 24h)
+    const safetyMarginMs = 60 * 60 * 1000; // 1 hour
+    cachedToken = {
+        accessToken: tokenData.access_token,
+        expiresAt: Date.now() + tokenData.expires_in * 1000 - safetyMarginMs,
+    };
+    functions.logger.info("EagleView OAuth2 token acquired, cached for ~23 hours");
+    return cachedToken.accessToken;
 }
 /**
- * Stub: Check order status with EagleView API.
- * Returns mock "processing" status. Will be replaced with actual API call.
+ * Place an order with EagleView API.
+ * Authenticates via OAuth2, posts to /v2/orders, returns the order ID and ETA.
  */
-async function checkEagleviewOrderStatus(_orderId) {
-    // TODO: Replace with actual EagleView API call
-    // const response = await fetch(`https://api.eagleview.com/v2/orders/${_orderId}`, {
-    //   headers: { "Authorization": `Bearer ${token}` },
-    // });
-    functions.logger.info(`[STUB] EagleView status check: ${_orderId}`);
-    return { status: "processing", percentComplete: 50 };
+async function placeEagleviewOrder(address, reportType) {
+    const token = await getEagleviewToken();
+    // Build the webhook callback URL for this Firebase project
+    const projectId = process.env.GCLOUD_PROJECT || process.env.GCP_PROJECT || "";
+    const callbackUrl = projectId
+        ? `https://us-central1-${projectId}.cloudfunctions.net/eagleviewWebhook`
+        : undefined;
+    const orderPayload = {
+        address,
+        productType: reportType,
+        deliveryMethod: "API",
+    };
+    // Include callback URL so EagleView notifies us when the report is ready
+    if (callbackUrl) {
+        orderPayload.callbackUrl = callbackUrl;
+    }
+    const response = await fetch(`${EAGLEVIEW_API_BASE}/v2/orders`, {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(orderPayload),
+    });
+    if (!response.ok) {
+        const errorBody = await response.text();
+        functions.logger.error("EagleView order placement failed:", {
+            status: response.status,
+            body: errorBody,
+            address,
+            reportType,
+        });
+        throw new Error(`EagleView order failed (${response.status}): ${errorBody}`);
+    }
+    const result = (await response.json());
+    // Handle various possible response field names
+    const orderId = result.orderId || result.order_id || result.id;
+    if (!orderId) {
+        functions.logger.error("EagleView order response missing orderId:", result);
+        throw new Error("EagleView order response did not include an order ID");
+    }
+    const estimatedDelivery = result.estimatedDelivery ||
+        result.estimated_delivery ||
+        new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString(); // fallback ~48h
+    functions.logger.info(`EagleView order placed: ${orderId} for ${reportType} at ${address}`);
+    return { orderId: String(orderId), estimatedDelivery };
+}
+/**
+ * Check order status with EagleView API.
+ * Maps EagleView's status values to our internal EagleviewStatus type.
+ */
+async function checkEagleviewOrderStatus(orderId) {
+    var _a;
+    const token = await getEagleviewToken();
+    const response = await fetch(`${EAGLEVIEW_API_BASE}/v2/orders/${encodeURIComponent(orderId)}`, {
+        method: "GET",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    if (!response.ok) {
+        const errorBody = await response.text();
+        functions.logger.error(`EagleView status check failed for ${orderId}:`, {
+            status: response.status,
+            body: errorBody,
+        });
+        throw new Error(`EagleView status check failed (${response.status}): ${errorBody}`);
+    }
+    const result = (await response.json());
+    const rawStatus = (result.status ||
+        result.orderStatus ||
+        result.order_status ||
+        "").toLowerCase();
+    // Map EagleView status values to our internal status type
+    let status;
+    if (rawStatus === "delivered" ||
+        rawStatus === "complete" ||
+        rawStatus === "completed") {
+        status = "delivered";
+    }
+    else if (rawStatus === "failed" ||
+        rawStatus === "error" ||
+        rawStatus === "cancelled") {
+        status = "failed";
+    }
+    else if (rawStatus === "ordered" ||
+        rawStatus === "new" ||
+        rawStatus === "accepted") {
+        status = "ordered";
+    }
+    else {
+        // processing, in_progress, pending, etc.
+        status = "processing";
+    }
+    const percentComplete = (_a = result.percentComplete) !== null && _a !== void 0 ? _a : result.percent_complete;
+    functions.logger.info(`EagleView status for ${orderId}: ${status} (raw: ${rawStatus}, ${percentComplete !== null && percentComplete !== void 0 ? percentComplete : "n/a"}%)`);
+    return { status, percentComplete };
+}
+/**
+ * Fetch the completed report results from EagleView.
+ * Only call this when the order status is "delivered".
+ */
+async function fetchEagleviewResults(orderId) {
+    const token = await getEagleviewToken();
+    const response = await fetch(`${EAGLEVIEW_API_BASE}/v2/orders/${encodeURIComponent(orderId)}/results`, {
+        method: "GET",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    if (!response.ok) {
+        const errorBody = await response.text();
+        functions.logger.error(`EagleView results fetch failed for ${orderId}:`, {
+            status: response.status,
+            body: errorBody,
+        });
+        throw new Error(`EagleView results fetch failed (${response.status}): ${errorBody}`);
+    }
+    const results = (await response.json());
+    functions.logger.info(`EagleView results fetched for ${orderId}: ${Object.keys(results).length} top-level keys`);
+    return results;
 }
 // ─── Cloud Function: orderEagleviewReport ───────────────────────────────────────
 /**
@@ -145,7 +280,7 @@ exports.orderEagleviewReport = functions
     }
     const db = admin.firestore();
     try {
-        // Place order with EagleView API (stub)
+        // Place order with EagleView API
         const { orderId, estimatedDelivery } = await placeEagleviewOrder(address, reportType);
         // Create tracking record
         const reportData = {
@@ -192,16 +327,17 @@ exports.orderEagleviewReport = functions
 // ─── Cloud Function: checkEagleviewStatus ───────────────────────────────────────
 /**
  * Check the status of an EagleView order. Polls the EagleView API and
- * updates the local record.
+ * updates the local record. If the order is delivered, automatically
+ * fetches the report results.
  *
  * @function checkEagleviewStatus
  * @type onCall
  * @auth firebase
  * @input {{ orderId: string }}
- * @output {{ success: boolean, orderId: string, status: EagleviewStatus }}
+ * @output {{ success: boolean, orderId: string, status: EagleviewStatus, reportData?: object }}
  */
 exports.checkEagleviewStatus = functions
-    .runWith({ timeoutSeconds: 15, memory: "256MB" })
+    .runWith({ timeoutSeconds: 30, memory: "256MB" })
     .https.onCall(async (data, context) => {
     if (!context.auth) {
         throw new functions.https.HttpsError("unauthenticated", "Must be authenticated to check status");
@@ -221,19 +357,45 @@ exports.checkEagleviewStatus = functions
         throw new functions.https.HttpsError("not-found", `No report found for order: ${orderId}`);
     }
     try {
-        // Check with EagleView API (stub)
+        // Check with EagleView API
         const apiStatus = await checkEagleviewOrderStatus(orderId);
         // Update local record
         const reportRef = snapshot.docs[0].ref;
-        await reportRef.update({
+        const updateData = {
             status: apiStatus.status,
             updated_at: admin.firestore.FieldValue.serverTimestamp(),
-        });
+        };
+        // If delivered, auto-fetch the report results
+        let reportData;
+        if (apiStatus.status === "delivered") {
+            try {
+                reportData = await fetchEagleviewResults(orderId);
+                updateData.data = {
+                    roof_facets: reportData.roof_facets || reportData.roofFacets || [],
+                    total_roof_area: reportData.total_roof_area || reportData.totalRoofArea || 0,
+                    total_usable_area: reportData.total_usable_area || reportData.totalUsableArea || 0,
+                    obstructions: reportData.obstructions || [],
+                    three_d_model_url: reportData.three_d_model_url || reportData.modelUrl || null,
+                    shade_report_url: reportData.shade_report_url || reportData.shadeReportUrl || null,
+                    measurement_report_url: reportData.measurement_report_url ||
+                        reportData.measurementReportUrl ||
+                        null,
+                };
+                updateData.delivered_at =
+                    admin.firestore.FieldValue.serverTimestamp();
+                functions.logger.info(`Auto-fetched results for delivered order ${orderId}`);
+            }
+            catch (fetchError) {
+                functions.logger.warn(`Order ${orderId} is delivered but results fetch failed: ${fetchError.message}. Results can be fetched later.`);
+            }
+        }
+        await reportRef.update(updateData);
         return {
             success: true,
             orderId,
             status: apiStatus.status,
             percentComplete: apiStatus.percentComplete,
+            ...(reportData ? { reportData } : {}),
         };
     }
     catch (error) {
@@ -456,6 +618,194 @@ exports.shouldOrderEagleview = functions
         if (error instanceof functions.https.HttpsError)
             throw error;
         throw new functions.https.HttpsError("internal", error.message || "Failed to check EagleView need");
+    }
+});
+// ─── Cloud Function: getEagleviewResults ────────────────────────────────────────
+/**
+ * Fetch completed report results from EagleView for a delivered order.
+ * Downloads the full report data and updates the local record.
+ *
+ * @function getEagleviewResults
+ * @type onCall
+ * @auth firebase
+ * @input {{ orderId: string }}
+ * @output {{ success: boolean, orderId: string, reportData: object }}
+ */
+exports.getEagleviewResults = functions
+    .runWith({ timeoutSeconds: 30, memory: "256MB" })
+    .https.onCall(async (data, context) => {
+    if (!context.auth) {
+        throw new functions.https.HttpsError("unauthenticated", "Must be authenticated to fetch results");
+    }
+    const { orderId } = data;
+    if (!orderId) {
+        throw new functions.https.HttpsError("invalid-argument", "orderId is required");
+    }
+    const db = admin.firestore();
+    // Find the report by orderId
+    const snapshot = await db
+        .collection("eagleview_reports")
+        .where("orderId", "==", orderId)
+        .limit(1)
+        .get();
+    if (snapshot.empty) {
+        throw new functions.https.HttpsError("not-found", `No report found for order: ${orderId}`);
+    }
+    try {
+        const reportData = await fetchEagleviewResults(orderId);
+        // Parse into our standard data format
+        const parsedData = {
+            roof_facets: reportData.roof_facets || reportData.roofFacets || [],
+            total_roof_area: reportData.total_roof_area || reportData.totalRoofArea || 0,
+            total_usable_area: reportData.total_usable_area || reportData.totalUsableArea || 0,
+            obstructions: reportData.obstructions || [],
+            three_d_model_url: reportData.three_d_model_url || reportData.modelUrl || null,
+            shade_report_url: reportData.shade_report_url || reportData.shadeReportUrl || null,
+            measurement_report_url: reportData.measurement_report_url ||
+                reportData.measurementReportUrl ||
+                null,
+        };
+        // Update the local record
+        const reportRef = snapshot.docs[0].ref;
+        await reportRef.update({
+            status: "delivered",
+            data: parsedData,
+            delivered_at: admin.firestore.FieldValue.serverTimestamp(),
+            updated_at: admin.firestore.FieldValue.serverTimestamp(),
+        });
+        functions.logger.info(`EagleView results fetched and stored for order ${orderId}`);
+        return {
+            success: true,
+            orderId,
+            reportData: parsedData,
+        };
+    }
+    catch (error) {
+        functions.logger.error(`Fetch EagleView results error (${orderId}):`, error);
+        if (error instanceof functions.https.HttpsError)
+            throw error;
+        throw new functions.https.HttpsError("internal", error.message || "Failed to fetch EagleView results");
+    }
+});
+// ─── Cloud Function: eagleviewWebhook ───────────────────────────────────────────
+/**
+ * Webhook handler for EagleView delivery callbacks.
+ * EagleView calls this endpoint when a report is ready for download.
+ * Automatically fetches the report data and updates the local record.
+ *
+ * @function eagleviewWebhook
+ * @type onRequest (POST)
+ * @auth none (validated by checking orderId exists in our records)
+ */
+exports.eagleviewWebhook = functions
+    .runWith({ timeoutSeconds: 60, memory: "256MB" })
+    .https.onRequest(async (req, res) => {
+    // Only accept POST
+    if (req.method !== "POST") {
+        res.status(405).json({ error: "Method not allowed" });
+        return;
+    }
+    const body = req.body || {};
+    const orderId = body.orderId || body.order_id || body.id;
+    const eventType = body.eventType || body.event_type || body.event || "delivery";
+    if (!orderId) {
+        functions.logger.warn("EagleView webhook received without orderId:", body);
+        res.status(400).json({ error: "Missing orderId in webhook payload" });
+        return;
+    }
+    functions.logger.info(`EagleView webhook received: orderId=${orderId}, event=${eventType}`);
+    const db = admin.firestore();
+    // Find the report by orderId — also validates this is a legitimate callback
+    const snapshot = await db
+        .collection("eagleview_reports")
+        .where("orderId", "==", orderId)
+        .limit(1)
+        .get();
+    if (snapshot.empty) {
+        functions.logger.warn(`EagleView webhook for unknown order: ${orderId}`);
+        // Return 200 anyway to prevent EagleView from retrying for unknown orders
+        res.status(200).json({ received: true, matched: false });
+        return;
+    }
+    const reportRef = snapshot.docs[0].ref;
+    try {
+        // Handle different event types
+        if (eventType === "failed" ||
+            eventType === "error" ||
+            eventType === "cancelled") {
+            await reportRef.update({
+                status: "failed",
+                updated_at: admin.firestore.FieldValue.serverTimestamp(),
+                webhook_received_at: admin.firestore.FieldValue.serverTimestamp(),
+                failure_reason: body.reason ||
+                    body.message ||
+                    "Order failed (reported via webhook)",
+            });
+            functions.logger.warn(`EagleView order ${orderId} failed via webhook: ${body.reason || "no reason"}`);
+            res.status(200).json({ received: true, status: "failed" });
+            return;
+        }
+        // For delivery events, fetch the full results
+        let parsedData = null;
+        try {
+            const reportData = await fetchEagleviewResults(orderId);
+            parsedData = {
+                roof_facets: reportData.roof_facets || reportData.roofFacets || [],
+                total_roof_area: reportData.total_roof_area || reportData.totalRoofArea || 0,
+                total_usable_area: reportData.total_usable_area || reportData.totalUsableArea || 0,
+                obstructions: reportData.obstructions || [],
+                three_d_model_url: reportData.three_d_model_url || reportData.modelUrl || null,
+                shade_report_url: reportData.shade_report_url || reportData.shadeReportUrl || null,
+                measurement_report_url: reportData.measurement_report_url ||
+                    reportData.measurementReportUrl ||
+                    null,
+            };
+        }
+        catch (fetchErr) {
+            functions.logger.warn(`Webhook for ${orderId}: results fetch failed (${fetchErr.message}), marking delivered without data`);
+        }
+        const updatePayload = {
+            status: "delivered",
+            delivered_at: admin.firestore.FieldValue.serverTimestamp(),
+            updated_at: admin.firestore.FieldValue.serverTimestamp(),
+            webhook_received_at: admin.firestore.FieldValue.serverTimestamp(),
+        };
+        if (parsedData) {
+            updatePayload.data = parsedData;
+        }
+        await reportRef.update(updatePayload);
+        // If there's an associated survey, update it with the roof data
+        const report = snapshot.docs[0].data();
+        if (report.surveyId && parsedData) {
+            try {
+                const surveyRef = db.collection("site_surveys").doc(report.surveyId);
+                const surveySnap = await surveyRef.get();
+                if (surveySnap.exists) {
+                    await surveyRef.update({
+                        "roof_measurements.eagleview_data": parsedData,
+                        "roof_measurements.total_roof_area": parsedData.total_roof_area,
+                        "roof_measurements.usable_roof_area": parsedData.total_usable_area,
+                        "roof_measurements.facets": parsedData.roof_facets,
+                        updated_at: admin.firestore.FieldValue.serverTimestamp(),
+                    });
+                    functions.logger.info(`Survey ${report.surveyId} updated with EagleView data from webhook`);
+                }
+            }
+            catch (surveyErr) {
+                functions.logger.warn(`Failed to update survey ${report.surveyId} from webhook: ${surveyErr.message}`);
+            }
+        }
+        functions.logger.info(`EagleView webhook processed: order ${orderId} delivered${parsedData ? " with data" : " (data pending)"}`);
+        res.status(200).json({
+            received: true,
+            status: "delivered",
+            dataFetched: !!parsedData,
+        });
+    }
+    catch (error) {
+        functions.logger.error(`EagleView webhook processing error (${orderId}):`, error);
+        // Return 500 so EagleView will retry
+        res.status(500).json({ error: "Internal processing error" });
     }
 });
 //# sourceMappingURL=eagleviewService.js.map

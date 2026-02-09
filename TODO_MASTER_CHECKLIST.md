@@ -46,7 +46,7 @@
 
 ### 2.2 Admin Section UX
 - [x] **AdminOverview** — ✅ DONE (all real Firestore data, fixed 3 hardcoded trend values)
-- [ ] **AdminLeads** — test search, filtering, sorting with real lead data
+- [x] **AdminLeads** — ✅ DONE (real Firestore data, search/filter works, CSV export functional)
 - [x] **AdminProjects** — ✅ DONE (DataTable/FilterBar upgrade)
 - [x] **AdminUsers** — ✅ DONE (DataTable/FilterBar + role editor modal)
 - [x] **AdminBilling** — ✅ DONE (fixed hooks crash + DataTable/FilterBar upgrade)
@@ -60,9 +60,9 @@
 - [x] **AdminAva** — ✅ DONE (Firestore conversations + live coordinator API tasks, proper error handling)
 - [x] **AdminCampaigns** — ✅ DONE (DataTable/FilterBar upgrade)
 - [x] **AdminAnalytics** — ✅ DONE (all real data from leads + projects collections)
-- [ ] **AdminTasks** — verify AI task queue displays correctly
+- [x] **AdminTasks** — ✅ DONE (real Cloud Function data, sorting, reassign/retry actions)
 - [x] **AdminCredits** — ✅ DONE (DataTable/FilterBar upgrade)
-- [ ] **AdminWebhooks** — verify webhook CRUD and test delivery
+- [x] **AdminWebhooks** — ✅ DONE (full CRUD, real Firestore, secret management)
 
 ### 2.3 Portal (Customer) UX
 - [x] **PortalHome** — ✅ DONE (real Firestore project data, proper empty states)
@@ -111,12 +111,12 @@
 - [x] **SalesTerritory** — ✅ DONE (real Google Maps with status-colored lead markers)
 
 ### 2.6 Public Pages UX
-- [ ] **Home** — verify hero, features, CTA all look professional
-- [ ] **Qualify** — test full qualification flow end-to-end
-- [ ] **Pricing** — verify pricing tiers match Stripe config
+- [x] **Home** — ✅ DONE (professional layout, real content, proper CTAs)
+- [x] **Qualify** — ✅ DONE (complete multi-step flow, NOTE: has fake urgency elements to review)
+- [x] **Pricing** — ✅ DONE (matches Stripe: $79/$149/$299, correct limits)
 - [ ] **About** — verify company info is accurate
 - [ ] **Features** — verify feature descriptions match actual capabilities
-- [ ] **Contact** — test contact form submission
+- [x] **Contact** — ✅ DONE (fixed error handling, form writes to Firestore)
 - [ ] **API Docs** — verify Swagger/API docs are complete and accurate
 - [ ] **Solar States** — test state-by-state solar data pages
 - [ ] **CreditMarketplace** — test public credit listing browse
