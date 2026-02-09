@@ -77,6 +77,126 @@ function StarRating({ rating }) {
   );
 }
 
+// Common zip-to-city/state mappings (subset; the backend locationMatching.ts has the full 356-zip set)
+const ZIP_LOOKUP = {
+  78701: "Austin, TX",
+  78702: "Austin, TX",
+  78703: "Austin, TX",
+  78704: "Austin, TX",
+  78745: "Austin, TX",
+  78748: "Austin, TX",
+  78749: "Austin, TX",
+  78750: "Austin, TX",
+  78751: "Austin, TX",
+  78753: "Austin, TX",
+  78758: "Austin, TX",
+  78759: "Austin, TX",
+  75201: "Dallas, TX",
+  75202: "Dallas, TX",
+  75204: "Dallas, TX",
+  75205: "Dallas, TX",
+  75206: "Dallas, TX",
+  75214: "Dallas, TX",
+  77001: "Houston, TX",
+  77002: "Houston, TX",
+  77003: "Houston, TX",
+  77004: "Houston, TX",
+  77005: "Houston, TX",
+  77006: "Houston, TX",
+  78201: "San Antonio, TX",
+  78202: "San Antonio, TX",
+  78204: "San Antonio, TX",
+  78205: "San Antonio, TX",
+  78207: "San Antonio, TX",
+  78209: "San Antonio, TX",
+  76101: "Fort Worth, TX",
+  76102: "Fort Worth, TX",
+  76104: "Fort Worth, TX",
+  73301: "Austin, TX",
+  79901: "El Paso, TX",
+  79902: "El Paso, TX",
+  90001: "Los Angeles, CA",
+  90002: "Los Angeles, CA",
+  90012: "Los Angeles, CA",
+  90210: "Beverly Hills, CA",
+  94102: "San Francisco, CA",
+  94103: "San Francisco, CA",
+  92101: "San Diego, CA",
+  95101: "San Jose, CA",
+  85001: "Phoenix, AZ",
+  85003: "Phoenix, AZ",
+  85004: "Phoenix, AZ",
+  85251: "Scottsdale, AZ",
+  85281: "Tempe, AZ",
+  33101: "Miami, FL",
+  33109: "Miami Beach, FL",
+  33130: "Miami, FL",
+  32801: "Orlando, FL",
+  33601: "Tampa, FL",
+  30301: "Atlanta, GA",
+  30303: "Atlanta, GA",
+  30308: "Atlanta, GA",
+  80201: "Denver, CO",
+  80202: "Denver, CO",
+  80204: "Denver, CO",
+  89101: "Las Vegas, NV",
+  89102: "Las Vegas, NV",
+  27601: "Raleigh, NC",
+  28201: "Charlotte, NC",
+  37201: "Nashville, TN",
+  37203: "Nashville, TN",
+  29401: "Charleston, SC",
+  29403: "Charleston, SC",
+  10001: "New York, NY",
+  10002: "New York, NY",
+  10003: "New York, NY",
+  60601: "Chicago, IL",
+  60602: "Chicago, IL",
+  60604: "Chicago, IL",
+  98101: "Seattle, WA",
+  98102: "Seattle, WA",
+  97201: "Portland, OR",
+  97202: "Portland, OR",
+};
+
+function lookupZipCityState(zip) {
+  if (!zip || zip.length < 5) return "";
+  return ZIP_LOOKUP[zip] || "";
+}
+
+function calcDistanceMiles(lat1, lng1, lat2, lng2) {
+  if (!lat1 || !lng1 || !lat2 || !lng2) return null;
+  const R = 3958.8;
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLng = ((lng2 - lng1) * Math.PI) / 180;
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos((lat1 * Math.PI) / 180) *
+      Math.cos((lat2 * Math.PI) / 180) *
+      Math.sin(dLng / 2) *
+      Math.sin(dLng / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
+
+const SERVICE_TYPE_LABELS = {
+  cad_design: "CAD Design",
+  engineering_stamp: "Engineering Stamp",
+  permit_submission: "Permit Submission",
+  site_survey: "Site Survey",
+  hoa_approval: "HOA Approval",
+  installation: "Installation",
+  inspection: "Inspection",
+  electrical: "Electrical",
+  roofing: "Roofing",
+  trenching: "Trenching",
+  battery_install: "Battery Install",
+  panel_upgrade: "Panel Upgrade",
+  monitoring_setup: "Monitoring Setup",
+  maintenance: "Maintenance",
+  other: "Other",
+};
+
 export default function DashboardWorkerProfile() {
   const { workerId } = useParams();
   const { user } = useAuth();
